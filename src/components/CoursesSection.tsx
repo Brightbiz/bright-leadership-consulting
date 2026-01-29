@@ -109,42 +109,80 @@ const CoursesSection = () => {
           ))}
         </div>
 
-        {/* Bundle CTA */}
+        {/* Executive Leadership Mastery Program CTA */}
         <AnimatedSection delay={600} className="mt-16">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primary/90 p-8 lg:p-12 text-center">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primary/90 p-8 lg:p-12">
             <div className="absolute inset-0 opacity-10" style={{
               backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0)`,
               backgroundSize: '20px 20px'
             }} />
             
-            <div className="relative">
-              <div className="mb-4 inline-flex items-center gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2">
+            <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+              {/* Main Program Info */}
+              <div className="text-left">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2">
+                  <Award className="h-4 w-4 text-white" />
                   <span className="text-sm font-bold text-white uppercase tracking-wider">
-                    Exclusive Offer
+                    CPD Accredited Program
                   </span>
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 animate-pulse">
-                  <span className="text-sm font-bold text-secondary-foreground uppercase tracking-wider">
-                    50% OFF
+                </div>
+                
+                <h3 className="mb-4 font-serif text-2xl font-semibold text-primary-foreground lg:text-3xl xl:text-4xl">
+                  Executive Leadership Mastery Program
+                </h3>
+                <p className="mb-6 text-primary-foreground/90 text-lg leading-relaxed">
+                  Our comprehensive flagship program designed to transform aspiring and established leaders into exceptional executives. 
+                  Master the complete leadership toolkit with <span className="font-semibold text-white">33 in-depth modules</span>, 
+                  personalized coaching, and internationally recognized CPD accreditation.
+                </p>
+                
+                <div className="flex flex-wrap gap-3 mb-6">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
+                    <BookOpen className="h-3.5 w-3.5" /> 33 Modules
                   </span>
-                </span>
-              </div>
-              
-              <h3 className="mb-4 font-serif text-2xl font-semibold text-primary-foreground lg:text-3xl">
-                Massive Discount on Individual Courses!
-              </h3>
-              <p className="mb-6 text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-                Get <span className="font-bold text-white">50% OFF</span> all individual training courses when you enroll in our 
-                <span className="font-semibold text-white"> Executive Leadership Mastery Program</span>. 
-                Includes 33 comprehensive modules, personalized coaching options, and CPD accreditation.
-              </p>
-              
-              <div className="flex flex-wrap justify-center gap-4">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
+                    <Users className="h-3.5 w-3.5" /> 1:1 Coaching
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
+                    <Award className="h-3.5 w-3.5" /> CPD Certified
+                  </span>
+                </div>
+                
                 <Button variant="hero" size="lg" className="group/btn text-lg px-8">
-                  Claim Your 50% Discount
+                  Explore the Program
                   <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
                 </Button>
+              </div>
+              
+              {/* Bonus Offer */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 lg:p-8 border border-white/20">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 animate-pulse">
+                  <span className="text-sm font-bold text-secondary-foreground uppercase tracking-wider">
+                    Exclusive Bonus
+                  </span>
+                </div>
+                
+                <h4 className="mb-3 font-serif text-xl font-semibold text-white lg:text-2xl">
+                  50% OFF Individual Courses
+                </h4>
+                <p className="mb-4 text-primary-foreground/80">
+                  Enroll in the Executive Leadership Mastery Program and get <span className="font-bold text-white">half price</span> on all our individual training courses—a massive saving on your professional development journey.
+                </p>
+                
+                <ul className="space-y-2 text-sm text-primary-foreground/90">
+                  <li className="flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                    Future of Work Strategy
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                    Enhanced Employability Skills
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                    Peak Performance Accelerator
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
