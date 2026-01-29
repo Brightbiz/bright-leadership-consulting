@@ -4,36 +4,6 @@ import AnimatedSection from "./AnimatedSection";
 
 const courses = [
   {
-    icon: Lightbulb,
-    title: "Transformational Leadership",
-    subtitle: "Ignite Change, Inspire Growth",
-    description:
-      "Go beyond managing to initiating meaningful change. Learn strategies that speak to the human soul and inspire your team to create courageously.",
-    features: ["Change Management", "Team Inspiration", "Visionary Leadership"],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership",
-    accent: "secondary" as const,
-  },
-  {
-    icon: Zap,
-    title: "Peak Performance Accelerator",
-    subtitle: "Master Time, Multiply Impact",
-    description:
-      "Develop time management strategies that unlock hidden hours. Learn to prioritize with precision and achieve results that resonate.",
-    features: ["Time Management", "Productivity Systems", "Focus Strategies"],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
-    accent: "primary" as const,
-  },
-  {
-    icon: TrendingUp,
-    title: "Building Professional Value",
-    subtitle: "Chart Your Course to Career Advancement",
-    description:
-      "Gain essential skills for both personal and professional growth. Improve work relationships, increase productivity, and optimize career opportunities.",
-    features: ["Career Development", "Strategic Thinking", "Professional Growth"],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value",
-    accent: "secondary" as const,
-  },
-  {
     icon: Briefcase,
     title: "Future of Work Strategy",
     subtitle: "Innovate, Adapt, Thrive",
@@ -52,6 +22,16 @@ const courses = [
     features: ["Emotional Intelligence", "Adaptability", "Soft Skills"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees",
     accent: "secondary" as const,
+  },
+  {
+    icon: Zap,
+    title: "Peak Performance Accelerator",
+    subtitle: "Master Time, Multiply Impact",
+    description:
+      "Develop time management strategies that unlock hidden hours. Learn to prioritize with precision and achieve results that resonate.",
+    features: ["Time Management", "Productivity Systems", "Focus Strategies"],
+    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    accent: "primary" as const,
   },
 ];
 
