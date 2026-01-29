@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      checklist_results: {
+        Row: {
+          checked_items: string[]
+          created_at: string
+          id: string
+          score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          checked_items?: string[]
+          created_at?: string
+          id?: string
+          score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          checked_items?: string[]
+          created_at?: string
+          id?: string
+          score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           company: string | null
