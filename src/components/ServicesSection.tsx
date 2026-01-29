@@ -226,7 +226,7 @@ const ServicesSection = () => {
           </AnimatedSection>
 
           {/* For Leaders Section */}
-          <div className="mb-20">
+          <div id="for-leaders" className="mb-20 scroll-mt-24">
             <OfferingSection
               title="For Leaders"
               subtitle="Elevate your personal leadership with tailored programs designed for executives ready to make an impact."
@@ -238,7 +238,7 @@ const ServicesSection = () => {
           </div>
 
           {/* For Organizations Section */}
-          <div className="mb-20">
+          <div id="for-organizations" className="mb-20 scroll-mt-24">
             <OfferingSection
               title="For Organizations"
               subtitle="Transform your organization's leadership culture with enterprise-grade programs and immersive experiences."
