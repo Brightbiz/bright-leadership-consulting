@@ -78,27 +78,27 @@ const getScoreLevel = (score: number) => {
       level: "Leadership Master",
       description: "You are operating at a high level. Focus on mentoring others and sharing your expertise.",
       icon: Award,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-50",
-      borderColor: "border-emerald-200",
+      color: "text-score-master-foreground",
+      bgColor: "bg-score-master-bg",
+      borderColor: "border-score-master-border",
     };
   } else if (score >= 11) {
     return {
       level: "Emerging Leader",
       description: "You have a strong foundation but need consistency in key areas. Keep developing!",
       icon: TrendingUp,
-      color: "text-amber-600",
-      bgColor: "bg-amber-50",
-      borderColor: "border-amber-200",
+      color: "text-score-emerging-foreground",
+      bgColor: "bg-score-emerging-bg",
+      borderColor: "border-score-emerging-border",
     };
   } else {
     return {
       level: "Aspiring Leader",
       description: "Prioritize foundational skills training immediately. Every expert was once a beginner!",
       icon: Target,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
+      color: "text-score-aspiring-foreground",
+      bgColor: "bg-score-aspiring-bg",
+      borderColor: "border-score-aspiring-border",
     };
   }
 };
@@ -261,25 +261,25 @@ const LeadershipChecklist = () => {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-                  <Award className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-score-master-bg border border-score-master-border">
+                  <Award className="h-5 w-5 text-score-master mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-emerald-700">16-20 Checks</p>
-                    <p className="text-sm text-emerald-600">Leadership Master</p>
+                    <p className="font-medium text-score-master-foreground">16-20 Checks</p>
+                    <p className="text-sm text-score-master">Leadership Master</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-50 border border-amber-200">
-                  <TrendingUp className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-score-emerging-bg border border-score-emerging-border">
+                  <TrendingUp className="h-5 w-5 text-score-emerging mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-amber-700">11-15 Checks</p>
-                    <p className="text-sm text-amber-600">Emerging Leader</p>
+                    <p className="font-medium text-score-emerging-foreground">11-15 Checks</p>
+                    <p className="text-sm text-score-emerging">Emerging Leader</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
-                  <Target className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-score-aspiring-bg border border-score-aspiring-border">
+                  <Target className="h-5 w-5 text-score-aspiring mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="font-medium text-blue-700">0-10 Checks</p>
-                    <p className="text-sm text-blue-600">Aspiring Leader</p>
+                    <p className="font-medium text-score-aspiring-foreground">0-10 Checks</p>
+                    <p className="text-sm text-score-aspiring">Aspiring Leader</p>
                   </div>
                 </div>
               </div>
