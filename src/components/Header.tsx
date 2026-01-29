@@ -9,7 +9,6 @@ const navLinks = [
   { label: "Programs", href: "/#programs" },
   { label: "Coaching", href: "/#coaching" },
   { label: "About", href: "/#about" },
-  { label: "Leadership Checklist", href: "/leadership-checklist" },
   { label: "Contact", href: "/#contact" },
 ];
 
