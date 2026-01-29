@@ -38,7 +38,7 @@ const forOrganizations = [
       "A customizable program designed to align leadership development with your business goals and create a sustainable leadership pipeline.",
     features: ["Leadership Audit", "Custom Training", "ROI Focused"],
     stats: { value: "3-6", label: "Months" },
-    image: corporateRetreat,
+    image: teamCollaboration,
     badge: "Enterprise",
     accent: "primary" as const,
   },
