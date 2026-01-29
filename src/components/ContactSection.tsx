@@ -2,7 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -86,7 +86,6 @@ const ContactSection = () => {
         description: "We'll get back to you within 24 hours.",
       });
 
-      // Reset form after showing success
       setTimeout(() => {
         form.reset();
         setIsSubmitted(false);
@@ -102,96 +101,103 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-muted/50">
-      <div className="container-narrow">
+    <section id="contact" className="section-padding relative overflow-hidden bg-gradient-to-br from-muted/50 via-background to-muted/30">
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/5 to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-secondary/5 to-transparent rounded-full blur-3xl" />
+      
+      <div className="container-narrow relative">
         <AnimatedSection>
-          <div className="mx-auto mb-16 max-w-2xl text-center">
-            <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wider text-secondary">
-              Get In Touch
-            </span>
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-secondary/15 to-primary/15 px-5 py-2.5 border border-secondary/20">
+              <MessageSquare className="h-4 w-4 text-secondary" />
+              <span className="text-sm font-bold text-secondary uppercase tracking-wider">
+                Get In Touch
+              </span>
+            </div>
             <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl lg:text-5xl">
               Start Your Leadership <span className="text-primary">Journey</span>
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               Ready to transform your leadership? Contact us for a free consultation 
               and discover how we can help you achieve extraordinary results.
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           {/* Contact Info */}
           <AnimatedSection className="lg:col-span-2" animation="slide-left">
             <div className="space-y-8">
-              <div>
+              <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 shadow-lg">
                 <h3 className="mb-4 font-serif text-xl font-semibold text-foreground">
                   Contact Information
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed mb-6">
                   Schedule your free consultation today and take the first step 
                   towards leadership excellence.
                 </p>
-              </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                    <Mail className="h-5 w-5" />
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-3 rounded-xl bg-muted/50 transition-colors hover:bg-muted">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-foreground text-sm">Email</div>
+                      <a
+                        href="mailto:info@brightleadershipconsulting.com"
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        info@brightleadershipconsulting.com
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-medium text-foreground">Email</div>
-                    <a
-                      href="mailto:info@brightleadershipconsulting.com"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      info@brightleadershipconsulting.com
-                    </a>
-                  </div>
-                </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                    <Phone className="h-5 w-5" />
+                  <div className="flex items-start gap-4 p-3 rounded-xl bg-muted/50 transition-colors hover:bg-muted">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary">
+                      <Phone className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-foreground text-sm">Phone</div>
+                      <a
+                        href="tel:+441234567890"
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        +44 (0) 123 456 7890
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-medium text-foreground">Phone</div>
-                    <a
-                      href="tel:+441onal234567890"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      +44 (0) 123 456 7890
-                    </a>
-                  </div>
-                </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-foreground">Location</div>
-                    <span className="text-muted-foreground">
-                      London, United Kingdom
-                    </span>
+                  <div className="flex items-start gap-4 p-3 rounded-xl bg-muted/50 transition-colors hover:bg-muted">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary">
+                      <MapPin className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-foreground text-sm">Location</div>
+                      <span className="text-sm text-muted-foreground">
+                        London, United Kingdom
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Office Hours */}
-              <div className="rounded-2xl border border-border bg-card p-6">
-                <h4 className="mb-3 font-semibold text-foreground">Office Hours</h4>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span>9:00 AM - 6:00 PM</span>
+              <div className="rounded-2xl border border-border/50 bg-gradient-to-br from-primary/5 to-secondary/5 p-6">
+                <h4 className="mb-4 font-semibold text-foreground">Office Hours</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center p-2 rounded-lg bg-white/50 dark:bg-card/50">
+                    <span className="text-muted-foreground">Monday - Friday</span>
+                    <span className="font-medium text-foreground">9:00 AM - 6:00 PM</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span>By Appointment</span>
+                  <div className="flex justify-between items-center p-2 rounded-lg bg-white/50 dark:bg-card/50">
+                    <span className="text-muted-foreground">Saturday</span>
+                    <span className="font-medium text-foreground">By Appointment</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span>Closed</span>
+                  <div className="flex justify-between items-center p-2 rounded-lg bg-white/50 dark:bg-card/50">
+                    <span className="text-muted-foreground">Sunday</span>
+                    <span className="font-medium text-foreground">Closed</span>
                   </div>
                 </div>
               </div>
@@ -200,17 +206,17 @@ const ContactSection = () => {
 
           {/* Contact Form */}
           <AnimatedSection className="lg:col-span-3" animation="slide-right" delay={100}>
-            <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
+            <div className="rounded-2xl border border-border/50 bg-card p-8 shadow-xl shadow-primary/5">
               {isSubmitted ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent">
-                    <CheckCircle className="h-8 w-8 text-primary" />
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/15">
+                    <CheckCircle className="h-10 w-10 text-primary" />
                   </div>
-                  <h3 className="mb-2 font-serif text-xl font-semibold text-foreground">
+                  <h3 className="mb-2 font-serif text-2xl font-semibold text-foreground">
                     Thank You!
                   </h3>
-                  <p className="text-muted-foreground">
-                    Your message has been sent. We'll be in touch soon.
+                  <p className="text-muted-foreground max-w-sm">
+                    Your message has been sent successfully. We'll be in touch within 24 hours.
                   </p>
                 </div>
               ) : (
@@ -222,12 +228,12 @@ const ContactSection = () => {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Full Name *</FormLabel>
+                            <FormLabel className="text-foreground">Full Name *</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="John Smith"
                                 {...field}
-                                className="h-12"
+                                className="h-12 bg-muted/50 border-border/50 focus:border-primary"
                               />
                             </FormControl>
                             <FormMessage />
@@ -240,13 +246,13 @@ const ContactSection = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email Address *</FormLabel>
+                            <FormLabel className="text-foreground">Email Address *</FormLabel>
                             <FormControl>
                               <Input
                                 type="email"
                                 placeholder="john@company.com"
                                 {...field}
-                                className="h-12"
+                                className="h-12 bg-muted/50 border-border/50 focus:border-primary"
                               />
                             </FormControl>
                             <FormMessage />
@@ -261,13 +267,13 @@ const ContactSection = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone Number</FormLabel>
+                            <FormLabel className="text-foreground">Phone Number</FormLabel>
                             <FormControl>
                               <Input
                                 type="tel"
                                 placeholder="+44 123 456 7890"
                                 {...field}
-                                className="h-12"
+                                className="h-12 bg-muted/50 border-border/50 focus:border-primary"
                               />
                             </FormControl>
                             <FormMessage />
@@ -280,12 +286,12 @@ const ContactSection = () => {
                         name="company"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Company</FormLabel>
+                            <FormLabel className="text-foreground">Company</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="Your Company"
                                 {...field}
-                                className="h-12"
+                                className="h-12 bg-muted/50 border-border/50 focus:border-primary"
                               />
                             </FormControl>
                             <FormMessage />
@@ -299,13 +305,13 @@ const ContactSection = () => {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Your Message *</FormLabel>
+                          <FormLabel className="text-foreground">Your Message *</FormLabel>
                           <FormControl>
                             <Textarea
                               placeholder="Tell us about your leadership goals and how we can help..."
                               {...field}
                               rows={5}
-                              className="resize-none"
+                              className="resize-none bg-muted/50 border-border/50 focus:border-primary"
                             />
                           </FormControl>
                           <FormMessage />
@@ -321,9 +327,7 @@ const ContactSection = () => {
                       disabled={form.formState.isSubmitting}
                     >
                       {form.formState.isSubmitting ? (
-                        <>
-                          <span className="animate-pulse">Sending...</span>
-                        </>
+                        <span className="animate-pulse">Sending...</span>
                       ) : (
                         <>
                           Send Message
