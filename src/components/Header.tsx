@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Programs", href: "#programs" },
-  { label: "Coaching", href: "#coaching" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Programs", href: "/#programs" },
+  { label: "Coaching", href: "/#coaching" },
+  { label: "About", href: "/#about" },
+  { label: "Leadership Checklist", href: "/leadership-checklist" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const Header = () => {
