@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useChecklistProgress } from "@/hooks/useChecklistProgress";
+import SocialShare from "@/components/SocialShare";
 
 interface ChecklistItem {
   id: string;
@@ -239,7 +240,7 @@ const LeadershipChecklist = () => {
             </CardHeader>
             <CardContent className="text-center">
               <p className="text-muted-foreground mb-6">{scoreLevel.description}</p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
                 <Button variant="outline" onClick={handleReset}>
                   Reset & Try Again
                 </Button>
@@ -249,6 +250,11 @@ const LeadershipChecklist = () => {
                   </Button>
                 </Link>
               </div>
+              <SocialShare
+                title="Leadership Skills Assessment"
+                text={`I scored ${score}/${totalItems} on the Leadership Skills Checklist and achieved "${scoreLevel.level}" level! Take the assessment to discover your leadership strengths.`}
+                url={`${window.location.origin}/leadership-checklist`}
+              />
             </CardContent>
           </Card>
         )}
