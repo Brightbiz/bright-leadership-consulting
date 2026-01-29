@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format } from "date-fns";
-import { Mail, MailOpen, Trash2, ArrowLeft, RefreshCw } from "lucide-react";
+import { Mail, MailOpen, Trash2, ArrowLeft, RefreshCw, LogOut, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -39,6 +41,7 @@ interface ContactSubmission {
 }
 
 const AdminSubmissions = () => {
+  const { user, isAdmin, isLoading: authLoading, signOut } = useAdminAuth();
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSubmission, setSelectedSubmission] = useState<ContactSubmission | null>(null);
@@ -67,8 +70,23 @@ const AdminSubmissions = () => {
   };
 
   useEffect(() => {
-    fetchSubmissions();
-  }, []);
+    if (user && isAdmin) {
+      fetchSubmissions();
+    }
+  }, [user, isAdmin]);
+
+  // Redirect if not authenticated or not admin
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const toggleReadStatus = async (submission: ContactSubmission) => {
     try {
@@ -126,7 +144,7 @@ const AdminSubmissions = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container-narrow py-8">
-        {/* Header */}
+      {/* Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="mb-2 flex items-center gap-3">
@@ -149,10 +167,16 @@ const AdminSubmissions = () => {
               )}
             </p>
           </div>
-          <Button onClick={fetchSubmissions} variant="outline" disabled={loading}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button onClick={fetchSubmissions} variant="outline" disabled={loading}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+            <Button onClick={signOut} variant="ghost" size="sm">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Table */}
