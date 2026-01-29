@@ -1,11 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, Target, TrendingUp, Award } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { useChecklistProgress } from "@/hooks/useChecklistProgress";
 
 interface ChecklistItem {
   id: string;
@@ -105,11 +106,25 @@ const getScoreLevel = (score: number) => {
 const LeadershipChecklist = () => {
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [showResults, setShowResults] = useState(false);
+  const [hasLoadedProgress, setHasLoadedProgress] = useState(false);
+  const { user, isLoading, isSaving, lastSaved, loadProgress, saveProgress } = useChecklistProgress();
 
   const totalItems = checklistData.reduce((acc, section) => acc + section.items.length, 0);
   const score = checkedItems.size;
   const progress = (score / totalItems) * 100;
   const scoreLevel = useMemo(() => getScoreLevel(score), [score]);
+
+  // Load saved progress when user is available
+  useEffect(() => {
+    if (user && !hasLoadedProgress) {
+      loadProgress().then((savedItems) => {
+        if (savedItems && savedItems.length > 0) {
+          setCheckedItems(new Set(savedItems));
+        }
+        setHasLoadedProgress(true);
+      });
+    }
+  }, [user, hasLoadedProgress, loadProgress]);
 
   const handleToggle = (itemId: string) => {
     setCheckedItems((prev) => {
@@ -128,9 +143,17 @@ const LeadershipChecklist = () => {
     setShowResults(false);
   };
 
-  const handleShowResults = () => {
+  const handleShowResults = async () => {
+    // Save results when viewing
+    if (user) {
+      await saveProgress(Array.from(checkedItems), score);
+    }
     setShowResults(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSaveProgress = async () => {
+    await saveProgress(Array.from(checkedItems), score);
   };
 
   const ScoreIcon = scoreLevel.icon;
@@ -146,11 +169,34 @@ const LeadershipChecklist = () => {
               Back to Home
             </Button>
           </Link>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
-              {score} / {totalItems} checked
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="text-xs sm:text-sm text-muted-foreground">
+              {score} / {totalItems}
             </span>
-            <Progress value={progress} className="w-24 h-2" />
+            <Progress value={progress} className="w-16 sm:w-24 h-2" />
+            {user ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSaveProgress}
+                disabled={isSaving}
+                className="hidden sm:flex"
+              >
+                {isSaving ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
+                )}
+                Save
+              </Button>
+            ) : (
+              <Link to="/admin/login" className="hidden sm:block">
+                <Button variant="outline" size="sm">
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Sign in to save
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -165,6 +211,16 @@ const LeadershipChecklist = () => {
             Honestly assess your current leadership strengths and areas for development. 
             Check each box where you feel confident, then view your score to understand where you stand.
           </p>
+          {!user && !isLoading && (
+            <p className="mt-4 text-sm text-muted-foreground">
+              <Link to="/admin/login" className="text-primary hover:underline">Sign in</Link> to save your progress and track improvements over time.
+            </p>
+          )}
+          {lastSaved && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              Progress loaded from your previous session.
+            </p>
+          )}
         </div>
 
         {/* Results Card (shown when showResults is true) */}
