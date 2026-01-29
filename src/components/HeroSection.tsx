@@ -73,7 +73,11 @@ const HeroSection = () => {
             {/* Leadership Checklist CTA */}
             <div className="mt-6 animate-fade-up-delay">
               <Link to="/leadership-checklist">
-                <Button variant="ghost" size="lg" className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 group">
+                <Button 
+                  variant="ghost" 
+                  size="lg" 
+                  className="border-2 border-secondary/60 bg-secondary/10 text-secondary hover:bg-secondary/20 hover:border-secondary hover:text-secondary font-semibold group"
+                >
                   <ClipboardCheck className="h-5 w-5 mr-2" />
                   Take the Free Leadership Assessment
                   <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
