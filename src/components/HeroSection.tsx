@@ -1,4 +1,5 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, ClipboardCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-coaching.jpg";
 
@@ -67,6 +68,17 @@ const HeroSection = () => {
                 <Play className="h-5 w-5" />
                 Watch Video
               </Button>
+            </div>
+
+            {/* Leadership Checklist CTA */}
+            <div className="mt-6 animate-fade-up-delay">
+              <Link to="/leadership-checklist">
+                <Button variant="ghost" size="lg" className="text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10 group">
+                  <ClipboardCheck className="h-5 w-5 mr-2" />
+                  Take the Free Leadership Assessment
+                  <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </div>
 
             {/* Stats */}
