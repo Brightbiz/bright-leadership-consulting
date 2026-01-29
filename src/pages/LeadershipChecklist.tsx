@@ -312,6 +312,7 @@ const LeadershipChecklist = () => {
                           id={item.id}
                           checked={isChecked}
                           onCheckedChange={() => handleToggle(item.id)}
+                          onClick={(e) => e.stopPropagation()}
                           className="mt-1 h-5 w-5 flex-shrink-0"
                         />
                         <label
