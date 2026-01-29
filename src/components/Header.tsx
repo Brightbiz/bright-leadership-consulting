@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -34,7 +35,8 @@ const Header = () => {
             ))}
           </div>
 
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <Button variant="ghost" size="sm">
               My Account
             </Button>
@@ -68,6 +70,10 @@ const Header = () => {
                 </a>
               ))}
               <div className="mt-4 flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Theme</span>
+                  <ThemeToggle />
+                </div>
                 <Button variant="outline" className="w-full">
                   My Account
                 </Button>
