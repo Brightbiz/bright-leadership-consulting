@@ -145,7 +145,7 @@ const CoursesSection = () => {
               </div>
               
               <h3 className="mb-4 font-serif text-2xl font-semibold text-primary-foreground lg:text-3xl">
-                Get All 7 Courses in Our Executive Leadership Mastery Program
+                Get All 6 Courses in Our Executive Leadership Mastery Program
               </h3>
               <p className="mb-6 text-primary-foreground/80 max-w-2xl mx-auto">
                 Save 25% when you bundle all courses together. Includes 33 comprehensive modules, 
