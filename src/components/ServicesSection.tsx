@@ -1,22 +1,21 @@
-import { GraduationCap, Users, Building2, ArrowRight, Sparkles, Star, Clock, Award, ChevronRight } from "lucide-react";
+import { GraduationCap, Users, Building2, ArrowRight, Sparkles, Star, Clock, Award, User, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import heroCoaching from "@/assets/hero-coaching.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import corporateRetreat from "@/assets/corporate-retreat.jpg";
 
-const services = [
+const forLeaders = [
   {
     icon: GraduationCap,
     title: "Executive Leadership Mastery Program",
     description:
-      "A comprehensive digital course bundle designed to unlock your full leadership potential with practical tools and powerful insights.",
+      "A comprehensive CPD-accredited digital course designed to unlock your full leadership potential with 33 modules of practical tools and powerful insights.",
     features: ["33 Comprehensive Modules", "Self-Paced Learning", "CPD Accredited"],
     stats: { value: "33", label: "Modules" },
     image: teamCollaboration,
     badge: "Most Popular",
-    accent: "secondary",
-    number: "01",
+    accent: "secondary" as const,
   },
   {
     icon: Users,
@@ -27,22 +26,145 @@ const services = [
     stats: { value: "1:1", label: "Sessions" },
     image: heroCoaching,
     badge: "Personalized",
-    accent: "primary",
-    number: "02",
+    accent: "primary" as const,
   },
+];
+
+const forOrganizations = [
   {
     icon: Building2,
-    title: "Corporate Retreats",
+    title: "Organizational Transformation",
     description:
-      "Immersive training retreats designed for leaders and organizations striving for excellence and sustainable growth.",
+      "A customizable program designed to align leadership development with your business goals and create a sustainable leadership pipeline.",
+    features: ["Leadership Audit", "Custom Training", "ROI Focused"],
+    stats: { value: "3-6", label: "Months" },
+    image: corporateRetreat,
+    badge: "Enterprise",
+    accent: "primary" as const,
+  },
+  {
+    icon: Briefcase,
+    title: "Corporate Training Retreats",
+    description:
+      "Immersive retreats designed for leaders and teams striving for excellence through tailored workshops and strategic planning.",
     features: ["Team Building", "Strategic Planning", "Custom Workshops"],
     stats: { value: "3-5", label: "Days" },
     image: corporateRetreat,
     badge: "Immersive",
-    accent: "primary",
-    number: "03",
+    accent: "secondary" as const,
   },
 ];
+
+interface ServiceCardProps {
+  service: {
+    icon: React.ElementType;
+    title: string;
+    description: string;
+    features: string[];
+    stats: { value: string; label: string };
+    image: string;
+    badge: string;
+    accent: "primary" | "secondary";
+  };
+  index: number;
+}
+
+const ServiceCard = ({ service, index }: ServiceCardProps) => (
+  <div className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 transition-all duration-500 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 h-full">
+    {/* Image */}
+    <div className="relative h-48 overflow-hidden">
+      <img 
+        src={service.image} 
+        alt={service.title}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+      
+      {/* Badge */}
+      <div className={`absolute top-4 right-4 ${service.accent === 'secondary' ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'} px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg`}>
+        {service.badge}
+      </div>
+    </div>
+    
+    {/* Content */}
+    <div className="p-6">
+      <div className="flex items-start gap-4 mb-4">
+        <div className={`shrink-0 h-12 w-12 flex items-center justify-center rounded-xl bg-gradient-to-br ${service.accent === 'secondary' ? 'from-secondary/20 to-secondary/5' : 'from-primary/15 to-primary/5'} transition-transform duration-300 group-hover:scale-110`}>
+          <service.icon className={`h-6 w-6 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} strokeWidth={1.5} />
+        </div>
+        
+        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${service.accent === 'secondary' ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
+          <span className="font-serif text-lg font-bold">{service.stats.value}</span>
+          <span className="text-xs font-semibold uppercase tracking-wider opacity-70">{service.stats.label}</span>
+        </div>
+      </div>
+      
+      <h3 className="mb-3 font-serif text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+        {service.title}
+      </h3>
+      
+      <p className="mb-5 text-muted-foreground leading-relaxed text-sm">
+        {service.description}
+      </p>
+
+      {/* Features */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {service.features.map((feature) => (
+          <span 
+            key={feature} 
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/50 text-xs font-medium text-foreground border border-border/50"
+          >
+            <Star className={`h-2.5 w-2.5 ${service.accent === 'secondary' ? 'text-secondary fill-secondary' : 'text-primary fill-primary'}`} />
+            {feature}
+          </span>
+        ))}
+      </div>
+
+      <Button 
+        variant={service.accent === 'secondary' ? 'hero' : 'teal'}
+        size="default"
+        className="w-full group/btn"
+      >
+        Learn More
+        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+      </Button>
+    </div>
+    
+    {/* Hover accent line */}
+    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.accent === 'secondary' ? 'from-secondary via-primary to-secondary' : 'from-primary via-secondary to-primary'} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+  </div>
+);
+
+interface OfferingSectionProps {
+  title: string;
+  subtitle: string;
+  icon: React.ElementType;
+  iconColor: string;
+  services: typeof forLeaders;
+  delay?: number;
+}
+
+const OfferingSection = ({ title, subtitle, icon: Icon, iconColor, services, delay = 0 }: OfferingSectionProps) => (
+  <AnimatedSection delay={delay}>
+    <div className="mb-10">
+      <div className={`inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-gradient-to-r ${iconColor === 'secondary' ? 'from-secondary/15 to-secondary/5 border-secondary/20' : 'from-primary/15 to-primary/5 border-primary/20'} border`}>
+        <Icon className={`h-5 w-5 ${iconColor === 'secondary' ? 'text-secondary' : 'text-primary'}`} />
+        <span className={`text-sm font-bold uppercase tracking-wider ${iconColor === 'secondary' ? 'text-secondary' : 'text-primary'}`}>
+          {title}
+        </span>
+      </div>
+      <p className="text-lg text-muted-foreground max-w-xl">
+        {subtitle}
+      </p>
+    </div>
+    
+    <div className="grid md:grid-cols-2 gap-6">
+      {services.map((service, index) => (
+        <ServiceCard key={service.title} service={service} index={index} />
+      ))}
+    </div>
+  </AnimatedSection>
+);
 
 const ServicesSection = () => {
   return (
@@ -65,7 +187,7 @@ const ServicesSection = () => {
         
         <div className="container-narrow relative">
           {/* Section Header */}
-          <AnimatedSection className="mx-auto mb-24 max-w-4xl text-center">
+          <AnimatedSection className="mx-auto mb-20 max-w-4xl text-center">
             <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/80 dark:bg-card/80 backdrop-blur-sm px-6 py-3 shadow-lg shadow-primary/5 border border-border/50">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-secondary/80">
                 <Sparkles className="h-4 w-4 text-secondary-foreground" />
@@ -103,93 +225,31 @@ const ServicesSection = () => {
             </p>
           </AnimatedSection>
 
-          {/* Services - Horizontal cards on large screens */}
-          <div className="space-y-8">
-            {services.map((service, index) => (
-              <AnimatedSection key={service.title} delay={index * 100}>
-                <div className={`group relative overflow-hidden rounded-[2rem] bg-card border border-border/50 transition-all duration-500 hover:border-${service.accent}/30 hover:shadow-2xl hover:shadow-${service.accent}/10`}>
-                  <div className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                    {/* Image side */}
-                    <div className="relative lg:w-2/5 h-72 lg:h-auto overflow-hidden">
-                      <img 
-                        src={service.image} 
-                        alt={service.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      {/* Overlay gradient */}
-                      <div className={`absolute inset-0 bg-gradient-to-${index % 2 === 1 ? 'l' : 'r'} from-transparent via-transparent to-card lg:block hidden`} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent lg:hidden" />
-                      
-                      {/* Number overlay */}
-                      <div className="absolute top-6 left-6 lg:top-8 lg:left-8">
-                        <span className="font-serif text-6xl lg:text-8xl font-bold text-white/20">
-                          {service.number}
-                        </span>
-                      </div>
-                      
-                      {/* Badge */}
-                      <div className={`absolute top-6 right-6 lg:top-auto lg:bottom-8 lg:${index % 2 === 1 ? 'left-8 right-auto' : 'right-8'} ${service.accent === 'secondary' ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'} px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-xl`}>
-                        {service.badge}
-                      </div>
-                    </div>
-                    
-                    {/* Content side */}
-                    <div className="lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex items-start gap-6">
-                        {/* Icon */}
-                        <div className={`hidden sm:flex shrink-0 h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${service.accent === 'secondary' ? 'from-secondary/20 to-secondary/5' : 'from-primary/15 to-primary/5'} transition-transform duration-300 group-hover:scale-110`}>
-                          <service.icon className={`h-8 w-8 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} strokeWidth={1.5} />
-                        </div>
-                        
-                        <div className="flex-1">
-                          {/* Stats badge */}
-                          <div className={`inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full ${service.accent === 'secondary' ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
-                            <span className="font-serif text-xl font-bold">{service.stats.value}</span>
-                            <span className="text-xs font-semibold uppercase tracking-wider opacity-70">{service.stats.label}</span>
-                          </div>
-                          
-                          <h3 className="mb-4 font-serif text-2xl lg:text-3xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
-                            {service.title}
-                          </h3>
-                          
-                          <p className="mb-6 text-muted-foreground leading-relaxed text-lg">
-                            {service.description}
-                          </p>
-
-                          {/* Features */}
-                          <div className="flex flex-wrap gap-3 mb-8">
-                            {service.features.map((feature) => (
-                              <span 
-                                key={feature} 
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/50 text-sm font-medium text-foreground border border-border/50"
-                              >
-                                <Star className={`h-3 w-3 ${service.accent === 'secondary' ? 'text-secondary fill-secondary' : 'text-primary fill-primary'}`} />
-                                {feature}
-                              </span>
-                            ))}
-                          </div>
-
-                          <Button 
-                            variant={service.accent === 'secondary' ? 'hero' : 'teal'}
-                            size="lg"
-                            className="group/btn"
-                          >
-                            Learn More
-                            <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Hover accent line */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.accent === 'secondary' ? 'from-secondary via-primary to-secondary' : 'from-primary via-secondary to-primary'} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
-                </div>
-              </AnimatedSection>
-            ))}
+          {/* For Leaders Section */}
+          <div className="mb-20">
+            <OfferingSection
+              title="For Leaders"
+              subtitle="Elevate your personal leadership with tailored programs designed for executives ready to make an impact."
+              icon={User}
+              iconColor="secondary"
+              services={forLeaders}
+              delay={0}
+            />
           </div>
 
-          {/* Trust indicators - Enhanced */}
+          {/* For Organizations Section */}
+          <div className="mb-20">
+            <OfferingSection
+              title="For Organizations"
+              subtitle="Transform your organization's leadership culture with enterprise-grade programs and immersive experiences."
+              icon={Building2}
+              iconColor="primary"
+              services={forOrganizations}
+              delay={200}
+            />
+          </div>
+
+          {/* Trust indicators */}
           <AnimatedSection delay={400} className="mt-24">
             <div className="relative rounded-3xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-border/50 p-8 lg:p-12">
               <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/10 via-transparent to-transparent opacity-50" />
