@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LogIn, ArrowLeft, Loader2 } from "lucide-react";
+import { UserPlus, ArrowLeft, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,65 +16,76 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Link } from "react-router-dom";
 
-const loginSchema = z.object({
+const registerSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters" }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type RegisterFormData = z.infer<typeof registerSchema>;
 
-const AdminLogin = () => {
+const AdminRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
+        options: {
+          emailRedirectTo: window.location.origin,
+        },
       });
 
       if (authError) throw authError;
 
-      // Check if user has admin role
-      const { data: roleData, error: roleError } = await supabase
-        .rpc("has_role", { _user_id: authData.user.id, _role: "admin" });
+      if (!authData.user) {
+        throw new Error("Registration failed. Please try again.");
+      }
 
-      if (roleError) throw roleError;
+      // Add admin role for the new user
+      const { error: roleError } = await supabase
+        .from("user_roles")
+        .insert({ user_id: authData.user.id, role: "admin" });
 
-      if (!roleData) {
-        await supabase.auth.signOut();
+      if (roleError) {
+        console.error("Role assignment error:", roleError);
+        // User created but role assignment failed - still show success
         toast({
-          title: "Access denied",
-          description: "You don't have admin privileges.",
+          title: "Account created",
+          description: "Your account was created but admin role assignment failed. Contact support.",
           variant: "destructive",
         });
         return;
       }
 
       toast({
-        title: "Welcome back!",
-        description: "You've been signed in successfully.",
+        title: "Registration successful!",
+        description: "Your admin account has been created. You can now sign in.",
       });
 
-      navigate("/admin");
+      navigate("/admin/login");
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Registration error:", error);
       toast({
-        title: "Login failed",
-        description: error.message || "Invalid email or password.",
+        title: "Registration failed",
+        description: error.message || "An error occurred during registration.",
         variant: "destructive",
       });
     } finally {
@@ -97,13 +108,13 @@ const AdminLogin = () => {
         <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <LogIn className="h-6 w-6 text-primary" />
+              <UserPlus className="h-6 w-6 text-primary" />
             </div>
             <h1 className="font-serif text-2xl font-semibold text-foreground">
-              Admin Login
+              Admin Registration
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Sign in to access the admin dashboard
+              Create a new admin account
             </p>
           </div>
 
@@ -149,6 +160,26 @@ const AdminLogin = () => {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="••••••••"
+                        {...field}
+                        className="h-12"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Button
                 type="submit"
                 variant="teal"
@@ -159,28 +190,28 @@ const AdminLogin = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    Creating account...
                   </>
                 ) : (
                   <>
-                    Sign In
-                    <LogIn className="ml-2 h-4 w-4" />
+                    Create Admin Account
+                    <UserPlus className="ml-2 h-4 w-4" />
                   </>
                 )}
               </Button>
+
+              <p className="text-center text-sm text-muted-foreground">
+                Already have an account?{" "}
+                <Link to="/admin/login" className="text-primary hover:underline">
+                  Sign in
+                </Link>
+              </p>
             </form>
           </Form>
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Need an admin account?{" "}
-            <Link to="/admin/register" className="text-primary hover:underline">
-              Register here
-            </Link>
-          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminLogin;
+export default AdminRegister;
