@@ -8,9 +8,9 @@ import corporateRetreat from "@/assets/corporate-retreat.jpg";
 const services = [
   {
     icon: GraduationCap,
-    title: "Leadership Mastery Program",
+    title: "Executive Leadership Mastery Program",
     description:
-      "A comprehensive 7-in-1 digital course bundle designed to unlock your full leadership potential with practical tools and powerful insights.",
+      "A comprehensive digital course bundle designed to unlock your full leadership potential with practical tools and powerful insights.",
     features: ["33 Comprehensive Modules", "Self-Paced Learning", "CPD Accredited"],
     stats: { value: "33", label: "Modules" },
     image: teamCollaboration,
