@@ -68,6 +68,22 @@
     --shadow-glow: 0 0 40px hsl(180 65% 28% / 0.15);
     --shadow-amber: 0 8px 25px hsl(38 92% 55% / 0.35);
 
+    /* Score level semantic colors */
+    --score-master: 160 60% 45%;
+    --score-master-foreground: 160 70% 25%;
+    --score-master-bg: 160 50% 96%;
+    --score-master-border: 160 45% 85%;
+
+    --score-emerging: 38 92% 50%;
+    --score-emerging-foreground: 32 80% 35%;
+    --score-emerging-bg: 38 80% 96%;
+    --score-emerging-border: 38 70% 85%;
+
+    --score-aspiring: 210 80% 55%;
+    --score-aspiring-foreground: 210 70% 35%;
+    --score-aspiring-bg: 210 70% 96%;
+    --score-aspiring-border: 210 60% 88%;
+
     /* Sidebar - keeping existing */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

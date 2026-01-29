@@ -64,6 +64,26 @@ export default {
           500: "hsl(var(--amber-500))",
           600: "hsl(var(--amber-600))",
         },
+        score: {
+          master: {
+            DEFAULT: "hsl(var(--score-master))",
+            foreground: "hsl(var(--score-master-foreground))",
+            bg: "hsl(var(--score-master-bg))",
+            border: "hsl(var(--score-master-border))",
+          },
+          emerging: {
+            DEFAULT: "hsl(var(--score-emerging))",
+            foreground: "hsl(var(--score-emerging-foreground))",
+            bg: "hsl(var(--score-emerging-bg))",
+            border: "hsl(var(--score-emerging-border))",
+          },
+          aspiring: {
+            DEFAULT: "hsl(var(--score-aspiring))",
+            foreground: "hsl(var(--score-aspiring-foreground))",
+            bg: "hsl(var(--score-aspiring-bg))",
+            border: "hsl(var(--score-aspiring-border))",
+          },
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
