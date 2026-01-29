@@ -132,6 +132,22 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Score level semantic colors - dark mode */
+    --score-master: 160 50% 50%;
+    --score-master-foreground: 160 40% 75%;
+    --score-master-bg: 160 30% 15%;
+    --score-master-border: 160 35% 25%;
+
+    --score-emerging: 38 75% 55%;
+    --score-emerging-foreground: 38 60% 75%;
+    --score-emerging-bg: 38 40% 15%;
+    --score-emerging-border: 38 45% 25%;
+
+    --score-aspiring: 210 70% 55%;
+    --score-aspiring-foreground: 210 60% 75%;
+    --score-aspiring-bg: 210 40% 15%;
+    --score-aspiring-border: 210 45% 25%;
   }
 }
 
