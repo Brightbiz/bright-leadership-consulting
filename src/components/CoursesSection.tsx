@@ -4,16 +4,6 @@ import AnimatedSection from "./AnimatedSection";
 
 const courses = [
   {
-    icon: BookOpen,
-    title: "Advanced Leadership Development",
-    subtitle: "The Blueprint for Leadership Mastery",
-    description:
-      "Master the theoretical foundations of effective leadership. Develop your unique leadership style and sharpen communication skills for organizational growth.",
-    features: ["Leadership Theory", "Communication Mastery", "Strategic Influence"],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/leadership-training",
-    accent: "primary" as const,
-  },
-  {
     icon: Lightbulb,
     title: "Transformational Leadership",
     subtitle: "Ignite Change, Inspire Growth",
