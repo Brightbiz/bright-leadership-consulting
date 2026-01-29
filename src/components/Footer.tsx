@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const footerLinks = {
@@ -15,6 +16,7 @@ const footerLinks = {
     { label: "Contact", href: "#" },
   ],
   resources: [
+    { label: "Leadership Checklist", href: "/leadership-checklist", isRoute: true },
     { label: "Free Resources", href: "#" },
     { label: "Case Studies", href: "#" },
     { label: "FAQ", href: "#" },
@@ -90,12 +92,21 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/70 transition-colors hover:text-secondary"
-                  >
-                    {link.label}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
