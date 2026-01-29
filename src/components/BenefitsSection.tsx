@@ -8,6 +8,7 @@ import {
   Target,
   Building,
 } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const benefits = [
   { icon: TrendingUp, title: "Enhanced Leadership Skills", description: "Master the art of inspiring and guiding teams" },
@@ -25,7 +26,7 @@ const BenefitsSection = () => {
     <section id="coaching" className="section-padding bg-primary text-primary-foreground">
       <div className="container-narrow">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <AnimatedSection className="mx-auto mb-16 max-w-2xl text-center">
           <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wider text-secondary">
             Why Choose Us
           </span>
@@ -36,26 +37,24 @@ const BenefitsSection = () => {
             Unlock your leadership potential and experience transformative growth 
             across all areas of your professional and personal life.
           </p>
-        </div>
+        </AnimatedSection>
 
         {/* Benefits Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map((benefit, index) => (
-            <div
-              key={benefit.title}
-              className="group rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-primary-foreground/10 hover:border-primary-foreground/20"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
-                <benefit.icon className="h-6 w-6" />
+            <AnimatedSection key={benefit.title} delay={index * 50}>
+              <div className="group h-full rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-primary-foreground/10 hover:border-primary-foreground/20">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
+                  <benefit.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mb-2 font-serif text-lg font-semibold">
+                  {benefit.title}
+                </h3>
+                <p className="text-sm text-primary-foreground/70 leading-relaxed">
+                  {benefit.description}
+                </p>
               </div>
-              <h3 className="mb-2 font-serif text-lg font-semibold">
-                {benefit.title}
-              </h3>
-              <p className="text-sm text-primary-foreground/70 leading-relaxed">
-                {benefit.description}
-              </p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

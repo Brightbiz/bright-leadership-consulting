@@ -8,7 +8,7 @@ const navLinks = [
   { label: "Programs", href: "#programs" },
   { label: "Coaching", href: "#coaching" },
   { label: "About", href: "#about" },
-  { label: "Blog", href: "#blog" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Header = () => {
@@ -37,8 +37,8 @@ const Header = () => {
             <Button variant="ghost" size="sm">
               My Account
             </Button>
-            <Button variant="teal" size="default">
-              Contact Us
+            <Button variant="teal" size="default" asChild>
+              <a href="#contact">Contact Us</a>
             </Button>
           </div>
 
@@ -70,8 +70,8 @@ const Header = () => {
                 <Button variant="outline" className="w-full">
                   My Account
                 </Button>
-                <Button variant="teal" className="w-full">
-                  Contact Us
+                <Button variant="teal" className="w-full" asChild>
+                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
                 </Button>
               </div>
             </div>
