@@ -120,7 +120,7 @@ const Footer = () => {
             <img
               src={cpdBadge}
               alt="CPD Standards Office Accredited - Provider 50838"
-              className="h-16 w-auto bg-white rounded-lg p-1"
+              className="h-24 w-auto bg-white rounded-lg p-2"
             />
             <p className="text-sm text-background/50 text-center sm:text-left">
               © {new Date().getFullYear()} BBS Consulting Group. All rights reserved.
