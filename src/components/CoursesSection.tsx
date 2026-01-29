@@ -118,24 +118,32 @@ const CoursesSection = () => {
             }} />
             
             <div className="relative">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2">
-                <span className="text-sm font-bold text-white uppercase tracking-wider">
-                  Best Value
+              <div className="mb-4 inline-flex items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2">
+                  <span className="text-sm font-bold text-white uppercase tracking-wider">
+                    Exclusive Offer
+                  </span>
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 animate-pulse">
+                  <span className="text-sm font-bold text-secondary-foreground uppercase tracking-wider">
+                    50% OFF
+                  </span>
                 </span>
               </div>
               
               <h3 className="mb-4 font-serif text-2xl font-semibold text-primary-foreground lg:text-3xl">
-                Get All 6 Courses in Our Executive Leadership Mastery Program
+                Massive Discount on Individual Courses!
               </h3>
-              <p className="mb-6 text-primary-foreground/80 max-w-2xl mx-auto">
-                Save 25% when you bundle all courses together. Includes 33 comprehensive modules, 
-                personalized coaching options, and CPD accreditation.
+              <p className="mb-6 text-primary-foreground/80 max-w-2xl mx-auto text-lg">
+                Get <span className="font-bold text-white">50% OFF</span> all individual training courses when you enroll in our 
+                <span className="font-semibold text-white"> Executive Leadership Mastery Program</span>. 
+                Includes 33 comprehensive modules, personalized coaching options, and CPD accreditation.
               </p>
               
               <div className="flex flex-wrap justify-center gap-4">
-                <Button variant="hero" size="lg" className="group/btn">
-                  View Complete Program
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                <Button variant="hero" size="lg" className="group/btn text-lg px-8">
+                  Claim Your 50% Discount
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
                 </Button>
               </div>
             </div>
