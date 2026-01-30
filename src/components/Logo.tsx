@@ -1,23 +1,21 @@
+import { cn } from "@/lib/utils";
 import bbsLogo from "@/assets/bbs-logo.png";
 
 interface LogoProps {
   className?: string;
-  size?: "sm" | "md" | "lg";
+  isCompact?: boolean;
 }
 
-const Logo = ({ className = "", size = "md" }: LogoProps) => {
-  const sizeClasses = {
-    sm: "h-12",
-    md: "h-16",
-    lg: "h-24",
-  };
-
+const Logo = ({ className = "", isCompact = false }: LogoProps) => {
   return (
-    <a href="/" className={`flex items-center ${className}`}>
+    <a href="/" className={cn("flex items-center", className)}>
       <img
         src={bbsLogo}
         alt="BBS Consulting Group"
-        className={`${sizeClasses[size]} w-auto object-contain`}
+        className={cn(
+          "w-auto object-contain transition-all duration-300",
+          isCompact ? "h-10" : "h-14"
+        )}
       />
     </a>
   );
