@@ -32,10 +32,9 @@ const featuredCourses = [
 
 const CoursesSection = () => {
   return (
-    <section id="courses" className="section-padding relative overflow-hidden bg-muted/20">
-      {/* Decorative elements */}
-      <div className="absolute top-20 -right-32 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+    <section id="courses" className="section-padding relative overflow-hidden bg-gradient-to-b from-primary/[0.05] via-primary/[0.03] to-background">
+      {/* Subtle top border accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
       <div className="container-narrow relative">
         <AnimatedSection className="mx-auto mb-16 max-w-3xl text-center">

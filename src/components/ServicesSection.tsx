@@ -4,7 +4,7 @@ import AnimatedSection from "./AnimatedSection";
 import heroCoaching from "@/assets/hero-coaching.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import corporateRetreat from "@/assets/corporate-retreat.jpg";
-import FloatingBlobsBackground from "./FloatingBlobsBackground";
+
 
 const services = [
   {
@@ -52,10 +52,8 @@ const ServicesSection = () => {
         </svg>
       </div>
 
-      {/* Main content area with gradient bg */}
-      <div className="bg-muted/40 pt-20 pb-24 relative">
-        {/* Gradient mesh background */}
-        <FloatingBlobsBackground variant="subtle" />
+      {/* Main content area - Teal tinted background */}
+      <div className="bg-gradient-to-b from-primary/[0.06] via-primary/[0.04] to-primary/[0.02] pt-20 pb-24 relative">
         
         <div className="container-narrow relative">
           {/* Section Header */}

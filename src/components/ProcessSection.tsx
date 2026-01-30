@@ -1,7 +1,7 @@
 import { Footprints } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import teamImage from "@/assets/team-collaboration.jpg";
-import FloatingBlobsBackground from "./FloatingBlobsBackground";
+
 
 const steps = [
   {
@@ -28,9 +28,7 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="about" className="section-padding relative overflow-hidden bg-muted/20">
-      {/* Gradient mesh background */}
-      <FloatingBlobsBackground />
+    <section id="about" className="section-padding relative overflow-hidden bg-gradient-to-br from-secondary/[0.06] via-secondary/[0.03] to-background">
       
       <div className="container-narrow relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">

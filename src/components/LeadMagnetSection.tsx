@@ -71,7 +71,7 @@ const LeadMagnetSection = () => {
   ];
 
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="section-padding bg-gradient-to-b from-secondary/[0.06] via-secondary/[0.04] to-background">
       <div className="container-narrow">
         <AnimatedSection>
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/90 p-8 lg:p-12">
