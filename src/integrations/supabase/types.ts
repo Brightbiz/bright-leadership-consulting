@@ -74,6 +74,30 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_magnet_downloads: {
+        Row: {
+          downloaded_at: string
+          email: string
+          id: string
+          lead_magnet_name: string
+          name: string | null
+        }
+        Insert: {
+          downloaded_at?: string
+          email: string
+          id?: string
+          lead_magnet_name?: string
+          name?: string | null
+        }
+        Update: {
+          downloaded_at?: string
+          email?: string
+          id?: string
+          lead_magnet_name?: string
+          name?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
