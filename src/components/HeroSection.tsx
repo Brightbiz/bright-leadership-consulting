@@ -1,16 +1,19 @@
 import { ArrowRight, Play, ClipboardCheck, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-coaching.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background Image with Gradient Overlay */}
+      {/* Background Video with Gradient Overlay */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Executive coaching session"
+        <video
+          src={heroVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60" />
