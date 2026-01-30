@@ -18,18 +18,20 @@ const HeroSection = () => {
           alt="Executive coaching session"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-primary/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/80 to-primary/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-primary/15" />
       </div>
 
-      {/* Decorative Elements */}
-      <div className="absolute right-0 top-1/4 h-[500px] w-[500px] rounded-full bg-secondary/20 blur-[100px]" />
-      <div className="absolute bottom-1/4 left-1/4 h-64 w-64 rounded-full bg-secondary/10 blur-[80px]" />
+      {/* Floating Blob Decorations - Subtle & Elegant */}
+      <div className="absolute right-[5%] top-[15%] h-[400px] w-[400px] rounded-full bg-secondary/15 blur-[120px] animate-float" />
+      <div className="absolute left-[10%] bottom-[20%] h-[300px] w-[300px] rounded-full bg-secondary/10 blur-[100px] animate-float" style={{ animationDelay: '-2s' }} />
+      <div className="absolute right-[20%] bottom-[30%] h-[200px] w-[200px] rounded-full bg-primary-foreground/5 blur-[80px] animate-float" style={{ animationDelay: '-4s' }} />
+      <div className="absolute left-[30%] top-[25%] h-[250px] w-[250px] rounded-full bg-secondary/8 blur-[90px] animate-float" style={{ animationDelay: '-3s' }} />
       
       {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.8) 1px, transparent 0)`,
-        backgroundSize: '32px 32px'
+      <div className="absolute inset-0 opacity-[0.015]" style={{
+        backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.6) 1px, transparent 0)`,
+        backgroundSize: '40px 40px'
       }} />
 
       {/* Content */}
