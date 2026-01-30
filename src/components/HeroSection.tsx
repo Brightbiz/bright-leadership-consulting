@@ -1,26 +1,60 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ArrowRight, Play, ClipboardCheck, Award, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import heroImage from "@/assets/hero-coaching.jpg";
 import heroVideo from "@/assets/hero-video.mp4";
 
 const HeroSection = () => {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayVideo = () => {
+    setIsVideoPlaying(true);
+    setTimeout(() => {
+      videoRef.current?.play();
+    }, 100);
+  };
+
+  const handleCloseVideo = () => {
+    setIsVideoPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background Image with Gradient Overlay */}
+      {/* Background Image/Video with Gradient Overlay */}
       <div className="absolute inset-0">
+        {/* Static Image Background */}
         <img
           src={heroImage}
           alt="Executive coaching session"
-          className="h-full w-full object-cover"
+          className={`h-full w-full object-cover transition-opacity duration-500 ${isVideoPlaying ? 'opacity-0' : 'opacity-100'}`}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-primary/20" />
+        
+        {/* Video Background */}
+        <video
+          ref={videoRef}
+          src={heroVideo}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${isVideoPlaying ? 'opacity-100' : 'opacity-0'}`}
+          onEnded={handleCloseVideo}
+        />
+        <div className={`absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60 transition-opacity duration-500 ${isVideoPlaying ? 'opacity-40' : 'opacity-100'}`} />
+        <div className={`absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-primary/20 transition-opacity duration-500 ${isVideoPlaying ? 'opacity-40' : 'opacity-100'}`} />
       </div>
+
+      {/* Close Video Button */}
+      {isVideoPlaying && (
+        <button
+          onClick={handleCloseVideo}
+          className="absolute right-6 top-24 z-20 rounded-full bg-black/50 p-3 backdrop-blur-sm transition-colors hover:bg-black/70"
+        >
+          <X className="h-6 w-6 text-white" />
+        </button>
+      )}
 
       {/* Decorative Elements */}
       <div className="absolute right-0 top-1/4 h-[500px] w-[500px] rounded-full bg-secondary/20 blur-[100px]" />
@@ -79,7 +113,7 @@ const HeroSection = () => {
                 variant="heroOutline" 
                 size="xl" 
                 className="group backdrop-blur-sm"
-                onClick={() => setIsVideoOpen(true)}
+                onClick={handlePlayVideo}
               >
                 <Play className="h-5 w-5" />
                 Watch Video
@@ -148,23 +182,6 @@ const HeroSection = () => {
         </svg>
       </div>
 
-      {/* Video Modal */}
-      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
-        <DialogContent className="max-w-4xl w-[90vw] p-0 bg-black border-none overflow-hidden">
-          <button
-            onClick={() => setIsVideoOpen(false)}
-            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 backdrop-blur-sm transition-colors hover:bg-white/20"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
-          <video
-            src={heroVideo}
-            controls
-            autoPlay
-            className="w-full aspect-video"
-          />
-        </DialogContent>
-      </Dialog>
     </section>
   );
 };
