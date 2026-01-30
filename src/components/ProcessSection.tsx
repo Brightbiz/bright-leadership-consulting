@@ -1,6 +1,7 @@
 import { Footprints } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import teamImage from "@/assets/team-collaboration.jpg";
+import GradientMeshBackground from "./GradientMeshBackground";
 
 const steps = [
   {
@@ -27,10 +28,9 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="about" className="section-padding relative overflow-hidden bg-gradient-to-br from-muted/50 via-background to-muted/30">
-      {/* Decorative elements */}
-      <div className="absolute top-20 -right-32 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+    <section id="about" className="section-padding relative overflow-hidden bg-muted/20">
+      {/* Gradient mesh background */}
+      <GradientMeshBackground />
       
       <div className="container-narrow relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">

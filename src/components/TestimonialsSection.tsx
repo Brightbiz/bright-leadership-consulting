@@ -1,5 +1,6 @@
 import { Star, Quote } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import GradientMeshBackground from "./GradientMeshBackground";
 
 const testimonials = [
   {
@@ -27,9 +28,9 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="section-padding relative overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl" />
+    <section className="section-padding relative overflow-hidden bg-muted/30">
+      {/* Gradient mesh background */}
+      <GradientMeshBackground variant="inverted" />
       
       <div className="container-narrow relative">
         {/* Section Header */}

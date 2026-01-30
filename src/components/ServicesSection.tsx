@@ -4,6 +4,7 @@ import AnimatedSection from "./AnimatedSection";
 import heroCoaching from "@/assets/hero-coaching.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import corporateRetreat from "@/assets/corporate-retreat.jpg";
+import GradientMeshBackground from "./GradientMeshBackground";
 
 const services = [
   {
@@ -52,10 +53,9 @@ const ServicesSection = () => {
       </div>
 
       {/* Main content area with gradient bg */}
-      <div className="bg-gradient-to-b from-muted/50 via-muted/30 to-background pt-20 pb-24">
-        {/* Decorative elements */}
-        <div className="absolute top-40 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute top-60 -right-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+      <div className="bg-muted/40 pt-20 pb-24 relative">
+        {/* Gradient mesh background */}
+        <GradientMeshBackground variant="subtle" />
         
         <div className="container-narrow relative">
           {/* Section Header */}
