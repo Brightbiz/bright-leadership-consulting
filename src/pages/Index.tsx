@@ -11,6 +11,7 @@ import ProcessSection from "@/components/ProcessSection";
 import ContactSection from "@/components/ContactSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 
 const Index = () => {
   return (
@@ -30,6 +31,7 @@ const Index = () => {
         <CTASection />
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 };
