@@ -1,19 +1,21 @@
-import { ArrowRight, Play, ClipboardCheck, Award } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Play, ClipboardCheck, Award, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import heroImage from "@/assets/hero-coaching.jpg";
 import heroVideo from "@/assets/hero-video.mp4";
 
 const HeroSection = () => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background Video with Gradient Overlay */}
+      {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0">
-        <video
-          src={heroVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src={heroImage}
+          alt="Executive coaching session"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60" />
@@ -73,7 +75,12 @@ const HeroSection = () => {
                 Get Started
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="heroOutline" size="xl" className="group backdrop-blur-sm">
+              <Button 
+                variant="heroOutline" 
+                size="xl" 
+                className="group backdrop-blur-sm"
+                onClick={() => setIsVideoOpen(true)}
+              >
                 <Play className="h-5 w-5" />
                 Watch Video
               </Button>
@@ -140,6 +147,24 @@ const HeroSection = () => {
           />
         </svg>
       </div>
+
+      {/* Video Modal */}
+      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+        <DialogContent className="max-w-4xl w-[90vw] p-0 bg-black border-none overflow-hidden">
+          <button
+            onClick={() => setIsVideoOpen(false)}
+            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 backdrop-blur-sm transition-colors hover:bg-white/20"
+          >
+            <X className="h-5 w-5 text-white" />
+          </button>
+          <video
+            src={heroVideo}
+            controls
+            autoPlay
+            className="w-full aspect-video"
+          />
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
