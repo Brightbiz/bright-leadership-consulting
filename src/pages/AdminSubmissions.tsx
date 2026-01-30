@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format } from "date-fns";
-import { Mail, MailOpen, Trash2, ArrowLeft, RefreshCw, LogOut, Loader2 } from "lucide-react";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -27,7 +27,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface ContactSubmission {
   id: string;
@@ -142,19 +143,12 @@ const AdminSubmissions = () => {
   const unreadCount = submissions.filter((s) => !s.is_read).length;
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container-narrow py-8">
-      {/* Header */}
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <div className="container-narrow py-8 pt-28 flex-1">
+        {/* Page Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="mb-2 flex items-center gap-3">
-              <Link to="/">
-                <Button variant="ghost" size="sm">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Site
-                </Button>
-              </Link>
-            </div>
             <h1 className="font-serif text-3xl font-semibold text-foreground">
               Contact Submissions
             </h1>
@@ -361,6 +355,7 @@ const AdminSubmissions = () => {
           </AlertDialog>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
