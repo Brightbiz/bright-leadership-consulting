@@ -120,14 +120,14 @@ const HeroSection = () => {
 
           {/* Right side floating card */}
           <div className="hidden lg:block relative">
-            <div className="glass-card rounded-2xl p-8 max-w-md ml-auto animate-scale-in backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl">
+            <div className="glass-card rounded-2xl p-8 max-w-md ml-auto animate-scale-in backdrop-blur-md bg-background/95 border border-secondary/30 shadow-2xl">
               <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20">
                 <Award className="h-6 w-6 text-secondary" />
               </div>
-              <h3 className="font-serif text-xl font-semibold text-white mb-4">
+              <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
                 Ready to Transform Your Leadership?
               </h3>
-              <p className="text-white/80 mb-6 leading-relaxed">
+              <p className="text-muted-foreground mb-6 leading-relaxed">
                 Book a complimentary 30-minute consultation to discuss your leadership goals.
               </p>
               <Button variant="hero" className="w-full shadow-lg shadow-secondary/30">
