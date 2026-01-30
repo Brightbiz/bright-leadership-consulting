@@ -28,7 +28,7 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="section-padding relative overflow-hidden bg-gradient-to-b from-muted via-muted/70 to-muted/40">
+    <section className="section-padding relative overflow-hidden bg-gradient-to-b from-muted/80 via-muted/50 to-muted/30">
       
       <div className="container-narrow relative">
         {/* Section Header */}
