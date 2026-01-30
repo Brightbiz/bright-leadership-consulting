@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn } from "lucide-react";
+import { CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -8,7 +8,8 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useChecklistProgress } from "@/hooks/useChecklistProgress";
 import SocialShare from "@/components/SocialShare";
-
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 interface ChecklistItem {
   id: string;
   text: string;
@@ -161,48 +162,43 @@ const LeadershipChecklist = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <Link to="/">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
+      <Header />
+      
+      {/* Progress Bar */}
+      <div className="fixed top-20 left-0 right-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 sm:gap-4">
             <span className="text-xs sm:text-sm text-muted-foreground">
-              {score} / {totalItems}
+              Progress: {score} / {totalItems}
             </span>
-            <Progress value={progress} className="w-16 sm:w-24 h-2" />
-            {user ? (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleSaveProgress}
-                disabled={isSaving}
-                className="hidden sm:flex"
-              >
-                {isSaving ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="mr-2 h-4 w-4" />
-                )}
-                Save
-              </Button>
-            ) : (
-              <Link to="/admin/login" className="hidden sm:block">
-                <Button variant="outline" size="sm">
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Sign in to save
-                </Button>
-              </Link>
-            )}
+            <Progress value={progress} className="w-20 sm:w-32 h-2" />
           </div>
+          {user ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSaveProgress}
+              disabled={isSaving}
+            >
+              {isSaving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Save Progress
+            </Button>
+          ) : (
+            <Link to="/admin/login">
+              <Button variant="outline" size="sm">
+                <LogIn className="mr-2 h-4 w-4" />
+                Sign in to save
+              </Button>
+            </Link>
+          )}
         </div>
-      </header>
+      </div>
 
-      <main className="container mx-auto px-4 py-8 md:py-12">
+      <main className="container mx-auto px-4 py-8 md:py-12 mt-32">
         {/* Title Section */}
         <div className="mb-10 text-center">
           <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -377,6 +373,7 @@ const LeadershipChecklist = () => {
           </Link>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
