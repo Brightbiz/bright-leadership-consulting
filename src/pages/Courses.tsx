@@ -25,15 +25,6 @@ const flagshipProgram = {
 
 const individualCourses = [
   {
-    icon: BookOpen,
-    title: "Advanced Leadership Development",
-    subtitle: "The Blueprint for Leadership Mastery",
-    description:
-      "Immerse yourself in the theoretical foundations that underpin effective leadership. Master leadership styles, sharpen communication skills, and embark on a transformative journey.",
-    features: ["Leadership Fundamentals", "Communication Skills", "Strategic Thinking"],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/leadership-training",
-  },
-  {
     icon: Lightbulb,
     title: "Transformational Leadership Skills",
     subtitle: "Lead with Purpose, Propel with Passion",
