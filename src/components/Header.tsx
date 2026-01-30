@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,9 +18,19 @@ const navLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const activeSection = useActiveSection();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isActive = (link: typeof navLinks[0]) => {
     if (link.sectionId === "" && isHomePage && !activeSection) return true;
@@ -28,9 +38,17 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className={cn(
+      "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
+      isScrolled 
+        ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md" 
+        : "bg-background/80 backdrop-blur-lg border-b border-border/50"
+    )}>
       <div className="container-narrow">
-        <nav className="flex h-20 items-center justify-between">
+        <nav className={cn(
+          "flex items-center justify-between transition-all duration-300",
+          isScrolled ? "h-16" : "h-20"
+        )}>
           <Logo />
 
           {/* Desktop Navigation */}
