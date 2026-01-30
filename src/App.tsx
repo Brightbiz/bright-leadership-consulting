@@ -10,6 +10,7 @@ import AdminSubmissions from "./pages/AdminSubmissions";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
 import LeadershipChecklist from "./pages/LeadershipChecklist";
+import Courses from "./pages/Courses";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/courses" element={<Courses />} />
             <Route path="/leadership-checklist" element={<LeadershipChecklist />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/register" element={<AdminRegister />} />
