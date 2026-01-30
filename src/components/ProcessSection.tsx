@@ -28,7 +28,7 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="about" className="section-padding relative overflow-hidden bg-gradient-to-br from-secondary/[0.12] via-secondary/[0.08] to-secondary/[0.04]">
+    <section id="about" className="section-padding relative overflow-hidden bg-gradient-to-br from-secondary/[0.08] via-secondary/[0.05] to-secondary/[0.02]">
       
       <div className="container-narrow relative">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">

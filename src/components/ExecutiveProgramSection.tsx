@@ -38,9 +38,9 @@ const organizationProgram = {
 
 const ExecutiveProgramSection = () => {
   return (
-    <section id="executive-program" className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/[0.06] via-background to-secondary/[0.06]">
+    <section id="executive-program" className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/[0.04] via-background to-secondary/[0.04]">
       {/* Decorative accent */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.04] via-transparent to-secondary/[0.04]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.02] via-transparent to-secondary/[0.02]" />
       
       <div className="container-narrow relative">
         {/* Section Header */}
