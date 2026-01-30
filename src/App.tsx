@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,13 +7,16 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AdminSubmissions from "./pages/AdminSubmissions";
-import AdminLogin from "./pages/AdminLogin";
-import AdminRegister from "./pages/AdminRegister";
-import LeadershipChecklist from "./pages/LeadershipChecklist";
-import Courses from "./pages/Courses";
+import PageLoader from "@/components/PageLoader";
+
+// Lazy load pages for better performance
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminRegister = lazy(() => import("./pages/AdminRegister"));
+const LeadershipChecklist = lazy(() => import("./pages/LeadershipChecklist"));
+const Courses = lazy(() => import("./pages/Courses"));
 
 const queryClient = new QueryClient();
 
@@ -21,16 +25,18 @@ const AnimatedRoutes = () => {
   
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
-        <Route path="/leadership-checklist" element={<PageTransition><LeadershipChecklist /></PageTransition>} />
-        <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
-        <Route path="/admin/register" element={<PageTransition><AdminRegister /></PageTransition>} />
-        <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
+          <Route path="/leadership-checklist" element={<PageTransition><LeadershipChecklist /></PageTransition>} />
+          <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
+          <Route path="/admin/register" element={<PageTransition><AdminRegister /></PageTransition>} />
+          <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 };
