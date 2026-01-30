@@ -1,20 +1,31 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Programs", href: "/#executive-program" },
-  { label: "Courses", href: "/#courses" },
-  { label: "Compare", href: "/#compare" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", href: "/", sectionId: "" },
+  { label: "Services", href: "/#services", sectionId: "services" },
+  { label: "Programs", href: "/#executive-program", sectionId: "executive-program" },
+  { label: "Courses", href: "/#courses", sectionId: "courses" },
+  { label: "Compare", href: "/#compare", sectionId: "compare" },
+  { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const activeSection = useActiveSection();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  const isActive = (link: typeof navLinks[0]) => {
+    if (link.sectionId === "" && isHomePage && !activeSection) return true;
+    return isHomePage && activeSection === link.sectionId;
+  };
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
@@ -24,13 +35,21 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
+          {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className={cn(
+                  "relative text-sm font-medium transition-colors hover:text-primary",
+                  isActive(link)
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                )}
               >
                 {link.label}
+                {isActive(link) && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full animate-fade-in" />
+                )}
               </a>
             ))}
           </div>
@@ -63,7 +82,10 @@ const Header = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-base font-medium text-foreground"
+                  className={cn(
+                    "text-base font-medium",
+                    isActive(link) ? "text-primary" : "text-foreground"
+                  )}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
