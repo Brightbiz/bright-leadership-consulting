@@ -53,7 +53,7 @@ const ServicesSection = () => {
       </div>
 
       {/* Main content area - Teal tinted background */}
-      <div className="bg-gradient-to-b from-primary/[0.06] via-primary/[0.04] to-primary/[0.02] pt-20 pb-24 relative">
+      <div className="bg-gradient-to-b from-primary/[0.12] via-primary/[0.08] to-primary/[0.04] pt-20 pb-24 relative">
         
         <div className="container-narrow relative">
           {/* Section Header */}

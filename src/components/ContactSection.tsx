@@ -101,10 +101,10 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden bg-gradient-to-br from-muted/50 via-background to-primary/[0.04]">
-      {/* Subtle corner accents */}
-      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-bl from-primary/[0.06] to-transparent" />
-      <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-gradient-to-tr from-secondary/[0.04] to-transparent" />
+    <section id="contact" className="section-padding relative overflow-hidden bg-gradient-to-br from-muted/70 via-muted/40 to-primary/[0.08]">
+      {/* Corner accents */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-primary/[0.10] to-transparent" />
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gradient-to-tr from-secondary/[0.08] to-transparent" />
       
       <div className="container-narrow relative">
         <AnimatedSection>
