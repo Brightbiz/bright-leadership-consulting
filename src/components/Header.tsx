@@ -14,7 +14,7 @@ const navLinks = [
   { label: "Services", href: "/services", sectionId: "" },
   { label: "Courses", href: "/courses", sectionId: "" },
   { label: "Blog", href: "/blog", sectionId: "" },
-  { label: "Contact", href: "/#contact", sectionId: "contact" },
+  { label: "Contact", href: "/contact", sectionId: "" },
 ];
 
 const Header = () => {
@@ -94,7 +94,7 @@ const Header = () => {
               My Account
             </Button>
             <Button variant="teal" size="default" asChild>
-              <a href="/#contact" onClick={(e) => handleNavClick(e, "/#contact")}>Contact Us</a>
+              <a href="/contact">Contact Us</a>
             </Button>
           </div>
 
@@ -134,7 +134,7 @@ const Header = () => {
                   My Account
                 </Button>
                 <Button variant="teal" className="w-full" asChild>
-                  <a href="/#contact" onClick={(e) => handleNavClick(e, "/#contact")}>Contact Us</a>
+                  <a href="/contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
                 </Button>
               </div>
             </div>
