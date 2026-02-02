@@ -1,5 +1,6 @@
-import { Users, GraduationCap, Briefcase, ArrowRight, Sparkles, Star, ChevronRight } from "lucide-react";
+import { Users, GraduationCap, Briefcase, Sparkles, Star, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import heroCoaching from "@/assets/hero-coaching.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import corporateRetreat from "@/assets/corporate-retreat.jpg";
@@ -63,6 +64,214 @@ const itemVariants = {
   },
 };
 
+interface ServiceCardProps {
+  service: typeof services[0];
+  index: number;
+}
+
+const ServiceCard = ({ service, index }: ServiceCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <TiltCard className="h-full" maxTilt={6}>
+        <motion.div 
+          className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 h-full flex flex-col"
+          animate={{
+            borderColor: isHovered 
+              ? service.accent === 'secondary' ? 'hsl(var(--secondary) / 0.5)' : 'hsl(var(--primary) / 0.5)'
+              : 'hsl(var(--border) / 0.5)',
+            boxShadow: isHovered 
+              ? service.accent === 'secondary' 
+                ? '0 25px 50px -12px hsl(var(--secondary) / 0.25)' 
+                : '0 25px 50px -12px hsl(var(--primary) / 0.25)'
+              : '0 0 0 0 transparent',
+          }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          {/* Animated gradient overlay on hover */}
+          <motion.div 
+            className={`absolute inset-0 pointer-events-none z-10 ${
+              service.accent === 'secondary' 
+                ? 'bg-gradient-to-br from-secondary/5 via-transparent to-secondary/10' 
+                : 'bg-gradient-to-br from-primary/5 via-transparent to-primary/10'
+            }`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+          />
+
+          {/* Image with parallax zoom */}
+          <div className="relative h-56 overflow-hidden">
+            <motion.img 
+              src={service.image} 
+              alt={service.title}
+              className="absolute inset-0 h-full w-full object-cover"
+              animate={{
+                scale: isHovered ? 1.1 : 1,
+                y: isHovered ? -5 : 0,
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+            
+            {/* Stats Badge with pulse animation */}
+            <motion.div 
+              className={`absolute top-4 right-4 ${service.accent === 'secondary' ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'} px-4 py-2 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm flex items-center gap-1.5`}
+              animate={{
+                scale: isHovered ? 1.05 : 1,
+                y: isHovered ? -2 : 0,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.span 
+                className="font-serif text-xl"
+                animate={{ scale: isHovered ? 1.1 : 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {service.stats.value}
+              </motion.span>
+              <span className="uppercase tracking-wider opacity-90">{service.stats.label}</span>
+            </motion.div>
+            
+            {/* Icon with float and glow animation */}
+            <motion.div 
+              className={`absolute bottom-4 left-6 h-14 w-14 flex items-center justify-center rounded-2xl bg-card/90 backdrop-blur-sm border ${service.accent === 'secondary' ? 'border-secondary/30' : 'border-primary/30'} shadow-xl`}
+              animate={{
+                y: isHovered ? -8 : 0,
+                scale: isHovered ? 1.1 : 1,
+                boxShadow: isHovered 
+                  ? service.accent === 'secondary'
+                    ? '0 20px 40px -10px hsl(var(--secondary) / 0.4)'
+                    : '0 20px 40px -10px hsl(var(--primary) / 0.4)'
+                  : '0 10px 20px -5px rgba(0,0,0,0.1)',
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <motion.div
+                animate={{ rotate: isHovered ? [0, -10, 10, 0] : 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                <service.icon 
+                  className={`h-7 w-7 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} 
+                  strokeWidth={1.5} 
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+          
+          {/* Content */}
+          <div className="p-6 flex flex-col flex-grow relative z-20">
+            <motion.h3 
+              className="font-serif text-2xl font-semibold text-foreground mb-3"
+              animate={{
+                color: isHovered 
+                  ? service.accent === 'secondary' ? 'hsl(var(--secondary))' : 'hsl(var(--primary))'
+                  : 'hsl(var(--foreground))',
+                x: isHovered ? 4 : 0,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {service.title}
+            </motion.h3>
+            
+            <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+              {service.description}
+            </p>
+
+            {/* Features with staggered animation */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {service.features.map((feature, featureIndex) => (
+                <motion.span 
+                  key={feature} 
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
+                    service.accent === 'secondary' 
+                      ? 'bg-secondary/10 text-secondary border border-secondary/20' 
+                      : 'bg-primary/10 text-primary border border-primary/20'
+                  }`}
+                  animate={{
+                    scale: isHovered ? 1.05 : 1,
+                    y: isHovered ? -2 : 0,
+                    backgroundColor: isHovered 
+                      ? service.accent === 'secondary' ? 'hsl(var(--secondary) / 0.2)' : 'hsl(var(--primary) / 0.2)'
+                      : service.accent === 'secondary' ? 'hsl(var(--secondary) / 0.1)' : 'hsl(var(--primary) / 0.1)',
+                  }}
+                  transition={{ 
+                    duration: 0.3, 
+                    delay: isHovered ? featureIndex * 0.05 : 0,
+                    ease: "easeOut"
+                  }}
+                >
+                  <motion.div
+                    animate={{ rotate: isHovered ? 360 : 0 }}
+                    transition={{ duration: 0.6, delay: featureIndex * 0.1 }}
+                  >
+                    <Star className="h-3 w-3 fill-current" />
+                  </motion.div>
+                  {feature}
+                </motion.span>
+              ))}
+            </div>
+
+            <MagneticButton 
+              variant={service.accent === 'secondary' ? 'hero' : 'teal'}
+              size="lg"
+              className="w-full group/btn overflow-hidden"
+              magneticStrength={0.15}
+            >
+              <motion.span 
+                className="flex items-center justify-center gap-2"
+                animate={{ x: isHovered ? 4 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <span>Learn More</span>
+                <motion.div
+                  animate={{ 
+                    x: isHovered ? [0, 4, 0] : 0,
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    repeat: isHovered ? Infinity : 0,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.div>
+              </motion.span>
+            </MagneticButton>
+          </div>
+          
+          {/* Animated accent line */}
+          <motion.div 
+            className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.accent === 'secondary' ? 'from-secondary via-primary to-secondary' : 'from-primary via-secondary to-primary'}`}
+            initial={{ scaleX: 0 }}
+            animate={{ 
+              scaleX: isHovered ? 1 : 0,
+              originX: 0,
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+
+          {/* Shimmer effect on hover */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            }}
+            initial={{ x: '-100%' }}
+            animate={{ x: isHovered ? '100%' : '-100%' }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+          />
+        </motion.div>
+      </TiltCard>
+    </motion.div>
+  );
+};
+
 const ServicesSection = () => {
   return (
     <section id="services" className="relative overflow-hidden">
@@ -105,7 +314,7 @@ const ServicesSection = () => {
             </p>
           </motion.div>
 
-          {/* Services Grid - Clean 3-column layout */}
+          {/* Services Grid */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -113,77 +322,8 @@ const ServicesSection = () => {
             viewport={{ once: true, margin: "-50px" }}
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
-            {services.map((service) => (
-              <motion.div
-                key={service.title}
-                variants={itemVariants}
-              >
-                <TiltCard className="h-full" maxTilt={6}>
-                  <div className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 h-full flex flex-col">
-                    {/* Image with overlay */}
-                    <div className="relative h-56 overflow-hidden">
-                      <img 
-                        src={service.image} 
-                        alt={service.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-                      
-                      {/* Stats Badge */}
-                      <div className={`absolute top-4 right-4 ${service.accent === 'secondary' ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'} px-4 py-2 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm flex items-center gap-1.5`}>
-                        <span className="font-serif text-xl">{service.stats.value}</span>
-                        <span className="uppercase tracking-wider opacity-90">{service.stats.label}</span>
-                      </div>
-                      
-                      {/* Icon floating on image */}
-                      <div className={`absolute bottom-4 left-6 h-14 w-14 flex items-center justify-center rounded-2xl bg-card/90 backdrop-blur-sm border ${service.accent === 'secondary' ? 'border-secondary/30' : 'border-primary/30'} shadow-xl transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1`}>
-                        <service.icon className={`h-7 w-7 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} strokeWidth={1.5} />
-                      </div>
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-grow">
-                      <h3 className="font-serif text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      
-                      <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
-                        {service.description}
-                      </p>
-
-                      {/* Features as inline list */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {service.features.map((feature) => (
-                          <span 
-                            key={feature} 
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                              service.accent === 'secondary' 
-                                ? 'bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary/20' 
-                                : 'bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20'
-                            }`}
-                          >
-                            <Star className="h-3 w-3 fill-current" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-
-                      <MagneticButton 
-                        variant={service.accent === 'secondary' ? 'hero' : 'teal'}
-                        size="lg"
-                        className="w-full group/btn"
-                        magneticStrength={0.15}
-                      >
-                        <span>Learn More</span>
-                        <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                      </MagneticButton>
-                    </div>
-                    
-                    {/* Hover accent line */}
-                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.accent === 'secondary' ? 'from-secondary via-primary to-secondary' : 'from-primary via-secondary to-primary'} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
-                  </div>
-                </TiltCard>
-              </motion.div>
+            {services.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index} />
             ))}
           </motion.div>
         </div>
