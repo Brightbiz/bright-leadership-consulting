@@ -1,131 +1,123 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { Newspaper, BookOpen, TrendingUp, Users, Sparkles } from "lucide-react";
+import { Newspaper, BookOpen, TrendingUp, Feather, ArrowRight } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
 import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 const BlogHero = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const parallax = useMouseParallax(containerRef, { sensitivity: 0.025, maxMovement: 30 });
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 25 });
 
-  const categories = [
-    { label: "Leadership", count: 12 },
-    { label: "Management", count: 8 },
-    { label: "Growth", count: 15 },
-    { label: "Strategy", count: 6 },
+  const featuredTopics = [
+    { icon: TrendingUp, label: "Strategy", color: "from-emerald-500 to-teal-600" },
+    { icon: BookOpen, label: "Learning", color: "from-amber-500 to-orange-600" },
+    { icon: Feather, label: "Insights", color: "from-violet-500 to-purple-600" },
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-[70vh] overflow-hidden flex items-center">
-      {/* Editorial gradient - warm cream to teal tints */}
-      <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-background to-primary/5" />
+    <section ref={containerRef} className="relative min-h-[85vh] overflow-hidden flex items-center bg-foreground">
+      {/* Dark editorial background with grain texture */}
+      <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground/95 to-primary/20" />
       
-      {/* Newspaper texture overlay */}
+      {/* Subtle grid pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            hsl(var(--foreground) / 0.1) 2px,
-            hsl(var(--foreground) / 0.1) 3px
-          )`,
+          backgroundImage: `linear-gradient(hsl(var(--background)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--background)) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
         }}
       />
 
-      {/* Floating editorial elements with parallax */}
-      <ParallaxLayer parallax={parallax} depth={0.9} className="absolute top-16 right-[18%]">
+      {/* Dramatic diagonal accent */}
+      <motion.div 
+        className="absolute top-0 right-0 w-[70%] h-full origin-top-right"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-bl from-secondary/20 via-secondary/5 to-transparent" 
+          style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0% 100%)' }} 
+        />
+      </motion.div>
+
+      {/* Floating article previews */}
+      <ParallaxLayer parallax={parallax} depth={0.8} className="absolute top-20 right-[8%] hidden xl:block">
         <motion.div
-          className="w-32 h-40 bg-gradient-to-br from-card to-card/80 rounded-lg border border-border/50 shadow-xl"
-          animate={{ rotate: [3, 6, 3], y: [0, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ opacity: 0, y: 40, rotate: 8 }}
+          animate={{ opacity: 1, y: 0, rotate: 8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="w-48 h-64 bg-background/10 backdrop-blur-xl rounded-2xl border border-background/20 p-4 shadow-2xl"
         >
-          <div className="p-3 space-y-2">
-            <div className="h-2 w-full bg-primary/20 rounded" />
-            <div className="h-2 w-3/4 bg-primary/15 rounded" />
-            <div className="h-8 w-full bg-secondary/10 rounded mt-2" />
-            <div className="h-2 w-full bg-muted rounded" />
-            <div className="h-2 w-2/3 bg-muted rounded" />
+          <div className="h-20 bg-gradient-to-br from-secondary/30 to-primary/20 rounded-lg mb-3" />
+          <div className="space-y-2">
+            <div className="h-2 w-full bg-background/20 rounded" />
+            <div className="h-2 w-3/4 bg-background/15 rounded" />
+            <div className="h-2 w-1/2 bg-background/10 rounded" />
+          </div>
+          <motion.div 
+            className="absolute -bottom-3 -right-3 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Newspaper className="h-4 w-4 text-secondary-foreground" />
+          </motion.div>
+        </motion.div>
+      </ParallaxLayer>
+
+      <ParallaxLayer parallax={parallax} depth={1.2} className="absolute bottom-32 right-[18%] hidden lg:block">
+        <motion.div
+          initial={{ opacity: 0, y: 40, rotate: -5 }}
+          animate={{ opacity: 1, y: 0, rotate: -5 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="w-40 h-52 bg-primary/20 backdrop-blur-xl rounded-2xl border border-primary/30 p-3 shadow-2xl"
+        >
+          <div className="h-16 bg-gradient-to-br from-primary/40 to-secondary/20 rounded-lg mb-2" />
+          <div className="space-y-1.5">
+            <div className="h-1.5 w-full bg-background/15 rounded" />
+            <div className="h-1.5 w-2/3 bg-background/10 rounded" />
           </div>
         </motion.div>
       </ParallaxLayer>
 
-      <ParallaxLayer parallax={parallax} depth={1.2} className="absolute bottom-32 left-[12%]">
+      {/* Glowing orbs */}
+      <ParallaxLayer parallax={parallax} depth={0.4} className="absolute -top-32 left-[20%]">
         <motion.div
-          className="w-24 h-32 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-lg border border-secondary/30 shadow-lg"
-          animate={{ rotate: [-5, -2, -5], y: [0, 8, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <div className="p-2 space-y-1.5">
-            <div className="h-1.5 w-full bg-secondary/30 rounded" />
-            <div className="h-1.5 w-2/3 bg-secondary/25 rounded" />
-            <div className="h-6 w-full bg-primary/10 rounded mt-1" />
-          </div>
-        </motion.div>
-      </ParallaxLayer>
-
-      {/* Large ambient blobs */}
-      <ParallaxLayer parallax={parallax} depth={0.5} className="absolute -top-20 left-[30%]">
-        <motion.div
-          className="w-[600px] h-[600px] rounded-full bg-secondary/10 blur-[150px]"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="w-[500px] h-[500px] rounded-full bg-primary/30 blur-[180px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
       </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={0.7} className="absolute -bottom-40 right-[10%]">
+      <ParallaxLayer parallax={parallax} depth={0.6} className="absolute -bottom-20 right-[5%]">
         <motion.div
-          className="w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px]"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="w-[400px] h-[400px] rounded-full bg-secondary/40 blur-[150px]"
+          animate={{ scale: [1.1, 1, 1.1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-      </ParallaxLayer>
-
-      {/* Floating decorative icons */}
-      <ParallaxLayer parallax={parallax} depth={1.4} className="absolute top-[45%] right-[8%] hidden lg:block">
-        <motion.div
-          animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="w-12 h-12 rounded-xl bg-primary/10 backdrop-blur-sm border border-primary/20 flex items-center justify-center">
-            <BookOpen className="h-6 w-6 text-primary" />
-          </div>
-        </motion.div>
-      </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={1.1} className="absolute top-32 left-[6%] hidden lg:block">
-        <motion.div
-          animate={{ y: [0, 10, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <div className="w-10 h-10 rounded-full bg-secondary/20 border border-secondary/30 flex items-center justify-center">
-            <Sparkles className="h-5 w-5 text-secondary" />
-          </div>
-        </motion.div>
       </ParallaxLayer>
 
       {/* Content */}
-      <div className="container-narrow relative py-24 pt-32">
+      <div className="container-narrow relative py-24 pt-32 z-10">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-secondary/15 to-primary/10 backdrop-blur-sm px-5 py-2.5 border border-secondary/25"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 inline-flex items-center gap-3"
           >
-            <Newspaper className="h-4 w-4 text-secondary" />
-            <span className="text-sm font-semibold text-secondary">
-              Insights & Resources
+            <span className="w-12 h-px bg-secondary" />
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">
+              The Journal
             </span>
           </motion.div>
 
-          <h1 className="mb-6 font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+          <h1 className="mb-8 font-serif text-5xl font-bold leading-[1.05] text-background sm:text-6xl lg:text-7xl">
             <TextReveal delay={0.2}>
-              Leadership Insights &
+              Ideas That
             </TextReveal>
-            <span className="block mt-2 text-primary">
+            <span className="block text-secondary">
               <TextReveal delay={0.4}>
-                Expert Perspectives
+                Shape Leaders
               </TextReveal>
             </span>
           </h1>
@@ -134,41 +126,56 @@ const BlogHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg text-muted-foreground leading-relaxed sm:text-xl max-w-2xl mb-10"
+            className="text-lg text-background/70 leading-relaxed sm:text-xl max-w-xl mb-12"
           >
-            Discover actionable strategies, industry trends, and expert advice to elevate 
-            your leadership journey and drive organizational success.
+            Curated perspectives on leadership, strategy, and growth from 
+            industry experts and thought leaders.
           </motion.p>
 
-          {/* Category pills */}
+          {/* Topic pills with icons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap gap-4 mb-12"
           >
-            {categories.map((category, index) => (
-              <motion.button
-                key={category.label}
-                initial={{ opacity: 0, scale: 0.9 }}
+            {featuredTopics.map((topic, index) => (
+              <motion.div
+                key={topic.label}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.9 + index * 0.1 }}
-                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+                transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
+                className="group flex items-center gap-3 px-5 py-3 rounded-full bg-background/10 border border-background/20 hover:bg-background/20 transition-all duration-300 cursor-pointer"
               >
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  {category.label}
+                <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${topic.color} flex items-center justify-center`}>
+                  <topic.icon className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-sm font-semibold text-background group-hover:text-secondary transition-colors">
+                  {topic.label}
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-                  {category.count}
-                </span>
-              </motion.button>
+              </motion.div>
             ))}
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.1 }}
+          >
+            <a 
+              href="#articles" 
+              className="inline-flex items-center gap-3 text-secondary font-semibold group"
+            >
+              <span>Explore Articles</span>
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </motion.div>
         </div>
       </div>
 
       {/* Bottom decorative line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-background/30 to-transparent" />
     </section>
   );
 };
