@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import TiltCard from "./TiltCard";
 import TextReveal from "./TextReveal";
+import testimonialSophia from "@/assets/testimonial-sophia.jpg";
+import testimonialDavid from "@/assets/testimonial-david.jpg";
+import testimonialEmily from "@/assets/testimonial-emily.jpg";
 
 const testimonials = [
   {
@@ -11,6 +14,7 @@ const testimonials = [
     content:
       "Through the coaching program, I revamped my leadership approach, optimized team engagement, and expanded our impact. Within months, our results surged dramatically.",
     rating: 5,
+    image: testimonialSophia,
   },
   {
     name: "David Patel",
@@ -18,6 +22,7 @@ const testimonials = [
     content:
       "The guidance helped me pivot my leadership style, streamline operations, and build strategic partnerships. Our company gained significant traction and attracted top talent.",
     rating: 5,
+    image: testimonialDavid,
   },
   {
     name: "Emily Rodriguez",
@@ -25,6 +30,7 @@ const testimonials = [
     content:
       "The coaching sessions empowered me to trust my instincts, communicate effectively, and lead with conviction. Today, I'm driving organizational success with confidence.",
     rating: 5,
+    image: testimonialEmily,
   },
 ];
 
@@ -130,9 +136,11 @@ const TestimonialsSection = () => {
                     </blockquote>
 
                     <div className="flex items-center gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 font-serif text-xl font-semibold text-primary-foreground shadow-lg shadow-primary/20">
-                        {testimonials[activeIndex].name.charAt(0)}
-                      </div>
+                      <img 
+                        src={testimonials[activeIndex].image} 
+                        alt={testimonials[activeIndex].name}
+                        className="h-14 w-14 rounded-full object-cover shadow-lg ring-2 ring-primary/20"
+                      />
                       <div>
                         <div className="font-semibold text-lg text-foreground">
                           {testimonials[activeIndex].name}
