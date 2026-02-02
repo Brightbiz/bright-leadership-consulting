@@ -1,12 +1,35 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Newspaper, BookOpen, TrendingUp, Feather, ArrowRight } from "lucide-react";
+import { Newspaper, BookOpen, TrendingUp, Feather, ArrowRight, Mail, Sparkles } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
 import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const BlogHero = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const containerRef = useRef<HTMLElement>(null);
   const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 25 });
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    toast({
+      title: "Welcome aboard! 🎉",
+      description: "You've successfully subscribed to our newsletter.",
+    });
+    
+    setEmail("");
+    setIsSubmitting(false);
+  };
 
   const featuredTopics = [
     { icon: TrendingUp, label: "Strategy", color: "from-emerald-500 to-teal-600" },
@@ -157,11 +180,58 @@ const BlogHero = () => {
             ))}
           </motion.div>
 
+          {/* Newsletter Signup Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+            className="mb-10"
+          >
+            <div className="relative max-w-md">
+              <div className="absolute -inset-1 bg-gradient-to-r from-secondary/50 via-primary/30 to-secondary/50 rounded-2xl blur-lg opacity-60" />
+              <form 
+                onSubmit={handleNewsletterSubmit}
+                className="relative bg-background/10 backdrop-blur-xl border border-background/20 rounded-xl p-4"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+                    <Sparkles className="h-4 w-4 text-secondary" />
+                  </div>
+                  <span className="text-sm font-medium text-background/80">Get weekly insights</span>
+                </div>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-background/50" />
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10 bg-background/10 border-background/20 text-background placeholder:text-background/40 focus:border-secondary"
+                      required
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    variant="hero"
+                    disabled={isSubmitting}
+                    className="shrink-0"
+                  >
+                    {isSubmitting ? "..." : "Subscribe"}
+                  </Button>
+                </div>
+                <p className="text-xs text-background/50 mt-2">
+                  Join 2,500+ leaders. Unsubscribe anytime.
+                </p>
+              </form>
+            </div>
+          </motion.div>
+
           {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
           >
             <a 
               href="#articles" 
