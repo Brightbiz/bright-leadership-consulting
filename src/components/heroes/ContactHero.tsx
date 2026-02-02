@@ -1,282 +1,238 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, MessageCircle } from "lucide-react";
+import { Mail, Phone, Clock, Zap, ArrowUpRight } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
 import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 const ContactHero = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 30 });
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 25 });
 
-  const contactMethods = [
-    { icon: Phone, label: "Call Us", value: "0333 335 5045" },
-    { icon: Mail, label: "Email", value: "hello@bbsconsulting.co.uk" },
-    { icon: Clock, label: "Hours", value: "Mon-Fri 9am-6pm" },
+  const contactCards = [
+    { icon: Phone, label: "Call Us", value: "0333 335 5045", color: "bg-primary" },
+    { icon: Mail, label: "Email", value: "hello@bbsconsulting.co.uk", color: "bg-secondary" },
+    { icon: Clock, label: "Response", value: "Within 2 hours", color: "bg-emerald-500" },
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-[85vh] overflow-hidden flex items-center">
-      {/* Gradient background with warm tones */}
-      <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-background to-primary/5" />
+    <section ref={containerRef} className="relative min-h-[90vh] overflow-hidden flex items-center">
+      {/* Vibrant gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-secondary/80" />
       
-      {/* Animated wave patterns */}
+      {/* Animated mesh gradient overlay */}
       <motion.div
-        className="absolute inset-0 pointer-events-none opacity-30"
+        className="absolute inset-0"
         animate={{
           background: [
-            "radial-gradient(ellipse 120% 60% at 0% 100%, hsl(var(--secondary) / 0.3) 0%, transparent 50%)",
-            "radial-gradient(ellipse 120% 60% at 50% 100%, hsl(var(--secondary) / 0.25) 0%, transparent 50%)",
-            "radial-gradient(ellipse 120% 60% at 100% 100%, hsl(var(--secondary) / 0.3) 0%, transparent 50%)",
-            "radial-gradient(ellipse 120% 60% at 0% 100%, hsl(var(--secondary) / 0.3) 0%, transparent 50%)",
+            "radial-gradient(ellipse 80% 50% at 20% 40%, hsl(var(--secondary) / 0.4) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 80% 60%, hsl(var(--secondary) / 0.4) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 40% 80%, hsl(var(--secondary) / 0.4) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 20% 40%, hsl(var(--secondary) / 0.4) 0%, transparent 60%)",
           ],
         }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* Decorative envelope lines pattern */}
-      <div className="absolute inset-0 overflow-hidden opacity-[0.04]">
-        <svg className="absolute w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <motion.path
-            d="M0,50 Q25,30 50,50 T100,50"
-            stroke="currentColor"
-            strokeWidth="0.3"
-            fill="none"
-            className="text-primary"
-            animate={{ d: [
-              "M0,50 Q25,30 50,50 T100,50",
-              "M0,50 Q25,70 50,50 T100,50",
-              "M0,50 Q25,30 50,50 T100,50",
-            ]}}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M0,30 Q25,10 50,30 T100,30"
-            stroke="currentColor"
-            strokeWidth="0.2"
-            fill="none"
-            className="text-secondary"
-            animate={{ d: [
-              "M0,30 Q25,10 50,30 T100,30",
-              "M0,30 Q25,50 50,30 T100,30",
-              "M0,30 Q25,10 50,30 T100,30",
-            ]}}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M0,70 Q25,90 50,70 T100,70"
-            stroke="currentColor"
-            strokeWidth="0.2"
-            fill="none"
-            className="text-primary"
-            animate={{ d: [
-              "M0,70 Q25,90 50,70 T100,70",
-              "M0,70 Q25,50 50,70 T100,70",
-              "M0,70 Q25,90 50,70 T100,70",
-            ]}}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
-
-      {/* Floating gradient orbs */}
-      <ParallaxLayer parallax={parallax} depth={0.6} className="absolute top-20 right-[10%]">
+      {/* Geometric shapes */}
+      <ParallaxLayer parallax={parallax} depth={0.5} className="absolute top-[10%] left-[5%]">
         <motion.div
-          className="w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px]"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="w-64 h-64 border-2 border-background/10 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
         />
       </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={0.8} className="absolute -bottom-20 left-[5%]">
+      <ParallaxLayer parallax={parallax} depth={0.7} className="absolute bottom-[15%] right-[10%]">
         <motion.div
-          className="w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px]"
-          animate={{ scale: [1.1, 1, 1.1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="w-48 h-48 border border-background/15 rounded-3xl"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={0.9} className="absolute top-[30%] right-[25%]">
+        <motion.div
+          className="w-32 h-32 bg-background/5 backdrop-blur-sm rounded-2xl"
+          animate={{ rotate: 180, scale: [1, 1.1, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
       </ParallaxLayer>
 
-      {/* Floating contact icons with parallax */}
-      <ParallaxLayer parallax={parallax} depth={1.4} className="absolute top-32 left-[8%] hidden lg:block">
+      {/* Floating connection nodes */}
+      <ParallaxLayer parallax={parallax} depth={1.3} className="absolute top-[20%] right-[15%] hidden lg:block">
         <motion.div
-          animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="relative"
         >
-          <div className="w-14 h-14 rounded-2xl bg-secondary/20 backdrop-blur-sm border border-secondary/30 flex items-center justify-center shadow-lg">
-            <Mail className="h-6 w-6 text-secondary" />
-          </div>
-        </motion.div>
-      </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={1.2} className="absolute bottom-40 right-[12%] hidden lg:block">
-        <motion.div
-          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <div className="w-12 h-12 rounded-xl bg-primary/15 backdrop-blur-sm border border-primary/20 flex items-center justify-center shadow-lg">
-            <Phone className="h-5 w-5 text-primary" />
-          </div>
-        </motion.div>
-      </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={1.6} className="absolute top-[55%] left-[15%] hidden lg:block">
-        <motion.div
-          animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <div className="w-10 h-10 rounded-full bg-secondary/25 flex items-center justify-center">
-            <MessageCircle className="h-4 w-4 text-secondary" />
-          </div>
+          <motion.div
+            className="w-16 h-16 rounded-full bg-background flex items-center justify-center shadow-2xl"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Zap className="h-7 w-7 text-primary" />
+          </motion.div>
+          {/* Connection lines */}
+          <svg className="absolute -left-20 -top-12 w-40 h-32 pointer-events-none">
+            <motion.path
+              d="M 80 60 Q 40 30 10 50"
+              stroke="hsl(var(--background) / 0.3)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="5 5"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 2, delay: 1 }}
+            />
+          </svg>
         </motion.div>
       </ParallaxLayer>
 
-      {/* Floating send icon animation */}
-      <ParallaxLayer parallax={parallax} depth={2} className="absolute top-[30%] right-[25%] hidden lg:block">
+      <ParallaxLayer parallax={parallax} depth={1.1} className="absolute bottom-[35%] left-[8%] hidden lg:block">
         <motion.div
-          animate={{ 
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-            opacity: [0.3, 1, 0.3],
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 1 }}
         >
-          <Send className="h-8 w-8 text-primary/40" />
+          <motion.div
+            className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shadow-xl"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          >
+            <Mail className="h-5 w-5 text-secondary-foreground" />
+          </motion.div>
         </motion.div>
       </ParallaxLayer>
 
       {/* Content */}
-      <div className="container-narrow relative py-24 pt-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="container-narrow relative py-24 pt-32 z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: Text content */}
           <div>
             {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-8 inline-flex items-center gap-3 rounded-full bg-primary/10 backdrop-blur-sm px-5 py-2.5 border border-primary/20"
+              className="mb-8 inline-flex items-center gap-3 rounded-full bg-background/10 backdrop-blur-sm px-5 py-2.5 border border-background/20"
             >
-              <MessageCircle className="h-4 w-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">
-                Let's Start a Conversation
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="w-2.5 h-2.5 rounded-full bg-emerald-400"
+              />
+              <span className="text-sm font-semibold text-background">
+                Available for consultation
               </span>
             </motion.div>
 
-            <h1 className="mb-6 font-serif text-4xl font-bold leading-[1.1] text-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 font-serif text-4xl font-bold leading-[1.1] text-background sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.1}>
-                Get in Touch
+                Let's Create
               </TextReveal>
-              <span className="block mt-2 text-primary">
+              <span className="block text-secondary-foreground">
                 <TextReveal delay={0.3}>
-                  With Our Team
+                  Something
                 </TextReveal>
               </span>
+              <TextReveal delay={0.5}>
+                Extraordinary
+              </TextReveal>
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg text-muted-foreground leading-relaxed max-w-xl mb-10"
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-lg text-background/80 leading-relaxed max-w-md mb-10"
             >
-              Ready to transform your leadership journey? We'd love to hear from you. 
-              Reach out for a complimentary consultation and discover how we can help 
-              you achieve your goals.
+              Ready to transform your leadership potential? Start a conversation 
+              and discover how we can accelerate your growth.
             </motion.p>
 
-            {/* Quick contact methods */}
-            <motion.div
+            {/* Quick action button */}
+            <motion.a
+              href="#contact-form"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="space-y-4"
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-background text-primary font-semibold hover:bg-background/90 transition-colors group shadow-xl"
             >
-              {contactMethods.map((method, index) => (
+              <span>Start a Conversation</span>
+              <ArrowUpRight className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </motion.a>
+          </div>
+
+          {/* Right: Contact cards stack */}
+          <div className="relative hidden lg:block">
+            <div className="relative h-[400px]">
+              {contactCards.map((card, index) => (
                 <motion.div
-                  key={method.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                  className="flex items-center gap-4 group cursor-pointer"
+                  key={card.label}
+                  initial={{ opacity: 0, y: 60, rotate: (index - 1) * 8 }}
+                  animate={{ opacity: 1, y: 0, rotate: (index - 1) * 8 }}
+                  transition={{ duration: 0.7, delay: 0.5 + index * 0.15 }}
+                  className="absolute w-full max-w-sm"
+                  style={{
+                    top: `${index * 30}px`,
+                    left: `${index * 20}px`,
+                    zIndex: contactCards.length - index,
+                  }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                    <method.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <span className="text-sm text-muted-foreground block">{method.label}</span>
-                    <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {method.value}
-                    </span>
-                  </div>
+                  <ParallaxLayer parallax={parallax} depth={0.4 + index * 0.2}>
+                    <motion.div
+                      whileHover={{ y: -5, rotate: 0, scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-background/95 backdrop-blur-xl rounded-2xl p-6 shadow-2xl border border-background/50 cursor-pointer"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`w-14 h-14 rounded-xl ${card.color} flex items-center justify-center shadow-lg`}>
+                          <card.icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <span className="text-sm text-muted-foreground block mb-1">{card.label}</span>
+                          <span className="font-semibold text-foreground text-lg">{card.value}</span>
+                        </div>
+                        <ArrowUpRight className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                    </motion.div>
+                  </ParallaxLayer>
                 </motion.div>
               ))}
-            </motion.div>
-          </div>
-
-          {/* Right: Decorative card with map pin */}
-          <div className="relative hidden lg:block">
-            <ParallaxLayer parallax={parallax} depth={0.4}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                {/* Glowing backdrop */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl scale-110" />
-                
-                <div className="relative bg-card/90 backdrop-blur-xl rounded-3xl border border-border p-8 shadow-2xl">
-                  {/* Map pin decoration */}
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                    <motion.div
-                      animate={{ y: [0, -8, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30"
-                    >
-                      <MapPin className="h-6 w-6 text-primary-foreground" />
-                    </motion.div>
-                  </div>
-
-                  <div className="pt-6 text-center">
-                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">
-                      Our Location
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      United Kingdom
-                    </p>
-
-                    {/* Response time indicator */}
-                    <div className="bg-muted/50 rounded-2xl p-6 mb-6">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <motion.div
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                          className="w-3 h-3 rounded-full bg-green-500"
-                        />
-                        <span className="text-sm font-medium text-foreground">Online Now</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Average response time: <span className="font-semibold text-foreground">2 hours</span>
-                      </p>
-                    </div>
-
-                    {/* Social proof */}
-                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
-                      <div className="text-center">
-                        <div className="font-serif text-2xl font-bold text-foreground">500+</div>
-                        <div>Consultations</div>
-                      </div>
-                      <div className="w-px h-10 bg-border" />
-                      <div className="text-center">
-                        <div className="font-serif text-2xl font-bold text-foreground">98%</div>
-                        <div>Satisfaction</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </ParallaxLayer>
+            </div>
           </div>
         </div>
+
+        {/* Mobile contact cards */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:hidden"
+        >
+          {contactCards.map((card, index) => (
+            <div 
+              key={card.label}
+              className="bg-background/20 backdrop-blur-sm rounded-xl p-4 border border-background/20"
+            >
+              <div className={`w-10 h-10 rounded-lg ${card.color} flex items-center justify-center mb-3`}>
+                <card.icon className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xs text-background/60 block">{card.label}</span>
+              <span className="font-medium text-background text-sm">{card.value}</span>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      {/* Bottom wave */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path 
+            d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" 
+            fill="hsl(var(--background))"
+          />
+        </svg>
+      </div>
     </section>
   );
 };
