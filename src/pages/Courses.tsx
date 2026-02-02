@@ -1,9 +1,10 @@
-import { BookOpen, Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Award, Star, Clock, Target, Sparkles, Crown, GraduationCap, Package } from "lucide-react";
+import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Award, Star, Target, Sparkles, Crown, GraduationCap, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 
 const flagshipProgram = {
   icon: Crown,
@@ -111,28 +112,14 @@ const Courses = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/5" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-        
-        <div className="container-narrow relative">
-          <AnimatedSection className="text-center max-w-4xl mx-auto">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-secondary/15 to-primary/15 px-5 py-2.5 border border-secondary/20">
-              <Award className="h-4 w-4 text-secondary" />
-              <span className="text-sm font-semibold text-secondary">
-                CPD Accredited Programs
-              </span>
-            </div>
-            <h1 className="mb-6 font-serif text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
-              Transform Your <span className="text-primary">Leadership</span> Journey
-            </h1>
-            <p className="text-lg text-muted-foreground sm:text-xl max-w-2xl mx-auto">
-              Explore our comprehensive range of CPD-accredited courses designed to develop exceptional leaders and accelerate professional growth.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+      <PageHero
+        variant="courses"
+        badge="CPD Accredited Programs"
+        badgeIcon={Award}
+        title="Transform Your"
+        titleHighlight="Leadership Journey"
+        description="Explore our comprehensive range of CPD-accredited courses designed to develop exceptional leaders and accelerate professional growth."
+      />
 
       {/* Flagship Program */}
       <section className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -376,7 +363,7 @@ const Courses = () => {
                 
                 {/* Benefits pills */}
                 <div className="flex flex-wrap justify-center gap-3 mb-10">
-                  {['Free 30-min Call', 'Personalized Advice', 'No Obligation'].map((benefit, index) => (
+                  {['Free 30-min Call', 'Personalized Advice', 'No Obligation'].map((benefit) => (
                     <span 
                       key={benefit}
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-sm font-medium text-foreground"
