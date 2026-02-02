@@ -1,5 +1,6 @@
 import { Award, ArrowRight, Sparkles, User, Building2, Star, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import TiltCard from "./TiltCard";
 import MagneticButton from "./MagneticButton";
 import TextReveal from "./TextReveal";
@@ -60,6 +61,239 @@ const itemVariants = {
       damping: 15,
     },
   },
+};
+
+interface ProgramCardProps {
+  program: typeof individualProgram;
+  accent: 'primary' | 'secondary';
+  icon: typeof User;
+  badge: string;
+  buttonVariant: 'hero' | 'teal';
+  buttonText: string;
+}
+
+const ProgramCard = ({ program, accent, icon: Icon, badge, buttonVariant, buttonText }: ProgramCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const accentColor = accent === 'secondary' ? 'secondary' : 'primary';
+
+  return (
+    <TiltCard className="h-full" maxTilt={5}>
+      <motion.div 
+        className="relative overflow-hidden rounded-2xl bg-card h-full flex flex-col"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        animate={{
+          borderWidth: 2,
+          borderColor: isHovered 
+            ? `hsl(var(--${accentColor}) / 0.6)` 
+            : `hsl(var(--${accentColor}) / 0.3)`,
+          boxShadow: isHovered 
+            ? `0 25px 50px -12px hsl(var(--${accentColor}) / 0.25)` 
+            : '0 10px 30px -10px rgba(0,0,0,0.1)',
+        }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{ borderStyle: 'solid' }}
+      >
+        {/* Animated gradient overlay */}
+        <motion.div 
+          className={`absolute inset-0 pointer-events-none z-10 bg-gradient-to-br from-${accentColor}/5 via-transparent to-${accentColor}/10`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
+        />
+        
+        {/* Header */}
+        <div className={`bg-gradient-to-r from-${accentColor}/20 to-${accentColor}/10 p-6 border-b border-${accentColor}/20 relative overflow-hidden`}>
+          {/* Shimmer effect */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
+            }}
+            initial={{ x: '-100%' }}
+            animate={{ x: isHovered ? '100%' : '-100%' }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+          />
+          
+          <div className="flex items-center gap-3 mb-3 relative z-20">
+            <motion.div 
+              className={`flex h-12 w-12 items-center justify-center rounded-xl bg-${accentColor}/20`}
+              animate={{
+                scale: isHovered ? 1.1 : 1,
+                rotate: isHovered ? [0, -5, 5, 0] : 0,
+                boxShadow: isHovered 
+                  ? `0 10px 25px -5px hsl(var(--${accentColor}) / 0.4)` 
+                  : '0 0 0 0 transparent',
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <Icon className={`h-6 w-6 text-${accentColor}`} />
+            </motion.div>
+            <div>
+              <motion.span 
+                className={`text-xs font-bold uppercase tracking-wider text-${accentColor}`}
+                animate={{ x: isHovered ? 4 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {program.title}
+              </motion.span>
+              <motion.h3 
+                className="font-serif text-xl font-semibold text-foreground"
+                animate={{ x: isHovered ? 4 : 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
+              >
+                {program.subtitle}
+              </motion.h3>
+            </div>
+          </div>
+          <motion.p 
+            className={`text-${accentColor} font-medium italic relative z-20`}
+            animate={{ x: isHovered ? 4 : 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            {program.tagline}
+          </motion.p>
+        </div>
+        
+        {/* Content */}
+        <div className="p-6 flex-grow flex flex-col relative z-20">
+          <p className="mb-4 text-muted-foreground leading-relaxed">
+            {program.description}
+          </p>
+          
+          <motion.div 
+            className="mb-4 p-3 rounded-lg bg-muted/50 border border-border/50"
+            animate={{
+              backgroundColor: isHovered ? 'hsl(var(--muted) / 0.7)' : 'hsl(var(--muted) / 0.5)',
+              scale: isHovered ? 1.02 : 1,
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <p className="text-sm text-foreground">
+              <span className="font-semibold">Who It's For:</span> {program.audience}
+            </p>
+          </motion.div>
+          
+          {/* Highlights with staggered animation */}
+          <ul className="space-y-3 mb-6 flex-grow">
+            {program.highlights.map((highlight, index) => (
+              <motion.li 
+                key={index} 
+                className="flex items-start gap-3"
+                animate={{
+                  x: isHovered ? 6 : 0,
+                  opacity: 1,
+                }}
+                transition={{ 
+                  duration: 0.3, 
+                  delay: isHovered ? index * 0.05 : 0,
+                  ease: "easeOut"
+                }}
+              >
+                <motion.div
+                  animate={{ 
+                    rotate: isHovered ? 360 : 0,
+                    scale: isHovered ? 1.2 : 1,
+                  }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                >
+                  <Star className={`h-4 w-4 text-${accentColor} flex-shrink-0 mt-0.5 fill-${accentColor}`} />
+                </motion.div>
+                <span className="text-sm text-foreground">{highlight}</span>
+              </motion.li>
+            ))}
+          </ul>
+          
+          {/* Bonus with pulse animation */}
+          <motion.div 
+            className={`bg-${accentColor}/10 rounded-xl p-4 mb-6 border border-${accentColor}/20`}
+            animate={{
+              scale: isHovered ? 1.02 : 1,
+              backgroundColor: isHovered 
+                ? `hsl(var(--${accentColor}) / 0.15)` 
+                : `hsl(var(--${accentColor}) / 0.1)`,
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <motion.div
+                animate={{ 
+                  scale: isHovered ? [1, 1.2, 1] : 1,
+                }}
+                transition={{ 
+                  duration: 0.6, 
+                  repeat: isHovered ? Infinity : 0,
+                  repeatDelay: 0.5
+                }}
+              >
+                <CheckCircle className={`h-5 w-5 text-${accentColor}`} />
+              </motion.div>
+              <span className={`font-bold text-${accentColor}`}>
+                {accent === 'secondary' ? 'Exclusive Bonus' : 'Included'}
+              </span>
+            </div>
+            <p className="text-sm text-foreground">{program.bonus}</p>
+          </motion.div>
+          
+          <MagneticButton 
+            variant={buttonVariant} 
+            size="lg" 
+            className="w-full group overflow-hidden"
+            href={program.link}
+            target={program.link.startsWith('http') ? '_blank' : undefined}
+            rel={program.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+          >
+            <motion.span 
+              className="flex items-center justify-center gap-2"
+              animate={{ x: isHovered ? 4 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {buttonText}
+              <motion.div
+                animate={{ 
+                  x: isHovered ? [0, 4, 0] : 0,
+                }}
+                transition={{ 
+                  duration: 0.6, 
+                  repeat: isHovered ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              >
+                <ArrowRight className="h-5 w-5" />
+              </motion.div>
+            </motion.span>
+          </MagneticButton>
+        </div>
+        
+        {/* Badge with hover animation */}
+        <motion.div 
+          className={`absolute top-4 right-4 bg-${accentColor} text-${accentColor}-foreground rounded-full px-3 py-1 shadow-lg`}
+          animate={{
+            scale: isHovered ? 1.1 : 1,
+            y: isHovered ? -2 : 0,
+            boxShadow: isHovered 
+              ? `0 10px 25px -5px hsl(var(--${accentColor}) / 0.5)` 
+              : '0 4px 6px -1px rgba(0,0,0,0.1)',
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <span className="font-bold text-xs uppercase">{badge}</span>
+        </motion.div>
+
+        {/* Animated accent line */}
+        <motion.div 
+          className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-${accentColor} via-${accent === 'secondary' ? 'primary' : 'secondary'} to-${accentColor}`}
+          initial={{ scaleX: 0 }}
+          animate={{ 
+            scaleX: isHovered ? 1 : 0,
+            originX: 0,
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        />
+      </motion.div>
+    </TiltCard>
+  );
 };
 
 const ExecutiveProgramSection = () => {
@@ -133,160 +367,26 @@ const ExecutiveProgramSection = () => {
         >
           {/* Individual Program */}
           <motion.div variants={itemVariants}>
-            <TiltCard className="h-full" maxTilt={5}>
-              <div className="relative overflow-hidden rounded-2xl bg-card border-2 border-secondary/30 h-full flex flex-col shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-secondary/10">
-                {/* Animated border glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary/20 via-transparent to-secondary/20 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Header */}
-                <div className="bg-gradient-to-r from-secondary/20 to-secondary/10 p-6 border-b border-secondary/20">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20 transition-transform duration-300 group-hover:scale-110">
-                      <User className="h-6 w-6 text-secondary" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-secondary">{individualProgram.title}</span>
-                      <h3 className="font-serif text-xl font-semibold text-foreground">{individualProgram.subtitle}</h3>
-                    </div>
-                  </div>
-                  <p className="text-secondary font-medium italic">{individualProgram.tagline}</p>
-                </div>
-                
-                {/* Content */}
-                <div className="p-6 flex-grow flex flex-col">
-                  <p className="mb-4 text-muted-foreground leading-relaxed">
-                    {individualProgram.description}
-                  </p>
-                  
-                  <div className="mb-4 p-3 rounded-lg bg-muted/50 border border-border/50">
-                    <p className="text-sm text-foreground">
-                      <span className="font-semibold">Who It's For:</span> {individualProgram.audience}
-                    </p>
-                  </div>
-                  
-                  {/* Highlights */}
-                  <ul className="space-y-3 mb-6 flex-grow">
-                    {individualProgram.highlights.map((highlight, index) => (
-                      <motion.li 
-                        key={index} 
-                        className="flex items-start gap-3"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 * index }}
-                      >
-                        <Star className="h-4 w-4 text-secondary flex-shrink-0 mt-0.5 fill-secondary" />
-                        <span className="text-sm text-foreground">{highlight}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                  
-                  {/* Bonus */}
-                  <div className="bg-secondary/10 rounded-xl p-4 mb-6 border border-secondary/20">
-                    <div className="flex items-center gap-2 mb-1">
-                      <CheckCircle className="h-5 w-5 text-secondary" />
-                      <span className="font-bold text-secondary">Exclusive Bonus</span>
-                    </div>
-                    <p className="text-sm text-foreground">{individualProgram.bonus}</p>
-                  </div>
-                  
-                  <MagneticButton 
-                    variant="hero" 
-                    size="lg" 
-                    className="w-full group"
-                    href={individualProgram.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Enroll Now
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </MagneticButton>
-                </div>
-                
-                {/* Badge */}
-                <div className="absolute top-4 right-4 bg-secondary text-secondary-foreground rounded-full px-3 py-1 shadow-lg">
-                  <span className="font-bold text-xs uppercase">Most Popular</span>
-                </div>
-              </div>
-            </TiltCard>
+            <ProgramCard
+              program={individualProgram}
+              accent="secondary"
+              icon={User}
+              badge="Most Popular"
+              buttonVariant="hero"
+              buttonText="Enroll Now"
+            />
           </motion.div>
           
           {/* Organization Program */}
           <motion.div variants={itemVariants}>
-            <TiltCard className="h-full" maxTilt={5}>
-              <div className="relative overflow-hidden rounded-2xl bg-card border-2 border-primary/30 h-full flex flex-col shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                {/* Animated border glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Header */}
-                <div className="bg-gradient-to-r from-primary/20 to-primary/10 p-6 border-b border-primary/20">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 transition-transform duration-300 group-hover:scale-110">
-                      <Building2 className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-primary">{organizationProgram.title}</span>
-                      <h3 className="font-serif text-xl font-semibold text-foreground">{organizationProgram.subtitle}</h3>
-                    </div>
-                  </div>
-                  <p className="text-primary font-medium italic">{organizationProgram.tagline}</p>
-                </div>
-                
-                {/* Content */}
-                <div className="p-6 flex-grow flex flex-col">
-                  <p className="mb-4 text-muted-foreground leading-relaxed">
-                    {organizationProgram.description}
-                  </p>
-                  
-                  <div className="mb-4 p-3 rounded-lg bg-muted/50 border border-border/50">
-                    <p className="text-sm text-foreground">
-                      <span className="font-semibold">Who It's For:</span> {organizationProgram.audience}
-                    </p>
-                  </div>
-                  
-                  {/* Highlights */}
-                  <ul className="space-y-3 mb-6 flex-grow">
-                    {organizationProgram.highlights.map((highlight, index) => (
-                      <motion.li 
-                        key={index} 
-                        className="flex items-start gap-3"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 * index }}
-                      >
-                        <Star className="h-4 w-4 text-primary flex-shrink-0 mt-0.5 fill-primary" />
-                        <span className="text-sm text-foreground">{highlight}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                  
-                  {/* Bonus */}
-                  <div className="bg-primary/10 rounded-xl p-4 mb-6 border border-primary/20">
-                    <div className="flex items-center gap-2 mb-1">
-                      <CheckCircle className="h-5 w-5 text-primary" />
-                      <span className="font-bold text-primary">Included</span>
-                    </div>
-                    <p className="text-sm text-foreground">{organizationProgram.bonus}</p>
-                  </div>
-                  
-                  <MagneticButton 
-                    variant="teal" 
-                    size="lg" 
-                    className="w-full group"
-                    href={organizationProgram.link}
-                  >
-                    Request Consultation
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </MagneticButton>
-                </div>
-                
-                {/* Badge */}
-                <div className="absolute top-4 right-4 bg-primary text-primary-foreground rounded-full px-3 py-1 shadow-lg">
-                  <span className="font-bold text-xs uppercase">Enterprise</span>
-                </div>
-              </div>
-            </TiltCard>
+            <ProgramCard
+              program={organizationProgram}
+              accent="primary"
+              icon={Building2}
+              badge="Enterprise"
+              buttonVariant="teal"
+              buttonText="Request Consultation"
+            />
           </motion.div>
         </motion.div>
 
