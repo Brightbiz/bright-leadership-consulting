@@ -114,16 +114,16 @@ const ServicesSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
                 variants={itemVariants}
-                className={`${index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
+                className={`${index === 0 ? 'lg:col-span-2' : ''}`}
               >
                 <TiltCard className="h-full">
-                  <div className={`group relative overflow-hidden rounded-2xl bg-card border border-border/50 transition-all duration-500 hover:border-primary/30 h-full flex flex-col ${index === 0 ? 'min-h-[500px]' : 'min-h-[320px]'}`}>
+                  <div className={`group relative overflow-hidden rounded-2xl bg-card border border-border/50 transition-all duration-500 hover:border-primary/30 h-full flex flex-col ${index === 0 ? 'min-h-[420px]' : 'min-h-[420px]'}`}>
                     {/* Image */}
                     <div className={`relative overflow-hidden ${index === 0 ? 'h-72' : 'h-40'}`}>
                       <img 
