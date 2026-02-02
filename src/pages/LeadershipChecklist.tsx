@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn } from "lucide-react";
+import { CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn, ClipboardCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,6 +10,8 @@ import { useChecklistProgress } from "@/hooks/useChecklistProgress";
 import SocialShare from "@/components/SocialShare";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+
 interface ChecklistItem {
   id: string;
   text: string;
@@ -164,8 +166,28 @@ const LeadershipChecklist = () => {
     <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background">
       <Header />
       
+      {/* Hero Section */}
+      <PageHero
+        badge="Free Assessment"
+        badgeIcon={ClipboardCheck}
+        title="The Ultimate Leadership"
+        titleHighlight="Skills Checklist"
+        description="Honestly assess your current leadership strengths and areas for development. Check each box where you feel confident, then view your score to understand where you stand."
+      >
+        {!user && !isLoading && (
+          <p className="mt-4 text-sm text-muted-foreground">
+            <Link to="/admin/login" className="text-primary hover:underline">Sign in</Link> to save your progress and track improvements over time.
+          </p>
+        )}
+        {lastSaved && (
+          <p className="mt-2 text-sm text-muted-foreground">
+            Progress loaded from your previous session.
+          </p>
+        )}
+      </PageHero>
+
       {/* Progress Bar */}
-      <div className="fixed top-20 left-0 right-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="sticky top-20 left-0 right-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 sm:gap-4">
             <span className="text-xs sm:text-sm text-muted-foreground">
@@ -198,27 +220,7 @@ const LeadershipChecklist = () => {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8 md:py-12 mt-32">
-        {/* Title Section */}
-        <div className="mb-10 text-center">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            The Ultimate Leadership Skills Checklist
-          </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
-            Honestly assess your current leadership strengths and areas for development. 
-            Check each box where you feel confident, then view your score to understand where you stand.
-          </p>
-          {!user && !isLoading && (
-            <p className="mt-4 text-sm text-muted-foreground">
-              <Link to="/admin/login" className="text-primary hover:underline">Sign in</Link> to save your progress and track improvements over time.
-            </p>
-          )}
-          {lastSaved && (
-            <p className="mt-2 text-sm text-muted-foreground">
-              Progress loaded from your previous session.
-            </p>
-          )}
-        </div>
+      <main className="container mx-auto px-4 py-8 md:py-12">
 
         {/* Results Card (shown when showResults is true) */}
         {showResults && (
