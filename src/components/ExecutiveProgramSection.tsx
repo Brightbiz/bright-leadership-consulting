@@ -174,11 +174,16 @@ const ExecutiveProgramSection = () => {
                     <p className="text-sm text-foreground">{individualProgram.bonus}</p>
                   </div>
                   
-                  <MagneticButton variant="hero" size="lg" className="w-full group" asChild>
-                    <a href={individualProgram.link} target="_blank" rel="noopener noreferrer">
-                      Enroll Now
-                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </a>
+                  <MagneticButton 
+                    variant="hero" 
+                    size="lg" 
+                    className="w-full group"
+                    href={individualProgram.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Enroll Now
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </MagneticButton>
                 </div>
                 
@@ -249,11 +254,14 @@ const ExecutiveProgramSection = () => {
                     <p className="text-sm text-foreground">{organizationProgram.bonus}</p>
                   </div>
                   
-                  <MagneticButton variant="teal" size="lg" className="w-full group" asChild>
-                    <a href={organizationProgram.link}>
-                      Request Consultation
-                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </a>
+                  <MagneticButton 
+                    variant="teal" 
+                    size="lg" 
+                    className="w-full group"
+                    href={organizationProgram.link}
+                  >
+                    Request Consultation
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </MagneticButton>
                 </div>
                 
