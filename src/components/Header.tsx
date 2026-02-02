@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -21,6 +22,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const activeSection = useActiveSection();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { handleAnchorClick } = useSmoothScroll({ offset: 80 });
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
@@ -33,8 +36,20 @@ const Header = () => {
   }, []);
 
   const isActive = (link: typeof navLinks[0]) => {
-    if (link.sectionId === "" && isHomePage && !activeSection) return true;
-    return isHomePage && activeSection === link.sectionId;
+    // Check if on the exact page
+    if (link.href === location.pathname) return true;
+    // Check for section on homepage
+    if (link.sectionId && isHomePage && activeSection === link.sectionId) return true;
+    // Home link active when on homepage with no section
+    if (link.href === "/" && isHomePage && !activeSection) return true;
+    return false;
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#") || href.startsWith("#")) {
+      handleAnchorClick(e, href);
+    }
+    setIsMenuOpen(false);
   };
 
   return (
@@ -57,6 +72,7 @@ const Header = () => {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
                   "relative text-sm font-medium transition-colors hover:text-primary",
                   isActive(link)
@@ -78,7 +94,7 @@ const Header = () => {
               My Account
             </Button>
             <Button variant="teal" size="default" asChild>
-              <a href="#contact">Contact Us</a>
+              <a href="/#contact" onClick={(e) => handleNavClick(e, "/#contact")}>Contact Us</a>
             </Button>
           </div>
 
@@ -104,7 +120,7 @@ const Header = () => {
                     "text-base font-medium",
                     isActive(link) ? "text-primary" : "text-foreground"
                   )}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                 >
                   {link.label}
                 </a>
@@ -118,7 +134,7 @@ const Header = () => {
                   My Account
                 </Button>
                 <Button variant="teal" className="w-full" asChild>
-                  <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
+                  <a href="/#contact" onClick={(e) => handleNavClick(e, "/#contact")}>Contact Us</a>
                 </Button>
               </div>
             </div>
