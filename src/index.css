@@ -7,6 +7,10 @@
 /* Bright Leadership Consulting - Elegant Design System */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     /* Core brand colors - Teal to Amber palette */
     --background: 180 10% 99%;
