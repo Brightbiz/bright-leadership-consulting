@@ -1,46 +1,59 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Home, AlertCircle, ArrowLeft, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 const NotFoundHero = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.015, maxMovement: 20 });
+
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center justify-center">
+    <section ref={containerRef} className="relative min-h-screen overflow-hidden flex items-center justify-center">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-background" />
       
-      {/* Animated lost particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-primary/20"
+      {/* Animated lost particles with parallax */}
+      {[...Array(15)].map((_, i) => (
+        <ParallaxLayer 
+          key={i} 
+          parallax={parallax} 
+          depth={0.5 + Math.random()}
+          className="absolute"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 0.5, 0],
-            scale: [0, 1, 0],
-          }}
-          transition={{
-            duration: 5 + Math.random() * 5,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "easeInOut",
-          }}
-        />
+          } as React.CSSProperties}
+        >
+          <motion.div
+            className="w-2 h-2 rounded-full bg-primary/20"
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 0.5, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 5 + Math.random() * 5,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "easeInOut",
+            }}
+          />
+        </ParallaxLayer>
       ))}
 
-      {/* Central glowing orb */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[120px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Central glowing orb with parallax */}
+      <ParallaxLayer parallax={parallax} depth={0.3} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <motion.div
+          className="w-[500px] h-[500px] rounded-full bg-primary/5 blur-[120px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
 
       {/* Broken grid lines */}
       <div className="absolute inset-0 opacity-[0.02]">
@@ -56,34 +69,35 @@ const NotFoundHero = () => {
 
       {/* Content */}
       <div className="container-narrow relative text-center py-24">
-        {/* Animated 404 */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          className="mb-8"
-        >
-          <div className="relative inline-block">
-            {/* Glitch effect layers */}
-            <motion.span
-              className="absolute inset-0 font-serif text-[12rem] md:text-[16rem] font-bold text-primary/20 select-none"
-              animate={{ x: [-2, 2, -2], opacity: [0.5, 0.3, 0.5] }}
-              transition={{ duration: 0.3, repeat: Infinity }}
-            >
-              404
-            </motion.span>
-            <motion.span
-              className="absolute inset-0 font-serif text-[12rem] md:text-[16rem] font-bold text-secondary/20 select-none"
-              animate={{ x: [2, -2, 2], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 0.3, repeat: Infinity, delay: 0.1 }}
-            >
-              404
-            </motion.span>
-            <span className="relative font-serif text-[12rem] md:text-[16rem] font-bold text-foreground/10">
-              404
-            </span>
-          </div>
-        </motion.div>
+        {/* Animated 404 with parallax */}
+        <ParallaxLayer parallax={parallax} depth={0.2} className="mb-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, type: "spring" }}
+          >
+            <div className="relative inline-block">
+              {/* Glitch effect layers */}
+              <motion.span
+                className="absolute inset-0 font-serif text-[12rem] md:text-[16rem] font-bold text-primary/20 select-none"
+                animate={{ x: [-2, 2, -2], opacity: [0.5, 0.3, 0.5] }}
+                transition={{ duration: 0.3, repeat: Infinity }}
+              >
+                404
+              </motion.span>
+              <motion.span
+                className="absolute inset-0 font-serif text-[12rem] md:text-[16rem] font-bold text-secondary/20 select-none"
+                animate={{ x: [2, -2, 2], opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 0.3, repeat: Infinity, delay: 0.1 }}
+              >
+                404
+              </motion.span>
+              <span className="relative font-serif text-[12rem] md:text-[16rem] font-bold text-foreground/10">
+                404
+              </span>
+            </div>
+          </motion.div>
+        </ParallaxLayer>
 
         {/* Badge */}
         <motion.div

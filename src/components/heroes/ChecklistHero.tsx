@@ -1,7 +1,9 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ClipboardCheck, CheckCircle2, Target, TrendingUp, Award } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 interface ChecklistHeroProps {
   isLoggedIn?: boolean;
@@ -9,8 +11,11 @@ interface ChecklistHeroProps {
 }
 
 const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
+  const containerRef = useRef<HTMLElement>(null);
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 25 });
+
   return (
-    <section className="relative min-h-[75vh] overflow-hidden flex items-center">
+    <section ref={containerRef} className="relative min-h-[75vh] overflow-hidden flex items-center">
       {/* Light gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-muted/50 to-secondary/8" />
       
@@ -31,38 +36,48 @@ const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
         ))}
       </div>
 
-      {/* Floating gradient blobs */}
-      <motion.div
-        className="absolute top-20 right-[15%] w-80 h-80 rounded-full bg-primary/15 blur-[100px]"
-        animate={{ scale: [1, 1.15, 1], x: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 left-[10%] w-72 h-72 rounded-full bg-secondary/20 blur-[80px]"
-        animate={{ scale: [1, 1.1, 1], y: [0, -30, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Floating checkmarks */}
-      {[
-        { top: "20%", left: "8%", delay: 0 },
-        { top: "35%", right: "12%", delay: 0.5 },
-        { bottom: "30%", left: "15%", delay: 1 },
-        { top: "55%", right: "8%", delay: 1.5 },
-      ].map((pos, i) => (
+      {/* Floating gradient blobs with parallax */}
+      <ParallaxLayer parallax={parallax} depth={0.6} className="absolute top-20 right-[15%]">
         <motion.div
-          key={i}
-          className="absolute hidden lg:flex w-10 h-10 rounded-full bg-primary/10 border border-primary/20 items-center justify-center"
-          style={pos}
-          animate={{ 
-            y: [0, -10, 0], 
-            opacity: [0.5, 1, 0.5],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: pos.delay }}
+          className="w-80 h-80 rounded-full bg-primary/15 blur-[100px]"
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={0.8} className="absolute bottom-20 left-[10%]">
+        <motion.div
+          className="w-72 h-72 rounded-full bg-secondary/20 blur-[80px]"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
+
+      {/* Floating checkmarks with parallax */}
+      {[
+        { top: "20%", left: "8%", delay: 0, depth: 1.2 },
+        { top: "35%", right: "12%", delay: 0.5, depth: 1.4 },
+        { bottom: "30%", left: "15%", delay: 1, depth: 1.0 },
+        { top: "55%", right: "8%", delay: 1.5, depth: 1.3 },
+      ].map((pos, i) => (
+        <ParallaxLayer 
+          key={i} 
+          parallax={parallax} 
+          depth={pos.depth}
+          className="absolute hidden lg:block"
+          style={{ top: pos.top, left: pos.left, right: pos.right, bottom: pos.bottom } as React.CSSProperties}
         >
-          <CheckCircle2 className="h-5 w-5 text-primary" />
-        </motion.div>
+          <motion.div
+            className="flex w-10 h-10 rounded-full bg-primary/10 border border-primary/20 items-center justify-center"
+            animate={{ 
+              y: [0, -10, 0], 
+              opacity: [0.5, 1, 0.5],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: pos.delay }}
+          >
+            <CheckCircle2 className="h-5 w-5 text-primary" />
+          </motion.div>
+        </ParallaxLayer>
       ))}
 
       {/* Dot grid pattern */}
@@ -136,48 +151,49 @@ const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
             )}
           </div>
 
-          {/* Score levels preview */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="lg:col-span-2 hidden lg:block"
-          >
-            <div className="relative">
-              {/* Glow backdrop */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl scale-105" />
-              
-              <div className="relative bg-card/95 backdrop-blur-xl rounded-3xl border border-border/50 p-6 shadow-2xl">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">
-                  Score Levels
-                </h3>
+          {/* Score levels preview with parallax */}
+          <ParallaxLayer parallax={parallax} depth={0.4} className="lg:col-span-2 hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="relative">
+                {/* Glow backdrop */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl scale-105" />
                 
-                <div className="space-y-4">
-                  {[
-                    { icon: Award, label: "Leadership Master", range: "16-20", color: "score-master" },
-                    { icon: TrendingUp, label: "Emerging Leader", range: "11-15", color: "score-emerging" },
-                    { icon: Target, label: "Aspiring Leader", range: "0-10", color: "score-aspiring" },
-                  ].map((level, index) => (
-                    <motion.div
-                      key={level.label}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                      className={`flex items-center gap-4 p-4 rounded-xl bg-${level.color}-bg border border-${level.color}-border`}
-                    >
-                      <div className={`flex h-10 w-10 items-center justify-center rounded-lg bg-${level.color}/20`}>
-                        <level.icon className={`h-5 w-5 text-${level.color}`} />
-                      </div>
-                      <div className="flex-1">
-                        <div className={`font-semibold text-${level.color}-foreground`}>{level.label}</div>
-                        <div className={`text-sm text-${level.color}`}>{level.range} checks</div>
-                      </div>
-                    </motion.div>
-                  ))}
+                <div className="relative bg-card/95 backdrop-blur-xl rounded-3xl border border-border/50 p-6 shadow-2xl">
+                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">
+                    Score Levels
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    {[
+                      { icon: Award, label: "Leadership Master", range: "16-20", color: "score-master" },
+                      { icon: TrendingUp, label: "Emerging Leader", range: "11-15", color: "score-emerging" },
+                      { icon: Target, label: "Aspiring Leader", range: "0-10", color: "score-aspiring" },
+                    ].map((level, index) => (
+                      <motion.div
+                        key={level.label}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                        className={`flex items-center gap-4 p-4 rounded-xl bg-${level.color}-bg border border-${level.color}-border`}
+                      >
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-lg bg-${level.color}/20`}>
+                          <level.icon className={`h-5 w-5 text-${level.color}`} />
+                        </div>
+                        <div className="flex-1">
+                          <div className={`font-semibold text-${level.color}-foreground`}>{level.label}</div>
+                          <div className={`text-sm text-${level.color}`}>{level.range} checks</div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </ParallaxLayer>
         </div>
       </div>
 

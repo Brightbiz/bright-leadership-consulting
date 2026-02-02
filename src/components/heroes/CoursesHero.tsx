@@ -1,10 +1,15 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Award, BookOpen, GraduationCap, Star } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 const CoursesHero = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.025, maxMovement: 35 });
+
   return (
-    <section className="relative min-h-[80vh] overflow-hidden flex items-center">
+    <section ref={containerRef} className="relative min-h-[80vh] overflow-hidden flex items-center">
       {/* Deep teal gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary/85" />
       
@@ -22,53 +27,57 @@ const CoursesHero = () => {
         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* Floating orbs */}
-      <motion.div
-        className="absolute top-20 right-[10%] w-[500px] h-[500px] rounded-full bg-secondary/25 blur-[100px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -bottom-20 left-[5%] w-[400px] h-[400px] rounded-full bg-white/10 blur-[80px]"
-        animate={{
-          scale: [1, 0.9, 1.1, 1],
-          y: [0, 40, -20, 0],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Floating orbs with parallax */}
+      <ParallaxLayer parallax={parallax} depth={0.7} className="absolute top-20 right-[10%]">
+        <motion.div
+          className="w-[500px] h-[500px] rounded-full bg-secondary/25 blur-[100px]"
+          animate={{
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={0.5} className="absolute -bottom-20 left-[5%]">
+        <motion.div
+          className="w-[400px] h-[400px] rounded-full bg-white/10 blur-[80px]"
+          animate={{
+            scale: [1, 0.9, 1.1, 1],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
 
-      {/* Floating icons */}
-      <motion.div
-        className="absolute top-32 left-[12%] hidden lg:block"
-        animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-          <BookOpen className="h-8 w-8 text-secondary" />
-        </div>
-      </motion.div>
-      <motion.div
-        className="absolute bottom-40 right-[8%] hidden lg:block"
-        animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      >
-        <div className="w-14 h-14 rounded-xl bg-secondary/20 backdrop-blur-sm border border-secondary/30 flex items-center justify-center">
-          <GraduationCap className="h-7 w-7 text-secondary" />
-        </div>
-      </motion.div>
-      <motion.div
-        className="absolute top-[60%] left-[8%] hidden lg:block"
-        animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-      >
-        <div className="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center">
-          <Star className="h-5 w-5 text-secondary fill-secondary" />
-        </div>
-      </motion.div>
+      {/* Floating icons with parallax */}
+      <ParallaxLayer parallax={parallax} depth={1.3} className="absolute top-32 left-[12%] hidden lg:block">
+        <motion.div
+          animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+            <BookOpen className="h-8 w-8 text-secondary" />
+          </div>
+        </motion.div>
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={1.1} className="absolute bottom-40 right-[8%] hidden lg:block">
+        <motion.div
+          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <div className="w-14 h-14 rounded-xl bg-secondary/20 backdrop-blur-sm border border-secondary/30 flex items-center justify-center">
+            <GraduationCap className="h-7 w-7 text-secondary" />
+          </div>
+        </motion.div>
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={1.5} className="absolute top-[60%] left-[8%] hidden lg:block">
+        <motion.div
+          animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          <div className="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center">
+            <Star className="h-5 w-5 text-secondary fill-secondary" />
+          </div>
+        </motion.div>
+      </ParallaxLayer>
 
       {/* Grid pattern overlay */}
       <div 

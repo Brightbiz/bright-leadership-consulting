@@ -1,10 +1,15 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Building, Users, Globe, Sparkles } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 
 const AboutHero = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const parallax = useMouseParallax(containerRef, { sensitivity: 0.03, maxMovement: 40 });
+
   return (
-    <section className="relative min-h-[85vh] overflow-hidden flex items-center">
+    <section ref={containerRef} className="relative min-h-[85vh] overflow-hidden flex items-center">
       {/* Warm gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 via-primary/10 to-background" />
       
@@ -24,41 +29,48 @@ const AboutHero = () => {
         />
       </div>
 
-      {/* Large floating shapes */}
-      <motion.div
-        className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-secondary/15 blur-[150px]"
-        animate={{
-          scale: [1, 1.1, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px]"
-        animate={{
-          scale: [1, 1.15, 1],
-          x: [0, -30, 0],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Large floating shapes with parallax */}
+      <ParallaxLayer parallax={parallax} depth={0.8} className="absolute top-0 right-0">
+        <motion.div
+          className="w-[800px] h-[800px] rounded-full bg-secondary/15 blur-[150px]"
+          animate={{
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={0.6} className="absolute -bottom-40 -left-40">
+        <motion.div
+          className="w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px]"
+          animate={{
+            scale: [1, 1.15, 1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
       
-      {/* Floating geometric accents */}
-      <motion.div
-        className="absolute top-32 right-[20%] w-20 h-20 border-2 border-secondary/30 rounded-2xl"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute bottom-40 left-[15%] w-16 h-16 bg-primary/10 rounded-full"
-        animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-48 left-[10%] w-3 h-3 bg-secondary rounded-full"
-        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Floating geometric accents with parallax */}
+      <ParallaxLayer parallax={parallax} depth={1.2} className="absolute top-32 right-[20%]">
+        <motion.div
+          className="w-20 h-20 border-2 border-secondary/30 rounded-2xl"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={0.9} className="absolute bottom-40 left-[15%]">
+        <motion.div
+          className="w-16 h-16 bg-primary/10 rounded-full"
+          animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
+      <ParallaxLayer parallax={parallax} depth={1.5} className="absolute top-48 left-[10%]">
+        <motion.div
+          className="w-3 h-3 bg-secondary rounded-full"
+          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </ParallaxLayer>
 
       {/* Content */}
       <div className="container-narrow relative py-24 pt-32">
@@ -108,7 +120,7 @@ const AboutHero = () => {
               {[
                 { icon: Users, value: "5,000+", label: "Leaders Trained" },
                 { icon: Globe, value: "25+", label: "Countries" },
-              ].map((stat, index) => (
+              ].map((stat) => (
                 <div key={stat.label} className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
                     <stat.icon className="h-5 w-5 text-primary" />
@@ -122,38 +134,39 @@ const AboutHero = () => {
             </motion.div>
           </div>
 
-          {/* Right decorative element */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative hidden lg:block"
-          >
-            {/* Main decorative card */}
-            <div className="relative">
-              {/* Glowing backdrop */}
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-primary/30 rounded-3xl blur-2xl scale-110" />
-              
-              <div className="relative bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-xl rounded-3xl border border-border/50 p-10 shadow-2xl">
-                <div className="text-center">
-                  <motion.div
-                    animate={{ rotate: [0, 5, -5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="inline-flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20 mb-6"
-                  >
-                    <Sparkles className="h-12 w-12 text-secondary" />
-                  </motion.div>
-                  <div className="font-serif text-7xl font-bold text-gradient mb-4">10+</div>
-                  <div className="text-xl text-muted-foreground">Years of Excellence</div>
-                  <div className="mt-6 pt-6 border-t border-border">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-medium">
-                      Est. 2014
-                    </span>
+          {/* Right decorative element with parallax */}
+          <ParallaxLayer parallax={parallax} depth={0.3} className="relative hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              {/* Main decorative card */}
+              <div className="relative">
+                {/* Glowing backdrop */}
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-primary/30 rounded-3xl blur-2xl scale-110" />
+                
+                <div className="relative bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-xl rounded-3xl border border-border/50 p-10 shadow-2xl">
+                  <div className="text-center">
+                    <motion.div
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      className="inline-flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20 mb-6"
+                    >
+                      <Sparkles className="h-12 w-12 text-secondary" />
+                    </motion.div>
+                    <div className="font-serif text-7xl font-bold text-primary mb-4">10+</div>
+                    <div className="text-xl text-muted-foreground">Years of Excellence</div>
+                    <div className="mt-6 pt-6 border-t border-border">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-medium">
+                        Est. 2014
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </ParallaxLayer>
         </div>
       </div>
 

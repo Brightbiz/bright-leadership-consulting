@@ -18,6 +18,7 @@ const AdminRegister = lazy(() => import("./pages/AdminRegister"));
 const LeadershipChecklist = lazy(() => import("./pages/LeadershipChecklist"));
 const Courses = lazy(() => import("./pages/Courses"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
+const Blog = lazy(() => import("./pages/Blog"));
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
           <Route path="/about" element={<PageTransition><AboutUs /></PageTransition>} />
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
+          <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
           <Route path="/leadership-checklist" element={<PageTransition><LeadershipChecklist /></PageTransition>} />
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
           <Route path="/admin/register" element={<PageTransition><AdminRegister /></PageTransition>} />
