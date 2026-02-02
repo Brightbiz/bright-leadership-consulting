@@ -17,6 +17,7 @@ const NotFound = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <PageHero
+        variant="error"
         badge="Error 404"
         badgeIcon={AlertCircle}
         title="Page"

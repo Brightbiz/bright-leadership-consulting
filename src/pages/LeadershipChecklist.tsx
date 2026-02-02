@@ -168,6 +168,7 @@ const LeadershipChecklist = () => {
       
       {/* Hero Section */}
       <PageHero
+        variant="checklist"
         badge="Free Assessment"
         badgeIcon={ClipboardCheck}
         title="The Ultimate Leadership"
