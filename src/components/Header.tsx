@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", href: "/", sectionId: "" },
-  { label: "Services", href: "/#services", sectionId: "services" },
-  { label: "Programs", href: "/#executive-program", sectionId: "executive-program" },
-  { label: "Courses", href: "/#courses", sectionId: "courses" },
+  { label: "For Leaders", href: "/#executive-program", sectionId: "executive-program" },
+  { label: "For Organisations", href: "/#executive-program", sectionId: "executive-program" },
+  { label: "Courses", href: "/courses", sectionId: "" },
   { label: "Compare", href: "/#compare", sectionId: "compare" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
