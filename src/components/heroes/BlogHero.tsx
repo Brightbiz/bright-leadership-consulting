@@ -6,6 +6,7 @@ import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const BlogHero = () => {
   const [email, setEmail] = useState("");
@@ -16,19 +17,43 @@ const BlogHero = () => {
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
     
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
     
-    toast({
-      title: "Welcome aboard! 🎉",
-      description: "You've successfully subscribed to our newsletter.",
-    });
-    
-    setEmail("");
-    setIsSubmitting(false);
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscribers")
+        .insert({ email: trimmedEmail, source: "blog" });
+      
+      if (error) {
+        if (error.code === "23505") {
+          // Unique constraint violation - already subscribed
+          toast({
+            title: "Already subscribed!",
+            description: "This email is already on our list.",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Welcome aboard! 🎉",
+          description: "You've successfully subscribed to our newsletter.",
+        });
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Newsletter signup error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const featuredTopics = [
