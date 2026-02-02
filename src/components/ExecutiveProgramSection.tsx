@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import TiltCard from "./TiltCard";
 import MagneticButton from "./MagneticButton";
 import TextReveal from "./TextReveal";
+import executiveLeadershipImage from "@/assets/executive-leadership-diverse.jpg";
 
 const individualProgram = {
   title: "For Individual Executives",
@@ -43,13 +44,13 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -66,7 +67,7 @@ const ExecutiveProgramSection = () => {
     <section id="executive-program" className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/[0.04] via-background to-secondary/[0.04]">
       {/* Animated background orbs */}
       <motion.div
-        className="absolute top-1/4 left-0 w-96 h-96 bg-primary/[0.08] rounded-full blur-3xl"
+        className="absolute top-1/4 left-0 w-72 h-72 bg-primary/[0.06] rounded-full blur-3xl"
         animate={{
           x: [0, 50, 0],
           y: [0, -30, 0],
@@ -74,7 +75,7 @@ const ExecutiveProgramSection = () => {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-0 w-80 h-80 bg-secondary/[0.08] rounded-full blur-3xl"
+        className="absolute bottom-1/4 right-0 w-64 h-64 bg-secondary/[0.06] rounded-full blur-3xl"
         animate={{
           x: [0, -40, 0],
           y: [0, 40, 0],
@@ -83,28 +84,43 @@ const ExecutiveProgramSection = () => {
       />
       
       <div className="container-narrow relative">
-        {/* Section Header */}
+        {/* Hero Image + Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mb-16 max-w-3xl text-center"
+          className="mb-10"
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/15 to-secondary/15 px-5 py-2.5 border border-primary/20">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-bold text-primary uppercase tracking-wider">
-              Flagship Programs
-            </span>
+          {/* Featured Image */}
+          <TiltCard className="mb-8" maxTilt={3}>
+            <div className="relative overflow-hidden rounded-2xl">
+              <img 
+                src={executiveLeadershipImage} 
+                alt="Diverse executive leadership team in boardroom discussion" 
+                className="w-full h-64 sm:h-80 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="inline-flex items-center gap-2 rounded-full bg-background/90 backdrop-blur-sm px-4 py-2 border border-primary/20">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-bold text-primary uppercase tracking-wider">
+                    Flagship Programs
+                  </span>
+                </div>
+              </div>
+            </div>
+          </TiltCard>
+          
+          {/* Text Header */}
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="mb-4 font-serif text-3xl font-semibold text-foreground sm:text-4xl lg:text-5xl">
+              <TextReveal>Executive Leadership Mastery</TextReveal>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Choose the path that fits your journey—whether you're an individual leader ready to excel or an organization building a culture of leadership excellence.
+            </p>
           </div>
-          
-          <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl lg:text-5xl">
-            <TextReveal>Executive Leadership Mastery</TextReveal>
-          </h2>
-          
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Choose the path that fits your journey—whether you're an individual leader ready to excel or an organization building a culture of leadership excellence.
-          </p>
         </motion.div>
 
         {/* Two Column Programs */}
@@ -112,8 +128,8 @@ const ExecutiveProgramSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-2 gap-8"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid lg:grid-cols-2 gap-6"
         >
           {/* Individual Program */}
           <motion.div variants={itemVariants}>
@@ -279,16 +295,16 @@ const ExecutiveProgramSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-12"
+          transition={{ delay: 0.3 }}
+          className="mt-8"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 p-6 rounded-2xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-border/50 backdrop-blur-sm">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
-              <Award className="h-7 w-7 text-primary" />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-border/50 backdrop-blur-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
+              <Award className="h-5 w-5 text-primary" />
             </div>
             <div className="text-center sm:text-left">
-              <p className="font-semibold text-foreground">CPD Accredited Programs</p>
-              <p className="text-sm text-muted-foreground">Internationally recognized certification to validate your leadership excellence</p>
+              <p className="font-semibold text-foreground text-sm">CPD Accredited Programs</p>
+              <p className="text-xs text-muted-foreground">Internationally recognized certification</p>
             </div>
           </div>
         </motion.div>
