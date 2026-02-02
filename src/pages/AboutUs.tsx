@@ -34,14 +34,20 @@ const values = [
 
 const teamMembers = [
   {
+    name: "Irene Agunbiade",
+    role: "Principal Consultant",
+    bio: "With over 20 years of experience and a strong track record in organisational leadership across business and finance sectors, Irene drives transformational change at the highest levels.",
+    credentials: ["BSc Engineering", "MBA (International)", "20+ Years Leadership Experience"],
+  },
+  {
     name: "Dr. Sarah Chen",
-    role: "Founder & CEO",
-    bio: "With over 20 years of experience in executive coaching, Dr. Chen has transformed leadership practices at Fortune 500 companies across three continents.",
+    role: "Head of Executive Programs",
+    bio: "With extensive experience in executive coaching, Dr. Chen has transformed leadership practices at Fortune 500 companies across three continents.",
     credentials: ["PhD Organizational Psychology", "ICF Master Certified Coach", "CPD Accredited Trainer"],
   },
   {
     name: "Marcus Williams",
-    role: "Head of Executive Programs",
+    role: "Senior Leadership Coach",
     bio: "Former C-suite executive turned leadership coach, Marcus brings real-world boardroom experience to every engagement.",
     credentials: ["MBA Harvard Business School", "15+ Years Executive Experience", "Certified Executive Coach"],
   },
@@ -50,12 +56,6 @@ const teamMembers = [
     role: "Director of Corporate Training",
     bio: "Priya specializes in organizational transformation and has designed leadership curricula for global enterprises.",
     credentials: ["MSc Leadership Studies", "Change Management Specialist", "CPD Accredited Facilitator"],
-  },
-  {
-    name: "James Okonkwo",
-    role: "Senior Leadership Coach",
-    bio: "An expert in emotional intelligence and team dynamics, James helps leaders unlock their authentic leadership potential.",
-    credentials: ["Certified EQ Practitioner", "Team Coaching Specialist", "NLP Master Practitioner"],
   },
 ];
 
