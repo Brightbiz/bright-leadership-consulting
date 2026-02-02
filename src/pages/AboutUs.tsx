@@ -4,10 +4,10 @@ import BackToTop from "@/components/BackToTop";
 import ScrollProgress from "@/components/ScrollProgress";
 import AnimatedSection from "@/components/AnimatedSection";
 import TiltCard from "@/components/TiltCard";
-import PageHero from "@/components/PageHero";
+import AboutHero from "@/components/heroes/AboutHero";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target, Heart, Lightbulb, Users, Award, Globe, Linkedin, Building } from "lucide-react";
+import { Target, Heart, Lightbulb, Users, Award, Globe, Linkedin } from "lucide-react";
 import cpdBadge from "@/assets/cpd-badge.png";
 
 const values = [
@@ -74,14 +74,7 @@ const AboutUs = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <PageHero
-          variant="about"
-          badge="About BBS Consulting Group"
-          badgeIcon={Building}
-          title="Transforming Leaders,"
-          titleHighlight="Shaping Futures"
-          description="For over a decade, we've been at the forefront of executive leadership development, empowering leaders to achieve extraordinary results and drive meaningful organizational change."
-        />
+        <AboutHero />
 
         {/* Our Story Section */}
         <section className="section-padding bg-muted/30">

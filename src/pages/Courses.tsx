@@ -1,10 +1,10 @@
-import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Award, Star, Target, Sparkles, Crown, GraduationCap, Package } from "lucide-react";
+import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Star, Target, Sparkles, Crown, GraduationCap, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import CoursesHero from "@/components/heroes/CoursesHero";
 
 const flagshipProgram = {
   icon: Crown,
@@ -112,14 +112,7 @@ const Courses = () => {
       <Header />
       
       {/* Hero Section */}
-      <PageHero
-        variant="courses"
-        badge="CPD Accredited Programs"
-        badgeIcon={Award}
-        title="Transform Your"
-        titleHighlight="Leadership Journey"
-        description="Explore our comprehensive range of CPD-accredited courses designed to develop exceptional leaders and accelerate professional growth."
-      />
+      <CoursesHero />
 
       {/* Flagship Program */}
       <section className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -329,7 +322,6 @@ const Courses = () => {
 
       {/* Premium CTA Section */}
       <section className="section-padding relative overflow-hidden">
-        {/* Animated gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-background to-secondary/[0.08]" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -337,14 +329,11 @@ const Courses = () => {
         <div className="container-narrow relative">
           <AnimatedSection>
             <div className="relative rounded-3xl bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-sm border border-border/50 p-10 md:p-16 shadow-2xl overflow-hidden">
-              {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-secondary/15 rounded-full blur-2xl" />
               <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-primary/15 rounded-full blur-2xl" />
               
-              {/* Content */}
               <div className="relative text-center max-w-3xl mx-auto">
-                {/* Icon badge */}
                 <div className="mb-8 inline-flex items-center justify-center h-20 w-20 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/15 border border-primary/20 shadow-lg shadow-primary/10">
                   <Target className="h-10 w-10 text-primary" />
                 </div>
@@ -358,10 +347,9 @@ const Courses = () => {
                 </h2>
                 
                 <p className="mb-10 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                  Book a free consultation and we'll help you find the perfect program for your leadership journey. Our experts will assess your goals and recommend the ideal path forward.
+                  Book a free consultation and we'll help you find the perfect program for your leadership journey.
                 </p>
                 
-                {/* Benefits pills */}
                 <div className="flex flex-wrap justify-center gap-3 mb-10">
                   {['Free 30-min Call', 'Personalized Advice', 'No Obligation'].map((benefit) => (
                     <span 
@@ -378,7 +366,7 @@ const Courses = () => {
                   <Button 
                     variant="default" 
                     size="xl" 
-                    className="group shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+                    className="group shadow-xl shadow-primary/20"
                     asChild
                   >
                     <Link to="/#contact">
@@ -386,15 +374,8 @@ const Courses = () => {
                       <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="xl" 
-                    className="group hover:bg-card/80 transition-all duration-300"
-                    asChild
-                  >
-                    <Link to="/">
-                      <span>Back to Home</span>
-                    </Link>
+                  <Button variant="outline" size="xl" asChild>
+                    <Link to="/">Back to Home</Link>
                   </Button>
                 </div>
               </div>
