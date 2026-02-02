@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import TiltCard from "./TiltCard";
 import TextReveal from "./TextReveal";
+import { Skeleton } from "@/components/ui/skeleton";
 import testimonialSophia from "@/assets/testimonial-sophia.jpg";
 import testimonialDavid from "@/assets/testimonial-david.jpg";
 import testimonialEmily from "@/assets/testimonial-emily.jpg";
@@ -33,6 +34,47 @@ const testimonials = [
     image: testimonialEmily,
   },
 ];
+
+interface TestimonialImageProps {
+  src: string;
+  alt: string;
+}
+
+const TestimonialImage = ({ src, alt }: TestimonialImageProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div className="relative h-14 w-14">
+      {/* Skeleton shown while loading */}
+      {!isLoaded && !hasError && (
+        <Skeleton className="absolute inset-0 h-14 w-14 rounded-full" />
+      )}
+      
+      {/* Fallback for error */}
+      {hasError && (
+        <div className="absolute inset-0 h-14 w-14 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center font-serif text-xl font-semibold text-primary-foreground shadow-lg ring-2 ring-primary/20">
+          {alt.charAt(0)}
+        </div>
+      )}
+      
+      {/* Actual image */}
+      <motion.img 
+        src={src} 
+        alt={alt}
+        className={`h-14 w-14 rounded-full object-cover shadow-lg ring-2 ring-primary/20 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setHasError(true)}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: isLoaded ? 1 : 0, 
+          scale: isLoaded ? 1 : 0.8 
+        }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      />
+    </div>
+  );
+};
 
 const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -136,10 +178,9 @@ const TestimonialsSection = () => {
                     </blockquote>
 
                     <div className="flex items-center gap-4">
-                      <img 
+                      <TestimonialImage 
                         src={testimonials[activeIndex].image} 
                         alt={testimonials[activeIndex].name}
-                        className="h-14 w-14 rounded-full object-cover shadow-lg ring-2 ring-primary/20"
                       />
                       <div>
                         <div className="font-semibold text-lg text-foreground">
