@@ -340,29 +340,77 @@ const Courses = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Premium CTA Section */}
       <section className="section-padding relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5" />
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-background to-secondary/[0.08]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        
         <div className="container-narrow relative">
-          <AnimatedSection className="text-center max-w-2xl mx-auto">
-            <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl">
-              Not Sure Which Course is Right for You?
-            </h2>
-            <p className="mb-8 text-lg text-muted-foreground">
-              Book a free consultation and we'll help you find the perfect program for your leadership journey.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="default" size="lg" asChild>
-                <Link to="/#contact">
-                  Schedule Consultation
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/">
-                  Back to Home
-                </Link>
-              </Button>
+          <AnimatedSection>
+            <div className="relative rounded-3xl bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-sm border border-border/50 p-10 md:p-16 shadow-2xl overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+              <div className="absolute -top-20 -right-20 w-48 h-48 bg-secondary/15 rounded-full blur-2xl" />
+              <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-primary/15 rounded-full blur-2xl" />
+              
+              {/* Content */}
+              <div className="relative text-center max-w-3xl mx-auto">
+                {/* Icon badge */}
+                <div className="mb-8 inline-flex items-center justify-center h-20 w-20 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/15 border border-primary/20 shadow-lg shadow-primary/10">
+                  <Target className="h-10 w-10 text-primary" />
+                </div>
+                
+                <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl lg:text-5xl leading-tight">
+                  Not Sure Which Path is{" "}
+                  <span className="relative">
+                    <span className="text-primary">Right for You?</span>
+                    <span className="absolute -bottom-2 left-0 right-0 h-3 bg-secondary/20 -skew-x-6 -z-10" />
+                  </span>
+                </h2>
+                
+                <p className="mb-10 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  Book a free consultation and we'll help you find the perfect program for your leadership journey. Our experts will assess your goals and recommend the ideal path forward.
+                </p>
+                
+                {/* Benefits pills */}
+                <div className="flex flex-wrap justify-center gap-3 mb-10">
+                  {['Free 30-min Call', 'Personalized Advice', 'No Obligation'].map((benefit, index) => (
+                    <span 
+                      key={benefit}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-sm font-medium text-foreground"
+                    >
+                      <Star className="h-3.5 w-3.5 text-secondary fill-secondary" />
+                      {benefit}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Button 
+                    variant="default" 
+                    size="xl" 
+                    className="group shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+                    asChild
+                  >
+                    <Link to="/#contact">
+                      Schedule Free Consultation
+                      <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="xl" 
+                    className="group hover:bg-card/80 transition-all duration-300"
+                    asChild
+                  >
+                    <Link to="/">
+                      <span>Back to Home</span>
+                    </Link>
+                  </Button>
+                </div>
+              </div>
             </div>
           </AnimatedSection>
         </div>
