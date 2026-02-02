@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn, ClipboardCheck } from "lucide-react";
+import { CheckCircle2, Target, TrendingUp, Award, Save, Loader2, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,7 +10,7 @@ import { useChecklistProgress } from "@/hooks/useChecklistProgress";
 import SocialShare from "@/components/SocialShare";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import ChecklistHero from "@/components/heroes/ChecklistHero";
 
 interface ChecklistItem {
   id: string;
@@ -167,25 +167,10 @@ const LeadershipChecklist = () => {
       <Header />
       
       {/* Hero Section */}
-      <PageHero
-        variant="checklist"
-        badge="Free Assessment"
-        badgeIcon={ClipboardCheck}
-        title="The Ultimate Leadership"
-        titleHighlight="Skills Checklist"
-        description="Honestly assess your current leadership strengths and areas for development. Check each box where you feel confident, then view your score to understand where you stand."
-      >
-        {!user && !isLoading && (
-          <p className="mt-4 text-sm text-muted-foreground">
-            <Link to="/admin/login" className="text-primary hover:underline">Sign in</Link> to save your progress and track improvements over time.
-          </p>
-        )}
-        {lastSaved && (
-          <p className="mt-2 text-sm text-muted-foreground">
-            Progress loaded from your previous session.
-          </p>
-        )}
-      </PageHero>
+      <ChecklistHero 
+        isLoggedIn={!!user} 
+        hasLastSaved={!!lastSaved} 
+      />
 
       {/* Progress Bar */}
       <div className="sticky top-20 left-0 right-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
