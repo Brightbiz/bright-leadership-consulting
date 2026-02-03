@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactHero from "@/components/heroes/ContactHero";
-import ContactSection from "@/components/ContactSection";
+import MultiStepContactForm from "@/components/MultiStepContactForm";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Users, Award } from "lucide-react";
@@ -95,7 +95,7 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Contact Form Section */}
+        {/* Multi-Step Contact Form Section */}
         <section id="contact-form" className="py-20">
           <div className="container-narrow">
             <AnimatedSection className="text-center mb-12">
@@ -103,11 +103,15 @@ const Contact = () => {
                 Send Us a Message
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Fill out the form below and we'll get back to you as soon as possible.
+                Complete the quick form below and we'll get back to you within 24 hours.
               </p>
             </AnimatedSection>
 
-            <ContactSection />
+            <AnimatedSection>
+              <div className="bg-card rounded-2xl border border-border/50 p-6 md:p-10 shadow-lg">
+                <MultiStepContactForm />
+              </div>
+            </AnimatedSection>
           </div>
         </section>
 
