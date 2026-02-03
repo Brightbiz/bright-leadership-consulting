@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -14,10 +15,25 @@ interface Module {
 }
 
 const ThinkificExport = () => {
+  const { user, isAdmin, isLoading: authLoading } = useAdminAuth();
   const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(false);
   const [parsed, setParsed] = useState(false);
   const [exporting, setExporting] = useState<number | null>(null);
+
+  // Auth loading state
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Redirect if not authenticated or not admin
+  if (!user || !isAdmin) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const parseMarkdown = async () => {
     setLoading(true);
