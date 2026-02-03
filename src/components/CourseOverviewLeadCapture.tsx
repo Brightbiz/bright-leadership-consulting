@@ -103,8 +103,20 @@ const CourseOverviewLeadCapture = () => {
           {downloadCount !== null && (
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
+              animate={{ 
+                opacity: 1, 
+                scale: [1, 1.02, 1],
+                boxShadow: [
+                  "0 0 0 0 hsl(var(--secondary) / 0)",
+                  "0 0 0 8px hsl(var(--secondary) / 0.1)",
+                  "0 0 0 0 hsl(var(--secondary) / 0)"
+                ]
+              }}
+              transition={{ 
+                opacity: { delay: 0.3, duration: 0.4 },
+                scale: { delay: 1, duration: 2, repeat: Infinity, repeatDelay: 3 },
+                boxShadow: { delay: 1, duration: 2, repeat: Infinity, repeatDelay: 3 }
+              }}
               className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 ml-3 border border-secondary/20"
             >
               <Users className="h-4 w-4 text-secondary" />
