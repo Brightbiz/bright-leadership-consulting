@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Scripts - Executive Leadership Mastery Program | INTERNAL USE ONLY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d3330;
+            --primary-light: #1a5750;
+            --secondary: #c9a227;
+            --secondary-light: #d4b54a;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --background: #ffffff;
+            --surface: #f8f9fa;
+            --border: #e5e7eb;
+            --warning: #dc2626;
+            --warning-bg: #fef2f2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @page {
+            size: A4;
+            margin: 25mm 20mm;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 11pt;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--background);
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            font-weight: 700;
+            color: rgba(220, 38, 38, 0.05);
+            pointer-events: none;
+            z-index: -1;
+            white-space: nowrap;
+        }
+        
+        .internal-banner {
+            background: linear-gradient(135deg, var(--warning) 0%, #b91c1c 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: -25mm -20mm 30px -20mm;
+            page-break-after: avoid;
+        }
+        
+        .internal-banner h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .internal-banner p {
+            font-size: 10pt;
+            opacity: 0.9;
+        }
+        
+        .cover {
+            text-align: center;
+            padding: 40px 0 60px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 40px;
+        }
+        
+        .cover-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cover-logo span {
+            color: var(--secondary);
+            font-family: 'Playfair Display', serif;
+            font-size: 28pt;
+            font-weight: 700;
+        }
+        
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28pt;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .cover .doc-type {
+            display: inline-block;
+            background: var(--warning-bg);
+            color: var(--warning);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 11pt;
+            border: 2px solid var(--warning);
+        }
+        
+        .usage-notice {
+            background: var(--warning-bg);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .usage-notice h3 {
+            color: var(--warning);
+            font-size: 12pt;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .usage-notice ul {
+            margin-left: 20px;
+            color: var(--text);
+        }
+        
+        .usage-notice li {
+            margin-bottom: 5px;
+        }
+        
+        .toc {
+            background: var(--surface);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+            page-break-after: always;
+        }
+        
+        .toc h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18pt;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .toc-phase {
+            margin-bottom: 20px;
+        }
+        
+        .toc-phase-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .toc-modules {
+            margin-left: 20px;
+            font-size: 10pt;
+            color: var(--text-muted);
+        }
+        
+        .toc-modules li {
+            margin-bottom: 3px;
+        }
+        
+        .module {
+            page-break-before: always;
+            margin-bottom: 50px;
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .module-number {
+            font-size: 10pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .module-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20pt;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .module-meta {
+            display: flex;
+            gap: 25px;
+            font-size: 10pt;
+            opacity: 0.9;
+        }
+        
+        .lesson {
+            margin-bottom: 40px;
+            border-left: 3px solid var(--secondary);
+            padding-left: 25px;
+        }
+        
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .lesson-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14pt;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .lesson-duration {
+            background: var(--surface);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 9pt;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        
+        .script-content {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .script-content h4 {
+            color: var(--primary);
+            font-size: 11pt;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .script-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .script-content ul, .script-content ol {
+            margin: 15px 0 15px 25px;
+        }
+        
+        .script-content li {
+            margin-bottom: 8px;
+        }
+        
+        .script-section {
+            margin-top: 20px;
+        }
+        
+        .script-section strong {
+            color: var(--primary);
+        }
+        
+        .key-points {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        .key-points h5 {
+            font-size: 10pt;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .teleprompter-note {
+            background: #fffbeb;
+            border: 1px dashed #d97706;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 10pt;
+            color: #92400e;
+        }
+        
+        .recording-notes {
+            background: #f0fdf4;
+            border: 1px solid #22c55e;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .recording-notes h4 {
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            .watermark { display: none; }
+            .internal-banner { margin: 0 0 30px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">INTERNAL USE ONLY</div>
+    
+    <div class="internal-banner">
+        <h2>⚠️ Confidential — Internal Use Only ⚠️</h2>
+        <p>This document contains video scripts for recording. Not for distribution to students.</p>
+    </div>
+    
+    <div class="cover">
+        <div class="cover-logo">
+            <span>BBS</span>
+        </div>
+        <h1>Video Recording Scripts</h1>
+        <p class="subtitle">Executive Leadership Mastery Program</p>
+        <div class="doc-type">🎬 INTERNAL PRODUCTION DOCUMENT</div>
+    </div>
+    
+    <div class="usage-notice">
+        <h3>⚠️ Document Usage Guidelines</h3>
+        <ul>
+            <li><strong>Purpose:</strong> These scripts are for video recording/production only</li>
+            <li><strong>NOT for student access:</strong> Students receive the recorded videos, not these scripts</li>
+            <li><strong>Teleprompter-ready:</strong> Scripts are formatted for easy reading during recording</li>
+            <li><strong>Duration guides:</strong> Target recording times are approximate; adjust pacing as needed</li>
+            <li><strong>Total content:</strong> 33 modules × ~5 lessons = 165+ video scripts</li>
+        </ul>
+    </div>
+    
+    <div class="toc">
+        <h2>Contents Overview</h2>
+        
+        <div class="toc-phase">
+            <div class="toc-phase-title">Phase 1: Leadership Foundations (Modules 1-6)</div>
+            <ul class="toc-modules">
+                <li>M1: What is Leadership? — 5 video scripts</li>
+                <li>M2: Leadership vs. Management — 5 video scripts</li>
+                <li>M3: Developing Your Leadership Identity — 5 video scripts</li>
+                <li>M4: The Power of Self-Awareness — 5 video scripts</li>
+                <li>M5: Emotional Intelligence — 5 video scripts</li>
+                <li>M6: Values-Based Leadership — 5 video scripts</li>
+            </ul>
+        </div>
+        
+        <div class="toc-phase">
+            <div class="toc-phase-title">Phase 2: Core Competencies (Modules 7-14)</div>
+            <ul class="toc-modules">
+                <li>M7: Communication Mastery — 5 video scripts</li>
+                <li>M8: Active Listening — 5 video scripts</li>
+                <li>M9: Building & Leading Teams — 5 video scripts</li>
+                <li>M10: Delegation & Empowerment — 5 video scripts</li>
+                <li>M11: Coaching & Developing Others — 5 video scripts</li>
+                <li>M12: Conflict Resolution — 5 video scripts</li>
+                <li>M13: Giving & Receiving Feedback — 5 video scripts</li>
+                <li>M14: Decision Making — 5 video scripts</li>
+            </ul>
+        </div>
+        
+        <div class="toc-phase">
+            <div class="toc-phase-title">Phase 3: Strategic Leadership (Modules 15-22)</div>
+            <ul class="toc-modules">
+                <li>M15: Strategic Thinking — 5 video scripts</li>
+                <li>M16: Change Leadership — 5 video scripts</li>
+                <li>M17: Innovation Leadership — 5 video scripts</li>
+                <li>M18: Influence & Persuasion — 5 video scripts</li>
+                <li>M19: Building Organisational Culture — 5 video scripts</li>
+                <li>M20: Stakeholder Management — 5 video scripts</li>
+                <li>M21: Crisis Leadership — 5 video scripts</li>
+                <li>M22: Ethical Leadership — 5 video scripts</li>
+            </ul>
+        </div>
+        
+        <div class="toc-phase">
+            <div class="toc-phase-title">Phase 4: Advanced Practice (Modules 23-28)</div>
+            <ul class="toc-modules">
+                <li>M23: Executive Presence — 5 video scripts</li>
+                <li>M24: Leading Remote & Hybrid Teams — 5 video scripts</li>
+                <li>M25: Diversity & Inclusion — 5 video scripts</li>
+                <li>M26: Resilience & Wellbeing — 5 video scripts</li>
+                <li>M27: Time & Energy Management — 5 video scripts</li>
+                <li>M28: Negotiation Skills — 5 video scripts</li>
+            </ul>
+        </div>
+        
+        <div class="toc-phase">
+            <div class="toc-phase-title">Phase 5: Mastery & Integration (Modules 29-33)</div>
+            <ul class="toc-modules">
+                <li>M29: Leading Leaders — 5 video scripts</li>
+                <li>M30: Succession Planning — 5 video scripts</li>
+                <li>M31: Board & C-Suite Engagement — 5 video scripts</li>
+                <li>M32: Personal Leadership Brand — 5 video scripts</li>
+                <li>M33: Capstone Integration — 5 video scripts</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- SAMPLE MODULE - Module 1 -->
+    <div class="module">
+        <div class="module-header">
+            <div class="module-number">Module 1 of 33</div>
+            <h2 class="module-title">What is Leadership?</h2>
+            <div class="module-meta">
+                <span>📹 5 Video Lessons</span>
+                <span>⏱️ Total: ~50 minutes</span>
+                <span>🎯 CPD Points: 2</span>
+            </div>
+        </div>
+        
+        <div class="lesson">
+            <div class="lesson-header">
+                <h3 class="lesson-title">Lesson 1.1: Defining Leadership</h3>
+                <span class="lesson-duration">⏱️ 8-10 min</span>
+            </div>
+            
+            <div class="recording-notes">
+                <h4>🎬 Recording Notes</h4>
+                <ul>
+                    <li><strong>Tone:</strong> Warm, welcoming, inspirational</li>
+                    <li><strong>Setting:</strong> Professional backdrop, good lighting</li>
+                    <li><strong>Pace:</strong> Measured, allow pauses for emphasis</li>
+                    <li><strong>Visual cues:</strong> Consider B-roll for "corner office" and "leadership examples"</li>
+                </ul>
+            </div>
+            
+            <div class="script-content">
+                <h4>📝 Video Script</h4>
+                
+                <p>Welcome to the Executive Leadership Mastery Program. I'm thrilled you've chosen to invest in your leadership journey.</p>
+                
+                <p>Let me start with a question that seems simple but has profound implications: What exactly is leadership?</p>
+                
+                <div class="teleprompter-note">
+                    [PAUSE — Let the question land]
+                </div>
+                
+                <p>Leadership is not a title. It's not a corner office. It's not the number of people who report to you.</p>
+                
+                <p>Leadership is the ability to inspire, influence, and guide others toward a shared goal. It's about creating a vision that others want to follow—not because they have to, but because they choose to.</p>
+                
+                <p>Think about the most impactful leader you've ever encountered. Perhaps it was a boss, a teacher, a coach, or even a peer. What made them memorable? I'd wager it wasn't their job title. It was how they made you feel. It was their ability to see potential in you that you couldn't see in yourself.</p>
+                
+                <div class="script-section">
+                    <strong>The Leadership Paradox</strong>
+                    <p>Here's what makes leadership fascinating: the most powerful leaders are often the most humble. They understand that leadership isn't about being in charge—it's about taking care of those in your charge.</p>
+                    
+                    <p>Simon Sinek puts it beautifully: "Leadership is not about being in control. It's about creating an environment in which people can do their best work."</p>
+                </div>
+                
+                <div class="key-points">
+                    <h5>🎯 Key Takeaways (Emphasise these)</h5>
+                    <ul>
+                        <li>Leadership is influence, not authority</li>
+                        <li>Great leaders inspire voluntary followership</li>
+                        <li>Leadership can exist at any level of an organization</li>
+                    </ul>
+                </div>
+                
+                <div class="teleprompter-note">
+                    [TRANSITION — Shift to reflective tone]
+                </div>
+                
+                <p>Before we move to our next lesson, I want you to pause this video and try a reflection exercise:</p>
+                
+                <p>Think about a time when someone influenced your behaviour without having formal authority over you. What did they do? How did they do it? Write down three specific behaviours they demonstrated.</p>
+                
+                <p>This reflection will set the foundation for everything we explore in this program.</p>
+                
+                <p>I'll see you in the next lesson, where we'll explore the specific traits of effective leaders.</p>
+            </div>
+        </div>
+        
+        <div class="lesson">
+            <div class="lesson-header">
+                <h3 class="lesson-title">Lesson 1.2: Traits of Effective Leaders</h3>
+                <span class="lesson-duration">⏱️ 10-12 min</span>
+            </div>
+            
+            <div class="recording-notes">
+                <h4>🎬 Recording Notes</h4>
+                <ul>
+                    <li><strong>Tone:</strong> Educational, engaging</li>
+                    <li><strong>Visual cues:</strong> Consider on-screen graphics for each trait</li>
+                    <li><strong>Pace:</strong> Slightly faster, content-rich</li>
+                </ul>
+            </div>
+            
+            <div class="script-content">
+                <h4>📝 Video Script</h4>
+                
+                <p>What separates good leaders from great ones? Researchers have spent decades trying to answer this question.</p>
+                
+                <p>While there's no single formula, certain traits consistently appear in the most effective leaders:</p>
+                
+                <div class="script-section">
+                    <strong>1. Integrity</strong>
+                    <p>Great leaders do what they say they'll do. They're consistent in their values, whether anyone is watching or not. Trust is the foundation of leadership, and integrity is the foundation of trust.</p>
+                </div>
+                
+                <div class="script-section">
+                    <strong>2. Vision</strong>
+                    <p>Effective leaders can see beyond the immediate. They paint a compelling picture of a future worth striving for. But here's the key—they don't just have a vision; they can communicate it in a way that resonates emotionally with others.</p>
+                </div>
+                
+                <div class="script-section">
+                    <strong>3. Emotional Intelligence</strong>
+                    <p>The ability to understand and manage your own emotions, while also reading and responding to the emotions of others, is perhaps the most critical leadership trait. We'll explore this in depth in Module 5.</p>
+                </div>
+                
+                <div class="script-section">
+                    <strong>4. Courage</strong>
+                    <p>Leadership requires making difficult decisions. It requires having hard conversations. It requires standing firm when it would be easier to compromise your values.</p>
+                </div>
+                
+                <div class="script-section">
+                    <strong>5. Humility</strong>
+                    <p>The best leaders know they don't have all the answers. They hire people smarter than themselves. They ask questions more than they give answers. They give credit freely and accept blame personally.</p>
+                </div>
+                
+                <div class="script-section">
+                    <strong>6. Adaptability</strong>
+                    <p>In a world of constant change, rigid leaders become obsolete. The ability to pivot, learn, and evolve is essential.</p>
+                </div>
+                
+                <div class="teleprompter-note">
+                    [PAUSE — Transition to activity]
+                </div>
+                
+                <p>Now it's your turn. I want you to do a Leadership Trait Self-Assessment.</p>
+                
+                <p>Rate yourself 1 to 10 on each of these six traits. Be honest—this is for your development, not your ego. Identify your top two strengths and the one area that needs the most work. This will be your focus throughout the program.</p>
+            </div>
+        </div>
+        
+        <!-- Additional lessons would continue here following the same pattern -->
+        
+        <div class="recording-notes" style="margin-top: 40px;">
+            <h4>📋 Module 1 Production Checklist</h4>
+            <ul>
+                <li>☐ Lesson 1.1: Defining Leadership (8-10 min)</li>
+                <li>☐ Lesson 1.2: Traits of Effective Leaders (10-12 min)</li>
+                <li>☐ Lesson 1.3: Leadership vs. Management (8-10 min)</li>
+                <li>☐ Lesson 1.4: The Impact of Leadership (10-12 min)</li>
+                <li>☐ Lesson 1.5: Developing Your Leadership Style (12-15 min)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- EXTRACTION INSTRUCTIONS -->
+    <div class="module">
+        <div class="module-header" style="background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);">
+            <div class="module-number">Instructions</div>
+            <h2 class="module-title">Full Script Extraction Guide</h2>
+        </div>
+        
+        <div class="script-content">
+            <h4>How to Extract All 165+ Video Scripts</h4>
+            
+            <p>The complete scripts are contained in the master content file:</p>
+            <p><strong>File:</strong> <code>public/downloads/executive-leadership-mastery-thinkific-content.md</code></p>
+            
+            <p><strong>To extract all video scripts:</strong></p>
+            
+            <ol>
+                <li>Open the master content file</li>
+                <li>Search for <code>**Video Script</code> to find each script section</li>
+                <li>Scripts are marked with duration estimates (e.g., "8-10 minutes")</li>
+                <li>Copy each script into this template format for production use</li>
+            </ol>
+            
+            <p><strong>Pattern to find scripts:</strong></p>
+            <pre style="background: #1a1a1a; color: #22c55e; padding: 15px; border-radius: 6px; overflow-x: auto;">
+### Lesson X.X: [Lesson Title]
+
+**Video Script (X-X minutes):**
+
+[Script content here...]
+            </pre>
+            
+            <p>Each module contains 5 lessons, for a total of 165 video scripts across 33 modules.</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 60px; padding: 30px; background: var(--surface); border-radius: 8px;">
+        <p style="color: var(--text-muted); font-size: 10pt;">
+            <strong>Bright Business School</strong><br>
+            Executive Leadership Mastery Program — Video Production Scripts<br>
+            © 2024 All Rights Reserved | CONFIDENTIAL
+        </p>
+    </div>
+</body>
+</html>
