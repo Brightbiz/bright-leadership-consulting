@@ -396,12 +396,12 @@ const ThinkificExport = () => {
             {/* Production Documents */}
             <p className="text-sm text-muted-foreground mb-3">Internal Production Documents:</p>
             <div className="flex flex-wrap justify-center gap-3">
-              <div className="inline-flex items-center rounded-lg bg-orange-500/10 overflow-hidden border border-orange-500/20">
+              <div className="inline-flex items-center rounded-lg bg-internal-video-bg overflow-hidden border border-internal-video-border">
                 <a
                   href="/downloads/video-scripts-internal.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-internal-video-foreground hover:bg-internal-video/10 transition-colors text-sm font-medium"
                 >
                   <Video className="h-4 w-4" />
                   Video Scripts (Internal)
@@ -415,18 +415,18 @@ const ThinkificExport = () => {
                       };
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium border-l border-orange-500/20"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-internal-video-foreground hover:bg-internal-video/10 transition-colors text-sm font-medium border-l border-internal-video-border"
                   title="Download as PDF"
                 >
                   <Printer className="h-4 w-4" />
                 </button>
               </div>
-              <div className="inline-flex items-center rounded-lg bg-indigo-500/10 overflow-hidden border border-indigo-500/20">
+              <div className="inline-flex items-center rounded-lg bg-internal-quiz-bg overflow-hidden border border-internal-quiz-border">
                 <a
                   href="/downloads/quiz-export-thinkific.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-internal-quiz-foreground hover:bg-internal-quiz/10 transition-colors text-sm font-medium"
                 >
                   <HelpCircle className="h-4 w-4" />
                   Quiz Export (Thinkific)
@@ -440,7 +440,7 @@ const ThinkificExport = () => {
                       };
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium border-l border-indigo-500/20"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-internal-quiz-foreground hover:bg-internal-quiz/10 transition-colors text-sm font-medium border-l border-internal-quiz-border"
                   title="Download as PDF"
                 >
                   <Printer className="h-4 w-4" />
