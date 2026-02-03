@@ -1,48 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import { Download, BookOpen, CheckCircle, Sparkles, Users } from "lucide-react";
+import { useState } from "react";
+import { Download, BookOpen, CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import AnimatedSection from "./AnimatedSection";
-import RecentActivityNotification from "./RecentActivityNotification";
-import { motion, useInView, useSpring, useTransform } from "framer-motion";
-
-const AnimatedCounter = ({ value }: { value: number }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
-  const spring = useSpring(0, { duration: 2000, bounce: 0 });
-  const display = useTransform(spring, (current) => Math.floor(current).toLocaleString());
-  
-  useEffect(() => {
-    if (isInView) {
-      spring.set(value);
-    }
-  }, [isInView, value, spring]);
-
-  return <motion.span ref={ref}>{display}</motion.span>;
-};
 
 const LeadMagnetSection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
-  const [downloadCount, setDownloadCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchDownloadCount = async () => {
-      const { count } = await supabase
-        .from("lead_magnet_downloads")
-        .select("*", { count: "exact", head: true })
-        .eq("lead_magnet_name", "5-leadership-secrets");
-      
-      // Add a base number for social proof
-      setDownloadCount((count || 0) + 2341);
-    };
-    fetchDownloadCount();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,27 +88,6 @@ const LeadMagnetSection = () => {
                     Free Download
                   </span>
                 </div>
-
-                {/* Social Proof Badge */}
-                {downloadCount !== null && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: [1, 1.02, 1],
-                    }}
-                    transition={{ 
-                      opacity: { delay: 0.3, duration: 0.4 },
-                      scale: { delay: 1, duration: 2, repeat: Infinity, repeatDelay: 3 },
-                    }}
-                    className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 ml-3 border border-white/20"
-                  >
-                    <Users className="h-4 w-4 text-secondary" />
-                    <span className="text-sm font-medium text-primary-foreground">
-                      <span className="font-bold"><AnimatedCounter value={downloadCount} /></span> leaders downloaded
-                    </span>
-                  </motion.div>
-                )}
 
                 <h2 className="mb-4 font-serif text-3xl font-semibold text-primary-foreground sm:text-4xl">
                   5 Leadership Secrets Every Executive Needs to Know
@@ -250,9 +197,6 @@ const LeadMagnetSection = () => {
           </div>
         </AnimatedSection>
       </div>
-      
-      {/* Recent Activity Notifications */}
-      <RecentActivityNotification />
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Download, BookOpen, CheckCircle, X, Sparkles, Users } from "lucide-react";
+import { Download, BookOpen, CheckCircle, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -148,12 +148,6 @@ const ExitIntentPopup = () => {
             </div>
           ) : (
             <>
-              {/* Social proof badge */}
-              <div className="flex items-center justify-center gap-2 mb-4 text-xs text-muted-foreground">
-                <Users className="h-3.5 w-3.5 text-secondary" />
-                <span><span className="font-semibold text-foreground">2,300+</span> leaders downloaded this guide</span>
-              </div>
-              
               <ul className="space-y-2 mb-5">
                 {secrets.map((secret, index) => (
                   <li
