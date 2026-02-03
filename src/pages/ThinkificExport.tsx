@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -335,9 +335,31 @@ const ThinkificExport = () => {
             <h1 className="text-3xl md:text-4xl font-serif font-semibold text-foreground mb-4">
               Export Modules for Thinkific
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
               Parse the Executive Leadership Mastery content and export individual modules as PDF files for bulk upload to Thinkific.
             </p>
+            
+            {/* Quick Downloads */}
+            <div className="flex flex-wrap justify-center gap-3">
+              <a
+                href="/downloads/executive-leadership-mastery-introduction.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium"
+              >
+                <BookOpen className="h-4 w-4" />
+                Course Introduction PDF
+              </a>
+              <a
+                href="/downloads/executive-leadership-mastery-overview.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+              >
+                <FileText className="h-4 w-4" />
+                Course Overview PDF
+              </a>
+            </div>
           </div>
 
           {/* Parse Button */}
