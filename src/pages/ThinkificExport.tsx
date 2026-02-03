@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -340,7 +340,7 @@ const ThinkificExport = () => {
             </p>
             
             {/* Quick Downloads */}
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mb-4">
               <a
                 href="/downloads/executive-leadership-mastery-introduction.html"
                 target="_blank"
@@ -348,7 +348,7 @@ const ThinkificExport = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium"
               >
                 <BookOpen className="h-4 w-4" />
-                Course Introduction PDF
+                Course Introduction
               </a>
               <a
                 href="/downloads/executive-leadership-mastery-overview.html"
@@ -357,7 +357,30 @@ const ThinkificExport = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
               >
                 <FileText className="h-4 w-4" />
-                Course Overview PDF
+                Course Overview
+              </a>
+            </div>
+            
+            {/* Production Documents */}
+            <p className="text-sm text-muted-foreground mb-3">Internal Production Documents:</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <a
+                href="/downloads/video-scripts-internal.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium border border-orange-500/20"
+              >
+                <Video className="h-4 w-4" />
+                Video Scripts (Internal)
+              </a>
+              <a
+                href="/downloads/quiz-export-thinkific.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium border border-indigo-500/20"
+              >
+                <HelpCircle className="h-4 w-4" />
+                Quiz Export (Thinkific)
               </a>
             </div>
           </div>
