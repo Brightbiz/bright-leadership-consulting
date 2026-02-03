@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import ChatMessage from "@/components/chat/ChatMessage";
 import LeadCaptureForm from "@/components/chat/LeadCaptureForm";
 import { useChatStream } from "@/components/chat/useChatStream";
@@ -15,22 +14,47 @@ interface Message {
   timestamp: Date;
 }
 
+const STORAGE_KEY = "bbs-chat-history";
+const INITIAL_MESSAGE: Message = {
+  id: "1",
+  text: "👋 Hi! I'm your Leadership Assistant. How can I help you with your leadership journey today?",
+  isBot: true,
+  timestamp: new Date(),
+};
+
 const quickReplies = [
   "Tell me about coaching",
   "What programs do you offer?",
   "How do I book a consultation?",
 ];
 
+const loadMessagesFromStorage = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.map((m: any) => ({
+        ...m,
+        timestamp: new Date(m.timestamp),
+      }));
+    }
+  } catch (e) {
+    console.error("Failed to load chat history:", e);
+  }
+  return [INITIAL_MESSAGE];
+};
+
+const saveMessagesToStorage = (messages: Message[]) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  } catch (e) {
+    console.error("Failed to save chat history:", e);
+  }
+};
+
 const FloatingChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "👋 Hi! I'm your Leadership Assistant. How can I help you with your leadership journey today?",
-      isBot: true,
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState("");
   const [showLeadForm, setShowLeadForm] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -40,6 +64,19 @@ const FloatingChatWidget = () => {
     setMessages,
     () => setShowLeadForm(true)
   );
+
+  // Persist messages to localStorage when they change
+  useEffect(() => {
+    if (messages.length > 0 && !messages.some((m) => m.id === "streaming")) {
+      saveMessagesToStorage(messages);
+    }
+  }, [messages]);
+
+  const clearHistory = useCallback(() => {
+    setMessages([INITIAL_MESSAGE]);
+    setShowLeadForm(false);
+    localStorage.removeItem(STORAGE_KEY);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -134,12 +171,23 @@ const FloatingChatWidget = () => {
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full hover:bg-white/10 transition-colors"
-                >
-                  <X className="h-5 w-5 text-primary-foreground" />
-                </button>
+                <div className="flex items-center gap-1">
+                  {messages.length > 1 && (
+                    <button
+                      onClick={clearHistory}
+                      className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                      title="Start new conversation"
+                    >
+                      <RotateCcw className="h-4 w-4 text-primary-foreground" />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                  >
+                    <X className="h-5 w-5 text-primary-foreground" />
+                  </button>
+                </div>
               </div>
 
               {/* Messages */}
