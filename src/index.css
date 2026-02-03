@@ -88,6 +88,17 @@
     --score-aspiring-bg: 210 70% 96%;
     --score-aspiring-border: 210 60% 88%;
 
+    /* Internal/Production document colors */
+    --internal-video: 25 95% 53%;
+    --internal-video-foreground: 25 90% 40%;
+    --internal-video-bg: 25 90% 96%;
+    --internal-video-border: 25 80% 88%;
+
+    --internal-quiz: 245 75% 60%;
+    --internal-quiz-foreground: 245 70% 45%;
+    --internal-quiz-bg: 245 70% 96%;
+    --internal-quiz-border: 245 60% 88%;
+
     /* Sidebar - keeping existing */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -152,6 +163,17 @@
     --score-aspiring-foreground: 210 60% 75%;
     --score-aspiring-bg: 210 40% 15%;
     --score-aspiring-border: 210 45% 25%;
+
+    /* Internal/Production document colors - dark mode */
+    --internal-video: 25 85% 55%;
+    --internal-video-foreground: 25 80% 75%;
+    --internal-video-bg: 25 40% 15%;
+    --internal-video-border: 25 45% 25%;
+
+    --internal-quiz: 245 65% 60%;
+    --internal-quiz-foreground: 245 55% 75%;
+    --internal-quiz-bg: 245 40% 15%;
+    --internal-quiz-border: 245 45% 25%;
   }
 }
 

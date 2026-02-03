@@ -78,10 +78,24 @@ export default {
             border: "hsl(var(--score-emerging-border))",
           },
           aspiring: {
-            DEFAULT: "hsl(var(--score-aspiring))",
+81:             DEFAULT: "hsl(var(--score-aspiring))",
             foreground: "hsl(var(--score-aspiring-foreground))",
             bg: "hsl(var(--score-aspiring-bg))",
             border: "hsl(var(--score-aspiring-border))",
+          },
+        },
+        internal: {
+          video: {
+            DEFAULT: "hsl(var(--internal-video))",
+            foreground: "hsl(var(--internal-video-foreground))",
+            bg: "hsl(var(--internal-video-bg))",
+            border: "hsl(var(--internal-video-border))",
+          },
+          quiz: {
+            DEFAULT: "hsl(var(--internal-quiz))",
+            foreground: "hsl(var(--internal-quiz-foreground))",
+            bg: "hsl(var(--internal-quiz-bg))",
+            border: "hsl(var(--internal-quiz-border))",
           },
         },
         sidebar: {
