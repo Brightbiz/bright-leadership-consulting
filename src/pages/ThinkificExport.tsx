@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -341,24 +341,56 @@ const ThinkificExport = () => {
             
             {/* Quick Downloads */}
             <div className="flex flex-wrap justify-center gap-3 mb-4">
-              <a
-                href="/downloads/executive-leadership-mastery-introduction.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium"
-              >
-                <BookOpen className="h-4 w-4" />
-                Course Introduction
-              </a>
-              <a
-                href="/downloads/executive-leadership-mastery-overview.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
-              >
-                <FileText className="h-4 w-4" />
-                Course Overview
-              </a>
+              <div className="inline-flex items-center rounded-lg bg-secondary/10 overflow-hidden">
+                <a
+                  href="/downloads/executive-leadership-mastery-introduction.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Course Introduction
+                </a>
+                <button
+                  onClick={() => {
+                    const printWindow = window.open("/downloads/executive-leadership-mastery-introduction.html", "_blank");
+                    if (printWindow) {
+                      printWindow.onload = () => {
+                        setTimeout(() => printWindow.print(), 300);
+                      };
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium border-l border-secondary/20"
+                  title="Download as PDF"
+                >
+                  <Printer className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="inline-flex items-center rounded-lg bg-primary/10 overflow-hidden">
+                <a
+                  href="/downloads/executive-leadership-mastery-overview.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+                >
+                  <FileText className="h-4 w-4" />
+                  Course Overview
+                </a>
+                <button
+                  onClick={() => {
+                    const printWindow = window.open("/downloads/executive-leadership-mastery-overview.html", "_blank");
+                    if (printWindow) {
+                      printWindow.onload = () => {
+                        setTimeout(() => printWindow.print(), 300);
+                      };
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-primary hover:bg-primary/20 transition-colors text-sm font-medium border-l border-primary/20"
+                  title="Download as PDF"
+                >
+                  <Printer className="h-4 w-4" />
+                </button>
+              </div>
             </div>
             
             {/* Production Documents */}
