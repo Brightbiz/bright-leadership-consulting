@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Newspaper, BookOpen, TrendingUp, Feather, ArrowRight, Mail, Sparkles } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import AnimatedGradient from "@/components/AnimatedGradient";
 import { useMouseParallax, ParallaxLayer } from "@/hooks/useMouseParallax";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -57,36 +58,15 @@ const BlogHero = () => {
   };
 
   const featuredTopics = [
-    { icon: TrendingUp, label: "Strategy", color: "from-emerald-500 to-teal-600" },
-    { icon: BookOpen, label: "Learning", color: "from-amber-500 to-orange-600" },
-    { icon: Feather, label: "Insights", color: "from-violet-500 to-purple-600" },
+    { icon: TrendingUp, label: "Strategy", color: "from-primary to-primary/70" },
+    { icon: BookOpen, label: "Learning", color: "from-secondary to-secondary/70" },
+    { icon: Feather, label: "Insights", color: "from-primary to-primary/70" },
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-[85vh] overflow-hidden flex items-center bg-foreground">
-      {/* Dark editorial background with grain texture */}
-      <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground/95 to-primary/20" />
-      
-      {/* Subtle grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(hsl(var(--background)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--background)) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
-      />
-
-      {/* Dramatic diagonal accent */}
-      <motion.div 
-        className="absolute top-0 right-0 w-[70%] h-full origin-top-right"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-bl from-secondary/20 via-secondary/5 to-transparent" 
-          style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0% 100%)' }} 
-        />
-      </motion.div>
+    <section ref={containerRef} className="relative min-h-[85vh] overflow-hidden flex items-center">
+      {/* Animated Gradient Background - same as homepage */}
+      <AnimatedGradient />
 
       {/* Floating article previews */}
       <ParallaxLayer parallax={parallax} depth={0.8} className="absolute top-20 right-[8%] hidden xl:block">
@@ -94,13 +74,13 @@ const BlogHero = () => {
           initial={{ opacity: 0, y: 40, rotate: 8 }}
           animate={{ opacity: 1, y: 0, rotate: 8 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="w-48 h-64 bg-background/10 backdrop-blur-xl rounded-2xl border border-background/20 p-4 shadow-2xl"
+          className="w-48 h-64 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-4 shadow-2xl"
         >
           <div className="h-20 bg-gradient-to-br from-secondary/30 to-primary/20 rounded-lg mb-3" />
           <div className="space-y-2">
-            <div className="h-2 w-full bg-background/20 rounded" />
-            <div className="h-2 w-3/4 bg-background/15 rounded" />
-            <div className="h-2 w-1/2 bg-background/10 rounded" />
+            <div className="h-2 w-full bg-white/20 rounded" />
+            <div className="h-2 w-3/4 bg-white/15 rounded" />
+            <div className="h-2 w-1/2 bg-white/10 rounded" />
           </div>
           <motion.div 
             className="absolute -bottom-3 -right-3 w-8 h-8 rounded-full bg-secondary flex items-center justify-center"
@@ -117,30 +97,14 @@ const BlogHero = () => {
           initial={{ opacity: 0, y: 40, rotate: -5 }}
           animate={{ opacity: 1, y: 0, rotate: -5 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="w-40 h-52 bg-primary/20 backdrop-blur-xl rounded-2xl border border-primary/30 p-3 shadow-2xl"
+          className="w-40 h-52 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-3 shadow-2xl"
         >
           <div className="h-16 bg-gradient-to-br from-primary/40 to-secondary/20 rounded-lg mb-2" />
           <div className="space-y-1.5">
-            <div className="h-1.5 w-full bg-background/15 rounded" />
-            <div className="h-1.5 w-2/3 bg-background/10 rounded" />
+            <div className="h-1.5 w-full bg-white/15 rounded" />
+            <div className="h-1.5 w-2/3 bg-white/10 rounded" />
           </div>
         </motion.div>
-      </ParallaxLayer>
-
-      {/* Glowing orbs */}
-      <ParallaxLayer parallax={parallax} depth={0.4} className="absolute -top-32 left-[20%]">
-        <motion.div
-          className="w-[500px] h-[500px] rounded-full bg-primary/30 blur-[180px]"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </ParallaxLayer>
-      <ParallaxLayer parallax={parallax} depth={0.6} className="absolute -bottom-20 right-[5%]">
-        <motion.div
-          className="w-[400px] h-[400px] rounded-full bg-secondary/40 blur-[150px]"
-          animate={{ scale: [1.1, 1, 1.1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
       </ParallaxLayer>
 
       {/* Content */}
@@ -151,15 +115,15 @@ const BlogHero = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-3"
+            className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg"
           >
-            <span className="w-12 h-px bg-secondary" />
-            <span className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">
+            <Newspaper className="h-4 w-4 text-secondary" />
+            <span className="text-sm font-semibold text-primary-foreground">
               The Journal
             </span>
           </motion.div>
 
-          <h1 className="mb-8 font-serif text-5xl font-bold leading-[1.05] text-background sm:text-6xl lg:text-7xl">
+          <h1 className="mb-8 font-serif text-5xl font-bold leading-[1.05] text-primary-foreground sm:text-6xl lg:text-7xl">
             <TextReveal delay={0.2}>
               Ideas That
             </TextReveal>
@@ -174,7 +138,7 @@ const BlogHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg text-background/70 leading-relaxed sm:text-xl max-w-xl mb-12"
+            className="text-lg text-primary-foreground/85 leading-relaxed sm:text-xl max-w-xl mb-12"
           >
             Curated perspectives on leadership, strategy, and growth from 
             industry experts and thought leaders.
@@ -193,12 +157,12 @@ const BlogHero = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                className="group flex items-center gap-3 px-5 py-3 rounded-full bg-background/10 border border-background/20 hover:bg-background/20 transition-all duration-300 cursor-pointer"
+                className="group flex items-center gap-3 px-5 py-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer"
               >
                 <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${topic.color} flex items-center justify-center`}>
-                  <topic.icon className="h-4 w-4 text-white" />
+                  <topic.icon className="h-4 w-4 text-primary-foreground" />
                 </div>
-                <span className="text-sm font-semibold text-background group-hover:text-secondary transition-colors">
+                <span className="text-sm font-semibold text-primary-foreground group-hover:text-secondary transition-colors">
                   {topic.label}
                 </span>
               </motion.div>
@@ -216,23 +180,23 @@ const BlogHero = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-secondary/50 via-primary/30 to-secondary/50 rounded-2xl blur-lg opacity-60" />
               <form 
                 onSubmit={handleNewsletterSubmit}
-                className="relative bg-background/10 backdrop-blur-xl border border-background/20 rounded-xl p-4"
+                className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-4"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                     <Sparkles className="h-4 w-4 text-secondary" />
                   </div>
-                  <span className="text-sm font-medium text-background/80">Get weekly insights</span>
+                  <span className="text-sm font-medium text-primary-foreground/80">Get weekly insights</span>
                 </div>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-background/50" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-foreground/50" />
                     <Input
                       type="email"
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 bg-background/10 border-background/20 text-background placeholder:text-background/40 focus:border-secondary"
+                      className="pl-10 bg-white/10 border-white/20 text-primary-foreground placeholder:text-primary-foreground/40 focus:border-secondary"
                       required
                     />
                   </div>
@@ -245,7 +209,7 @@ const BlogHero = () => {
                     {isSubmitting ? "..." : "Subscribe"}
                   </Button>
                 </div>
-                <p className="text-xs text-background/50 mt-2">
+                <p className="text-xs text-primary-foreground/50 mt-2">
                   Join 2,500+ leaders. Unsubscribe anytime.
                 </p>
               </form>
@@ -269,8 +233,15 @@ const BlogHero = () => {
         </div>
       </div>
 
-      {/* Bottom decorative line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-background/30 to-transparent" />
+      {/* Bottom wave - same as homepage */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 100" fill="none" className="w-full">
+          <path
+            d="M0 50C360 100 720 0 1080 50C1260 75 1380 75 1440 50V100H0V50Z"
+            className="fill-background"
+          />
+        </svg>
+      </div>
     </section>
   );
 };
