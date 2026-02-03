@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +6,23 @@ import { FileText, Download, ArrowRight, Clock, Award, BookOpen, Target, Check, 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import AnimatedSection from "@/components/AnimatedSection";
+import { motion, useInView, useSpring, useTransform } from "framer-motion";
+
+const AnimatedCounter = ({ value }: { value: number }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  const spring = useSpring(0, { duration: 2000, bounce: 0 });
+  const display = useTransform(spring, (current) => Math.floor(current).toLocaleString());
+  
+  useEffect(() => {
+    if (isInView) {
+      spring.set(value);
+    }
+  }, [isInView, value, spring]);
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+};
 
 const CourseOverviewLeadCapture = () => {
   const [name, setName] = useState("");
@@ -84,12 +101,17 @@ const CourseOverviewLeadCapture = () => {
           
           {/* Social Proof Badge */}
           {downloadCount !== null && (
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 ml-3 border border-secondary/20">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 ml-3 border border-secondary/20"
+            >
               <Users className="h-4 w-4 text-secondary" />
               <span className="text-sm font-medium text-foreground">
-                <span className="font-bold">{downloadCount.toLocaleString()}</span> leaders downloaded
+                <span className="font-bold"><AnimatedCounter value={downloadCount} /></span> leaders downloaded
               </span>
-            </div>
+            </motion.div>
           )}
           <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl">
             Download the Complete <span className="text-primary">Course Overview</span>
