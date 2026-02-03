@@ -396,24 +396,56 @@ const ThinkificExport = () => {
             {/* Production Documents */}
             <p className="text-sm text-muted-foreground mb-3">Internal Production Documents:</p>
             <div className="flex flex-wrap justify-center gap-3">
-              <a
-                href="/downloads/video-scripts-internal.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium border border-orange-500/20"
-              >
-                <Video className="h-4 w-4" />
-                Video Scripts (Internal)
-              </a>
-              <a
-                href="/downloads/quiz-export-thinkific.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium border border-indigo-500/20"
-              >
-                <HelpCircle className="h-4 w-4" />
-                Quiz Export (Thinkific)
-              </a>
+              <div className="inline-flex items-center rounded-lg bg-orange-500/10 overflow-hidden border border-orange-500/20">
+                <a
+                  href="/downloads/video-scripts-internal.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium"
+                >
+                  <Video className="h-4 w-4" />
+                  Video Scripts (Internal)
+                </a>
+                <button
+                  onClick={() => {
+                    const printWindow = window.open("/downloads/video-scripts-internal.html", "_blank");
+                    if (printWindow) {
+                      printWindow.onload = () => {
+                        setTimeout(() => printWindow.print(), 300);
+                      };
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-orange-600 hover:bg-orange-500/20 transition-colors text-sm font-medium border-l border-orange-500/20"
+                  title="Download as PDF"
+                >
+                  <Printer className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="inline-flex items-center rounded-lg bg-indigo-500/10 overflow-hidden border border-indigo-500/20">
+                <a
+                  href="/downloads/quiz-export-thinkific.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium"
+                >
+                  <HelpCircle className="h-4 w-4" />
+                  Quiz Export (Thinkific)
+                </a>
+                <button
+                  onClick={() => {
+                    const printWindow = window.open("/downloads/quiz-export-thinkific.html", "_blank");
+                    if (printWindow) {
+                      printWindow.onload = () => {
+                        setTimeout(() => printWindow.print(), 300);
+                      };
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-indigo-600 hover:bg-indigo-500/20 transition-colors text-sm font-medium border-l border-indigo-500/20"
+                  title="Download as PDF"
+                >
+                  <Printer className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
 
