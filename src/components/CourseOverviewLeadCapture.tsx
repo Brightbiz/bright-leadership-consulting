@@ -6,6 +6,7 @@ import { FileText, Download, ArrowRight, Clock, Award, BookOpen, Target, Check, 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import AnimatedSection from "@/components/AnimatedSection";
+import RecentActivityNotification from "@/components/RecentActivityNotification";
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
 
 const AnimatedCounter = ({ value }: { value: number }) => {
@@ -291,6 +292,9 @@ const CourseOverviewLeadCapture = () => {
           </div>
         </AnimatedSection>
       </div>
+      
+      {/* Recent Activity Notifications */}
+      <RecentActivityNotification />
     </section>
   );
 };
