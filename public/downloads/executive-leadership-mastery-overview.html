@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Leadership Mastery Program - Course Overview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+    }
+    
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    
+    @media print {
+      .page {
+        padding: 20px;
+      }
+      .module-card {
+        break-inside: avoid;
+      }
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 40px 0;
+      border-bottom: 3px solid #c9a55c;
+      margin-bottom: 40px;
+    }
+    
+    .logo-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9a55c 0%, #e8d5a3 50%, #c9a55c 100%);
+      color: #1a1a2e;
+      padding: 8px 24px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    
+    .header .subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 24px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #c9a55c;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Overview Section */
+    .overview {
+      background: #f8f7f4;
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+    }
+    
+    .overview h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: #1a1a2e;
+    }
+    
+    .overview p {
+      color: #444;
+      margin-bottom: 12px;
+    }
+    
+    .overview ul {
+      list-style: none;
+      margin-top: 16px;
+    }
+    
+    .overview li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: #444;
+    }
+    
+    .overview li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #c9a55c;
+      font-weight: bold;
+    }
+    
+    /* Modules Section */
+    .modules-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .modules-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #1a1a2e;
+    }
+    
+    .modules-header p {
+      color: #666;
+      margin-top: 8px;
+    }
+    
+    /* Module Cards */
+    .module-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: box-shadow 0.3s ease;
+    }
+    
+    .module-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    
+    .module-number {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
+      color: #c9a55c;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .module-title-section {
+      flex: 1;
+      margin-left: 16px;
+    }
+    
+    .module-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+    
+    .module-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #888;
+    }
+    
+    .module-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .module-summary {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    
+    .learning-objectives {
+      background: #fafafa;
+      padding: 16px;
+      border-radius: 6px;
+    }
+    
+    .learning-objectives h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    
+    .learning-objectives ul {
+      list-style: none;
+    }
+    
+    .learning-objectives li {
+      font-size: 13px;
+      color: #444;
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .learning-objectives li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #c9a55c;
+    }
+    
+    /* Section Dividers */
+    .section-divider {
+      text-align: center;
+      padding: 30px 0;
+      margin: 20px 0;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    
+    .section-divider h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #1a1a2e;
+    }
+    
+    .section-divider p {
+      color: #888;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 3px solid #c9a55c;
+      text-align: center;
+    }
+    
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    
+    .footer p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9a55c 0%, #b8944b 100%);
+      color: #1a1a2e;
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+    
+    @media print {
+      .cta-button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-badge">CPD Accredited</div>
+      <h1>Executive Leadership Mastery</h1>
+      <p class="subtitle">Transform Your Leadership. Elevate Your Impact.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">33</div>
+          <div class="stat-label">Modules</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">80+</div>
+          <div class="stat-label">Hours</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">66</div>
+          <div class="stat-label">CPD Points</div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Overview -->
+    <section class="overview">
+      <h2>Program Overview</h2>
+      <p>The Executive Leadership Mastery Program is a comprehensive, CPD-accredited course designed for ambitious professionals ready to elevate their leadership capabilities. Through 33 expertly crafted modules, you'll develop the skills, mindset, and strategies needed to lead with confidence, inspire teams, and drive organizational success.</p>
+      <p>This program combines cutting-edge leadership theory with practical, immediately applicable exercises, case studies, and role-play scenarios.</p>
+      <ul>
+        <li>Video lessons with expert instruction</li>
+        <li>Interactive quizzes and assessments</li>
+        <li>Real-world case studies and analysis</li>
+        <li>Role-play exercises for practical application</li>
+        <li>Downloadable resources and templates</li>
+        <li>CPD certification upon completion</li>
+      </ul>
+    </section>
+    
+    <!-- Modules -->
+    <section class="modules">
+      <div class="modules-header">
+        <h2>Complete Curriculum</h2>
+        <p>33 comprehensive modules covering every aspect of executive leadership</p>
+      </div>
+      
+      <!-- Foundation Section -->
+      <div class="section-divider">
+        <h3>Foundation: Leadership Fundamentals</h3>
+        <p>Modules 1–5</p>
+      </div>
+      
+      <!-- Module 1 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">1</div>
+          <div class="module-title-section">
+            <h3 class="module-title">What is Leadership?</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Explore the foundational principles of leadership, distinguishing it from management. Learn to identify core traits of effective leaders and reflect on your own leadership style.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Define leadership and distinguish it from management</li>
+            <li>Identify core traits and behaviours of effective leaders</li>
+            <li>Reflect on personal leadership style and growth areas</li>
+            <li>Understand leadership's impact on team performance</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 2 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">2</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Leadership vs. Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Master the distinct roles of leaders and managers. Learn when to apply each mindset and develop strategies to balance administrative duties with visionary leadership.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Articulate distinct roles of leader vs. manager</li>
+            <li>Identify situations requiring each mindset</li>
+            <li>Analyse the "Manager's Dilemma"</li>
+            <li>Develop strategies to shift from execution to vision</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 3 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">3</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Leadership Styles</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Discover the spectrum of leadership styles from autocratic to servant leadership. Learn to adapt your approach based on context and develop situational leadership skills.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Compare and contrast major leadership styles</li>
+            <li>Assess your natural leadership tendencies</li>
+            <li>Apply situational leadership principles</li>
+            <li>Develop adaptive leadership capabilities</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 4 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">4</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Communication Mastery</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Master the art of executive communication. Learn to convey vision compellingly, listen actively, and navigate difficult conversations with confidence.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop compelling communication techniques</li>
+            <li>Master active listening and feedback skills</li>
+            <li>Navigate difficult conversations effectively</li>
+            <li>Tailor communication to different audiences</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 5 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">5</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Emotional Intelligence</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop the EQ skills essential for leadership success. Master self-awareness, self-regulation, empathy, and social skills to build stronger relationships.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Understand the five components of emotional intelligence</li>
+            <li>Develop self-awareness and self-regulation</li>
+            <li>Build empathy and social skills</li>
+            <li>Apply EQ in leadership scenarios</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Core Skills Section -->
+      <div class="section-divider">
+        <h3>Core Skills: Essential Leadership Competencies</h3>
+        <p>Modules 6–15</p>
+      </div>
+      
+      <!-- Module 6 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">6</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Decision Making and Problem Solving</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop frameworks for making high-stakes decisions under pressure. Learn structured problem-solving approaches and overcome cognitive biases.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Apply structured decision-making frameworks</li>
+            <li>Identify and mitigate cognitive biases</li>
+            <li>Balance data-driven and intuitive decisions</li>
+            <li>Make confident decisions under uncertainty</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 7 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">7</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Delegation and Empowerment</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Master the art of effective delegation. Learn to empower team members, build trust through autonomy, and develop future leaders.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Identify tasks suitable for delegation</li>
+            <li>Match tasks to team member capabilities</li>
+            <li>Provide effective support without micromanaging</li>
+            <li>Build a culture of empowerment and ownership</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 8 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">8</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Conflict Resolution</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Transform conflict from destructive to constructive. Learn mediation techniques, de-escalation strategies, and how to foster healthy disagreement.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Identify conflict sources and escalation patterns</li>
+            <li>Apply mediation and resolution techniques</li>
+            <li>Transform conflict into productive dialogue</li>
+            <li>Build a culture that embraces healthy disagreement</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 9 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">9</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Time Management and Productivity</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Optimize your time as a leader. Learn prioritization frameworks, eliminate time wasters, and create systems for sustainable high performance.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Apply prioritization frameworks effectively</li>
+            <li>Identify and eliminate time-wasting activities</li>
+            <li>Design productive daily routines</li>
+            <li>Balance strategic work with operational demands</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 10 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">10</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Goal Setting and Performance Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Set goals that inspire and drive results. Learn to cascade objectives, measure performance effectively, and deliver feedback that improves outcomes.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Set SMART goals aligned with organizational strategy</li>
+            <li>Cascade objectives through teams effectively</li>
+            <li>Design meaningful performance metrics</li>
+            <li>Conduct performance conversations that drive improvement</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 11 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">11</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Coaching and Mentoring</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop others through coaching and mentoring. Master questioning techniques, provide developmental feedback, and build a coaching culture.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Distinguish between coaching and mentoring approaches</li>
+            <li>Apply effective coaching frameworks (GROW model)</li>
+            <li>Develop powerful questioning techniques</li>
+            <li>Create development plans for team members</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 12 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">12</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Leading High-Performance Teams</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Build and lead teams that consistently exceed expectations. Learn team dynamics, optimize collaboration, and create psychological safety.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Understand stages of team development</li>
+            <li>Build psychological safety and trust</li>
+            <li>Optimize team collaboration and communication</li>
+            <li>Address underperformance effectively</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 13 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">13</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Change Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead change initiatives successfully. Understand change psychology, overcome resistance, and build organizational agility.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Apply change management frameworks (Kotter, ADKAR)</li>
+            <li>Understand the psychology of change resistance</li>
+            <li>Communicate change effectively</li>
+            <li>Build sustainable change momentum</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 14 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">14</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Strategic Planning</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop and execute winning strategies. Learn strategic analysis tools, long-term planning techniques, and strategy execution frameworks.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Conduct comprehensive strategic analysis</li>
+            <li>Develop clear strategic objectives</li>
+            <li>Create actionable implementation plans</li>
+            <li>Monitor and adapt strategy execution</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 15 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">15</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Motivation and Engagement</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Inspire and engage your team for peak performance. Understand motivation psychology, recognition strategies, and engagement drivers.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Understand intrinsic vs. extrinsic motivation</li>
+            <li>Apply motivation theories in practice</li>
+            <li>Design effective recognition programs</li>
+            <li>Create an engaging work environment</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Advanced Section -->
+      <div class="section-divider">
+        <h3>Advanced: Strategic Leadership</h3>
+        <p>Modules 16–25</p>
+      </div>
+      
+      <!-- Module 16 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">16</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Innovation and Creativity</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Foster innovation in your organization. Learn creative problem-solving techniques, design thinking principles, and how to build innovative cultures.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Apply design thinking methodology</li>
+            <li>Foster creative problem-solving in teams</li>
+            <li>Overcome barriers to innovation</li>
+            <li>Build a culture that embraces experimentation</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 17 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">17</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Ethical Leadership</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead with integrity and build ethical organizations. Navigate complex ethical dilemmas, establish ethical frameworks, and create cultures of integrity.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop a personal ethical framework</li>
+            <li>Navigate complex ethical dilemmas</li>
+            <li>Build organizational ethical culture</li>
+            <li>Address ethical violations appropriately</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 18 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">18</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Diversity, Equity, and Inclusion</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Champion diversity and build inclusive teams. Understand unconscious bias, create equitable opportunities, and leverage diverse perspectives.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Recognize and address unconscious bias</li>
+            <li>Build inclusive team environments</li>
+            <li>Create equitable policies and practices</li>
+            <li>Leverage diversity for competitive advantage</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 19 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">19</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Remote and Hybrid Leadership</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead effectively in distributed work environments. Master virtual communication, build remote team culture, and maintain engagement across distances.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Adapt leadership style for remote contexts</li>
+            <li>Build culture and connection virtually</li>
+            <li>Manage performance in hybrid environments</li>
+            <li>Navigate challenges of distributed teams</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 20 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">20</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Financial Acumen for Leaders</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop essential financial literacy for executives. Understand financial statements, budgeting, ROI analysis, and financial decision-making.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Read and interpret financial statements</li>
+            <li>Develop and manage budgets effectively</li>
+            <li>Evaluate investment decisions using ROI</li>
+            <li>Communicate financial information clearly</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 21 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">21</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Building Organizational Culture</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Shape and transform organizational culture. Understand culture dynamics, lead cultural change, and align culture with strategy.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Assess and diagnose organizational culture</li>
+            <li>Define desired cultural attributes</li>
+            <li>Lead cultural transformation initiatives</li>
+            <li>Align culture with strategic objectives</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 22 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">22</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Stakeholder Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Navigate complex stakeholder relationships. Learn stakeholder analysis, manage competing interests, and build strategic alliances.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Identify and prioritize key stakeholders</li>
+            <li>Develop stakeholder engagement strategies</li>
+            <li>Manage competing stakeholder interests</li>
+            <li>Build and maintain strategic relationships</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 23 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">23</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Negotiation Skills</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Master the art of negotiation. Learn principled negotiation techniques, handle difficult negotiations, and create win-win outcomes.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Prepare effectively for negotiations</li>
+            <li>Apply principled negotiation techniques</li>
+            <li>Handle difficult negotiation tactics</li>
+            <li>Create value in win-win agreements</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 24 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">24</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Resilience and Stress Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Build personal and team resilience. Develop stress management strategies, maintain well-being under pressure, and lead through adversity.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop personal resilience practices</li>
+            <li>Manage stress effectively</li>
+            <li>Build resilient team cultures</li>
+            <li>Lead effectively through adversity</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 25 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">25</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Executive Presence</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Develop commanding executive presence. Master gravitas, communication impact, and the ability to command attention in any room.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Understand the components of executive presence</li>
+            <li>Develop personal gravitas and confidence</li>
+            <li>Communicate with impact and authority</li>
+            <li>Project credibility in high-stakes situations</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Mastery Section -->
+      <div class="section-divider">
+        <h3>Mastery: Executive Excellence</h3>
+        <p>Modules 26–33</p>
+      </div>
+      
+      <!-- Module 26 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">26</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Developing Others</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Build the next generation of leaders. Create development pathways, succession plans, and learning cultures that grow talent.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Identify and develop high-potential talent</li>
+            <li>Create effective succession plans</li>
+            <li>Build learning and development cultures</li>
+            <li>Measure leadership development ROI</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 27 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">27</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Customer-Centric Leadership</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead with the customer at the center. Build customer-focused cultures, drive customer experience excellence, and align teams around customer value.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Embed customer focus in organizational culture</li>
+            <li>Design exceptional customer experiences</li>
+            <li>Align teams around customer value creation</li>
+            <li>Measure and improve customer satisfaction</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 28 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">28</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Personal Branding for Leaders</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Build your leadership brand and reputation. Define your unique value proposition, enhance your visibility, and establish thought leadership.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Define your unique leadership brand</li>
+            <li>Build strategic visibility and reputation</li>
+            <li>Establish thought leadership presence</li>
+            <li>Align personal brand with organizational goals</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 29 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">29</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Influencing Without Authority</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead through influence rather than position. Master persuasion techniques, build coalitions, and drive change without formal authority.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Apply principles of persuasion and influence</li>
+            <li>Build coalitions and alliances</li>
+            <li>Navigate organizational politics ethically</li>
+            <li>Drive change without formal authority</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 30 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">30</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Crisis Management</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead effectively through crises. Develop crisis response plans, communicate during emergencies, and emerge stronger from challenges.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop crisis prevention and response plans</li>
+            <li>Lead decisively during emergencies</li>
+            <li>Communicate effectively in crisis situations</li>
+            <li>Build organizational resilience post-crisis</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 31 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">31</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Data Literacy and Analytics</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead in a data-driven world. Develop data literacy, interpret analytics, and make evidence-based decisions.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop executive-level data literacy</li>
+            <li>Interpret data and analytics effectively</li>
+            <li>Make evidence-based decisions</li>
+            <li>Build data-driven organizational cultures</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 32 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">32</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Global Leadership and Cultural Intelligence</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Lead across cultures and borders. Develop cultural intelligence, navigate global business environments, and build diverse international teams.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Develop cultural intelligence (CQ)</li>
+            <li>Navigate cross-cultural communication</li>
+            <li>Lead diverse international teams</li>
+            <li>Adapt leadership style to cultural contexts</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Module 33 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-number">33</div>
+          <div class="module-title-section">
+            <h3 class="module-title">Leadership Legacy and Sustainability</h3>
+            <div class="module-meta">
+              <span>⏱ 2-3 hours</span>
+              <span>📜 2 CPD Points</span>
+            </div>
+          </div>
+        </div>
+        <p class="module-summary">Build a lasting leadership legacy. Define your impact, develop sustainability practices, and leave organizations better than you found them.</p>
+        <div class="learning-objectives">
+          <h4>Learning Objectives</h4>
+          <ul>
+            <li>Define your desired leadership legacy</li>
+            <li>Integrate sustainability into leadership practice</li>
+            <li>Prepare organizations for long-term success</li>
+            <li>Create lasting positive impact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-logo">Bernard Brown Solutions</div>
+      <p>Executive Coaching • Leadership Training • Corporate Retreats</p>
+      <p>Transform Your Leadership. Elevate Your Impact.</p>
+      <a href="https://www.thinkific.com" class="cta-button">Enroll Now</a>
+    </footer>
+  </div>
+</body>
+</html>
