@@ -78,7 +78,7 @@ export default {
             border: "hsl(var(--score-emerging-border))",
           },
           aspiring: {
-81:             DEFAULT: "hsl(var(--score-aspiring))",
+            DEFAULT: "hsl(var(--score-aspiring))",
             foreground: "hsl(var(--score-aspiring-foreground))",
             bg: "hsl(var(--score-aspiring-bg))",
             border: "hsl(var(--score-aspiring-border))",
