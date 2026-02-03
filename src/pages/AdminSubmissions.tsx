@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format } from "date-fns";
-import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2 } from "lucide-react";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -162,6 +162,12 @@ const AdminSubmissions = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <Button asChild variant="outline">
+              <Link to="/admin/thinkific-export">
+                <Package className="mr-2 h-4 w-4" />
+                Thinkific Export
+              </Link>
+            </Button>
             <Button onClick={fetchSubmissions} variant="outline" disabled={loading}>
               <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
