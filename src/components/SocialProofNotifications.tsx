@@ -1,26 +1,71 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Download, UserPlus, CheckCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type NotificationType = "download" | "signup" | "consultation";
+
 interface Notification {
   id: string;
-  type: "download" | "signup" | "consultation";
+  type: NotificationType;
   name: string;
   location: string;
   time: string;
 }
 
-const mockNotifications: Notification[] = [
-  { id: "1", type: "download", name: "Sarah M.", location: "London, UK", time: "2 minutes ago" },
-  { id: "2", type: "signup", name: "James T.", location: "Manchester, UK", time: "5 minutes ago" },
-  { id: "3", type: "consultation", name: "Emma R.", location: "Edinburgh, UK", time: "8 minutes ago" },
-  { id: "4", type: "download", name: "Michael P.", location: "Birmingham, UK", time: "12 minutes ago" },
-  { id: "5", type: "signup", name: "Olivia K.", location: "Bristol, UK", time: "15 minutes ago" },
-  { id: "6", type: "consultation", name: "David L.", location: "Leeds, UK", time: "18 minutes ago" },
-  { id: "7", type: "download", name: "Sophie W.", location: "Glasgow, UK", time: "22 minutes ago" },
-  { id: "8", type: "signup", name: "Thomas H.", location: "Liverpool, UK", time: "25 minutes ago" },
+const firstNames = [
+  "Sarah", "James", "Emma", "Michael", "Sophie", "David", "Charlotte", "Oliver",
+  "Jessica", "William", "Emily", "Thomas", "Hannah", "Daniel", "Lucy", "Andrew",
+  "Rachel", "Christopher", "Megan", "Richard", "Katie", "Matthew", "Laura", "Ben",
+  "Olivia", "George", "Grace", "Harry", "Alice", "Jack", "Eleanor", "Samuel"
 ];
+
+const lastInitials = ["M", "T", "R", "P", "K", "L", "W", "H", "S", "B", "C", "D", "F", "G", "J", "N"];
+
+const locations = [
+  "London", "Manchester", "Birmingham", "Edinburgh", "Glasgow", "Bristol",
+  "Liverpool", "Leeds", "Sheffield", "Newcastle", "Cambridge", "Oxford",
+  "Dublin", "Belfast", "Cardiff", "Brighton", "Reading", "Southampton",
+  "Nottingham", "Leicester", "Aberdeen", "York", "Bath", "Canterbury"
+];
+
+const timeFrames = [
+  { text: "just now", weight: 1 },
+  { text: "2 minutes ago", weight: 2 },
+  { text: "5 minutes ago", weight: 3 },
+  { text: "8 minutes ago", weight: 3 },
+  { text: "12 minutes ago", weight: 4 },
+  { text: "18 minutes ago", weight: 3 },
+  { text: "25 minutes ago", weight: 2 },
+  { text: "45 minutes ago", weight: 2 },
+  { text: "1 hour ago", weight: 4 },
+  { text: "2 hours ago", weight: 5 },
+  { text: "3 hours ago", weight: 3 },
+  { text: "earlier today", weight: 4 },
+];
+
+const notificationTypes: NotificationType[] = ["download", "signup", "consultation"];
+
+const getRandomItem = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+const getWeightedTime = () => {
+  const totalWeight = timeFrames.reduce((sum, t) => sum + t.weight, 0);
+  let random = Math.random() * totalWeight;
+  
+  for (const timeFrame of timeFrames) {
+    random -= timeFrame.weight;
+    if (random <= 0) return timeFrame.text;
+  }
+  return timeFrames[0].text;
+};
+
+const generateNotification = (): Notification => ({
+  id: Math.random().toString(36).substring(7),
+  type: getRandomItem(notificationTypes),
+  name: `${getRandomItem(firstNames)} ${getRandomItem(lastInitials)}.`,
+  location: `${getRandomItem(locations)}, UK`,
+  time: getWeightedTime(),
+});
 
 const getNotificationContent = (notification: Notification) => {
   switch (notification.type) {
@@ -51,9 +96,19 @@ const getNotificationContent = (notification: Notification) => {
 const SocialProofNotifications = () => {
   const [currentNotification, setCurrentNotification] = useState<Notification | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [notificationIndex, setNotificationIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+
+  const showNotification = useCallback(() => {
+    const notification = generateNotification();
+    setCurrentNotification(notification);
+    setIsVisible(true);
+
+    // Hide after 5 seconds
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
+  }, []);
 
   useEffect(() => {
     // Check if dismissed
@@ -69,7 +124,7 @@ const SocialProofNotifications = () => {
     }, 8000);
 
     return () => clearTimeout(initialDelay);
-  }, []);
+  }, [showNotification]);
 
   useEffect(() => {
     if (isDismissed || isPaused) return;
@@ -80,19 +135,7 @@ const SocialProofNotifications = () => {
     }, 25000 + Math.random() * 10000);
 
     return () => clearInterval(interval);
-  }, [notificationIndex, isDismissed, isPaused]);
-
-  const showNotification = () => {
-    const notification = mockNotifications[notificationIndex % mockNotifications.length];
-    setCurrentNotification(notification);
-    setIsVisible(true);
-
-    // Hide after 5 seconds
-    setTimeout(() => {
-      setIsVisible(false);
-      setNotificationIndex((prev) => prev + 1);
-    }, 5000);
-  };
+  }, [isDismissed, isPaused, showNotification]);
 
   const handleDismiss = () => {
     setIsVisible(false);
