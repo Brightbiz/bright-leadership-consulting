@@ -355,9 +355,20 @@ const ThinkificExport = () => {
                   onClick={() => {
                     const printWindow = window.open("/downloads/executive-leadership-mastery-introduction.html", "_blank");
                     if (printWindow) {
-                      printWindow.onload = () => {
-                        setTimeout(() => printWindow.print(), 300);
-                      };
+                      const checkReady = setInterval(() => {
+                        try {
+                          if (printWindow.document.readyState === 'complete') {
+                            clearInterval(checkReady);
+                            setTimeout(() => printWindow.print(), 500);
+                          }
+                        } catch {
+                          clearInterval(checkReady);
+                        }
+                      }, 100);
+                      setTimeout(() => {
+                        clearInterval(checkReady);
+                        try { printWindow.print(); } catch {}
+                      }, 3000);
                     }
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-secondary hover:bg-secondary/20 transition-colors text-sm font-medium border-l border-secondary/20"
@@ -380,9 +391,20 @@ const ThinkificExport = () => {
                   onClick={() => {
                     const printWindow = window.open("/downloads/executive-leadership-mastery-overview.html", "_blank");
                     if (printWindow) {
-                      printWindow.onload = () => {
-                        setTimeout(() => printWindow.print(), 300);
-                      };
+                      const checkReady = setInterval(() => {
+                        try {
+                          if (printWindow.document.readyState === 'complete') {
+                            clearInterval(checkReady);
+                            setTimeout(() => printWindow.print(), 500);
+                          }
+                        } catch {
+                          clearInterval(checkReady);
+                        }
+                      }, 100);
+                      setTimeout(() => {
+                        clearInterval(checkReady);
+                        try { printWindow.print(); } catch {}
+                      }, 3000);
                     }
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-primary hover:bg-primary/20 transition-colors text-sm font-medium border-l border-primary/20"
@@ -410,9 +432,22 @@ const ThinkificExport = () => {
                   onClick={() => {
                     const printWindow = window.open("/downloads/video-scripts-internal.html", "_blank");
                     if (printWindow) {
-                      printWindow.onload = () => {
-                        setTimeout(() => printWindow.print(), 300);
-                      };
+                      // Use interval to check when document is ready
+                      const checkReady = setInterval(() => {
+                        try {
+                          if (printWindow.document.readyState === 'complete') {
+                            clearInterval(checkReady);
+                            setTimeout(() => printWindow.print(), 500);
+                          }
+                        } catch {
+                          clearInterval(checkReady);
+                        }
+                      }, 100);
+                      // Fallback timeout
+                      setTimeout(() => {
+                        clearInterval(checkReady);
+                        try { printWindow.print(); } catch {}
+                      }, 3000);
                     }
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-internal-video-foreground hover:bg-internal-video/10 transition-colors text-sm font-medium border-l border-internal-video-border"
@@ -435,9 +470,20 @@ const ThinkificExport = () => {
                   onClick={() => {
                     const printWindow = window.open("/downloads/quiz-export-thinkific.html", "_blank");
                     if (printWindow) {
-                      printWindow.onload = () => {
-                        setTimeout(() => printWindow.print(), 300);
-                      };
+                      const checkReady = setInterval(() => {
+                        try {
+                          if (printWindow.document.readyState === 'complete') {
+                            clearInterval(checkReady);
+                            setTimeout(() => printWindow.print(), 500);
+                          }
+                        } catch {
+                          clearInterval(checkReady);
+                        }
+                      }, 100);
+                      setTimeout(() => {
+                        clearInterval(checkReady);
+                        try { printWindow.print(); } catch {}
+                      }, 3000);
                     }
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-internal-quiz-foreground hover:bg-internal-quiz/10 transition-colors text-sm font-medium border-l border-internal-quiz-border"
