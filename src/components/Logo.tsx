@@ -11,7 +11,7 @@ const Logo = ({ className = "", isCompact = false }: LogoProps) => {
     <a href="/" className={cn("flex items-center", className)}>
       <img
         src={bbsLogo}
-        alt="BBS Consulting Group"
+        alt="Bright Leadership Consulting"
         className={cn(
           "w-auto object-contain transition-all duration-300",
           isCompact ? "h-10" : "h-14"

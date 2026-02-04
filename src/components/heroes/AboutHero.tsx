@@ -60,7 +60,7 @@ const AboutHero = () => {
             >
               <Building className="h-4 w-4 text-secondary" />
               <span className="text-sm font-semibold text-primary-foreground">
-                BBS Consulting Group • Est. 2014
+                Bright Leadership Consulting • Est. 2014
               </span>
             </motion.div>
 

@@ -96,7 +96,7 @@ Trigger [COLLECT_LEAD] when users say things like:
 
 ## CONTACT
 - Phone: 0333 335 5045 (Mon-Fri, 9am-6pm)
-- Email: hello@bbsconsulting.co.uk
+- Email: hello@brightleadershipconsulting.com
 - Free Discovery Call: Encourage booking through the website
 
 ## COMMON QUESTIONS TO HANDLE WELL

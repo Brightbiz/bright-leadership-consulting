@@ -84,7 +84,7 @@ const AboutUs = () => {
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    BBS Consulting Group was founded with a simple yet powerful vision: to bridge the gap 
+                    Bright Leadership Consulting was founded with a simple yet powerful vision: to bridge the gap 
                     between leadership potential and exceptional performance. What began as a boutique 
                     coaching practice has evolved into a comprehensive leadership development organization 
                     trusted by executives and organizations worldwide.
@@ -256,7 +256,7 @@ const AboutUs = () => {
                 Ready to Transform Your Leadership?
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of executives who have elevated their leadership with BBS Consulting Group.
+                Join thousands of executives who have elevated their leadership with Bright Leadership Consulting.
               </p>
               <a
                 href="/#contact"
