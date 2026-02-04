@@ -526,23 +526,23 @@ const ThinkificExport = () => {
     // 3. Create slides for each lesson with richer content
     module.lessons.forEach((lesson) => {
       const contentLines = lesson.content.split('\n').filter(line => line.trim());
-      const bullets: string[] = [];
+      const coreConcepts: string[] = [];
+      const practicalPoints: string[] = [];
       const keyTerms: string[] = [];
+      const actionItems: string[] = [];
+      let introContext = '';
       
-      // Extract different types of content
-      contentLines.forEach(line => {
-        const cleanLine = line.replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '').replace(/^\*|-\s*/, '').trim();
+      // Extract different types of content with better categorization
+      contentLines.forEach((line, lineIndex) => {
+        const cleanLine = line.replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '').replace(/^\*|-\s*/, '').replace(/^\d+\.\s*/, '').trim();
         
-        // Skip headers and very short/long lines
-        if (!cleanLine || cleanLine.length < 15 || cleanLine.length > 200 || cleanLine.startsWith('#')) return;
+        // Skip headers and very short lines
+        if (!cleanLine || cleanLine.length < 10 || cleanLine.startsWith('#')) return;
         
-        // Prioritize lines with key phrases
-        const isPriority = /key|important|essential|critical|remember|note|tip|strategy|principle|framework|model/i.test(cleanLine);
-        
-        if (isPriority && bullets.length < 6) {
-          bullets.unshift(cleanLine);
-        } else if (bullets.length < 6) {
-          bullets.push(cleanLine);
+        // Capture introductory context (first substantial paragraph)
+        if (lineIndex < 8 && cleanLine.length > 50 && cleanLine.length < 300 && !introContext && !line.startsWith('-') && !line.match(/^\d+\./)) {
+          introContext = cleanLine;
+          return;
         }
         
         // Extract bold terms as key concepts
@@ -550,67 +550,139 @@ const ThinkificExport = () => {
         if (boldMatches) {
           boldMatches.forEach(m => {
             const term = m.replace(/\*\*/g, '').trim();
-            if (term.length > 3 && term.length < 50 && keyTerms.length < 4) {
+            if (term.length > 3 && term.length < 60 && keyTerms.length < 6) {
               keyTerms.push(term);
             }
           });
         }
+        
+        // Categorize content by type
+        const isActionable = /implement|apply|practice|exercise|try|action|step|do this|start by|begin with/i.test(cleanLine);
+        const isPractical = /example|such as|for instance|in practice|real-world|scenario|situation|when you/i.test(cleanLine);
+        const isCore = /key|important|essential|critical|fundamental|principle|framework|model|strategy|definition|means|refers to/i.test(cleanLine);
+        
+        // Truncate very long lines for readability
+        const truncatedLine = cleanLine.length > 150 ? cleanLine.substring(0, 147) + '...' : cleanLine;
+        
+        if (isActionable && actionItems.length < 4) {
+          actionItems.push(truncatedLine);
+        } else if (isCore && coreConcepts.length < 6) {
+          coreConcepts.push(truncatedLine);
+        } else if (isPractical && practicalPoints.length < 4) {
+          practicalPoints.push(truncatedLine);
+        } else if (coreConcepts.length < 6 && cleanLine.length > 25) {
+          coreConcepts.push(truncatedLine);
+        }
       });
 
-      // Main lesson slide
-      if (bullets.length > 0) {
+      // Main lesson slide with core concepts
+      if (coreConcepts.length > 0 || introContext) {
+        const mainBullets = coreConcepts.slice(0, 5);
         slides.push({
           type: 'lesson',
           title: `Lesson ${lesson.lessonNumber}`,
           subtitle: lesson.title,
-          bullets: bullets.slice(0, 6),
+          bullets: mainBullets,
+          highlight: introContext ? (introContext.length > 120 ? introContext.substring(0, 117) + '...' : introContext) : undefined,
           icon: '📖',
         });
       }
       
-      // Add a key concepts slide if we found key terms
-      if (keyTerms.length >= 2) {
+      // Add practical application slide if we have practical points or action items
+      const combinedPractical = [...practicalPoints, ...actionItems].slice(0, 5);
+      if (combinedPractical.length >= 2) {
         slides.push({
           type: 'keypoints',
-          title: 'Key Concepts',
-          subtitle: `Lesson ${lesson.lessonNumber} Highlights`,
-          bullets: keyTerms,
+          title: 'Practical Application',
+          subtitle: `Lesson ${lesson.lessonNumber} - Putting It Into Practice`,
+          bullets: combinedPractical,
+          icon: '🎯',
+        });
+      }
+      
+      // Add key terms slide if we found enough terms
+      if (keyTerms.length >= 3) {
+        slides.push({
+          type: 'keypoints',
+          title: 'Key Terms & Concepts',
+          subtitle: `Lesson ${lesson.lessonNumber} Vocabulary`,
+          bullets: keyTerms.slice(0, 6),
           icon: '💡',
         });
       }
     });
     
-    // 4. Check for case study content
+    // 4. Check for case study content - extract more detail
     const caseStudyMatch = module.fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
     if (caseStudyMatch) {
       const caseContent = caseStudyMatch[1];
-      const caseTitle = caseContent.split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Real-World Application';
+      const caseLines = caseContent.split('\n').filter(l => l.trim());
+      const caseTitle = caseLines[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Real-World Application';
       const caseBullets: string[] = [];
-      caseContent.split('\n').forEach(line => {
-        const cleaned = line.replace(/^[-*]\s*/, '').trim();
-        if (cleaned.length > 20 && cleaned.length < 150 && caseBullets.length < 4) {
-          caseBullets.push(cleaned);
+      let caseContext = '';
+      
+      caseLines.slice(1).forEach((line, idx) => {
+        const cleaned = line.replace(/^[-*]\s*/, '').replace(/^\d+\.\s*/, '').trim();
+        if (!cleaned || cleaned.length < 15) return;
+        
+        // Capture first paragraph as context
+        if (idx < 3 && cleaned.length > 40 && !caseContext && !line.startsWith('-')) {
+          caseContext = cleaned.length > 140 ? cleaned.substring(0, 137) + '...' : cleaned;
+          return;
+        }
+        
+        if (cleaned.length > 15 && cleaned.length < 160 && caseBullets.length < 5) {
+          caseBullets.push(cleaned.length > 140 ? cleaned.substring(0, 137) + '...' : cleaned);
         }
       });
-      if (caseBullets.length > 0) {
+      
+      if (caseBullets.length > 0 || caseContext) {
         slides.push({
           type: 'casestudy',
           title: 'Case Study',
           subtitle: caseTitle,
           bullets: caseBullets,
+          highlight: caseContext,
           icon: '📊',
         });
       }
     }
     
-    // 5. Summary slide
-    const summaryBullets = module.lessons.slice(0, 5).map(l => `✓ ${l.title}`);
+    // 4b. Check for role-play exercises
+    const rolePlayMatch = module.fullContent.match(/### Role-Play[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    if (rolePlayMatch) {
+      const rpContent = rolePlayMatch[1];
+      const rpLines = rpContent.split('\n').filter(l => l.trim());
+      const rpTitle = rpLines[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Practice Scenario';
+      const rpBullets: string[] = [];
+      
+      rpLines.slice(1).forEach(line => {
+        const cleaned = line.replace(/^[-*]\s*/, '').replace(/^\d+\.\s*/, '').trim();
+        if (cleaned.length > 20 && cleaned.length < 160 && rpBullets.length < 4) {
+          rpBullets.push(cleaned.length > 140 ? cleaned.substring(0, 137) + '...' : cleaned);
+        }
+      });
+      
+      if (rpBullets.length > 0) {
+        slides.push({
+          type: 'keypoints',
+          title: 'Role-Play Exercise',
+          subtitle: rpTitle,
+          bullets: rpBullets,
+          icon: '🎭',
+        });
+      }
+    }
+    
+    // 5. Summary slide with richer takeaways
+    const summaryBullets = module.lessons.map(l => `✓ ${l.title}`);
+    const nextModuleText = module.number < 33 ? `Continue to Module ${module.number + 1} →` : '🎓 Program Complete!';
     slides.push({
       type: 'summary',
       title: 'Module Summary',
       subtitle: `Key Takeaways from Module ${module.number}`,
-      bullets: summaryBullets,
-      highlight: `Continue to Module ${module.number + 1} →`,
+      bullets: summaryBullets.slice(0, 6),
+      highlight: nextModuleText,
       icon: '🎯',
     });
 
@@ -656,6 +728,9 @@ const ThinkificExport = () => {
                 <h2 class="slide-title">${slide.title}</h2>
                 ${slide.subtitle ? `<p class="slide-subtitle">${slide.subtitle}</p>` : ''}
               </div>
+              ${slide.highlight && !isSummary ? `
+                <div class="context-block">${slide.highlight}</div>
+              ` : ''}
               ${slide.bullets ? `
                 <ul class="slide-bullets ${isKeypoints ? 'keypoints-list' : ''} ${isCaseStudy ? 'casestudy-list' : ''}">
                   ${slide.bullets.map((b, i) => `<li style="animation-delay: ${i * 0.1}s">${b}</li>`).join('')}
@@ -816,6 +891,19 @@ const ThinkificExport = () => {
               font-size: 20px;
               color: rgba(255,255,255,0.8);
               font-weight: 400;
+            }
+            
+            /* Context block for introductory text */
+            .context-block {
+              background: rgba(201, 162, 39, 0.08);
+              border-left: 4px solid rgba(201, 162, 39, 0.5);
+              padding: 16px 20px;
+              margin-bottom: 25px;
+              font-size: 17px;
+              line-height: 1.6;
+              color: rgba(255,255,255,0.85);
+              font-style: italic;
+              border-radius: 0 8px 8px 0;
             }
             
             /* Bullet lists */
