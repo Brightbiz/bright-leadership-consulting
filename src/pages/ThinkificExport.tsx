@@ -414,6 +414,64 @@ const ThinkificExport = () => {
                 </button>
               </div>
             </div>
+
+            {/* Video Scripts - Complete Document */}
+            <Card className="mb-8 border-internal-video-border bg-internal-video-bg/30">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-internal-video text-internal-video-foreground">
+                    <Video className="h-5 w-5" />
+                  </div>
+                  <div className="text-left">
+                    <CardTitle className="text-lg text-internal-video-foreground">Complete Video Scripts</CardTitle>
+                    <CardDescription>All 165+ video recording scripts in one document</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="/downloads/video-scripts-internal.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1"
+                  >
+                    <Button variant="outline" className="w-full border-internal-video-border text-internal-video-foreground hover:bg-internal-video/10">
+                      <FileText className="h-4 w-4 mr-2" />
+                      View Full Document
+                    </Button>
+                  </a>
+                  <Button
+                    onClick={() => {
+                      const printWindow = window.open("/downloads/video-scripts-internal.html", "_blank");
+                      if (printWindow) {
+                        const checkReady = setInterval(() => {
+                          try {
+                            if (printWindow.document.readyState === 'complete') {
+                              clearInterval(checkReady);
+                              setTimeout(() => printWindow.print(), 500);
+                            }
+                          } catch {
+                            clearInterval(checkReady);
+                          }
+                        }, 100);
+                        setTimeout(() => {
+                          clearInterval(checkReady);
+                          try { printWindow.print(); } catch {}
+                        }, 3000);
+                      }
+                    }}
+                    className="flex-1 bg-internal-video text-white hover:bg-internal-video/90"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download as PDF
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  📹 Contains teleprompter-ready scripts, recording notes, and key talking points for all 33 modules.
+                </p>
+              </CardContent>
+            </Card>
             
             {/* Production Documents */}
             <p className="text-sm text-muted-foreground mb-3">Internal Production Documents:</p>
