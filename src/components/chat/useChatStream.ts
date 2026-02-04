@@ -140,7 +140,7 @@ export const useChatStream = (
         ...prev,
         {
           id: Date.now().toString(),
-          text: "I'm having trouble connecting right now. Please try again or contact us directly at hello@bbsconsulting.co.uk",
+          text: "I'm having trouble connecting right now. Please try again or contact us directly at hello@brightleadershipconsulting.com",
           isBot: true,
           timestamp: new Date(),
         },

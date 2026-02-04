@@ -115,7 +115,7 @@ const FloatingChatWidget = () => {
       ...prev,
       {
         id: Date.now().toString(),
-        text: "No problem! Feel free to share your details whenever you're ready, or you can always reach us at hello@bbsconsulting.co.uk or call 0333 335 5045.",
+        text: "No problem! Feel free to share your details whenever you're ready, or you can always reach us at hello@brightleadershipconsulting.com or call 0333 335 5045.",
         isBot: true,
         timestamp: new Date(),
       },

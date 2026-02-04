@@ -10,7 +10,7 @@ const ContactHero = () => {
 
   const contactCards = [
     { icon: Phone, label: "Call Us", value: "0333 335 5045", color: "bg-primary" },
-    { icon: Mail, label: "Email", value: "hello@bbsconsulting.co.uk", color: "bg-secondary" },
+    { icon: Mail, label: "Email", value: "hello@brightleadershipconsulting.com", color: "bg-secondary" },
     { icon: Clock, label: "Response", value: "Within 2 hours", color: "bg-emerald-500" },
   ];
 

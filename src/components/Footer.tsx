@@ -42,7 +42,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-background/70">
                 <Mail className="h-4 w-4 text-secondary" />
-                info@bbsconsultinggroup.com
+                hello@brightleadershipconsulting.com
               </div>
               <div className="flex items-center gap-3 text-sm text-background/70">
                 <Phone className="h-4 w-4 text-secondary" />
@@ -123,7 +123,7 @@ const Footer = () => {
               className="h-24 w-auto bg-white rounded-lg p-2"
             />
             <p className="text-sm text-background/50 text-center sm:text-left">
-              © {new Date().getFullYear()} BBS Consulting Group. All rights reserved.
+              © {new Date().getFullYear()} Bright Leadership Consulting. All rights reserved.
             </p>
           </div>
           <div className="flex items-center gap-4">
