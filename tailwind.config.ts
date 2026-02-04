@@ -91,6 +91,12 @@ export default {
             bg: "hsl(var(--internal-video-bg))",
             border: "hsl(var(--internal-video-border))",
           },
+          content: {
+            DEFAULT: "hsl(var(--internal-content))",
+            foreground: "hsl(var(--internal-content-foreground))",
+            bg: "hsl(var(--internal-content-bg))",
+            border: "hsl(var(--internal-content-border))",
+          },
           quiz: {
             DEFAULT: "hsl(var(--internal-quiz))",
             foreground: "hsl(var(--internal-quiz-foreground))",
