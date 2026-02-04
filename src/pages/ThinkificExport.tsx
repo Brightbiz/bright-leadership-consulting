@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -15,6 +15,14 @@ interface Module {
   content: string;
 }
 
+interface ParsedLesson {
+  moduleNumber: number;
+  lessonNumber: string; // e.g., "1.1", "1.2"
+  title: string;
+  content: string; // Full lesson content without video scripts
+  videoScript: string; // Just the video script for this lesson
+}
+
 interface ParsedModule {
   number: number;
   title: string;
@@ -22,6 +30,7 @@ interface ParsedModule {
   lessonContent: string; // Content without video scripts and quizzes
   videoScripts: string;  // Just the video script sections
   quizContent: string;   // Just the quiz section
+  lessons: ParsedLesson[]; // Individual lessons
 }
 
 const ThinkificExport = () => {
@@ -33,11 +42,13 @@ const ThinkificExport = () => {
 
   // Count stats - must be before any returns
   const stats = useMemo(() => {
-    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0 };
+    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0, individualLessons: 0 };
+    const totalIndividualLessons = modules.reduce((acc, m) => acc + m.lessons.length, 0);
     return {
       lessons: modules.length,
       scripts: modules.filter(m => m.videoScripts.length > 0).length,
       quizzes: modules.filter(m => m.quizContent.length > 0).length,
+      individualLessons: totalIndividualLessons,
     };
   }, [modules, parsed]);
 
@@ -139,6 +150,59 @@ const ThinkificExport = () => {
     return cleaned.trim();
   };
 
+  const extractIndividualLessons = (moduleContent: string, moduleNumber: number): ParsedLesson[] => {
+    const lessons: ParsedLesson[] = [];
+    
+    // Match lesson headers like "### Lesson 1.1: Defining Leadership"
+    const lessonRegex = /### Lesson (\d+\.\d+): (.+)/g;
+    const matches = [...moduleContent.matchAll(lessonRegex)];
+    
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      const lessonNumber = match[1];
+      const lessonTitle = match[2].trim();
+      
+      // Get content from this lesson header to the next lesson, quiz, case study, role-play, or module separator
+      const startIndex = match.index!;
+      let endIndex: number;
+      
+      if (i < matches.length - 1) {
+        endIndex = matches[i + 1].index!;
+      } else {
+        // Find the end - could be quiz, case study, role-play, or end of module
+        const remainingContent = moduleContent.slice(startIndex);
+        const endMatch = remainingContent.match(/\n### Module \d+ Quiz|\n### Case Study|\n### Role-Play|\n---\n\n# MODULE/);
+        if (endMatch && endMatch.index) {
+          endIndex = startIndex + endMatch.index;
+        } else {
+          endIndex = moduleContent.length;
+        }
+      }
+      
+      const fullLessonContent = moduleContent.slice(startIndex, endIndex).trim();
+      
+      // Extract video script from this lesson
+      const videoScriptMatch = fullLessonContent.match(/\*\*Video Script[^*]*\*\*[\s\S]*?(?=\n\n\*\*[A-Z]|\n---|\n### |$)/);
+      const videoScript = videoScriptMatch ? videoScriptMatch[0] : '';
+      
+      // Remove video script from lesson content
+      let lessonContentOnly = fullLessonContent;
+      if (videoScript) {
+        lessonContentOnly = fullLessonContent.replace(videoScript, '').replace(/\n{3,}/g, '\n\n').trim();
+      }
+      
+      lessons.push({
+        moduleNumber,
+        lessonNumber,
+        title: lessonTitle,
+        content: lessonContentOnly,
+        videoScript,
+      });
+    }
+    
+    return lessons;
+  };
+
   const parseMarkdown = async () => {
     setLoading(true);
     try {
@@ -161,6 +225,8 @@ const ThinkificExport = () => {
         const endIndex = i < matches.length - 1 ? matches[i + 1].index! : text.length;
         const moduleContent = text.slice(startIndex, endIndex).trim();
         
+        const lessons = extractIndividualLessons(moduleContent, moduleNumber);
+        
         parsedModules.push({
           number: moduleNumber,
           title: moduleTitle,
@@ -168,6 +234,7 @@ const ThinkificExport = () => {
           lessonContent: extractLessonContent(moduleContent),
           videoScripts: extractVideoScripts(moduleContent),
           quizContent: extractQuizContent(moduleContent),
+          lessons,
         });
       }
       
@@ -357,6 +424,18 @@ const ThinkificExport = () => {
     setTimeout(() => setExporting(null), 1000);
   };
 
+  const downloadIndividualLesson = async (lesson: ParsedLesson) => {
+    setExporting(`individual-${lesson.lessonNumber}`);
+    const header = `# Lesson ${lesson.lessonNumber}: ${lesson.title}\n\n`;
+    generatePDFWindow(
+      `Lesson ${lesson.lessonNumber}: ${lesson.title}`,
+      `Module ${lesson.moduleNumber} of 33 • CPD Accredited`,
+      header + lesson.content,
+      'lesson'
+    );
+    setTimeout(() => setExporting(null), 1000);
+  };
+
   const downloadAllOfType = async (type: 'lesson' | 'video' | 'quiz') => {
     setExporting(`all-${type}`);
     
@@ -540,7 +619,7 @@ const ThinkificExport = () => {
                       <div>
                         <h3 className="text-lg font-semibold">{modules.length} Modules Parsed</h3>
                         <p className="text-sm text-muted-foreground">
-                          {stats.lessons} lesson sets • {stats.scripts} video script sets • {stats.quizzes} quizzes
+                          {stats.individualLessons} individual lessons • {stats.scripts} video script sets • {stats.quizzes} quizzes
                         </p>
                       </div>
                     </div>
@@ -548,8 +627,13 @@ const ThinkificExport = () => {
                 </CardContent>
               </Card>
 
-              <Tabs defaultValue="videos" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-3">
+              <Tabs defaultValue="individual" className="space-y-6">
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="individual" className="gap-2">
+                    <Layers className="h-4 w-4" />
+                    <span className="hidden sm:inline">Individual Lessons</span>
+                    <span className="sm:hidden">Lessons</span>
+                  </TabsTrigger>
                   <TabsTrigger value="videos" className="gap-2">
                     <Video className="h-4 w-4" />
                     <span className="hidden sm:inline">Video Scripts</span>
@@ -557,8 +641,8 @@ const ThinkificExport = () => {
                   </TabsTrigger>
                   <TabsTrigger value="lessons" className="gap-2">
                     <BookOpen className="h-4 w-4" />
-                    <span className="hidden sm:inline">Module Content</span>
-                    <span className="sm:hidden">Content</span>
+                    <span className="hidden sm:inline">Full Modules</span>
+                    <span className="sm:hidden">Modules</span>
                   </TabsTrigger>
                   <TabsTrigger value="quizzes" className="gap-2">
                     <ClipboardList className="h-4 w-4" />
@@ -566,6 +650,71 @@ const ThinkificExport = () => {
                     <span className="sm:hidden">Quizzes</span>
                   </TabsTrigger>
                 </TabsList>
+
+                {/* Individual Lessons Tab */}
+                <TabsContent value="individual" className="space-y-6">
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-primary text-primary-foreground">
+                            <Layers className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle>Individual Lesson Files</CardTitle>
+                            <CardDescription>{stats.individualLessons} separate lessons ready for Thinkific upload</CardDescription>
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+
+                  {modules.map((module) => (
+                    <div key={`individual-module-${module.number}`} className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="text-sm">
+                          Module {module.number}
+                        </Badge>
+                        <h3 className="font-semibold text-foreground">{module.title}</h3>
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {module.lessons.map((lesson) => (
+                          <Card key={`lesson-${lesson.lessonNumber}`} className="hover:shadow-md transition-shadow">
+                            <CardHeader className="pb-3">
+                              <div className="flex items-start justify-between">
+                                <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary border border-primary/20">
+                                  Lesson {lesson.lessonNumber}
+                                </Badge>
+                              </div>
+                              <CardTitle className="text-sm leading-tight line-clamp-2">
+                                {lesson.title}
+                              </CardTitle>
+                              <CardDescription className="text-xs">
+                                {Math.round(lesson.content.length / 1000)}k characters
+                              </CardDescription>
+                            </CardHeader>
+                            <CardContent className="pt-0">
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="w-full border-primary/20 text-primary hover:bg-primary/10"
+                                onClick={() => downloadIndividualLesson(lesson)}
+                                disabled={exporting !== null}
+                              >
+                                {exporting === `individual-${lesson.lessonNumber}` ? (
+                                  <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                ) : (
+                                  <Download className="h-3 w-3 mr-2" />
+                                )}
+                                Export Lesson
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </TabsContent>
 
                 {/* Video Scripts Tab */}
                 <TabsContent value="videos" className="space-y-6">
@@ -645,8 +794,8 @@ const ThinkificExport = () => {
                             <BookOpen className="h-5 w-5" />
                           </div>
                           <div>
-                            <CardTitle>Module Lesson Content</CardTitle>
-                            <CardDescription>Lessons, case studies & exercises (excludes video scripts & quizzes)</CardDescription>
+                            <CardTitle>Full Module Content</CardTitle>
+                            <CardDescription>Complete modules with all lessons combined (excludes video scripts & quizzes)</CardDescription>
                           </div>
                         </div>
                         <Button 
