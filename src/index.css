@@ -89,15 +89,20 @@
     --score-aspiring-border: 210 60% 88%;
 
     /* Internal/Production document colors */
-    --internal-video: 25 95% 53%;
-    --internal-video-foreground: 25 90% 40%;
-    --internal-video-bg: 25 90% 96%;
-    --internal-video-border: 25 80% 88%;
+    --internal-video: 271 75% 55%;
+    --internal-video-foreground: 271 70% 40%;
+    --internal-video-bg: 271 70% 96%;
+    --internal-video-border: 271 60% 88%;
 
-    --internal-quiz: 245 75% 60%;
-    --internal-quiz-foreground: 245 70% 45%;
-    --internal-quiz-bg: 245 70% 96%;
-    --internal-quiz-border: 245 60% 88%;
+    --internal-content: 160 75% 38%;
+    --internal-content-foreground: 160 70% 30%;
+    --internal-content-bg: 160 70% 96%;
+    --internal-content-border: 160 60% 88%;
+
+    --internal-quiz: 187 75% 42%;
+    --internal-quiz-foreground: 187 70% 32%;
+    --internal-quiz-bg: 187 70% 96%;
+    --internal-quiz-border: 187 60% 88%;
 
     /* Sidebar - keeping existing */
     --sidebar-background: 0 0% 98%;
@@ -165,15 +170,20 @@
     --score-aspiring-border: 210 45% 25%;
 
     /* Internal/Production document colors - dark mode */
-    --internal-video: 25 85% 55%;
-    --internal-video-foreground: 25 80% 75%;
-    --internal-video-bg: 25 40% 15%;
-    --internal-video-border: 25 45% 25%;
+    --internal-video: 271 65% 60%;
+    --internal-video-foreground: 271 55% 80%;
+    --internal-video-bg: 271 40% 15%;
+    --internal-video-border: 271 45% 25%;
 
-    --internal-quiz: 245 65% 60%;
-    --internal-quiz-foreground: 245 55% 75%;
-    --internal-quiz-bg: 245 40% 15%;
-    --internal-quiz-border: 245 45% 25%;
+    --internal-content: 160 65% 45%;
+    --internal-content-foreground: 160 55% 80%;
+    --internal-content-bg: 160 40% 12%;
+    --internal-content-border: 160 45% 22%;
+
+    --internal-quiz: 187 65% 50%;
+    --internal-quiz-foreground: 187 55% 80%;
+    --internal-quiz-bg: 187 40% 12%;
+    --internal-quiz-border: 187 45% 22%;
   }
 }
 
