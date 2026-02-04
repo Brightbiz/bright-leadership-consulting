@@ -10083,4 +10083,4 @@ This case illustrates the gap between short-term success and long-term legacy. K
 ---
 
 *Content prepared for Thinkific import - Executive Leadership Mastery Program*
-*© BBS Consulting Group - 33 Modules Complete*
+*© Bright Leadership Consulting - 33 Modules Complete*
