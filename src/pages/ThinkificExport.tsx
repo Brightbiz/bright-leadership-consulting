@@ -479,55 +479,196 @@ const ThinkificExport = () => {
   const generatePresentationPDF = (module: ParsedModule) => {
     setExporting(`presentation-${module.number}`);
     
-    // Extract key points from lesson content for slides
-    const slides: { title: string; bullets: string[] }[] = [];
+    interface Slide {
+      type: 'title' | 'overview' | 'lesson' | 'keypoints' | 'casestudy' | 'summary';
+      title: string;
+      subtitle?: string;
+      bullets?: string[];
+      highlight?: string;
+      icon?: string;
+    }
     
-    // Title slide
+    const slides: Slide[] = [];
+    
+    // 1. Title slide
     slides.push({
+      type: 'title',
       title: `Module ${module.number}`,
-      bullets: [module.title]
+      subtitle: module.title,
+    });
+    
+    // 2. Overview slide - extract module learning objectives if present
+    const overviewBullets: string[] = [];
+    const learningObjMatch = module.fullContent.match(/learning objectives?:?([\s\S]*?)(?=\n###|\n\*\*|$)/i);
+    if (learningObjMatch) {
+      const objLines = learningObjMatch[1].split('\n').filter(l => l.trim().startsWith('-') || l.trim().match(/^\d+\./));
+      objLines.forEach(line => {
+        const cleaned = line.replace(/^[-\d.]+\s*/, '').trim();
+        if (cleaned.length > 10 && overviewBullets.length < 5) {
+          overviewBullets.push(cleaned);
+        }
+      });
+    }
+    if (overviewBullets.length === 0) {
+      // Fallback: use lesson titles as overview
+      module.lessons.slice(0, 5).forEach(lesson => {
+        overviewBullets.push(`${lesson.lessonNumber}: ${lesson.title}`);
+      });
+    }
+    slides.push({
+      type: 'overview',
+      title: 'Module Overview',
+      subtitle: `What You'll Learn in Module ${module.number}`,
+      bullets: overviewBullets,
+      icon: '📋',
     });
 
-    // Extract lessons and create slides from them
+    // 3. Create slides for each lesson with richer content
     module.lessons.forEach((lesson) => {
-      // Create a slide for each lesson
       const contentLines = lesson.content.split('\n').filter(line => line.trim());
       const bullets: string[] = [];
+      const keyTerms: string[] = [];
       
-      // Extract bullet points or key sentences
+      // Extract different types of content
       contentLines.forEach(line => {
         const cleanLine = line.replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '').replace(/^\*|-\s*/, '').trim();
-        if (cleanLine && cleanLine.length > 10 && cleanLine.length < 150 && !cleanLine.startsWith('#')) {
-          if (bullets.length < 5) {
-            bullets.push(cleanLine);
-          }
+        
+        // Skip headers and very short/long lines
+        if (!cleanLine || cleanLine.length < 15 || cleanLine.length > 200 || cleanLine.startsWith('#')) return;
+        
+        // Prioritize lines with key phrases
+        const isPriority = /key|important|essential|critical|remember|note|tip|strategy|principle|framework|model/i.test(cleanLine);
+        
+        if (isPriority && bullets.length < 6) {
+          bullets.unshift(cleanLine);
+        } else if (bullets.length < 6) {
+          bullets.push(cleanLine);
+        }
+        
+        // Extract bold terms as key concepts
+        const boldMatches = line.match(/\*\*([^*]+)\*\*/g);
+        if (boldMatches) {
+          boldMatches.forEach(m => {
+            const term = m.replace(/\*\*/g, '').trim();
+            if (term.length > 3 && term.length < 50 && keyTerms.length < 4) {
+              keyTerms.push(term);
+            }
+          });
         }
       });
 
+      // Main lesson slide
       if (bullets.length > 0) {
         slides.push({
-          title: `Lesson ${lesson.lessonNumber}: ${lesson.title}`,
-          bullets: bullets.slice(0, 5)
+          type: 'lesson',
+          title: `Lesson ${lesson.lessonNumber}`,
+          subtitle: lesson.title,
+          bullets: bullets.slice(0, 6),
+          icon: '📖',
+        });
+      }
+      
+      // Add a key concepts slide if we found key terms
+      if (keyTerms.length >= 2) {
+        slides.push({
+          type: 'keypoints',
+          title: 'Key Concepts',
+          subtitle: `Lesson ${lesson.lessonNumber} Highlights`,
+          bullets: keyTerms,
+          icon: '💡',
         });
       }
     });
+    
+    // 4. Check for case study content
+    const caseStudyMatch = module.fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    if (caseStudyMatch) {
+      const caseContent = caseStudyMatch[1];
+      const caseTitle = caseContent.split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Real-World Application';
+      const caseBullets: string[] = [];
+      caseContent.split('\n').forEach(line => {
+        const cleaned = line.replace(/^[-*]\s*/, '').trim();
+        if (cleaned.length > 20 && cleaned.length < 150 && caseBullets.length < 4) {
+          caseBullets.push(cleaned);
+        }
+      });
+      if (caseBullets.length > 0) {
+        slides.push({
+          type: 'casestudy',
+          title: 'Case Study',
+          subtitle: caseTitle,
+          bullets: caseBullets,
+          icon: '📊',
+        });
+      }
+    }
+    
+    // 5. Summary slide
+    const summaryBullets = module.lessons.slice(0, 5).map(l => `✓ ${l.title}`);
+    slides.push({
+      type: 'summary',
+      title: 'Module Summary',
+      subtitle: `Key Takeaways from Module ${module.number}`,
+      bullets: summaryBullets,
+      highlight: `Continue to Module ${module.number + 1} →`,
+      icon: '🎯',
+    });
 
-    // Generate HTML for presentation-style PDF
-    const slidesHTML = slides.map((slide, index) => `
-      <div class="slide ${index === 0 ? 'title-slide' : ''}">
-        <div class="slide-number">${index + 1} / ${slides.length}</div>
-        <h2 class="slide-title">${slide.title}</h2>
-        ${index === 0 ? `
-          <div class="subtitle">${slide.bullets[0]}</div>
-          <div class="program-info">Executive Leadership Mastery Program</div>
-          <div class="cpd-badge">CPD Accredited • 66 CPD Points</div>
-        ` : `
-          <ul class="slide-bullets">
-            ${slide.bullets.map(b => `<li>${b}</li>`).join('')}
-          </ul>
-        `}
-      </div>
-    `).join('');
+    // Generate HTML for presentation-style PDF with enhanced design
+    const slidesHTML = slides.map((slide, index) => {
+      const isTitle = slide.type === 'title';
+      const isSummary = slide.type === 'summary';
+      const isOverview = slide.type === 'overview';
+      const isCaseStudy = slide.type === 'casestudy';
+      const isKeypoints = slide.type === 'keypoints';
+      
+      let slideClass = 'slide';
+      if (isTitle) slideClass += ' title-slide';
+      if (isSummary) slideClass += ' summary-slide';
+      if (isOverview) slideClass += ' overview-slide';
+      if (isCaseStudy) slideClass += ' casestudy-slide';
+      if (isKeypoints) slideClass += ' keypoints-slide';
+      
+      return `
+        <div class="${slideClass}">
+          <div class="decorative-corner top-left"></div>
+          <div class="decorative-corner top-right"></div>
+          <div class="decorative-corner bottom-left"></div>
+          <div class="decorative-corner bottom-right"></div>
+          <div class="slide-number">${index + 1} / ${slides.length}</div>
+          <div class="brand-logo">BRIGHT LEADERSHIP</div>
+          
+          ${isTitle ? `
+            <div class="title-content">
+              <div class="module-badge">MODULE ${module.number} OF 33</div>
+              <h1 class="main-title">${slide.subtitle}</h1>
+              <div class="divider"></div>
+              <div class="program-info">Executive Leadership Mastery Program</div>
+              <div class="cpd-container">
+                <div class="cpd-badge">CPD Accredited</div>
+                <div class="cpd-points">66 CPD Points • 80+ Hours</div>
+              </div>
+            </div>
+          ` : `
+            <div class="content-wrapper">
+              ${slide.icon ? `<div class="slide-icon">${slide.icon}</div>` : ''}
+              <div class="slide-header">
+                <h2 class="slide-title">${slide.title}</h2>
+                ${slide.subtitle ? `<p class="slide-subtitle">${slide.subtitle}</p>` : ''}
+              </div>
+              ${slide.bullets ? `
+                <ul class="slide-bullets ${isKeypoints ? 'keypoints-list' : ''} ${isCaseStudy ? 'casestudy-list' : ''}">
+                  ${slide.bullets.map((b, i) => `<li style="animation-delay: ${i * 0.1}s">${b}</li>`).join('')}
+                </ul>
+              ` : ''}
+              ${slide.highlight && isSummary ? `
+                <div class="next-module">${slide.highlight}</div>
+              ` : ''}
+            </div>
+          `}
+        </div>
+      `;
+    }).join('');
 
     const printWindow = window.open("", "_blank");
     if (printWindow) {
@@ -537,103 +678,235 @@ const ThinkificExport = () => {
         <head>
           <meta charset="UTF-8">
           <title>Module ${module.number}: ${module.title} - Presentation</title>
+          <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
           <style>
             @page { 
               margin: 0; 
               size: A4 landscape; 
             }
-            * { box-sizing: border-box; }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
             body {
-              font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-              margin: 0;
-              padding: 0;
-              background: #f5f5f5;
+              font-family: 'Inter', 'Segoe UI', sans-serif;
+              background: #0a2920;
             }
+            
+            /* Base slide styles */
             .slide {
               width: 100%;
               height: 100vh;
-              min-height: 700px;
-              padding: 60px 80px;
-              background: linear-gradient(135deg, #0f4c3a 0%, #1a6b52 50%, #0f4c3a 100%);
+              min-height: 595px;
+              padding: 50px 70px;
+              background: linear-gradient(145deg, #0f4c3a 0%, #0a3a2c 40%, #0d4538 100%);
               color: white;
               display: flex;
               flex-direction: column;
               justify-content: center;
               page-break-after: always;
               position: relative;
+              overflow: hidden;
             }
-            .slide:last-child {
-              page-break-after: auto;
+            .slide:last-child { page-break-after: auto; }
+            
+            /* Decorative corners */
+            .decorative-corner {
+              position: absolute;
+              width: 80px;
+              height: 80px;
+              border: 3px solid rgba(201, 162, 39, 0.3);
             }
-            .title-slide {
-              text-align: center;
-              background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
-            }
-            .title-slide .slide-title {
-              font-size: 72px;
-              margin-bottom: 20px;
-              color: #c9a227;
-            }
-            .title-slide .subtitle {
-              font-size: 36px;
-              font-weight: 300;
-              margin-bottom: 60px;
-              color: white;
-            }
-            .title-slide .program-info {
-              font-size: 24px;
-              color: rgba(255,255,255,0.8);
-              margin-top: 40px;
-            }
-            .title-slide .cpd-badge {
-              display: inline-block;
-              background: rgba(201, 162, 39, 0.2);
-              border: 2px solid #c9a227;
-              padding: 12px 30px;
-              border-radius: 30px;
-              margin-top: 20px;
-              font-size: 16px;
-              color: #c9a227;
+            .top-left { top: 25px; left: 25px; border-right: none; border-bottom: none; }
+            .top-right { top: 25px; right: 25px; border-left: none; border-bottom: none; }
+            .bottom-left { bottom: 25px; left: 25px; border-right: none; border-top: none; }
+            .bottom-right { bottom: 25px; right: 25px; border-left: none; border-top: none; }
+            
+            /* Brand and navigation */
+            .brand-logo {
+              position: absolute;
+              top: 35px;
+              left: 70px;
+              font-size: 11px;
+              letter-spacing: 3px;
+              color: rgba(201, 162, 39, 0.7);
+              font-weight: 600;
             }
             .slide-number {
               position: absolute;
-              bottom: 30px;
-              right: 40px;
-              font-size: 14px;
-              color: rgba(255,255,255,0.5);
+              bottom: 35px;
+              right: 70px;
+              font-size: 13px;
+              color: rgba(255,255,255,0.4);
+              font-weight: 500;
             }
-            .slide-title {
-              font-size: 42px;
-              font-weight: 600;
-              margin-bottom: 40px;
+            
+            /* Title slide */
+            .title-slide {
+              background: radial-gradient(ellipse at center, #0f4c3a 0%, #0a2920 100%);
+              text-align: center;
+            }
+            .title-slide .decorative-corner { border-color: rgba(201, 162, 39, 0.5); }
+            .title-content { text-align: center; }
+            .module-badge {
+              display: inline-block;
+              background: rgba(201, 162, 39, 0.15);
+              border: 1px solid rgba(201, 162, 39, 0.4);
+              padding: 8px 24px;
+              border-radius: 25px;
+              font-size: 13px;
+              letter-spacing: 2px;
               color: #c9a227;
+              margin-bottom: 30px;
+            }
+            .main-title {
+              font-family: 'Playfair Display', Georgia, serif;
+              font-size: 52px;
+              font-weight: 600;
+              color: white;
+              line-height: 1.2;
+              margin-bottom: 25px;
+              max-width: 900px;
+              margin-left: auto;
+              margin-right: auto;
+            }
+            .divider {
+              width: 120px;
+              height: 3px;
+              background: linear-gradient(90deg, transparent, #c9a227, transparent);
+              margin: 0 auto 30px;
+            }
+            .program-info {
+              font-size: 18px;
+              color: rgba(255,255,255,0.7);
+              margin-bottom: 25px;
+              letter-spacing: 1px;
+            }
+            .cpd-container { display: flex; justify-content: center; gap: 15px; align-items: center; }
+            .cpd-badge {
+              background: #c9a227;
+              color: #0a2920;
+              padding: 8px 20px;
+              border-radius: 4px;
+              font-size: 12px;
+              font-weight: 600;
+              letter-spacing: 1px;
+            }
+            .cpd-points {
+              color: rgba(255,255,255,0.6);
+              font-size: 13px;
+            }
+            
+            /* Content slides */
+            .content-wrapper {
+              max-width: 1000px;
+              width: 100%;
+            }
+            .slide-icon {
+              font-size: 36px;
+              margin-bottom: 15px;
+            }
+            .slide-header { margin-bottom: 35px; }
+            .slide-title {
+              font-family: 'Playfair Display', Georgia, serif;
+              font-size: 38px;
+              font-weight: 600;
+              color: #c9a227;
+              margin-bottom: 8px;
               line-height: 1.2;
             }
+            .slide-subtitle {
+              font-size: 20px;
+              color: rgba(255,255,255,0.8);
+              font-weight: 400;
+            }
+            
+            /* Bullet lists */
             .slide-bullets {
               list-style: none;
               padding: 0;
-              margin: 0;
             }
             .slide-bullets li {
-              font-size: 26px;
-              line-height: 1.6;
-              margin-bottom: 24px;
-              padding-left: 40px;
+              font-size: 20px;
+              line-height: 1.5;
+              margin-bottom: 18px;
+              padding-left: 35px;
               position: relative;
+              color: rgba(255,255,255,0.9);
             }
             .slide-bullets li::before {
-              content: "▸";
+              content: "";
               position: absolute;
               left: 0;
-              color: #c9a227;
-              font-size: 28px;
+              top: 10px;
+              width: 8px;
+              height: 8px;
+              background: #c9a227;
+              border-radius: 50%;
             }
+            
+            /* Key points slide */
+            .keypoints-slide { background: linear-gradient(145deg, #1a5a45 0%, #0f4c3a 100%); }
+            .keypoints-list li {
+              background: rgba(201, 162, 39, 0.1);
+              border-left: 4px solid #c9a227;
+              padding: 15px 20px 15px 35px;
+              margin-bottom: 12px;
+              border-radius: 0 8px 8px 0;
+              font-weight: 500;
+            }
+            .keypoints-list li::before { display: none; }
+            
+            /* Case study slide */
+            .casestudy-slide { background: linear-gradient(145deg, #0d4538 0%, #0a3a2c 100%); }
+            .casestudy-slide .slide-icon { font-size: 42px; }
+            .casestudy-list li {
+              border-bottom: 1px solid rgba(255,255,255,0.1);
+              padding-bottom: 15px;
+              font-style: italic;
+            }
+            .casestudy-list li:last-child { border-bottom: none; }
+            
+            /* Overview slide */
+            .overview-slide .slide-bullets li::before {
+              content: "→";
+              background: none;
+              color: #c9a227;
+              font-size: 18px;
+              font-weight: bold;
+              top: 2px;
+              width: auto;
+              height: auto;
+            }
+            
+            /* Summary slide */
+            .summary-slide {
+              background: radial-gradient(ellipse at bottom right, #1a5a45 0%, #0a2920 100%);
+            }
+            .summary-slide .slide-bullets li::before {
+              content: none;
+            }
+            .summary-slide .slide-bullets li {
+              padding-left: 0;
+              font-size: 22px;
+              color: rgba(255,255,255,0.95);
+            }
+            .next-module {
+              margin-top: 40px;
+              padding: 15px 30px;
+              background: rgba(201, 162, 39, 0.15);
+              border: 1px solid rgba(201, 162, 39, 0.4);
+              display: inline-block;
+              border-radius: 8px;
+              color: #c9a227;
+              font-weight: 500;
+              font-size: 16px;
+            }
+            
             @media print {
               .slide {
                 height: 100vh;
                 page-break-after: always;
                 page-break-inside: avoid;
               }
+              body { background: white; }
             }
           </style>
         </head>
