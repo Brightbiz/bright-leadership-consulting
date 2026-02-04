@@ -23,6 +23,13 @@ interface ParsedLesson {
   videoScript: string; // Just the video script for this lesson
 }
 
+interface ParsedQuiz {
+  moduleNumber: number;
+  moduleTitle: string;
+  content: string; // Full quiz content
+  questionCount: number;
+}
+
 interface ParsedModule {
   number: number;
   title: string;
@@ -31,6 +38,7 @@ interface ParsedModule {
   videoScripts: string;  // Just the video script sections
   quizContent: string;   // Just the quiz section
   lessons: ParsedLesson[]; // Individual lessons
+  quiz: ParsedQuiz | null; // Parsed quiz for this module
 }
 
 const ThinkificExport = () => {
@@ -42,13 +50,15 @@ const ThinkificExport = () => {
 
   // Count stats - must be before any returns
   const stats = useMemo(() => {
-    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0, individualLessons: 0 };
+    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0, individualLessons: 0, individualQuizzes: 0 };
     const totalIndividualLessons = modules.reduce((acc, m) => acc + m.lessons.length, 0);
+    const totalIndividualQuizzes = modules.filter(m => m.quiz !== null).length;
     return {
       lessons: modules.length,
       scripts: modules.filter(m => m.videoScripts.length > 0).length,
       quizzes: modules.filter(m => m.quizContent.length > 0).length,
       individualLessons: totalIndividualLessons,
+      individualQuizzes: totalIndividualQuizzes,
     };
   }, [modules, parsed]);
 
@@ -132,6 +142,21 @@ const ThinkificExport = () => {
       return quizMatch[0].trim();
     }
     return '';
+  };
+
+  const parseQuizFromModule = (quizContent: string, moduleNumber: number, moduleTitle: string): ParsedQuiz | null => {
+    if (!quizContent || quizContent.trim().length === 0) return null;
+    
+    // Count questions by looking for numbered items (1., 2., etc.)
+    const questionMatches = quizContent.match(/^\d+\.\s+/gm);
+    const questionCount = questionMatches ? questionMatches.length : 0;
+    
+    return {
+      moduleNumber,
+      moduleTitle,
+      content: quizContent,
+      questionCount,
+    };
   };
 
   const extractLessonContent = (content: string): string => {
@@ -226,6 +251,8 @@ const ThinkificExport = () => {
         const moduleContent = text.slice(startIndex, endIndex).trim();
         
         const lessons = extractIndividualLessons(moduleContent, moduleNumber);
+        const quizContent = extractQuizContent(moduleContent);
+        const quiz = parseQuizFromModule(quizContent, moduleNumber, moduleTitle);
         
         parsedModules.push({
           number: moduleNumber,
@@ -233,8 +260,9 @@ const ThinkificExport = () => {
           fullContent: moduleContent,
           lessonContent: extractLessonContent(moduleContent),
           videoScripts: extractVideoScripts(moduleContent),
-          quizContent: extractQuizContent(moduleContent),
+          quizContent,
           lessons,
+          quiz,
         });
       }
       
@@ -419,6 +447,18 @@ const ThinkificExport = () => {
       `Module ${module.number}: ${module.title} - Quiz`,
       `Module ${module.number} of 33 • Assessment`,
       header + module.quizContent,
+      'quiz'
+    );
+    setTimeout(() => setExporting(null), 1000);
+  };
+
+  const downloadIndividualQuiz = async (quiz: ParsedQuiz) => {
+    setExporting(`individual-quiz-${quiz.moduleNumber}`);
+    const header = `# Module ${quiz.moduleNumber} Quiz: ${quiz.moduleTitle}\n\n`;
+    generatePDFWindow(
+      `Module ${quiz.moduleNumber} Quiz: ${quiz.moduleTitle}`,
+      `Module ${quiz.moduleNumber} of 33 • Assessment`,
+      header + quiz.content,
       'quiz'
     );
     setTimeout(() => setExporting(null), 1000);
@@ -619,7 +659,7 @@ const ThinkificExport = () => {
                       <div>
                         <h3 className="text-lg font-semibold">{modules.length} Modules Parsed</h3>
                         <p className="text-sm text-muted-foreground">
-                          {stats.individualLessons} individual lessons • {stats.scripts} video script sets • {stats.quizzes} quizzes
+                          {stats.individualLessons} individual lessons • {stats.scripts} video script sets • {stats.individualQuizzes} individual quizzes
                         </p>
                       </div>
                     </div>
@@ -628,11 +668,16 @@ const ThinkificExport = () => {
               </Card>
 
               <Tabs defaultValue="individual" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="individual" className="gap-2">
                     <Layers className="h-4 w-4" />
                     <span className="hidden sm:inline">Individual Lessons</span>
                     <span className="sm:hidden">Lessons</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="individual-quizzes" className="gap-2">
+                    <HelpCircle className="h-4 w-4" />
+                    <span className="hidden sm:inline">Individual Quizzes</span>
+                    <span className="sm:hidden">Quizzes</span>
                   </TabsTrigger>
                   <TabsTrigger value="videos" className="gap-2">
                     <Video className="h-4 w-4" />
@@ -646,8 +691,8 @@ const ThinkificExport = () => {
                   </TabsTrigger>
                   <TabsTrigger value="quizzes" className="gap-2">
                     <ClipboardList className="h-4 w-4" />
-                    <span className="hidden sm:inline">Quizzes</span>
-                    <span className="sm:hidden">Quizzes</span>
+                    <span className="hidden sm:inline">All Quizzes</span>
+                    <span className="sm:hidden">All</span>
                   </TabsTrigger>
                 </TabsList>
 
@@ -714,6 +759,62 @@ const ThinkificExport = () => {
                       </div>
                     </div>
                   ))}
+                </TabsContent>
+
+                {/* Individual Quizzes Tab */}
+                <TabsContent value="individual-quizzes" className="space-y-6">
+                  <Card className="border-internal-quiz-border bg-internal-quiz-bg/50">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-internal-quiz text-white">
+                            <HelpCircle className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle>Individual Quiz Files</CardTitle>
+                            <CardDescription>{stats.individualQuizzes} separate quizzes ready for Thinkific upload</CardDescription>
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {modules.filter(m => m.quiz !== null).map((module) => (
+                      <Card key={`individual-quiz-${module.number}`} className="hover:shadow-md transition-shadow">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between">
+                            <Badge variant="secondary" className="mb-2 bg-internal-quiz-bg text-internal-quiz-foreground border border-internal-quiz-border">
+                              <HelpCircle className="h-3 w-3 mr-1" />
+                              Module {module.number} Quiz
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-sm leading-tight line-clamp-2">
+                            {module.title}
+                          </CardTitle>
+                          <CardDescription className="text-xs">
+                            {module.quiz?.questionCount || 0} questions
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full border-internal-quiz-border text-internal-quiz-foreground hover:bg-internal-quiz-bg"
+                            onClick={() => module.quiz && downloadIndividualQuiz(module.quiz)}
+                            disabled={exporting !== null}
+                          >
+                            {exporting === `individual-quiz-${module.number}` ? (
+                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                              <Download className="h-3 w-3 mr-2" />
+                            )}
+                            Export Quiz
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </TabsContent>
 
                 {/* Video Scripts Tab */}
