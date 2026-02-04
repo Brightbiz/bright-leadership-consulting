@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -476,6 +476,193 @@ const ThinkificExport = () => {
     setTimeout(() => setExporting(null), 1000);
   };
 
+  const generatePresentationPDF = (module: ParsedModule) => {
+    setExporting(`presentation-${module.number}`);
+    
+    // Extract key points from lesson content for slides
+    const slides: { title: string; bullets: string[] }[] = [];
+    
+    // Title slide
+    slides.push({
+      title: `Module ${module.number}`,
+      bullets: [module.title]
+    });
+
+    // Extract lessons and create slides from them
+    module.lessons.forEach((lesson) => {
+      // Create a slide for each lesson
+      const contentLines = lesson.content.split('\n').filter(line => line.trim());
+      const bullets: string[] = [];
+      
+      // Extract bullet points or key sentences
+      contentLines.forEach(line => {
+        const cleanLine = line.replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '').replace(/^\*|-\s*/, '').trim();
+        if (cleanLine && cleanLine.length > 10 && cleanLine.length < 150 && !cleanLine.startsWith('#')) {
+          if (bullets.length < 5) {
+            bullets.push(cleanLine);
+          }
+        }
+      });
+
+      if (bullets.length > 0) {
+        slides.push({
+          title: `Lesson ${lesson.lessonNumber}: ${lesson.title}`,
+          bullets: bullets.slice(0, 5)
+        });
+      }
+    });
+
+    // Generate HTML for presentation-style PDF
+    const slidesHTML = slides.map((slide, index) => `
+      <div class="slide ${index === 0 ? 'title-slide' : ''}">
+        <div class="slide-number">${index + 1} / ${slides.length}</div>
+        <h2 class="slide-title">${slide.title}</h2>
+        ${index === 0 ? `
+          <div class="subtitle">${slide.bullets[0]}</div>
+          <div class="program-info">Executive Leadership Mastery Program</div>
+          <div class="cpd-badge">CPD Accredited • 66 CPD Points</div>
+        ` : `
+          <ul class="slide-bullets">
+            ${slide.bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        `}
+      </div>
+    `).join('');
+
+    const printWindow = window.open("", "_blank");
+    if (printWindow) {
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Module ${module.number}: ${module.title} - Presentation</title>
+          <style>
+            @page { 
+              margin: 0; 
+              size: A4 landscape; 
+            }
+            * { box-sizing: border-box; }
+            body {
+              font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+              margin: 0;
+              padding: 0;
+              background: #f5f5f5;
+            }
+            .slide {
+              width: 100%;
+              height: 100vh;
+              min-height: 700px;
+              padding: 60px 80px;
+              background: linear-gradient(135deg, #0f4c3a 0%, #1a6b52 50%, #0f4c3a 100%);
+              color: white;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              page-break-after: always;
+              position: relative;
+            }
+            .slide:last-child {
+              page-break-after: auto;
+            }
+            .title-slide {
+              text-align: center;
+              background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
+            }
+            .title-slide .slide-title {
+              font-size: 72px;
+              margin-bottom: 20px;
+              color: #c9a227;
+            }
+            .title-slide .subtitle {
+              font-size: 36px;
+              font-weight: 300;
+              margin-bottom: 60px;
+              color: white;
+            }
+            .title-slide .program-info {
+              font-size: 24px;
+              color: rgba(255,255,255,0.8);
+              margin-top: 40px;
+            }
+            .title-slide .cpd-badge {
+              display: inline-block;
+              background: rgba(201, 162, 39, 0.2);
+              border: 2px solid #c9a227;
+              padding: 12px 30px;
+              border-radius: 30px;
+              margin-top: 20px;
+              font-size: 16px;
+              color: #c9a227;
+            }
+            .slide-number {
+              position: absolute;
+              bottom: 30px;
+              right: 40px;
+              font-size: 14px;
+              color: rgba(255,255,255,0.5);
+            }
+            .slide-title {
+              font-size: 42px;
+              font-weight: 600;
+              margin-bottom: 40px;
+              color: #c9a227;
+              line-height: 1.2;
+            }
+            .slide-bullets {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+            }
+            .slide-bullets li {
+              font-size: 26px;
+              line-height: 1.6;
+              margin-bottom: 24px;
+              padding-left: 40px;
+              position: relative;
+            }
+            .slide-bullets li::before {
+              content: "▸";
+              position: absolute;
+              left: 0;
+              color: #c9a227;
+              font-size: 28px;
+            }
+            @media print {
+              .slide {
+                height: 100vh;
+                page-break-after: always;
+                page-break-inside: avoid;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${slidesHTML}
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      
+      const checkReady = setInterval(() => {
+        try {
+          if (printWindow.document.readyState === 'complete') {
+            clearInterval(checkReady);
+            setTimeout(() => printWindow.print(), 500);
+          }
+        } catch {
+          clearInterval(checkReady);
+        }
+      }, 100);
+      setTimeout(() => {
+        clearInterval(checkReady);
+        try { printWindow.print(); } catch {}
+      }, 3000);
+    }
+    
+    setTimeout(() => setExporting(null), 1000);
+  };
+
   const downloadAllOfType = async (type: 'lesson' | 'video' | 'quiz') => {
     setExporting(`all-${type}`);
     
@@ -668,7 +855,7 @@ const ThinkificExport = () => {
               </Card>
 
               <Tabs defaultValue="individual" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-5">
+                <TabsList className="grid w-full grid-cols-6">
                   <TabsTrigger value="individual" className="gap-2">
                     <Layers className="h-4 w-4" />
                     <span className="hidden sm:inline">Individual Lessons</span>
@@ -678,6 +865,11 @@ const ThinkificExport = () => {
                     <HelpCircle className="h-4 w-4" />
                     <span className="hidden sm:inline">Individual Quizzes</span>
                     <span className="sm:hidden">Quizzes</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="presentations" className="gap-2">
+                    <Presentation className="h-4 w-4" />
+                    <span className="hidden sm:inline">Presentations</span>
+                    <span className="sm:hidden">PPT</span>
                   </TabsTrigger>
                   <TabsTrigger value="videos" className="gap-2">
                     <Video className="h-4 w-4" />
@@ -810,6 +1002,62 @@ const ThinkificExport = () => {
                               <Download className="h-3 w-3 mr-2" />
                             )}
                             Export Quiz
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                {/* Presentations Tab */}
+                <TabsContent value="presentations" className="space-y-6">
+                  <Card className="border-secondary/30 bg-secondary/5">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-secondary text-secondary-foreground">
+                            <Presentation className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle>PowerPoint-Style Presentations</CardTitle>
+                            <CardDescription>33 presentation PDFs in landscape format for each module</CardDescription>
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {modules.map((module) => (
+                      <Card key={`presentation-${module.number}`} className="hover:shadow-md transition-shadow">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between">
+                            <Badge variant="secondary" className="mb-2 bg-secondary/10 text-secondary-foreground border border-secondary/20">
+                              <Presentation className="h-3 w-3 mr-1" />
+                              Module {module.number}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-sm leading-tight line-clamp-2">
+                            {module.title}
+                          </CardTitle>
+                          <CardDescription className="text-xs">
+                            {module.lessons.length} slides • Landscape A4
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full border-secondary/30 text-secondary-foreground hover:bg-secondary/10"
+                            onClick={() => generatePresentationPDF(module)}
+                            disabled={exporting !== null}
+                          >
+                            {exporting === `presentation-${module.number}` ? (
+                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                              <Download className="h-3 w-3 mr-2" />
+                            )}
+                            Export Presentation
                           </Button>
                         </CardContent>
                       </Card>
