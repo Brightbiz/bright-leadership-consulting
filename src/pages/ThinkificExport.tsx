@@ -297,7 +297,7 @@ const ThinkificExport = () => {
           </div>
           ${htmlContent}
           <div class="footer">
-            <p>© Bright Business Solutions • Executive Leadership Mastery Program</p>
+            <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
             <p>This material is for enrolled students only. Do not distribute.</p>
           </div>
         </body>
