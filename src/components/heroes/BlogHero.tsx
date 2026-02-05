@@ -8,11 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useRateLimit } from "@/hooks/useRateLimit";
 
 const BlogHero = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { checkRateLimit, recordSubmission, isChecking } = useRateLimit();
   const containerRef = useRef<HTMLElement>(null);
   const parallax = useMouseParallax(containerRef, { sensitivity: 0.02, maxMovement: 25 });
 
@@ -24,6 +26,19 @@ const BlogHero = () => {
     setIsSubmitting(true);
     
     try {
+      // Check rate limit before submission
+      const rateLimitResult = await checkRateLimit("newsletter");
+      
+      if (!rateLimitResult.allowed) {
+        toast({
+          title: "Too many submissions",
+          description: rateLimitResult.message || "Please try again later.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase
         .from("newsletter_subscribers")
         .insert({ email: trimmedEmail, source: "blog" });
@@ -39,6 +54,9 @@ const BlogHero = () => {
           throw error;
         }
       } else {
+        // Record successful submission for rate limiting
+        await recordSubmission("newsletter");
+        
         toast({
           title: "Welcome aboard! 🎉",
           description: "You've successfully subscribed to our newsletter.",
@@ -203,10 +221,10 @@ const BlogHero = () => {
                   <Button 
                     type="submit" 
                     variant="hero"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isChecking}
                     className="shrink-0"
                   >
-                    {isSubmitting ? "..." : "Subscribe"}
+                    {isSubmitting || isChecking ? "..." : "Subscribe"}
                   </Button>
                 </div>
                 <p className="text-xs text-primary-foreground/50 mt-2">

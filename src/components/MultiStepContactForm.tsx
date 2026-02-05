@@ -29,6 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
+import { useRateLimit } from "@/hooks/useRateLimit";
 
 const contactSchema = z.object({
   name: z
@@ -80,6 +81,7 @@ const MultiStepContactForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { checkRateLimit, recordSubmission, isChecking } = useRateLimit();
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -116,6 +118,18 @@ const MultiStepContactForm = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
+      // Check rate limit before submission
+      const rateLimitResult = await checkRateLimit("contact");
+      
+      if (!rateLimitResult.allowed) {
+        toast({
+          title: "Too many submissions",
+          description: rateLimitResult.message || "Please try again later.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase.from("contact_submissions").insert({
         name: data.name,
         email: data.email,
@@ -125,6 +139,9 @@ const MultiStepContactForm = () => {
       });
 
       if (error) throw error;
+
+      // Record successful submission for rate limiting
+      await recordSubmission("contact");
 
       setIsSubmitted(true);
       toast({
@@ -367,9 +384,9 @@ const MultiStepContactForm = () => {
                 variant="teal"
                 size="lg"
                 className="flex-1"
-                disabled={form.formState.isSubmitting}
+                disabled={form.formState.isSubmitting || isChecking}
               >
-                {form.formState.isSubmitting ? (
+                {form.formState.isSubmitting || isChecking ? (
                   <span className="animate-pulse">Sending...</span>
                 ) : (
                   <>
