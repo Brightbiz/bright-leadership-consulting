@@ -327,10 +327,10 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
   
   // Instructions boxes
   const instructions = [
-    { icon: '📖', title: 'Before Each Lesson', text: 'Review the key concepts listed and set your learning intention.' },
-    { icon: '✍️', title: 'During Each Lesson', text: 'Take notes in the spaces provided. Capture insights, questions, and ideas.' },
-    { icon: '💭', title: 'After Each Lesson', text: 'Complete the reflection questions and action planning sections.' },
-    { icon: '🎯', title: 'At Module End', text: 'Summarize your key takeaways and commit to specific actions.' },
+    { icon: '1', title: 'Before Each Lesson', text: 'Review the key concepts listed and set your learning intention.' },
+    { icon: '2', title: 'During Each Lesson', text: 'Take notes in the spaces provided. Capture insights, questions, and ideas.' },
+    { icon: '3', title: 'After Each Lesson', text: 'Complete the reflection questions and action planning sections.' },
+    { icon: '4', title: 'At Module End', text: 'Summarize your key takeaways and commit to specific actions.' },
   ];
   
   for (const instr of instructions) {
@@ -386,7 +386,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
     borderWidth: 1,
   });
   
-  introPage.drawText('📅 My Learning Commitment', {
+  introPage.drawText('MY LEARNING COMMITMENT', {
     x: MARGIN + 15,
     y: y - 20,
     size: 12,
@@ -436,7 +436,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
         borderWidth: 1,
       });
       
-      lessonPage.drawText('💡 Key Concepts to Master', {
+      lessonPage.drawText('KEY CONCEPTS TO MASTER', {
         x: MARGIN + 15,
         y: y - 20,
         size: 11,
@@ -460,7 +460,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
     
     // Notes section with fillable field
     y -= 10;
-    lessonPage.drawText('📝 My Notes', {
+    lessonPage.drawText('MY NOTES', {
       x: MARGIN,
       y,
       size: 12,
@@ -484,7 +484,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       opacity: 0,
     });
     
-    lessonPage.drawText('💭 Reflection Questions', {
+    lessonPage.drawText('REFLECTION QUESTIONS', {
       x: MARGIN + 10,
       y: y - 15,
       size: 12,
@@ -527,7 +527,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
         borderWidth: 1,
       });
       
-      lessonPage.drawText('🎯 Action Items from This Lesson', {
+      lessonPage.drawText('ACTION ITEMS FROM THIS LESSON', {
         x: MARGIN + 10,
         y: y - 18,
         size: 11,
@@ -566,7 +566,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       color: rgb(0.49, 0.23, 0.93),
     });
     
-    casePage.drawText(`📊 Case Study: ${caseStudyTitle}`, {
+    casePage.drawText(`CASE STUDY: ${caseStudyTitle}`, {
       x: MARGIN + 15,
       y: y - 22,
       size: 13,
@@ -609,7 +609,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       borderWidth: 1,
     });
     
-    casePage.drawText('🔑 Key Lessons from This Case', {
+    casePage.drawText('KEY LESSONS FROM THIS CASE', {
       x: MARGIN + 10,
       y: y - 18,
       size: 11,
@@ -646,7 +646,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       color: rgb(0.92, 0.35, 0.05),
     });
     
-    rolePage.drawText(`🎭 Role-Play: ${rolePlayTitle}`, {
+    rolePage.drawText(`ROLE-PLAY: ${rolePlayTitle}`, {
       x: MARGIN + 15,
       y: y - 22,
       size: 13,
@@ -685,7 +685,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       { q: 'What feedback did I receive?', height: 50 },
     ];
     
-    rolePage.drawText('🎬 Practice Reflection', {
+    rolePage.drawText('PRACTICE REFLECTION', {
       x: MARGIN,
       y,
       size: 12,
@@ -722,7 +722,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
     color: COLORS.accent,
   });
   
-  summaryPage.drawText(`🎯 Module ${module.number} Summary`, {
+  summaryPage.drawText(`MODULE ${module.number} SUMMARY`, {
     x: MARGIN + 15,
     y: y - 22,
     size: 14,
@@ -733,7 +733,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
   y -= 60;
   
   // Top 3 Insights
-  summaryPage.drawText('📚 Top 3 Insights', {
+  summaryPage.drawText('TOP 3 INSIGHTS', {
     x: MARGIN,
     y,
     size: 12,
@@ -758,7 +758,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
   y -= 10;
   
   // Questions I Still Have
-  summaryPage.drawText('❓ Questions I Still Have', {
+  summaryPage.drawText('QUESTIONS I STILL HAVE', {
     x: MARGIN,
     y,
     size: 12,
@@ -781,7 +781,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
     borderWidth: 1,
   });
   
-  summaryPage.drawText('📋 My 30-Day Action Plan', {
+  summaryPage.drawText('MY 30-DAY ACTION PLAN', {
     x: MARGIN + 10,
     y: y - 18,
     size: 12,
@@ -832,7 +832,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
       borderWidth: 2,
     });
     
-    summaryPage.drawText('✨ My Commitment Statement', {
+    summaryPage.drawText('MY COMMITMENT STATEMENT', {
       x: MARGIN + 10,
       y: y - 18,
       size: 12,
