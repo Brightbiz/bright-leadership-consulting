@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,6 +48,26 @@ const ThinkificExport = () => {
   const [loading, setLoading] = useState(false);
   const [parsed, setParsed] = useState(false);
   const [exporting, setExporting] = useState<string | null>(null);
+  const [embedBranding, setEmbedBranding] = useState(true);
+  const [logoBase64, setLogoBase64] = useState<string>('');
+
+  // Load and cache logo as base64 for offline HTML workbooks
+  useEffect(() => {
+    const loadLogoAsBase64 = async () => {
+      try {
+        // Import the logo and convert to base64
+        const logoModule = await import('@/assets/bbs-logo.png');
+        const response = await fetch(logoModule.default);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        reader.onloadend = () => setLogoBase64(reader.result as string);
+        reader.readAsDataURL(blob);
+      } catch (error) {
+        console.error('Could not load logo for embedding:', error);
+      }
+    };
+    loadLogoAsBase64();
+  }, []);
 
   // Count stats - must be before any returns
   const stats = useMemo(() => {
@@ -1046,7 +1066,7 @@ const ThinkificExport = () => {
     }
   };
 
-  const generateWorkbookHTML = (module: ParsedModule) => {
+  const generateWorkbookHTML = (module: ParsedModule, withBranding: boolean = true) => {
     setExporting(`workbook-html-${module.number}`);
     
     // Similar content extraction as PDF version
@@ -1072,6 +1092,13 @@ const ThinkificExport = () => {
     const rolePlayTitle = rolePlayMatch ?
       (rolePlayMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise') : null;
 
+    // Logo HTML - use embedded base64 if branding enabled
+    const logoHTML = withBranding && logoBase64 ? `
+      <div class="header-logo">
+        <img src="${logoBase64}" alt="Bright Leadership Consulting" class="logo-image" onerror="this.style.display='none'">
+      </div>
+    ` : '';
+
     const interactiveHTML = `
       <!DOCTYPE html>
       <html>
@@ -1095,6 +1122,14 @@ const ThinkificExport = () => {
             color: white;
             padding: 40px 20px;
             text-align: center;
+          }
+          .header-logo {
+            margin-bottom: 20px;
+          }
+          .logo-image {
+            max-height: 60px;
+            width: auto;
+            filter: brightness(0) invert(1);
           }
           .header-badge {
             display: inline-block;
@@ -1290,6 +1325,7 @@ const ThinkificExport = () => {
       </head>
       <body>
         <div class="header">
+          ${logoHTML}
           <div class="header-badge">MODULE ${module.number} OF 33</div>
           <h1>${module.title}</h1>
           <p>Interactive Learning Workbook</p>
@@ -1723,6 +1759,19 @@ const ThinkificExport = () => {
                           📊 Case Study Analysis
                         </Badge>
                       </div>
+                      <div className="flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+                        <input 
+                          type="checkbox" 
+                          id="embedBranding" 
+                          checked={embedBranding} 
+                          onChange={(e) => setEmbedBranding(e.target.checked)}
+                          className="w-4 h-4 accent-amber-600"
+                        />
+                        <label htmlFor="embedBranding" className="text-sm text-amber-800 dark:text-amber-200 cursor-pointer">
+                          <span className="font-medium">Embed branding/logo</span>
+                          <span className="text-amber-600 dark:text-amber-400 ml-2">(works offline, no external dependencies)</span>
+                        </label>
+                      </div>
                     </CardContent>
                   </Card>
 
@@ -1762,7 +1811,7 @@ const ThinkificExport = () => {
                             variant="outline" 
                             size="sm" 
                             className="w-full border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
-                            onClick={() => generateWorkbookHTML(module)}
+                            onClick={() => generateWorkbookHTML(module, embedBranding)}
                             disabled={exporting !== null}
                           >
                             {exporting === `workbook-html-${module.number}` ? (
