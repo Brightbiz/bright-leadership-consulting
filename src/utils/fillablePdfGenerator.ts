@@ -35,9 +35,32 @@ const PAGE_HEIGHT = 841.89; // A4 height in points
 const MARGIN = 50;
 const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
 
+// Sanitize text to replace unsupported characters with standard equivalents
+function sanitizeText(text: string): string {
+  return text
+    // Smart quotes to straight quotes
+    .replace(/[\u201C\u201D\u201E\u201F]/g, '"') // " " „ ‟ → "
+    .replace(/[\u2018\u2019\u201A\u201B]/g, "'") // ' ' ‚ ‛ → '
+    // Dashes
+    .replace(/[\u2013\u2014]/g, '-') // – — → -
+    // Ellipsis
+    .replace(/\u2026/g, '...') // … → ...
+    // Bullet points
+    .replace(/[\u2022\u2023\u2043]/g, '*') // • ‣ ⁃ → *
+    // Non-breaking space
+    .replace(/\u00A0/g, ' ')
+    // Remove any other problematic characters that Helvetica can't render
+    .replace(/[^\x00-\x7F]/g, (char) => {
+      // Allow common accented characters that Helvetica supports
+      const allowed = 'àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ';
+      return allowed.includes(char) ? char : '';
+    });
+}
+
 // Helper to wrap text into lines
 function wrapText(text: string, maxWidth: number, font: PDFFont, fontSize: number): string[] {
-  const words = text.split(' ');
+  const sanitized = sanitizeText(text);
+  const words = sanitized.split(' ');
   const lines: string[] = [];
   let currentLine = '';
 
@@ -143,7 +166,7 @@ function extractLessonContent(lessons: ModuleData['lessons']): LessonContent[] {
   return lessons.map(lesson => {
     const keyConceptMatches = lesson.content.match(/\*\*([^*]+)\*\*/g) || [];
     const keyConcepts = keyConceptMatches
-      .map(m => m.replace(/\*\*/g, '').trim())
+      .map(m => sanitizeText(m.replace(/\*\*/g, '').trim()))
       .filter(c => c.length > 5 && c.length < 60)
       .slice(0, 5);
     
@@ -151,7 +174,7 @@ function extractLessonContent(lessons: ModuleData['lessons']): LessonContent[] {
     
     return {
       lessonNumber: lesson.lessonNumber,
-      title: lesson.title,
+      title: sanitizeText(lesson.title),
       keyConcepts,
       hasActivities: activityMatches.length > 0,
       content: lesson.content,
@@ -163,7 +186,8 @@ function extractLessonContent(lessons: ModuleData['lessons']): LessonContent[] {
 function extractCaseStudyTitle(fullContent: string): string | null {
   const match = fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
   if (match) {
-    return match[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Case Study';
+    const title = match[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Case Study';
+    return sanitizeText(title);
   }
   return null;
 }
@@ -172,7 +196,8 @@ function extractCaseStudyTitle(fullContent: string): string | null {
 function extractRolePlayTitle(fullContent: string): string | null {
   const match = fullContent.match(/### Role-Play[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
   if (match) {
-    return match[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise';
+    const title = match[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise';
+    return sanitizeText(title);
   }
   return null;
 }
@@ -252,7 +277,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
   });
   
   // Features
-  const features = 'Reflection Exercises • Action Planning • Key Concepts Summary';
+  const features = 'Reflection Exercises - Action Planning - Key Concepts Summary';
   coverPage.drawText(features, {
     x: (PAGE_WIDTH - helvetica.widthOfTextAtSize(features, 11)) / 2,
     y: titleY - 50,
