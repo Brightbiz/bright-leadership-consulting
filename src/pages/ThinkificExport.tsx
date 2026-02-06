@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown, Copy, Eye } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -1066,9 +1066,8 @@ const ThinkificExport = () => {
     }
   };
 
-  const generateWorkbookHTML = (module: ParsedModule, withBranding: boolean = true) => {
-    setExporting(`workbook-html-${module.number}`);
-    
+  // Generate the HTML content for a workbook (returns the HTML string)
+  const generateWorkbookHTMLContent = (module: ParsedModule, withBranding: boolean = true): string => {
     // Similar content extraction as PDF version
     const lessonsContent = module.lessons.map(lesson => {
       const keyConceptMatches = lesson.content.match(/\*\*([^*]+)\*\*/g) || [];
@@ -1099,403 +1098,450 @@ const ThinkificExport = () => {
       </div>
     ` : '';
 
-    const interactiveHTML = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Module ${module.number} Workbook: ${module.title}</title>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <style>
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          body {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            background: linear-gradient(180deg, #f8fafb 0%, #f1f5f4 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: #1a1a1a;
-          }
-          
-          .header {
-            background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-          }
-          .header-logo {
-            margin-bottom: 20px;
-          }
-          .logo-image {
-            max-height: 60px;
-            width: auto;
-            filter: brightness(0) invert(1);
-          }
-          .header-badge {
-            display: inline-block;
-            background: rgba(201, 162, 39, 0.2);
-            border: 1px solid rgba(201, 162, 39, 0.5);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #c9a227;
-            margin-bottom: 15px;
-          }
-          .header h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 32px;
-            margin-bottom: 8px;
-          }
-          .header p { color: rgba(255,255,255,0.8); }
-          
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px 20px;
-          }
-          
-          .progress-bar {
-            background: #e5e7eb;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            overflow: hidden;
-          }
-          .progress-fill {
-            background: linear-gradient(90deg, #0f4c3a, #1a6b52);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 4px;
-          }
-          .progress-text {
-            text-align: center;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 30px;
-          }
-          
-          .section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-            overflow: hidden;
-          }
-          .section-header {
-            background: linear-gradient(90deg, #0f4c3a 0%, #1a6b52 100%);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-          }
-          .section-header.case-study { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); }
-          .section-header.role-play { background: linear-gradient(90deg, #ea580c 0%, #f97316 100%); }
-          .section-header.summary { background: linear-gradient(90deg, #c9a227 0%, #dab939 100%); }
-          .section-header .icon { font-size: 20px; }
-          .section-header h2 { font-size: 16px; margin: 0; flex: 1; }
-          .section-header .toggle { font-size: 18px; transition: transform 0.3s; }
-          .section-header.collapsed .toggle { transform: rotate(-90deg); }
-          
-          .section-content {
-            padding: 20px;
-            display: block;
-          }
-          .section-content.hidden { display: none; }
-          
-          .key-concepts {
-            background: rgba(201, 162, 39, 0.1);
-            border: 1px solid rgba(201, 162, 39, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-          }
-          .key-concepts h4 {
-            color: #8b7019;
-            font-size: 14px;
-            margin-bottom: 10px;
-          }
-          .key-concepts ul { padding-left: 20px; margin: 0; }
-          .key-concepts li { margin-bottom: 5px; color: #555; font-size: 14px; }
-          
-          .form-group {
-            margin-bottom: 20px;
-          }
-          .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #0f4c3a;
-            margin-bottom: 8px;
-            font-size: 14px;
-          }
-          .form-group textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            resize: vertical;
-            transition: border-color 0.2s;
-          }
-          .form-group textarea:focus {
-            outline: none;
-            border-color: #0f4c3a;
-          }
-          .form-group textarea.filled {
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.05);
-          }
-          
-          .action-list { list-style: none; }
-          .action-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-          }
-          .action-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #0f4c3a;
-            cursor: pointer;
-          }
-          .action-item input[type="text"] {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 14px;
-          }
-          .action-item input[type="text"]:focus {
-            outline: none;
-            border-color: #0f4c3a;
-          }
-          
-          .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-          }
-          .btn-primary {
-            background: linear-gradient(135deg, #0f4c3a 0%, #1a6b52 100%);
-            color: white;
-          }
-          .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15, 76, 58, 0.3); }
-          .btn-secondary {
-            background: #f1f5f4;
-            color: #0f4c3a;
-            border: 2px solid #0f4c3a;
-          }
-          
-          .actions-bar {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            padding: 30px 20px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            position: sticky;
-            bottom: 0;
-          }
-          
-          .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #666;
-            font-size: 13px;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          ${logoHTML}
-          <div class="header-badge">MODULE ${module.number} OF 33</div>
-          <h1>${module.title}</h1>
-          <p>Interactive Learning Workbook</p>
+    const interactiveHTML = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module ${module.number} Workbook: ${module.title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #f8fafb 0%, #f1f5f4 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      color: #1a1a1a;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .header-logo {
+      margin-bottom: 20px;
+    }
+    .logo-image {
+      max-height: 60px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(201, 162, 39, 0.2);
+      border: 1px solid rgba(201, 162, 39, 0.5);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #c9a227;
+      margin-bottom: 15px;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .header p { color: rgba(255,255,255,0.8); }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    
+    .progress-bar {
+      background: #e5e7eb;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #0f4c3a, #1a6b52);
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease;
+      border-radius: 4px;
+    }
+    .progress-text {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .section-header {
+      background: linear-gradient(90deg, #0f4c3a 0%, #1a6b52 100%);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .section-header.case-study { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); }
+    .section-header.role-play { background: linear-gradient(90deg, #ea580c 0%, #f97316 100%); }
+    .section-header.summary { background: linear-gradient(90deg, #c9a227 0%, #dab939 100%); }
+    .section-header .icon { font-size: 20px; }
+    .section-header h2 { font-size: 16px; margin: 0; flex: 1; }
+    .section-header .toggle { font-size: 18px; transition: transform 0.3s; }
+    .section-header.collapsed .toggle { transform: rotate(-90deg); }
+    
+    .section-content {
+      padding: 20px;
+      display: block;
+    }
+    .section-content.hidden { display: none; }
+    
+    .key-concepts {
+      background: rgba(201, 162, 39, 0.1);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .key-concepts h4 {
+      color: #8b7019;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .key-concepts ul { padding-left: 20px; margin: 0; }
+    .key-concepts li { margin-bottom: 5px; color: #555; font-size: 14px; }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #0f4c3a;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .form-group textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #0f4c3a;
+    }
+    .form-group textarea.filled {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+    }
+    
+    .action-list { list-style: none; }
+    .action-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .action-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #0f4c3a;
+      cursor: pointer;
+    }
+    .action-item input[type="text"] {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .action-item input[type="text"]:focus {
+      outline: none;
+      border-color: #0f4c3a;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0f4c3a 0%, #1a6b52 100%);
+      color: white;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15, 76, 58, 0.3); }
+    .btn-secondary {
+      background: #f1f5f4;
+      color: #0f4c3a;
+      border: 2px solid #0f4c3a;
+    }
+    
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      padding: 30px 20px;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      position: sticky;
+      bottom: 0;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    ${logoHTML}
+    <div class="header-badge">MODULE ${module.number} OF 33</div>
+    <h1>${module.title}</h1>
+    <p>Interactive Learning Workbook</p>
+  </div>
+  
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0% Complete</div>
+    
+    ${lessonsContent.map((lesson, idx) => `
+      <div class="section" data-section="${idx + 1}">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="icon">📖</span>
+          <h2>Lesson ${lesson.lessonNumber}: ${lesson.title}</h2>
+          <span class="toggle">▼</span>
         </div>
-        
-        <div class="container">
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          <div class="progress-text" id="progressText">0% Complete</div>
-          
-          ${lessonsContent.map((lesson, idx) => `
-            <div class="section" data-section="${idx + 1}">
-              <div class="section-header" onclick="toggleSection(this)">
-                <span class="icon">📖</span>
-                <h2>Lesson ${lesson.lessonNumber}: ${lesson.title}</h2>
-                <span class="toggle">▼</span>
-              </div>
-              <div class="section-content">
-                ${lesson.keyConcepts.length > 0 ? `
-                  <div class="key-concepts">
-                    <h4>💡 Key Concepts</h4>
-                    <ul>${lesson.keyConcepts.map(c => `<li>${c}</li>`).join('')}</ul>
-                  </div>
-                ` : ''}
-                <div class="form-group">
-                  <label>📝 My Notes</label>
-                  <textarea placeholder="What are my key takeaways from this lesson?" onchange="updateProgress()"></textarea>
-                </div>
-                <div class="form-group">
-                  <label>💭 How does this apply to my leadership?</label>
-                  <textarea placeholder="Reflect on how this lesson relates to your current role..." onchange="updateProgress()"></textarea>
-                </div>
-                <div class="form-group">
-                  <label>🎯 Action Items</label>
-                  <ul class="action-list">
-                    <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I do differently?"></li>
-                    <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I practice this week?"></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          `).join('')}
-          
-          ${caseStudyTitle ? `
-            <div class="section">
-              <div class="section-header case-study" onclick="toggleSection(this)">
-                <span class="icon">📊</span>
-                <h2>Case Study: ${caseStudyTitle}</h2>
-                <span class="toggle">▼</span>
-              </div>
-              <div class="section-content">
-                <div class="form-group">
-                  <label>What is the key challenge in this case?</label>
-                  <textarea placeholder="Identify the main issue..." onchange="updateProgress()"></textarea>
-                </div>
-                <div class="form-group">
-                  <label>What would I do differently?</label>
-                  <textarea placeholder="Apply the module's principles..." onchange="updateProgress()"></textarea>
-                </div>
-              </div>
+        <div class="section-content">
+          ${lesson.keyConcepts.length > 0 ? `
+            <div class="key-concepts">
+              <h4>💡 Key Concepts</h4>
+              <ul>${lesson.keyConcepts.map(c => `<li>${c}</li>`).join('')}</ul>
             </div>
           ` : ''}
-          
-          ${rolePlayTitle ? `
-            <div class="section">
-              <div class="section-header role-play" onclick="toggleSection(this)">
-                <span class="icon">🎭</span>
-                <h2>Role-Play: ${rolePlayTitle}</h2>
-                <span class="toggle">▼</span>
-              </div>
-              <div class="section-content">
-                <div class="form-group">
-                  <label>Practice Reflection</label>
-                  <textarea placeholder="What went well? What would I change?" onchange="updateProgress()"></textarea>
-                </div>
-              </div>
-            </div>
-          ` : ''}
-          
-          <div class="section">
-            <div class="section-header summary" onclick="toggleSection(this)">
-              <span class="icon">🎯</span>
-              <h2>Module Summary</h2>
-              <span class="toggle">▼</span>
-            </div>
-            <div class="section-content">
-              <div class="form-group">
-                <label>Top 3 Insights from This Module</label>
-                <textarea placeholder="1. &#10;2. &#10;3. " onchange="updateProgress()"></textarea>
-              </div>
-              <div class="form-group">
-                <label>My 30-Day Commitment</label>
-                <textarea placeholder="What will I commit to doing over the next 30 days?" onchange="updateProgress()"></textarea>
-              </div>
-            </div>
+          <div class="form-group">
+            <label>📝 My Notes</label>
+            <textarea placeholder="What are my key takeaways from this lesson?" onchange="updateProgress()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>💭 How does this apply to my leadership?</label>
+            <textarea placeholder="Reflect on how this lesson relates to your current role..." onchange="updateProgress()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>🎯 Action Items</label>
+            <ul class="action-list">
+              <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I do differently?"></li>
+              <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I practice this week?"></li>
+            </ul>
           </div>
         </div>
-        
-        <div class="actions-bar">
-          <button class="btn btn-secondary" onclick="saveProgress()">💾 Save Progress</button>
-          <button class="btn btn-primary" onclick="window.print()">🖨️ Print Workbook</button>
+      </div>
+    `).join('')}
+    
+    ${caseStudyTitle ? `
+      <div class="section">
+        <div class="section-header case-study" onclick="toggleSection(this)">
+          <span class="icon">📊</span>
+          <h2>Case Study: ${caseStudyTitle}</h2>
+          <span class="toggle">▼</span>
         </div>
-        
-        <div class="footer">
-          <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
+        <div class="section-content">
+          <div class="form-group">
+            <label>What is the key challenge in this case?</label>
+            <textarea placeholder="Identify the main issue..." onchange="updateProgress()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>What would I do differently?</label>
+            <textarea placeholder="Apply the module's principles..." onchange="updateProgress()"></textarea>
+          </div>
         </div>
-        
-        <script>
-          function toggleSection(header) {
-            header.classList.toggle('collapsed');
-            const content = header.nextElementSibling;
-            content.classList.toggle('hidden');
-          }
-          
-          function updateProgress() {
-            const textareas = document.querySelectorAll('textarea');
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            let filled = 0;
-            let total = textareas.length + checkboxes.length;
-            
-            textareas.forEach(ta => {
-              if (ta.value.trim().length > 0) {
-                filled++;
-                ta.classList.add('filled');
-              } else {
-                ta.classList.remove('filled');
-              }
-            });
-            checkboxes.forEach(cb => { if (cb.checked) filled++; });
-            
-            const percent = Math.round((filled / total) * 100);
-            document.getElementById('progressFill').style.width = percent + '%';
-            document.getElementById('progressText').textContent = percent + '% Complete';
-            
-            // Auto-save to localStorage
-            saveProgress();
-          }
-          
-          function saveProgress() {
-            const data = {};
-            document.querySelectorAll('textarea').forEach((ta, i) => { data['ta_' + i] = ta.value; });
-            document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { data['cb_' + i] = cb.checked; });
-            document.querySelectorAll('input[type="text"]').forEach((txt, i) => { data['txt_' + i] = txt.value; });
-            localStorage.setItem('workbook_module_${module.number}', JSON.stringify(data));
-          }
-          
-          function loadProgress() {
-            const saved = localStorage.getItem('workbook_module_${module.number}');
-            if (saved) {
-              const data = JSON.parse(saved);
-              document.querySelectorAll('textarea').forEach((ta, i) => { if (data['ta_' + i]) ta.value = data['ta_' + i]; });
-              document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if (data['cb_' + i]) cb.checked = data['cb_' + i]; });
-              document.querySelectorAll('input[type="text"]').forEach((txt, i) => { if (data['txt_' + i]) txt.value = data['txt_' + i]; });
-              updateProgress();
-            }
-          }
-          
-          window.onload = loadProgress;
-        </script>
-      </body>
-      </html>
-    `;
+      </div>
+    ` : ''}
+    
+    ${rolePlayTitle ? `
+      <div class="section">
+        <div class="section-header role-play" onclick="toggleSection(this)">
+          <span class="icon">🎭</span>
+          <h2>Role-Play: ${rolePlayTitle}</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="form-group">
+            <label>Practice Reflection</label>
+            <textarea placeholder="What went well? What would I change?" onchange="updateProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+    ` : ''}
+    
+    <div class="section">
+      <div class="section-header summary" onclick="toggleSection(this)">
+        <span class="icon">🎯</span>
+        <h2>Module Summary</h2>
+        <span class="toggle">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="form-group">
+          <label>Top 3 Insights from This Module</label>
+          <textarea placeholder="1. &#10;2. &#10;3. " onchange="updateProgress()"></textarea>
+        </div>
+        <div class="form-group">
+          <label>My 30-Day Commitment</label>
+          <textarea placeholder="What will I commit to doing over the next 30 days?" onchange="updateProgress()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions-bar">
+    <button class="btn btn-secondary" onclick="saveProgress()">💾 Save Progress</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Print Workbook</button>
+  </div>
+  
+  <div class="footer">
+    <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
+  </div>
+  
+  <script>
+    function toggleSection(header) {
+      header.classList.toggle('collapsed');
+      const content = header.nextElementSibling;
+      content.classList.toggle('hidden');
+    }
+    
+    function updateProgress() {
+      const textareas = document.querySelectorAll('textarea');
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let filled = 0;
+      let total = textareas.length + checkboxes.length;
+      
+      textareas.forEach(ta => {
+        if (ta.value.trim().length > 0) {
+          filled++;
+          ta.classList.add('filled');
+        } else {
+          ta.classList.remove('filled');
+        }
+      });
+      checkboxes.forEach(cb => { if (cb.checked) filled++; });
+      
+      const percent = Math.round((filled / total) * 100);
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressText').textContent = percent + '% Complete';
+      
+      // Auto-save to localStorage
+      saveProgress();
+    }
+    
+    function saveProgress() {
+      const data = {};
+      document.querySelectorAll('textarea').forEach((ta, i) => { data['ta_' + i] = ta.value; });
+      document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { data['cb_' + i] = cb.checked; });
+      document.querySelectorAll('input[type="text"]').forEach((txt, i) => { data['txt_' + i] = txt.value; });
+      localStorage.setItem('workbook_module_${module.number}', JSON.stringify(data));
+    }
+    
+    function loadProgress() {
+      const saved = localStorage.getItem('workbook_module_${module.number}');
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.querySelectorAll('textarea').forEach((ta, i) => { if (data['ta_' + i]) ta.value = data['ta_' + i]; });
+        document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if (data['cb_' + i]) cb.checked = data['cb_' + i]; });
+        document.querySelectorAll('input[type="text"]').forEach((txt, i) => { if (data['txt_' + i]) txt.value = data['txt_' + i]; });
+        updateProgress();
+      }
+    }
+    
+    window.onload = loadProgress;
+  </script>
+</body>
+</html>`;
 
-    // Open in new window
+    return interactiveHTML;
+  };
+
+  // Preview workbook HTML in a new window
+  const previewWorkbookHTML = (module: ParsedModule) => {
+    setExporting(`workbook-preview-${module.number}`);
+    const html = generateWorkbookHTMLContent(module, embedBranding);
+    
     const htmlWindow = window.open("", "_blank");
     if (htmlWindow) {
-      htmlWindow.document.write(interactiveHTML);
+      htmlWindow.document.write(html);
       htmlWindow.document.close();
     }
     
-    setTimeout(() => setExporting(null), 1000);
+    setTimeout(() => setExporting(null), 500);
+  };
+
+  // Download workbook HTML as a file
+  const downloadWorkbookHTML = (module: ParsedModule) => {
+    setExporting(`workbook-download-${module.number}`);
+    const html = generateWorkbookHTMLContent(module, embedBranding);
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Module-${module.number}-Workbook-${module.title.replace(/[^a-zA-Z0-9]/g, '-')}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    setTimeout(() => setExporting(null), 500);
+  };
+
+  // Copy workbook HTML to clipboard for Thinkific embed
+  const copyWorkbookHTML = async (module: ParsedModule) => {
+    setExporting(`workbook-copy-${module.number}`);
+    const html = generateWorkbookHTMLContent(module, embedBranding);
+    
+    try {
+      await navigator.clipboard.writeText(html);
+      // Show success feedback via toast or alert
+      alert(`HTML copied to clipboard! You can now paste it into Thinkific's Multimedia Lesson editor.`);
+    } catch (err) {
+      console.error('Failed to copy HTML:', err);
+      // Fallback: create a temporary textarea
+      const textarea = document.createElement('textarea');
+      textarea.value = html;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert(`HTML copied to clipboard! You can now paste it into Thinkific's Multimedia Lesson editor.`);
+    }
+    
+    setTimeout(() => setExporting(null), 500);
   };
 
   const downloadAllOfType = async (type: 'lesson' | 'video' | 'quiz') => {
@@ -1805,22 +1851,55 @@ const ThinkificExport = () => {
                             ) : (
                               <FileDown className="h-3 w-3 mr-2" />
                             )}
-                            Print PDF
+                            Fillable PDF
                           </Button>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="w-full border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
-                            onClick={() => generateWorkbookHTML(module, embedBranding)}
-                            disabled={exporting !== null}
-                          >
-                            {exporting === `workbook-html-${module.number}` ? (
-                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
-                            ) : (
-                              <Download className="h-3 w-3 mr-2" />
-                            )}
-                            Interactive HTML
-                          </Button>
+                          <div className="grid grid-cols-3 gap-1">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                              onClick={() => copyWorkbookHTML(module)}
+                              disabled={exporting !== null}
+                              title="Copy HTML to clipboard for Thinkific"
+                            >
+                              {exporting === `workbook-copy-${module.number}` ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Copy className="h-3 w-3" />
+                              )}
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                              onClick={() => downloadWorkbookHTML(module)}
+                              disabled={exporting !== null}
+                              title="Download HTML file"
+                            >
+                              {exporting === `workbook-download-${module.number}` ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Download className="h-3 w-3" />
+                              )}
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                              onClick={() => previewWorkbookHTML(module)}
+                              disabled={exporting !== null}
+                              title="Preview in new window"
+                            >
+                              {exporting === `workbook-preview-${module.number}` ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Eye className="h-3 w-3" />
+                              )}
+                            </Button>
+                          </div>
+                          <p className="text-xs text-amber-600 dark:text-amber-400 text-center">
+                            📋 Copy • 💾 Download • 👁️ Preview
+                          </p>
                         </CardContent>
                       </Card>
                     ))}
