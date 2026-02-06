@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown, Copy, Eye, Code } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown, Copy, Eye, Archive } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { generateFillableWorkbookPDF, downloadPDF } from "@/utils/fillablePdfGenerator";
+import JSZip from "jszip";
 
 interface Module {
   number: number;
@@ -1703,27 +1704,36 @@ const ThinkificExport = () => {
 </html>`;
   };
 
-  // Copy Thinkific-safe embed code to clipboard
-  const copyThinkificEmbed = async (module: ParsedModule) => {
+  // Download Thinkific-ready ZIP file (contains index.html that Thinkific can upload)
+  const downloadThinkificZip = async (module: ParsedModule) => {
     setExporting(`workbook-thinkific-${module.number}`);
-    const html = generateThinkificEmbedCode(module);
     
     try {
-      await navigator.clipboard.writeText(html);
-      toast.success(`Thinkific embed code copied!`, {
-        description: `Module ${module.number} - Static HTML ready to paste.`
+      const html = generateThinkificEmbedCode(module);
+      const zip = new JSZip();
+      
+      // Thinkific requires index.html as the entry point
+      zip.file("index.html", html);
+      
+      // Generate the zip blob
+      const blob = await zip.generateAsync({ type: "blob" });
+      
+      // Download the zip
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Module-${module.number}-Workbook-Thinkific.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      toast.success(`Thinkific ZIP downloaded!`, {
+        description: `Upload Module-${module.number}-Workbook-Thinkific.zip to Multimedia Lesson.`
       });
     } catch (err) {
-      console.error('Failed to copy embed code:', err);
-      const textarea = document.createElement('textarea');
-      textarea.value = html;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      toast.success(`Thinkific embed code copied!`, {
-        description: `Module ${module.number} - Static HTML ready to paste.`
-      });
+      console.error('Failed to generate ZIP:', err);
+      toast.error('Failed to generate ZIP file');
     }
     
     setTimeout(() => setExporting(null), 500);
@@ -2024,21 +2034,21 @@ const ThinkificExport = () => {
                           </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-0 space-y-2">
-                          {/* Primary: Thinkific Embed (static HTML that works) */}
+                          {/* Primary: Thinkific ZIP (upload to Multimedia Lesson) */}
                           <Button 
                             variant="default" 
                             size="sm" 
                             className="w-full bg-green-600 hover:bg-green-700 text-white"
-                            onClick={() => copyThinkificEmbed(module)}
+                            onClick={() => downloadThinkificZip(module)}
                             disabled={exporting !== null}
-                            title="Copy static HTML code for Thinkific Multimedia Lesson"
+                            title="Download ZIP for Thinkific Multimedia Lesson upload"
                           >
                             {exporting === `workbook-thinkific-${module.number}` ? (
                               <Loader2 className="h-3 w-3 mr-2 animate-spin" />
                             ) : (
-                              <Code className="h-3 w-3 mr-2" />
+                              <Archive className="h-3 w-3 mr-2" />
                             )}
-                            Thinkific Embed
+                            Thinkific ZIP
                           </Button>
                           
                           {/* Secondary: Fillable PDF */}
