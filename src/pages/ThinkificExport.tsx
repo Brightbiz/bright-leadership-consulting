@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown, Copy, Eye } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown, Copy, Eye, Code } from "lucide-react";
+import { toast } from "sonner";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -1527,8 +1528,9 @@ const ThinkificExport = () => {
     
     try {
       await navigator.clipboard.writeText(html);
-      // Show success feedback via toast or alert
-      alert(`HTML copied to clipboard! You can now paste it into Thinkific's Multimedia Lesson editor.`);
+      toast.success(`Module ${module.number} HTML copied!`, {
+        description: "Paste into Thinkific's Multimedia Lesson editor."
+      });
     } catch (err) {
       console.error('Failed to copy HTML:', err);
       // Fallback: create a temporary textarea
@@ -1538,7 +1540,190 @@ const ThinkificExport = () => {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      alert(`HTML copied to clipboard! You can now paste it into Thinkific's Multimedia Lesson editor.`);
+      toast.success(`Module ${module.number} HTML copied!`, {
+        description: "Paste into Thinkific's Multimedia Lesson editor."
+      });
+    }
+    
+    setTimeout(() => setExporting(null), 500);
+  };
+
+  // Generate Thinkific-safe static HTML (no JavaScript, works in embed restrictions)
+  const generateThinkificEmbedCode = (module: ParsedModule): string => {
+    // Extract lesson content for display
+    const lessonsContent = module.lessons.map(lesson => {
+      const keyConceptMatches = lesson.content.match(/\*\*([^*]+)\*\*/g) || [];
+      const keyConcepts = keyConceptMatches
+        .map(m => m.replace(/\*\*/g, '').trim())
+        .filter(c => c.length > 5 && c.length < 60)
+        .slice(0, 5);
+      
+      return {
+        lessonNumber: lesson.lessonNumber,
+        title: lesson.title,
+        keyConcepts,
+      };
+    });
+
+    const caseStudyMatch = module.fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    const rolePlayMatch = module.fullContent.match(/### Role-Play[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    
+    const caseStudyTitle = caseStudyMatch ? 
+      (caseStudyMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Case Study') : null;
+    const rolePlayTitle = rolePlayMatch ?
+      (rolePlayMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise') : null;
+
+    // Logo HTML - use embedded base64 if branding enabled
+    const logoHTML = embedBranding && logoBase64 ? `
+      <div style="text-align:center;margin-bottom:15px;">
+        <img src="${logoBase64}" alt="Bright Leadership Consulting" style="max-height:50px;width:auto;filter:brightness(0) invert(1);" onerror="this.style.display='none'">
+      </div>
+    ` : '';
+
+    // Generate static HTML with inline styles - NO JavaScript
+    return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module ${module.number} Workbook: ${module.title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafb; line-height: 1.6; color: #1a1a1a; padding: 0; }
+    .header { background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%); color: white; padding: 30px 20px; text-align: center; }
+    .header-badge { display: inline-block; background: rgba(201, 162, 39, 0.2); border: 1px solid rgba(201, 162, 39, 0.5); padding: 5px 14px; border-radius: 20px; font-size: 11px; letter-spacing: 2px; color: #c9a227; margin-bottom: 12px; }
+    .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .header p { color: rgba(255,255,255,0.8); font-size: 14px; }
+    .container { max-width: 750px; margin: 0 auto; padding: 25px 20px; }
+    .section { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 18px; overflow: hidden; }
+    .section-header { background: linear-gradient(90deg, #0f4c3a 0%, #1a6b52 100%); color: white; padding: 14px 18px; font-weight: 600; font-size: 15px; }
+    .section-header.case-study { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); }
+    .section-header.role-play { background: linear-gradient(90deg, #ea580c 0%, #f97316 100%); }
+    .section-header.summary { background: linear-gradient(90deg, #c9a227 0%, #dab939 100%); color: #1a1a1a; }
+    .section-content { padding: 18px; }
+    .key-concepts { background: rgba(201, 162, 39, 0.1); border: 1px solid rgba(201, 162, 39, 0.3); padding: 14px; border-radius: 8px; margin-bottom: 18px; }
+    .key-concepts h4 { color: #8b7019; font-size: 13px; margin-bottom: 8px; font-weight: 600; }
+    .key-concepts ul { padding-left: 18px; margin: 0; }
+    .key-concepts li { margin-bottom: 4px; color: #555; font-size: 13px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; color: #0f4c3a; margin-bottom: 8px; font-size: 14px; }
+    .form-group .input-area { width: 100%; min-height: 80px; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; background: #fafafa; font-size: 13px; color: #666; font-style: italic; }
+    .footer { text-align: center; padding: 25px 20px; color: #666; font-size: 12px; }
+    .print-note { background: #fef3c7; border: 1px solid #f59e0b; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: #92400e; text-align: center; }
+    @media print { .print-note { display: none; } body { background: white; } .section { box-shadow: none; border: 1px solid #e5e7eb; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    ${logoHTML}
+    <div class="header-badge">MODULE ${module.number} OF 33</div>
+    <h1>${module.title}</h1>
+    <p>Interactive Learning Workbook</p>
+  </div>
+  
+  <div class="container">
+    <div class="print-note">
+      💡 <strong>Tip:</strong> Print this workbook (Ctrl/Cmd+P) or use your browser's "Save as PDF" to complete it offline.
+    </div>
+    
+    ${lessonsContent.map((lesson) => `
+      <div class="section">
+        <div class="section-header">📖 Lesson ${lesson.lessonNumber}: ${lesson.title}</div>
+        <div class="section-content">
+          ${lesson.keyConcepts.length > 0 ? `
+            <div class="key-concepts">
+              <h4>💡 Key Concepts</h4>
+              <ul>${lesson.keyConcepts.map(c => `<li>${c}</li>`).join('')}</ul>
+            </div>
+          ` : ''}
+          <div class="form-group">
+            <label>📝 My Notes</label>
+            <div class="input-area">What are my key takeaways from this lesson?</div>
+          </div>
+          <div class="form-group">
+            <label>💭 How does this apply to my leadership?</label>
+            <div class="input-area">Reflect on how this lesson relates to your current role...</div>
+          </div>
+          <div class="form-group">
+            <label>🎯 Action Items</label>
+            <div class="input-area">1. What will I do differently?<br><br>2. What will I practice this week?</div>
+          </div>
+        </div>
+      </div>
+    `).join('')}
+    
+    ${caseStudyTitle ? `
+      <div class="section">
+        <div class="section-header case-study">📊 Case Study: ${caseStudyTitle}</div>
+        <div class="section-content">
+          <div class="form-group">
+            <label>What is the key challenge in this case?</label>
+            <div class="input-area">Identify the main issue...</div>
+          </div>
+          <div class="form-group">
+            <label>What would I do differently?</label>
+            <div class="input-area">Apply the module's principles...</div>
+          </div>
+        </div>
+      </div>
+    ` : ''}
+    
+    ${rolePlayTitle ? `
+      <div class="section">
+        <div class="section-header role-play">🎭 Role-Play: ${rolePlayTitle}</div>
+        <div class="section-content">
+          <div class="form-group">
+            <label>Practice Reflection</label>
+            <div class="input-area">What went well? What would I change?</div>
+          </div>
+        </div>
+      </div>
+    ` : ''}
+    
+    <div class="section">
+      <div class="section-header summary">🎯 Module Summary</div>
+      <div class="section-content">
+        <div class="form-group">
+          <label>Top 3 Insights from This Module</label>
+          <div class="input-area">1.<br><br>2.<br><br>3.</div>
+        </div>
+        <div class="form-group">
+          <label>My 30-Day Commitment</label>
+          <div class="input-area">What will I commit to doing over the next 30 days?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
+  </div>
+</body>
+</html>`;
+  };
+
+  // Copy Thinkific-safe embed code to clipboard
+  const copyThinkificEmbed = async (module: ParsedModule) => {
+    setExporting(`workbook-thinkific-${module.number}`);
+    const html = generateThinkificEmbedCode(module);
+    
+    try {
+      await navigator.clipboard.writeText(html);
+      toast.success(`Thinkific embed code copied!`, {
+        description: `Module ${module.number} - Static HTML ready to paste.`
+      });
+    } catch (err) {
+      console.error('Failed to copy embed code:', err);
+      const textarea = document.createElement('textarea');
+      textarea.value = html;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      toast.success(`Thinkific embed code copied!`, {
+        description: `Module ${module.number} - Static HTML ready to paste.`
+      });
     }
     
     setTimeout(() => setExporting(null), 500);
@@ -1839,6 +2024,24 @@ const ThinkificExport = () => {
                           </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-0 space-y-2">
+                          {/* Primary: Thinkific Embed (static HTML that works) */}
+                          <Button 
+                            variant="default" 
+                            size="sm" 
+                            className="w-full bg-green-600 hover:bg-green-700 text-white"
+                            onClick={() => copyThinkificEmbed(module)}
+                            disabled={exporting !== null}
+                            title="Copy static HTML code for Thinkific Multimedia Lesson"
+                          >
+                            {exporting === `workbook-thinkific-${module.number}` ? (
+                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                              <Code className="h-3 w-3 mr-2" />
+                            )}
+                            Thinkific Embed
+                          </Button>
+                          
+                          {/* Secondary: Fillable PDF */}
                           <Button 
                             variant="outline" 
                             size="sm" 
@@ -1853,6 +2056,8 @@ const ThinkificExport = () => {
                             )}
                             Fillable PDF
                           </Button>
+                          
+                          {/* Interactive HTML options (with JS - for standalone use) */}
                           <div className="grid grid-cols-3 gap-1">
                             <Button 
                               variant="outline" 
@@ -1860,7 +2065,7 @@ const ThinkificExport = () => {
                               className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
                               onClick={() => copyWorkbookHTML(module)}
                               disabled={exporting !== null}
-                              title="Copy HTML to clipboard for Thinkific"
+                              title="Copy interactive HTML (for standalone hosting)"
                             >
                               {exporting === `workbook-copy-${module.number}` ? (
                                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -1874,7 +2079,7 @@ const ThinkificExport = () => {
                               className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
                               onClick={() => downloadWorkbookHTML(module)}
                               disabled={exporting !== null}
-                              title="Download HTML file"
+                              title="Download interactive HTML file"
                             >
                               {exporting === `workbook-download-${module.number}` ? (
                                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -1888,7 +2093,7 @@ const ThinkificExport = () => {
                               className="border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
                               onClick={() => previewWorkbookHTML(module)}
                               disabled={exporting !== null}
-                              title="Preview in new window"
+                              title="Preview interactive version"
                             >
                               {exporting === `workbook-preview-${module.number}` ? (
                                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -1897,8 +2102,8 @@ const ThinkificExport = () => {
                               )}
                             </Button>
                           </div>
-                          <p className="text-xs text-amber-600 dark:text-amber-400 text-center">
-                            📋 Copy • 💾 Download • 👁️ Preview
+                          <p className="text-xs text-muted-foreground text-center">
+                            Interactive: 📋 Copy • 💾 Download • 👁️ Preview
                           </p>
                         </CardContent>
                       </Card>
