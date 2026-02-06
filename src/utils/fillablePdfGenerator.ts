@@ -61,7 +61,7 @@ function wrapText(text: string, maxWidth: number, font: PDFFont, fontSize: numbe
 }
 
 // Draw a text field (form field) on the page
-async function drawTextField(
+function drawTextField(
   page: PDFPage,
   form: ReturnType<PDFDocument['getForm']>,
   fieldName: string,
@@ -70,7 +70,7 @@ async function drawTextField(
   width: number,
   height: number,
   isMultiline: boolean = false
-): Promise<PDFTextField> {
+): PDFTextField {
   const textField = form.createTextField(fieldName);
   textField.addToPage(page, {
     x,
