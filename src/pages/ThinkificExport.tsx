@@ -1704,12 +1704,13 @@ const ThinkificExport = () => {
 </html>`;
   };
 
-  // Download Thinkific-ready ZIP file (contains index.html that Thinkific can upload)
+  // Download Thinkific-ready ZIP file (contains index.html with full interactivity)
   const downloadThinkificZip = async (module: ParsedModule) => {
     setExporting(`workbook-thinkific-${module.number}`);
     
     try {
-      const html = generateThinkificEmbedCode(module);
+      // Use the full interactive HTML (with JS) since ZIP uploads run as standalone pages
+      const html = generateWorkbookHTMLContent(module, embedBranding);
       const zip = new JSZip();
       
       // Thinkific requires index.html as the entry point
