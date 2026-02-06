@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation } from "lucide-react";
+import { Download, FileText, Loader2, CheckCircle2, Package, ArrowLeft, BookOpen, Video, HelpCircle, Printer, Play, ClipboardList, Layers, Presentation, NotebookPen, FileDown } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -50,7 +50,7 @@ const ThinkificExport = () => {
 
   // Count stats - must be before any returns
   const stats = useMemo(() => {
-    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0, individualLessons: 0, individualQuizzes: 0 };
+    if (!parsed) return { lessons: 0, scripts: 0, quizzes: 0, individualLessons: 0, individualQuizzes: 0, workbooks: 0 };
     const totalIndividualLessons = modules.reduce((acc, m) => acc + m.lessons.length, 0);
     const totalIndividualQuizzes = modules.filter(m => m.quiz !== null).length;
     return {
@@ -59,6 +59,7 @@ const ThinkificExport = () => {
       quizzes: modules.filter(m => m.quizContent.length > 0).length,
       individualLessons: totalIndividualLessons,
       individualQuizzes: totalIndividualQuizzes,
+      workbooks: modules.length,
     };
   }, [modules, parsed]);
 
@@ -1024,6 +1025,984 @@ const ThinkificExport = () => {
     setTimeout(() => setExporting(null), 1000);
   };
 
+  // Workbook generation functions
+  const generateWorkbookPDF = (module: ParsedModule) => {
+    setExporting(`workbook-pdf-${module.number}`);
+    
+    // Extract lesson information for workbook
+    const lessonsContent = module.lessons.map(lesson => {
+      // Extract key concepts, activities, and reflection prompts from lesson content
+      const keyConceptMatches = lesson.content.match(/\*\*([^*]+)\*\*/g) || [];
+      const keyConcepts = keyConceptMatches
+        .map(m => m.replace(/\*\*/g, '').trim())
+        .filter(c => c.length > 5 && c.length < 60)
+        .slice(0, 5);
+      
+      // Find activities and exercises
+      const activityMatches = lesson.content.match(/activity|exercise|reflection|practice|discuss|consider|think about|write down/gi) || [];
+      const hasActivities = activityMatches.length > 0;
+      
+      return {
+        lessonNumber: lesson.lessonNumber,
+        title: lesson.title,
+        keyConcepts,
+        hasActivities,
+        content: lesson.content,
+      };
+    });
+
+    // Extract case study and role-play for the module
+    const caseStudyMatch = module.fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    const rolePlayMatch = module.fullContent.match(/### Role-Play[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    
+    const caseStudyTitle = caseStudyMatch ? 
+      (caseStudyMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Case Study') : null;
+    const rolePlayTitle = rolePlayMatch ?
+      (rolePlayMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise') : null;
+
+    // Generate HTML for workbook
+    const workbookHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Module ${module.number} Workbook: ${module.title}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+          @page { margin: 2cm; size: A4; }
+          * { box-sizing: border-box; }
+          body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+          }
+          
+          .cover-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
+            color: white;
+            padding: 60px;
+            page-break-after: always;
+          }
+          .cover-badge {
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid rgba(201, 162, 39, 0.5);
+            padding: 8px 24px;
+            border-radius: 25px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #c9a227;
+            margin-bottom: 30px;
+          }
+          .cover-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.2;
+          }
+          .cover-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+          }
+          .cover-icon {
+            font-size: 48px;
+            margin-bottom: 30px;
+          }
+          .cover-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(201, 162, 39, 0.3);
+          }
+          .cover-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin: 5px 0;
+          }
+          
+          .page { page-break-after: always; padding: 20px 0; }
+          .page:last-child { page-break-after: auto; }
+          
+          h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #0f4c3a;
+            font-size: 28px;
+            border-bottom: 3px solid #c9a227;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+          }
+          h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #0f4c3a;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 16px;
+          }
+          h3 {
+            color: #333;
+            font-size: 18px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+          }
+          
+          .section-header {
+            background: linear-gradient(90deg, #0f4c3a 0%, #1a6b52 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .section-header .icon { font-size: 24px; }
+          .section-header h2 { color: white; margin: 0; border: none; padding: 0; }
+          
+          .lesson-block {
+            background: #f8f9fa;
+            border-left: 4px solid #0f4c3a;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+          }
+          .lesson-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+          }
+          .lesson-badge {
+            background: #0f4c3a;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+          }
+          .lesson-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 18px;
+            color: #0f4c3a;
+            margin: 0;
+          }
+          
+          .key-concepts {
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+          }
+          .key-concepts h4 {
+            color: #8b7019;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .key-concepts ul {
+            margin: 0;
+            padding-left: 20px;
+          }
+          .key-concepts li {
+            margin-bottom: 6px;
+            color: #555;
+          }
+          
+          .reflection-box {
+            border: 2px dashed #0f4c3a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+          }
+          .reflection-box h4 {
+            color: #0f4c3a;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .reflection-prompt {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 12px;
+          }
+          .writing-lines {
+            border-bottom: 1px solid #ddd;
+            height: 35px;
+            margin: 8px 0;
+          }
+          
+          .action-plan {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border: 1px solid #a5d6a7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+          }
+          .action-plan h4 {
+            color: #2e7d32;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 12px 0;
+          }
+          .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2e7d32;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+          }
+          .action-item-content {
+            flex: 1;
+          }
+          .action-item-content .label {
+            font-weight: 600;
+            color: #2e7d32;
+            font-size: 13px;
+          }
+          .action-item-content .line {
+            border-bottom: 1px solid #a5d6a7;
+            height: 25px;
+          }
+          
+          .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+          }
+          .summary-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+          }
+          .summary-box h4 {
+            color: #0f4c3a;
+            margin: 0 0 12px 0;
+            font-size: 14px;
+          }
+          
+          .notes-section {
+            background: #fffef5;
+            border: 1px solid #f0e68c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+          }
+          .notes-section h4 {
+            color: #8b7019;
+            margin: 0 0 15px 0;
+          }
+          
+          .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #0f4c3a;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+          }
+        </style>
+      </head>
+      <body>
+        <!-- Cover Page -->
+        <div class="cover-page">
+          <div class="cover-badge">MODULE ${module.number} OF 33</div>
+          <div class="cover-icon">📓</div>
+          <h1 class="cover-title">${module.title}</h1>
+          <p class="cover-subtitle">Interactive Learning Workbook</p>
+          <p class="cover-subtitle" style="font-size: 14px; opacity: 0.8;">
+            Reflection Exercises • Action Planning • Key Concepts Summary
+          </p>
+          <div class="cover-info">
+            <p>Executive Leadership Mastery Program</p>
+            <p>CPD Accredited • 66 CPD Points Total</p>
+            <p>© Bright Leadership Consulting</p>
+          </div>
+        </div>
+
+        <!-- Introduction Page -->
+        <div class="page">
+          <h1>How to Use This Workbook</h1>
+          <p>This workbook is designed to help you actively engage with the material in Module ${module.number}. For maximum benefit:</p>
+          
+          <div class="lesson-block">
+            <h3>📖 Before Each Lesson</h3>
+            <p>Review the key concepts listed and set your learning intention.</p>
+          </div>
+          
+          <div class="lesson-block">
+            <h3>✍️ During Each Lesson</h3>
+            <p>Take notes in the spaces provided. Capture insights, questions, and ideas.</p>
+          </div>
+          
+          <div class="lesson-block">
+            <h3>💭 After Each Lesson</h3>
+            <p>Complete the reflection questions and action planning sections.</p>
+          </div>
+          
+          <div class="lesson-block">
+            <h3>🎯 At Module End</h3>
+            <p>Summarize your key takeaways and commit to specific actions.</p>
+          </div>
+
+          <div class="action-plan" style="margin-top: 30px;">
+            <h4>📅 My Learning Commitment</h4>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">I will complete this module by:</div>
+                <div class="line"></div>
+              </div>
+            </div>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">My primary goal for this module:</div>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lesson Pages -->
+        ${lessonsContent.map((lesson, idx) => `
+          <div class="page">
+            <div class="section-header">
+              <span class="icon">📖</span>
+              <h2>Lesson ${lesson.lessonNumber}: ${lesson.title}</h2>
+            </div>
+            
+            ${lesson.keyConcepts.length > 0 ? `
+              <div class="key-concepts">
+                <h4>💡 Key Concepts to Master</h4>
+                <ul>
+                  ${lesson.keyConcepts.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+            
+            <div class="notes-section">
+              <h4>📝 My Notes</h4>
+              ${Array(6).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+            
+            <div class="reflection-box">
+              <h4>💭 Reflection Questions</h4>
+              <p class="reflection-prompt">How does this lesson relate to my current leadership challenges?</p>
+              ${Array(3).fill('<div class="writing-lines"></div>').join('')}
+              <p class="reflection-prompt" style="margin-top: 15px;">What is one thing I can apply immediately?</p>
+              ${Array(2).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+            
+            <div class="action-plan">
+              <h4>🎯 Action Items from This Lesson</h4>
+              <div class="action-item">
+                <div class="checkbox"></div>
+                <div class="action-item-content">
+                  <div class="line"></div>
+                </div>
+              </div>
+              <div class="action-item">
+                <div class="checkbox"></div>
+                <div class="action-item-content">
+                  <div class="line"></div>
+                </div>
+              </div>
+              <div class="action-item">
+                <div class="checkbox"></div>
+                <div class="action-item-content">
+                  <div class="line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+
+        ${caseStudyTitle ? `
+          <!-- Case Study Page -->
+          <div class="page">
+            <div class="section-header" style="background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%);">
+              <span class="icon">📊</span>
+              <h2>Case Study: ${caseStudyTitle}</h2>
+            </div>
+            
+            <div class="reflection-box">
+              <h4>📋 Case Study Analysis</h4>
+              <p class="reflection-prompt">What is the key issue or challenge presented in this case?</p>
+              ${Array(3).fill('<div class="writing-lines"></div>').join('')}
+              <p class="reflection-prompt" style="margin-top: 15px;">What leadership principles from this module apply here?</p>
+              ${Array(3).fill('<div class="writing-lines"></div>').join('')}
+              <p class="reflection-prompt" style="margin-top: 15px;">What would I do differently or the same as the leader in this case?</p>
+              ${Array(3).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+            
+            <div class="action-plan" style="background: linear-gradient(135deg, #ede9fe 0%, #f3e8ff 100%); border-color: #c4b5fd;">
+              <h4 style="color: #7c3aed;">🔑 Key Lessons from This Case</h4>
+              ${Array(4).fill('<div class="action-item"><div class="checkbox" style="border-color: #7c3aed;"></div><div class="action-item-content"><div class="line" style="border-color: #c4b5fd;"></div></div></div>').join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        ${rolePlayTitle ? `
+          <!-- Role-Play Page -->
+          <div class="page">
+            <div class="section-header" style="background: linear-gradient(90deg, #ea580c 0%, #f97316 100%);">
+              <span class="icon">🎭</span>
+              <h2>Role-Play: ${rolePlayTitle}</h2>
+            </div>
+            
+            <div class="lesson-block" style="border-color: #ea580c;">
+              <h4 style="color: #ea580c;">Preparation Notes</h4>
+              <p>Before practicing this role-play, consider:</p>
+              ${Array(4).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+            
+            <div class="reflection-box">
+              <h4>🎬 Practice Reflection</h4>
+              <p class="reflection-prompt">What went well during the role-play?</p>
+              ${Array(2).fill('<div class="writing-lines"></div>').join('')}
+              <p class="reflection-prompt" style="margin-top: 15px;">What would I do differently next time?</p>
+              ${Array(2).fill('<div class="writing-lines"></div>').join('')}
+              <p class="reflection-prompt" style="margin-top: 15px;">What feedback did I receive?</p>
+              ${Array(2).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Module Summary Page -->
+        <div class="page">
+          <div class="section-header" style="background: linear-gradient(90deg, #c9a227 0%, #dab939 100%);">
+            <span class="icon">🎯</span>
+            <h2>Module ${module.number} Summary</h2>
+          </div>
+          
+          <div class="summary-grid">
+            <div class="summary-box">
+              <h4>📚 Top 3 Insights</h4>
+              <p>1.</p>
+              <div class="writing-lines"></div>
+              <p style="margin-top: 10px;">2.</p>
+              <div class="writing-lines"></div>
+              <p style="margin-top: 10px;">3.</p>
+              <div class="writing-lines"></div>
+            </div>
+            <div class="summary-box">
+              <h4>❓ Questions I Still Have</h4>
+              ${Array(5).fill('<div class="writing-lines"></div>').join('')}
+            </div>
+          </div>
+          
+          <div class="action-plan" style="margin-top: 20px;">
+            <h4>📋 My 30-Day Action Plan</h4>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">This Week (Days 1-7):</div>
+                <div class="line"></div>
+              </div>
+            </div>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">Next Week (Days 8-14):</div>
+                <div class="line"></div>
+              </div>
+            </div>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">Week 3 (Days 15-21):</div>
+                <div class="line"></div>
+              </div>
+            </div>
+            <div class="action-item">
+              <div class="checkbox"></div>
+              <div class="action-item-content">
+                <div class="label">Week 4 (Days 22-30):</div>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="reflection-box" style="margin-top: 20px;">
+            <h4>✨ My Commitment Statement</h4>
+            <p class="reflection-prompt">Based on what I've learned in Module ${module.number}, I commit to:</p>
+            ${Array(4).fill('<div class="writing-lines"></div>').join('')}
+            <p style="margin-top: 20px; font-size: 12px; color: #666;">
+              Signed: ___________________________ Date: _______________
+            </p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
+          <p>Module ${module.number}: ${module.title} • Interactive Workbook</p>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printWindow = window.open("", "_blank");
+    if (printWindow) {
+      printWindow.document.write(workbookHTML);
+      printWindow.document.close();
+      
+      const checkReady = setInterval(() => {
+        try {
+          if (printWindow.document.readyState === 'complete') {
+            clearInterval(checkReady);
+            setTimeout(() => printWindow.print(), 500);
+          }
+        } catch {
+          clearInterval(checkReady);
+        }
+      }, 100);
+      setTimeout(() => {
+        clearInterval(checkReady);
+        try { printWindow.print(); } catch {}
+      }, 3000);
+    }
+    
+    setTimeout(() => setExporting(null), 1000);
+  };
+
+  const generateWorkbookHTML = (module: ParsedModule) => {
+    setExporting(`workbook-html-${module.number}`);
+    
+    // Similar content extraction as PDF version
+    const lessonsContent = module.lessons.map(lesson => {
+      const keyConceptMatches = lesson.content.match(/\*\*([^*]+)\*\*/g) || [];
+      const keyConcepts = keyConceptMatches
+        .map(m => m.replace(/\*\*/g, '').trim())
+        .filter(c => c.length > 5 && c.length < 60)
+        .slice(0, 5);
+      
+      return {
+        lessonNumber: lesson.lessonNumber,
+        title: lesson.title,
+        keyConcepts,
+      };
+    });
+
+    const caseStudyMatch = module.fullContent.match(/### Case Study[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    const rolePlayMatch = module.fullContent.match(/### Role-Play[:\s]*([\s\S]*?)(?=\n### |\n---\n|$)/i);
+    
+    const caseStudyTitle = caseStudyMatch ? 
+      (caseStudyMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Case Study') : null;
+    const rolePlayTitle = rolePlayMatch ?
+      (rolePlayMatch[1].split('\n')[0]?.replace(/^\*\*|\*\*$/g, '').trim() || 'Role-Play Exercise') : null;
+
+    const interactiveHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module ${module.number} Workbook: ${module.title}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+          body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #f8fafb 0%, #f1f5f4 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #1a1a1a;
+          }
+          
+          .header {
+            background: linear-gradient(135deg, #0f4c3a 0%, #0a3a2c 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+          }
+          .header-badge {
+            display: inline-block;
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid rgba(201, 162, 39, 0.5);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #c9a227;
+            margin-bottom: 15px;
+          }
+          .header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+          }
+          .header p { color: rgba(255,255,255,0.8); }
+          
+          .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+          }
+          
+          .progress-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+          }
+          .progress-fill {
+            background: linear-gradient(90deg, #0f4c3a, #1a6b52);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+          }
+          .progress-text {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 30px;
+          }
+          
+          .section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            overflow: hidden;
+          }
+          .section-header {
+            background: linear-gradient(90deg, #0f4c3a 0%, #1a6b52 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+          }
+          .section-header.case-study { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); }
+          .section-header.role-play { background: linear-gradient(90deg, #ea580c 0%, #f97316 100%); }
+          .section-header.summary { background: linear-gradient(90deg, #c9a227 0%, #dab939 100%); }
+          .section-header .icon { font-size: 20px; }
+          .section-header h2 { font-size: 16px; margin: 0; flex: 1; }
+          .section-header .toggle { font-size: 18px; transition: transform 0.3s; }
+          .section-header.collapsed .toggle { transform: rotate(-90deg); }
+          
+          .section-content {
+            padding: 20px;
+            display: block;
+          }
+          .section-content.hidden { display: none; }
+          
+          .key-concepts {
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+          }
+          .key-concepts h4 {
+            color: #8b7019;
+            font-size: 14px;
+            margin-bottom: 10px;
+          }
+          .key-concepts ul { padding-left: 20px; margin: 0; }
+          .key-concepts li { margin-bottom: 5px; color: #555; font-size: 14px; }
+          
+          .form-group {
+            margin-bottom: 20px;
+          }
+          .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #0f4c3a;
+            margin-bottom: 8px;
+            font-size: 14px;
+          }
+          .form-group textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.2s;
+          }
+          .form-group textarea:focus {
+            outline: none;
+            border-color: #0f4c3a;
+          }
+          .form-group textarea.filled {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+          }
+          
+          .action-list { list-style: none; }
+          .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+          }
+          .action-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #0f4c3a;
+            cursor: pointer;
+          }
+          .action-item input[type="text"] {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+          }
+          .action-item input[type="text"]:focus {
+            outline: none;
+            border-color: #0f4c3a;
+          }
+          
+          .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+          .btn-primary {
+            background: linear-gradient(135deg, #0f4c3a 0%, #1a6b52 100%);
+            color: white;
+          }
+          .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15, 76, 58, 0.3); }
+          .btn-secondary {
+            background: #f1f5f4;
+            color: #0f4c3a;
+            border: 2px solid #0f4c3a;
+          }
+          
+          .actions-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 30px 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            position: sticky;
+            bottom: 0;
+          }
+          
+          .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #666;
+            font-size: 13px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="header-badge">MODULE ${module.number} OF 33</div>
+          <h1>${module.title}</h1>
+          <p>Interactive Learning Workbook</p>
+        </div>
+        
+        <div class="container">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-text" id="progressText">0% Complete</div>
+          
+          ${lessonsContent.map((lesson, idx) => `
+            <div class="section" data-section="${idx + 1}">
+              <div class="section-header" onclick="toggleSection(this)">
+                <span class="icon">📖</span>
+                <h2>Lesson ${lesson.lessonNumber}: ${lesson.title}</h2>
+                <span class="toggle">▼</span>
+              </div>
+              <div class="section-content">
+                ${lesson.keyConcepts.length > 0 ? `
+                  <div class="key-concepts">
+                    <h4>💡 Key Concepts</h4>
+                    <ul>${lesson.keyConcepts.map(c => `<li>${c}</li>`).join('')}</ul>
+                  </div>
+                ` : ''}
+                <div class="form-group">
+                  <label>📝 My Notes</label>
+                  <textarea placeholder="What are my key takeaways from this lesson?" onchange="updateProgress()"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>💭 How does this apply to my leadership?</label>
+                  <textarea placeholder="Reflect on how this lesson relates to your current role..." onchange="updateProgress()"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>🎯 Action Items</label>
+                  <ul class="action-list">
+                    <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I do differently?"></li>
+                    <li class="action-item"><input type="checkbox" onchange="updateProgress()"><input type="text" placeholder="What will I practice this week?"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+          
+          ${caseStudyTitle ? `
+            <div class="section">
+              <div class="section-header case-study" onclick="toggleSection(this)">
+                <span class="icon">📊</span>
+                <h2>Case Study: ${caseStudyTitle}</h2>
+                <span class="toggle">▼</span>
+              </div>
+              <div class="section-content">
+                <div class="form-group">
+                  <label>What is the key challenge in this case?</label>
+                  <textarea placeholder="Identify the main issue..." onchange="updateProgress()"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>What would I do differently?</label>
+                  <textarea placeholder="Apply the module's principles..." onchange="updateProgress()"></textarea>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+          
+          ${rolePlayTitle ? `
+            <div class="section">
+              <div class="section-header role-play" onclick="toggleSection(this)">
+                <span class="icon">🎭</span>
+                <h2>Role-Play: ${rolePlayTitle}</h2>
+                <span class="toggle">▼</span>
+              </div>
+              <div class="section-content">
+                <div class="form-group">
+                  <label>Practice Reflection</label>
+                  <textarea placeholder="What went well? What would I change?" onchange="updateProgress()"></textarea>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+          
+          <div class="section">
+            <div class="section-header summary" onclick="toggleSection(this)">
+              <span class="icon">🎯</span>
+              <h2>Module Summary</h2>
+              <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+              <div class="form-group">
+                <label>Top 3 Insights from This Module</label>
+                <textarea placeholder="1. &#10;2. &#10;3. " onchange="updateProgress()"></textarea>
+              </div>
+              <div class="form-group">
+                <label>My 30-Day Commitment</label>
+                <textarea placeholder="What will I commit to doing over the next 30 days?" onchange="updateProgress()"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="saveProgress()">💾 Save Progress</button>
+          <button class="btn btn-primary" onclick="window.print()">🖨️ Print Workbook</button>
+        </div>
+        
+        <div class="footer">
+          <p>© Bright Leadership Consulting • Executive Leadership Mastery Program</p>
+        </div>
+        
+        <script>
+          function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('hidden');
+          }
+          
+          function updateProgress() {
+            const textareas = document.querySelectorAll('textarea');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let filled = 0;
+            let total = textareas.length + checkboxes.length;
+            
+            textareas.forEach(ta => {
+              if (ta.value.trim().length > 0) {
+                filled++;
+                ta.classList.add('filled');
+              } else {
+                ta.classList.remove('filled');
+              }
+            });
+            checkboxes.forEach(cb => { if (cb.checked) filled++; });
+            
+            const percent = Math.round((filled / total) * 100);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = percent + '% Complete';
+            
+            // Auto-save to localStorage
+            saveProgress();
+          }
+          
+          function saveProgress() {
+            const data = {};
+            document.querySelectorAll('textarea').forEach((ta, i) => { data['ta_' + i] = ta.value; });
+            document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { data['cb_' + i] = cb.checked; });
+            document.querySelectorAll('input[type="text"]').forEach((txt, i) => { data['txt_' + i] = txt.value; });
+            localStorage.setItem('workbook_module_${module.number}', JSON.stringify(data));
+          }
+          
+          function loadProgress() {
+            const saved = localStorage.getItem('workbook_module_${module.number}');
+            if (saved) {
+              const data = JSON.parse(saved);
+              document.querySelectorAll('textarea').forEach((ta, i) => { if (data['ta_' + i]) ta.value = data['ta_' + i]; });
+              document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if (data['cb_' + i]) cb.checked = data['cb_' + i]; });
+              document.querySelectorAll('input[type="text"]').forEach((txt, i) => { if (data['txt_' + i]) txt.value = data['txt_' + i]; });
+              updateProgress();
+            }
+          }
+          
+          window.onload = loadProgress;
+        </script>
+      </body>
+      </html>
+    `;
+
+    // Open in new window
+    const htmlWindow = window.open("", "_blank");
+    if (htmlWindow) {
+      htmlWindow.document.write(interactiveHTML);
+      htmlWindow.document.close();
+    }
+    
+    setTimeout(() => setExporting(null), 1000);
+  };
+
   const downloadAllOfType = async (type: 'lesson' | 'video' | 'quiz') => {
     setExporting(`all-${type}`);
     
@@ -1207,7 +2186,7 @@ const ThinkificExport = () => {
                       <div>
                         <h3 className="text-lg font-semibold">{modules.length} Modules Parsed</h3>
                         <p className="text-sm text-muted-foreground">
-                          {stats.individualLessons} individual lessons • {stats.scripts} video script sets • {stats.individualQuizzes} individual quizzes
+                          {stats.individualLessons} lessons • {stats.scripts} video scripts • {stats.individualQuizzes} quizzes • {stats.workbooks} workbooks
                         </p>
                       </div>
                     </div>
@@ -1215,39 +2194,130 @@ const ThinkificExport = () => {
                 </CardContent>
               </Card>
 
-              <Tabs defaultValue="individual" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-6">
+              <Tabs defaultValue="workbooks" className="space-y-6">
+                <TabsList className="grid w-full grid-cols-7">
+                  <TabsTrigger value="workbooks" className="gap-2">
+                    <NotebookPen className="h-4 w-4" />
+                    <span className="hidden sm:inline">Workbooks</span>
+                    <span className="sm:hidden">📓</span>
+                  </TabsTrigger>
                   <TabsTrigger value="individual" className="gap-2">
                     <Layers className="h-4 w-4" />
-                    <span className="hidden sm:inline">Individual Lessons</span>
-                    <span className="sm:hidden">Lessons</span>
+                    <span className="hidden sm:inline">Lessons</span>
+                    <span className="sm:hidden">📖</span>
                   </TabsTrigger>
                   <TabsTrigger value="individual-quizzes" className="gap-2">
                     <HelpCircle className="h-4 w-4" />
-                    <span className="hidden sm:inline">Individual Quizzes</span>
-                    <span className="sm:hidden">Quizzes</span>
+                    <span className="hidden sm:inline">Quizzes</span>
+                    <span className="sm:hidden">❓</span>
                   </TabsTrigger>
                   <TabsTrigger value="presentations" className="gap-2">
                     <Presentation className="h-4 w-4" />
                     <span className="hidden sm:inline">Presentations</span>
-                    <span className="sm:hidden">PPT</span>
+                    <span className="sm:hidden">📊</span>
                   </TabsTrigger>
                   <TabsTrigger value="videos" className="gap-2">
                     <Video className="h-4 w-4" />
-                    <span className="hidden sm:inline">Video Scripts</span>
-                    <span className="sm:hidden">Videos</span>
+                    <span className="hidden sm:inline">Scripts</span>
+                    <span className="sm:hidden">🎬</span>
                   </TabsTrigger>
                   <TabsTrigger value="lessons" className="gap-2">
                     <BookOpen className="h-4 w-4" />
-                    <span className="hidden sm:inline">Full Modules</span>
-                    <span className="sm:hidden">Modules</span>
+                    <span className="hidden sm:inline">Modules</span>
+                    <span className="sm:hidden">📚</span>
                   </TabsTrigger>
                   <TabsTrigger value="quizzes" className="gap-2">
                     <ClipboardList className="h-4 w-4" />
                     <span className="hidden sm:inline">All Quizzes</span>
-                    <span className="sm:hidden">All</span>
+                    <span className="sm:hidden">📝</span>
                   </TabsTrigger>
                 </TabsList>
+
+                {/* Workbooks Tab */}
+                <TabsContent value="workbooks" className="space-y-6">
+                  <Card className="border-amber-500/20 bg-amber-500/5">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-amber-600 text-white">
+                            <NotebookPen className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle>Interactive Workbooks</CardTitle>
+                            <CardDescription>{stats.workbooks} module workbooks with reflection exercises, action planning templates & key concepts</CardDescription>
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="outline" className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                          ✍️ Reflection Questions
+                        </Badge>
+                        <Badge variant="outline" className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                          🎯 Action Planning
+                        </Badge>
+                        <Badge variant="outline" className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                          💡 Key Concepts
+                        </Badge>
+                        <Badge variant="outline" className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                          📊 Case Study Analysis
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {modules.map((module) => (
+                      <Card key={`workbook-${module.number}`} className="hover:shadow-md transition-shadow">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between">
+                            <Badge variant="secondary" className="mb-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-700">
+                              <NotebookPen className="h-3 w-3 mr-1" />
+                              Module {module.number}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-sm leading-tight line-clamp-2">
+                            {module.title}
+                          </CardTitle>
+                          <CardDescription className="text-xs">
+                            {module.lessons.length} lessons • Includes activities
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0 space-y-2">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                            onClick={() => generateWorkbookPDF(module)}
+                            disabled={exporting !== null}
+                          >
+                            {exporting === `workbook-pdf-${module.number}` ? (
+                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                              <FileDown className="h-3 w-3 mr-2" />
+                            )}
+                            Print PDF
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                            onClick={() => generateWorkbookHTML(module)}
+                            disabled={exporting !== null}
+                          >
+                            {exporting === `workbook-html-${module.number}` ? (
+                              <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                              <Download className="h-3 w-3 mr-2" />
+                            )}
+                            Interactive HTML
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
 
                 {/* Individual Lessons Tab */}
                 <TabsContent value="individual" className="space-y-6">
