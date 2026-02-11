@@ -17,9 +17,9 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hello@brightleadershipconsulting.com",
+    value: "info@brightleadershipconsulting.com",
     description: "We'll respond within 24 hours",
-    action: "mailto:hello@brightleadershipconsulting.com",
+    action: "mailto:info@brightleadershipconsulting.com",
   },
   {
     icon: MapPin,
