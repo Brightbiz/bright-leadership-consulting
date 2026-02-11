@@ -42,7 +42,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-background/70">
                 <Mail className="h-4 w-4 text-secondary" />
-                hello@brightleadershipconsulting.com
+                info@brightleadershipconsulting.com
               </div>
               <div className="flex items-center gap-3 text-sm text-background/70">
                 <Phone className="h-4 w-4 text-secondary" />
