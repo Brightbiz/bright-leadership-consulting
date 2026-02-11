@@ -21,7 +21,7 @@ const individualProgram = {
     "Flexible self-paced learning with virtual sessions",
   ],
   bonus: "50% OFF all individual training courses as an exclusive bonus!",
-  link: "https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program",
+  link: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
 };
 
 const organizationProgram = {
