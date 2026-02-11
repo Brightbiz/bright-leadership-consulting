@@ -20,7 +20,8 @@ const tiers = [
       "Lifetime access to materials",
     ],
     accent: "primary" as const,
-    popular: false,
+    popular: true,
+    limited: false,
     cta: "Start Learning Today",
     link: "https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program",
   },
@@ -40,9 +41,10 @@ const tiers = [
       "Priority email support",
     ],
     accent: "secondary" as const,
-    popular: true,
-    cta: "Join the Cohort",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program",
+    popular: false,
+    limited: true,
+    cta: "Enquire About Availability",
+    link: "#contact",
   },
   {
     name: "1:1 Executive Coaching",
@@ -61,7 +63,8 @@ const tiers = [
     ],
     accent: "primary" as const,
     popular: false,
-    cta: "Apply Now",
+    limited: true,
+    cta: "Enquire About Availability",
     link: "#contact",
   },
 ];
@@ -121,12 +124,22 @@ const PricingTiers = () => {
                 </Badge>
               </div>
             )}
+            {tier.limited && (
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+                <Badge variant="outline" className="shadow-lg px-4 py-1 border-amber-500/50 bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400">
+                  <Clock className="h-3 w-3 mr-1" />
+                  Limited Availability
+                </Badge>
+              </div>
+            )}
 
             <motion.div
               whileHover={{ y: -4 }}
               className={`relative h-full rounded-2xl border-2 bg-card p-6 flex flex-col transition-shadow duration-300 ${
                 tier.popular
                   ? "border-secondary shadow-xl shadow-secondary/10"
+                  : tier.limited
+                  ? "border-border/30 opacity-90 hover:opacity-100 hover:border-primary/20 hover:shadow-md"
                   : "border-border/50 hover:border-primary/30 hover:shadow-lg"
               }`}
             >
@@ -185,6 +198,11 @@ const PricingTiers = () => {
                   </li>
                 ))}
               </ul>
+              {tier.limited && (
+                <p className="text-xs text-muted-foreground italic mb-4 px-1">
+                  Due to high demand, coaching places fill quickly. Submit an enquiry and we'll contact you if a slot becomes available.
+                </p>
+              )}
 
               {/* CTA */}
               <MagneticButton
