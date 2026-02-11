@@ -22,7 +22,7 @@ const flagshipProgram = {
     "CPD Accredited certification",
     "50% discount on individual courses as a bonus",
   ],
-  link: "https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program",
+  link: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
 };
 
 const individualCourses = [
