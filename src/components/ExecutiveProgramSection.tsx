@@ -4,6 +4,7 @@ import { useState } from "react";
 import TiltCard from "./TiltCard";
 import MagneticButton from "./MagneticButton";
 import TextReveal from "./TextReveal";
+import PricingTiers from "./PricingTiers";
 import executiveLeadershipImage from "@/assets/executive-leadership-diverse.jpg";
 
 const individualProgram = {
@@ -389,6 +390,9 @@ const ExecutiveProgramSection = () => {
             />
           </motion.div>
         </motion.div>
+
+        {/* Pricing Tiers */}
+        <PricingTiers />
 
         {/* CPD Accreditation Note */}
         <motion.div
