@@ -342,13 +342,21 @@ const CoursesSection = () => {
                   <p className="text-sm text-muted-foreground">6 individual courses + discounted bundles available</p>
                 </div>
               </div>
-              <Button variant="default" size="lg" className="group shadow-lg" asChild>
-                <Link to="/courses">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  View All Courses
-                  <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <Button variant="default" size="lg" className="group shadow-lg" asChild>
+                  <Link to="/courses">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    View All Courses
+                    <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" className="group" asChild>
+                  <Link to="/brochures">
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    Download Brochures
+                  </Link>
+                </Button>
+              </div>
             </div>
           </TiltCard>
         </motion.div>
