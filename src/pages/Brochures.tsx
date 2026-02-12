@@ -1,4 +1,4 @@
-import { FileText, Download, ArrowRight, Crown, BookOpen, Zap, Users, Briefcase, Sparkles } from "lucide-react";
+import { FileText, Download, ArrowRight, Crown, BookOpen, Zap, Users, Briefcase, Sparkles, Library } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const brochures = [
+  {
+    icon: Library,
+    title: "Complete Workshops & Course Catalog",
+    subtitle: "10+ Programs | Workshops & Digital Courses | All Levels",
+    description: "The full Bright Leadership Consulting catalog — organisational workshops, the Four-in-One package, and individual digital courses with pricing, modules, and outcomes.",
+    accent: "secondary" as const,
+    featured: true,
+    url: "/brochures/full-programs-brochure.html",
+  },
   {
     icon: Crown,
     title: "Executive Leadership Mastery Program",
