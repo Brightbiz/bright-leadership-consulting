@@ -1,16 +1,13 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServicesHero from "@/components/heroes/ServicesHero";
-import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, ArrowRight, Sparkles, Users, Target, Award, Clock, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Check, ArrowRight, Sparkles, Users, Target, Award, Globe } from "lucide-react";
 
 const serviceDetails = [
   {
@@ -84,47 +81,48 @@ const Services = () => {
         <ServicesHero />
 
         {/* Detailed Service Sections */}
-        <section id="comparison" className="py-20 lg:py-32">
-          <div className="container-narrow">
-            <AnimatedSection className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">
-                <Sparkles className="h-3 w-3 mr-1" />
+        <section id="comparison" className="section-padding relative overflow-hidden">
+          <div className="absolute top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-40 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
+          <div className="container-narrow relative">
+            <AnimatedSection className="text-center mb-20">
+              <Badge variant="outline" className="mb-4 px-4 py-1.5">
+                <Sparkles className="h-3 w-3 mr-1.5" />
                 Our Expertise
               </Badge>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Comprehensive Leadership Solutions
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                 Each service is designed to meet you where you are and take you where you want to go.
               </p>
             </AnimatedSection>
 
-            <div className="space-y-24">
+            <div className="space-y-32">
               {serviceDetails.map((service, index) => (
                 <AnimatedSection 
                   key={service.id}
                   animation={index % 2 === 0 ? "slide-right" : "slide-left"}
                 >
-                  <div className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                  <div className={`grid lg:grid-cols-2 gap-16 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                     <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
                       <Badge className={`mb-4 bg-gradient-to-r ${service.gradient} text-primary-foreground`}>
                         {service.subtitle}
                       </Badge>
-                      <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+                      <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
                         {service.title}
                       </h3>
-                      <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                      <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
                         {service.description}
                       </p>
 
-                      {/* Features list */}
-                      <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                      <div className="grid sm:grid-cols-2 gap-4 mb-10">
                         {service.features.map((feature) => (
-                          <div key={feature} className="flex items-center gap-3">
-                            <div className={`w-5 h-5 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center flex-shrink-0`}>
-                              <Check className="h-3 w-3 text-primary-foreground" />
+                          <div key={feature} className="flex items-center gap-3 group">
+                            <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                              <Check className="h-3.5 w-3.5 text-primary-foreground" />
                             </div>
-                            <span className="text-foreground">{feature}</span>
+                            <span className="text-foreground text-sm">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -139,13 +137,15 @@ const Services = () => {
 
                     {/* Stats card */}
                     <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                      <Card className="relative overflow-hidden">
-                        <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${service.gradient}`} />
-                        <CardContent className="p-8">
-                          <div className="grid grid-cols-3 gap-6">
+                      <div className="relative rounded-3xl bg-card/90 backdrop-blur-sm border border-border/50 overflow-hidden shadow-xl">
+                        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.gradient}`} />
+                        <div className="absolute -top-20 -right-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-secondary/5 rounded-full blur-3xl" />
+                        <div className="relative p-10">
+                          <div className="grid grid-cols-3 gap-8">
                             {service.stats.map((stat) => (
                               <div key={stat.label} className="text-center">
-                                <div className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-1">
+                                <div className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
                                   {stat.value}
                                 </div>
                                 <div className="text-sm text-muted-foreground">
@@ -154,8 +154,8 @@ const Services = () => {
                               </div>
                             ))}
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </AnimatedSection>
@@ -165,13 +165,18 @@ const Services = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-20 bg-muted/30">
-          <div className="container-narrow">
+        <section className="section-padding relative overflow-hidden bg-muted/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-16">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <Badge variant="outline" className="mb-4 px-4 py-1.5">
+                <Award className="h-3 w-3 mr-1.5" />
+                Why Us
+              </Badge>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Why Leaders Choose Us
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                 Our unique approach combines proven methodologies with personalized attention.
               </p>
             </AnimatedSection>
@@ -184,28 +189,21 @@ const Services = () => {
                 { icon: Globe, title: "Global Reach", description: "Serving leaders across 25+ countries" },
               ].map((item, index) => (
                 <AnimatedSection key={item.title} delay={index * 100}>
-                  <Card className="h-full hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <item.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-8 text-center group hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                      <item.icon className="h-7 w-7 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Process Section */}
         <ProcessSection />
-
-        {/* Testimonials */}
         <TestimonialsSection />
-
-        {/* CTA */}
         <CTASection />
       </main>
 
