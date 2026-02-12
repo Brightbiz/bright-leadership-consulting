@@ -7,7 +7,7 @@ const tiers = [
   {
     name: "Self-Paced Mastery",
     icon: User,
-    price: 997,
+    price: 1197,
     originalPrice: 1497,
     period: "one-time",
     description: "Master leadership at your own pace with full programme access.",
@@ -28,7 +28,7 @@ const tiers = [
   {
     name: "Group Coaching",
     icon: Users,
-    price: 1297,
+    price: 1497,
     originalPrice: 1797,
     period: "one-time",
     description: "Accelerate your growth with expert-led group coaching sessions.",
@@ -49,7 +49,7 @@ const tiers = [
   {
     name: "1:1 Executive Coaching",
     icon: Crown,
-    price: 1997,
+    price: 2197,
     originalPrice: 2997,
     period: "one-time",
     description: "The ultimate transformation with dedicated personal coaching.",
