@@ -4,7 +4,8 @@ import ContactHero from "@/components/heroes/ContactHero";
 import MultiStepContactForm from "@/components/MultiStepContactForm";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Users, Award } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Users, Award, Sparkles } from "lucide-react";
 
 const contactInfo = [
   {
@@ -65,30 +66,29 @@ const Contact = () => {
         <ContactHero />
 
         {/* Contact Methods Grid */}
-        <section className="py-16 bg-muted/30">
-          <div className="container-narrow">
+        <section className="py-20 relative overflow-hidden bg-muted/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
+          <div className="container-narrow relative">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {contactInfo.map((item, index) => (
                 <AnimatedSection key={item.title} delay={index * 100}>
-                  <Card className="h-full hover:shadow-lg transition-shadow group">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                        <item.icon className="h-7 w-7 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-                      {item.action ? (
-                        <a 
-                          href={item.action}
-                          className="text-primary font-medium hover:underline block mb-1"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="text-foreground font-medium mb-1">{item.value}</p>
-                      )}
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-8 text-center group hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                      <item.icon className="h-7 w-7 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                    {item.action ? (
+                      <a 
+                        href={item.action}
+                        className="text-primary font-medium hover:underline block mb-1 text-sm"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-foreground font-medium mb-1 text-sm">{item.value}</p>
+                    )}
+                    <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
@@ -96,33 +96,49 @@ const Contact = () => {
         </section>
 
         {/* Multi-Step Contact Form Section */}
-        <section id="contact-form" className="py-20">
-          <div className="container-narrow">
+        <section id="contact-form" className="section-padding relative overflow-hidden">
+          <div className="absolute top-20 -right-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-12">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
+                <Sparkles className="h-3 w-3 mr-1.5" />
+                Get in Touch
+              </Badge>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Send Us a Message
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                 Complete the quick form below and we'll get back to you within 24 hours.
               </p>
             </AnimatedSection>
 
             <AnimatedSection>
-              <div className="bg-card rounded-2xl border border-border/50 p-6 md:p-10 shadow-lg">
-                <MultiStepContactForm />
+              <div className="relative rounded-3xl bg-card/90 backdrop-blur-sm border border-border/50 p-8 md:p-12 shadow-2xl overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+                <div className="absolute -top-20 -right-20 w-48 h-48 bg-secondary/8 rounded-full blur-3xl" />
+                <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-primary/8 rounded-full blur-3xl" />
+                <div className="relative">
+                  <MultiStepContactForm />
+                </div>
               </div>
             </AnimatedSection>
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-muted/30">
-          <div className="container-narrow">
+        <section className="section-padding relative overflow-hidden bg-muted/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,hsl(var(--secondary)/0.04),transparent_60%)]" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-12">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
+                <MessageCircle className="h-3 w-3 mr-1.5" />
+                Quick Answers
+              </Badge>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Frequently Asked Questions
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                 Quick answers to common questions about getting in touch.
               </p>
             </AnimatedSection>
@@ -130,19 +146,17 @@ const Contact = () => {
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
                 <AnimatedSection key={faq.question} delay={index * 100}>
-                  <Card className="h-full">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                          <MessageCircle className="h-4 w-4 text-secondary" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                          <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
-                        </div>
+                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-7 group hover:border-primary/20 hover:shadow-lg transition-all duration-500">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <MessageCircle className="h-5 w-5 text-secondary" />
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                      </div>
+                    </div>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
@@ -150,21 +164,22 @@ const Contact = () => {
         </section>
 
         {/* Trust Indicators */}
-        <section className="py-16">
-          <div className="container-narrow">
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+        <section className="py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.03] via-transparent to-secondary/[0.03]" />
+          <div className="container-narrow relative">
+            <div className="flex flex-wrap justify-center gap-10 md:gap-20">
               {[
                 { icon: Users, value: "5,000+", label: "Leaders Trained" },
                 { icon: Award, value: "CPD", label: "Accredited Programs" },
                 { icon: MapPin, value: "25+", label: "Countries Served" },
               ].map((stat, index) => (
                 <AnimatedSection key={stat.label} delay={index * 100}>
-                  <div className="flex items-center gap-4 text-center">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <stat.icon className="h-6 w-6 text-primary" />
+                  <div className="flex items-center gap-5">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center shadow-sm">
+                      <stat.icon className="h-7 w-7 text-primary" />
                     </div>
-                    <div className="text-left">
-                      <div className="font-serif text-2xl font-bold text-foreground">{stat.value}</div>
+                    <div>
+                      <div className="font-serif text-3xl font-bold text-foreground">{stat.value}</div>
                       <div className="text-sm text-muted-foreground">{stat.label}</div>
                     </div>
                   </div>

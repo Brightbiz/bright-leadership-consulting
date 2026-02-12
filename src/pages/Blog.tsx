@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ArrowRight, Clock, User, Tag, Search, TrendingUp, Users, Lightbulb, Target, Calendar, Flame, BookOpen, Quote } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -191,27 +190,27 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
       <BlogHero />
 
       {/* Featured Posts */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-narrow">
+      <section className="section-padding relative overflow-hidden bg-muted/30">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
+        <div className="container-narrow relative">
           <AnimatedSection className="mb-12">
             <div className="flex items-center gap-3 mb-2">
-              <div className="h-1 w-8 bg-secondary rounded-full" />
+              <div className="h-1 w-10 bg-secondary rounded-full" />
               <span className="text-sm font-semibold text-secondary uppercase tracking-wider">Featured</span>
             </div>
-            <h2 className="font-serif text-3xl font-semibold text-foreground">
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
               Editor's Picks
             </h2>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 gap-8">
             {featuredPosts.map((post, index) => (
-              <AnimatedSection key={post.id} delay={index * 0.1}>
+              <AnimatedSection key={post.id} delay={index * 100}>
                 <Link to={`/blog/${post.slug}`} className="group block">
-                  <Card className="overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
+                  <div className="overflow-hidden rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                     <div className="aspect-[16/9] overflow-hidden">
                       <img
                         src={post.image}
@@ -219,8 +218,8 @@ const Blog = () => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-3 mb-3">
+                    <div className="p-7">
+                      <div className="flex items-center gap-3 mb-4">
                         <Badge variant="secondary" className="capitalize">
                           {post.category}
                         </Badge>
@@ -232,7 +231,7 @@ const Blog = () => {
                       <h3 className="font-serif text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
                       </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4">
+                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-5">
                         {post.excerpt}
                       </p>
                       <div className="flex items-center justify-between">
@@ -240,7 +239,7 @@ const Blog = () => {
                           <img 
                             src={post.authorImage} 
                             alt={post.author}
-                            className="w-8 h-8 rounded-full object-cover"
+                            className="w-9 h-9 rounded-full object-cover border-2 border-border/50"
                           />
                           <span className="text-sm text-muted-foreground">{post.author}</span>
                         </div>
@@ -249,8 +248,8 @@ const Blog = () => {
                           <ArrowRight className="h-4 w-4" />
                         </span>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </Link>
               </AnimatedSection>
             ))}
@@ -259,22 +258,24 @@ const Blog = () => {
       </section>
 
       {/* Quote Section */}
-      <section className="py-16 bg-primary">
-        <div className="container-narrow">
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
+        <div className="container-narrow relative">
           <AnimatedSection>
             <div className="text-center max-w-3xl mx-auto">
-              <Quote className="h-12 w-12 text-secondary mx-auto mb-6 opacity-60" />
-              <blockquote className="font-serif text-2xl md:text-3xl text-primary-foreground leading-relaxed mb-6">
+              <Quote className="h-14 w-14 text-secondary mx-auto mb-8 opacity-60" />
+              <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary-foreground leading-relaxed mb-8">
                 "{featuredQuote.text}"
               </blockquote>
               <div className="flex items-center justify-center gap-3">
-                <div className="h-px w-8 bg-primary-foreground/30" />
+                <div className="h-px w-10 bg-primary-foreground/30" />
                 <p className="text-primary-foreground/80">
                   <span className="font-semibold">{featuredQuote.author}</span>
                   <span className="mx-2">·</span>
                   <span>{featuredQuote.role}</span>
                 </p>
-                <div className="h-px w-8 bg-primary-foreground/30" />
+                <div className="h-px w-10 bg-primary-foreground/30" />
               </div>
             </div>
           </AnimatedSection>
@@ -282,24 +283,25 @@ const Blog = () => {
       </section>
 
       {/* Main Content with Sidebar */}
-      <section className="section-padding">
-        <div className="container-narrow">
+      <section className="section-padding relative overflow-hidden">
+        <div className="absolute top-40 -right-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="container-narrow relative">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Main Posts Column */}
             <div className="lg:col-span-2">
               {/* Filter Bar */}
-              <AnimatedSection className="mb-8">
+              <AnimatedSection className="mb-10">
                 <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-                  {/* Category Tabs */}
                   <div className="flex flex-wrap gap-2">
                     {categories.map((category) => (
                       <button
                         key={category.id}
                         onClick={() => setActiveCategory(category.id)}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                           activeCategory === category.id
                             ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                            : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                            : "bg-muted/80 text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}
                       >
                         <category.icon className="h-3.5 w-3.5" />
@@ -307,26 +309,24 @@ const Blog = () => {
                       </button>
                     ))}
                   </div>
-
-                  {/* Search */}
                   <div className="relative w-full sm:w-56">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 h-9"
+                      className="pl-10 h-10 rounded-xl"
                     />
                   </div>
                 </div>
               </AnimatedSection>
 
               {/* Posts List */}
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {filteredPosts.map((post, index) => (
-                  <AnimatedSection key={post.id} delay={index * 0.05}>
+                  <AnimatedSection key={post.id} delay={index * 50}>
                     <Link to={`/blog/${post.slug}`} className="group block">
-                      <Card className="overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
+                      <div className="overflow-hidden rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5">
                         <div className="flex flex-col sm:flex-row">
                           <div className="sm:w-1/3 aspect-video sm:aspect-square overflow-hidden">
                             <img
@@ -335,9 +335,9 @@ const Blog = () => {
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>
-                          <CardContent className="sm:w-2/3 p-5 flex flex-col justify-center">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant="outline" className="capitalize text-xs">
+                          <div className="sm:w-2/3 p-6 flex flex-col justify-center">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Badge variant="outline" className="capitalize text-xs rounded-lg">
                                 {post.category}
                               </Badge>
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
@@ -348,7 +348,7 @@ const Blog = () => {
                             <h3 className="font-serif text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
                               {post.title}
                             </h3>
-                            <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-3">
+                            <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4">
                               {post.excerpt}
                             </p>
                             <div className="flex items-center justify-between">
@@ -356,16 +356,16 @@ const Blog = () => {
                                 <img 
                                   src={post.authorImage} 
                                   alt={post.author}
-                                  className="w-6 h-6 rounded-full object-cover"
+                                  className="w-7 h-7 rounded-full object-cover border border-border/50"
                                 />
                                 <span className="text-xs text-muted-foreground">{post.author}</span>
                                 <span className="text-xs text-muted-foreground">· {post.readTime}</span>
                               </div>
                               <ArrowRight className="h-4 w-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
-                          </CardContent>
+                          </div>
                         </div>
-                      </Card>
+                      </div>
                     </Link>
                   </AnimatedSection>
                 ))}
@@ -374,15 +374,14 @@ const Blog = () => {
               {filteredPosts.length === 0 && (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground">No articles found matching your criteria.</p>
-                  <Button variant="outline" className="mt-4" onClick={() => { setActiveCategory("all"); setSearchQuery(""); }}>
+                  <Button variant="outline" className="mt-4 rounded-xl" onClick={() => { setActiveCategory("all"); setSearchQuery(""); }}>
                     Clear Filters
                   </Button>
                 </div>
               )}
 
-              {/* Load More */}
               <AnimatedSection className="mt-12 text-center">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="rounded-xl">
                   Load More Articles
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -393,23 +392,23 @@ const Blog = () => {
             <div className="lg:col-span-1 space-y-8">
               {/* Trending Posts */}
               <AnimatedSection>
-                <div className="bg-card rounded-2xl border border-border/50 p-6">
+                <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-7">
                   <div className="flex items-center gap-2 mb-6">
                     <Flame className="h-5 w-5 text-secondary" />
                     <h3 className="font-serif text-lg font-semibold text-foreground">Trending Now</h3>
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     {trendingPosts.map((post, index) => (
                       <Link 
                         key={post.id} 
                         to={`/blog/${post.slug}`}
                         className="group flex gap-4 items-start"
                       >
-                        <span className="text-3xl font-serif font-bold text-muted-foreground/30 group-hover:text-primary/50 transition-colors">
+                        <span className="text-3xl font-serif font-bold text-muted-foreground/20 group-hover:text-primary/40 transition-colors">
                           {String(index + 1).padStart(2, '0')}
                         </span>
                         <div>
-                          <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                          <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-relaxed">
                             {post.title}
                           </h4>
                           <span className="text-xs text-muted-foreground">{post.readTime}</span>
@@ -421,8 +420,8 @@ const Blog = () => {
               </AnimatedSection>
 
               {/* Categories */}
-              <AnimatedSection delay={0.1}>
-                <div className="bg-card rounded-2xl border border-border/50 p-6">
+              <AnimatedSection delay={100}>
+                <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-7">
                   <div className="flex items-center gap-2 mb-6">
                     <BookOpen className="h-5 w-5 text-primary" />
                     <h3 className="font-serif text-lg font-semibold text-foreground">Categories</h3>
@@ -434,7 +433,7 @@ const Blog = () => {
                         <button
                           key={category.id}
                           onClick={() => setActiveCategory(category.id)}
-                          className="w-full flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-primary/5 hover:border-primary/20 border border-transparent transition-all group"
+                          className="w-full flex items-center justify-between p-3.5 rounded-xl bg-muted/40 hover:bg-primary/5 hover:border-primary/20 border border-transparent transition-all group"
                         >
                           <div className="flex items-center gap-3">
                             <category.icon className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -442,7 +441,7 @@ const Blog = () => {
                               {category.label}
                             </span>
                           </div>
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge variant="secondary" className="text-xs rounded-lg">
                             {count}
                           </Badge>
                         </button>
@@ -453,25 +452,25 @@ const Blog = () => {
               </AnimatedSection>
 
               {/* Authors */}
-              <AnimatedSection delay={0.2}>
-                <div className="bg-card rounded-2xl border border-border/50 p-6">
+              <AnimatedSection delay={200}>
+                <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-7">
                   <div className="flex items-center gap-2 mb-6">
                     <Users className="h-5 w-5 text-secondary" />
                     <h3 className="font-serif text-lg font-semibold text-foreground">Our Authors</h3>
                   </div>
                   <div className="space-y-4">
                     {authors.map((author) => (
-                      <div key={author.name} className="flex items-center gap-3">
+                      <div key={author.name} className="flex items-center gap-3 group">
                         <img 
                           src={author.image} 
                           alt={author.name}
-                          className="w-12 h-12 rounded-full object-cover border-2 border-border"
+                          className="w-12 h-12 rounded-full object-cover border-2 border-border/50 group-hover:border-primary/30 transition-colors"
                         />
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-foreground">{author.name}</h4>
                           <p className="text-xs text-muted-foreground">{author.role}</p>
                         </div>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs rounded-lg">
                           {author.articles} posts
                         </Badge>
                       </div>
@@ -481,19 +480,22 @@ const Blog = () => {
               </AnimatedSection>
 
               {/* Newsletter Sidebar */}
-              <AnimatedSection delay={0.3}>
-                <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-6 text-primary-foreground">
-                  <h3 className="font-serif text-lg font-semibold mb-2">Subscribe to Updates</h3>
-                  <p className="text-primary-foreground/80 text-sm mb-4">
-                    Get the latest insights delivered to your inbox weekly.
-                  </p>
-                  <Input 
-                    placeholder="Your email" 
-                    className="bg-white/10 border-white/20 text-primary-foreground placeholder:text-primary-foreground/60 mb-3"
-                  />
-                  <Button variant="secondary" className="w-full">
-                    Subscribe
-                  </Button>
+              <AnimatedSection delay={300}>
+                <div className="rounded-2xl bg-gradient-to-br from-primary via-primary/95 to-primary/90 p-7 text-primary-foreground relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl" />
+                  <div className="relative">
+                    <h3 className="font-serif text-lg font-semibold mb-3">Subscribe to Updates</h3>
+                    <p className="text-primary-foreground/80 text-sm mb-5 leading-relaxed">
+                      Get the latest insights delivered to your inbox weekly.
+                    </p>
+                    <Input 
+                      placeholder="Your email" 
+                      className="bg-white/10 border-white/20 text-primary-foreground placeholder:text-primary-foreground/60 mb-3 rounded-xl"
+                    />
+                    <Button variant="secondary" className="w-full rounded-xl">
+                      Subscribe
+                    </Button>
+                  </div>
                 </div>
               </AnimatedSection>
             </div>
@@ -502,29 +504,30 @@ const Blog = () => {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-        <div className="container-narrow">
+      <section className="section-padding relative overflow-hidden bg-muted/30">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
+        <div className="container-narrow relative">
           <AnimatedSection>
-            <div className="relative rounded-3xl bg-card border border-border/50 p-10 md:p-16 text-center overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+            <div className="relative rounded-3xl bg-card/90 backdrop-blur-sm border border-border/50 p-10 md:p-16 text-center overflow-hidden shadow-2xl">
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-secondary to-primary" />
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-secondary/10 rounded-full blur-3xl" />
               <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
               
               <div className="relative max-w-2xl mx-auto">
-                <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-4">
+                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
                   Stay Ahead of the Curve
                 </h2>
-                <p className="text-muted-foreground mb-8">
+                <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
                   Get weekly leadership insights, exclusive content, and practical strategies delivered straight to your inbox.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <Input placeholder="Enter your email" className="flex-grow" />
-                  <Button variant="default">
+                  <Input placeholder="Enter your email" className="flex-grow rounded-xl" />
+                  <Button variant="default" className="rounded-xl">
                     Subscribe
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="text-xs text-muted-foreground mt-5">
                   Join 2,500+ leaders. Unsubscribe anytime.
                 </p>
               </div>

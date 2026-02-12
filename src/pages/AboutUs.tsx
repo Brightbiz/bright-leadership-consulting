@@ -7,8 +7,10 @@ import TiltCard from "@/components/TiltCard";
 import AboutHero from "@/components/heroes/AboutHero";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target, Heart, Lightbulb, Users, Award, Globe, Linkedin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Target, Heart, Lightbulb, Users, Award, Globe, Linkedin, ArrowRight, Sparkles } from "lucide-react";
 import cpdBadge from "@/assets/cpd-badge.png";
+import { Link } from "react-router-dom";
 
 const values = [
   {
@@ -67,87 +69,104 @@ const credentials = [
   { icon: Target, label: "Success Rate", detail: "98% Client Satisfaction" },
 ];
 
+const milestones = [
+  { year: "2014", event: "Founded with a vision to transform leadership development" },
+  { year: "2017", event: "Expanded to serve clients across 10+ countries" },
+  { year: "2020", event: "Launched digital-first executive programs" },
+  { year: "2023", event: "CPD accredited & 5,000+ leaders transformed" },
+];
+
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
       <ScrollProgress />
       <Header />
       <main>
-        {/* Hero Section */}
         <AboutHero />
 
         {/* Our Story Section */}
-        <section className="section-padding bg-muted/30">
-          <div className="container-narrow">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <section className="section-padding relative overflow-hidden">
+          <div className="absolute top-20 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
+          <div className="container-narrow relative">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <AnimatedSection>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
-                <div className="space-y-4 text-muted-foreground leading-relaxed">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-1 w-10 bg-secondary rounded-full" />
+                  <span className="text-sm font-semibold text-secondary uppercase tracking-wider">Our Journey</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
+                  A Decade of <span className="text-primary">Transforming Leaders</span>
+                </h2>
+                <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
                   <p>
                     Bright Leadership Consulting was founded with a simple yet powerful vision: to bridge the gap 
-                    between leadership potential and exceptional performance. What began as a boutique 
-                    coaching practice has evolved into a comprehensive leadership development organization 
-                    trusted by executives and organizations worldwide.
+                    between leadership potential and exceptional performance.
                   </p>
                   <p>
-                    Our journey started when our founder recognized that traditional leadership training 
-                    often failed to create lasting change. We pioneered an approach that combines 
-                    evidence-based methodologies with personalized coaching, creating transformative 
-                    experiences that resonate long after the program ends.
+                    We pioneered an approach that combines evidence-based methodologies with personalized coaching, 
+                    creating transformative experiences that resonate long after the program ends.
                   </p>
                   <p>
-                    Today, we're proud to be CPD accredited and recognized as a leading provider of 
-                    executive coaching and leadership training. Our programs have touched the lives of 
-                    thousands of leaders, helping them unlock their potential and inspire those around them.
+                    Today, we're CPD accredited and recognized as a leading provider of executive coaching and 
+                    leadership training worldwide.
                   </p>
                 </div>
               </AnimatedSection>
               
-              <AnimatedSection delay={0.2}>
-                <TiltCard className="relative overflow-hidden rounded-2xl">
-                  <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <div className="text-6xl font-bold text-primary mb-2">10+</div>
-                      <div className="text-xl text-muted-foreground">Years of Excellence</div>
+              <AnimatedSection delay={200}>
+                <div className="space-y-4">
+                  {milestones.map((milestone, index) => (
+                    <div 
+                      key={milestone.year}
+                      className="flex gap-6 items-start group"
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/15 border border-primary/20 flex items-center justify-center group-hover:from-primary/25 group-hover:to-secondary/25 transition-all duration-300 shadow-sm">
+                          <span className="text-sm font-bold text-primary">{milestone.year}</span>
+                        </div>
+                        {index < milestones.length - 1 && (
+                          <div className="w-px h-8 bg-gradient-to-b from-primary/30 to-transparent mt-2" />
+                        )}
+                      </div>
+                      <div className="pt-3">
+                        <p className="text-foreground font-medium leading-relaxed">{milestone.event}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <Badge className="bg-secondary text-secondary-foreground">Est. 2014</Badge>
-                  </div>
-                </TiltCard>
+                  ))}
+                </div>
               </AnimatedSection>
             </div>
           </div>
         </section>
 
         {/* Mission & Values Section */}
-        <section className="section-padding">
-          <div className="container-narrow">
+        <section className="section-padding relative overflow-hidden bg-muted/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-16">
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5">
+              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
+                <Sparkles className="h-3 w-3 mr-1.5" />
                 What Drives Us
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Mission & Values</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                We exist to unlock human potential and create leaders who inspire positive change in their 
-                organizations and communities.
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our Mission & Values</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                We exist to unlock human potential and create leaders who inspire positive change.
               </p>
             </AnimatedSection>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value, index) => (
-                <AnimatedSection key={value.title} delay={index * 0.1}>
-                  <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 group">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                        <value.icon className="h-7 w-7 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold mb-2">{value.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {value.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                <AnimatedSection key={value.title} delay={index * 100}>
+                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-8 text-center group hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                      <value.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">{value.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {value.description}
+                    </p>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
@@ -155,39 +174,42 @@ const AboutUs = () => {
         </section>
 
         {/* Team Section */}
-        <section className="section-padding bg-muted/30">
-          <div className="container-narrow">
+        <section className="section-padding relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-16">
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5">
+              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
+                <Users className="h-3 w-3 mr-1.5" />
                 Meet Our Experts
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Leadership Team</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Our team of world-class coaches and trainers brings decades of combined experience in 
-                executive development.
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Leadership Team</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                World-class coaches and trainers with decades of combined experience.
               </p>
             </AnimatedSection>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {teamMembers.map((member, index) => (
-                <AnimatedSection key={member.name} delay={index * 0.1}>
+                <AnimatedSection key={member.name} delay={index * 100}>
                   <TiltCard className="h-full">
-                    <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden group">
-                      <div className="aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 relative">
+                    <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 overflow-hidden group hover:border-primary/20 transition-all duration-500">
+                      <div className="aspect-square bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 relative">
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center">
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border-2 border-primary/10 shadow-lg shadow-primary/10">
                             <span className="text-3xl font-bold text-primary">
                               {member.name.split(' ').map(n => n[0]).join('')}
                             </span>
                           </div>
                         </div>
-                        <button className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Linkedin className="h-4 w-4 text-primary" />
+                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card to-transparent" />
+                        <button className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md border border-border/50 hover:bg-primary hover:text-primary-foreground">
+                          <Linkedin className="h-4 w-4" />
                         </button>
                       </div>
-                      <CardContent className="p-5">
-                        <h3 className="font-semibold mb-1">{member.name}</h3>
-                        <p className="text-sm text-primary mb-3">{member.role}</p>
+                      <div className="p-5">
+                        <h3 className="font-semibold mb-1 text-foreground">{member.name}</h3>
+                        <p className="text-sm text-primary font-medium mb-3">{member.role}</p>
                         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                           {member.bio}
                         </p>
@@ -196,14 +218,14 @@ const AboutUs = () => {
                             <Badge 
                               key={cred} 
                               variant="secondary" 
-                              className="text-xs font-normal"
+                              className="text-xs font-normal bg-muted/80"
                             >
                               {cred}
                             </Badge>
                           ))}
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </TiltCard>
                 </AnimatedSection>
               ))}
@@ -212,32 +234,36 @@ const AboutUs = () => {
         </section>
 
         {/* Credentials Section */}
-        <section className="section-padding">
-          <div className="container-narrow">
+        <section className="section-padding relative overflow-hidden bg-muted/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,hsl(var(--secondary)/0.04),transparent_60%)]" />
+          <div className="container-narrow relative">
             <AnimatedSection className="text-center mb-16">
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5">
+              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
+                <Award className="h-3 w-3 mr-1.5" />
                 Trust & Recognition
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Credentials</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our Credentials</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 Accredited excellence backed by industry recognition and proven results.
               </p>
             </AnimatedSection>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {credentials.map((cred, index) => (
-                <AnimatedSection key={cred.label} delay={index * 0.1}>
-                  <Card className="text-center p-6 border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300">
-                    <cred.icon className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <div className="font-semibold mb-1">{cred.label}</div>
+                <AnimatedSection key={cred.label} delay={index * 100}>
+                  <div className="text-center p-8 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <cred.icon className="h-7 w-7 text-primary" />
+                    </div>
+                    <div className="font-semibold mb-1 text-foreground">{cred.label}</div>
                     <div className="text-sm text-muted-foreground">{cred.detail}</div>
-                  </Card>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
 
             <AnimatedSection className="flex justify-center">
-              <div className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="bg-card rounded-2xl p-8 shadow-xl border border-border/50">
                 <img
                   src={cpdBadge}
                   alt="CPD Standards Office Accredited - Provider 50838"
@@ -249,21 +275,30 @@ const AboutUs = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="section-padding bg-gradient-to-br from-primary/5 via-transparent to-secondary/5">
-          <div className="container-narrow text-center">
+        <section className="section-padding relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.06] via-transparent to-secondary/[0.06]" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="container-narrow relative">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ready to Transform Your Leadership?
-              </h2>
-              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of executives who have elevated their leadership with Bright Leadership Consulting.
-              </p>
-              <a
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-base font-medium text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
-              >
-                Get in Touch
-              </a>
+              <div className="relative rounded-3xl bg-gradient-to-br from-primary via-primary/95 to-primary/90 p-10 md:p-16 text-center overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/15 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-2xl" />
+                <div className="relative max-w-2xl mx-auto">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground leading-tight">
+                    Ready to Transform Your Leadership?
+                  </h2>
+                  <p className="text-xl text-primary-foreground/80 mb-10 leading-relaxed">
+                    Join thousands of executives who have elevated their leadership with Bright Leadership Consulting.
+                  </p>
+                  <Button variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" asChild>
+                    <Link to="/#contact">
+                      Get in Touch
+                      <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
             </AnimatedSection>
           </div>
         </section>
