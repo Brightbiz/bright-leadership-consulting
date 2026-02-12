@@ -234,10 +234,23 @@
   }
   .brochure-footer a { color: var(--amber); text-decoration: none; }
 
+  /* Download button */
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--dark); padding: 10px 24px;
+    border-radius: 10px; font-size: 14px; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.3s; box-shadow: 0 4px 15px rgba(229,160,40,0.3);
+    font-family: 'Inter', sans-serif;
+  }
+  .download-btn:hover { background: var(--amber-dark); color: var(--white); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(229,160,40,0.4); }
+  .download-btn svg { width: 18px; height: 18px; }
+
   @media print {
     .hero { min-height: 380px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     section { page-break-inside: avoid; }
     .workshop-card { break-inside: avoid; }
+    .download-btn { display: none; }
   }
   @media (max-width: 768px) {
     .hero h1 { font-size: 30px; }
@@ -307,8 +320,16 @@
 <!-- Workshop 1 -->
 <section>
   <div class="container">
-    <div class="section-label">Organisational Workshops</div>
-    <h2>In-Person &amp; Virtual <span>Workshops</span></h2>
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 8px;">
+      <div>
+        <div class="section-label">Organisational Workshops</div>
+        <h2>In-Person &amp; Virtual <span>Workshops</span></h2>
+      </div>
+      <button class="download-btn" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Download as PDF
+      </button>
+    </div>
     <div class="note-box">&#128712; All stated workshop prices are per workshop/organisation, not per individual. Pricing covers the full session and all included resources for your group or cohort.</div>
 
     <!-- WS1: Leading Through Change -->
