@@ -64,8 +64,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+44 (0) 123 456 7890",
-    href: "tel:+441234567890",
+    value: "0333 335 5045",
+    href: "tel:03333355045",
   },
   {
     icon: MapPin,
@@ -285,7 +285,7 @@ const ContactSection = () => {
                         <FormControl>
                           <Input
                             type="tel"
-                            placeholder="+44 123 456 7890"
+                            placeholder="0333 335 5045"
                             {...field}
                             className="h-11 bg-muted/50 border-border/50 focus:border-primary"
                           />

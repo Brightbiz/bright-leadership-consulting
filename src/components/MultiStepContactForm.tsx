@@ -293,7 +293,7 @@ const MultiStepContactForm = () => {
                         <FormControl>
                           <Input
                             type="tel"
-                            placeholder="+44 123 456 7890"
+                            placeholder="0333 335 5045"
                             {...field}
                             className="h-12 bg-muted/50 border-border/50 focus:border-primary"
                           />
