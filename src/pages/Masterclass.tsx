@@ -413,7 +413,6 @@ const Masterclass = () => {
 
               {/* Trust signals */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><Shield className="h-3 w-3 text-primary" /> 30-day money-back guarantee</span>
                 <span className="flex items-center gap-1"><Award className="h-3 w-3 text-primary" /> CPD accredited</span>
               </div>
             </div>
@@ -453,8 +452,8 @@ const Masterclass = () => {
                 a: "Lifetime access. Learn at your own pace — revisit modules whenever you need a refresher.",
               },
               {
-                q: "Is there a money-back guarantee?",
-                a: "Yes — 30-day unconditional money-back guarantee. If you're not satisfied, we'll refund you in full.",
+                q: "Is there a guarantee?",
+                a: "We're confident in the quality of our programme. If you have any concerns, please contact us before enrolling and we'll be happy to discuss.",
               },
               {
                 q: "What are CPD points?",
