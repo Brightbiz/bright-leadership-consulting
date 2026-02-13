@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { ArrowRight, Play, ClipboardCheck, Award, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import heroVideo from "@/assets/hero-video.mp4";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
 import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -48,7 +46,7 @@ const HeroSection = () => {
                 variant="heroOutline" 
                 size="xl" 
                 className="group backdrop-blur-sm"
-                onClick={() => setIsVideoOpen(true)}
+                onClick={() => setIsVideoPlaying(true)}
               >
                 <Play className="h-5 w-5" />
                 Watch Video
@@ -87,25 +85,49 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right side floating card */}
+          {/* Right side - Video or floating card */}
           <div className="hidden lg:block relative animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            <div className="glass-card rounded-2xl p-8 max-w-md ml-auto backdrop-blur-xl bg-background/90 border border-white/20 shadow-2xl hover:shadow-secondary/20 transition-all duration-500">
-              {/* Animated border */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
-              
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20">
-                <Award className="h-6 w-6 text-secondary" />
+            {isVideoPlaying ? (
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10">
+                <button
+                  onClick={() => setIsVideoPlaying(false)}
+                  className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 backdrop-blur-sm transition-colors hover:bg-black/70"
+                >
+                  <X className="h-4 w-4 text-white" />
+                </button>
+                <iframe
+                  src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&rel=0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full aspect-video"
+                  title="Bright Leadership Consulting"
+                />
               </div>
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
-                Ready to Transform Your Leadership?
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                Book a complimentary 30-minute consultation to discuss your leadership goals.
-              </p>
-              <MagneticButton variant="hero" className="w-full shadow-lg shadow-secondary/30" href="#contact">
-                Schedule Free Consultation
-              </MagneticButton>
-            </div>
+            ) : (
+              <div 
+                className="glass-card rounded-2xl p-8 max-w-md ml-auto backdrop-blur-xl bg-background/90 border border-white/20 shadow-2xl hover:shadow-secondary/20 transition-all duration-500 cursor-pointer group/card"
+                onClick={() => setIsVideoPlaying(true)}
+              >
+                {/* Animated border */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
+                
+                {/* Play indicator */}
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20 transition-transform duration-300 group-hover/card:scale-110">
+                  <Play className="h-6 w-6 text-secondary ml-0.5" fill="currentColor" />
+                </div>
+                <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
+                  See Our Impact in Action
+                </h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Watch how we help senior leaders build confidence, inspire teams, and drive lasting results.
+                </p>
+                <div className="flex items-center gap-2 text-secondary font-semibold text-sm group-hover/card:gap-3 transition-all">
+                  <Play className="h-4 w-4" />
+                  Watch Now
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/card:translate-x-1" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -119,25 +141,6 @@ const HeroSection = () => {
           />
         </svg>
       </div>
-
-      {/* Video Modal */}
-      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
-        <DialogContent className="max-w-4xl w-[90vw] p-0 bg-black border-none overflow-hidden">
-          <button
-            onClick={() => setIsVideoOpen(false)}
-            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 backdrop-blur-sm transition-colors hover:bg-white/20"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
-          <iframe
-            src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&rel=0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full aspect-video"
-            title="Bright Leadership Consulting"
-          />
-        </DialogContent>
-      </Dialog>
     </section>
   );
 };
