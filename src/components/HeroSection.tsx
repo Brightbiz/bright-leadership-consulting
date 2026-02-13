@@ -27,20 +27,20 @@ const HeroSection = () => {
               </span>
             </div>
 
-            <h1 className="mb-6 font-serif text-4xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 font-serif text-3xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
                 Empower Your Leadership Excellence
               </TextReveal>
             </h1>
 
-            <p className="mb-8 text-lg leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <p className="mb-8 text-base leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
               Transform your leadership potential into extraordinary results. 
               Our executive coaching programs help senior leaders build confidence, 
               inspire teams, and drive lasting impact.
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
-              <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30">
+              <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="#executive-program">
                 Get Started
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
@@ -102,7 +102,7 @@ const HeroSection = () => {
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 Book a complimentary 30-minute consultation to discuss your leadership goals.
               </p>
-              <MagneticButton variant="hero" className="w-full shadow-lg shadow-secondary/30">
+              <MagneticButton variant="hero" className="w-full shadow-lg shadow-secondary/30" href="#contact">
                 Schedule Free Consultation
               </MagneticButton>
             </div>

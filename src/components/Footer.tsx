@@ -11,18 +11,13 @@ const footerLinks = {
     { label: "Course Bundles", href: "#" },
   ],
   company: [
-    { label: "About Us", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Contact", href: "#" },
+    { label: "About Us", href: "/about", isRoute: true },
+    { label: "Blog", href: "/blog", isRoute: true },
+    { label: "Contact", href: "/contact", isRoute: true },
   ],
   resources: [
     { label: "Leadership Checklist", href: "/leadership-checklist", isRoute: true },
     { label: "Course Brochures", href: "/brochures", isRoute: true },
-    { label: "Free Resources", href: "#" },
-    { label: "Case Studies", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Privacy Policy", href: "#" },
   ],
 };
 
@@ -78,12 +73,21 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/70 transition-colors hover:text-secondary"
-                  >
-                    {link.label}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
