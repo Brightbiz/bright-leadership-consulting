@@ -18,6 +18,7 @@ const footerLinks = {
   resources: [
     { label: "Leadership Checklist", href: "/leadership-checklist", isRoute: true },
     { label: "Course Brochures", href: "/brochures", isRoute: true },
+    { label: "Free Masterclass", href: "/masterclass", isRoute: true },
   ],
 };
 
