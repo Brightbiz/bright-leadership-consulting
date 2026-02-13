@@ -10,6 +10,7 @@ const tiers = [
     price: 1297,
     originalPrice: 1497,
     period: "one-time",
+    installments: 3,
     description: "Master leadership at your own pace with full programme access.",
     features: [
       "All 33 modules (80+ hours of content)",
@@ -183,6 +184,14 @@ const PricingTiers = () => {
                   </Badge>
                   <span className="text-xs text-muted-foreground">one-time payment</span>
                 </div>
+                {"installments" in tier && tier.installments && (
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Or 3 interest-free instalments of{" "}
+                    <span className="font-semibold text-foreground">
+                      £{Math.ceil(tier.price / tier.installments).toLocaleString()}
+                    </span>
+                  </p>
+                )}
               </div>
 
               {/* Features */}
