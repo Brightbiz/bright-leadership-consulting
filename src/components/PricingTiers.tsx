@@ -72,7 +72,7 @@ const tiers = [
 
 const PricingTiers = () => {
   return (
-    <div className="mt-16">
+    <div id="pricing-tiers" className="mt-16">
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -169,6 +169,7 @@ const PricingTiers = () => {
               <div className="mb-6">
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-bold text-foreground">
+                    {tier.limited && <span className="text-lg font-normal text-muted-foreground">from </span>}
                     £{tier.price.toLocaleString()}
                   </span>
                   <span className="text-lg text-muted-foreground line-through">
