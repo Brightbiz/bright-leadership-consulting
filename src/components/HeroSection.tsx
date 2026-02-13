@@ -1,37 +1,20 @@
 import { useState } from "react";
-import { ArrowRight, ClipboardCheck, Award } from "lucide-react";
+import { ArrowRight, Play, ClipboardCheck, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
 import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background YouTube Video */}
-      <div className="absolute inset-0 z-0">
-        <iframe
-          src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&mute=1&loop=1&playlist=SosVIXorVq8&controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1&playsinline=1"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full min-h-full pointer-events-none"
-          title="Background video"
-          style={{ border: 'none' }}
-        />
-      </div>
-
-      {/* Dark overlay to blend video with brand colors */}
-      <div className="absolute inset-0 z-[1] bg-primary/75" />
-      
-      {/* Animated gradient mesh on top for brand feel */}
-      <div className="absolute inset-0 z-[2] mix-blend-soft-light opacity-60">
-        <AnimatedGradient />
-      </div>
-
-      {/* Extra bottom fade for seamless transition */}
-      <div className="absolute inset-x-0 bottom-0 z-[3] h-40 bg-gradient-to-t from-background to-transparent" />
+      {/* Animated Gradient Background */}
+      <AnimatedGradient />
 
       {/* Content */}
-      <div className="container-narrow relative z-[4] flex min-h-screen items-center pt-20 overflow-hidden">
+      <div className="container-narrow relative flex min-h-screen items-center pt-20 overflow-hidden">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center py-16 w-full">
           <div className="max-w-2xl min-w-0">
             {/* Badge */}
@@ -93,30 +76,42 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right side floating card */}
+          {/* Right side - Embedded Video Player */}
           <div className="hidden lg:block relative animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            <div className="glass-card rounded-2xl p-8 max-w-md ml-auto backdrop-blur-xl bg-background/90 border border-white/20 shadow-2xl hover:shadow-secondary/20 transition-all duration-500">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
-              
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20">
-                <Award className="h-6 w-6 text-secondary" />
-              </div>
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
-                Ready to Transform Your Leadership?
-              </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                Book a complimentary 30-minute consultation to discuss your leadership goals.
-              </p>
-              <MagneticButton variant="hero" className="w-full shadow-lg shadow-secondary/30" href="#contact">
-                Schedule Free Consultation
-              </MagneticButton>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30 border border-white/15">
+              {isPlaying ? (
+                <iframe
+                  src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&rel=0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full aspect-video"
+                  title="Bright Leadership Consulting"
+                />
+              ) : (
+                <div 
+                  className="relative cursor-pointer group"
+                  onClick={() => setIsPlaying(true)}
+                >
+                  <img
+                    src="https://img.youtube.com/vi/SosVIXorVq8/maxresdefault.jpg"
+                    alt="Watch our leadership video"
+                    className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Play overlay */}
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition-colors duration-300 group-hover:bg-black/20">
+                    <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center shadow-xl shadow-secondary/40 transition-transform duration-300 group-hover:scale-110">
+                      <Play className="h-7 w-7 text-secondary-foreground ml-0.5" fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0 z-[5]">
+      <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 100" fill="none" className="w-full">
           <path
             d="M0 50C360 100 720 0 1080 50C1260 75 1380 75 1440 50V100H0V50Z"
