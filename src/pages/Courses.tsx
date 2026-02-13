@@ -136,20 +136,38 @@ const Courses = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={200}>
-            <div 
-              className="relative mx-auto max-w-4xl cursor-pointer group rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-border/50"
-              onClick={() => setIsVideoOpen(true)}
-            >
-              {/* YouTube Thumbnail */}
-              <img
-                src="https://img.youtube.com/vi/uEIw8uGi6Qo/maxresdefault.jpg"
-                alt="Course preview video thumbnail"
-                className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* Play Overlay */}
-              <div className="absolute inset-0 bg-primary/30 flex items-center justify-center transition-all duration-300 group-hover:bg-primary/20">
-                <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center shadow-xl shadow-secondary/40 transition-transform duration-300 group-hover:scale-110">
-                  <Play className="h-8 w-8 text-secondary-foreground ml-1" fill="currentColor" />
+            <div className="relative mx-auto max-w-4xl">
+              {/* Decorative glowing orbs */}
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-secondary/20 rounded-full blur-3xl" />
+              <div className="absolute -bottom-10 -right-10 w-52 h-52 bg-primary/20 rounded-full blur-3xl" />
+              
+              {/* Animated gradient border wrapper */}
+              <div className="relative rounded-3xl p-[3px] bg-gradient-to-br from-secondary via-primary/50 to-secondary/80 shadow-2xl shadow-primary/20 hover:shadow-secondary/30 transition-shadow duration-700">
+                {/* Inner glow ring */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-secondary/40 via-transparent to-primary/40 blur-lg opacity-60" />
+                
+                <div 
+                  className="relative rounded-[calc(1.5rem-3px)] overflow-hidden cursor-pointer group bg-background"
+                  onClick={() => setIsVideoOpen(true)}
+                >
+                  {/* YouTube Thumbnail */}
+                  <img
+                    src="https://img.youtube.com/vi/uEIw8uGi6Qo/maxresdefault.jpg"
+                    alt="Course preview video thumbnail"
+                    className="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Play Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent flex items-center justify-center transition-all duration-500 group-hover:from-primary/40 group-hover:via-primary/10">
+                    {/* Pulsing ring */}
+                    <div className="absolute h-24 w-24 rounded-full bg-secondary/20 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]" />
+                    <div className="relative h-18 w-18 rounded-full bg-secondary flex items-center justify-center shadow-xl shadow-secondary/50 transition-transform duration-300 group-hover:scale-110" style={{ height: '4.5rem', width: '4.5rem' }}>
+                      <Play className="h-8 w-8 text-secondary-foreground ml-1" fill="currentColor" />
+                    </div>
+                  </div>
+                  {/* Bottom info bar */}
+                  <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent">
+                    <p className="text-white/90 text-sm font-medium">▶ Watch the Course Preview</p>
+                  </div>
                 </div>
               </div>
             </div>
