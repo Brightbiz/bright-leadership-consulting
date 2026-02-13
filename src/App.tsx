@@ -28,6 +28,7 @@ const Services = lazy(() => import("./pages/Services"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ThinkificExport = lazy(() => import("./pages/ThinkificExport"));
 const Brochures = lazy(() => import("./pages/Brochures"));
+const Masterclass = lazy(() => import("./pages/Masterclass"));
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const AnimatedRoutes = () => {
           <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
           <Route path="/brochures" element={<PageTransition><Brochures /></PageTransition>} />
           <Route path="/admin/thinkific-export" element={<PageTransition><ThinkificExport /></PageTransition>} />
+          <Route path="/masterclass" element={<Masterclass />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
