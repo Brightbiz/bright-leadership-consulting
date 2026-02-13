@@ -16,9 +16,9 @@ const HeroSection = () => {
       <AnimatedGradient />
 
       {/* Content */}
-      <div className="container-narrow relative flex min-h-screen items-center pt-20">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center py-16">
-          <div className="max-w-2xl">
+      <div className="container-narrow relative flex min-h-screen items-center pt-20 overflow-hidden">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center py-16 w-full">
+          <div className="max-w-2xl min-w-0">
             {/* Badge */}
             <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
               <Award className="h-4 w-4 text-secondary" />
@@ -27,13 +27,13 @@ const HeroSection = () => {
               </span>
             </div>
 
-            <h1 className="mb-6 font-serif text-3xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 font-serif text-2xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
                 Empower Your Leadership Excellence
               </TextReveal>
             </h1>
 
-            <p className="mb-8 text-base leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
               Transform your leadership potential into extraordinary results. 
               Our executive coaching programs help senior leaders build confidence, 
               inspire teams, and drive lasting impact.
@@ -63,15 +63,15 @@ const HeroSection = () => {
                   size="lg" 
                   className="border-2 border-secondary/60 bg-secondary/10 text-secondary hover:bg-secondary/20 hover:border-secondary hover:text-secondary font-semibold group backdrop-blur-sm"
                 >
-                  <ClipboardCheck className="h-5 w-5 mr-2" />
-                  Take the Free Leadership Assessment
-                  <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  <ClipboardCheck className="h-5 w-5 mr-2 flex-shrink-0" />
+                  <span className="truncate">Free Leadership Assessment</span>
+                  <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
               </Link>
             </div>
 
             {/* Stats */}
-            <div className="mt-12 grid grid-cols-3 gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1s' }}>
+            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1s' }}>
               {[
                 { value: "500+", label: "Leaders Coached" },
                 { value: "95%", label: "Success Rate" },
