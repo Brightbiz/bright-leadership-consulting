@@ -129,11 +129,12 @@ const HeroSection = () => {
           >
             <X className="h-5 w-5 text-white" />
           </button>
-          <video
-            src={heroVideo}
-            controls
-            autoPlay
+          <iframe
+            src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&rel=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
             className="w-full aspect-video"
+            title="Bright Leadership Consulting"
           />
         </DialogContent>
       </Dialog>
