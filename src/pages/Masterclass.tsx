@@ -5,9 +5,11 @@ import {
   Award, Users, BookOpen, Target, TrendingUp, ChevronDown, X,
   Quote,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Logo from "@/components/Logo";
+import { FileText } from "lucide-react";
 import testimonialSophia from "@/assets/testimonial-sophia.jpg";
 import testimonialDavid from "@/assets/testimonial-david.jpg";
 import testimonialEmily from "@/assets/testimonial-emily.jpg";
@@ -414,6 +416,16 @@ const Masterclass = () => {
               {/* Trust signals */}
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1"><Award className="h-3 w-3 text-primary" /> CPD accredited</span>
+              </div>
+
+              {/* Brochure download */}
+              <div className="mt-5">
+                <Button variant="outline" size="sm" asChild className="gap-2">
+                  <Link to="/brochures">
+                    <FileText className="h-4 w-4" />
+                    Download Course Brochure
+                  </Link>
+                </Button>
               </div>
             </div>
 
