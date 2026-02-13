@@ -34,7 +34,7 @@ const tiers = [
     description: "Accelerate your growth with expert-led group coaching sessions.",
     features: [
       "Everything in Self-Paced Mastery",
-      "12 live group coaching sessions",
+      "6 live group coaching sessions",
       "Peer learning community access",
       "Monthly Q&A with instructors",
       "Group accountability partners",
@@ -55,7 +55,7 @@ const tiers = [
     description: "The ultimate transformation with dedicated personal coaching.",
     features: [
       "Everything in Group Coaching",
-      "12 private 1:1 coaching sessions",
+      "6 private 1:1 coaching sessions",
       "360° leadership assessment",
       "Personalised development plan",
       "Direct access to your coach",
