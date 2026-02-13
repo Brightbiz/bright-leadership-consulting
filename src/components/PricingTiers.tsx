@@ -7,7 +7,7 @@ const tiers = [
   {
     name: "Self-Paced Mastery",
     icon: User,
-    price: 1197,
+    price: 1297,
     originalPrice: 1497,
     period: "one-time",
     description: "Master leadership at your own pace with full programme access.",
