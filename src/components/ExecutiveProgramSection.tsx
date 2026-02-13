@@ -400,7 +400,7 @@ const ExecutiveProgramSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-8"
+          className="mt-8 space-y-4"
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-border/50 backdrop-blur-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
@@ -410,6 +410,18 @@ const ExecutiveProgramSection = () => {
               <p className="font-semibold text-foreground text-sm">CPD Accredited Programs</p>
               <p className="text-xs text-muted-foreground">Internationally recognized certification</p>
             </div>
+          </div>
+
+          {/* Warm visitor funnel link */}
+          <div className="text-center">
+            <a
+              href="/masterclass"
+              className="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:text-secondary/80 transition-colors group"
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>Watch Our Free Masterclass: The 5 Leadership Shifts That Separate Executives From Managers</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
         </motion.div>
       </div>
