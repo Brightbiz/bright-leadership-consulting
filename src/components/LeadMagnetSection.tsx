@@ -74,14 +74,14 @@ const LeadMagnetSection = () => {
     <section className="section-padding bg-gradient-to-b from-secondary/[0.08] via-secondary/[0.05] to-secondary/[0.02]">
       <div className="container-narrow">
         <AnimatedSection>
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/90 p-8 lg:p-12">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/90 p-6 sm:p-8 lg:p-12">
             {/* Decorative elements */}
             <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-secondary/20 blur-3xl" />
             <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-secondary/10 blur-2xl" />
             
             <div className="relative grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
               {/* Left: Content */}
-              <div>
+              <div className="min-w-0">
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 border border-white/20">
                   <Sparkles className="h-4 w-4 text-secondary" />
                   <span className="text-sm font-semibold text-primary-foreground uppercase tracking-wider">
@@ -89,11 +89,11 @@ const LeadMagnetSection = () => {
                   </span>
                 </div>
 
-                <h2 className="mb-4 font-serif text-3xl font-semibold text-primary-foreground sm:text-4xl">
+                <h2 className="mb-4 font-serif text-2xl font-semibold text-primary-foreground sm:text-4xl">
                   5 Leadership Secrets Every Executive Needs to Know
                 </h2>
 
-                <p className="mb-6 text-primary-foreground/80 text-lg leading-relaxed">
+                <p className="mb-6 text-primary-foreground/80 text-base sm:text-lg leading-relaxed">
                   Unlock the proven strategies that distinguish exceptional leaders from the rest. 
                   This exclusive guide reveals the essential secrets to transforming your leadership effectiveness.
                 </p>
