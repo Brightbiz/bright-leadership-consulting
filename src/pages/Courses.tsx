@@ -1,4 +1,6 @@
-import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Star, Sparkles, Crown, GraduationCap, Package, Target } from "lucide-react";
+import { useState } from "react";
+import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Star, Sparkles, Crown, GraduationCap, Package, Target, Play, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -108,12 +110,71 @@ const bundles = [
 ];
 
 const Courses = () => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
       <CoursesHero />
+
+      {/* Watch Preview Video Section */}
+      <section className="section-padding relative overflow-hidden bg-muted/20">
+        <div className="container-narrow relative">
+          <AnimatedSection className="mx-auto mb-10 max-w-3xl text-center">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/15 to-secondary/15 px-5 py-2.5 border border-primary/20">
+              <Play className="h-4 w-4 text-primary" />
+              <span className="text-sm font-semibold text-primary">Course Preview</span>
+            </div>
+            <h2 className="mb-4 font-serif text-3xl font-semibold text-foreground sm:text-4xl">
+              Your Leadership <span className="text-primary">Blueprint</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              See how 33 modules, 80+ hours of content, and 66 CPD points come together to transform your leadership career.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={200}>
+            <div 
+              className="relative mx-auto max-w-4xl cursor-pointer group rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-border/50"
+              onClick={() => setIsVideoOpen(true)}
+            >
+              {/* YouTube Thumbnail */}
+              <img
+                src="https://img.youtube.com/vi/uEIw8uGi6Qo/maxresdefault.jpg"
+                alt="Course preview video thumbnail"
+                className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Play Overlay */}
+              <div className="absolute inset-0 bg-primary/30 flex items-center justify-center transition-all duration-300 group-hover:bg-primary/20">
+                <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center shadow-xl shadow-secondary/40 transition-transform duration-300 group-hover:scale-110">
+                  <Play className="h-8 w-8 text-secondary-foreground ml-1" fill="currentColor" />
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+        <DialogContent className="max-w-4xl w-[90vw] p-0 bg-black border-none overflow-hidden">
+          <button
+            onClick={() => setIsVideoOpen(false)}
+            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 backdrop-blur-sm transition-colors hover:bg-white/20"
+          >
+            <X className="h-5 w-5 text-white" />
+          </button>
+          <iframe
+            src="https://www.youtube.com/embed/uEIw8uGi6Qo?autoplay=1&rel=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full aspect-video"
+            title="Course Preview - Bright Leadership Consulting"
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Flagship Program */}
       <section className="section-padding relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5">
