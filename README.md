@@ -1,73 +1,126 @@
-# Welcome to your Lovable project
+# Bright Leadership Consulting — Developer Setup
 
-## Project info
+## Tech Stack
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+- **Frontend:** React 18 + TypeScript + Vite + Tailwind CSS
+- **UI Library:** shadcn/ui (Radix primitives)
+- **Animation:** Framer Motion
+- **Backend:** Lovable Cloud (Supabase-powered)
+- **Routing:** React Router v6
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# 1. Clone the repository
 git clone <YOUR_GIT_URL>
+cd <PROJECT_FOLDER>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Create a .env file (copy from .env.example or use the values below)
+#    VITE_SUPABASE_URL=<provided separately>
+#    VITE_SUPABASE_PUBLISHABLE_KEY=<provided separately>
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Start the dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app runs at `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+├── assets/          # Images, videos, static assets
+├── components/      # Reusable UI components
+│   ├── ui/          # shadcn/ui primitives
+│   ├── heroes/      # Page hero sections
+│   ├── chat/        # AI chat widget components
+│   └── skeletons/   # Loading skeleton components
+├── hooks/           # Custom React hooks
+├── integrations/    # Supabase client & generated types (DO NOT EDIT)
+├── lib/             # Utility functions
+├── pages/           # Route-level page components
+├── test/            # Test files
+└── utils/           # Helper utilities
 
-## What technologies are used for this project?
+public/
+├── brochures/       # Downloadable brochure HTML files
+└── downloads/       # Developer handoff docs, PDFs, exports
 
-This project is built with:
+supabase/
+└── functions/       # Edge functions (auto-deployed)
+    ├── chat-assistant/
+    └── check-rate-limit/
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## Key Files (Do Not Edit)
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+These files are auto-generated and managed by the platform:
 
-## Can I connect a custom domain to my Lovable project?
+- `src/integrations/supabase/client.ts` — Supabase client
+- `src/integrations/supabase/types.ts` — Database types
+- `.env` — Environment variables
+- `supabase/config.toml` — Supabase configuration
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Database & Backend
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Full backend documentation (tables, RLS policies, edge functions, secrets) is in:
+
+📄 **[`public/downloads/developer-handoff.md`](public/downloads/developer-handoff.md)**
+
+### Quick Reference — Tables
+
+| Table | Purpose |
+|-------|---------|
+| `contact_submissions` | Contact form entries |
+| `newsletter_subscribers` | Email subscribers |
+| `lead_magnet_downloads` | Lead magnet email captures |
+| `checklist_results` | Leadership assessment results |
+| `rate_limits` | Server-side rate limiting |
+| `user_roles` | Admin/user role assignments |
+
+---
+
+## Authentication
+
+- Email/password with mandatory email verification
+- Admin routes: `/admin/login`, `/admin/register`, `/admin/submissions`
+- Admin access controlled via `user_roles` table
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server (port 8080) |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm test` | Run tests via Vitest |
+
+---
+
+## Edge Functions
+
+Edge functions in `supabase/functions/` are deployed automatically. They require these secrets (already configured in production):
+
+- `LOVABLE_API_KEY` — AI gateway for chat assistant
+- `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` — Auto-provided
+
+---
+
+## Deployment
+
+The app is deployed via Lovable. To publish: open the Lovable editor → Share → Publish.
+
+For self-hosting, run `npm run build` and serve the `dist/` folder with any static host.
