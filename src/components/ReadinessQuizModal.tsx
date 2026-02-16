@@ -150,6 +150,20 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                   Find Out in 60 Seconds
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full text-muted-foreground text-sm mt-1"
+                  asChild
+                >
+                  <a
+                    href="https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleClose(false)}
+                  >
+                    Skip — I'm ready to enrol
+                  </a>
+                </Button>
               </motion.div>
             )}
 
