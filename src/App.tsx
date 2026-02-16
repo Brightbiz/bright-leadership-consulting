@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -68,22 +69,24 @@ const AnimatedRoutes = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AnimatedRoutes />
-          {/* Conversion Optimization Components */}
-          <ExitIntentPopup />
-          <StickyMobileCTA />
-          <SocialProofNotifications />
-          <FloatingChatWidget />
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AnimatedRoutes />
+            {/* Conversion Optimization Components */}
+            <ExitIntentPopup />
+            <StickyMobileCTA />
+            <SocialProofNotifications />
+            <FloatingChatWidget />
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;

@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import LogoMarquee from "@/components/LogoMarquee";
@@ -18,6 +19,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead path="/" />
       <ScrollProgress />
       <Header />
       <main>

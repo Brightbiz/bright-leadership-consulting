@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock, User, Tag, Search, TrendingUp, Users, Lightbulb, Target, Calendar, Flame, BookOpen, Quote } from "lucide-react";
@@ -188,6 +189,7 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Blog" description="Leadership insights, management strategies, and executive development articles from Bright Leadership Consulting." path="/blog" />
       <Header />
       
       <BlogHero />

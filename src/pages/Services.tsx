@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServicesHero from "@/components/heroes/ServicesHero";
@@ -75,6 +76,7 @@ const serviceDetails = [
 const Services = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Services" description="Executive coaching, CPD-accredited training programs, and corporate retreats. Comprehensive leadership solutions from Bright Leadership Consulting." path="/services" />
       <Header />
       
       <main>

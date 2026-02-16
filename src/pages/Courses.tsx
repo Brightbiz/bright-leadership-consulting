@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import { useState } from "react";
 import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Star, Sparkles, Crown, GraduationCap, Package, Target, Play, X } from "lucide-react";
 import PricingTiers from "@/components/PricingTiers";
@@ -115,6 +116,7 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Courses" description="CPD-accredited Executive Leadership Mastery Program and individual training courses. 33 modules, 80+ hours, flexible self-paced learning." path="/courses" />
       <Header />
       
       {/* Hero Section */}
