@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Clock, Shield, Sparkles, Users, User, Crown } from "lucide-react";
+import { Check, Clock, Shield, Sparkles, Users, User, Crown, ClipboardCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import MagneticButton from "./MagneticButton";
+import ReadinessQuizModal from "./ReadinessQuizModal";
 
 const tiers = [
   {
@@ -71,8 +73,11 @@ const tiers = [
 ];
 
 const PricingTiers = () => {
+  const [quizOpen, setQuizOpen] = useState(false);
+
   return (
     <div id="pricing-tiers" className="mt-16">
+      <ReadinessQuizModal open={quizOpen} onOpenChange={setQuizOpen} />
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -229,6 +234,30 @@ const PricingTiers = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Readiness qualifier */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className="mt-10 text-center"
+      >
+        <div className="inline-flex flex-col items-center gap-3 rounded-2xl border border-primary/20 bg-primary/5 px-6 py-5 max-w-lg mx-auto">
+          <ClipboardCheck className="h-6 w-6 text-primary" />
+          <p className="text-sm text-foreground font-medium leading-relaxed">
+            Not sure which tier is right for you? This programme may not be for everyone — save time and money by finding out before you buy.
+          </p>
+          <MagneticButton
+            variant="outline"
+            size="default"
+            className="border-primary/30 text-primary hover:bg-primary/10"
+            onClick={() => setQuizOpen(true)}
+          >
+            Take the 60-Second Readiness Quiz
+          </MagneticButton>
+        </div>
+      </motion.div>
 
       {/* Trust signals */}
       <motion.div
