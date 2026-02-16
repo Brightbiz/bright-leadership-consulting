@@ -131,6 +131,39 @@ const AdminSubmissions = () => {
     return map[tier] || { label: tier, variant: "outline" as const };
   };
 
+  const downloadCsv = (filename: string, headers: string[], rows: string[][]) => {
+    const escape = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const csv = [headers.map(escape).join(","), ...rows.map((r) => r.map(escape).join(","))].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportContacts = () => {
+    downloadCsv("contact-submissions.csv",
+      ["Name", "Email", "Phone", "Company", "Message", "Date", "Read"],
+      submissions.map((s) => [s.name, s.email, s.phone || "", s.company || "", s.message, format(new Date(s.created_at), "yyyy-MM-dd HH:mm"), s.is_read ? "Yes" : "No"])
+    );
+  };
+
+  const exportLeads = () => {
+    downloadCsv("lead-downloads.csv",
+      ["Name", "Email", "Lead Magnet", "Date"],
+      leads.map((l) => [l.name || "", l.email, l.lead_magnet_name, format(new Date(l.downloaded_at), "yyyy-MM-dd HH:mm")])
+    );
+  };
+
+  const exportQuiz = () => {
+    downloadCsv("quiz-results.csv",
+      ["Name", "Email", "Score", "Recommended Tier", "Date"],
+      quizResults.map((r) => [r.name || "", r.email, String(r.total_score), r.recommended_tier, format(new Date(r.created_at), "yyyy-MM-dd HH:mm")])
+    );
+  };
+
   const LoadingSkeleton = () => (
     <div className="p-6 space-y-4">
       {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}
@@ -187,6 +220,14 @@ const AdminSubmissions = () => {
 
           {/* ─── Contacts Tab ─── */}
           <TabsContent value="contacts">
+            {submissions.length > 0 && (
+              <div className="mb-3 flex justify-end">
+                <Button variant="outline" size="sm" onClick={exportContacts}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Export CSV
+                </Button>
+              </div>
+            )}
             <div className="rounded-lg border border-border bg-card">
               {loading ? <LoadingSkeleton /> : submissions.length === 0 ? (
                 <div className="p-12 text-center">
@@ -263,6 +304,14 @@ const AdminSubmissions = () => {
 
           {/* ─── Lead Downloads Tab ─── */}
           <TabsContent value="leads">
+            {leads.length > 0 && (
+              <div className="mb-3 flex justify-end">
+                <Button variant="outline" size="sm" onClick={exportLeads}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Export CSV
+                </Button>
+              </div>
+            )}
             <div className="rounded-lg border border-border bg-card">
               {loading ? <LoadingSkeleton /> : leads.length === 0 ? (
                 <div className="p-12 text-center">
@@ -301,6 +350,14 @@ const AdminSubmissions = () => {
 
           {/* ─── Quiz Results Tab ─── */}
           <TabsContent value="quiz">
+            {quizResults.length > 0 && (
+              <div className="mb-3 flex justify-end">
+                <Button variant="outline" size="sm" onClick={exportQuiz}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Export CSV
+                </Button>
+              </div>
+            )}
             <div className="rounded-lg border border-border bg-card">
               {loading ? <LoadingSkeleton /> : quizResults.length === 0 ? (
                 <div className="p-12 text-center">
