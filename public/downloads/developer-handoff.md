@@ -250,3 +250,92 @@ npm run build
 ```
 
 The Supabase client is pre-configured at `src/integrations/supabase/client.ts` — import from there, never create a new client.
+
+---
+
+## WordPress Migration Guide
+
+### Option 1: Iframe Embedding (Recommended)
+
+Embed the published Lovable app (or specific routes) directly into WordPress pages using an iframe. This preserves all interactive features — assessments, quizzes, chat widget, and lead capture — without re-building them.
+
+```html
+<!-- Full site embed -->
+<iframe
+  src="https://your-published-url.lovable.app"
+  width="100%"
+  height="800"
+  style="border: none; max-width: 100%;"
+  loading="lazy"
+  title="Bright Leadership Consulting"
+></iframe>
+
+<!-- Embed a specific tool (e.g., Pre-Course Assessment) -->
+<iframe
+  src="https://your-published-url.lovable.app/pre-assessment"
+  width="100%"
+  height="900"
+  style="border: none; max-width: 100%;"
+  loading="lazy"
+  title="Leadership Pre-Course Assessment"
+></iframe>
+```
+
+**Recommended pages to embed individually:**
+
+| WordPress Page | Iframe Route |
+|---------------|--------------|
+| Pre-Course Assessment | `/pre-assessment` |
+| Post-Course Assessment | `/post-assessment` |
+| Leadership Readiness Quiz | `/masterclass` (contains quiz modal) |
+| Leadership Checklist | `/leadership-checklist` |
+| Contact Form | `/contact` |
+
+**WordPress plugin tip:** Use a plugin like *Advanced iFrame* or *Insert Headers and Footers* for responsive iframe sizing and auto-height adjustment.
+
+### Option 2: Custom Domain Pointing
+
+Point your domain (or a subdomain like `app.yourdomain.com`) directly to the Lovable app:
+
+**DNS Records Required:**
+
+| Type | Name | Value |
+|------|------|-------|
+| A | `@` (root) | `185.158.133.1` |
+| A | `www` | `185.158.133.1` |
+| TXT | `_lovable` | `lovable_verify=<your-verification-code>` |
+
+> SSL is provisioned automatically once DNS propagates (up to 72 hours).
+
+If your WordPress site lives at `yourdomain.com`, you can point a subdomain like `tools.yourdomain.com` to the Lovable app and link to it from WordPress navigation.
+
+### Option 3: Static Build Self-Hosting
+
+The GitHub repository contains the full source. To build and host independently:
+
+```bash
+git clone <YOUR_GITHUB_REPO_URL>
+cd <PROJECT_FOLDER>
+npm install
+npm run build
+# Deploy the dist/ folder to any static host (Netlify, Vercel, etc.)
+```
+
+> **Note:** The app depends on the Lovable Cloud backend for database, auth, and edge functions. These will continue to work regardless of where the frontend is hosted, as long as the environment variables (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) are set.
+
+---
+
+## Key Interactive Tools (Preserve During Migration)
+
+These features rely on the backend and should NOT be rebuilt in WordPress — use iframe embedding instead:
+
+| Feature | Route | Backend Dependency |
+|---------|-------|--------------------|
+| Pre-Course Assessment | `/pre-assessment` | `assessment_results` table (auth required) |
+| Post-Course Assessment | `/post-assessment` | `assessment_results` table (auth required) |
+| Leadership Readiness Quiz | `/masterclass` | `readiness_quiz_results` table |
+| Contact Form | `/contact` | `contact_submissions` + rate limiting |
+| AI Chat Assistant | Floating widget | `chat-assistant` edge function |
+| Lead Magnet Download | Homepage section | `lead_magnet_downloads` table |
+| Newsletter Signup | Footer / Blog | `newsletter_subscribers` table |
+| Leadership Checklist | `/leadership-checklist` | `checklist_results` table (auth required) |
