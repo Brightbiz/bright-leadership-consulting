@@ -45,6 +45,7 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     options: [
       { label: "Self-paced — I learn best on my own schedule", value: "self_paced", score: 1 },
       { label: "Structured group learning with peers", value: "group", score: 2 },
+      { label: "A mix of self-study and live guidance", value: "blended", score: 3 },
       { label: "Personalised 1:1 coaching and mentorship", value: "one_on_one", score: 4 },
     ],
   },
@@ -53,6 +54,7 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     question: "What is your development timeline?",
     options: [
       { label: "No rush — I want to build skills gradually", value: "flexible", score: 1 },
+      { label: "Within 6–12 months for long-term growth", value: "long_term", score: 2 },
       { label: "Within 3–6 months for a new role or promotion", value: "medium_term", score: 3 },
       { label: "Urgently — I need to step up immediately", value: "urgent", score: 4 },
     ],
@@ -62,7 +64,8 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     question: "How important is personalised feedback to your growth?",
     options: [
       { label: "I'm self-motivated — content is enough", value: "content_only", score: 1 },
-      { label: "Some feedback would help — group sessions are ideal", value: "group_feedback", score: 2 },
+      { label: "Occasional feedback would be helpful", value: "occasional", score: 2 },
+      { label: "Regular feedback in a group setting is ideal", value: "group_feedback", score: 3 },
       { label: "Critical — I need a dedicated coach who knows my context", value: "dedicated_coach", score: 4 },
     ],
   },
@@ -71,8 +74,10 @@ export const readinessQuizQuestions: QuizQuestion[] = [
 export type TierRecommendation = "self-paced" | "group-coaching" | "executive-coaching";
 
 export function getRecommendation(totalScore: number): TierRecommendation {
-  if (totalScore >= 18) return "executive-coaching";
-  if (totalScore >= 12) return "group-coaching";
+  // Max = 24, Min = 6
+  // Self-paced: 6–13, Group: 14–19, Executive: 20–24
+  if (totalScore >= 20) return "executive-coaching";
+  if (totalScore >= 14) return "group-coaching";
   return "self-paced";
 }
 

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, CheckCircle2, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle2, Sparkles, ShieldCheck, Award, Zap } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import {
@@ -98,47 +97,87 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
   const currentQ = readinessQuizQuestions[currentQuestion];
   const currentAnswer = currentQ ? answers[currentQ.id]?.value : undefined;
 
+  const tierResultColors: Record<TierRecommendation, string> = {
+    "self-paced": "from-primary/20 to-primary/5",
+    "group-coaching": "from-secondary/20 to-secondary/5",
+    "executive-coaching": "from-primary/30 via-secondary/10 to-primary/5",
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden">
-        {/* Progress bar */}
-        <div className="px-6 pt-6">
-          <Progress value={progress} className="h-1.5" />
+      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden border-primary/20 shadow-2xl shadow-primary/10">
+        {/* Decorative top gradient bar */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-primary via-secondary to-primary" />
+
+        {/* Step progress dots */}
+        <div className="px-6 pt-5 flex items-center justify-center gap-2">
+          {["intro", "questions", "email", "result"].map((s, i) => {
+            const stepOrder = ["intro", "questions", "email", "result"];
+            const currentIdx = stepOrder.indexOf(step);
+            const isActive = i <= currentIdx;
+            return (
+              <div key={s} className="flex items-center gap-2">
+                <motion.div
+                  className={`h-2.5 rounded-full transition-all duration-500 ${
+                    i === currentIdx
+                      ? "w-8 bg-gradient-to-r from-primary to-secondary"
+                      : isActive
+                      ? "w-2.5 bg-primary/60"
+                      : "w-2.5 bg-muted-foreground/20"
+                  }`}
+                  layout
+                />
+              </div>
+            );
+          })}
         </div>
 
-        <div className="px-6 pb-6 pt-4 min-h-[380px] flex flex-col">
+        <div className="px-6 pb-6 pt-4 min-h-[420px] flex flex-col">
           <AnimatePresence mode="wait">
             {/* INTRO */}
             {step === "intro" && (
               <motion.div
                 key="intro"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.3 }}
                 className="flex flex-col flex-grow"
               >
                 <DialogHeader className="mb-6">
-                  <DialogTitle className="font-serif text-2xl">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                      <Zap className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                    <span className="text-xs font-semibold tracking-wider uppercase text-primary">
+                      60-Second Assessment
+                    </span>
+                  </div>
+                  <DialogTitle className="font-serif text-2xl leading-tight">
                     Is This Programme Right for You?
                   </DialogTitle>
                   <DialogDescription className="text-base mt-2 leading-relaxed">
-                    This programme may not be for everyone. Save time and money by taking 60 seconds to discover whether the Executive Leadership Mastery Programme is the right fit for your goals — and which tier suits you best.
+                    Save time and money — discover which tier matches your goals before you invest.
                   </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-3 mb-8 flex-grow">
-                  <div className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                    <span>6 quick questions about your goals and experience</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <Sparkles className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
-                    <span>Get a personalised tier recommendation</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <ShieldCheck className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                    <span>No obligation — just honest guidance</span>
-                  </div>
+                  {[
+                    { icon: CheckCircle2, color: "text-primary", text: "6 quick questions about your goals and experience" },
+                    { icon: Sparkles, color: "text-secondary", text: "Get a personalised tier recommendation" },
+                    { icon: ShieldCheck, color: "text-primary", text: "No obligation — just honest guidance" },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 + i * 0.1 }}
+                      className="flex items-center gap-3 text-sm text-muted-foreground rounded-lg border border-border/40 bg-muted/20 px-4 py-3"
+                    >
+                      <item.icon className={`h-4 w-4 ${item.color} flex-shrink-0`} />
+                      <span>{item.text}</span>
+                    </motion.div>
+                  ))}
                 </div>
 
                 <Button
@@ -171,18 +210,35 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
             {step === "questions" && currentQ && (
               <motion.div
                 key={`q-${currentQuestion}`}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.25 }}
                 className="flex flex-col flex-grow"
               >
                 <DialogHeader className="mb-1">
                   <DialogTitle className="sr-only">Readiness Quiz</DialogTitle>
                   <DialogDescription className="sr-only">Answer the following question</DialogDescription>
                 </DialogHeader>
-                <p className="text-xs text-muted-foreground mb-2">
-                  Question {currentQuestion + 1} of {totalQuestions}
-                </p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-medium text-muted-foreground bg-muted/40 px-3 py-1 rounded-full">
+                    {currentQuestion + 1} of {totalQuestions}
+                  </span>
+                  <div className="flex gap-1">
+                    {Array.from({ length: totalQuestions }).map((_, i) => (
+                      <div
+                        key={i}
+                        className={`h-1 w-6 rounded-full transition-all duration-300 ${
+                          i < currentQuestion
+                            ? "bg-primary"
+                            : i === currentQuestion
+                            ? "bg-gradient-to-r from-primary to-secondary"
+                            : "bg-muted-foreground/15"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-5">
                   {currentQ.question}
                 </h3>
@@ -193,20 +249,23 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                     const opt = currentQ.options.find((o) => o.value === val);
                     if (opt) handleAnswer(currentQ.id, opt.value, opt.score);
                   }}
-                  className="space-y-3 flex-grow"
+                  className="space-y-2.5 flex-grow"
                 >
-                  {currentQ.options.map((opt) => (
-                    <label
+                  {currentQ.options.map((opt, i) => (
+                    <motion.label
                       key={opt.value}
-                      className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 cursor-pointer transition-all duration-200 ${
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.06 }}
+                      className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3.5 cursor-pointer transition-all duration-200 ${
                         currentAnswer === opt.value
-                          ? "border-primary bg-primary/5"
-                          : "border-border/50 hover:border-primary/30 hover:bg-muted/30"
+                          ? "border-primary bg-primary/8 shadow-sm shadow-primary/10"
+                          : "border-border/40 hover:border-primary/30 hover:bg-muted/30"
                       }`}
                     >
                       <RadioGroupItem value={opt.value} />
-                      <span className="text-sm text-foreground">{opt.label}</span>
-                    </label>
+                      <span className="text-sm text-foreground leading-snug">{opt.label}</span>
+                    </motion.label>
                   ))}
                 </RadioGroup>
 
@@ -232,32 +291,42 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
             {step === "email" && (
               <motion.div
                 key="email"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.3 }}
                 className="flex flex-col flex-grow"
               >
                 <DialogHeader className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-secondary to-secondary/60 flex items-center justify-center">
+                      <Sparkles className="h-5 w-5 text-secondary-foreground" />
+                    </div>
+                    <span className="text-xs font-semibold tracking-wider uppercase text-secondary">
+                      Almost Done
+                    </span>
+                  </div>
                   <DialogTitle className="font-serif text-xl">
-                    Almost There — Where Should We Send Your Results?
+                    Where Should We Send Your Results?
                   </DialogTitle>
                   <DialogDescription className="text-sm mt-2">
-                    Enter your details to see your personalised recommendation. We'll also send you a summary to review later.
+                    Enter your details to see your personalised recommendation. We'll also send a summary to review later.
                   </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-4 flex-grow">
                   <div>
-                    <Label htmlFor="quiz-name">First Name (optional)</Label>
+                    <Label htmlFor="quiz-name" className="text-sm font-medium">First Name (optional)</Label>
                     <Input
                       id="quiz-name"
                       placeholder="e.g. Sarah"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      className="mt-1.5"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="quiz-email">Email Address *</Label>
+                    <Label htmlFor="quiz-email" className="text-sm font-medium">Email Address *</Label>
                     <Input
                       id="quiz-email"
                       type="email"
@@ -265,6 +334,7 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="mt-1.5"
                     />
                   </div>
                 </div>
@@ -297,6 +367,7 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                 key="result"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, type: "spring", damping: 20 }}
                 className="flex flex-col flex-grow text-center"
               >
                 <DialogHeader className="mb-2">
@@ -304,19 +375,41 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                   <DialogDescription className="sr-only">Based on your quiz answers</DialogDescription>
                 </DialogHeader>
 
-                <div className="mb-4">
-                  <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mb-3">
-                    <CheckCircle2 className="h-7 w-7 text-primary" />
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-1">Your recommended tier:</p>
-                  <h3 className="font-serif text-2xl font-bold text-foreground">
+                <div className={`mb-5 rounded-2xl bg-gradient-to-br ${tierResultColors[recommendation]} p-6`}>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring", damping: 12 }}
+                    className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-secondary mb-4 shadow-lg shadow-primary/20"
+                  >
+                    <Award className="h-8 w-8 text-primary-foreground" />
+                  </motion.div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-xs font-semibold tracking-wider uppercase text-primary mb-2"
+                  >
+                    Your recommended tier
+                  </motion.p>
+                  <motion.h3
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="font-serif text-2xl font-bold text-foreground"
+                  >
                     {tierDetails[recommendation].name}
-                  </h3>
+                  </motion.h3>
                 </div>
 
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-md mx-auto">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-md mx-auto"
+                >
                   {tierDetails[recommendation].description}
-                </p>
+                </motion.p>
 
                 <div className="space-y-3 mt-auto">
                   <Button
