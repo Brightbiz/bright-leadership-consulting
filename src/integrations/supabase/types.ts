@@ -179,6 +179,36 @@ export type Database = {
         }
         Relationships: []
       }
+      readiness_quiz_results: {
+        Row: {
+          answers: Json
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          recommended_tier: string
+          total_score: number
+        }
+        Insert: {
+          answers?: Json
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          recommended_tier: string
+          total_score?: number
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          recommended_tier?: string
+          total_score?: number
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
