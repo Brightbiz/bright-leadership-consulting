@@ -19,7 +19,7 @@ const THINKIFIC_LINK =
   "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program";
 
 // CTA reveals after this many seconds of "watching"
-const CTA_REVEAL_SECONDS = 45;
+const CTA_REVEAL_SECONDS = 300; // 5 minutes into a 7:29 video
 
 // Evergreen countdown: 72 hours from first visit
 const COUNTDOWN_KEY = "vsl_countdown_deadline";
@@ -188,13 +188,13 @@ const Masterclass = () => {
             <div className="rounded-2xl p-[3px] bg-gradient-to-br from-secondary via-primary-foreground/30 to-secondary/80 shadow-2xl shadow-black/20">
               <div className="relative rounded-[calc(1rem-3px)] overflow-hidden bg-background aspect-video">
                 {isPlaying ? (
-                  /* Replace src with your real video embed */
-                  <div className="absolute inset-0 flex items-center justify-center bg-primary/10">
-                    <p className="text-muted-foreground text-sm px-6 text-center">
-                      🎬 Your VSL video will play here.<br />
-                      Replace this placeholder with your YouTube/Vimeo embed URL.
-                    </p>
-                  </div>
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/iGKXCsLP4OI?autoplay=1&rel=0"
+                    title="Executive Leadership Mastery Program"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 ) : (
                   <div
                     className="relative cursor-pointer group h-full flex items-center justify-center bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/10"
@@ -206,7 +206,7 @@ const Masterclass = () => {
                       <Play className="h-9 w-9 text-secondary-foreground ml-1" fill="currentColor" />
                     </div>
                     <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-primary/60 to-transparent text-center">
-                      <p className="text-primary-foreground text-sm font-medium">▶ Watch the Free Masterclass (18 min)</p>
+                      <p className="text-primary-foreground text-sm font-medium">▶ Watch the Free Masterclass (8 min)</p>
                     </div>
                   </div>
                 )}
