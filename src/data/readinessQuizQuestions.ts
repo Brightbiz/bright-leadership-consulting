@@ -15,8 +15,8 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     options: [
       { label: "Individual contributor / Early career", value: "individual", score: 1 },
       { label: "Team lead or first-time manager", value: "team_lead", score: 2 },
-      { label: "Senior manager / Director", value: "senior_manager", score: 3 },
-      { label: "C-Suite / VP / Executive", value: "executive", score: 4 },
+      { label: "Senior manager / Director", value: "senior_manager", score: 2 },
+      { label: "C-Suite / VP / Executive", value: "executive", score: 2 },
     ],
   },
   {
@@ -24,9 +24,9 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     question: "How many people do you currently lead or influence?",
     options: [
       { label: "None yet — aspiring leader", value: "none", score: 1 },
-      { label: "1–5 direct reports", value: "small", score: 2 },
-      { label: "6–20 people", value: "medium", score: 3 },
-      { label: "20+ across teams or departments", value: "large", score: 4 },
+      { label: "1–5 direct reports", value: "small", score: 1 },
+      { label: "6–20 people", value: "medium", score: 2 },
+      { label: "20+ across teams or departments", value: "large", score: 2 },
     ],
   },
   {
@@ -74,10 +74,10 @@ export const readinessQuizQuestions: QuizQuestion[] = [
 export type TierRecommendation = "self-paced" | "group-coaching" | "executive-coaching";
 
 export function getRecommendation(totalScore: number): TierRecommendation {
-  // Max = 24, Min = 6
-  // Self-paced: 6–13, Group: 14–19, Executive: 20–24
-  if (totalScore >= 20) return "executive-coaching";
-  if (totalScore >= 14) return "group-coaching";
+  // Max = 20, Min = 6
+  // Self-paced: 6–12, Group: 13–16, Executive: 17–20
+  if (totalScore >= 17) return "executive-coaching";
+  if (totalScore >= 13) return "group-coaching";
   return "self-paced";
 }
 
