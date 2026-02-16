@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Zap, TrendingUp, Users, Lightbulb, Briefcase, ArrowRight, Star, Sparkles, Crown, GraduationCap, Package, Target, Play, X } from "lucide-react";
+import PricingTiers from "@/components/PricingTiers";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -251,6 +252,13 @@ const Courses = () => {
               </div>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Executive Leadership Pricing Tiers */}
+      <section className="section-padding relative overflow-hidden">
+        <div className="container-narrow">
+          <PricingTiers />
         </div>
       </section>
 
