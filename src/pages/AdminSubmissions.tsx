@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { format } from "date-fns";
-import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck } from "lucide-react";
+import { format, isAfter, isBefore, startOfDay, endOfDay } from "date-fns";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -56,7 +59,20 @@ const AdminSubmissions = () => {
   const [quizResults, setQuizResults] = useState<QuizResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSubmission, setSelectedSubmission] = useState<ContactSubmission | null>(null);
+  const [dateFrom, setDateFrom] = useState<Date | undefined>();
+  const [dateTo, setDateTo] = useState<Date | undefined>();
   const { toast } = useToast();
+
+  const inRange = (dateStr: string) => {
+    const d = new Date(dateStr);
+    if (dateFrom && isBefore(d, startOfDay(dateFrom))) return false;
+    if (dateTo && isAfter(d, endOfDay(dateTo))) return false;
+    return true;
+  };
+
+  const filteredSubmissions = useMemo(() => submissions.filter((s) => inRange(s.created_at)), [submissions, dateFrom, dateTo]);
+  const filteredLeads = useMemo(() => leads.filter((l) => inRange(l.downloaded_at)), [leads, dateFrom, dateTo]);
+  const filteredQuiz = useMemo(() => quizResults.filter((r) => inRange(r.created_at)), [quizResults, dateFrom, dateTo]);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -120,7 +136,7 @@ const AdminSubmissions = () => {
     }
   };
 
-  const unreadCount = submissions.filter((s) => !s.is_read).length;
+  const unreadCount = filteredSubmissions.filter((s) => !s.is_read).length;
 
   const tierLabel = (tier: string) => {
     const map: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
@@ -146,21 +162,21 @@ const AdminSubmissions = () => {
   const exportContacts = () => {
     downloadCsv("contact-submissions.csv",
       ["Name", "Email", "Phone", "Company", "Message", "Date", "Read"],
-      submissions.map((s) => [s.name, s.email, s.phone || "", s.company || "", s.message, format(new Date(s.created_at), "yyyy-MM-dd HH:mm"), s.is_read ? "Yes" : "No"])
+      filteredSubmissions.map((s) => [s.name, s.email, s.phone || "", s.company || "", s.message, format(new Date(s.created_at), "yyyy-MM-dd HH:mm"), s.is_read ? "Yes" : "No"])
     );
   };
 
   const exportLeads = () => {
     downloadCsv("lead-downloads.csv",
       ["Name", "Email", "Lead Magnet", "Date"],
-      leads.map((l) => [l.name || "", l.email, l.lead_magnet_name, format(new Date(l.downloaded_at), "yyyy-MM-dd HH:mm")])
+      filteredLeads.map((l) => [l.name || "", l.email, l.lead_magnet_name, format(new Date(l.downloaded_at), "yyyy-MM-dd HH:mm")])
     );
   };
 
   const exportQuiz = () => {
     downloadCsv("quiz-results.csv",
       ["Name", "Email", "Score", "Recommended Tier", "Date"],
-      quizResults.map((r) => [r.name || "", r.email, String(r.total_score), r.recommended_tier, format(new Date(r.created_at), "yyyy-MM-dd HH:mm")])
+      filteredQuiz.map((r) => [r.name || "", r.email, String(r.total_score), r.recommended_tier, format(new Date(r.created_at), "yyyy-MM-dd HH:mm")])
     );
   };
 
@@ -200,6 +216,39 @@ const AdminSubmissions = () => {
           </div>
         </div>
 
+        {/* Date Range Filter */}
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <span className="text-sm font-medium text-muted-foreground">Filter by date:</span>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className={cn("w-[150px] justify-start text-left font-normal", !dateFrom && "text-muted-foreground")}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {dateFrom ? format(dateFrom, "MMM d, yyyy") : "From"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar mode="single" selected={dateFrom} onSelect={setDateFrom} initialFocus className={cn("p-3 pointer-events-auto")} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className={cn("w-[150px] justify-start text-left font-normal", !dateTo && "text-muted-foreground")}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {dateTo ? format(dateTo, "MMM d, yyyy") : "To"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar mode="single" selected={dateTo} onSelect={setDateTo} initialFocus className={cn("p-3 pointer-events-auto")} />
+            </PopoverContent>
+          </Popover>
+          {(dateFrom || dateTo) && (
+            <Button variant="ghost" size="sm" onClick={() => { setDateFrom(undefined); setDateTo(undefined); }}>
+              <X className="mr-1 h-4 w-4" />
+              Clear
+            </Button>
+          )}
+        </div>
+
         {/* Tabs */}
         <Tabs defaultValue="contacts" className="space-y-4">
           <TabsList className="grid w-full grid-cols-3">
@@ -220,7 +269,7 @@ const AdminSubmissions = () => {
 
           {/* ─── Contacts Tab ─── */}
           <TabsContent value="contacts">
-            {submissions.length > 0 && (
+            {filteredSubmissions.length > 0 && (
               <div className="mb-3 flex justify-end">
                 <Button variant="outline" size="sm" onClick={exportContacts}>
                   <Download className="mr-2 h-4 w-4" />
@@ -229,7 +278,7 @@ const AdminSubmissions = () => {
               </div>
             )}
             <div className="rounded-lg border border-border bg-card">
-              {loading ? <LoadingSkeleton /> : submissions.length === 0 ? (
+              {loading ? <LoadingSkeleton /> : filteredSubmissions.length === 0 ? (
                 <div className="p-12 text-center">
                   <Mail className="mx-auto mb-4 h-12 w-12 text-muted-foreground/50" />
                   <h3 className="text-lg font-medium text-foreground">No submissions yet</h3>
@@ -248,7 +297,7 @@ const AdminSubmissions = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {submissions.map((submission) => (
+                    {filteredSubmissions.map((submission) => (
                       <TableRow
                         key={submission.id}
                         className={`cursor-pointer ${!submission.is_read ? "bg-accent/30" : ""}`}
@@ -304,7 +353,7 @@ const AdminSubmissions = () => {
 
           {/* ─── Lead Downloads Tab ─── */}
           <TabsContent value="leads">
-            {leads.length > 0 && (
+            {filteredLeads.length > 0 && (
               <div className="mb-3 flex justify-end">
                 <Button variant="outline" size="sm" onClick={exportLeads}>
                   <Download className="mr-2 h-4 w-4" />
@@ -313,7 +362,7 @@ const AdminSubmissions = () => {
               </div>
             )}
             <div className="rounded-lg border border-border bg-card">
-              {loading ? <LoadingSkeleton /> : leads.length === 0 ? (
+              {loading ? <LoadingSkeleton /> : filteredLeads.length === 0 ? (
                 <div className="p-12 text-center">
                   <Download className="mx-auto mb-4 h-12 w-12 text-muted-foreground/50" />
                   <h3 className="text-lg font-medium text-foreground">No downloads yet</h3>
@@ -330,7 +379,7 @@ const AdminSubmissions = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {leads.map((lead) => (
+                    {filteredLeads.map((lead) => (
                       <TableRow key={lead.id}>
                         <TableCell className="font-medium">{lead.name || "—"}</TableCell>
                         <TableCell>{lead.email}</TableCell>
@@ -350,7 +399,7 @@ const AdminSubmissions = () => {
 
           {/* ─── Quiz Results Tab ─── */}
           <TabsContent value="quiz">
-            {quizResults.length > 0 && (
+            {filteredQuiz.length > 0 && (
               <div className="mb-3 flex justify-end">
                 <Button variant="outline" size="sm" onClick={exportQuiz}>
                   <Download className="mr-2 h-4 w-4" />
@@ -359,7 +408,7 @@ const AdminSubmissions = () => {
               </div>
             )}
             <div className="rounded-lg border border-border bg-card">
-              {loading ? <LoadingSkeleton /> : quizResults.length === 0 ? (
+              {loading ? <LoadingSkeleton /> : filteredQuiz.length === 0 ? (
                 <div className="p-12 text-center">
                   <ClipboardCheck className="mx-auto mb-4 h-12 w-12 text-muted-foreground/50" />
                   <h3 className="text-lg font-medium text-foreground">No quiz results yet</h3>
@@ -377,7 +426,7 @@ const AdminSubmissions = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {quizResults.map((result) => {
+                    {filteredQuiz.map((result) => {
                       const tier = tierLabel(result.recommended_tier);
                       return (
                         <TableRow key={result.id}>
