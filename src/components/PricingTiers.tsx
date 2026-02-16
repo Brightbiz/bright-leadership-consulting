@@ -7,7 +7,7 @@ import ReadinessQuizModal from "./ReadinessQuizModal";
 
 const tiers = [
   {
-    name: "Self-Paced Mastery",
+    name: "Self-Paced Executive Training",
     icon: User,
     price: 1297,
     originalPrice: 1497,
