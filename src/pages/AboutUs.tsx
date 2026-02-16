@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -79,6 +80,7 @@ const milestones = [
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="About Us" description="Meet the team behind Bright Leadership Consulting. A decade of transforming leaders with CPD-accredited coaching and training." path="/about" />
       <ScrollProgress />
       <Header />
       <main>

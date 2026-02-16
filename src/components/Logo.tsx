@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import bbsLogo from "@/assets/bbs-logo.png";
 
@@ -6,9 +7,9 @@ interface LogoProps {
   isCompact?: boolean;
 }
 
-const Logo = ({ className = "", isCompact = false }: LogoProps) => {
+const Logo = forwardRef<HTMLAnchorElement, LogoProps>(({ className = "", isCompact = false }, ref) => {
   return (
-    <a href="/" className={cn("flex items-center", className)}>
+    <a ref={ref} href="/" className={cn("flex items-center", className)}>
       <img
         src={bbsLogo}
         alt="Bright Leadership Consulting"
@@ -19,6 +20,8 @@ const Logo = ({ className = "", isCompact = false }: LogoProps) => {
       />
     </a>
   );
-};
+});
+
+Logo.displayName = "Logo";
 
 export default Logo;

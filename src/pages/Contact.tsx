@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactHero from "@/components/heroes/ContactHero";
@@ -60,6 +61,7 @@ const faqs = [
 const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Contact" description="Get in touch with Bright Leadership Consulting. Schedule a free consultation for executive coaching, training, or corporate retreats." path="/contact" />
       <Header />
       
       <main>
