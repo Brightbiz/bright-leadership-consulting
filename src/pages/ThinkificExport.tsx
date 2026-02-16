@@ -1979,14 +1979,60 @@ const ThinkificExport = () => {
                 <TabsContent value="assessments" className="space-y-6">
                   <Card className="border-primary/20 bg-primary/5">
                     <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-primary text-primary-foreground">
-                          <CheckCircle2 className="h-5 w-5" />
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-primary text-primary-foreground">
+                            <CheckCircle2 className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <CardTitle>Leadership Assessments</CardTitle>
+                            <CardDescription>Pre-course and post-course assessments for Thinkific Multimedia lessons</CardDescription>
+                          </div>
                         </div>
-                        <div>
-                          <CardTitle>Leadership Assessments</CardTitle>
-                          <CardDescription>Pre-course and post-course assessments for Thinkific Multimedia lessons</CardDescription>
-                        </div>
+                        <Button
+                          onClick={async () => {
+                            setExporting('all-assessments');
+                            try {
+                              const [preRes, postRes] = await Promise.all([
+                                fetch('/downloads/pre-course-assessment.html'),
+                                fetch('/downloads/post-course-assessment.html'),
+                              ]);
+                              const [preHtml, postHtml] = await Promise.all([preRes.text(), postRes.text()]);
+
+                              const preZip = new JSZip();
+                              preZip.file('index.html', preHtml);
+                              const preBlob = await preZip.generateAsync({ type: 'blob' });
+
+                              const postZip = new JSZip();
+                              postZip.file('index.html', postHtml);
+                              const postBlob = await postZip.generateAsync({ type: 'blob' });
+
+                              for (const [name, blob] of [['pre-course-assessment.zip', preBlob], ['post-course-assessment.zip', postBlob]] as const) {
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = name;
+                                a.click();
+                                URL.revokeObjectURL(url);
+                              }
+                              toast.success('Both assessment ZIPs downloaded!');
+                            } catch (err) {
+                              console.error(err);
+                              toast.error('Failed to generate ZIPs');
+                            } finally {
+                              setExporting(null);
+                            }
+                          }}
+                          disabled={exporting !== null}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                        >
+                          {exporting === 'all-assessments' ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          ) : (
+                            <Archive className="h-4 w-4 mr-2" />
+                          )}
+                          Download Both ZIPs
+                        </Button>
                       </div>
                     </CardHeader>
                   </Card>
@@ -2007,8 +2053,35 @@ const ThinkificExport = () => {
                           </Button>
                           <Button variant="outline" size="sm" className="flex-1" asChild>
                             <a href="/downloads/pre-course-assessment.html" download="pre-course-assessment.html">
-                              <Download className="h-3 w-3 mr-2" /> Download HTML
+                              <Download className="h-3 w-3 mr-2" /> HTML
                             </a>
+                          </Button>
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="flex-1"
+                            disabled={exporting !== null}
+                            onClick={async () => {
+                              setExporting('zip-pre');
+                              try {
+                                const res = await fetch('/downloads/pre-course-assessment.html');
+                                const html = await res.text();
+                                const zip = new JSZip();
+                                zip.file('index.html', html);
+                                const blob = await zip.generateAsync({ type: 'blob' });
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = 'pre-course-assessment.zip';
+                                a.click();
+                                URL.revokeObjectURL(url);
+                                toast.success('Pre-course assessment ZIP downloaded!');
+                              } catch { toast.error('Failed to generate ZIP'); }
+                              finally { setExporting(null); }
+                            }}
+                          >
+                            {exporting === 'zip-pre' ? <Loader2 className="h-3 w-3 mr-2 animate-spin" /> : <Archive className="h-3 w-3 mr-2" />}
+                            ZIP
                           </Button>
                         </div>
                       </CardContent>
@@ -2029,8 +2102,35 @@ const ThinkificExport = () => {
                           </Button>
                           <Button variant="outline" size="sm" className="flex-1" asChild>
                             <a href="/downloads/post-course-assessment.html" download="post-course-assessment.html">
-                              <Download className="h-3 w-3 mr-2" /> Download HTML
+                              <Download className="h-3 w-3 mr-2" /> HTML
                             </a>
+                          </Button>
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="flex-1"
+                            disabled={exporting !== null}
+                            onClick={async () => {
+                              setExporting('zip-post');
+                              try {
+                                const res = await fetch('/downloads/post-course-assessment.html');
+                                const html = await res.text();
+                                const zip = new JSZip();
+                                zip.file('index.html', html);
+                                const blob = await zip.generateAsync({ type: 'blob' });
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = 'post-course-assessment.zip';
+                                a.click();
+                                URL.revokeObjectURL(url);
+                                toast.success('Post-course assessment ZIP downloaded!');
+                              } catch { toast.error('Failed to generate ZIP'); }
+                              finally { setExporting(null); }
+                            }}
+                          >
+                            {exporting === 'zip-post' ? <Loader2 className="h-3 w-3 mr-2 animate-spin" /> : <Archive className="h-3 w-3 mr-2" />}
+                            ZIP
                           </Button>
                         </div>
                       </CardContent>
@@ -2039,7 +2139,8 @@ const ThinkificExport = () => {
 
                   <Card>
                     <CardContent className="pt-6 space-y-2 text-sm text-muted-foreground">
-                      <p><strong className="text-foreground">Thinkific Upload:</strong> Upload each HTML file as a Multimedia lesson. The pre-course assessment saves scores to localStorage, which the post-course assessment reads for the growth comparison.</p>
+                      <p><strong className="text-foreground">Thinkific Upload:</strong> Download the ZIP files and upload each as a <strong>Multimedia lesson</strong> in Thinkific. Each ZIP contains an <code>index.html</code> that renders the interactive assessment inside the course iframe.</p>
+                      <p><strong className="text-foreground">Growth Comparison:</strong> The pre-course assessment saves scores to localStorage, which the post-course assessment reads automatically for the side-by-side growth comparison.</p>
                       <p><strong className="text-foreground">App Pages:</strong> Authenticated versions are also available at <code>/pre-assessment</code> and <code>/post-assessment</code> with database persistence.</p>
                     </CardContent>
                   </Card>
