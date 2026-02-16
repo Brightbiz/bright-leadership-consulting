@@ -1,4 +1,5 @@
-import { Award, ArrowRight, Sparkles, User, Building2, Star, CheckCircle } from "lucide-react";
+import { Award, ArrowRight, Sparkles, User, Building2, Star, CheckCircle, ClipboardCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import TiltCard from "./TiltCard";
@@ -423,6 +424,39 @@ const ExecutiveProgramSection = () => {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
           </div>
+
+          {/* Assessment Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 p-4 rounded-xl bg-card border border-border/50"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary/20 to-primary/20">
+              <ClipboardCheck className="h-5 w-5 text-secondary" />
+            </div>
+            <div className="text-center sm:text-left">
+              <p className="font-semibold text-foreground text-sm">Leadership Assessments</p>
+              <p className="text-xs text-muted-foreground">Measure your growth before and after the programme</p>
+            </div>
+            <div className="flex gap-2 ml-auto">
+              <Link
+                to="/pre-assessment"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors border border-primary/20"
+              >
+                Pre-Course
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                to="/post-assessment"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-secondary/10 text-secondary text-sm font-medium hover:bg-secondary/20 transition-colors border border-secondary/20"
+              >
+                Post-Course
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
