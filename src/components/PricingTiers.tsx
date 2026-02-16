@@ -235,27 +235,51 @@ const PricingTiers = () => {
         ))}
       </div>
 
-      {/* Readiness qualifier */}
+      {/* Readiness qualifier — premium CTA */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="mt-10 text-center"
+        transition={{ delay: 0.3, duration: 0.6 }}
+        className="mt-14"
       >
-        <div className="inline-flex flex-col items-center gap-3 rounded-2xl border border-primary/20 bg-primary/5 px-6 py-5 max-w-lg mx-auto">
-          <ClipboardCheck className="h-6 w-6 text-primary" />
-          <p className="text-sm text-foreground font-medium leading-relaxed">
-            Not sure which tier is right for you? This programme may not be for everyone — save time and money by finding out before you buy.
-          </p>
-          <MagneticButton
-            variant="outline"
-            size="default"
-            className="border-primary/30 text-primary hover:bg-primary/10"
-            onClick={() => setQuizOpen(true)}
-          >
-            Take the 60-Second Readiness Quiz
-          </MagneticButton>
+        <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5 px-8 py-10 sm:px-12 sm:py-12">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 -mt-8 -mr-8 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute bottom-0 left-0 -mb-8 -ml-8 h-32 w-32 rounded-full bg-secondary/10 blur-3xl" />
+          
+          <div className="relative flex flex-col items-center gap-6 text-center">
+            <motion.div
+              animate={{ rotate: [0, -5, 5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 ring-4 ring-primary/10"
+            >
+              <ClipboardCheck className="h-7 w-7 text-primary" />
+            </motion.div>
+            
+            <div className="max-w-xl space-y-2">
+              <h4 className="font-serif text-xl sm:text-2xl font-semibold text-foreground">
+                Not Sure Which Path Is Right for You?
+              </h4>
+              <p className="text-muted-foreground leading-relaxed">
+                Answer 6 quick questions and we'll recommend the best programme tier based on your goals, experience, and learning style.
+              </p>
+            </div>
+
+            <MagneticButton
+              variant="hero"
+              size="lg"
+              className="mt-2 px-8 shadow-lg shadow-primary/20"
+              onClick={() => setQuizOpen(true)}
+            >
+              <ClipboardCheck className="h-5 w-5 mr-2" />
+              Take the 60-Second Readiness Quiz
+            </MagneticButton>
+
+            <p className="text-xs text-muted-foreground">
+              Free · No sign-up required · Instant recommendation
+            </p>
+          </div>
         </div>
       </motion.div>
 
