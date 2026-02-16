@@ -83,20 +83,20 @@ export function getRecommendation(totalScore: number): TierRecommendation {
 
 export const tierDetails: Record<TierRecommendation, { name: string; description: string; ctaText: string; ctaLink: string }> = {
   "self-paced": {
-    name: "Self-Paced Mastery",
-    description: "Based on your responses, the Self-Paced Mastery tier is the perfect starting point. You'll get full access to all 33 modules and 66 CPD points to build your leadership foundation at your own pace.",
+    name: "Self-Paced Executive Training",
+    description: "Based on your responses, the Self-Paced Executive Training tier is ideal for you. You'll get full access to all 33 modules and 66 CPD points — the same executive-level curriculum, delivered digitally so you can learn at your own pace. You can also combine this with 1:1 Executive Coaching later for maximum impact.",
     ctaText: "Start Learning Today — £1,297",
     ctaLink: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
   },
   "group-coaching": {
     name: "Group Coaching",
-    description: "Your goals and experience suggest you'd benefit most from structured group coaching. Live sessions with peers and expert instructors will accelerate your development and provide the accountability you need.",
+    description: "Your goals suggest you'd benefit from structured group coaching alongside the full digital curriculum. Live sessions with peers and expert instructors will accelerate your development. You can also add 1:1 Executive Coaching for a fully personalised experience.",
     ctaText: "Enquire About Group Coaching",
     ctaLink: "#contact",
   },
   "executive-coaching": {
     name: "1:1 Executive Coaching",
-    description: "With your level of responsibility and ambition, personalised 1:1 executive coaching will deliver the fastest transformation. A dedicated coach will create a bespoke development plan tailored to your specific challenges.",
+    description: "You're looking for personalised, high-touch development. A dedicated coach will create a bespoke plan tailored to your challenges — combined with full access to the 33-module executive training programme for a comprehensive leadership transformation.",
     ctaText: "Apply for Executive Coaching",
     ctaLink: "#contact",
   },
