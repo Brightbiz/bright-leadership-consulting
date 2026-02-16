@@ -190,7 +190,7 @@ const Masterclass = () => {
                 {isPlaying ? (
                   <iframe
                     className="absolute inset-0 w-full h-full"
-                    src="https://www.youtube.com/embed/iGKXCsLP4OI?autoplay=1&rel=0"
+                    src="https://www.youtube.com/embed/ARX2bkVMkps?autoplay=1&rel=0"
                     title="Executive Leadership Mastery Program"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
