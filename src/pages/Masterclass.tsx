@@ -3,13 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, CheckCircle, ArrowRight, Shield, Clock, Star, Sparkles,
   Award, Users, BookOpen, Target, TrendingUp, ChevronDown, X,
-  Quote,
+  Quote, ClipboardCheck,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Logo from "@/components/Logo";
 import { FileText } from "lucide-react";
+import ReadinessQuizModal from "@/components/ReadinessQuizModal";
 import testimonialSophia from "@/assets/testimonial-sophia.jpg";
 import testimonialDavid from "@/assets/testimonial-david.jpg";
 import testimonialEmily from "@/assets/testimonial-emily.jpg";
@@ -86,6 +87,7 @@ const results = [
 // ─── Component ──────────────────────────────────────────────
 const Masterclass = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
   const [ctaRevealed, setCtaRevealed] = useState(false);
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof formatTime>>({ h: "00", m: "00", s: "00" });
   const [expired, setExpired] = useState(false);
@@ -443,6 +445,32 @@ const Masterclass = () => {
                 </span>
               </motion.div>
             )}
+
+            {/* Quiz trigger */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-10"
+            >
+              <div className="inline-flex flex-col items-center gap-3 rounded-2xl border border-primary/20 bg-primary/5 px-6 py-5 max-w-lg mx-auto">
+                <ClipboardCheck className="h-6 w-6 text-primary" />
+                <p className="text-sm text-foreground font-medium leading-relaxed">
+                  Not sure if this programme is right for you? Save time and money by finding out before you buy.
+                </p>
+                <Button
+                  variant="outline"
+                  size="default"
+                  className="border-primary/30 text-primary hover:bg-primary/10"
+                  onClick={() => setQuizOpen(true)}
+                >
+                  Take the 60-Second Readiness Quiz
+                </Button>
+              </div>
+            </motion.div>
+
+            <ReadinessQuizModal open={quizOpen} onOpenChange={setQuizOpen} />
           </motion.div>
         </div>
       </section>
