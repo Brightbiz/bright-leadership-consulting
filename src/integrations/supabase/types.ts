@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      assessment_results: {
+        Row: {
+          answers: Json
+          assessment_type: string
+          competency_scores: Json
+          completed_at: string
+          created_at: string
+          id: string
+          max_score: number
+          percentage: number
+          total_score: number
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          assessment_type: string
+          competency_scores?: Json
+          completed_at?: string
+          created_at?: string
+          id?: string
+          max_score?: number
+          percentage?: number
+          total_score?: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          assessment_type?: string
+          competency_scores?: Json
+          completed_at?: string
+          created_at?: string
+          id?: string
+          max_score?: number
+          percentage?: number
+          total_score?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       checklist_results: {
         Row: {
           checked_items: string[]

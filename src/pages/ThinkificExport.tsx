@@ -1932,7 +1932,12 @@ const ThinkificExport = () => {
               </Card>
 
               <Tabs defaultValue="workbooks" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList className="grid w-full grid-cols-8">
+                  <TabsTrigger value="assessments" className="gap-2">
+                    <CheckCircle2 className="h-4 w-4" />
+                    <span className="hidden sm:inline">Assessments</span>
+                    <span className="sm:hidden">✅</span>
+                  </TabsTrigger>
                   <TabsTrigger value="workbooks" className="gap-2">
                     <NotebookPen className="h-4 w-4" />
                     <span className="hidden sm:inline">Workbooks</span>
@@ -1969,6 +1974,76 @@ const ThinkificExport = () => {
                     <span className="sm:hidden">📝</span>
                   </TabsTrigger>
                 </TabsList>
+
+                {/* Assessments Tab */}
+                <TabsContent value="assessments" className="space-y-6">
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-primary text-primary-foreground">
+                          <CheckCircle2 className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <CardTitle>Leadership Assessments</CardTitle>
+                          <CardDescription>Pre-course and post-course assessments for Thinkific Multimedia lessons</CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </Card>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Card className="hover:shadow-md transition-shadow">
+                      <CardHeader>
+                        <Badge variant="secondary" className="w-fit mb-2">Pre-Course</Badge>
+                        <CardTitle className="text-base">Pre-Course Leadership Assessment</CardTitle>
+                        <CardDescription>20 mixed-format questions (self-rating + scenario-based) measuring baseline competencies</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" className="flex-1" asChild>
+                            <a href="/downloads/pre-course-assessment.html" target="_blank" rel="noopener noreferrer">
+                              <Eye className="h-3 w-3 mr-2" /> Preview
+                            </a>
+                          </Button>
+                          <Button variant="outline" size="sm" className="flex-1" asChild>
+                            <a href="/downloads/pre-course-assessment.html" download="pre-course-assessment.html">
+                              <Download className="h-3 w-3 mr-2" /> Download HTML
+                            </a>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="hover:shadow-md transition-shadow">
+                      <CardHeader>
+                        <Badge variant="secondary" className="w-fit mb-2">Post-Course</Badge>
+                        <CardTitle className="text-base">Post-Course Leadership Assessment</CardTitle>
+                        <CardDescription>20 mixed-format questions with localStorage-based growth comparison against pre-course scores</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" className="flex-1" asChild>
+                            <a href="/downloads/post-course-assessment.html" target="_blank" rel="noopener noreferrer">
+                              <Eye className="h-3 w-3 mr-2" /> Preview
+                            </a>
+                          </Button>
+                          <Button variant="outline" size="sm" className="flex-1" asChild>
+                            <a href="/downloads/post-course-assessment.html" download="post-course-assessment.html">
+                              <Download className="h-3 w-3 mr-2" /> Download HTML
+                            </a>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Card>
+                    <CardContent className="pt-6 space-y-2 text-sm text-muted-foreground">
+                      <p><strong className="text-foreground">Thinkific Upload:</strong> Upload each HTML file as a Multimedia lesson. The pre-course assessment saves scores to localStorage, which the post-course assessment reads for the growth comparison.</p>
+                      <p><strong className="text-foreground">App Pages:</strong> Authenticated versions are also available at <code>/pre-assessment</code> and <code>/post-assessment</code> with database persistence.</p>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
                 {/* Workbooks Tab */}
                 <TabsContent value="workbooks" className="space-y-6">

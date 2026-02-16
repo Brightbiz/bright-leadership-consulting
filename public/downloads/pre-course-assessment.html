@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Course Leadership Assessment | Executive Leadership Mastery Program</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Georgia','Times New Roman',serif;background:#f9f7f2;color:#1a1a1a;line-height:1.6}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.header{background:linear-gradient(135deg,#0f4c3a,#1e6b4f);color:#fff;padding:40px 20px;text-align:center;border-radius:12px;margin-bottom:30px}
+.header h1{font-size:24px;margin-bottom:8px}
+.header p{color:#c9a227;font-size:14px}
+.badge{display:inline-block;background:rgba(255,255,255,0.15);padding:4px 14px;border-radius:20px;font-size:12px;margin-top:12px}
+.progress-bar{background:#e5e7eb;border-radius:9999px;height:8px;margin:20px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#0f4c3a,#1e6b4f);border-radius:9999px;transition:width 0.4s ease}
+.progress-text{display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px}
+.question-card{background:#fff;border-radius:12px;padding:28px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:1px solid #e5e7eb;transition:opacity 0.3s}
+.competency-badge{display:inline-block;background:#0f4c3a10;color:#0f4c3a;border:1px solid #0f4c3a30;padding:3px 12px;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:12px}
+.question-text{font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.5}
+.scenario-text{font-size:15px;margin-bottom:18px;line-height:1.6;color:#333}
+.option{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:2px solid #e5e7eb;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all 0.2s}
+.option:hover{border-color:#0f4c3a40;background:#0f4c3a05}
+.option.selected{border-color:#0f4c3a;background:#0f4c3a08}
+.option input{margin-top:3px;accent-color:#0f4c3a}
+.option label{cursor:pointer;flex:1;font-size:14px;line-height:1.5}
+.feedback{margin-top:12px;padding:14px 18px;background:#f0f7f4;border-left:4px solid #0f4c3a;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#555;display:none}
+.feedback.show{display:block}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+.btn{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn-primary{background:#0f4c3a;color:#fff}.btn-primary:hover{background:#1e6b4f}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.btn-outline{background:transparent;border:2px solid #0f4c3a;color:#0f4c3a}.btn-outline:hover{background:#0f4c3a10}
+.btn-outline:disabled{opacity:0.4;cursor:not-allowed}
+.btn-gold{background:#c9a227;color:#fff}.btn-gold:hover{background:#b8911e}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.dot{width:10px;height:10px;border-radius:50%;background:#ddd;border:none;cursor:pointer;transition:all 0.2s;padding:0}
+.dot.active{background:#0f4c3a;transform:scale(1.3)}
+.dot.answered{background:#0f4c3a60}
+/* Results */
+.results{display:none}
+.score-hero{text-align:center;background:linear-gradient(135deg,#0f4c3a,#1e6b4f);color:#fff;padding:40px;border-radius:12px;margin-bottom:24px}
+.score-hero .score{font-size:64px;font-weight:700}
+.score-hero .level{font-size:22px;margin-top:8px}
+.comp-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.comp-name{width:160px;font-size:13px;font-weight:600;flex-shrink:0}
+.comp-bar{flex:1;height:14px;background:#e5e7eb;border-radius:9999px;overflow:hidden}
+.comp-fill{height:100%;background:linear-gradient(90deg,#0f4c3a,#1e6b4f);border-radius:9999px;transition:width 0.6s}
+.comp-pct{width:50px;text-align:right;font-size:13px;font-weight:600}
+.comparison{display:none}
+.comparison .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+.comparison .stat{text-align:center;padding:16px;background:#fff;border-radius:8px;border:1px solid #e5e7eb}
+.comparison .stat .label{font-size:12px;color:#666;margin-bottom:4px}
+.comparison .stat .value{font-size:28px;font-weight:700}
+.positive{color:#16a34a}.negative{color:#dc2626}
+@media print{.nav,.btn,.dots{display:none!important}.container{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Executive Leadership Mastery Program</h1>
+<p>Pre-Course Leadership Assessment</p>
+<div class="badge">Mixed Format &bull; 20 Questions &bull; ~10-12 Minutes</div>
+</div>
+
+<div id="assessment">
+<div class="progress-text"><span id="prog-answered">0 of 20 answered</span><span id="prog-pct">0%</span></div>
+<div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+<div id="question-area"></div>
+<div class="nav">
+<button class="btn btn-outline" id="btn-prev" disabled onclick="navigate(-1)">&larr; Previous</button>
+<div class="dots" id="dots"></div>
+<button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Next &rarr;</button>
+<button class="btn btn-gold" id="btn-complete" style="display:none" onclick="completeAssessment()" disabled>Complete Assessment</button>
+</div>
+</div>
+
+<div class="results" id="results"></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'elm_pre_assessment';
+const questions = [
+  {type:'self-rating',id:'pre-sr-1',text:'I consistently align my team\'s daily activities with the organisation\'s long-term strategic objectives.',competency:'Strategic Thinking',maxScore:5},
+  {type:'self-rating',id:'pre-sr-2',text:'I am able to recognise and manage my own emotional responses during high-pressure situations.',competency:'Emotional Intelligence',maxScore:5},
+  {type:'self-rating',id:'pre-sr-3',text:'I proactively identify and address resistance when leading organisational change initiatives.',competency:'Change Leadership',maxScore:5},
+  {type:'self-rating',id:'pre-sr-4',text:'I delegate strategically, empowering my team members with both authority and accountability.',competency:'Team Empowerment',maxScore:5},
+  {type:'self-rating',id:'pre-sr-5',text:'I adapt my communication style effectively when engaging with different stakeholder groups.',competency:'Communication',maxScore:5},
+  {type:'self-rating',id:'pre-sr-6',text:'I make complex decisions confidently, even when working with incomplete information.',competency:'Decision Making',maxScore:5},
+  {type:'self-rating',id:'pre-sr-7',text:'I actively create space for experimentation and innovative thinking within my team.',competency:'Innovation',maxScore:5},
+  {type:'self-rating',id:'pre-sr-8',text:'I project confidence and credibility when presenting to senior leadership or board-level audiences.',competency:'Executive Presence',maxScore:5},
+  {type:'self-rating',id:'pre-sr-9',text:'I regularly use data and evidence to inform my strategic planning and forecasting.',competency:'Strategic Thinking',maxScore:5},
+  {type:'self-rating',id:'pre-sr-10',text:'I actively seek feedback from peers and direct reports to improve my leadership effectiveness.',competency:'Emotional Intelligence',maxScore:5},
+  {type:'scenario',id:'pre-sc-1',scenario:'Your organisation is entering a new market segment. You have limited data but the board expects a recommendation within 48 hours. How do you approach this?',competency:'Strategic Thinking',maxScore:4,options:[{label:'Request more time to gather comprehensive data before making any recommendation',score:1,feedback:'While thorough, executive leaders must balance analysis with decisiveness under time pressure.'},{label:'Rely on your industry intuition and present a confident recommendation immediately',score:2,feedback:'Intuition matters, but the strongest leaders combine experience with structured rapid analysis.'},{label:'Conduct rapid analysis using available data, identify key assumptions, and present a recommendation with clear risk mitigation strategies',score:4,feedback:'Excellent. This balances speed, rigour, and transparency about uncertainties.'},{label:'Delegate the analysis entirely to your strategy team and review their findings',score:2,feedback:'Delegation is important, but this situation calls for your direct strategic involvement.'}]},
+  {type:'scenario',id:'pre-sc-2',scenario:'During a critical leadership meeting, a respected peer publicly challenges your proposed restructuring plan, calling it "short-sighted." How do you respond?',competency:'Emotional Intelligence',maxScore:4,options:[{label:'Defend your plan firmly, pointing out the flaws in their perspective',score:1,feedback:'Defensiveness can escalate conflict and undermine collaborative problem-solving.'},{label:'Acknowledge their concern, ask clarifying questions, and suggest incorporating their perspective into a revised approach',score:4,feedback:'Outstanding. This demonstrates emotional maturity, active listening, and collaborative leadership.'},{label:'Remain silent and move to the next agenda item to avoid conflict',score:1,feedback:'Avoidance can signal a lack of conviction and miss an opportunity for constructive dialogue.'},{label:'Thank them for the feedback and offer to discuss it privately after the meeting',score:3,feedback:'Good composure, though addressing it openly can build trust with the wider group.'}]},
+  {type:'scenario',id:'pre-sc-3',scenario:'You are leading a major digital transformation. Six months in, adoption rates are at 35% and key stakeholders are losing confidence. What is your next move?',competency:'Change Leadership',maxScore:4,options:[{label:'Push harder on compliance, setting mandatory adoption deadlines with consequences',score:1,feedback:'Forced compliance typically increases resistance and rarely achieves sustainable change.'},{label:'Identify the top resistors and engage them as change champions by addressing their specific concerns and involving them in solution design',score:4,feedback:'Converting resistors to champions is a hallmark of masterful change leadership.'},{label:'Scale back the initiative and take a more gradual approach',score:2,feedback:'While pragmatic, this risks losing momentum entirely. A targeted intervention is stronger.'},{label:'Launch an internal marketing campaign to improve awareness and excitement',score:2,feedback:'Communication helps, but at 35% adoption, the issue is likely deeper than awareness.'}]},
+  {type:'scenario',id:'pre-sc-4',scenario:'Your highest-performing direct report asks to lead a cross-functional project that is outside their current expertise. They are passionate but inexperienced in this domain. How do you respond?',competency:'Team Empowerment',maxScore:4,options:[{label:'Assign them the project with full autonomy - their track record speaks for itself',score:2,feedback:'Autonomy without support in unfamiliar territory can set up even strong performers for failure.'},{label:'Decline the request and assign someone with relevant domain expertise instead',score:1,feedback:'This misses an opportunity to develop talent and may demotivate a key performer.'},{label:'Approve the assignment, pair them with a domain expert as mentor, and establish structured check-ins to provide support without micromanaging',score:4,feedback:'This maximises growth while managing risk - the mark of a leader who develops others strategically.'},{label:'Ask them to shadow the current domain expert for 3 months before deciding',score:2,feedback:'Measured but overly cautious. Growth happens through doing, with appropriate support structures.'}]},
+  {type:'scenario',id:'pre-sc-5',scenario:'You must communicate a 15% budget reduction to your division while maintaining team morale and productivity. How do you frame this message?',competency:'Communication',maxScore:4,options:[{label:'Send a detailed email outlining the cuts and the financial rationale behind each one',score:1,feedback:'Email lacks the personal touch needed for difficult news. Leaders show up for hard conversations.'},{label:'Hold a team meeting, be transparent about the situation, outline your strategy for maintaining quality, and invite input on implementation',score:4,feedback:'Transparency, vision, and participative leadership build trust during challenging times.'},{label:'Minimise the severity and focus only on the positive opportunities that might emerge',score:1,feedback:'Sugar-coating erodes trust. People respect honest leadership over false optimism.'},{label:'Meet individually with each team lead to discuss impact and then announce the plan',score:3,feedback:'Good stakeholder management, though collective transparency can build broader team resilience.'}]},
+  {type:'scenario',id:'pre-sc-6',scenario:'Two equally qualified internal candidates are vying for a critical leadership role. One is a long-tenured loyalist; the other is a recent hire with fresh perspective. The decision is contentious. How do you decide?',competency:'Decision Making',maxScore:4,options:[{label:'Reward loyalty and promote the long-tenured candidate to maintain cultural stability',score:2,feedback:'Loyalty matters, but the best decision aligns with strategic needs, not tenure alone.'},{label:'Choose the recent hire to signal that the organisation values innovation and new thinking',score:2,feedback:'Fresh thinking is valuable, but selecting based on signalling rather than fit can backfire.'},{label:'Define the strategic competencies the role demands, assess both candidates against them objectively, and make a transparent decision based on organisational need',score:4,feedback:'Excellent. Criteria-based decision-making ensures fairness and strategic alignment.'},{label:'Create two roles to avoid conflict and keep both candidates engaged',score:1,feedback:'Avoiding difficult decisions creates structural inefficiency and signals weak leadership.'}]},
+  {type:'scenario',id:'pre-sc-7',scenario:'Your industry is being disrupted by AI and automation. Your board wants a 5-year innovation strategy, but your leadership team is divided between aggressive investment and cautious observation. What do you recommend?',competency:'Innovation',maxScore:4,options:[{label:'Recommend waiting for competitors to move first and then fast-following their approach',score:1,feedback:'Fast-following often means falling behind. In disruptive environments, proactive positioning is essential.'},{label:'Propose a balanced approach: invest in strategic pilot programmes, create an innovation lab, and establish clear metrics for scaling successful experiments',score:4,feedback:'This combines boldness with prudence - the hallmark of innovation leadership at the executive level.'},{label:'Go all-in with aggressive investment to establish first-mover advantage',score:2,feedback:'Bold, but without structured experimentation, this carries significant downside risk.'},{label:'Commission an external consultancy to develop the strategy on your behalf',score:1,feedback:'Outsourcing core strategy signals a lack of internal capability and ownership.'}]},
+  {type:'scenario',id:'pre-sc-8',scenario:'You are presenting quarterly results to the board. Revenue is down 8%, but your strategic initiatives are showing early positive indicators. The chairman appears sceptical. How do you handle the presentation?',competency:'Executive Presence',maxScore:4,options:[{label:'Focus entirely on the positive leading indicators and downplay the revenue shortfall',score:1,feedback:'Selective presentation erodes board trust. Credibility requires acknowledging reality.'},{label:'Present the full picture with confidence: acknowledge the shortfall, explain root causes, demonstrate the strategic trajectory with data, and outline specific corrective actions with timelines',score:4,feedback:'Masterful. This shows command of the situation, transparency, and strategic confidence.'},{label:'Apologise for the results and promise to do better next quarter',score:1,feedback:'Apologies without analysis signal a lack of strategic control and executive confidence.'},{label:'Open with the revenue challenge, then quickly pivot to the long-term strategy and growth roadmap',score:3,feedback:'Good structure, but adding specific corrective actions would demonstrate stronger executive command.'}]},
+  {type:'scenario',id:'pre-sc-9',scenario:'A key client relationship is deteriorating due to service quality issues. Your team blames resource constraints; the client is threatening to leave. How do you intervene?',competency:'Decision Making',maxScore:4,options:[{label:'Personally visit the client, listen to their concerns, co-create a recovery plan with committed timelines, and reallocate internal resources to deliver on promises',score:4,feedback:'Executive-level relationship management combined with decisive resource allocation demonstrates leadership maturity.'},{label:'Ask your account manager to handle it and report back with an update',score:1,feedback:'When key relationships are at risk, senior leaders must step in personally.'},{label:'Offer the client a discount to retain the contract while you fix internal issues',score:2,feedback:'Discounts treat symptoms, not causes. The client wants quality, not price concessions.'},{label:'Escalate the resource constraints to the COO and request additional headcount',score:2,feedback:'Helpful, but doesn\'t address the immediate client relationship crisis.'}]},
+  {type:'scenario',id:'pre-sc-10',scenario:'You have been invited to deliver a keynote at a major industry conference. Your topic is "The Future of Leadership in the Age of AI." How do you prepare?',competency:'Executive Presence',maxScore:4,options:[{label:'Ask your communications team to write the speech and rehearse it the day before',score:1,feedback:'Authenticity and personal expertise are essential for executive credibility at this level.'},{label:'Decline the invitation - public speaking at this scale is outside your comfort zone',score:1,feedback:'Executive leaders must lean into visibility opportunities. Growth requires discomfort.'},{label:'Research current trends, synthesise your own leadership insights and experiences, craft a narrative that combines data with storytelling, and rehearse with feedback from trusted advisors',score:4,feedback:'This shows intellectual rigour, personal authenticity, and strategic preparation - true executive presence.'},{label:'Prepare a data-heavy slide deck covering all major AI leadership trends comprehensively',score:2,feedback:'Data matters, but executive keynotes require narrative, vision, and personal connection with the audience.'}]}
+];
+
+const likertLabels = [{value:1,label:'Strongly Disagree'},{value:2,label:'Disagree'},{value:3,label:'Neutral'},{value:4,label:'Agree'},{value:5,label:'Strongly Agree'}];
+let current = 0;
+let answers = {};
+let feedbacks = {};
+
+function renderDots(){
+  const d = document.getElementById('dots');
+  d.innerHTML = questions.map((_,i) => `<button class="dot${i===current?' active':''}${answers[questions[i].id]!==undefined?' answered':''}" onclick="goTo(${i})"></button>`).join('');
+}
+
+function renderQuestion(){
+  const q = questions[current];
+  const area = document.getElementById('question-area');
+  let html = `<div class="question-card"><div class="competency-badge">${q.competency}</div>`;
+  if(q.type==='self-rating'){
+    html += `<div class="question-text">${q.text}</div>`;
+    likertLabels.forEach(l => {
+      const checked = answers[q.id]===l.value;
+      html += `<div class="option${checked?' selected':''}" onclick="selectAnswer('${q.id}',${l.value})"><input type="radio" name="${q.id}" ${checked?'checked':''}/><label><strong>${l.value}.</strong> ${l.label}</label></div>`;
+    });
+  } else {
+    html += `<div class="scenario-text">${q.scenario}</div>`;
+    q.options.forEach((o,i) => {
+      const checked = feedbacks[q.id]===o.feedback && answers[q.id]===o.score;
+      html += `<div class="option${checked?' selected':''}" onclick="selectScenario('${q.id}',${o.score},${i})"><input type="radio" name="${q.id}" ${checked?'checked':''}/><label>${o.label}</label></div>`;
+    });
+    if(feedbacks[q.id]){
+      html += `<div class="feedback show">${feedbacks[q.id]}</div>`;
+    }
+  }
+  html += '</div>';
+  area.innerHTML = html;
+  updateNav();
+  renderDots();
+}
+
+function selectAnswer(id, score){
+  answers[id] = score;
+  renderQuestion();
+}
+
+function selectScenario(id, score, idx){
+  const q = questions.find(x=>x.id===id);
+  answers[id] = score;
+  feedbacks[id] = q.options[idx].feedback;
+  renderQuestion();
+}
+
+function updateNav(){
+  const answered = Object.keys(answers).length;
+  const total = questions.length;
+  const pct = Math.round((answered/total)*100);
+  document.getElementById('prog-answered').textContent = `${answered} of ${total} answered`;
+  document.getElementById('prog-pct').textContent = `${pct}%`;
+  document.getElementById('prog-fill').style.width = `${pct}%`;
+  document.getElementById('btn-prev').disabled = current===0;
+  const isLast = current===total-1;
+  document.getElementById('btn-next').style.display = isLast?'none':'';
+  document.getElementById('btn-complete').style.display = isLast?'':'none';
+  document.getElementById('btn-complete').disabled = answered<total;
+  document.getElementById('btn-next').disabled = answers[questions[current].id]===undefined;
+}
+
+function navigate(dir){current=Math.max(0,Math.min(questions.length-1,current+dir));renderQuestion();}
+function goTo(i){current=i;renderQuestion();}
+
+function completeAssessment(){
+  // Save to localStorage for post-course comparison
+  const totalScore = Object.values(answers).reduce((a,b)=>a+b,0);
+  const maxScore = questions.reduce((a,q)=>a+q.maxScore,0);
+  const pct = Math.round((totalScore/maxScore)*100);
+  const compScores = {};
+  questions.forEach(q=>{
+    if(!compScores[q.competency])compScores[q.competency]={score:0,maxScore:0};
+    compScores[q.competency].maxScore+=q.maxScore;
+    compScores[q.competency].score+=(answers[q.id]||0);
+  });
+  Object.keys(compScores).forEach(k=>{compScores[k].percentage=Math.round((compScores[k].score/compScores[k].maxScore)*100);});
+  
+  const result = {totalScore,maxScore,percentage:pct,competencyScores:compScores,completedAt:new Date().toISOString()};
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
+
+  // Show results
+  let level, desc, color;
+  if(pct>=85){level='Master Executive Leader';desc='You demonstrate exceptional leadership capability across all competencies.';color='#0f4c3a';}
+  else if(pct>=70){level='Advanced Leader';desc='You show strong leadership in most areas. Targeted development will elevate your executive impact.';color='#1e6b4f';}
+  else if(pct>=50){level='Developing Leader';desc='You have a solid foundation with clear areas for growth. This programme will accelerate your development.';color='#c9a227';}
+  else{level='Emerging Leader';desc='You are at the beginning of your executive leadership journey. This programme will provide transformative frameworks.';color='#d97706';}
+
+  let compHTML = '';
+  Object.entries(compScores).forEach(([name,data])=>{
+    compHTML += `<div class="comp-row"><div class="comp-name">${name}</div><div class="comp-bar"><div class="comp-fill" style="width:${data.percentage}%"></div></div><div class="comp-pct">${data.percentage}%</div></div>`;
+  });
+
+  document.getElementById('assessment').style.display='none';
+  const r = document.getElementById('results');
+  r.style.display='block';
+  r.innerHTML = `
+    <div class="score-hero"><div class="badge">Pre-Course Assessment Complete</div><div class="score">${pct}%</div><div class="level">${level}</div><p style="margin-top:12px;color:rgba(255,255,255,0.8);max-width:500px;margin-left:auto;margin-right:auto">${desc}</p></div>
+    <div class="question-card"><h3 style="margin-bottom:16px;font-size:18px">Competency Breakdown</h3>${compHTML}</div>
+    <div style="text-align:center;margin-top:20px"><button class="btn btn-primary" onclick="window.print()">Export PDF Summary</button></div>
+    <div style="text-align:center;margin-top:16px;font-size:13px;color:#666"><p>Your pre-course scores have been saved. Complete the post-course assessment after the programme for a growth comparison.</p></div>
+  `;
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
