@@ -321,12 +321,8 @@ const ExecutiveProgramSection = () => {
       
       <div className="container-narrow relative">
         {/* Hero Image + Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-10"
+        <div
+          className="mb-10 animate-fade-in"
         >
           {/* Featured Image */}
           <TiltCard className="mb-8" maxTilt={3}>
@@ -357,18 +353,15 @@ const ExecutiveProgramSection = () => {
               Choose the path that fits your journey—whether you're an individual leader ready to excel or an organization building a culture of leadership excellence.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Two Column Programs */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid lg:grid-cols-2 gap-6"
+        <div
+          className="grid lg:grid-cols-2 gap-6 animate-fade-in"
+          style={{ animationDelay: "200ms", animationFillMode: "both" }}
         >
           {/* Individual Program */}
-          <motion.div variants={itemVariants}>
+          <div>
             <ProgramCard
               program={individualProgram}
               accent="secondary"
@@ -377,10 +370,10 @@ const ExecutiveProgramSection = () => {
               buttonVariant="hero"
               buttonText="Enroll Now"
             />
-          </motion.div>
+          </div>
           
           {/* Organization Program */}
-          <motion.div variants={itemVariants}>
+          <div>
             <ProgramCard
               program={organizationProgram}
               accent="primary"
@@ -389,19 +382,16 @@ const ExecutiveProgramSection = () => {
               buttonVariant="teal"
               buttonText="Request Consultation"
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Pricing Tiers */}
         <PricingTiers />
 
         {/* CPD Accreditation Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-8 space-y-4"
+        <div
+          className="mt-8 space-y-4 animate-fade-in"
+          style={{ animationDelay: "300ms", animationFillMode: "both" }}
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-border/50 backdrop-blur-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20">
@@ -426,11 +416,7 @@ const ExecutiveProgramSection = () => {
           </div>
 
           {/* Assessment Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+          <div
             className="flex flex-col sm:flex-row items-center justify-center gap-3 p-4 rounded-xl bg-card border border-border/50"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary/20 to-primary/20">
@@ -456,8 +442,8 @@ const ExecutiveProgramSection = () => {
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

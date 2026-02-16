@@ -79,19 +79,9 @@ const PricingTiers = () => {
     <div id="pricing-tiers" className="mt-16">
       <ReadinessQuizModal open={quizOpen} onOpenChange={setQuizOpen} />
       {/* Section header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-10"
-      >
+      <div className="text-center mb-10 animate-fade-in">
         {/* Urgency banner */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-destructive/10 border border-destructive/20"
-        >
+        <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-destructive/10 border border-destructive/20">
           <motion.div
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
@@ -101,7 +91,7 @@ const PricingTiers = () => {
           <span className="text-sm font-semibold text-destructive">
             Launch Pricing — Limited Time Only
           </span>
-        </motion.div>
+        </div>
 
         <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-3">
           Choose Your Path to Leadership Excellence
@@ -109,18 +99,15 @@ const PricingTiers = () => {
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Invest in yourself with our CPD-accredited programme. All tiers include the full 33-module curriculum with 66 CPD points.
         </p>
-      </motion.div>
+      </div>
 
       {/* Pricing cards */}
       <div className="grid md:grid-cols-3 gap-6">
         {tiers.map((tier, index) => (
-          <motion.div
+          <div
             key={tier.name}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="relative"
+            className="relative animate-fade-in"
+            style={{ animationDelay: `${index * 100}ms`, animationFillMode: "both" }}
           >
             {tier.popular && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
@@ -231,17 +218,14 @@ const PricingTiers = () => {
                 {tier.cta}
               </MagneticButton>
             </motion.div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Readiness qualifier — premium CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-        className="mt-14"
+      <div
+        className="mt-14 animate-fade-in"
+        style={{ animationDelay: "300ms", animationFillMode: "both" }}
       >
         <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5 px-8 py-10 sm:px-12 sm:py-12">
           {/* Decorative background elements */}
@@ -281,15 +265,12 @@ const PricingTiers = () => {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Trust signals */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
-        className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+      <div
+        className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground animate-fade-in"
+        style={{ animationDelay: "400ms", animationFillMode: "both" }}
       >
         <div className="flex items-center gap-2">
           <Check className="h-4 w-4 text-primary" />
@@ -299,7 +280,7 @@ const PricingTiers = () => {
           <Sparkles className="h-4 w-4 text-primary" />
           <span>With further discounts off all training courses</span>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
