@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Clock, Shield, Sparkles, Users, User, Crown, ClipboardCheck } from "lucide-react";
+import { Check, Clock, Sparkles, Users, User, Crown, ClipboardCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import MagneticButton from "./MagneticButton";
 import ReadinessQuizModal from "./ReadinessQuizModal";
@@ -268,16 +268,12 @@ const PricingTiers = () => {
         className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
       >
         <div className="flex items-center gap-2">
-          <Shield className="h-4 w-4 text-primary" />
-          <span>30-day money-back guarantee</span>
-        </div>
-        <div className="flex items-center gap-2">
           <Check className="h-4 w-4 text-primary" />
           <span>66 CPD points included</span>
         </div>
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-primary" />
-          <span>Bonus: 50% off all training courses</span>
+          <span>With further discounts off all training courses</span>
         </div>
       </motion.div>
     </div>

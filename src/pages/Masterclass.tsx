@@ -395,7 +395,7 @@ const Masterclass = () => {
                   "Real-world case studies & action plans",
                   "Certificate of completion",
                   "Lifetime access to materials",
-                  "Bonus: 50% OFF all individual training courses",
+                  "With further discounts off all training courses",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm text-foreground">
                     <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0 mt-0.5" />

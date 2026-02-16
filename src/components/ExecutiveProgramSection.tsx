@@ -21,7 +21,7 @@ const individualProgram = {
     "Real-world capstone project",
     "Flexible self-paced learning with virtual sessions",
   ],
-  bonus: "50% OFF all individual training courses as an exclusive bonus!",
+  bonus: "With further discounts off all training courses!",
   link: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
 };
 
