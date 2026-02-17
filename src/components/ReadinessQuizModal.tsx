@@ -195,7 +195,7 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                   asChild
                 >
                   <a
-                    href="https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program"
+                    href="https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handleClose(false)}

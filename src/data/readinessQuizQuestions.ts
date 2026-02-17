@@ -86,7 +86,7 @@ export const tierDetails: Record<TierRecommendation, { name: string; description
     name: "Self-Paced Executive Training",
     description: "Based on your responses, the Self-Paced Executive Training tier is ideal for you. You'll get full access to all 33 modules and 66 CPD points — the same executive-level curriculum, delivered digitally so you can learn at your own pace. You can also combine this with 1:1 Executive Coaching later for maximum impact.",
     ctaText: "Start Learning Today — £1,297",
-    ctaLink: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
+    ctaLink: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
   },
   "group-coaching": {
     name: "Group Coaching",

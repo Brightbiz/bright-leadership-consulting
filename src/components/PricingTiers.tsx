@@ -26,7 +26,7 @@ const tiers = [
     popular: true,
     limited: false,
     cta: "Start Learning Today",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/copy-of-executive-leadership-mastery-program",
+    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
   },
   {
     name: "Group Coaching",
