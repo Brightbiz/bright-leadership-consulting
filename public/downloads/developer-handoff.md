@@ -339,3 +339,29 @@ These features rely on the backend and should NOT be rebuilt in WordPress — us
 | Lead Magnet Download | Homepage section | `lead_magnet_downloads` table |
 | Newsletter Signup | Footer / Blog | `newsletter_subscribers` table |
 | Leadership Checklist | `/leadership-checklist` | `checklist_results` table (auth required) |
+
+---
+
+## Thinkific Enrollment Link Mapping
+
+All enrollment buttons and CTA links point to the Thinkific platform. These are the canonical URLs:
+
+| Program / Course | Thinkific URL |
+|-----------------|---------------|
+| **Executive Leadership Mastery (Self-Paced)** | `https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program` |
+| **Advanced Leadership Skills** | `https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program` |
+| Transformational Leadership | `https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership` |
+| Achieving Peak Performance | `https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance` |
+| Building Professional & Personal Value | `https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value` |
+| The Future of Work | `https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work` |
+| Employability Skills for Employees | `https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees` |
+
+**Where each link appears:**
+
+| Link | Used In |
+|------|---------|
+| Self-Paced (`/new-executive-leadership-mastery-program`) | PricingTiers, ExecutiveProgramSection, Courses page, ReadinessQuizModal, readinessQuizQuestions data, Masterclass VSL, Executive brochure |
+| Advanced Leadership (`/executive-leadership-mastery-program`) | Advanced Leadership brochure |
+| Individual courses | Courses page course cards, respective brochures |
+
+> **Important:** The Self-Paced tier and the Masterclass funnel both use the same `/new-executive-leadership-mastery-program` URL. Do not confuse with `/executive-leadership-mastery-program` (Advanced Leadership Skills) or the legacy `/copy-of-executive-leadership-mastery-program` (deprecated).
