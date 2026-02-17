@@ -106,7 +106,50 @@ Stores leadership checklist assessment results (authenticated users only).
 
 ---
 
-### 5. `rate_limits`
+### 5. `assessment_results`
+
+Stores pre-course and post-course assessment results (authenticated users only).
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|---------|
+| id | uuid | No | `gen_random_uuid()` |
+| user_id | uuid | No | — |
+| assessment_type | text | No | — |
+| answers | jsonb | No | `'{}'` |
+| total_score | integer | No | `0` |
+| max_score | integer | No | `0` |
+| percentage | numeric | No | `0` |
+| competency_scores | jsonb | No | `'{}'` |
+| completed_at | timestamptz | No | `now()` |
+| created_at | timestamptz | No | `now()` |
+
+**RLS Policies:**
+- `Users can insert their own results` — INSERT where `auth.uid() = user_id`
+- `Users can view their own results` — SELECT where `auth.uid() = user_id`
+
+---
+
+### 6. `readiness_quiz_results`
+
+Stores leadership readiness quiz submissions (public, no auth required).
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|---------|
+| id | uuid | No | `gen_random_uuid()` |
+| name | text | Yes | — |
+| email | text | No | — |
+| answers | jsonb | No | `'{}'` |
+| total_score | integer | No | `0` |
+| recommended_tier | text | No | — |
+| created_at | timestamptz | No | `now()` |
+
+**RLS Policies:**
+- `Anyone can submit quiz results` — INSERT with check `true`
+- `Admins can view quiz results` — SELECT (admin only)
+
+---
+
+### 7. `rate_limits`
 
 Server-side rate limiting tracker.
 
@@ -122,7 +165,7 @@ Server-side rate limiting tracker.
 
 ---
 
-### 6. `user_roles`
+### 8. `user_roles`
 
 RBAC role assignments.
 
@@ -219,9 +262,13 @@ Auto-updates `updated_at` on row modification.
 | `/masterclass` | Masterclass landing | No |
 | `/leadership-checklist` | Assessment tool | No |
 | `/brochures` | Brochure downloads | No |
+| `/pre-assessment` | Pre-course assessment | Yes (auth) |
+| `/post-assessment` | Post-course assessment | Yes (auth) |
+| `/quiz` | Standalone quiz | No |
 | `/admin/login` | Admin login | No |
 | `/admin/register` | Admin registration | No |
 | `/admin/submissions` | View submissions | Admin |
+| `/admin/thinkific-export` | Thinkific content export | Admin |
 
 ---
 
