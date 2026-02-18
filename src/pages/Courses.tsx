@@ -463,12 +463,12 @@ const Courses = () => {
                     asChild
                   >
                     <a href="https://calendly.com/bbs-consulting/30min" target="_blank" rel="noopener noreferrer">
-                      Schedule Free Consultation
+                      Book Free Consultation
                       <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
                     </a>
                   </Button>
                   <Button variant="outline" size="xl" asChild>
-                    <Link to="/">Back to Home</Link>
+                    <Link to="/contact">Just Ask a Question</Link>
                   </Button>
                 </div>
               </div>

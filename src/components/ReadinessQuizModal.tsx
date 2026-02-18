@@ -428,6 +428,18 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                       <ArrowRight className="h-4 w-4 ml-1" />
                     </a>
                   </Button>
+                  {tierDetails[recommendation].ctaLink.includes("calendly") && (
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full"
+                      asChild
+                    >
+                      <a href="/contact" onClick={() => handleClose(false)}>
+                        Just ask a question instead
+                      </a>
+                    </Button>
+                  )}
                   <Button
                     variant="ghost"
                     className="w-full text-muted-foreground"

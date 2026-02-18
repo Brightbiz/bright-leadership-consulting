@@ -238,6 +238,7 @@ const ProgramCard = ({ program, accent, icon: Icon, badge, buttonVariant, button
             <p className="text-sm text-foreground">{program.bonus}</p>
           </motion.div>
           
+          <div className="space-y-2">
           <MagneticButton 
             variant={buttonVariant} 
             size="lg" 
@@ -266,6 +267,16 @@ const ProgramCard = ({ program, accent, icon: Icon, badge, buttonVariant, button
               </motion.div>
             </motion.span>
           </MagneticButton>
+          {program.link.includes("calendly") && (
+            <a
+              href="/contact"
+              className="flex items-center justify-center gap-1.5 w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Or just ask a question
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          )}
+          </div>
         </div>
         
         {/* Badge with hover animation */}
