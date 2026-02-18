@@ -462,10 +462,10 @@ const Courses = () => {
                     className="group shadow-xl shadow-primary/20"
                     asChild
                   >
-                    <Link to="/#contact">
+                    <a href="https://calendly.com/bbs-consulting/30min" target="_blank" rel="noopener noreferrer">
                       Schedule Free Consultation
                       <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                    </a>
                   </Button>
                   <Button variant="outline" size="xl" asChild>
                     <Link to="/">Back to Home</Link>

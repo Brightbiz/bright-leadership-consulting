@@ -190,7 +190,7 @@ const ProgramComparison = () => {
 
                 <p className="text-center text-sm text-muted-foreground mt-4">
                   Still not sure?{" "}
-                  <a href="#contact" className="text-primary font-medium hover:underline">
+                  <a href="https://calendly.com/bbs-consulting/30min" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline">
                     Book a free consultation
                   </a>
                 </p>

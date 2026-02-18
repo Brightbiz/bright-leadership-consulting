@@ -47,7 +47,7 @@ const tiers = [
     popular: false,
     limited: true,
     cta: "Enquire About Availability",
-    link: "#contact",
+    link: "https://calendly.com/bbs-consulting/30min",
   },
   {
     name: "1:1 Executive Coaching",
@@ -68,7 +68,7 @@ const tiers = [
     popular: false,
     limited: true,
     cta: "Enquire About Availability",
-    link: "#contact",
+    link: "https://calendly.com/bbs-consulting/30min",
   },
 ];
 
