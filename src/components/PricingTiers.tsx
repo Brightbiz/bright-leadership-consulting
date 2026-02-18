@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Clock, Sparkles, Users, User, Crown, ClipboardCheck } from "lucide-react";
+import { Check, Clock, Sparkles, Users, User, Crown, ClipboardCheck, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import MagneticButton from "./MagneticButton";
 import ReadinessQuizModal from "./ReadinessQuizModal";
@@ -207,16 +207,27 @@ const PricingTiers = () => {
               )}
 
               {/* CTA */}
-              <MagneticButton
-                variant={tier.popular ? "hero" : "teal"}
-                size="lg"
-                className="w-full"
-                href={tier.link}
-                target={tier.link.startsWith("http") ? "_blank" : undefined}
-                rel={tier.link.startsWith("http") ? "noopener noreferrer" : undefined}
-              >
-                {tier.cta}
-              </MagneticButton>
+              <div className="space-y-2">
+                <MagneticButton
+                  variant={tier.popular ? "hero" : "teal"}
+                  size="lg"
+                  className="w-full"
+                  href={tier.link}
+                  target={tier.link.startsWith("http") ? "_blank" : undefined}
+                  rel={tier.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  {tier.cta}
+                </MagneticButton>
+                {tier.limited && (
+                  <a
+                    href="/contact"
+                    className="flex items-center justify-center gap-1.5 w-full py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Or just ask a question
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </div>
             </motion.div>
           </div>
         ))}
