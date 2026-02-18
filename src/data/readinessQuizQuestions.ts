@@ -92,12 +92,12 @@ export const tierDetails: Record<TierRecommendation, { name: string; description
     name: "Group Coaching",
     description: "Your goals suggest you'd benefit from structured group coaching alongside the full digital curriculum. Live sessions with peers and expert instructors will accelerate your development. You can also add 1:1 Executive Coaching for a fully personalised experience.",
     ctaText: "Enquire About Group Coaching",
-    ctaLink: "#contact",
+    ctaLink: "https://calendly.com/bbs-consulting/30min",
   },
   "executive-coaching": {
     name: "1:1 Executive Coaching",
     description: "You're looking for personalised, high-touch development. A dedicated coach will create a bespoke plan tailored to your challenges — combined with full access to the 33-module executive training programme for a comprehensive leadership transformation.",
     ctaText: "Apply for Executive Coaching",
-    ctaLink: "#contact",
+    ctaLink: "https://calendly.com/bbs-consulting/30min",
   },
 };

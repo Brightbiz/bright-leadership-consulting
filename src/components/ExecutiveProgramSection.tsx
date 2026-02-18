@@ -39,7 +39,7 @@ const organizationProgram = {
     "Sustainable growth and leadership pipeline development",
   ],
   bonus: "Customized implementation and ongoing support included!",
-  link: "#contact",
+  link: "https://calendly.com/bbs-consulting/30min",
 };
 
 const containerVariants = {

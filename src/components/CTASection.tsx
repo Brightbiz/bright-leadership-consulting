@@ -59,7 +59,7 @@ const CTASection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.6 }}
                 >
-                  <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
+                  <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="https://calendly.com/bbs-consulting/30min" target="_blank" rel="noopener noreferrer">
                     Request Free Consultation
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </MagneticButton>
