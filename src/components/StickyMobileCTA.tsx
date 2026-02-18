@@ -33,10 +33,7 @@ const StickyMobileCTA = () => {
   };
 
   const handleClick = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
+    window.location.href = "/contact";
   };
 
   // Only show on mobile, after scroll, and if not dismissed

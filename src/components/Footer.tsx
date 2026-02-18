@@ -5,10 +5,10 @@ import cpdBadge from "@/assets/cpd-badge.png";
 
 const footerLinks = {
   programs: [
-    { label: "Leadership Training", href: "#" },
-    { label: "Executive Coaching", href: "#" },
-    { label: "Corporate Retreats", href: "#" },
-    { label: "Course Bundles", href: "#" },
+    { label: "Executive Leadership Mastery", href: "/courses", isRoute: true },
+    { label: "Executive Coaching", href: "/services", isRoute: true },
+    { label: "All Courses", href: "/courses", isRoute: true },
+    { label: "Course Brochures", href: "/brochures", isRoute: true },
   ],
   company: [
     { label: "About Us", href: "/about", isRoute: true },

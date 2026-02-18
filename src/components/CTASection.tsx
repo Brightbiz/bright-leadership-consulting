@@ -59,11 +59,11 @@ const CTASection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.6 }}
                 >
-                  <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30">
+                  <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
                     Request Free Consultation
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </MagneticButton>
-                  <MagneticButton variant="heroOutline" size="xl">
+                  <MagneticButton variant="heroOutline" size="xl" href="/courses">
                     View Programs
                   </MagneticButton>
                 </motion.div>
