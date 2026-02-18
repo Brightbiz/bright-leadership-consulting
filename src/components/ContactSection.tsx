@@ -127,7 +127,7 @@ const ContactSection = forwardRef<HTMLElement>((_, ref) => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-muted/50 via-muted/30 to-primary/[0.05]">
+    <section ref={ref} id="contact" className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-muted/50 via-muted/30 to-primary/[0.05]">
       {/* Corner accents */}
       <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-gradient-to-bl from-primary/[0.07] to-transparent" />
       <div className="absolute bottom-0 left-0 w-[250px] h-[250px] bg-gradient-to-tr from-secondary/[0.05] to-transparent" />

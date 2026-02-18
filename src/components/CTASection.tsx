@@ -7,7 +7,7 @@ import MagneticButton from "./MagneticButton";
 
 const CTASection = forwardRef<HTMLElement>((_, ref) => {
   return (
-    <section className="section-padding bg-background">
+    <section ref={ref} className="section-padding bg-background">
       <div className="container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
