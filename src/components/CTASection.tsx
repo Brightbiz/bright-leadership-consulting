@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
 import MagneticButton from "./MagneticButton";
 
-const CTASection = () => {
+const CTASection = forwardRef<HTMLElement>((_, ref) => {
   return (
     <section className="section-padding bg-background">
       <div className="container-narrow">
@@ -74,6 +75,8 @@ const CTASection = () => {
       </div>
     </section>
   );
-};
+});
+
+CTASection.displayName = "CTASection";
 
 export default CTASection;
