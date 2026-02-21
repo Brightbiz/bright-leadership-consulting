@@ -185,10 +185,10 @@ const ServicesHero = () => {
                     </p>
 
                     {/* Learn more link */}
-                    <div className="flex items-center gap-2 text-secondary font-medium">
+                    <a href="#comparison" className="flex items-center gap-2 text-secondary font-medium">
                       <span>Learn More</span>
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
-                    </div>
+                    </a>
 
                     {/* Decorative corner accent */}
                     <div className="absolute top-0 right-0 w-24 h-24 overflow-hidden rounded-bl-[100px]">

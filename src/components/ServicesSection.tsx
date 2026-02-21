@@ -222,6 +222,7 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
               size="lg"
               className="w-full group/btn overflow-hidden"
               magneticStrength={0.15}
+              href="/services"
             >
               <motion.span 
                 className="flex items-center justify-center gap-2"

@@ -130,8 +130,8 @@ const Services = () => {
                       </div>
 
                       <Button variant="teal" size="lg" className="group" asChild>
-                        <a href="#contact">
-                          Learn More
+                        <a href="/contact">
+                          Get In Touch
                           <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>
