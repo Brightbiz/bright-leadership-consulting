@@ -243,9 +243,9 @@ const ProgramCard = ({ program, accent, icon: Icon, badge, buttonVariant, button
             variant={buttonVariant} 
             size="lg" 
             className="w-full group overflow-hidden"
-            href={program.link.startsWith('http') ? '#pricing-tiers' : program.link}
-            target={undefined}
-            rel={undefined}
+            href={program.link}
+            target={program.link.startsWith('http') ? '_blank' : undefined}
+            rel={program.link.startsWith('http') ? 'noopener noreferrer' : undefined}
           >
             <motion.span 
               className="flex items-center justify-center gap-2"
