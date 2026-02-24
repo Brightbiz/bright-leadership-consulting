@@ -7,7 +7,7 @@ interface SEOHeadProps {
   type?: string;
 }
 
-const SITE_URL = "https://www.brightleadershipconsulting.com";
+const SITE_URL = "https://brightleadershipconsulting.com";
 const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Leadership Mastery & Coaching";
 const DEFAULT_DESCRIPTION = "Transform your leadership potential with Bright Leadership Consulting. CPD-accredited Executive Leadership Mastery Program, personalized executive coaching, and immersive corporate retreats.";
 
