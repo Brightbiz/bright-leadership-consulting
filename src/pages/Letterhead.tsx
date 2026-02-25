@@ -63,8 +63,7 @@ const Letterhead = () => {
               <span>CPD Accredited Provider — #50838</span>
             </div>
             <div className="flex gap-6">
-              <span>Company Reg: 09876543</span>
-              <span>VAT Reg: GB 123 4567 89</span>
+              <span>Company Reg: 07258400</span>
             </div>
           </div>
 
@@ -84,8 +83,7 @@ const Letterhead = () => {
                 <p>London, United Kingdom</p>
               </div>
               <div className="text-right text-xs text-gray-400 leading-relaxed">
-                <p>Company Registration: 09876543</p>
-                <p>VAT Registration: GB 123 4567 89</p>
+                <p>Company Registration: 07258400</p>
                 <p className="mt-1.5 text-[#C8A45A]">brightleadershipconsulting.com</p>
               </div>
             </div>
