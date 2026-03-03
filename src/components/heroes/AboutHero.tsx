@@ -66,25 +66,25 @@ const AboutHero = () => {
 
             <h1 className="mb-6 font-serif text-4xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
-                Where Vision Meets
+                Trusted Advisors to
               </TextReveal>
               <span className="block text-secondary mt-2">
                 <TextReveal delay={0.4}>
-                  Transformation
+                  Senior Leaders
                 </TextReveal>
               </span>
             </h1>
 
             <p className="mb-8 text-lg leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
-              For over a decade, we've partnered with leaders across the globe to unlock 
-              their full potential. Our approach combines proven methodologies with 
-              personalized strategies that create lasting impact.
+              For over a decade, we've partnered with organisations across the globe to 
+              strengthen executive capability. Our approach combines diagnostic rigour with 
+              tailored advisory that creates lasting organisational impact.
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.7s' }}>
               <Link to="/contact">
                 <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30">
-                  Start Your Journey
+                  Arrange a Conversation
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
               </Link>
@@ -136,8 +136,8 @@ const AboutHero = () => {
                   Our Mission
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Empowering leaders to unlock their potential, inspire their teams, 
-                  and drive meaningful change in their organizations and communities.
+                  Strengthening the leadership capability of the organisations we serve — 
+                  through rigorous diagnostics, tailored advisory, and sustained partnership.
                 </p>
               </div>
 

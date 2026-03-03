@@ -16,23 +16,23 @@ import { Link } from "react-router-dom";
 const values = [
   {
     icon: Target,
-    title: "Excellence",
-    description: "We pursue the highest standards in everything we do, delivering transformative results that exceed expectations.",
+    title: "Rigour",
+    description: "We apply evidence-based frameworks and diagnostic instruments to deliver measurable organisational outcomes.",
   },
   {
     icon: Heart,
     title: "Integrity",
-    description: "We operate with complete transparency and honesty, building trust through authentic relationships.",
+    description: "We operate with complete confidentiality and candour, building trust through sustained professional relationships.",
   },
   {
     icon: Lightbulb,
-    title: "Innovation",
-    description: "We continuously evolve our methodologies to stay at the forefront of leadership development.",
+    title: "Insight",
+    description: "We bring fresh perspective to complex leadership challenges, combining research with practical experience.",
   },
   {
     icon: Users,
-    title: "Collaboration",
-    description: "We believe in the power of partnership, working alongside our clients to achieve shared success.",
+    title: "Partnership",
+    description: "We work alongside leadership teams as trusted advisors, invested in the long-term success of the organisations we serve.",
   },
 ];
 
@@ -46,41 +46,41 @@ const teamMembers = [
   {
     name: "Dr. Sarah Chen",
     role: "Head of Executive Programs",
-    bio: "With extensive experience in executive coaching, Dr. Chen has transformed leadership practices at Fortune 500 companies across three continents.",
-    credentials: ["PhD Organizational Psychology", "ICF Master Certified Coach", "CPD Accredited Trainer"],
+    bio: "With extensive experience in executive advisory, Dr. Chen has shaped leadership effectiveness at Fortune 500 companies across three continents.",
+    credentials: ["PhD Organizational Psychology", "ICF Master Certified Coach", "CPD Accredited"],
   },
   {
     name: "Marcus Williams",
-    role: "Senior Leadership Coach",
-    bio: "Former C-suite executive turned leadership coach, Marcus brings real-world boardroom experience to every engagement.",
+    role: "Senior Advisor",
+    bio: "Former C-suite executive turned strategic advisor, Marcus brings real-world boardroom experience to every engagement.",
     credentials: ["MBA Harvard Business School", "15+ Years Executive Experience", "Certified Executive Coach"],
   },
   {
     name: "Priya Sharma",
-    role: "Director of Corporate Training",
-    bio: "Priya specializes in organizational transformation and has designed leadership curricula for global enterprises.",
-    credentials: ["MSc Leadership Studies", "Change Management Specialist", "CPD Accredited Facilitator"],
+    role: "Director of Development Programs",
+    bio: "Priya specialises in organisational transformation and has designed leadership curricula for global enterprises.",
+    credentials: ["MSc Leadership Studies", "Change Management Specialist", "CPD Accredited"],
   },
 ];
 
 const credentials = [
   { icon: Award, label: "CPD Accredited Provider", detail: "Provider #50838" },
   { icon: Globe, label: "Global Reach", detail: "Clients in 25+ Countries" },
-  { icon: Users, label: "Leaders Transformed", detail: "5,000+ Executives" },
-  { icon: Target, label: "Success Rate", detail: "98% Client Satisfaction" },
+  { icon: Users, label: "Senior Leaders Served", detail: "5,000+ Executives" },
+  { icon: Target, label: "Client Satisfaction", detail: "98% Recommend Us" },
 ];
 
 const milestones = [
-  { year: "2014", event: "Founded with a vision to transform leadership development" },
-  { year: "2017", event: "Expanded to serve clients across 10+ countries" },
-  { year: "2020", event: "Launched digital-first executive programs" },
-  { year: "2023", event: "CPD accredited & 5,000+ leaders transformed" },
+  { year: "2014", event: "Founded with a vision to strengthen organisational leadership" },
+  { year: "2017", event: "Expanded advisory services across 10+ countries" },
+  { year: "2020", event: "Launched the Executive Alignment Index (EAI)" },
+  { year: "2023", event: "CPD accredited — 5,000+ senior leaders served" },
 ];
 
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="About Us" description="Meet the team behind Bright Leadership Consulting. A decade of transforming leaders with CPD-accredited coaching and training." path="/about" />
+      <SEOHead title="About Us" description="Meet the team behind Bright Leadership Consulting. A decade of strengthening executive leadership with CPD-accredited advisory and development programs." path="/about" />
       <ScrollProgress />
       <Header />
       <main>
@@ -98,20 +98,20 @@ const AboutUs = () => {
                   <span className="text-sm font-semibold text-secondary uppercase tracking-wider">Our Journey</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
-                  A Decade of <span className="text-primary">Transforming Leaders</span>
+                  A Decade of <span className="text-primary">Strengthening Leadership</span>
                 </h2>
                 <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
                   <p>
-                    Bright Leadership Consulting was founded with a simple yet powerful vision: to bridge the gap 
-                    between leadership potential and exceptional performance.
+                    Bright Leadership Consulting was founded with a clear purpose: to help organisations 
+                    build the executive capability they need to thrive in complexity.
                   </p>
                   <p>
-                    We pioneered an approach that combines evidence-based methodologies with personalized coaching, 
-                    creating transformative experiences that resonate long after the program ends.
+                    We pioneered an approach that combines rigorous diagnostic instruments with tailored 
+                    advisory engagements, creating sustained impact that endures beyond the programme.
                   </p>
                   <p>
-                    Today, we're CPD accredited and recognized as a leading provider of executive coaching and 
-                    leadership training worldwide.
+                    Today, we are CPD accredited and recognised as a specialist provider of executive 
+                    advisory and leadership development worldwide.
                   </p>
                 </div>
               </AnimatedSection>
@@ -153,7 +153,7 @@ const AboutUs = () => {
               </Badge>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our Mission & Values</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                We exist to unlock human potential and create leaders who inspire positive change.
+                We exist to strengthen the leadership capability of the organisations we serve.
               </p>
             </AnimatedSection>
 
@@ -183,11 +183,11 @@ const AboutUs = () => {
             <AnimatedSection className="text-center mb-16">
               <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
                 <Users className="h-3 w-3 mr-1.5" />
-                Meet Our Experts
+                Our People
               </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Leadership Team</h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Advisory Team</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                World-class coaches and trainers with decades of combined experience.
+                Senior practitioners with decades of combined boardroom and advisory experience.
               </p>
             </AnimatedSection>
 
@@ -246,7 +246,7 @@ const AboutUs = () => {
               </Badge>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our Credentials</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Accredited excellence backed by industry recognition and proven results.
+                Accredited rigour backed by industry recognition and proven outcomes.
               </p>
             </AnimatedSection>
 
@@ -288,14 +288,14 @@ const AboutUs = () => {
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-2xl" />
                 <div className="relative max-w-2xl mx-auto">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground leading-tight">
-                    Ready to Transform Your Leadership?
+                    Ready to Strengthen Your Leadership?
                   </h2>
                   <p className="text-xl text-primary-foreground/80 mb-10 leading-relaxed">
-                    Join thousands of executives who have elevated their leadership with Bright Leadership Consulting.
+                    Arrange a confidential conversation with our advisory team to discuss your organisation's needs.
                   </p>
                   <Button variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" asChild>
                     <Link to="/#contact">
-                      Get in Touch
+                      Arrange a Conversation
                       <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
