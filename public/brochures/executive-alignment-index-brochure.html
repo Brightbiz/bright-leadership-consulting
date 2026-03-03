@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Alignment Index | Bright Leadership Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b6b;
+    --teal-dark: #0f4a4a;
+    --teal-light: #e0f2f2;
+    --amber: #e5a028;
+    --amber-light: #fef3d0;
+    --amber-dark: #b87d1a;
+    --dark: #1a2530;
+    --gray: #64748b;
+    --light: #f8fafb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; line-height: 1.7; }
+  h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.25; }
+
+  /* Hero */
+  .hero {
+    position: relative; min-height: 480px; overflow: hidden;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--teal-dark) 50%, var(--teal) 100%);
+    display: flex; align-items: center; padding: 80px 40px;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%; width: 500px; height: 500px;
+    border-radius: 50%; background: var(--amber); opacity: 0.06;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+    background: linear-gradient(to top, #fff, transparent);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); padding: 8px 20px;
+    border-radius: 50px; font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 28px;
+    border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+  }
+  .hero h1 { color: #fff; font-size: 44px; margin-bottom: 20px; }
+  .hero h1 span { color: var(--amber); }
+  .hero .subtitle { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 560px; font-weight: 300; }
+
+  /* Sections */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 60px 0; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2.5px; color: var(--teal); margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: ''; width: 28px; height: 2px; background: var(--amber);
+  }
+  h2 { font-size: 32px; margin-bottom: 16px; color: var(--dark); }
+  h2 span { color: var(--teal); }
+
+  /* What It Is */
+  .what-section { background: var(--light); }
+  .what-intro { font-size: 16px; color: var(--gray); max-width: 640px; margin-bottom: 32px; }
+  .dimension-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .dimension-card {
+    background: #fff; border-radius: 14px; padding: 24px;
+    border: 1px solid #e8edf2; text-align: center;
+    transition: all 0.3s;
+  }
+  .dimension-card:hover { border-color: var(--teal); box-shadow: 0 6px 24px rgba(26,107,107,0.08); transform: translateY(-2px); }
+  .dimension-icon {
+    width: 44px; height: 44px; border-radius: 12px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    background: linear-gradient(135deg, var(--teal-light), rgba(26,107,107,0.08));
+  }
+  .dimension-card h4 { font-size: 14px; color: var(--teal-dark); margin-bottom: 4px; font-family: 'Inter', sans-serif; font-weight: 600; }
+  .dimension-card p { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+  /* Methodology */
+  .method-section { background: #fff; }
+  .method-text { font-size: 15px; color: var(--gray); max-width: 680px; line-height: 1.8; }
+  .method-emphasis {
+    margin-top: 24px; padding: 24px 28px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--teal-light), rgba(26,107,107,0.04));
+    border-left: 3px solid var(--teal); font-size: 15px; color: var(--dark); font-weight: 500;
+  }
+
+  /* Deliverable */
+  .deliver-section { background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%); color: #fff; }
+  .deliver-section h2 { color: #fff; }
+  .deliver-section h2 span { color: var(--amber); }
+  .deliver-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; margin-bottom: 28px; }
+  .deliver-item {
+    display: flex; gap: 12px; padding: 16px 18px; border-radius: 12px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); align-items: center;
+  }
+  .deliver-icon {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+    background: var(--amber); display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--dark); font-weight: 700;
+  }
+  .deliver-text { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; }
+  .deliver-uses { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+  /* Commissioner */
+  .commission-section { background: var(--light); }
+  .commission-text { font-size: 15px; color: var(--gray); margin-bottom: 24px; }
+  .trigger-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .trigger-item {
+    display: flex; gap: 10px; align-items: center; padding: 14px 18px;
+    background: #fff; border-radius: 12px; border: 1px solid #e8edf2;
+    font-size: 14px; color: var(--dark); font-weight: 500;
+  }
+  .trigger-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0;
+  }
+
+  /* Why Now */
+  .why-section { background: #fff; }
+  .why-text { font-size: 15px; color: var(--gray); max-width: 640px; line-height: 1.8; }
+  .why-statement {
+    margin-top: 24px; font-size: 17px; color: var(--dark); font-weight: 600;
+    font-family: 'Playfair Display', serif; line-height: 1.5;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--teal-dark) 60%, var(--teal) 100%);
+    text-align: center; padding: 72px 40px; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px;
+    border-radius: 50%; background: var(--amber); opacity: 0.05;
+  }
+  .cta-section h2 { color: #fff; font-size: 36px; margin-bottom: 16px; }
+  .cta-section p { color: rgba(255,255,255,0.65); font-size: 15px; max-width: 480px; margin: 0 auto 36px; line-height: 1.7; }
+  .cta-enquiry {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--amber); color: var(--dark); padding: 16px 40px;
+    border-radius: 12px; font-size: 15px; font-weight: 700;
+    text-decoration: none; transition: all 0.3s; letter-spacing: 0.3px;
+    box-shadow: 0 8px 25px rgba(229,160,40,0.3);
+  }
+  .cta-enquiry:hover { background: var(--amber-dark); transform: translateY(-2px); box-shadow: 0 12px 35px rgba(229,160,40,0.4); }
+  .cta-note { margin-top: 20px; color: rgba(255,255,255,0.45); font-size: 12px; letter-spacing: 0.5px; }
+
+  /* Footer */
+  .brochure-footer {
+    background: var(--dark); color: rgba(255,255,255,0.5); text-align: center;
+    padding: 28px; font-size: 12px; letter-spacing: 0.3px;
+  }
+  .brochure-footer a { color: var(--amber); text-decoration: none; }
+
+  /* Download Button */
+  .download-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26,37,48,0.95); backdrop-filter: blur(12px);
+    padding: 16px 40px; display: flex; justify-content: center; align-items: center; gap: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .download-bar p { color: rgba(255,255,255,0.6); font-size: 13px; }
+  .download-btn {
+    background: var(--amber); color: var(--dark); padding: 10px 28px;
+    border-radius: 8px; font-size: 13px; font-weight: 700; border: none;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .download-btn:hover { background: var(--amber-dark); }
+
+  @media print {
+    .download-bar { display: none !important; }
+    .hero { min-height: 380px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section { page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 60px 24px; min-height: auto; }
+    .hero h1 { font-size: 30px; }
+    .container { padding: 0 24px; }
+    .dimension-grid { grid-template-columns: 1fr; }
+    .deliver-grid { grid-template-columns: 1fr; }
+    .trigger-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Governance Instrument</div>
+    <h1>Executive <span>Alignment Index</span></h1>
+    <p class="subtitle">Structural Clarity for Executive Teams Operating Under Complexity</p>
+  </div>
+</div>
+
+<!-- What It Is -->
+<section class="what-section">
+  <div class="container">
+    <div class="section-label">Overview</div>
+    <h2>What the Executive <span>Alignment Index</span> Is</h2>
+    <p class="what-intro">The Executive Alignment Index (EAI) is a structured governance instrument designed to measure executive variance across six critical dimensions. It does not measure sentiment. It measures structural cohesion at executive level.</p>
+    <div class="dimension-grid">
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Strategic Interpretation</h4>
+        <p>Consistency in how executives interpret strategic direction</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Decision Rights Clarity</h4>
+        <p>Defined ownership of decision authority across functions</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Cross-Functional Coordination</h4>
+        <p>Alignment of processes and priorities between divisions</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Escalation Pathways</h4>
+        <p>Structured routes for issue resolution and governance</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Accountability Architecture</h4>
+        <p>Clarity of ownership, reporting lines, and outcomes</p>
+      </div>
+      <div class="dimension-card">
+        <div class="dimension-icon">&#9670;</div>
+        <h4>Risk Ownership</h4>
+        <p>Distribution and acceptance of risk at executive level</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Methodology -->
+<section class="method-section">
+  <div class="container">
+    <div class="section-label">Methodology</div>
+    <h2>How the <span>EAI</span> Works</h2>
+    <p class="method-text">The EAI is scored across a validated maturity scale per dimension and aggregated into a composite alignment score, with variance indicators highlighting divergence between executives.</p>
+    <div class="method-emphasis">The emphasis is not average agreement -- but dispersion and misalignment patterns that affect execution, governance, and strategic clarity.</div>
+  </div>
+</section>
+
+<!-- Deliverable -->
+<section class="deliver-section">
+  <div class="container">
+    <div class="section-label" style="color: rgba(255,255,255,0.5);">Deliverable</div>
+    <h2>The Executive <span>Alignment Index Report</span></h2>
+    <p style="color: rgba(255,255,255,0.7); font-size: 15px; max-width: 600px;">The primary deliverable is a board-ready report presented as a concise executive dashboard.</p>
+    <div class="deliver-grid">
+      <div class="deliver-item">
+        <div class="deliver-icon">01</div>
+        <div class="deliver-text">Composite Alignment Score</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-icon">02</div>
+        <div class="deliver-text">Dimension-Level Variance Indicators</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-icon">03</div>
+        <div class="deliver-text">Executive Dispersion Mapping</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-icon">04</div>
+        <div class="deliver-text">Priority Action Matrix</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-icon">05</div>
+        <div class="deliver-text">Governance Risk &amp; Escalation Commentary</div>
+      </div>
+    </div>
+    <p class="deliver-uses">The report becomes the anchor artefact for board discussion, strategic planning cycles, post-acquisition integration, and executive intervention design.</p>
+    <p style="color: rgba(255,255,255,0.9); font-size: 15px; font-weight: 500; margin-top: 16px;">The EAI introduces objective measurement where most organisations rely on assumption.</p>
+  </div>
+</section>
+
+<!-- Who Commissions -->
+<section class="commission-section">
+  <div class="container">
+    <div class="section-label">Commissioning</div>
+    <h2>Who Typically <span>Commissions</span> the EAI</h2>
+    <p class="commission-text">The Executive Alignment Index is typically commissioned by the CEO, Chair, or Chief People Officer ahead of:</p>
+    <div class="trigger-grid">
+      <div class="trigger-item"><div class="trigger-dot"></div>Strategic planning cycles</div>
+      <div class="trigger-item"><div class="trigger-dot"></div>Post-acquisition or integration phases</div>
+      <div class="trigger-item"><div class="trigger-dot"></div>Leadership transitions</div>
+      <div class="trigger-item"><div class="trigger-dot"></div>Rapid growth periods</div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Now -->
+<section class="why-section">
+  <div class="container">
+    <div class="section-label">Context</div>
+    <h2>Why It <span>Matters Now</span></h2>
+    <p class="why-text">As organisations face accelerated growth and increasing governance scrutiny, executive alignment becomes a measurable structural necessity -- not a cultural aspiration.</p>
+    <p class="why-text" style="margin-top: 12px;">Most organisations assume alignment.</p>
+    <p class="why-statement">The EAI provides objective clarity before misalignment becomes execution failure.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Enquire Confidentially</h2>
+  <p>The engagement includes executive assessment, structured analysis, and board-level reporting -- tailored to organisational scale and executive complexity.</p>
+  <a href="https://bright-grace-glow.lovable.app/contact" class="cta-enquiry">
+    Enquire About the EAI &rarr;
+  </a>
+  <p class="cta-note">Engagements are commissioned by executive referral or direct enquiry.</p>
+</div>
+
+<!-- Footer -->
+<div class="brochure-footer">
+  &copy; 2025 Bright Leadership Consulting. All rights reserved. | <a href="https://bright-grace-glow.lovable.app">brightleadershipconsulting.co.uk</a>
+</div>
+
+<!-- Download Bar -->
+<div class="download-bar">
+  <p>Save this brochure as PDF</p>
+  <button class="download-btn" onclick="window.print()">Download PDF</button>
+</div>
+
+</body>
+</html>

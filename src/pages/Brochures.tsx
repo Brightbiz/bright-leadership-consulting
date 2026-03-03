@@ -1,4 +1,4 @@
-import { FileText, Download, ArrowRight, Crown, BookOpen, Zap, Users, Briefcase, Sparkles, Library } from "lucide-react";
+import { FileText, Download, ArrowRight, Crown, BookOpen, Zap, Users, Briefcase, Sparkles, Library, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const brochures = [
+  {
+    icon: Shield,
+    title: "Executive Alignment Index",
+    subtitle: "Governance Instrument | Board-Ready Reporting",
+    description: "A structured governance instrument measuring executive variance across six dimensions. Designed for CEOs, Chairs, and Chief People Officers operating under complexity.",
+    accent: "secondary" as const,
+    featured: true,
+    url: "/brochures/executive-alignment-index-brochure.html",
+  },
   {
     icon: Library,
     title: "Complete Workshops & Course Catalog",
