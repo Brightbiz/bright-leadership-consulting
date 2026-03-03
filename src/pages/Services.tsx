@@ -93,10 +93,11 @@ const Services = () => {
                 Our Expertise
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Comprehensive Leadership Solutions
+                The Human Skills That Drive Results
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Each service is designed to meet you where you are and take you where you want to go.
+                LinkedIn's fastest-rising skills are innately human. Our programs develop the cross-team collaboration, 
+                strategic decision-making, and emotional intelligence that set exceptional leaders apart.
               </p>
             </AnimatedSection>
 

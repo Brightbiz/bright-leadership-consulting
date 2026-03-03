@@ -132,6 +132,58 @@ const blogPosts = {
     date: "January 22, 2024",
     readTime: "5 min read",
     tags: ["Delegation", "Strategy", "Leadership", "Productivity"]
+  },
+  "linkedin-skills-on-the-rise-2026-what-it-means-for-leaders": {
+    title: "LinkedIn's 2026 Skills Report: What It Means for Your Leadership Career",
+    excerpt: "LinkedIn's latest data reveals the fastest-rising skills are innately human. Here's what that means for executives — and how to stay ahead.",
+    content: `
+      <p class="text-xl text-muted-foreground mb-8 leading-relaxed">LinkedIn's 2026 "Skills on the Rise" report has landed — and the message for leaders is clear: while AI dominates the technical skills conversation, the fastest-rising skills companies are hiring for are <strong>innately human</strong>.</p>
+      
+      <h2 class="text-2xl font-bold mt-10 mb-4">The Shift: Skills Over Titles</h2>
+      <p class="mb-6">Nearly half of recruiters on LinkedIn now use skills data — not job titles or degrees — to fill roles. Companies are prioritising adaptable skills over linear resumes. For leaders, this represents both a challenge and an opportunity.</p>
+      <p class="mb-6">"They're no longer looking for just titles," says Andrew Seaman, LinkedIn's editor at large for jobs and career development. The implication? Your leadership skills are your currency.</p>
+      
+      <blockquote class="border-l-4 border-primary pl-6 my-8 italic text-lg text-muted-foreground">"There's still nuance that AI can't do." — Andrew Seaman, LinkedIn News</blockquote>
+      
+      <h2 class="text-2xl font-bold mt-10 mb-4">The Human Skills That Matter Most</h2>
+      <p class="mb-6">LinkedIn's data reveals three categories of rising skills:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2 text-muted-foreground">
+        <li><strong class="text-foreground">Cross-team collaboration & client relations</strong> — The interpersonal skills that build trust and drive results across organisational boundaries.</li>
+        <li><strong class="text-foreground">Leadership training & change leadership</strong> — The ability to guide teams through transformation while maintaining morale and productivity.</li>
+        <li><strong class="text-foreground">Strategic decision-making & business fundamentals</strong> — Developing new revenue streams, operational efficiency, and strategic agility.</li>
+      </ul>
+      
+      <h2 class="text-2xl font-bold mt-10 mb-4">What About AI Skills?</h2>
+      <p class="mb-6">Yes, AI skills are rising too. But LinkedIn's data shows a nuanced picture: most roles don't require deep technical AI expertise. Instead, companies want leaders who can <em>apply AI practically</em> in their work — knowing when to leverage it and when human judgment is irreplaceable.</p>
+      <p class="mb-6">The best leaders in 2026 won't be the ones who can write code. They'll be the ones who understand how to lead teams through AI-driven transformation while preserving the human elements that drive innovation.</p>
+      
+      <h2 class="text-2xl font-bold mt-10 mb-4">Your Skills Gap Action Plan</h2>
+      <p class="mb-6">Based on LinkedIn's findings, here's how to position yourself for success:</p>
+      <ol class="list-decimal pl-6 mb-6 space-y-3 text-muted-foreground">
+        <li><strong class="text-foreground">Audit your skills inventory.</strong> Map your current capabilities against LinkedIn's rising skills. Where are the gaps?</li>
+        <li><strong class="text-foreground">Invest in emotional intelligence.</strong> EQ is the foundation of every human skill on LinkedIn's list — and it's trainable.</li>
+        <li><strong class="text-foreground">Develop your AI-ready leadership posture.</strong> You don't need to become a data scientist, but you do need to understand how AI changes team dynamics, decision-making, and strategy.</li>
+        <li><strong class="text-foreground">Build cross-functional experience.</strong> The ability to collaborate across teams and departments is one of the most in-demand skills of 2026.</li>
+        <li><strong class="text-foreground">Get CPD-accredited training.</strong> Formal recognition of your leadership skills signals commitment to professional growth — something recruiters actively filter for.</li>
+      </ol>
+      
+      <h2 class="text-2xl font-bold mt-10 mb-4">How Our Programs Align</h2>
+      <p class="mb-6">At Bright Leadership Consulting, every module in our Executive Leadership Mastery Program maps directly to the skills LinkedIn identifies as fastest-rising: emotional intelligence, strategic decision-making, cross-team collaboration, change leadership, and AI-ready leadership.</p>
+      <p class="mb-6">Our 33-module, CPD-accredited curriculum was designed before this report — but the data validates what we've always believed: <strong>the future belongs to leaders who master the human skills machines can't teach.</strong></p>
+    `,
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&h=600&fit=crop",
+    category: "Strategy",
+    author: {
+      name: "Irene Agunbiade",
+      role: "Founder & CEO, Bright Leadership Consulting",
+      avatar: testimonialSophia,
+      bio: "Irene Agunbiade is the founder of Bright Leadership Consulting and a CPD-accredited executive coach with over 15 years of experience developing senior leaders across 25+ countries.",
+      linkedin: "https://linkedin.com",
+      twitter: "https://twitter.com"
+    },
+    date: "March 3, 2026",
+    readTime: "7 min read",
+    tags: ["LinkedIn", "Skills 2026", "AI Leadership", "Human Skills", "Career Strategy"]
   }
 };
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Play, ClipboardCheck, Award } from "lucide-react";
+import { ArrowRight, Play, ClipboardCheck, Award, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
@@ -27,14 +27,14 @@ const HeroSection = () => {
 
             <h1 className="mb-6 font-serif text-2xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
-                Empower Your Leadership Excellence
+                The Leadership Skills AI Can't Teach
               </TextReveal>
             </h1>
 
             <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
-              Transform your leadership potential into extraordinary results. 
-              Our executive coaching programs help senior leaders build confidence, 
-              inspire teams, and drive lasting impact.
+              In a world racing to automate, the leaders who thrive are those who master 
+              the human skills machines can't replicate — emotional intelligence, strategic 
+              decision-making, and cross-team collaboration.
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
@@ -44,17 +44,27 @@ const HeroSection = () => {
               </MagneticButton>
             </div>
 
-            {/* Leadership Checklist CTA */}
-            <div className="mt-8 animate-fade-up" style={{ animationDelay: '0.8s' }}>
-              <Link to="/leadership-checklist">
+            {/* Skills Gap Assessment CTA */}
+            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: '0.8s' }}>
+              <Link to="/skills-assessment">
                 <MagneticButton 
                   variant="ghost" 
                   size="lg" 
                   className="border-2 border-secondary/60 bg-secondary/10 text-secondary hover:bg-secondary/20 hover:border-secondary hover:text-secondary font-semibold group backdrop-blur-sm"
                 >
-                  <ClipboardCheck className="h-5 w-5 mr-2 flex-shrink-0" />
-                  <span className="truncate">Free Leadership Assessment</span>
+                  <BarChart3 className="h-5 w-5 mr-2 flex-shrink-0" />
+                  <span className="truncate">Free Skills Gap Assessment</span>
                   <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0 transition-transform group-hover:translate-x-1" />
+                </MagneticButton>
+              </Link>
+              <Link to="/leadership-checklist">
+                <MagneticButton 
+                  variant="ghost" 
+                  size="lg" 
+                  className="border-2 border-white/30 bg-white/5 text-primary-foreground/80 hover:bg-white/10 hover:border-white/50 hover:text-primary-foreground font-semibold group backdrop-blur-sm"
+                >
+                  <ClipboardCheck className="h-5 w-5 mr-2 flex-shrink-0" />
+                  <span className="truncate">Leadership Checklist</span>
                 </MagneticButton>
               </Link>
             </div>
