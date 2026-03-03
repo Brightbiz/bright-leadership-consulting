@@ -150,22 +150,22 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                       <Zap className="h-5 w-5 text-primary-foreground" />
                     </div>
                     <span className="text-xs font-semibold tracking-wider uppercase text-primary">
-                      60-Second Assessment
+                      60-Second Diagnostic
                     </span>
                   </div>
                   <DialogTitle className="font-serif text-2xl leading-tight">
-                    Is This Programme Right for You?
+                    Which Engagement Is Right for You?
                   </DialogTitle>
                   <DialogDescription className="text-base mt-2 leading-relaxed">
-                    Save time and money — discover which tier matches your goals before you invest.
+                    Identify the most appropriate development engagement for your objectives and organisational context.
                   </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-3 mb-8 flex-grow">
                   {[
-                    { icon: CheckCircle2, color: "text-primary", text: "6 quick questions about your goals and experience" },
-                    { icon: Sparkles, color: "text-secondary", text: "Get a personalised tier recommendation" },
-                    { icon: ShieldCheck, color: "text-primary", text: "No obligation — just honest guidance" },
+                    { icon: CheckCircle2, color: "text-primary", text: "6 questions about your objectives and context" },
+                    { icon: Sparkles, color: "text-secondary", text: "Receive a tailored engagement recommendation" },
+                    { icon: ShieldCheck, color: "text-primary", text: "No obligation — confidential and straightforward" },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -186,7 +186,7 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                   className="w-full"
                   onClick={() => setStep("questions")}
                 >
-                  Find Out in 60 Seconds
+                  Begin the Diagnostic
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
                 <Button
@@ -200,7 +200,7 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                     rel="noopener noreferrer"
                     onClick={() => handleClose(false)}
                   >
-                    Skip — I'm ready to enrol
+                    Skip — I'm ready to proceed
                   </a>
                 </Button>
               </motion.div>
@@ -389,9 +389,9 @@ const ReadinessQuizModal = ({ open, onOpenChange }: ReadinessQuizModalProps) => 
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     className="text-xs font-semibold tracking-wider uppercase text-primary mb-2"
-                  >
-                    Your recommended tier
-                  </motion.p>
+                   >
+                     Your recommended engagement
+                   </motion.p>
                   <motion.h3
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
