@@ -26,7 +26,7 @@ const EAIInstrumentSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             >
-              Executive Alignment Index™
+              Executive Alignment Index
             </motion.h2>
 
             <motion.div

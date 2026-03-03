@@ -46,7 +46,7 @@ const HeroSection = () => {
               href="/executive-alignment-index"
             >
               <Shield className="h-5 w-5 mr-2 flex-shrink-0" />
-              <span className="truncate">Executive Alignment Index™</span>
+              <span className="truncate">Executive Alignment Index</span>
             </MagneticButton>
           </div>
         </div>
