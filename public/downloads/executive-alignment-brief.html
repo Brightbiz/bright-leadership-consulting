@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Alignment Brief™ — Bright Leadership Consulting</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --charcoal: #1a1a1a;
+      --text: #2d2d2d;
+      --text-secondary: #5a5a5a;
+      --text-muted: #8a8a8a;
+      --teal-deep: #1a5c5c;
+      --teal-muted: #2a7a7a;
+      --teal-light: #e8f4f4;
+      --border: #e0e0e0;
+      --bg: #ffffff;
+      --bg-subtle: #fafafa;
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 2.5cm 2.8cm;
+      }
+      .no-print { display: none !important; }
+      body { font-size: 10pt; }
+      .page-break { page-break-before: always; }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .brief {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    /* Cover / Title Block */
+    .title-block {
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+
+    .title-block .firm-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    .title-block h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .title-block .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    .title-block .meta {
+      margin-top: 40px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Section Headers */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      margin-bottom: 12px;
+    }
+
+    .section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .section h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      margin-bottom: 12px;
+      margin-top: 32px;
+    }
+
+    .section p {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+
+    .section p.muted {
+      color: var(--text-secondary);
+    }
+
+    /* Pull Quote */
+    .pull-quote {
+      border-left: 2px solid var(--teal-deep);
+      padding: 16px 0 16px 24px;
+      margin: 32px 0;
+    }
+
+    .pull-quote p {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 17px;
+      font-style: italic;
+      color: var(--charcoal);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+
+    /* Dashboard Mock */
+    .dashboard-mock {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin: 40px 0;
+    }
+
+    .dashboard-mock .mock-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .dimension-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dimension-row:last-child {
+      border-bottom: none;
+    }
+
+    .dimension-label {
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .dimension-bar {
+      flex: 0 0 200px;
+      height: 6px;
+      background: #eee;
+      margin: 0 16px;
+      position: relative;
+    }
+
+    .dimension-fill {
+      height: 100%;
+      background: var(--teal-deep);
+      transition: width 0.3s;
+    }
+
+    .dimension-score {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal-deep);
+      flex: 0 0 36px;
+      text-align: right;
+    }
+
+    /* List */
+    .structured-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 24px;
+    }
+
+    .structured-list li {
+      font-size: 14px;
+      color: var(--text);
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .structured-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--teal-deep);
+    }
+
+    /* Footer */
+    .brief-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      margin-top: 60px;
+    }
+
+    .brief-footer p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .brief-footer .contact-line {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 20px;
+    }
+
+    .brief-footer .contact-line a {
+      color: var(--teal-deep);
+      text-decoration: none;
+    }
+
+    /* Download button - screen only */
+    .download-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      text-align: center;
+      z-index: 100;
+    }
+
+    .download-bar button {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: var(--teal-deep);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .download-bar button:hover {
+      background: var(--teal-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="brief">
+
+    <!-- Title Block -->
+    <div class="title-block">
+      <p class="firm-name">Bright Leadership Consulting</p>
+      <h1>Executive Alignment Brief™</h1>
+      <p class="subtitle">
+        A governance-level overview of how structural alignment is measured, diagnosed, and sustained across executive teams.
+      </p>
+      <p class="meta">Confidential Advisory Document — 2025</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section">
+      <p class="section-number">Section I</p>
+      <h2>The Alignment Problem</h2>
+      <p>
+        Executive alignment rarely fails abruptly. It erodes through variance in decision architecture, strategic interpretation, and accountability distribution.
+      </p>
+      <p class="muted">
+        Most organisations experience this as operational friction — delayed decisions, duplicated initiatives, escalation bottlenecks. The root cause is rarely capability. It is structural.
+      </p>
+
+      <div class="pull-quote">
+        <p>In complex organisations, alignment doesn't collapse — it drifts. And drift is invisible until it becomes expensive.</p>
+      </div>
+
+      <p>
+        Traditional approaches — engagement surveys, personality profiling, leadership development programmes — measure sentiment or individual capability. They do not diagnose structural coherence at the executive layer.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Section 2 -->
+    <div class="section">
+      <p class="section-number">Section II</p>
+      <h2>The Executive Alignment Index™</h2>
+      <p>
+        The Executive Alignment Index is a diagnostic instrument that measures structural cohesion across six governance-critical dimensions.
+      </p>
+
+      <h3>The Six Dimensions</h3>
+      <ul class="structured-list">
+        <li>Strategic Interpretation — Are executives interpreting the strategy consistently?</li>
+        <li>Decision Rights — Is it clear who decides what, and when?</li>
+        <li>Cross-Functional Coordination — Are interdependencies managed or assumed?</li>
+        <li>Escalation Pathways — Do escalation routes exist, and are they used appropriately?</li>
+        <li>Accountability Architecture — Is accountability distributed or concentrated?</li>
+        <li>Risk Ownership — Is risk owned at the appropriate level?</li>
+      </ul>
+
+      <p class="muted">
+        Each dimension is scored on a validated 1–5 maturity scale. The Index identifies dispersion — the degree of variance between individual executive scores — as the primary indicator of structural misalignment risk.
+      </p>
+
+      <!-- Dashboard Mock -->
+      <div class="dashboard-mock">
+        <p class="mock-title">Sample — Composite Alignment Score: 3.4 / 5.0</p>
+        <div class="dimension-row">
+          <span class="dimension-label">Strategic Interpretation</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 76%"></div></div>
+          <span class="dimension-score">3.8</span>
+        </div>
+        <div class="dimension-row">
+          <span class="dimension-label">Decision Rights</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 54%"></div></div>
+          <span class="dimension-score">2.7</span>
+        </div>
+        <div class="dimension-row">
+          <span class="dimension-label">Cross-Functional Coordination</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 68%"></div></div>
+          <span class="dimension-score">3.4</span>
+        </div>
+        <div class="dimension-row">
+          <span class="dimension-label">Escalation Pathways</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 72%"></div></div>
+          <span class="dimension-score">3.6</span>
+        </div>
+        <div class="dimension-row">
+          <span class="dimension-label">Accountability Architecture</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 80%"></div></div>
+          <span class="dimension-score">4.0</span>
+        </div>
+        <div class="dimension-row">
+          <span class="dimension-label">Risk Ownership</span>
+          <div class="dimension-bar"><div class="dimension-fill" style="width: 62%"></div></div>
+          <span class="dimension-score">3.1</span>
+        </div>
+      </div>
+
+      <p class="muted">
+        The composite score provides an institutional benchmark. The dispersion analysis beneath it reveals where structural fault lines exist — often invisible to the executive team itself.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Section 3 -->
+    <div class="section">
+      <p class="section-number">Section III</p>
+      <h2>How Engagements Work</h2>
+
+      <h3>Phase 1 — Diagnostic</h3>
+      <p>
+        The Executive Alignment Index is deployed across the senior leadership team. Each executive completes a structured assessment independently. Results are aggregated and analysed for composite alignment and dimensional dispersion.
+      </p>
+
+      <h3>Phase 2 — Reporting</h3>
+      <p>
+        A board-ready Executive Alignment Index Report™ is produced. This document provides the composite alignment score, dimension-level breakdown, dispersion mapping, a priority action matrix, and governance risk commentary.
+      </p>
+
+      <h3>Phase 3 — Advisory</h3>
+      <p>
+        Where commissioned, a structured advisory engagement follows. This may include executive architecture review, role mandate clarification, governance interface design, or succession risk assessment.
+      </p>
+
+      <p class="muted">
+        Engagements are typically commissioned by the CEO, Chair, or Chief People Officer. Duration and scope are determined during an initial confidential conversation.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Section 4 -->
+    <div class="section">
+      <p class="section-number">Section IV</p>
+      <h2>When Organisations Commission This Work</h2>
+      <p>
+        The Executive Alignment Index is typically deployed during periods of structural transition or strategic recalibration.
+      </p>
+
+      <ul class="structured-list">
+        <li>Strategic planning cycles requiring executive coherence</li>
+        <li>Post-merger integration of leadership teams</li>
+        <li>CEO or Chair transitions</li>
+        <li>Rapid growth outpacing leadership structure</li>
+        <li>Digital or AI transformation requiring governance clarity</li>
+        <li>Board-level concern about executive effectiveness</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>The question is not whether your executives are capable. The question is whether they are structurally aligned.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Section 5 -->
+    <div class="section">
+      <p class="section-number">Section V</p>
+      <h2>Confidential Enquiry</h2>
+      <p>
+        Engagements are commissioned by executive referral or direct enquiry. If you are a CEO, Chair, or CPO considering alignment work, we welcome a confidential conversation.
+      </p>
+      <p class="muted">
+        All diagnostic data and advisory outputs are treated with strict confidentiality. Engagement terms are discussed directly with the commissioning executive.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="brief-footer">
+      <p>
+        © 2025 Bright Leadership Consulting. All rights reserved.<br>
+        Executive Alignment Index™ and Executive Alignment Brief™ are proprietary instruments of Bright Leadership Consulting.
+      </p>
+      <p class="contact-line">
+        <a href="https://brightleadershipconsulting.com/contact">brightleadershipconsulting.com</a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Download bar - screen only -->
+  <div class="download-bar no-print">
+    <button onclick="window.print()">Save as PDF</button>
+  </div>
+</body>
+</html>
