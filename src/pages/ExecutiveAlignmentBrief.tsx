@@ -27,10 +27,10 @@ const ExecutiveAlignmentBrief = () => {
                 Advisory Document
               </p>
               <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-foreground leading-tight mb-6">
-                Executive Alignment Brief™
+                Executive Alignment Brief
               </h1>
               <p className="text-muted-foreground text-base leading-relaxed">
-                A concise overview of the Executive Alignment Index™ and its commissioning context.
+                A concise overview of the Executive Alignment Index and its commissioning context.
               </p>
             </motion.div>
 
@@ -47,7 +47,7 @@ const ExecutiveAlignmentBrief = () => {
               <div className="space-y-4">
                 {[
                   "The structural alignment problem in executive teams",
-                  "The Executive Alignment Index™ — six diagnostic dimensions",
+                  "The Executive Alignment Index — six diagnostic dimensions",
                   "Sample composite alignment dashboard",
                   "How engagements are structured — diagnostic, reporting, advisory",
                   "When organisations commission this work",

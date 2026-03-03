@@ -19,7 +19,7 @@ const ExecutiveAlignmentIndex = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         path="/executive-alignment-index"
-        title="Executive Alignment Index™ | Bright Leadership Consulting"
+        title="Executive Alignment Index | Bright Leadership Consulting"
         description="A governance-level instrument measuring executive variance across decision rights, strategic interpretation, and escalation architecture."
       />
       <ScrollProgress />
@@ -45,7 +45,7 @@ const ExecutiveAlignmentIndex = () => {
               </h1>
 
               <p className="mb-10 text-lg leading-relaxed text-primary-foreground/80 max-w-2xl sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
-                The Executive Alignment Index™ provides governance-level visibility 
+                The Executive Alignment Index provides governance-level visibility 
                 into executive variance before strategic execution slows.
               </p>
 
@@ -100,7 +100,7 @@ const ExecutiveAlignmentIndex = () => {
                 <p>Averages conceal dispersion.</p>
 
                 <p className="font-serif text-foreground font-medium text-xl">
-                  The Executive Alignment Index™ identifies structural variance before it compounds.
+                  The Executive Alignment Index identifies structural variance before it compounds.
                 </p>
               </motion.div>
             </div>
@@ -160,7 +160,7 @@ const ExecutiveAlignmentIndex = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
               >
-                The Executive Alignment Index Report™
+                The Executive Alignment Index Report
               </motion.p>
 
               <motion.div
@@ -219,7 +219,7 @@ const ExecutiveAlignmentIndex = () => {
                 </div>
 
                 <p>
-                  Where variance requires intervention, ALIGN™ executive working sessions 
+                  Where variance requires intervention, ALIGN executive working sessions 
                   establish defined decision architecture.
                 </p>
               </motion.div>
@@ -248,7 +248,7 @@ const ExecutiveAlignmentIndex = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.15 }}
               >
-                <p>The Executive Alignment Index™ is commissioned during:</p>
+                <p>The Executive Alignment Index is commissioned during:</p>
 
                 <div className="space-y-1.5 border-l-2 border-border pl-6">
                   <p>Growth acceleration</p>
@@ -289,7 +289,7 @@ const ExecutiveAlignmentIndex = () => {
                   to="/contact"
                   className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 tracking-wide"
                 >
-                  Enquire Regarding Executive Alignment Index™
+                  Enquire Regarding Executive Alignment Index
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </motion.div>

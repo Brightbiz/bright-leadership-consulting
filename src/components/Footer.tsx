@@ -129,7 +129,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-sm text-background/50 hover:text-background/70 transition-colors duration-300 tracking-wide"
             >
-              Executive Alignment Brief™ (Download PDF)
+              Executive Alignment Brief (Download PDF)
             </a>
           </div>
         </div>
