@@ -34,6 +34,7 @@ const BookingConfirmed = lazy(() => import("./pages/BookingConfirmed"));
 const Letterhead = lazy(() => import("./pages/Letterhead"));
 const SkillsGapAssessment = lazy(() => import("./pages/SkillsGapAssessment"));
 const ExecutiveAlignmentIndex = lazy(() => import("./pages/ExecutiveAlignmentIndex"));
+const SelectedEngagements = lazy(() => import("./pages/SelectedEngagements"));
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const AnimatedRoutes = () => {
           <Route path="/letterhead" element={<Letterhead />} />
           <Route path="/skills-assessment" element={<PageTransition><SkillsGapAssessment /></PageTransition>} />
           <Route path="/executive-alignment-index" element={<PageTransition><ExecutiveAlignmentIndex /></PageTransition>} />
+          <Route path="/selected-engagements" element={<PageTransition><SelectedEngagements /></PageTransition>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
