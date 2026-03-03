@@ -274,6 +274,25 @@ const ServicesSection = () => {
               <ServiceCard key={service.title} service={service} index={index} />
             ))}
           </motion.div>
+
+          {/* Subtle programs link */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-muted-foreground text-sm">
+              We also deliver CPD-accredited executive development programs.{" "}
+              <a 
+                href="/courses" 
+                className="text-primary font-medium hover:underline underline-offset-4 transition-colors"
+              >
+                View Programs →
+              </a>
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
