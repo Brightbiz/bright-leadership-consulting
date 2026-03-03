@@ -125,6 +125,23 @@ const OfferSequencingSection = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Understated CTA */}
+        <motion.div
+          className="max-w-3xl mx-auto text-center mt-20"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 tracking-wide"
+          >
+            Enquire Confidentially
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
