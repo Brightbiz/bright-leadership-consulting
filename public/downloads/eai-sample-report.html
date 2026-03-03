@@ -18,10 +18,12 @@
     --light: #f8fafb;
     --red: #dc2626;
     --red-light: #fef2f2;
-    --green: #16a34a;
-    --green-light: #f0fdf4;
-    --yellow: #ca8a04;
-    --yellow-light: #fefce8;
+    --variance-elevated: #0f4a4a;
+    --variance-elevated-bg: #d0e8e8;
+    --variance-moderate: #1a6b6b;
+    --variance-moderate-bg: #e0f2f2;
+    --variance-low: #94b8b8;
+    --variance-low-bg: #f0f7f7;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; line-height: 1.6; }
@@ -73,12 +75,11 @@
   .composite-max { font-size: 20px; color: var(--gray-light); font-weight: 400; }
   .composite-status {
     display: inline-flex; align-items: center; gap: 6px;
-    background: var(--yellow-light); color: var(--yellow);
     padding: 6px 16px; border-radius: 20px;
     font-size: 12px; font-weight: 600; margin-top: 12px;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .composite-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); }
+  .composite-status .dot { width: 6px; height: 6px; border-radius: 50%; }
   .composite-interpretation {
     margin-top: 16px; font-size: 13px; color: var(--gray);
     max-width: 520px; margin-left: auto; margin-right: auto;
@@ -105,9 +106,9 @@
     display: inline-flex; padding: 3px 10px; border-radius: 4px;
     font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
   }
-  .variance-low { background: var(--green-light); color: var(--green); }
-  .variance-moderate { background: var(--yellow-light); color: var(--yellow); }
-  .variance-high { background: var(--red-light); color: var(--red); }
+  .variance-low { background: var(--variance-low-bg); color: var(--variance-low); }
+  .variance-moderate { background: var(--variance-moderate-bg); color: var(--variance-moderate); }
+  .variance-elevated { background: var(--variance-elevated-bg); color: var(--variance-elevated); font-weight: 800; }
 
   /* Dispersion Map */
   .dispersion-section { margin-bottom: 28px; }
@@ -163,9 +164,9 @@
     font-size: 9px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 1px; margin-bottom: 8px;
   }
-  .matrix-q1 .matrix-label { color: var(--red); }
-  .matrix-q2 .matrix-label { color: var(--amber); }
-  .matrix-q3 .matrix-label { color: var(--teal); }
+  .matrix-q1 .matrix-label { color: var(--variance-elevated); }
+  .matrix-q2 .matrix-label { color: var(--teal); }
+  .matrix-q3 .matrix-label { color: var(--variance-moderate); }
   .matrix-q4 .matrix-label { color: var(--gray-light); }
   .matrix-item { font-size: 12px; color: var(--dark); margin-bottom: 6px; padding-left: 12px; position: relative; }
   .matrix-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
@@ -241,7 +242,7 @@
   <div class="composite-section">
     <div class="section-num">Section 1</div>
     <div class="composite-score">3.2 <span class="composite-max">/ 5.0</span></div>
-    <div class="composite-status"><span class="dot"></span> Moderate Variance</div>
+    <div class="composite-status" style="background:var(--variance-moderate-bg);color:var(--variance-moderate)"><span class="dot" style="background:var(--variance-moderate)"></span> Moderate Variance</div>
     <p class="composite-interpretation">"Executive alignment is directionally coherent, with material variance in decision rights and escalation clarity."</p>
   </div>
 
@@ -268,8 +269,8 @@
         <tr>
           <td class="dimension-name">Decision Rights Clarity</td>
           <td class="score-value">2.4</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:48%; background:var(--red)"></div></div></td>
-          <td><span class="variance-badge variance-high">High</span></td>
+          <td><div class="score-bar-container"><div class="score-bar" style="width:48%; background:var(--variance-elevated)"></div></div></td>
+          <td><span class="variance-badge variance-elevated">Elevated</span></td>
         </tr>
         <tr>
           <td class="dimension-name">Cross-Functional Coordination</td>
@@ -280,8 +281,8 @@
         <tr>
           <td class="dimension-name">Escalation Pathways</td>
           <td class="score-value">2.6</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:52%; background:var(--amber)"></div></div></td>
-          <td><span class="variance-badge variance-high">High</span></td>
+          <td><div class="score-bar-container"><div class="score-bar" style="width:52%; background:var(--variance-elevated)"></div></div></td>
+          <td><span class="variance-badge variance-elevated">Elevated</span></td>
         </tr>
         <tr>
           <td class="dimension-name">Accountability Architecture</td>
