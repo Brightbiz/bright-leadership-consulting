@@ -120,8 +120,20 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-background/10 pt-8 md:flex-row">
+        {/* Brief + Bottom */}
+        <div className="mt-16 border-t border-background/10 pt-8">
+          <div className="mb-8 text-center">
+            <a
+              href="/downloads/executive-alignment-brief.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-background/50 hover:text-background/70 transition-colors duration-300 tracking-wide"
+            >
+              Executive Alignment Brief™ (Download PDF)
+            </a>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <img
               src={cpdBadge}
