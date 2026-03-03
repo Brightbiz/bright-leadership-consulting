@@ -2,6 +2,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import LogoMarquee from "@/components/LogoMarquee";
+import EAISection from "@/components/EAISection";
 import ServicesSection from "@/components/ServicesSection";
 import ExecutiveProgramSection from "@/components/ExecutiveProgramSection";
 import CoursesSection from "@/components/CoursesSection";
@@ -25,6 +26,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <LogoMarquee />
+        <EAISection />
         <ServicesSection />
         <ExecutiveProgramSection />
         <CoursesSection />
