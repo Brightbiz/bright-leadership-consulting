@@ -20,7 +20,7 @@ const contactInfo = [
     icon: Mail,
     title: "Email",
     value: "info@brightleadershipconsulting.com",
-    description: "We'll respond within 24 hours",
+    description: "We respond within 24 hours",
     action: "mailto:info@brightleadershipconsulting.com",
   },
   {
@@ -32,7 +32,7 @@ const contactInfo = [
   },
   {
     icon: Clock,
-    title: "Business Hours",
+    title: "Office Hours",
     value: "9:00 AM - 6:00 PM",
     description: "Monday to Friday (GMT)",
     action: null,
@@ -41,27 +41,27 @@ const contactInfo = [
 
 const faqs = [
   {
-    question: "How do I book a consultation?",
-    answer: "Simply fill out the contact form below or call us directly. We'll schedule a complimentary 30-minute discovery call to understand your needs.",
+    question: "How do I arrange an initial conversation?",
+    answer: "Complete the enquiry form below or call us directly. We'll schedule a confidential, no-obligation conversation to understand your organisation's needs.",
   },
   {
     question: "What is your typical response time?",
-    answer: "We aim to respond to all inquiries within 2 business hours during office hours, and within 24 hours for weekend or after-hours messages.",
+    answer: "We aim to respond to all enquiries within 2 business hours during office hours, and within 24 hours for weekend or after-hours messages.",
   },
   {
-    question: "Do you offer virtual consultations?",
-    answer: "Yes! We work with clients globally via video conferencing. All our coaching and many training programs can be delivered virtually.",
+    question: "Do you work with international clients?",
+    answer: "Yes. We serve clients globally via video conferencing and can arrange in-person engagements at locations worldwide.",
   },
   {
-    question: "What areas do you cover?",
-    answer: "We serve clients throughout the UK and internationally. Our corporate retreats can be arranged at premium locations worldwide.",
+    question: "What sectors do you work with?",
+    answer: "Our advisory experience spans financial services, professional services, technology, healthcare, manufacturing, and the public sector.",
   },
 ];
 
 const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="Contact" description="Get in touch with Bright Leadership Consulting. Schedule a free consultation for executive coaching, training, or corporate retreats." path="/contact" />
+      <SEOHead title="Contact" description="Arrange a confidential conversation with Bright Leadership Consulting. Executive advisory, leadership development, and corporate retreats." path="/contact" />
       <Header />
       
       <main>
@@ -105,13 +105,13 @@ const Contact = () => {
             <AnimatedSection className="text-center mb-12">
               <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
                 <Sparkles className="h-3 w-3 mr-1.5" />
-                Get in Touch
+                Confidential Enquiry
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Send Us a Message
+                Get in Touch
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Complete the quick form below and we'll get back to you within 24 hours.
+                Complete the form below and a member of our advisory team will respond within 24 hours.
               </p>
             </AnimatedSection>
 
@@ -135,13 +135,13 @@ const Contact = () => {
             <AnimatedSection className="text-center mb-12">
               <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
                 <MessageCircle className="h-3 w-3 mr-1.5" />
-                Quick Answers
+                Common Questions
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Frequently Asked Questions
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Quick answers to common questions about getting in touch.
+                Quick answers to common questions about engaging with us.
               </p>
             </AnimatedSection>
 
@@ -171,7 +171,7 @@ const Contact = () => {
           <div className="container-narrow relative">
             <div className="flex flex-wrap justify-center gap-10 md:gap-20">
               {[
-                { icon: Users, value: "5,000+", label: "Leaders Trained" },
+                { icon: Users, value: "5,000+", label: "Senior Leaders Served" },
                 { icon: Award, value: "CPD", label: "Accredited Programs" },
                 { icon: MapPin, value: "25+", label: "Countries Served" },
               ].map((stat, index) => (

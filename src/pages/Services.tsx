@@ -14,8 +14,8 @@ const serviceDetails = [
   {
     id: "coaching",
     title: "Executive Coaching",
-    subtitle: "1-on-1 Leadership Development",
-    description: "Our personalized coaching programs are designed for senior executives and emerging leaders who want to accelerate their growth, enhance their leadership presence, and achieve breakthrough results.",
+    subtitle: "1-on-1 Advisory & Development",
+    description: "Confidential, structured coaching engagements for senior executives and high-potential leaders seeking to sharpen strategic thinking, strengthen executive presence, and deliver measurable organisational impact.",
     features: [
       "Personalized development plan",
       "Weekly 60-minute sessions",
@@ -33,9 +33,9 @@ const serviceDetails = [
   },
   {
     id: "training",
-    title: "Executive Training",
+    title: "Executive Development",
     subtitle: "CPD Accredited Programs",
-    description: "Our comprehensive training programs combine cutting-edge leadership theory with practical application. All programs are CPD accredited and designed to create lasting behavioral change.",
+    description: "Rigorous, CPD-accredited development programs that combine contemporary leadership research with practical application. Designed to create sustained behavioural change at the senior level.",
     features: [
       "CPD accredited certification",
       "Interactive workshops",
@@ -54,8 +54,8 @@ const serviceDetails = [
   {
     id: "retreats",
     title: "Corporate Retreats",
-    subtitle: "Immersive Team Experiences",
-    description: "Transform your leadership team through immersive retreat experiences. Our carefully designed programs combine strategic planning, team building, and personal development in inspiring settings.",
+    subtitle: "Immersive Leadership Experiences",
+    description: "Structured retreat engagements for leadership teams that combine strategic visioning, team diagnostics, and individual development in carefully selected settings worldwide.",
     features: [
       "Custom program design",
       "Luxury venue selection",
@@ -93,11 +93,11 @@ const Services = () => {
                 Our Expertise
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                The Human Skills That Drive Results
+                The Capabilities That Define Senior Leadership
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                LinkedIn's fastest-rising skills are innately human. Our programs develop the cross-team collaboration, 
-                strategic decision-making, and emotional intelligence that set exceptional leaders apart.
+                The skills that matter most at executive level — strategic judgement, stakeholder influence, 
+                and the ability to lead through complexity — cannot be automated. Our services develop exactly these.
               </p>
             </AnimatedSection>
 
@@ -177,18 +177,18 @@ const Services = () => {
                 Why Us
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Why Leaders Choose Us
+                Why Organisations Choose Us
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Our unique approach combines proven methodologies with personalized attention.
+                A distinctive approach that combines diagnostic rigour with tailored advisory.
               </p>
             </AnimatedSection>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 { icon: Award, title: "CPD Accredited", description: "All programs meet rigorous professional standards" },
-                { icon: Users, title: "Expert Faculty", description: "Learn from seasoned leadership practitioners" },
-                { icon: Target, title: "Results-Driven", description: "Measurable outcomes and accountability" },
+                { icon: Users, title: "Senior Practitioners", description: "Advisors with genuine boardroom experience" },
+                { icon: Target, title: "Outcomes-Focused", description: "Measurable impact with agreed KPIs" },
                 { icon: Globe, title: "Global Reach", description: "Serving leaders across 25+ countries" },
               ].map((item, index) => (
                 <AnimatedSection key={item.title} delay={index * 100}>

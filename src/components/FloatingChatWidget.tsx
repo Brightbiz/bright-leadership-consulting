@@ -17,15 +17,15 @@ interface Message {
 const STORAGE_KEY = "bbs-chat-history";
 const INITIAL_MESSAGE: Message = {
   id: "1",
-  text: "👋 Hi! I'm your Leadership Assistant. How can I help you with your leadership journey today?",
+  text: "Good day. I'm the advisory assistant for Bright Leadership Consulting. How can I assist you?",
   isBot: true,
   timestamp: new Date(),
 };
 
 const quickReplies = [
-  "Tell me about coaching",
-  "What programs do you offer?",
-  "How do I book a consultation?",
+  "Tell me about the EAI",
+  "What advisory services do you offer?",
+  "How do I arrange a conversation?",
 ];
 
 const loadMessagesFromStorage = (): Message[] => {
@@ -102,7 +102,7 @@ const FloatingChatWidget = () => {
       ...prev,
       {
         id: Date.now().toString(),
-        text: `Thank you, ${name}! 🎉 Our team will reach out within 24 hours to schedule your free discovery call. In the meantime, feel free to ask me any other questions!`,
+        text: `Thank you, ${name}. A member of our advisory team will be in touch within 24 hours to arrange a confidential conversation. In the meantime, please feel free to ask any further questions.`,
         isBot: true,
         timestamp: new Date(),
       },
@@ -115,7 +115,7 @@ const FloatingChatWidget = () => {
       ...prev,
       {
         id: Date.now().toString(),
-        text: "No problem! Feel free to share your details whenever you're ready, or you can always reach us at info@brightleadershipconsulting.com or call 0333 335 5045.",
+        text: "Of course. Whenever you're ready, you can share your details here, or reach our advisory team directly at info@brightleadershipconsulting.com or 0333 335 5045.",
         isBot: true,
         timestamp: new Date(),
       },
@@ -164,10 +164,10 @@ const FloatingChatWidget = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-primary-foreground">
-                      Leadership Assistant
+                      Advisory Assistant
                     </h3>
                     <p className="text-xs text-primary-foreground/70">
-                      Powered by AI • Usually replies instantly
+                      Bright Leadership Consulting
                     </p>
                   </div>
                 </div>
@@ -244,7 +244,7 @@ const FloatingChatWidget = () => {
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type a message..."
+                    placeholder="Ask a question..."
                     className="flex-1 h-10"
                     disabled={isTyping || showLeadForm}
                   />

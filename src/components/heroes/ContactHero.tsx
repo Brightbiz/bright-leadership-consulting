@@ -121,21 +121,21 @@ const ContactHero = () => {
                 className="w-2.5 h-2.5 rounded-full bg-emerald-400"
               />
               <span className="text-sm font-semibold text-background">
-                Available for consultation
+                Available for confidential enquiry
               </span>
             </motion.div>
 
             <h1 className="mb-6 font-serif text-4xl font-bold leading-[1.1] text-background sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.1}>
-                Let's Create
+                Start a
               </TextReveal>
               <span className="block text-secondary-foreground">
                 <TextReveal delay={0.3}>
-                  Something
+                  Confidential
                 </TextReveal>
               </span>
               <TextReveal delay={0.5}>
-                Extraordinary
+                Conversation
               </TextReveal>
             </h1>
 
@@ -145,8 +145,8 @@ const ContactHero = () => {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="text-lg text-background/80 leading-relaxed max-w-md mb-10"
             >
-              Ready to transform your leadership potential? Start a conversation 
-              and discover how we can accelerate your growth.
+              Every advisory engagement begins with understanding your organisation's 
+              context. We're here to listen.
             </motion.p>
 
             {/* Quick action button */}
@@ -157,7 +157,7 @@ const ContactHero = () => {
               transition={{ duration: 0.6, delay: 0.9 }}
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-background text-primary font-semibold hover:bg-background/90 transition-colors group shadow-xl"
             >
-              <span>Start a Conversation</span>
+              <span>Make an Enquiry</span>
               <ArrowUpRight className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </motion.a>
           </div>
