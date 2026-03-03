@@ -195,17 +195,17 @@ const ExecutiveAlignmentIndex = () => {
                 <span className="text-xs font-bold text-primary uppercase tracking-widest">Methodology</span>
               </motion.div>
               <motion.h2 variants={fadeUp} className="font-serif text-3xl font-semibold text-foreground sm:text-4xl mb-6">
-                Calibrated Assessment. <span className="text-primary">Structural Clarity.</span>
+                Identifying Structural Variance <span className="text-primary">Between Executives.</span>
               </motion.h2>
               <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Executives are assessed across defined alignment dimensions using a calibrated 1–5 maturity scale. Results are aggregated into a composite alignment score, with variance indicators identifying divergence between executives.
+                Scored across calibrated 1–5 maturity dimensions, with variance indicators highlighting executive dispersion. The emphasis is not average agreement — but where structural misalignment creates governance risk.
               </motion.p>
               <motion.div
                 variants={fadeUp}
                 className="p-6 rounded-2xl bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] border-l-4 border-primary"
               >
                 <p className="text-foreground font-medium text-lg leading-relaxed">
-                  The emphasis is not average agreement — but dispersion and structural misalignment risk.
+                  Most tools measure averages. The Index measures dispersion — where boards and executive teams diverge on the decisions that matter most.
                 </p>
               </motion.div>
             </motion.div>
