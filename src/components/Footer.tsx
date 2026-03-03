@@ -6,7 +6,7 @@ import cpdBadge from "@/assets/cpd-badge.png";
 const footerLinks = {
   programs: [
     { label: "Executive Leadership Mastery", href: "/courses", isRoute: true },
-    { label: "Executive Coaching", href: "/services", isRoute: true },
+    { label: "Advisory & Development", href: "/services", isRoute: true },
     { label: "All Courses", href: "/courses", isRoute: true },
     { label: "Course Brochures", href: "/brochures", isRoute: true },
   ],
@@ -16,9 +16,9 @@ const footerLinks = {
     { label: "Contact", href: "/contact", isRoute: true },
   ],
   resources: [
-    { label: "Leadership Checklist", href: "/leadership-checklist", isRoute: true },
+    { label: "Leadership Diagnostic", href: "/leadership-checklist", isRoute: true },
     { label: "Course Brochures", href: "/brochures", isRoute: true },
-    { label: "Free Masterclass", href: "/masterclass", isRoute: true },
+    { label: "Executive Briefing", href: "/masterclass", isRoute: true },
   ],
 };
 
