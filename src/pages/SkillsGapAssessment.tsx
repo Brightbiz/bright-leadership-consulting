@@ -13,9 +13,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const categoryLabels = {
-  human: { label: "Human Skills", icon: Users, color: "text-primary" },
-  strategic: { label: "Strategic Skills", icon: Target, color: "text-secondary" },
-  "ai-ready": { label: "AI-Ready Skills", icon: Cpu, color: "text-primary" },
+  human: { label: "Interpersonal Capability", icon: Users, color: "text-primary" },
+  strategic: { label: "Strategic Capability", icon: Target, color: "text-secondary" },
+  "ai-ready": { label: "Digital Readiness", icon: Cpu, color: "text-primary" },
 };
 
 const levelColors = {
@@ -58,10 +58,10 @@ const SkillsGapAssessment = () => {
       await supabase.from("lead_magnet_downloads").insert({
         email,
         name,
-        lead_magnet_name: "Skills Gap Assessment 2026",
+        lead_magnet_name: "Leadership Capability Diagnostic 2026",
       });
       setLeadCaptured(true);
-      toast.success("Results saved! Check your recommendations below.");
+      toast.success("Results saved. See your recommendations below.");
     } catch {
       setLeadCaptured(true);
     }
@@ -72,38 +72,38 @@ const SkillsGapAssessment = () => {
   if (showResults && results) {
     return (
       <div className="min-h-screen bg-background">
-        <SEOHead title="Your Skills Gap Results" description="Your personalised leadership skills gap analysis based on LinkedIn's 2026 rising skills." path="/skills-assessment" />
+        <SEOHead title="Your Diagnostic Results" description="Your leadership capability diagnostic results with personalised development recommendations." path="/skills-assessment" />
         <Header />
         <main className="pt-28 pb-20">
           <div className="container-narrow max-w-3xl mx-auto">
             <AnimatedSection className="text-center mb-12">
               <Badge className="mb-4 bg-secondary/10 text-secondary border-secondary/30">
-                <BarChart3 className="h-3 w-3 mr-1" /> Your Results
+                <BarChart3 className="h-3 w-3 mr-1" /> Diagnostic Results
               </Badge>
               <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-foreground mb-4">
-                Your Leadership Skills Gap Analysis
+                Leadership Capability Diagnostic
               </h1>
               <p className="text-muted-foreground text-lg">
-                Based on LinkedIn's 2026 fastest-rising skills framework
+                Structured assessment across interpersonal, strategic, and digital readiness dimensions
               </p>
             </AnimatedSection>
 
             {/* Overall Score */}
             <AnimatedSection delay={100}>
               <div className="rounded-2xl bg-gradient-to-br from-primary via-primary/95 to-primary/90 p-8 text-center mb-8 shadow-xl">
-                <p className="text-primary-foreground/70 text-sm uppercase tracking-wider mb-2">Overall Score</p>
+                <p className="text-primary-foreground/70 text-sm uppercase tracking-wider mb-2">Composite Score</p>
                 <p className="text-5xl font-bold text-primary-foreground mb-2">
                   {results.overallScore} <span className="text-2xl text-primary-foreground/60">/ {results.maxScore}</span>
                 </p>
                 <p className="text-primary-foreground/80">
-                  {results.overallScore >= 28 ? "Advanced Leader" : results.overallScore >= 20 ? "Developing Leader" : "Emerging Leader"}
+                  {results.overallScore >= 28 ? "Strong Capability" : results.overallScore >= 20 ? "Developing Capability" : "Priority Development Areas Identified"}
                 </p>
               </div>
             </AnimatedSection>
 
             {/* Skill Breakdown */}
             <AnimatedSection delay={200}>
-              <h2 className="font-serif text-2xl font-semibold mb-6">Skill-by-Skill Breakdown</h2>
+              <h2 className="font-serif text-2xl font-semibold mb-6">Capability Breakdown</h2>
               <div className="space-y-4 mb-10">
                 {results.results.map((result, i) => {
                   const catInfo = categoryLabels[result.category];
@@ -137,7 +137,7 @@ const SkillsGapAssessment = () => {
               <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 mb-10">
                 <h3 className="font-semibold text-foreground flex items-center gap-2 mb-4">
                   <Target className="h-5 w-5 text-destructive" />
-                  Your Top Development Priorities
+                  Your Priority Development Areas
                 </h3>
                 <div className="space-y-3">
                   {results.topGaps.map((gap) => (
@@ -158,11 +158,11 @@ const SkillsGapAssessment = () => {
               <div className="rounded-2xl bg-gradient-to-br from-secondary/10 to-primary/10 border-2 border-secondary/30 p-8 text-center mb-10">
                 <Sparkles className="h-8 w-8 text-secondary mx-auto mb-3" />
                 <h3 className="font-serif text-xl font-semibold text-foreground mb-2">
-                  Recommended For You
+                  Recommended Development Pathway
                 </h3>
                 <p className="text-lg font-medium text-secondary mb-2">{results.recommendedCourse.name}</p>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Based on your skills profile, this programme addresses your biggest development areas.
+                  Based on your capability profile, this programme addresses your highest-priority development areas.
                 </p>
                 <Button variant="hero" size="lg" className="shadow-lg shadow-secondary/30" asChild>
                   <a href={results.recommendedCourse.link} target="_blank" rel="noopener noreferrer">
@@ -177,9 +177,9 @@ const SkillsGapAssessment = () => {
             {!leadCaptured && (
               <AnimatedSection delay={500}>
                 <div className="rounded-2xl bg-card border border-border/50 p-8 text-center">
-                  <h3 className="font-semibold text-foreground mb-2">Save Your Results & Get Our Free Guide</h3>
+                  <h3 className="font-semibold text-foreground mb-2">Save Your Diagnostic Results</h3>
                   <p className="text-sm text-muted-foreground mb-6">
-                    Enter your details to save your skills gap analysis and receive our "5 Leadership Secrets" PDF.
+                    Enter your details to retain your results and receive our executive briefing paper.
                   </p>
                   <form onSubmit={handleLeadCapture} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
                     <input
@@ -191,7 +191,7 @@ const SkillsGapAssessment = () => {
                     />
                     <input
                       type="email"
-                      placeholder="Your email"
+                      placeholder="Business email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -209,7 +209,7 @@ const SkillsGapAssessment = () => {
               <AnimatedSection delay={500}>
                 <div className="rounded-2xl bg-primary/5 border border-primary/20 p-6 text-center">
                   <CheckCircle className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <p className="text-foreground font-medium">Results saved! Your free guide is on its way.</p>
+                  <p className="text-foreground font-medium">Results saved. Your executive briefing is on its way.</p>
                 </div>
               </AnimatedSection>
             )}
@@ -223,8 +223,8 @@ const SkillsGapAssessment = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Leadership Skills Gap Assessment"
-        description="Discover your leadership skill gaps based on LinkedIn's 2026 fastest-rising skills. Free assessment with personalised course recommendations."
+        title="Leadership Capability Diagnostic"
+        description="Assess your leadership capability across interpersonal, strategic, and digital readiness dimensions. Complimentary diagnostic with personalised development recommendations."
         path="/skills-assessment"
       />
       <Header />
@@ -232,13 +232,13 @@ const SkillsGapAssessment = () => {
         <div className="container-narrow max-w-2xl mx-auto">
           <AnimatedSection className="text-center mb-10">
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/30">
-              <Brain className="h-3 w-3 mr-1" /> Based on LinkedIn 2026 Data
+              <Brain className="h-3 w-3 mr-1" /> Diagnostic Instrument
             </Badge>
             <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-foreground mb-3">
-              Leadership Skills Gap Assessment
+              Leadership Capability Diagnostic
             </h1>
             <p className="text-muted-foreground">
-              Discover how your skills stack up against LinkedIn's fastest-rising skills for 2026.
+              Assess your executive capability across the dimensions that define senior leadership effectiveness.
             </p>
           </AnimatedSection>
 
@@ -307,9 +307,9 @@ const SkillsGapAssessment = () => {
                   >
                     <ArrowLeft className="h-4 w-4" /> Back
                   </Button>
-                  <span className="text-xs text-muted-foreground self-center">
-                    Click an answer to continue
-                  </span>
+                   <span className="text-xs text-muted-foreground self-center">
+                     Select a response to proceed
+                   </span>
                 </div>
               </div>
             </motion.div>
