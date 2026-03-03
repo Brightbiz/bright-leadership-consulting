@@ -10,20 +10,25 @@
     --teal: #1a6b6b;
     --teal-dark: #0f4a4a;
     --teal-light: #e0f2f2;
-    --amber: #e5a028;
-    --amber-light: #fef3d0;
     --dark: #1a2530;
-    --gray: #64748b;
-    --gray-light: #94a3b8;
+    --slate-800: #1e293b;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --slate-200: #e2e8f0;
     --light: #f8fafb;
-    --red: #dc2626;
-    --red-light: #fef2f2;
     --variance-elevated: #0f4a4a;
     --variance-elevated-bg: #d0e8e8;
     --variance-moderate: #1a6b6b;
     --variance-moderate-bg: #e0f2f2;
     --variance-low: #94b8b8;
     --variance-low-bg: #f0f7f7;
+    /* Dispersion — monochrome tonal */
+    --exec-a: #0f4a4a;
+    --exec-b: #1a6b6b;
+    --exec-c: #2d8a8a;
+    --exec-d: #5ba3a3;
+    --exec-e: #94b8b8;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; line-height: 1.6; }
@@ -41,12 +46,12 @@
     align-items: flex-start;
   }
   .report-title { font-size: 22px; color: var(--teal-dark); margin-bottom: 4px; }
-  .report-subtitle { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
-  .report-meta { text-align: right; font-size: 11px; color: var(--gray); line-height: 1.8; }
+  .report-subtitle { font-size: 11px; color: var(--slate-500); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+  .report-meta { text-align: right; font-size: 11px; color: var(--slate-500); line-height: 1.8; }
   .report-meta strong { color: var(--dark); }
   .confidential-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    background: var(--red-light); color: var(--red); padding: 3px 10px;
+    background: var(--slate-200); color: var(--slate-600); padding: 3px 10px;
     border-radius: 4px; font-size: 9px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px;
   }
@@ -54,7 +59,7 @@
   /* Section labels */
   .section-num {
     font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: var(--gray-light); margin-bottom: 6px;
+    letter-spacing: 2px; color: var(--slate-400); margin-bottom: 6px;
   }
   .section-title { font-size: 16px; color: var(--dark); margin-bottom: 12px; }
 
@@ -72,7 +77,7 @@
     font-size: 56px; font-weight: 700; color: var(--teal);
     line-height: 1;
   }
-  .composite-max { font-size: 20px; color: var(--gray-light); font-weight: 400; }
+  .composite-max { font-size: 20px; color: var(--slate-400); font-weight: 400; }
   .composite-status {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 16px; border-radius: 20px;
@@ -81,7 +86,7 @@
   }
   .composite-status .dot { width: 6px; height: 6px; border-radius: 50%; }
   .composite-interpretation {
-    margin-top: 16px; font-size: 13px; color: var(--gray);
+    margin-top: 16px; font-size: 13px; color: var(--slate-500);
     max-width: 520px; margin-left: auto; margin-right: auto;
     font-style: italic;
   }
@@ -91,8 +96,8 @@
   .dimension-table th {
     text-align: left; font-size: 10px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 1.5px;
-    color: var(--gray-light); padding: 8px 12px;
-    border-bottom: 2px solid #e8edf2;
+    color: var(--slate-400); padding: 8px 12px;
+    border-bottom: 2px solid var(--slate-200);
   }
   .dimension-table td {
     padding: 12px; border-bottom: 1px solid #f1f5f9;
@@ -131,16 +136,16 @@
     width: 8px; height: 8px; border-radius: 50%;
     border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
-  .dispersion-dot.exec-a { background: var(--teal); }
-  .dispersion-dot.exec-b { background: var(--amber); }
-  .dispersion-dot.exec-c { background: #7c3aed; }
-  .dispersion-dot.exec-d { background: #e11d48; }
-  .dispersion-dot.exec-e { background: #0891b2; }
+  .dispersion-dot.exec-a { background: var(--exec-a); }
+  .dispersion-dot.exec-b { background: var(--exec-b); }
+  .dispersion-dot.exec-c { background: var(--exec-c); }
+  .dispersion-dot.exec-d { background: var(--exec-d); }
+  .dispersion-dot.exec-e { background: var(--exec-e); }
   .dispersion-legend {
     display: flex; gap: 16px; margin-top: 12px; justify-content: center;
   }
-  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--gray); }
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--slate-500); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
 
   /* Priority Action Matrix */
   .matrix-grid {
@@ -152,7 +157,7 @@
     grid-column: 1 / -1;
     display: grid; grid-template-columns: 1fr 1fr;
     font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--gray-light); text-align: center;
+    letter-spacing: 1px; color: var(--slate-400); text-align: center;
   }
   .matrix-header span { padding: 10px; border-bottom: 1px solid #e8edf2; }
   .matrix-cell {
@@ -167,13 +172,13 @@
   .matrix-q1 .matrix-label { color: var(--variance-elevated); }
   .matrix-q2 .matrix-label { color: var(--teal); }
   .matrix-q3 .matrix-label { color: var(--variance-moderate); }
-  .matrix-q4 .matrix-label { color: var(--gray-light); }
+  .matrix-q4 .matrix-label { color: var(--slate-400); }
   .matrix-item { font-size: 12px; color: var(--dark); margin-bottom: 6px; padding-left: 12px; position: relative; }
   .matrix-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
   .matrix-axis-label {
     writing-mode: vertical-rl; text-orientation: mixed;
     font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--gray-light);
+    letter-spacing: 1px; color: var(--slate-400);
     display: flex; align-items: center; justify-content: center;
     padding: 8px;
   }
@@ -182,7 +187,7 @@
   .commentary-list { list-style: none; }
   .commentary-list li {
     position: relative; padding: 10px 0 10px 20px;
-    font-size: 13px; color: var(--gray); line-height: 1.7;
+    font-size: 13px; color: var(--slate-500); line-height: 1.7;
     border-bottom: 1px solid #f8fafb;
   }
   .commentary-list li::before {
@@ -196,7 +201,7 @@
     margin-top: 32px; padding-top: 16px;
     border-top: 1px solid #e8edf2;
     display: flex; justify-content: space-between;
-    font-size: 10px; color: var(--gray-light);
+    font-size: 10px; color: var(--slate-400);
   }
 
   /* Download Bar */
@@ -208,11 +213,11 @@
   }
   .download-bar p { color: rgba(255,255,255,0.6); font-size: 13px; }
   .download-btn {
-    background: var(--amber); color: var(--dark); padding: 10px 28px;
+    background: var(--teal); color: #fff; padding: 10px 28px;
     border-radius: 8px; font-size: 13px; font-weight: 700; border: none;
     cursor: pointer; transition: all 0.3s;
   }
-  .download-btn:hover { background: #b87d1a; }
+  .download-btn:hover { background: var(--teal-dark); }
 
   @media print {
     .download-bar { display: none !important; }
@@ -349,11 +354,11 @@
       </div>
     </div>
     <div class="dispersion-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> Exec A</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> Exec B</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div> Exec C</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#e11d48"></div> Exec D</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div> Exec E</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-a)"></div> Exec A</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-b)"></div> Exec B</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-c)"></div> Exec C</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-d)"></div> Exec D</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-e)"></div> Exec E</div>
     </div>
   </div>
 
