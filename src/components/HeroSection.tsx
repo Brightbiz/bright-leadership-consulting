@@ -20,25 +20,29 @@ const HeroSection = () => {
             <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
               <Shield className="h-4 w-4 text-secondary" />
               <span className="text-sm font-semibold text-primary-foreground">
-                Strategic Advisory & Executive Development
+                Executive Alignment Architecture
               </span>
             </div>
 
+            <p className="mb-4 text-sm font-medium tracking-widest text-secondary uppercase animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              Measured alignment · Governance clarity · Structural cohesion
+            </p>
+
             <h1 className="mb-6 font-serif text-2xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-              <TextReveal delay={0.2}>
-                Structural Clarity for Leaders Operating Under Complexity
+              <TextReveal delay={0.3}>
+                Executive Alignment Architecture for Teams Operating Under Complexity
               </TextReveal>
             </h1>
 
-            <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
-              We help executive teams align on the decisions that matter most — 
-              strengthening governance, accelerating strategic execution, and building 
-              the leadership capability organisations need to scale with confidence.
+            <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
+              Bright Leadership Consulting advises executive teams during growth, 
+              leadership transition, and AI-driven transformation — ensuring 
+              executive alignment is measured, not assumed.
             </p>
 
-            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
+            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.7s' }}>
               <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
-                Arrange a Conversation
+                Enquire Confidentially
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
               <MagneticButton
@@ -53,7 +57,7 @@ const HeroSection = () => {
             </div>
 
             {/* Stats */}
-            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1s' }}>
+            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1.1s' }}>
               {[
                 { value: "15+", label: "Years Advisory Experience" },
                 { value: "6", label: "Governance Dimensions" },
