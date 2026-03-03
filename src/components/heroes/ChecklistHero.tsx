@@ -103,17 +103,17 @@ const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
             >
               <ClipboardCheck className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold text-primary">
-                Free Assessment
+                Diagnostic Instrument
               </span>
             </motion.div>
 
             <h1 className="mb-6 font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
-                The Ultimate Leadership
+                Leadership Capability
               </TextReveal>
               <span className="block mt-2 text-primary">
                 <TextReveal delay={0.4}>
-                  Skills Checklist
+                  Diagnostic
                 </TextReveal>
               </span>
             </h1>
@@ -124,8 +124,8 @@ const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-lg text-muted-foreground leading-relaxed sm:text-xl max-w-xl"
             >
-              Honestly assess your current leadership strengths and areas for development. 
-              Check each box where you feel confident, then view your score.
+              A structured self-assessment across 20 leadership indicators. 
+              Identify your strengths and priority development areas.
             </motion.p>
 
             {!isLoggedIn && (
@@ -163,16 +163,16 @@ const ChecklistHero = ({ isLoggedIn, hasLastSaved }: ChecklistHeroProps) => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl scale-105" />
                 
                 <div className="relative bg-card/95 backdrop-blur-xl rounded-3xl border border-border/50 p-6 shadow-2xl">
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">
-                    Score Levels
-                  </h3>
+                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">
+                     Capability Levels
+                   </h3>
                   
                   <div className="space-y-4">
-                    {[
-                      { icon: Award, label: "Leadership Master", range: "16-20", color: "score-master" },
-                      { icon: TrendingUp, label: "Emerging Leader", range: "11-15", color: "score-emerging" },
-                      { icon: Target, label: "Aspiring Leader", range: "0-10", color: "score-aspiring" },
-                    ].map((level, index) => (
+                     {[
+                       { icon: Award, label: "Established Capability", range: "16-20", color: "score-master" },
+                       { icon: TrendingUp, label: "Developing Capability", range: "11-15", color: "score-emerging" },
+                       { icon: Target, label: "Priority Development", range: "0-10", color: "score-aspiring" },
+                     ].map((level, index) => (
                       <motion.div
                         key={level.label}
                         initial={{ opacity: 0, x: 20 }}

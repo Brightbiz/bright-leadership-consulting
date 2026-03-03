@@ -80,8 +80,8 @@ const checklistData: ChecklistSection[] = [
 const getScoreLevel = (score: number) => {
   if (score >= 16) {
     return {
-      level: "Leadership Master",
-      description: "You are operating at a high level. Focus on mentoring others and sharing your expertise.",
+      level: "Established Capability",
+      description: "Your leadership practices are well-developed. Consider how you can extend this capability across your wider team.",
       icon: Award,
       color: "text-score-master-foreground",
       bgColor: "bg-score-master-bg",
@@ -89,8 +89,8 @@ const getScoreLevel = (score: number) => {
     };
   } else if (score >= 11) {
     return {
-      level: "Emerging Leader",
-      description: "You have a strong foundation but need consistency in key areas. Keep developing!",
+      level: "Developing Capability",
+      description: "You have a strong foundation with clear areas for further development. A structured programme would accelerate your progress.",
       icon: TrendingUp,
       color: "text-score-emerging-foreground",
       bgColor: "bg-score-emerging-bg",
@@ -98,8 +98,8 @@ const getScoreLevel = (score: number) => {
     };
   } else {
     return {
-      level: "Aspiring Leader",
-      description: "Prioritize foundational skills training immediately. Every expert was once a beginner!",
+      level: "Priority Development",
+      description: "There are significant opportunities to strengthen your leadership practice. We recommend a structured development engagement.",
       icon: Target,
       color: "text-score-aspiring-foreground",
       bgColor: "bg-score-aspiring-bg",
@@ -231,14 +231,14 @@ const LeadershipChecklist = () => {
                 </Button>
                 <Link to="/#contact">
                   <Button variant="teal" className="rounded-xl group">
-                    Get Leadership Coaching
+                    Arrange a Conversation
                     <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
               <SocialShare
                 title="Leadership Skills Assessment"
-                text={`I scored ${score}/${totalItems} on the Leadership Skills Checklist and achieved "${scoreLevel.level}" level! Take the assessment to discover your leadership strengths.`}
+                text={`I scored ${score}/${totalItems} on the Leadership Capability Diagnostic and achieved "${scoreLevel.level}" level. Take the diagnostic to assess your own leadership strengths.`}
                 url={`${window.location.origin}/leadership-checklist`}
               />
             </div>
@@ -250,29 +250,29 @@ const LeadershipChecklist = () => {
           <AnimatedSection>
             <div className="mb-12 rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden shadow-sm">
               <div className="p-6 border-b border-border/50 bg-muted/30">
-                <h3 className="text-lg font-semibold font-serif">Scoring Guide</h3>
+                <h3 className="text-lg font-semibold font-serif">Diagnostic Scoring</h3>
               </div>
               <div className="p-6">
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="flex items-start gap-3 p-4 rounded-xl bg-score-master-bg border border-score-master-border">
                     <Award className="h-5 w-5 text-score-master mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-score-master-foreground">16-20 Checks</p>
-                      <p className="text-sm text-score-master">Leadership Master</p>
+                       <p className="font-medium text-score-master-foreground">16-20 Indicators</p>
+                       <p className="text-sm text-score-master">Established Capability</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-4 rounded-xl bg-score-emerging-bg border border-score-emerging-border">
                     <TrendingUp className="h-5 w-5 text-score-emerging mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-score-emerging-foreground">11-15 Checks</p>
-                      <p className="text-sm text-score-emerging">Emerging Leader</p>
+                       <p className="font-medium text-score-emerging-foreground">11-15 Indicators</p>
+                       <p className="text-sm text-score-emerging">Developing Capability</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-4 rounded-xl bg-score-aspiring-bg border border-score-aspiring-border">
                     <Target className="h-5 w-5 text-score-aspiring mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-score-aspiring-foreground">0-10 Checks</p>
-                      <p className="text-sm text-score-aspiring">Aspiring Leader</p>
+                       <p className="font-medium text-score-aspiring-foreground">0-10 Indicators</p>
+                       <p className="text-sm text-score-aspiring">Priority Development</p>
                     </div>
                   </div>
                 </div>
@@ -332,13 +332,13 @@ const LeadershipChecklist = () => {
 
         {/* Submit Button */}
         <div className="mt-12 text-center">
-          <Button
+           <Button
             variant="teal"
             size="xl"
             onClick={handleShowResults}
             className="px-10 rounded-xl group shadow-lg shadow-primary/20"
           >
-            View My Results
+            View Diagnostic Results
             <CheckCircle2 className="ml-2 h-5 w-5" />
           </Button>
           {score > 0 && !showResults && (
@@ -354,14 +354,14 @@ const LeadershipChecklist = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
         <div className="container mx-auto px-4 text-center relative">
           <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-4">
-            Ready to Fill the Gaps in Your Checklist?
+            Want to Discuss Your Results?
           </h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
-            Take the next step in your professional journey with our Executive Leadership Mastery Program.
+            Arrange a confidential conversation with our advisory team to explore how we can support your development priorities.
           </p>
           <Link to="/#contact">
             <Button variant="teal" size="lg" className="rounded-xl group shadow-lg shadow-primary/20">
-              Get Started Today
+              Arrange a Conversation
               <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
