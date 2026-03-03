@@ -90,11 +90,8 @@ const Header = () => {
 
           <div className="hidden items-center gap-3 md:flex">
             <ThemeToggle />
-            <Button variant="ghost" size="sm">
-              My Account
-            </Button>
             <Button variant="teal" size="default" asChild>
-              <a href="/contact">Contact Us</a>
+              <a href="/contact">Enquire</a>
             </Button>
           </div>
 
@@ -130,11 +127,8 @@ const Header = () => {
                   <span className="text-sm text-muted-foreground">Theme</span>
                   <ThemeToggle />
                 </div>
-                <Button variant="outline" className="w-full">
-                  My Account
-                </Button>
                 <Button variant="teal" className="w-full" asChild>
-                  <a href="/contact" onClick={() => setIsMenuOpen(false)}>Contact Us</a>
+                  <a href="/contact" onClick={() => setIsMenuOpen(false)}>Enquire</a>
                 </Button>
               </div>
             </div>

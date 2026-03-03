@@ -9,9 +9,6 @@ import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import PageLoader from "@/components/PageLoader";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
-import StickyMobileCTA from "@/components/StickyMobileCTA";
-import SocialProofNotifications from "@/components/SocialProofNotifications";
 import FloatingChatWidget from "@/components/FloatingChatWidget";
 
 // Lazy load pages for better performance
@@ -85,10 +82,6 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AnimatedRoutes />
-            {/* Conversion Optimization Components */}
-            <ExitIntentPopup />
-            <StickyMobileCTA />
-            <SocialProofNotifications />
             <FloatingChatWidget />
           </BrowserRouter>
         </TooltipProvider>

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Play, ClipboardCheck, Award, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Play, Shield } from "lucide-react";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
 import MagneticButton from "./MagneticButton";
@@ -19,62 +18,46 @@ const HeroSection = () => {
           <div className="max-w-2xl min-w-0">
             {/* Badge */}
             <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
-              <Award className="h-4 w-4 text-secondary" />
+              <Shield className="h-4 w-4 text-secondary" />
               <span className="text-sm font-semibold text-primary-foreground">
-                CPD Accredited Programs
+                Strategic Advisory & Executive Development
               </span>
             </div>
 
             <h1 className="mb-6 font-serif text-2xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
               <TextReveal delay={0.2}>
-                The Leadership Skills AI Can't Teach
+                Structural Clarity for Leaders Operating Under Complexity
               </TextReveal>
             </h1>
 
             <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
-              In a world racing to automate, the leaders who thrive are those who master 
-              the human skills machines can't replicate — emotional intelligence, strategic 
-              decision-making, and cross-team collaboration.
+              We help executive teams align on the decisions that matter most — 
+              strengthening governance, accelerating strategic execution, and building 
+              the leadership capability organisations need to scale with confidence.
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
-              <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="#executive-program">
-                Get Started
+              <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
+                Arrange a Conversation
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
-            </div>
-
-            {/* Skills Gap Assessment CTA */}
-            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: '0.8s' }}>
-              <Link to="/skills-assessment">
-                <MagneticButton 
-                  variant="ghost" 
-                  size="lg" 
-                  className="border-2 border-secondary/60 bg-secondary/10 text-secondary hover:bg-secondary/20 hover:border-secondary hover:text-secondary font-semibold group backdrop-blur-sm"
-                >
-                  <BarChart3 className="h-5 w-5 mr-2 flex-shrink-0" />
-                  <span className="truncate">Free Skills Gap Assessment</span>
-                  <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0 transition-transform group-hover:translate-x-1" />
-                </MagneticButton>
-              </Link>
-              <Link to="/leadership-checklist">
-                <MagneticButton 
-                  variant="ghost" 
-                  size="lg" 
-                  className="border-2 border-white/30 bg-white/5 text-primary-foreground/80 hover:bg-white/10 hover:border-white/50 hover:text-primary-foreground font-semibold group backdrop-blur-sm"
-                >
-                  <ClipboardCheck className="h-5 w-5 mr-2 flex-shrink-0" />
-                  <span className="truncate">Leadership Checklist</span>
-                </MagneticButton>
-              </Link>
+              <MagneticButton
+                variant="ghost"
+                size="lg"
+                className="border-2 border-white/30 bg-white/5 text-primary-foreground/80 hover:bg-white/10 hover:border-white/50 hover:text-primary-foreground font-semibold group backdrop-blur-sm"
+                href="/executive-alignment-index"
+              >
+                <Shield className="h-5 w-5 mr-2 flex-shrink-0" />
+                <span className="truncate">Executive Alignment Index</span>
+              </MagneticButton>
             </div>
 
             {/* Stats */}
             <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1s' }}>
               {[
-                { value: "500+", label: "Leaders Coached" },
-                { value: "95%", label: "Success Rate" },
-                { value: "15+", label: "Years Experience" },
+                { value: "15+", label: "Years Advisory Experience" },
+                { value: "6", label: "Governance Dimensions" },
+                { value: "CPD", label: "Accredited Programs" },
               ].map((stat) => (
                 <div key={stat.label} className="group cursor-default">
                   <div className="font-serif text-2xl font-semibold text-secondary sm:text-3xl transition-transform group-hover:scale-105">

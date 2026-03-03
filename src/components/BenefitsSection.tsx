@@ -1,26 +1,26 @@
 import { motion } from "framer-motion";
 import {
   TrendingUp,
-  Heart,
+  Shield,
   Award,
   Zap,
   Scale,
-  Sparkles,
   Target,
   Building,
+  GitBranch,
 } from "lucide-react";
 import TiltCard from "./TiltCard";
 import TextReveal from "./TextReveal";
 
 const benefits = [
-  { icon: TrendingUp, title: "Enhanced Leadership Skills", description: "Master the art of inspiring and guiding teams", size: "large" },
-  { icon: Heart, title: "Job Satisfaction Boost", description: "Find deeper meaning and fulfillment in your role", size: "small" },
-  { icon: Award, title: "Financial Rewards", description: "Unlock career advancement and growth opportunities", size: "small" },
-  { icon: Zap, title: "Productivity Surge", description: "Achieve more with focused, effective leadership", size: "medium" },
-  { icon: Scale, title: "Work-Life Harmony", description: "Balance professional success with personal wellbeing", size: "medium" },
-  { icon: Sparkles, title: "Holistic Growth", description: "Develop as a complete leader and person", size: "small" },
-  { icon: Target, title: "Career Acceleration", description: "Fast-track your path to executive positions", size: "small" },
-  { icon: Building, title: "Organisational Flourishing", description: "Create lasting positive impact on your organization", size: "large" },
+  { icon: TrendingUp, title: "Strategic Execution Velocity", description: "Accelerate the speed from decision to outcome across the executive team", size: "large" },
+  { icon: Shield, title: "Governance Clarity", description: "Define decision rights, escalation pathways, and accountability architecture", size: "small" },
+  { icon: GitBranch, title: "Executive Alignment", description: "Reduce structural variance where it creates the highest governance risk", size: "small" },
+  { icon: Zap, title: "Operational Confidence", description: "Build the leadership capability to scale without losing coherence", size: "medium" },
+  { icon: Scale, title: "Board-Ready Reporting", description: "Provide boards with objective visibility into executive cohesion", size: "medium" },
+  { icon: Award, title: "CPD-Accredited Development", description: "Recognised programs that build lasting leadership capability", size: "small" },
+  { icon: Target, title: "Post-Merger Integration", description: "Align newly combined leadership teams around shared governance structures", size: "small" },
+  { icon: Building, title: "Organisational Resilience", description: "Strengthen the structural foundations that sustain performance under pressure", size: "large" },
 ];
 
 const containerVariants = {
@@ -80,18 +80,6 @@ const BenefitsSection = () => {
           ease: "easeInOut",
         }}
       />
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.5, 0.8, 0.5],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
       
       {/* Grain texture */}
       <div 
@@ -120,19 +108,19 @@ const BenefitsSection = () => {
           className="mx-auto mb-16 max-w-3xl text-center"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-5 py-2.5 border border-white/20">
-            <Sparkles className="h-4 w-4 text-secondary" />
+            <Shield className="h-4 w-4 text-secondary" />
             <span className="text-sm font-bold text-white uppercase tracking-wider">
-              Why Choose Us
+              Organisational Outcomes
             </span>
           </div>
           <h2 className="mb-6 font-serif text-3xl font-semibold text-primary-foreground sm:text-4xl lg:text-5xl">
             <TextReveal delay={0.2}>
-              Benefits of Executive Coaching
+              What Changes When Executive Teams Align
             </TextReveal>
           </h2>
           <p className="text-lg text-primary-foreground/80 leading-relaxed">
-            Unlock your leadership potential and experience transformative growth 
-            across all areas of your professional and personal life.
+            The measurable impact of structural clarity across governance, 
+            decision-making, and leadership capability.
           </p>
         </motion.div>
 
@@ -144,7 +132,7 @@ const BenefitsSection = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-4"
         >
-          {benefits.map((benefit, index) => {
+          {benefits.map((benefit) => {
             const isLarge = benefit.size === "large";
             const isMedium = benefit.size === "medium";
             

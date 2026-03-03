@@ -1,4 +1,4 @@
-import { Footprints } from "lucide-react";
+import { Layers } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import teamImage from "@/assets/team-collaboration.jpg";
@@ -8,23 +8,23 @@ import TextReveal from "./TextReveal";
 const steps = [
   {
     number: "01",
-    title: "Initial Assessment",
-    description: "We begin by understanding your unique needs, aspirations, and challenges.",
+    title: "Discovery & Scoping",
+    description: "We begin with a confidential conversation to understand the governance context, organisational complexity, and strategic objectives.",
   },
   {
     number: "02",
-    title: "Personalized Plan",
-    description: "A coaching plan crafted just for you, aligned with your goals and growth areas.",
+    title: "Diagnostic & Assessment",
+    description: "Structured assessment across critical dimensions — identifying where executive alignment creates or constrains organisational performance.",
   },
   {
     number: "03",
-    title: "Coaching Sessions",
-    description: "Dive into dynamic one-on-one sessions with our seasoned coaches.",
+    title: "Board-Ready Reporting",
+    description: "A concise, data-led report with actionable recommendations — designed for executive teams and governance committees.",
   },
   {
     number: "04",
-    title: "Ongoing Support",
-    description: "Continued support and resources beyond the sessions for lasting transformation.",
+    title: "Advisory & Implementation",
+    description: "Ongoing strategic advisory to support execution, recalibration, and sustained leadership capability development.",
   },
 ];
 
@@ -65,10 +65,9 @@ const ProcessSection = () => {
               <div className="relative overflow-hidden rounded-3xl shadow-2xl shadow-primary/10">
                 <img
                   src={teamImage}
-                  alt="Leadership team collaboration"
+                  alt="Executive advisory engagement"
                   className="h-full w-full object-cover"
                 />
-                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
               </div>
             </TiltCard>
@@ -83,7 +82,7 @@ const ProcessSection = () => {
               whileHover={{ scale: 1.05 }}
             >
               <div className="font-serif text-3xl font-bold text-secondary-foreground">15+</div>
-              <div className="text-sm font-medium text-secondary-foreground/80">Years of Excellence</div>
+              <div className="text-sm font-medium text-secondary-foreground/80">Years of Experience</div>
             </motion.div>
             
             {/* Additional floating element */}
@@ -97,11 +96,11 @@ const ProcessSection = () => {
             >
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Footprints className="h-5 w-5 text-primary" />
+                  <Layers className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <div className="font-semibold text-foreground text-sm">500+</div>
-                  <div className="text-xs text-muted-foreground">Leaders Transformed</div>
+                  <div className="font-semibold text-foreground text-sm">Board-Ready</div>
+                  <div className="text-xs text-muted-foreground">Governance Reporting</div>
                 </div>
               </div>
             </motion.div>
@@ -116,18 +115,18 @@ const ProcessSection = () => {
             className="order-1 lg:order-2"
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-secondary/15 to-primary/15 px-5 py-2.5 border border-secondary/20">
-              <Footprints className="h-4 w-4 text-secondary" />
+              <Layers className="h-4 w-4 text-secondary" />
               <span className="text-sm font-bold text-secondary uppercase tracking-wider">
-                Our Process
+                How We Work
               </span>
             </div>
             
             <h2 className="mb-6 font-serif text-3xl font-semibold text-foreground sm:text-4xl lg:text-5xl">
-              <TextReveal>Your Coaching Journey</TextReveal>
+              <TextReveal>Our Advisory Engagement</TextReveal>
             </h2>
             <p className="mb-10 text-lg text-muted-foreground leading-relaxed">
-              Our structured yet flexible approach ensures you receive the personalized 
-              guidance needed to unlock your full leadership potential.
+              A structured yet flexible approach — calibrated to organisational 
+              complexity, governance requirements, and strategic context.
             </p>
 
             <div className="relative space-y-6">

@@ -33,8 +33,8 @@ const Footer = () => {
               <Logo className="brightness-0 invert" />
             </div>
             <p className="mb-6 max-w-sm text-background/70 leading-relaxed">
-              Empowering leaders to achieve extraordinary results through 
-              personalized coaching and transformative training programs.
+              Strategic advisory and executive development for organisations 
+              navigating complexity, growth, and governance change.
             </p>
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-background/70">

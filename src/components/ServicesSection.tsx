@@ -1,4 +1,4 @@
-import { Users, GraduationCap, Briefcase, Sparkles, Star, ChevronRight } from "lucide-react";
+import { Users, GraduationCap, Briefcase, Shield, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import heroCoaching from "@/assets/hero-coaching.jpg";
@@ -13,28 +13,28 @@ const services = [
     icon: Users,
     title: "Executive Coaching",
     description:
-      "Personalized 1:1 coaching to develop the cross-team collaboration, emotional intelligence, and strategic decision-making that set exceptional leaders apart.",
-    features: ["Cross-Team Collaboration", "Emotional Intelligence", "Strategic Decision-Making"],
-    stats: { value: "1:1", label: "Sessions" },
+      "Bespoke 1:1 advisory for senior leaders navigating complexity — strengthening strategic decision-making, stakeholder alignment, and organisational influence.",
+    features: ["Strategic Decision-Making", "Stakeholder Alignment", "Organisational Influence"],
+    stats: { value: "1:1", label: "Advisory" },
     image: heroCoaching,
     accent: "primary" as const,
   },
   {
     icon: GraduationCap,
-    title: "Executive Training",
+    title: "Executive Development",
     description:
-      "CPD-accredited programs covering the human skills LinkedIn says are rising fastest — change leadership, client relations, and AI-ready leadership.",
-    features: ["CPD Accredited", "AI-Ready Leadership", "Client Relations"],
+      "CPD-accredited programs building the leadership capabilities organisations need — change leadership, cross-functional coordination, and governance readiness.",
+    features: ["CPD Accredited", "Change Leadership", "Governance Readiness"],
     stats: { value: "7", label: "Programs" },
     image: teamCollaboration,
     accent: "secondary" as const,
   },
   {
     icon: Briefcase,
-    title: "Corporate Retreats",
+    title: "Leadership Retreats",
     description:
-      "Immersive team experiences that build the interpersonal skills, strategic planning capabilities, and collaborative culture AI can't replicate.",
-    features: ["Team Collaboration", "Strategic Planning", "Culture Building"],
+      "Immersive executive experiences designed to recalibrate team alignment, accelerate strategic planning, and strengthen collective leadership capability.",
+    features: ["Executive Alignment", "Strategic Planning", "Team Cohesion"],
     stats: { value: "3-5", label: "Days" },
     image: corporateRetreat,
     accent: "primary" as const,
@@ -119,7 +119,7 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
             
-            {/* Stats Badge with pulse animation */}
+            {/* Stats Badge */}
             <motion.div 
               className={`absolute top-4 right-4 ${service.accent === 'secondary' ? 'bg-secondary text-secondary-foreground' : 'bg-primary text-primary-foreground'} px-4 py-2 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm flex items-center gap-1.5`}
               animate={{
@@ -138,29 +138,19 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
               <span className="uppercase tracking-wider opacity-90">{service.stats.label}</span>
             </motion.div>
             
-            {/* Icon with float and glow animation */}
+            {/* Icon */}
             <motion.div 
               className={`absolute bottom-4 left-6 h-14 w-14 flex items-center justify-center rounded-2xl bg-card/90 backdrop-blur-sm border ${service.accent === 'secondary' ? 'border-secondary/30' : 'border-primary/30'} shadow-xl`}
               animate={{
                 y: isHovered ? -8 : 0,
                 scale: isHovered ? 1.1 : 1,
-                boxShadow: isHovered 
-                  ? service.accent === 'secondary'
-                    ? '0 20px 40px -10px hsl(var(--secondary) / 0.4)'
-                    : '0 20px 40px -10px hsl(var(--primary) / 0.4)'
-                  : '0 10px 20px -5px rgba(0,0,0,0.1)',
               }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <motion.div
-                animate={{ rotate: isHovered ? [0, -10, 10, 0] : 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                <service.icon 
-                  className={`h-7 w-7 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} 
-                  strokeWidth={1.5} 
-                />
-              </motion.div>
+              <service.icon 
+                className={`h-7 w-7 ${service.accent === 'secondary' ? 'text-secondary' : 'text-primary'}`} 
+                strokeWidth={1.5} 
+              />
             </motion.div>
           </div>
           
@@ -183,37 +173,19 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
               {service.description}
             </p>
 
-            {/* Features with staggered animation */}
+            {/* Features */}
             <div className="flex flex-wrap gap-2 mb-6">
               {service.features.map((feature, featureIndex) => (
-                <motion.span 
+                <span 
                   key={feature} 
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
                     service.accent === 'secondary' 
                       ? 'bg-secondary/10 text-secondary border border-secondary/20' 
                       : 'bg-primary/10 text-primary border border-primary/20'
                   }`}
-                  animate={{
-                    scale: isHovered ? 1.05 : 1,
-                    y: isHovered ? -2 : 0,
-                    backgroundColor: isHovered 
-                      ? service.accent === 'secondary' ? 'hsl(var(--secondary) / 0.2)' : 'hsl(var(--primary) / 0.2)'
-                      : service.accent === 'secondary' ? 'hsl(var(--secondary) / 0.1)' : 'hsl(var(--primary) / 0.1)',
-                  }}
-                  transition={{ 
-                    duration: 0.3, 
-                    delay: isHovered ? featureIndex * 0.05 : 0,
-                    ease: "easeOut"
-                  }}
                 >
-                  <motion.div
-                    animate={{ rotate: isHovered ? 360 : 0 }}
-                    transition={{ duration: 0.6, delay: featureIndex * 0.1 }}
-                  >
-                    <Star className="h-3 w-3 fill-current" />
-                  </motion.div>
                   {feature}
-                </motion.span>
+                </span>
               ))}
             </div>
 
@@ -224,29 +196,14 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
               magneticStrength={0.15}
               href="/services"
             >
-              <motion.span 
-                className="flex items-center justify-center gap-2"
-                animate={{ x: isHovered ? 4 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <span className="flex items-center justify-center gap-2">
                 <span>Learn More</span>
-                <motion.div
-                  animate={{ 
-                    x: isHovered ? [0, 4, 0] : 0,
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    repeat: isHovered ? Infinity : 0,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </motion.div>
-              </motion.span>
+                <ChevronRight className="h-4 w-4" />
+              </span>
             </MagneticButton>
           </div>
           
-          {/* Animated accent line */}
+          {/* Accent line */}
           <motion.div 
             className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.accent === 'secondary' ? 'from-secondary via-primary to-secondary' : 'from-primary via-secondary to-primary'}`}
             initial={{ scaleX: 0 }}
@@ -255,17 +212,6 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
               originX: 0,
             }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-          />
-
-          {/* Shimmer effect on hover */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-            }}
-            initial={{ x: '-100%' }}
-            animate={{ x: isHovered ? '100%' : '-100%' }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
           />
         </motion.div>
       </TiltCard>
@@ -299,7 +245,7 @@ const ServicesSection = () => {
           >
             <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/80 dark:bg-card/80 backdrop-blur-sm px-6 py-3 shadow-lg shadow-primary/5 border border-border/50">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-secondary/80">
-                <Sparkles className="h-4 w-4 text-secondary-foreground" />
+                <Shield className="h-4 w-4 text-secondary-foreground" />
               </div>
               <span className="text-sm font-bold uppercase tracking-widest text-foreground">
                 Our Services
@@ -307,11 +253,12 @@ const ServicesSection = () => {
             </div>
             
             <h2 className="mb-8 font-serif text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl leading-tight">
-              <TextReveal>The Skills AI Can't Replace</TextReveal>
+              <TextReveal>Advisory, Development & Alignment</TextReveal>
             </h2>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              LinkedIn's 2026 data confirms: the fastest-rising skills are innately human. Choose your path to mastering them.
+              Helping executive teams build the capability, cohesion, and governance 
+              clarity their organisations need to operate at scale.
             </p>
           </motion.div>
 

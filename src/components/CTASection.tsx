@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
@@ -29,15 +29,15 @@ const CTASection = forwardRef<HTMLElement>((_, ref) => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Sparkles className="h-4 w-4 text-secondary" />
+                  <Shield className="h-4 w-4 text-secondary" />
                   <span className="text-sm font-bold text-white uppercase tracking-wider">
-                    Take Action Today
+                    Enquire Confidentially
                   </span>
                 </motion.div>
                 
                 <h2 className="mb-6 font-serif text-3xl font-semibold text-primary-foreground sm:text-4xl lg:text-5xl text-balance">
                   <TextReveal delay={0.3}>
-                    Unlock Your Leadership Potential
+                    The Right Conversation Starts Here
                   </TextReveal>
                 </h2>
                 
@@ -48,9 +48,9 @@ const CTASection = forwardRef<HTMLElement>((_, ref) => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
                 >
-                  Don't hesitate! Transform your leadership abilities with Bright Leadership 
-                  Consulting. Schedule your free consultation today and take the first step 
-                  towards extraordinary results.
+                  Whether you're navigating a leadership transition, preparing for growth, 
+                  or strengthening executive alignment — we'd welcome a conversation about 
+                  how we can help.
                 </motion.p>
                 
                 <motion.div 
@@ -61,11 +61,11 @@ const CTASection = forwardRef<HTMLElement>((_, ref) => {
                   transition={{ delay: 0.6 }}
                 >
                   <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="https://calendly.com/bbs-consulting/30min" target="_blank" rel="noopener noreferrer">
-                    Book Free Consultation
+                    Schedule a Conversation
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </MagneticButton>
                   <MagneticButton variant="heroOutline" size="xl" href="/contact">
-                    Just Ask a Question
+                    Contact Us Directly
                   </MagneticButton>
                 </motion.div>
               </div>
