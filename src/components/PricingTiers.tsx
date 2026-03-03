@@ -7,13 +7,13 @@ import ReadinessQuizModal from "./ReadinessQuizModal";
 
 const tiers = [
   {
-    name: "Self-Paced Executive Training",
+    name: "Self-Directed Executive Programme",
     icon: User,
     price: 1297,
     originalPrice: 1497,
     period: "one-time",
     installments: 3,
-    description: "Master leadership at your own pace with full programme access.",
+    description: "Master the full executive curriculum at your own pace with complete programme access.",
     features: [
       "All 33 modules (80+ hours of content)",
       "66 CPD points upon completion",
@@ -25,22 +25,22 @@ const tiers = [
     accent: "primary" as const,
     popular: true,
     limited: false,
-    cta: "Start Learning Today",
+    cta: "Begin Your Programme",
     link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
   },
   {
-    name: "Group Coaching",
+    name: "Cohort-Based Development",
     icon: Users,
     price: 1497,
     originalPrice: 1797,
     period: "one-time",
-    description: "Accelerate your growth with expert-led group coaching sessions.",
+    description: "Accelerate your growth with facilitated cohort sessions and peer learning.",
     features: [
-      "Everything in Self-Paced Mastery",
-      "6 live group coaching sessions",
+      "Everything in the Self-Directed Programme",
+      "6 live facilitated development sessions",
       "Peer learning community access",
-      "Monthly Q&A with instructors",
-      "Group accountability partners",
+      "Monthly Q&A with senior facilitators",
+      "Cohort accountability partners",
       "Priority email support",
     ],
     accent: "secondary" as const,
@@ -50,18 +50,18 @@ const tiers = [
     link: "https://calendly.com/bbs-consulting/30min",
   },
   {
-    name: "1:1 Executive Coaching",
+    name: "1:1 Advisory & Development",
     icon: Crown,
     price: 2197,
     originalPrice: 2997,
     period: "one-time",
-    description: "The ultimate transformation with dedicated personal coaching.",
+    description: "The most comprehensive engagement with dedicated advisory support.",
     features: [
-      "Everything in Group Coaching",
-      "6 private 1:1 coaching sessions",
-      "360° leadership assessment",
+      "Everything in Cohort-Based Development",
+      "6 private 1:1 advisory sessions",
+      "360° leadership diagnostic",
       "Personalised development plan",
-      "Direct access to your coach",
+      "Direct access to your advisor",
       "Executive network introductions",
     ],
     accent: "primary" as const,
@@ -94,10 +94,10 @@ const PricingTiers = () => {
         </div>
 
         <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-3">
-          Choose Your Path to Leadership Excellence
+          Select Your Development Engagement
         </h3>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Invest in yourself with our CPD-accredited programme. All tiers include the full 33-module curriculum with 66 CPD points.
+          All engagements include our CPD-accredited 33-module executive curriculum with 66 CPD points. Choose the level of advisory support that fits your objectives.
         </p>
       </div>
 
@@ -201,9 +201,9 @@ const PricingTiers = () => {
                 ))}
               </ul>
               {tier.limited && (
-                <p className="text-xs text-muted-foreground italic mb-4 px-1">
-                  Due to high demand, coaching places fill quickly. Submit an enquiry and we'll contact you if a slot becomes available.
-                </p>
+              <p className="text-xs text-muted-foreground italic mb-4 px-1">
+                   Due to high demand, places fill quickly. Submit an enquiry and we'll be in touch when a slot becomes available.
+                 </p>
               )}
 
               {/* CTA */}
@@ -254,11 +254,11 @@ const PricingTiers = () => {
             
             <div className="max-w-xl space-y-2">
               <h4 className="font-serif text-xl sm:text-2xl font-semibold text-foreground">
-                Not Sure Which Path Is Right for You?
-              </h4>
-              <p className="text-muted-foreground leading-relaxed">
-                Answer 6 quick questions and we'll recommend the best programme tier based on your goals, experience, and learning style.
-              </p>
+                 Not Sure Which Engagement Is Right for You?
+               </h4>
+               <p className="text-muted-foreground leading-relaxed">
+                 Answer 6 quick questions and we'll recommend the most appropriate engagement based on your objectives, experience, and development preferences.
+               </p>
             </div>
 
             <MagneticButton
@@ -289,7 +289,7 @@ const PricingTiers = () => {
         </div>
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-primary" />
-          <span>With further discounts off all training courses</span>
+          <span>With further discounts on all development programmes</span>
         </div>
       </div>
     </div>

@@ -43,10 +43,10 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     id: "learning_style",
     question: "How do you prefer to develop your skills?",
     options: [
-      { label: "Self-paced — I learn best on my own schedule", value: "self_paced", score: 1 },
-      { label: "Structured group learning with peers", value: "group", score: 2 },
-      { label: "A mix of self-study and live guidance", value: "blended", score: 3 },
-      { label: "Personalised 1:1 coaching and mentorship", value: "one_on_one", score: 4 },
+      { label: "Self-directed — I develop best on my own schedule", value: "self_paced", score: 1 },
+      { label: "Structured cohort learning with peers", value: "group", score: 2 },
+      { label: "A blend of self-study and facilitated guidance", value: "blended", score: 3 },
+      { label: "Personalised 1:1 advisory and mentorship", value: "one_on_one", score: 4 },
     ],
   },
   {
@@ -65,8 +65,8 @@ export const readinessQuizQuestions: QuizQuestion[] = [
     options: [
       { label: "I'm self-motivated — content is enough", value: "content_only", score: 1 },
       { label: "Occasional feedback would be helpful", value: "occasional", score: 2 },
-      { label: "Regular feedback in a group setting is ideal", value: "group_feedback", score: 3 },
-      { label: "Critical — I need a dedicated coach who knows my context", value: "dedicated_coach", score: 4 },
+      { label: "Regular feedback in a cohort setting is ideal", value: "group_feedback", score: 3 },
+      { label: "Critical — I need a dedicated advisor who understands my context", value: "dedicated_coach", score: 4 },
     ],
   },
 ];
@@ -83,21 +83,21 @@ export function getRecommendation(totalScore: number): TierRecommendation {
 
 export const tierDetails: Record<TierRecommendation, { name: string; description: string; ctaText: string; ctaLink: string }> = {
   "self-paced": {
-    name: "Self-Paced Executive Training",
-    description: "Based on your responses, the Self-Paced Executive Training tier is ideal for you. You'll get full access to all 33 modules and 66 CPD points — the same executive-level curriculum, delivered digitally so you can learn at your own pace. You can also combine this with 1:1 Executive Coaching later for maximum impact.",
-    ctaText: "Start Learning Today — £1,297",
+    name: "Self-Directed Executive Programme",
+    description: "Based on your responses, the Self-Directed Executive Programme is well suited to your development objectives. You'll receive full access to all 33 modules and 66 CPD points — the same executive-level curriculum, delivered digitally so you can progress at your own pace. This can also be combined with 1:1 Advisory sessions for a more tailored engagement.",
+    ctaText: "Begin Your Programme — £1,297",
     ctaLink: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
   },
   "group-coaching": {
-    name: "Group Coaching",
-    description: "Your goals suggest you'd benefit from structured group coaching alongside the full digital curriculum. Live sessions with peers and expert instructors will accelerate your development. You can also add 1:1 Executive Coaching for a fully personalised experience.",
-    ctaText: "Enquire About Group Coaching",
+    name: "Cohort-Based Development",
+    description: "Your goals suggest you'd benefit from structured cohort-based development alongside the full digital curriculum. Live sessions with peers and senior facilitators will accelerate your progress. You can also add 1:1 Advisory sessions for a fully personalised engagement.",
+    ctaText: "Enquire About Cohort Programme",
     ctaLink: "https://calendly.com/bbs-consulting/30min",
   },
   "executive-coaching": {
-    name: "1:1 Executive Coaching",
-    description: "You're looking for personalised, high-touch development. A dedicated coach will create a bespoke plan tailored to your challenges — combined with full access to the 33-module executive training programme for a comprehensive leadership transformation.",
-    ctaText: "Apply for Executive Coaching",
+    name: "1:1 Advisory & Development",
+    description: "You're seeking personalised, high-touch development. A dedicated advisor will create a bespoke plan tailored to your organisational challenges — combined with full access to the 33-module executive programme for a comprehensive leadership engagement.",
+    ctaText: "Enquire About 1:1 Advisory",
     ctaLink: "https://calendly.com/bbs-consulting/30min",
   },
 };
