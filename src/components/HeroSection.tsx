@@ -1,124 +1,53 @@
-import { useState } from "react";
-import { ArrowRight, Play, Shield } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import AnimatedGradient from "./AnimatedGradient";
 import TextReveal from "./TextReveal";
 import MagneticButton from "./MagneticButton";
 
 const HeroSection = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Animated Gradient Background */}
       <AnimatedGradient />
 
-      {/* Content */}
       <div className="container-narrow relative flex min-h-screen items-center pt-20 overflow-hidden">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center py-16 w-full">
-          <div className="max-w-2xl min-w-0">
-            {/* Badge */}
-            <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
-              <Shield className="h-4 w-4 text-secondary" />
-              <span className="text-sm font-semibold text-primary-foreground">
-                Executive Alignment Architecture
-              </span>
-            </div>
-
-            <p className="mb-4 text-sm font-medium tracking-widest text-secondary uppercase animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              Measured alignment · Governance clarity · Structural cohesion
-            </p>
-
-            <h1 className="mb-6 font-serif text-2xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-              <TextReveal delay={0.3}>
-                Executive Alignment Architecture for Teams Operating Under Complexity
-              </TextReveal>
-            </h1>
-
-            <p className="mb-8 text-sm leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
-              Bright Leadership Consulting advises executive teams during growth, 
-              leadership transition, and AI-driven transformation — ensuring 
-              executive alignment is measured, not assumed.
-            </p>
-
-            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.7s' }}>
-              <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
-                Enquire Confidentially
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </MagneticButton>
-              <MagneticButton
-                variant="ghost"
-                size="lg"
-                className="border-2 border-white/30 bg-white/5 text-primary-foreground/80 hover:bg-white/10 hover:border-white/50 hover:text-primary-foreground font-semibold group backdrop-blur-sm"
-                href="/executive-alignment-index"
-              >
-                <Shield className="h-5 w-5 mr-2 flex-shrink-0" />
-                <span className="truncate">Executive Alignment Index</span>
-              </MagneticButton>
-            </div>
-
-            {/* Stats */}
-            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 pt-8 animate-fade-up" style={{ animationDelay: '1.1s' }}>
-              {[
-                { value: "15+", label: "Years Advisory Experience" },
-                { value: "6", label: "Governance Dimensions" },
-                { value: "CPD", label: "Accredited Programs" },
-              ].map((stat) => (
-                <div key={stat.label} className="group cursor-default">
-                  <div className="font-serif text-2xl font-semibold text-secondary sm:text-3xl transition-transform group-hover:scale-105">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-primary-foreground/70">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+        <div className="max-w-3xl py-24 lg:py-32">
+          {/* Badge */}
+          <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
+            <Shield className="h-4 w-4 text-secondary" />
+            <span className="text-sm font-semibold text-primary-foreground">
+              Executive Alignment Architecture
+            </span>
           </div>
 
-          {/* Right side - Embedded Video Player */}
-          <div className="hidden lg:block relative animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            {/* Decorative glowing orbs */}
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-secondary/20 rounded-full blur-3xl" />
-            <div className="absolute -bottom-10 -right-10 w-52 h-52 bg-primary/20 rounded-full blur-3xl" />
+          <h1 className="mb-6 font-serif text-3xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
+            <TextReveal delay={0.3}>
+              Executive Alignment Determines Whether Strategy Accelerates or Stalls
+            </TextReveal>
+          </h1>
 
-            {/* Animated gradient border wrapper */}
-            <div className="relative rounded-3xl p-[3px] bg-gradient-to-br from-secondary via-primary-foreground/30 to-secondary/80 shadow-2xl shadow-black/30 hover:shadow-secondary/20 transition-shadow duration-700">
-              {/* Inner glow ring */}
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-secondary/40 via-transparent to-primary-foreground/20 blur-lg opacity-60" />
+          <p className="mb-4 text-lg leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            Clarity at executive level for organisations navigating growth, 
+            transition, and AI-driven transformation.
+          </p>
 
-              <div className="relative rounded-[calc(1.5rem-3px)] overflow-hidden bg-background">
-                {isPlaying ? (
-                  <iframe
-                    src="https://www.youtube.com/embed/SosVIXorVq8?autoplay=1&rel=0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full aspect-video"
-                    title="Bright Leadership Consulting"
-                  />
-                ) : (
-                  <div 
-                    className="relative cursor-pointer group"
-                    onClick={() => setIsPlaying(true)}
-                  >
-                    <img
-                      src="https://img.youtube.com/vi/SosVIXorVq8/maxresdefault.jpg"
-                      alt="Watch our leadership video"
-                      className="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Play overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent flex items-center justify-center transition-all duration-500 group-hover:from-primary/40 group-hover:via-primary/10">
-                      {/* Pulsing ring */}
-                      <div className="absolute h-24 w-24 rounded-full bg-secondary/20 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]" />
-                      <div className="relative h-[4.5rem] w-[4.5rem] rounded-full bg-secondary flex items-center justify-center shadow-xl shadow-secondary/50 transition-transform duration-300 group-hover:scale-110">
-                        <Play className="h-8 w-8 text-secondary-foreground ml-1" fill="currentColor" />
-                      </div>
-                    </div>
-                    {/* Bottom info bar */}
-                    <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent">
-                      <p className="text-white/90 text-sm font-medium">▶ Watch Our Story</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+          <p className="mb-10 text-base leading-relaxed text-primary-foreground/70 sm:text-lg animate-fade-up" style={{ animationDelay: '0.6s' }}>
+            Bright Leadership Consulting measures executive variance — ensuring 
+            alignment is established before execution slows.
+          </p>
+
+          <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.7s' }}>
+            <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
+              Enquire Confidentially
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </MagneticButton>
+            <MagneticButton
+              variant="ghost"
+              size="lg"
+              className="border-2 border-white/30 bg-white/5 text-primary-foreground/80 hover:bg-white/10 hover:border-white/50 hover:text-primary-foreground font-semibold group backdrop-blur-sm"
+              href="/executive-alignment-index"
+            >
+              <Shield className="h-5 w-5 mr-2 flex-shrink-0" />
+              <span className="truncate">Executive Alignment Index™</span>
+            </MagneticButton>
           </div>
         </div>
       </div>
