@@ -120,11 +120,11 @@ const ServicesHero = () => {
 
           <h1 className="mb-6 font-serif text-4xl font-bold leading-[1.1] text-primary-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
             <TextReveal delay={0.1}>
-              Three Paths to
+              Master the Skills
             </TextReveal>
             <span className="block mt-2 text-secondary">
               <TextReveal delay={0.3}>
-                Leadership Excellence
+                AI Can't Replace
               </TextReveal>
             </span>
           </h1>
@@ -135,8 +135,8 @@ const ServicesHero = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-lg text-primary-foreground/80 leading-relaxed max-w-2xl mx-auto"
           >
-            Whether you're seeking personal transformation, team development, or organizational change, 
-            we have the expertise to guide your journey to exceptional leadership.
+            LinkedIn's 2026 Skills Report confirms: cross-team collaboration, client relations, and 
+            leadership training are the fastest-rising human skills. Our programs deliver exactly that.
           </motion.p>
         </div>
 

@@ -35,8 +35,8 @@ const individualCourses = [
     title: "Transformational Leadership Skills",
     subtitle: "Lead with Purpose, Propel with Passion",
     description:
-      "Go beyond the obvious with strategies that speak to the human soul. Discover how to encourage, inspire, and motivate your team to create courageously.",
-    features: ["Change Management", "Team Inspiration", "Vision Building"],
+      "Go beyond the obvious with strategies that speak to the human soul. Develop cross-team collaboration, change leadership, and the ability to inspire collective action.",
+    features: ["Change Leadership", "Cross-Team Collaboration", "Vision Building"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership",
   },
   {
@@ -44,8 +44,8 @@ const individualCourses = [
     title: "Peak Performance Accelerator",
     subtitle: "Master Time, Multiply Impact",
     description:
-      "Develop time management strategies that unlock hidden hours. Learn to prioritize with precision and achieve results that resonate.",
-    features: ["Time Management", "Productivity Systems", "Focus Strategies"],
+      "Develop strategic decision-making and operational efficiency — the business fundamentals LinkedIn identifies as fastest-rising skills for 2026.",
+    features: ["Strategic Decision-Making", "Operational Efficiency", "Focus Strategies"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
   },
   {
@@ -53,17 +53,17 @@ const individualCourses = [
     title: "Building Professional & Personal Value",
     subtitle: "Chart Your Course to Career Advancement",
     description:
-      "Discover the secrets of outstanding professionals. Improve work relationships, increase productivity, and optimize your career opportunities.",
-    features: ["Career Growth", "Professional Development", "Strategic Networking"],
+      "Master the client relations, strategic networking, and professional influence skills that recruiters are actively searching for in 2026.",
+    features: ["Client Relations", "Strategic Networking", "Professional Influence"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value",
   },
   {
     icon: Briefcase,
-    title: "Future of Work Strategy",
-    subtitle: "Innovate, Adapt, Thrive",
+    title: "Future of Work & AI-Ready Leadership",
+    subtitle: "Lead Through the AI Transformation",
     description:
-      "Navigate Remote Work, AI Integration, and International Cooperation. Develop strategic agility to thrive in the dynamic world of work.",
-    features: ["Remote Leadership", "AI Integration", "Global Collaboration"],
+      "Navigate AI integration, remote collaboration, and digital transformation. Learn to lead teams through technological change while preserving the human skills that drive innovation.",
+    features: ["AI-Ready Leadership", "Digital Transformation", "Global Collaboration"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
   },
   {
@@ -71,8 +71,8 @@ const individualCourses = [
     title: "Enhanced Employability Skills",
     subtitle: "Stand Out, Shine Bright",
     description:
-      "Master the soft skills that are the currency of success. Develop emotional intelligence, adaptability, and effective communication.",
-    features: ["Emotional Intelligence", "Adaptability", "Soft Skills Mastery"],
+      "Build the emotional intelligence, adaptability, and interpersonal skills that LinkedIn's 2026 data shows companies value most — the human skills AI can't replicate.",
+    features: ["Emotional Intelligence", "Adaptability", "Interpersonal Skills"],
     link: "https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees",
   },
 ];

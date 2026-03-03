@@ -13,8 +13,8 @@ const services = [
     icon: Users,
     title: "Executive Coaching",
     description:
-      "Personalized 1:1 coaching sessions to transform how you lead, inspire, and connect with your team.",
-    features: ["Tailored Guidance", "Flexible Sessions", "Ongoing Support"],
+      "Personalized 1:1 coaching to develop the cross-team collaboration, emotional intelligence, and strategic decision-making that set exceptional leaders apart.",
+    features: ["Cross-Team Collaboration", "Emotional Intelligence", "Strategic Decision-Making"],
     stats: { value: "1:1", label: "Sessions" },
     image: heroCoaching,
     accent: "primary" as const,
@@ -23,8 +23,8 @@ const services = [
     icon: GraduationCap,
     title: "Executive Training",
     description:
-      "CPD-accredited digital courses designed to unlock your full leadership potential at your own pace.",
-    features: ["CPD Accredited", "Self-Paced", "Lifetime Access"],
+      "CPD-accredited programs covering the human skills LinkedIn says are rising fastest — change leadership, client relations, and AI-ready leadership.",
+    features: ["CPD Accredited", "AI-Ready Leadership", "Client Relations"],
     stats: { value: "7", label: "Programs" },
     image: teamCollaboration,
     accent: "secondary" as const,
@@ -33,8 +33,8 @@ const services = [
     icon: Briefcase,
     title: "Corporate Retreats",
     description:
-      "Immersive training retreats for teams striving for excellence and breakthrough results.",
-    features: ["Team Building", "Strategic Planning", "Custom Workshops"],
+      "Immersive team experiences that build the interpersonal skills, strategic planning capabilities, and collaborative culture AI can't replicate.",
+    features: ["Team Collaboration", "Strategic Planning", "Culture Building"],
     stats: { value: "3-5", label: "Days" },
     image: corporateRetreat,
     accent: "primary" as const,
@@ -307,11 +307,11 @@ const ServicesSection = () => {
             </div>
             
             <h2 className="mb-8 font-serif text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl leading-tight">
-              <TextReveal>Three Paths to Leadership Excellence</TextReveal>
+              <TextReveal>The Skills AI Can't Replace</TextReveal>
             </h2>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Choose the approach that fits your unique leadership journey.
+              LinkedIn's 2026 data confirms: the fastest-rising skills are innately human. Choose your path to mastering them.
             </p>
           </motion.div>
 

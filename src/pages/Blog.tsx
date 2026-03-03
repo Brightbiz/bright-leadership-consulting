@@ -21,6 +21,19 @@ const categories = [
 
 const blogPosts = [
   {
+    id: 10,
+    slug: "linkedin-skills-on-the-rise-2026-what-it-means-for-leaders",
+    title: "LinkedIn's 2026 Skills Report: What It Means for Your Leadership Career",
+    excerpt: "LinkedIn's latest data reveals the fastest-rising skills are innately human. Here's what that means for executives — and how to stay ahead.",
+    category: "strategy",
+    author: "Irene Agunbiade",
+    authorImage: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop",
+    date: "2026-03-03",
+    readTime: "7 min read",
+    featured: true,
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop",
+  },
+  {
     id: 1,
     slug: "5-essential-traits-transformational-leaders",
     title: "5 Essential Traits of Transformational Leaders",

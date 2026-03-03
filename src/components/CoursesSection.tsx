@@ -17,8 +17,8 @@ const featuredCourses = [
   },
   {
     icon: BookOpen,
-    title: "Future of Work Strategy",
-    description: "Master leadership fundamentals, communication, and strategic thinking for the modern workplace.",
+    title: "Future of Work & AI-Ready Leadership",
+    description: "Navigate AI integration, digital transformation, and cross-team collaboration for the modern workplace.",
     featured: false,
     accent: "primary" as const,
     stats: "12 Modules",
@@ -34,7 +34,7 @@ const featuredCourses = [
   {
     icon: Users,
     title: "Enhanced Employability Skills",
-    description: "Build emotional intelligence, adaptability, and in-demand soft skills.",
+    description: "Build the emotional intelligence, adaptability, and interpersonal skills that AI can't replicate.",
     featured: false,
     accent: "primary" as const,
     stats: "10 Modules",

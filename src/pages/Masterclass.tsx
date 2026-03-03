@@ -43,13 +43,13 @@ const formatTime = (ms: number) => {
 };
 
 const modules = [
-  "Strategic Leadership & Vision",
-  "Emotional Intelligence Mastery",
-  "High-Performance Team Building",
-  "Executive Communication & Presence",
-  "Decision-Making Under Pressure",
-  "Change Management & Innovation",
-  "Stakeholder Management",
+  "Strategic Leadership & Vision — The Vision Architect",
+  "Emotional Intelligence Mastery — The Emotional Strategist",
+  "High-Performance Team Building — The Culture Builder",
+  "Executive Communication & Persuasion — The Persuader",
+  "Strategic Decision-Making — The Decision Architect",
+  "AI-Ready Leadership & Change Management",
+  "Cross-Team Collaboration & Stakeholder Management",
   "Conflict Resolution & Negotiation",
 ];
 
@@ -170,11 +170,12 @@ const Masterclass = () => {
             </Badge>
 
             <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight mb-6">
-              The 5 Leadership Shifts That Separate <span className="text-secondary">Executives</span> From Managers
+              The 5 Leadership Shifts That <span className="text-secondary">AI Can't Automate</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              Discover the exact framework used by senior leaders to step into C-Suite roles with confidence, authority, and lasting impact.
+              LinkedIn's 2026 data confirms: the fastest-rising skills are innately human. Discover the exact framework 
+              used by senior leaders to master cross-team collaboration, strategic decision-making, and emotional intelligence.
             </p>
           </motion.div>
 
