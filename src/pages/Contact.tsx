@@ -1,195 +1,211 @@
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ContactHero from "@/components/heroes/ContactHero";
-import MultiStepContactForm from "@/components/MultiStepContactForm";
-import AnimatedSection from "@/components/AnimatedSection";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Users, Award, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useRateLimit } from "@/hooks/useRateLimit";
 
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "Phone",
-    value: "0333 335 5045",
-    description: "Mon-Fri from 9am to 6pm",
-    action: "tel:03333355045",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    value: "info@brightleadershipconsulting.com",
-    description: "We respond within 24 hours",
-    action: "mailto:info@brightleadershipconsulting.com",
-  },
-  {
-    icon: MapPin,
-    title: "Location",
-    value: "United Kingdom",
-    description: "Serving clients globally",
-    action: null,
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    value: "9:00 AM - 6:00 PM",
-    description: "Monday to Friday (GMT)",
-    action: null,
-  },
-];
+const contactSchema = z.object({
+  name: z.string().trim().min(1, { message: "Please complete this field." }).max(100),
+  email: z.string().trim().email({ message: "Email format appears invalid." }).max(255),
+  company: z.string().trim().max(100).optional(),
+  role: z.string().trim().max(100).optional(),
+  message: z.string().trim().min(10, { message: "Please provide further detail." }).max(1000),
+});
 
-const faqs = [
-  {
-    question: "How do I arrange an initial conversation?",
-    answer: "Complete the enquiry form below or call us directly. We'll schedule a confidential, no-obligation conversation to understand your organisation's needs.",
-  },
-  {
-    question: "What is your typical response time?",
-    answer: "We aim to respond to all enquiries within 2 business hours during office hours, and within 24 hours for weekend or after-hours messages.",
-  },
-  {
-    question: "Do you work with international clients?",
-    answer: "Yes. We serve clients globally via video conferencing and can arrange in-person engagements at locations worldwide.",
-  },
-  {
-    question: "What sectors do you work with?",
-    answer: "Our advisory experience spans financial services, professional services, technology, healthcare, manufacturing, and the public sector.",
-  },
-];
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
+  const { checkRateLimit, recordSubmission, isChecking } = useRateLimit();
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { name: "", email: "", company: "", role: "", message: "" },
+    mode: "onTouched",
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      const rateLimitResult = await checkRateLimit("contact");
+      if (!rateLimitResult.allowed) {
+        toast({
+          title: "Please try again later",
+          description: rateLimitResult.message || "Too many submissions.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: data.name,
+        email: data.email,
+        phone: null,
+        company: data.company || null,
+        message: `${data.role ? `Role: ${data.role}\n\n` : ""}${data.message}`,
+      });
+
+      if (error) throw error;
+      await recordSubmission("contact");
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Submission could not be processed",
+        description: "Please try again shortly.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="Contact" description="Arrange a confidential conversation with Bright Leadership Consulting. Executive advisory, leadership development, and corporate retreats." path="/contact" />
+      <SEOHead
+        title="Enquire — Bright Leadership Consulting"
+        description="Executive alignment engagements are discussed confidentially and by arrangement."
+        path="/contact"
+      />
       <Header />
-      
-      <main>
-        <ContactHero />
 
-        {/* Contact Methods Grid */}
-        <section className="py-20 relative overflow-hidden bg-muted/30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,hsl(var(--primary)/0.04),transparent_60%)]" />
-          <div className="container-narrow relative">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactInfo.map((item, index) => (
-                <AnimatedSection key={item.title} delay={index * 100}>
-                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-8 text-center group hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                      <item.icon className="h-7 w-7 text-primary" />
-                    </div>
-                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                    {item.action ? (
-                      <a 
-                        href={item.action}
-                        className="text-primary font-medium hover:underline block mb-1 text-sm"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-foreground font-medium mb-1 text-sm">{item.value}</p>
+      <main className="pt-32 pb-24">
+        <div className="container-brief">
+          <div className="prose-narrow mx-auto">
+            {/* Heading */}
+            <p className="kicker mb-6">Confidential Enquiry</p>
+            <h1 className="heading-hero mb-8">
+              Confidential Executive Enquiries
+            </h1>
+            <p className="body-brief mb-16">
+              Executive alignment engagements are discussed confidentially and by arrangement.
+            </p>
+
+            {/* Divider */}
+            <div className="section-divider mb-16" />
+
+            {isSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="py-16 text-center"
+              >
+                <CheckCircle className="h-10 w-10 text-secondary mx-auto mb-6" />
+                <h2 className="heading-section mb-4">Enquiry Received</h2>
+                <p className="body-brief">
+                  Your enquiry has been received.<br />
+                  A member of our team will respond shortly.
+                </p>
+              </motion.div>
+            ) : (
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                    <p className="text-xs text-muted-foreground mt-1">{item.description}</p>
+                  />
+                  <FormField
+                    control={form.control}
+                    name="company"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">Organisation</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="role"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">Role</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">Message</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={5}
+                            className="resize-none bg-muted/30 border-border/50 focus:border-secondary"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="pt-4">
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      size="lg"
+                      className="border-primary/20 text-foreground hover:border-secondary hover:text-secondary transition-colors"
+                      disabled={form.formState.isSubmitting || isChecking}
+                    >
+                      {form.formState.isSubmitting || isChecking ? (
+                        <span className="animate-pulse">Submitting…</span>
+                      ) : (
+                        "Submit Enquiry"
+                      )}
+                    </Button>
                   </div>
-                </AnimatedSection>
-              ))}
-            </div>
+                </form>
+              </Form>
+            )}
           </div>
-        </section>
-
-        {/* Multi-Step Contact Form Section */}
-        <section id="contact-form" className="section-padding relative overflow-hidden">
-          <div className="absolute top-20 -right-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-          <div className="container-narrow relative">
-            <AnimatedSection className="text-center mb-12">
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
-                <Sparkles className="h-3 w-3 mr-1.5" />
-                Confidential Enquiry
-              </Badge>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Get in Touch
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Complete the form below and a member of our advisory team will respond within 24 hours.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="relative rounded-3xl bg-card/90 backdrop-blur-sm border border-border/50 p-8 md:p-12 shadow-2xl overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
-                <div className="absolute -top-20 -right-20 w-48 h-48 bg-secondary/8 rounded-full blur-3xl" />
-                <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-primary/8 rounded-full blur-3xl" />
-                <div className="relative">
-                  <MultiStepContactForm />
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="section-padding relative overflow-hidden bg-muted/30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,hsl(var(--secondary)/0.04),transparent_60%)]" />
-          <div className="container-narrow relative">
-            <AnimatedSection className="text-center mb-12">
-              <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/5 px-4 py-1.5">
-                <MessageCircle className="h-3 w-3 mr-1.5" />
-                Common Questions
-              </Badge>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Quick answers to common questions about engaging with us.
-              </p>
-            </AnimatedSection>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {faqs.map((faq, index) => (
-                <AnimatedSection key={faq.question} delay={index * 100}>
-                  <div className="h-full rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 p-7 group hover:border-primary/20 hover:shadow-lg transition-all duration-500">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <MessageCircle className="h-5 w-5 text-secondary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Trust Indicators */}
-        <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.03] via-transparent to-secondary/[0.03]" />
-          <div className="container-narrow relative">
-            <div className="flex flex-wrap justify-center gap-10 md:gap-20">
-              {[
-                { icon: Users, value: "5,000+", label: "Senior Leaders Served" },
-                { icon: Award, value: "CPD", label: "Accredited Programs" },
-                { icon: MapPin, value: "25+", label: "Countries Served" },
-              ].map((stat, index) => (
-                <AnimatedSection key={stat.label} delay={index * 100}>
-                  <div className="flex items-center gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 flex items-center justify-center shadow-sm">
-                      <stat.icon className="h-7 w-7 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-serif text-3xl font-bold text-foreground">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">{stat.label}</div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
 
       <Footer />
