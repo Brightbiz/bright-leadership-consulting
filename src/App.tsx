@@ -21,6 +21,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 // Programme pages
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
 const Courses = lazy(() => import("./pages/Courses"));
+const Slides = lazy(() => import("./pages/Slides"));
 
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
@@ -43,6 +44,7 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/executive-leadership-mastery" element={<PageTransition><ExecutiveLeadershipMastery /></PageTransition>} />
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
+          <Route path="/slides" element={<PageTransition><Slides /></PageTransition>} />
           {/* Admin routes */}
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
           <Route path="/admin/register" element={<PageTransition><AdminRegister /></PageTransition>} />
