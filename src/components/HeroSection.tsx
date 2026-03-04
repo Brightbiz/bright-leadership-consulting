@@ -8,8 +8,8 @@ const HeroSection = () => {
     <section className="relative min-h-screen overflow-hidden">
       <AnimatedGradient />
 
-      <div className="container-narrow relative flex min-h-screen items-center pt-20 overflow-hidden">
-        <div className="max-w-3xl py-24 lg:py-32">
+      <div className="container-brief relative flex min-h-screen items-center pt-20 overflow-hidden">
+        <div className="prose-narrow py-24 lg:py-32">
           {/* Badge */}
           <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
             <Shield className="h-4 w-4 text-secondary" />
@@ -18,18 +18,18 @@ const HeroSection = () => {
             </span>
           </div>
 
-          <h1 className="mb-6 font-serif text-3xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
+          <h1 className="mb-6 font-serif text-[2.625rem] sm:text-[2.875rem] lg:text-[3rem] font-semibold leading-[1.2] tracking-tight text-primary-foreground">
             <TextReveal delay={0.3}>
               Executive Alignment Determines Whether Strategy Accelerates or Stalls
             </TextReveal>
           </h1>
 
-          <p className="mb-4 text-lg leading-relaxed text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
+          <p className="mb-4 text-lg leading-[1.65] text-primary-foreground/85 sm:text-xl animate-fade-up" style={{ animationDelay: '0.5s' }}>
             Clarity at executive level for organisations navigating growth, 
             transition, and AI-driven transformation.
           </p>
 
-          <p className="mb-10 text-base leading-relaxed text-primary-foreground/70 sm:text-lg animate-fade-up" style={{ animationDelay: '0.6s' }}>
+          <p className="mb-10 text-base leading-[1.65] text-primary-foreground/70 sm:text-lg animate-fade-up" style={{ animationDelay: '0.6s' }}>
             Bright Leadership Consulting measures executive variance — ensuring 
             alignment is established before execution slows.
           </p>

@@ -9,53 +9,57 @@ const triggers = [
   "AI transformation",
 ];
 
+const fade = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.7, ease: "easeOut" as const },
+};
+
 const CommissionedBySection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-muted/30">
-      <div className="container-narrow">
-        <div className="max-w-3xl mx-auto">
-          <motion.p
-            className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            Commissioning Context
-          </motion.p>
+    <>
+      {/* Section divider */}
+      <div className="section-divider" />
 
-          <motion.div
-            className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-          >
-            <p>
-              Typically commissioned by the CEO, Chair, or Chief People Officer during:
-            </p>
+      <section className="section-brief bg-background">
+        <div className="container-brief">
+          <div className="prose-narrow mx-auto">
+            <motion.p className="kicker mb-6" {...fade}>
+              Commissioning Context
+            </motion.p>
 
-            <div className="space-y-1.5 border-l-2 border-border pl-6">
-              {triggers.map((trigger) => (
-                <p key={trigger}>{trigger}</p>
-              ))}
-            </div>
-
-            <p>
-              Engagements are confidential and calibrated to organisational complexity.
-            </p>
-
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 tracking-wide"
+            <motion.div
+              className="space-y-6 body-brief"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Enquire Regarding Executive Alignment
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </motion.div>
+              <p>
+                Typically commissioned by the CEO, Chair, or Chief People Officer during:
+              </p>
+
+              <div className="scan-list">
+                {triggers.map((trigger) => (
+                  <p key={trigger}>{trigger}</p>
+                ))}
+              </div>
+
+              <p>
+                Engagements are confidential and calibrated to organisational complexity.
+              </p>
+
+              <Link
+                to="/contact"
+                className="link-quiet"
+              >
+                Enquire Regarding Executive Alignment
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
