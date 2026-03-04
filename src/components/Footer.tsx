@@ -3,24 +3,12 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import cpdBadge from "@/assets/cpd-badge.png";
 
-const footerLinks = {
-  programs: [
-    { label: "Executive Leadership Mastery", href: "/courses", isRoute: true },
-    { label: "Advisory & Development", href: "/services", isRoute: true },
-    { label: "All Courses", href: "/courses", isRoute: true },
-    { label: "Course Brochures", href: "/brochures", isRoute: true },
-  ],
-  company: [
-    { label: "About Us", href: "/about", isRoute: true },
-    { label: "Blog", href: "/blog", isRoute: true },
-    { label: "Contact", href: "/contact", isRoute: true },
-  ],
-  resources: [
-    { label: "Leadership Diagnostic", href: "/leadership-checklist", isRoute: true },
-    { label: "Course Brochures", href: "/brochures", isRoute: true },
-    { label: "Executive Briefing", href: "/masterclass", isRoute: true },
-  ],
-};
+const structuralLinks = [
+  { label: "Executive Alignment Index", href: "/executive-alignment-index", isRoute: true },
+  { label: "Selected Engagements", href: "/selected-engagements", isRoute: true },
+  { label: "Executive Alignment Brief (PDF)", href: "/downloads/executive-alignment-brief.html", isRoute: false, external: true },
+  { label: "Enquire Confidentially", href: "/contact", isRoute: true },
+];
 
 const Footer = () => {
   return (
@@ -52,64 +40,24 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Links */}
-          <div>
-            <h4 className="mb-4 font-semibold text-background">Programs</h4>
+          {/* Structural Links */}
+          <div className="lg:col-span-3 flex items-start justify-end">
             <ul className="space-y-3">
-              {footerLinks.programs.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-background/70 transition-colors hover:text-secondary"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 font-semibold text-background">Company</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
+              {structuralLinks.map((link) => (
                 <li key={link.label}>
                   {link.isRoute ? (
                     <Link
                       to={link.href}
-                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                      className="text-sm text-background/70 transition-colors hover:text-secondary tracking-wide"
                     >
                       {link.label}
                     </Link>
                   ) : (
                     <a
                       href={link.href}
-                      className="text-sm text-background/70 transition-colors hover:text-secondary"
-                    >
-                      {link.label}
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 font-semibold text-background">Resources</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.label}>
-                  {link.isRoute ? (
-                    <Link
-                      to={link.href}
-                      className="text-sm text-background/70 transition-colors hover:text-secondary"
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={link.href}
-                      className="text-sm text-background/70 transition-colors hover:text-secondary"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-background/70 transition-colors hover:text-secondary tracking-wide"
                     >
                       {link.label}
                     </a>
@@ -120,41 +68,31 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Brief + Bottom */}
+        {/* Bottom */}
         <div className="mt-16 border-t border-background/10 pt-8">
-          <div className="mb-8 text-center">
-            <a
-              href="/downloads/executive-alignment-brief.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-background/50 hover:text-background/70 transition-colors duration-300 tracking-wide"
-            >
-              Executive Alignment Brief (Download PDF)
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <img
-              src={cpdBadge}
-              alt="CPD Standards Office Accredited - Provider 50838"
-              className="h-24 w-auto bg-white rounded-lg p-2"
-            />
-            <p className="text-sm text-background/50 text-center sm:text-left">
-              © {new Date().getFullYear()} Bright Leadership Consulting. All rights reserved.
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex gap-3">
-              {[Linkedin, Twitter, Instagram].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-background/10 text-background/70 transition-colors hover:bg-secondary hover:text-secondary-foreground"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
+          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <img
+                src={cpdBadge}
+                alt="CPD Standards Office Accredited - Provider 50838"
+                className="h-24 w-auto bg-white rounded-lg p-2"
+              />
+              <p className="text-sm text-background/50 text-center sm:text-left">
+                © {new Date().getFullYear()} Bright Leadership Consulting. All rights reserved.
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex gap-3">
+                {[Linkedin, Twitter, Instagram].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-background/10 text-background/70 transition-colors hover:bg-secondary hover:text-secondary-foreground"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
