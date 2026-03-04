@@ -265,8 +265,9 @@
   .takeaway {
     margin-top: 56px;
     padding: 28px 40px;
-    border-left: 4px solid #c9a0a0;
-    background: #faf2f2;
+    border-left: 4px solid transparent;
+    border-image: linear-gradient(180deg, var(--teal), var(--amber)) 1;
+    background: linear-gradient(135deg, rgba(26,107,107,0.06), rgba(229,160,40,0.06));
     border-radius: 0 12px 12px 0;
     max-width: 1400px;
   }
@@ -276,7 +277,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #8b6060;
+    color: var(--teal-dark);
     margin-bottom: 6px;
   }
 
