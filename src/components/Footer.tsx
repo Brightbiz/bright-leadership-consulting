@@ -46,7 +46,10 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border/40">
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground/50 mb-1">
+            Confidential Executive Advisory
+          </p>
+          <p className="text-xs text-muted-foreground/40">
             © {new Date().getFullYear()} Bright Leadership Consulting. All rights reserved.
           </p>
         </div>

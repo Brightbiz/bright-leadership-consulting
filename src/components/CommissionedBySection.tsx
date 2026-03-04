@@ -52,7 +52,7 @@ const CommissionedBySection = () => {
                 to="/contact"
                 className="link-quiet"
               >
-                Enquire Regarding Executive Alignment
+                Enquire Confidentially
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </motion.div>

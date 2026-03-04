@@ -50,7 +50,7 @@ const EAIInstrumentSection = () => {
                 to="/executive-alignment-index"
                 className="link-quiet"
               >
-                Learn More
+                Executive Alignment Index™
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </motion.div>
