@@ -8,6 +8,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import AnimatedGradient from "@/components/AnimatedGradient";
 import TextReveal from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
+import EAIDashboardPreview from "@/components/EAIDashboardPreview";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -184,6 +185,14 @@ const ExecutiveAlignmentIndex = () => {
                   The report anchors board discussion and strategic recalibration.
                 </p>
               </motion.div>
+            </div>
+
+            {/* Dashboard Preview — full width within container */}
+            <div className="mt-16 max-w-4xl mx-auto">
+              <EAIDashboardPreview />
+              <p className="mt-4 text-center text-xs text-muted-foreground italic tracking-wide">
+                Example Executive Alignment Index™ dashboard (illustrative).
+              </p>
             </div>
           </div>
         </section>

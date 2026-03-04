@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Executive Alignment Index Report | Sample Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Executive Alignment Index™ Report | Sample Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --teal: #1a6b6b;
     --teal-dark: #0f4a4a;
-    --teal-light: #e0f2f2;
+    --teal-muted: #94b8b8;
     --dark: #1a2530;
-    --slate-800: #1e293b;
     --slate-600: #475569;
     --slate-500: #64748b;
     --slate-400: #94a3b8;
     --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
     --light: #f8fafb;
     --variance-elevated: #0f4a4a;
     --variance-elevated-bg: #d0e8e8;
@@ -23,205 +23,188 @@
     --variance-moderate-bg: #e0f2f2;
     --variance-low: #94b8b8;
     --variance-low-bg: #f0f7f7;
-    /* Dispersion — monochrome tonal */
-    --exec-a: #0f4a4a;
-    --exec-b: #1a6b6b;
-    --exec-c: #2d8a8a;
-    --exec-d: #5ba3a3;
-    --exec-e: #94b8b8;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; line-height: 1.6; }
-  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.25; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.3; }
 
-  .page { max-width: 800px; margin: 0 auto; padding: 40px; }
+  .page { max-width: 780px; margin: 0 auto; padding: 56px 48px 80px; }
 
-  /* Header */
+  /* ── Header ── */
   .report-header {
-    border-bottom: 3px solid var(--teal);
-    padding-bottom: 24px;
-    margin-bottom: 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 28px; margin-bottom: 40px;
+    border-bottom: 1.5px solid var(--slate-200);
   }
-  .report-title { font-size: 22px; color: var(--teal-dark); margin-bottom: 4px; }
-  .report-subtitle { font-size: 11px; color: var(--slate-500); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
-  .report-meta { text-align: right; font-size: 11px; color: var(--slate-500); line-height: 1.8; }
-  .report-meta strong { color: var(--dark); }
-  .confidential-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: var(--slate-200); color: var(--slate-600); padding: 3px 10px;
-    border-radius: 4px; font-size: 9px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px;
-  }
+  .report-title { font-size: 20px; color: var(--dark); margin-bottom: 2px; letter-spacing: -0.3px; }
+  .report-subtitle { font-size: 10px; color: var(--slate-400); text-transform: uppercase; letter-spacing: 2.5px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .report-meta { text-align: right; font-size: 11px; color: var(--slate-500); line-height: 2; }
+  .report-meta strong { color: var(--dark); font-weight: 600; }
 
-  /* Section labels */
-  .section-num {
-    font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: var(--slate-400); margin-bottom: 6px;
+  /* ── Section Labels ── */
+  .section-label {
+    font-size: 9px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 2.5px; color: var(--slate-400); margin-bottom: 8px;
+    font-family: 'Inter', sans-serif;
   }
-  .section-title { font-size: 16px; color: var(--dark); margin-bottom: 12px; }
+  .section-heading { font-size: 15px; color: var(--dark); margin-bottom: 16px; }
 
-  /* Composite Score */
-  .composite-section {
-    background: var(--light);
-    border: 1px solid #e8edf2;
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 28px;
-    text-align: center;
+  /* ── Composite Score ── */
+  .composite {
+    text-align: center; padding: 36px 24px; margin-bottom: 40px;
+    border: 1px solid var(--slate-200); border-radius: 2px;
   }
   .composite-score {
     font-family: 'Playfair Display', serif;
-    font-size: 56px; font-weight: 700; color: var(--teal);
-    line-height: 1;
+    font-size: 52px; font-weight: 700; color: var(--dark); line-height: 1;
   }
-  .composite-max { font-size: 20px; color: var(--slate-400); font-weight: 400; }
+  .composite-max { font-size: 18px; color: var(--slate-400); font-weight: 400; }
   .composite-status {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 16px; border-radius: 20px;
-    font-size: 12px; font-weight: 600; margin-top: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
+    padding: 5px 14px; border-radius: 2px; margin-top: 14px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+    background: var(--variance-moderate-bg); color: var(--variance-moderate);
   }
-  .composite-status .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .composite-status .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--variance-moderate); }
   .composite-interpretation {
     margin-top: 16px; font-size: 13px; color: var(--slate-500);
     max-width: 520px; margin-left: auto; margin-right: auto;
-    font-style: italic;
+    font-style: italic; line-height: 1.7;
   }
 
-  /* Dimension Breakdown */
-  .dimension-table { width: 100%; margin-bottom: 28px; border-collapse: separate; border-spacing: 0; }
-  .dimension-table th {
-    text-align: left; font-size: 10px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1.5px;
-    color: var(--slate-400); padding: 8px 12px;
-    border-bottom: 2px solid var(--slate-200);
+  /* ── Two-Column Layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── Dimension Breakdown ── */
+  .dimension-list { list-style: none; }
+  .dimension-item {
+    padding: 14px 0; border-bottom: 1px solid var(--slate-100);
   }
-  .dimension-table td {
-    padding: 12px; border-bottom: 1px solid #f1f5f9;
-    font-size: 13px; vertical-align: middle;
-  }
-  .dimension-name { font-weight: 600; color: var(--dark); }
-  .score-bar-container { width: 120px; height: 6px; background: #e8edf2; border-radius: 3px; position: relative; }
-  .score-bar { height: 100%; border-radius: 3px; background: var(--teal); }
-  .score-value { font-weight: 700; color: var(--dark); font-size: 14px; font-family: 'Inter', sans-serif; }
+  .dimension-item:last-child { border-bottom: none; }
+  .dimension-name { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+  .dimension-meta { display: flex; align-items: center; gap: 16px; }
+  .dimension-score { font-size: 12px; color: var(--slate-500); }
+  .dimension-score strong { color: var(--dark); font-weight: 700; font-size: 14px; }
   .variance-badge {
-    display: inline-flex; padding: 3px 10px; border-radius: 4px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    display: inline-flex; padding: 2px 8px; border-radius: 2px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
   }
   .variance-low { background: var(--variance-low-bg); color: var(--variance-low); }
   .variance-moderate { background: var(--variance-moderate-bg); color: var(--variance-moderate); }
-  .variance-elevated { background: var(--variance-elevated-bg); color: var(--variance-elevated); font-weight: 800; }
+  .variance-elevated { background: var(--variance-elevated-bg); color: var(--variance-elevated); }
+  .dimension-bar { flex: 1; height: 4px; background: var(--slate-100); border-radius: 2px; position: relative; }
+  .dimension-bar-fill { height: 100%; border-radius: 2px; background: var(--teal-muted); }
+  .dimension-bar-fill.elevated { background: var(--variance-elevated); }
 
-  /* Dispersion Map */
-  .dispersion-section { margin-bottom: 28px; }
-  .dispersion-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 8px 0; border-bottom: 1px solid #f1f5f9;
+  /* ── Dispersion Map ── */
+  .dispersion-box { padding: 0; }
+  .dispersion-title-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 20px;
   }
-  .dispersion-label { width: 160px; font-size: 12px; font-weight: 500; color: var(--dark); flex-shrink: 0; }
+  .dispersion-stat { font-size: 11px; color: var(--slate-500); }
+  .dispersion-stat strong { color: var(--dark); font-weight: 700; font-size: 13px; }
+  .dispersion-track-wrap { margin-bottom: 16px; }
+  .dispersion-dim-label { font-size: 11px; color: var(--slate-500); margin-bottom: 4px; }
   .dispersion-track {
-    flex: 1; height: 20px; background: #f1f5f9; border-radius: 10px;
-    position: relative; overflow: visible;
+    height: 16px; background: var(--slate-100); border-radius: 2px;
+    position: relative; margin-bottom: 12px;
   }
   .dispersion-range {
-    position: absolute; top: 4px; height: 12px;
-    background: var(--teal-light); border: 1px solid var(--teal);
-    border-radius: 6px; opacity: 0.6;
+    position: absolute; top: 3px; height: 10px;
+    background: var(--variance-moderate-bg); border-left: 1.5px solid var(--teal);
+    border-right: 1.5px solid var(--teal); border-radius: 1px;
   }
-  .dispersion-dot {
-    position: absolute; top: 50%; transform: translate(-50%, -50%);
-    width: 8px; height: 8px; border-radius: 50%;
-    border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  .dispersion-median {
+    position: absolute; top: 0; bottom: 0; width: 1.5px;
+    background: var(--dark);
   }
-  .dispersion-dot.exec-a { background: var(--exec-a); }
-  .dispersion-dot.exec-b { background: var(--exec-b); }
-  .dispersion-dot.exec-c { background: var(--exec-c); }
-  .dispersion-dot.exec-d { background: var(--exec-d); }
-  .dispersion-dot.exec-e { background: var(--exec-e); }
-  .dispersion-legend {
-    display: flex; gap: 16px; margin-top: 12px; justify-content: center;
+  .dispersion-median::after {
+    content: ''; position: absolute; top: -3px; left: -2.5px;
+    width: 6px; height: 6px; background: var(--dark); border-radius: 50%;
   }
-  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--slate-500); }
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
+  .dispersion-scale {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: var(--slate-400); margin-top: -4px; margin-bottom: 16px;
+    padding: 0 2px;
+  }
 
-  /* Priority Action Matrix */
-  .matrix-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    border: 1px solid #e8edf2; border-radius: 12px;
-    overflow: hidden; margin-bottom: 28px;
+  /* ── Priority Matrix ── */
+  .matrix {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--slate-200); border-radius: 2px;
+    overflow: hidden; margin-bottom: 40px;
   }
   .matrix-header {
-    grid-column: 1 / -1;
-    display: grid; grid-template-columns: 1fr 1fr;
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--slate-400); text-align: center;
+    grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--slate-200);
   }
-  .matrix-header span { padding: 10px; border-bottom: 1px solid #e8edf2; }
-  .matrix-cell {
-    padding: 16px; border-right: 1px solid #f1f5f9;
-    border-bottom: 1px solid #f1f5f9;
+  .matrix-header span {
+    padding: 8px 16px; font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-400);
+    text-align: center;
   }
-  .matrix-cell:nth-child(even) { border-right: none; }
-  .matrix-label {
+  .matrix-cell { padding: 16px; }
+  .matrix-cell:nth-child(odd) { border-right: 1px solid var(--slate-100); }
+  .matrix-cell:nth-child(3), .matrix-cell:nth-child(4) { border-top: 1px solid var(--slate-100); }
+  .matrix-cell-label {
     font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 8px;
+    letter-spacing: 1px; margin-bottom: 8px; color: var(--slate-400);
   }
-  .matrix-q1 .matrix-label { color: var(--variance-elevated); }
-  .matrix-q2 .matrix-label { color: var(--teal); }
-  .matrix-q3 .matrix-label { color: var(--variance-moderate); }
-  .matrix-q4 .matrix-label { color: var(--slate-400); }
-  .matrix-item { font-size: 12px; color: var(--dark); margin-bottom: 6px; padding-left: 12px; position: relative; }
-  .matrix-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
-  .matrix-axis-label {
-    writing-mode: vertical-rl; text-orientation: mixed;
-    font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--slate-400);
-    display: flex; align-items: center; justify-content: center;
-    padding: 8px;
+  .matrix-q1 .matrix-cell-label { color: var(--variance-elevated); }
+  .matrix-q2 .matrix-cell-label { color: var(--teal); }
+  .matrix-item {
+    font-size: 12px; color: var(--slate-600); line-height: 1.6;
+    margin-bottom: 6px; padding-left: 10px; position: relative;
   }
+  .matrix-item::before {
+    content: ''; position: absolute; left: 0; top: 7px;
+    width: 3px; height: 3px; border-radius: 50%; background: var(--slate-400);
+  }
+  .matrix-q1 .matrix-item::before { background: var(--variance-elevated); }
 
-  /* Governance Commentary */
+  /* ── Commentary ── */
   .commentary-list { list-style: none; }
   .commentary-list li {
-    position: relative; padding: 10px 0 10px 20px;
+    position: relative; padding: 8px 0 8px 16px;
     font-size: 13px; color: var(--slate-500); line-height: 1.7;
-    border-bottom: 1px solid #f8fafb;
+    border-bottom: 1px solid var(--slate-100);
   }
+  .commentary-list li:last-child { border-bottom: none; }
   .commentary-list li::before {
-    content: ''; position: absolute; left: 0; top: 16px;
-    width: 6px; height: 6px; border-radius: 50;
-    border: 2px solid var(--teal); background: transparent;
+    content: ''; position: absolute; left: 0; top: 15px;
+    width: 4px; height: 4px; border-radius: 50%;
+    border: 1.5px solid var(--teal); background: transparent;
   }
 
-  /* Footer */
+  /* ── Footer ── */
   .report-footer {
-    margin-top: 32px; padding-top: 16px;
-    border-top: 1px solid #e8edf2;
-    display: flex; justify-content: space-between;
-    font-size: 10px; color: var(--slate-400);
+    margin-top: 40px; padding-top: 20px;
+    border-top: 1px solid var(--slate-200);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px; color: var(--slate-400); letter-spacing: 0.5px;
   }
+  .report-footer-right { text-align: right; line-height: 1.8; }
 
-  /* Download Bar */
+  /* ── Download Bar ── */
   .download-bar {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
     background: rgba(26,37,48,0.95); backdrop-filter: blur(12px);
-    padding: 16px 40px; display: flex; justify-content: center; align-items: center; gap: 16px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 40px; display: flex; justify-content: center; align-items: center; gap: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
   }
-  .download-bar p { color: rgba(255,255,255,0.6); font-size: 13px; }
+  .download-bar p { color: rgba(255,255,255,0.5); font-size: 12px; }
   .download-btn {
-    background: var(--teal); color: #fff; padding: 10px 28px;
-    border-radius: 8px; font-size: 13px; font-weight: 700; border: none;
-    cursor: pointer; transition: all 0.3s;
+    background: var(--teal); color: #fff; padding: 8px 24px;
+    border-radius: 2px; font-size: 12px; font-weight: 600; border: none;
+    cursor: pointer; transition: background 0.2s; letter-spacing: 0.5px;
   }
   .download-btn:hover { background: var(--teal-dark); }
 
   @media print {
     .download-bar { display: none !important; }
-    .page { padding: 20px; }
+    .page { padding: 24px; }
     body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -229,186 +212,197 @@
 <body>
 
 <div class="page">
+
   <!-- Header -->
   <div class="report-header">
     <div>
-      <div class="report-subtitle">Executive Alignment Index</div>
+      <div class="report-subtitle">Executive Alignment Index™</div>
       <h1 class="report-title">Alignment Index Report</h1>
     </div>
     <div class="report-meta">
-      <div><strong>Organisation:</strong> [Sample Organisation]</div>
+      <div><strong>Organisation:</strong> [Client Name]</div>
+      <div><strong>Commissioned By:</strong> CEO / Chair</div>
       <div><strong>Date:</strong> March 2026</div>
-      <div><strong>Commissioned By:</strong> [CEO / Chair]</div>
-      <div class="confidential-badge">&#9679; Confidential</div>
+      <div><strong>Prepared by:</strong> Bright Leadership Consulting</div>
     </div>
   </div>
 
-  <!-- Section 1: Composite Score -->
-  <div class="composite-section">
-    <div class="section-num">Section 1</div>
-    <div class="composite-score">3.2 <span class="composite-max">/ 5.0</span></div>
-    <div class="composite-status" style="background:var(--variance-moderate-bg);color:var(--variance-moderate)"><span class="dot" style="background:var(--variance-moderate)"></span> Moderate Variance</div>
-    <p class="composite-interpretation">"Executive alignment is directionally coherent, with material variance in decision rights and escalation clarity."</p>
+  <!-- Composite Score -->
+  <div class="composite">
+    <div class="section-label">Composite Alignment Score</div>
+    <div class="composite-score">3.4 <span class="composite-max">/ 5.0</span></div>
+    <div class="composite-status"><span class="dot"></span> Moderate Variance</div>
+    <p class="composite-interpretation">
+      Executive alignment is directionally coherent with material dispersion 
+      in decision authority and cross-functional coordination.
+    </p>
   </div>
 
-  <!-- Section 2: Dimension Breakdown -->
-  <div>
-    <div class="section-num">Section 2 &mdash; Dimension-Level Breakdown</div>
-    <h3 class="section-title">Alignment by Dimension</h3>
-    <table class="dimension-table">
-      <thead>
-        <tr>
-          <th>Dimension</th>
-          <th>Score</th>
-          <th style="width:140px">Distribution</th>
-          <th>Variance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="dimension-name">Strategic Interpretation</td>
-          <td class="score-value">3.8</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:76%"></div></div></td>
-          <td><span class="variance-badge variance-low">Low</span></td>
-        </tr>
-        <tr>
-          <td class="dimension-name">Decision Rights Clarity</td>
-          <td class="score-value">2.4</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:48%; background:var(--variance-elevated)"></div></div></td>
-          <td><span class="variance-badge variance-elevated">Elevated</span></td>
-        </tr>
-        <tr>
-          <td class="dimension-name">Cross-Functional Coordination</td>
-          <td class="score-value">3.2</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:64%"></div></div></td>
-          <td><span class="variance-badge variance-moderate">Moderate</span></td>
-        </tr>
-        <tr>
-          <td class="dimension-name">Escalation Pathways</td>
-          <td class="score-value">2.6</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:52%; background:var(--variance-elevated)"></div></div></td>
-          <td><span class="variance-badge variance-elevated">Elevated</span></td>
-        </tr>
-        <tr>
-          <td class="dimension-name">Accountability Architecture</td>
-          <td class="score-value">3.6</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:72%"></div></div></td>
-          <td><span class="variance-badge variance-low">Low</span></td>
-        </tr>
-        <tr>
-          <td class="dimension-name">Risk Ownership</td>
-          <td class="score-value">3.4</td>
-          <td><div class="score-bar-container"><div class="score-bar" style="width:68%"></div></div></td>
-          <td><span class="variance-badge variance-moderate">Moderate</span></td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Two-Column: Dimensions + Dispersion -->
+  <div class="two-col">
+
+    <!-- Left: Dimension Breakdown -->
+    <div>
+      <div class="section-label">Alignment Dimension Breakdown</div>
+      <ul class="dimension-list">
+        <li class="dimension-item">
+          <div class="dimension-name">Strategic Interpretation</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>3.8</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:76%"></div></div>
+            <span class="variance-badge variance-low">Low</span>
+          </div>
+        </li>
+        <li class="dimension-item">
+          <div class="dimension-name">Decision Rights Clarity</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>2.9</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill elevated" style="width:58%"></div></div>
+            <span class="variance-badge variance-elevated">Elevated</span>
+          </div>
+        </li>
+        <li class="dimension-item">
+          <div class="dimension-name">Cross-Functional Coordination</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>3.2</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:64%"></div></div>
+            <span class="variance-badge variance-moderate">Moderate</span>
+          </div>
+        </li>
+        <li class="dimension-item">
+          <div class="dimension-name">Escalation Pathways</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>2.6</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill elevated" style="width:52%"></div></div>
+            <span class="variance-badge variance-elevated">Elevated</span>
+          </div>
+        </li>
+        <li class="dimension-item">
+          <div class="dimension-name">Accountability Architecture</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>3.6</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:72%"></div></div>
+            <span class="variance-badge variance-low">Low</span>
+          </div>
+        </li>
+        <li class="dimension-item">
+          <div class="dimension-name">Risk Ownership</div>
+          <div class="dimension-meta">
+            <div class="dimension-score">Score: <strong>3.4</strong></div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:68%"></div></div>
+            <span class="variance-badge variance-moderate">Moderate</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: Executive Dispersion -->
+    <div class="dispersion-box">
+      <div class="section-label">Executive Dispersion Mapping</div>
+      <div class="dispersion-title-row">
+        <div class="dispersion-stat">Range: <strong>2.6 — 4.1</strong></div>
+        <div class="dispersion-stat">Median: <strong>3.4</strong></div>
+      </div>
+
+      <div class="dispersion-track-wrap">
+        <div class="dispersion-dim-label">Strategic Interpretation</div>
+        <div class="dispersion-track">
+          <div class="dispersion-range" style="left:56%;width:22%"></div>
+          <div class="dispersion-median" style="left:72%"></div>
+        </div>
+      </div>
+      <div class="dispersion-track-wrap">
+        <div class="dispersion-dim-label">Decision Rights Clarity</div>
+        <div class="dispersion-track">
+          <div class="dispersion-range" style="left:22%;width:42%"></div>
+          <div class="dispersion-median" style="left:44%"></div>
+        </div>
+      </div>
+      <div class="dispersion-track-wrap">
+        <div class="dispersion-dim-label">Cross-Functional Coordination</div>
+        <div class="dispersion-track">
+          <div class="dispersion-range" style="left:34%;width:30%"></div>
+          <div class="dispersion-median" style="left:50%"></div>
+        </div>
+      </div>
+      <div class="dispersion-track-wrap">
+        <div class="dispersion-dim-label">Escalation Pathways</div>
+        <div class="dispersion-track">
+          <div class="dispersion-range" style="left:20%;width:40%"></div>
+          <div class="dispersion-median" style="left:38%"></div>
+        </div>
+      </div>
+      <div class="dispersion-track-wrap">
+        <div class="dispersion-dim-label">Risk Ownership</div>
+        <div class="dispersion-track">
+          <div class="dispersion-range" style="left:42%;width:28%"></div>
+          <div class="dispersion-median" style="left:56%"></div>
+        </div>
+      </div>
+
+      <div class="dispersion-scale">
+        <span>1.0</span><span>2.0</span><span>3.0</span><span>4.0</span><span>5.0</span>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Section 3: Executive Dispersion Mapping -->
-  <div class="dispersion-section">
-    <div class="section-num">Section 3 &mdash; Executive Dispersion</div>
-    <h3 class="section-title">Individual Score Distribution</h3>
-    <div class="dispersion-row">
-      <div class="dispersion-label">Strategic Interpretation</div>
-      <div class="dispersion-track">
-        <div class="dispersion-range" style="left:56%;width:24%"></div>
-        <div class="dispersion-dot exec-a" style="left:60%"></div>
-        <div class="dispersion-dot exec-b" style="left:72%"></div>
-        <div class="dispersion-dot exec-c" style="left:78%"></div>
-        <div class="dispersion-dot exec-d" style="left:68%"></div>
-        <div class="dispersion-dot exec-e" style="left:82%"></div>
-      </div>
-    </div>
-    <div class="dispersion-row">
-      <div class="dispersion-label">Decision Rights Clarity</div>
-      <div class="dispersion-track">
-        <div class="dispersion-range" style="left:20%;width:48%"></div>
-        <div class="dispersion-dot exec-a" style="left:24%"></div>
-        <div class="dispersion-dot exec-b" style="left:64%"></div>
-        <div class="dispersion-dot exec-c" style="left:40%"></div>
-        <div class="dispersion-dot exec-d" style="left:52%"></div>
-        <div class="dispersion-dot exec-e" style="left:32%"></div>
-      </div>
-    </div>
-    <div class="dispersion-row">
-      <div class="dispersion-label">Escalation Pathways</div>
-      <div class="dispersion-track">
-        <div class="dispersion-range" style="left:22%;width:44%"></div>
-        <div class="dispersion-dot exec-a" style="left:28%"></div>
-        <div class="dispersion-dot exec-b" style="left:62%"></div>
-        <div class="dispersion-dot exec-c" style="left:36%"></div>
-        <div class="dispersion-dot exec-d" style="left:48%"></div>
-        <div class="dispersion-dot exec-e" style="left:44%"></div>
-      </div>
-    </div>
-    <div class="dispersion-row">
-      <div class="dispersion-label">Risk Ownership</div>
-      <div class="dispersion-track">
-        <div class="dispersion-range" style="left:42%;width:32%"></div>
-        <div class="dispersion-dot exec-a" style="left:48%"></div>
-        <div class="dispersion-dot exec-b" style="left:70%"></div>
-        <div class="dispersion-dot exec-c" style="left:56%"></div>
-        <div class="dispersion-dot exec-d" style="left:62%"></div>
-        <div class="dispersion-dot exec-e" style="left:66%"></div>
-      </div>
-    </div>
-    <div class="dispersion-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-a)"></div> Exec A</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-b)"></div> Exec B</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-c)"></div> Exec C</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-d)"></div> Exec D</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--exec-e)"></div> Exec E</div>
-    </div>
-  </div>
+  <!-- Two-Column: Matrix + Commentary -->
+  <div class="two-col">
 
-  <!-- Section 4: Priority Action Matrix -->
-  <div>
-    <div class="section-num">Section 4 &mdash; Priority Actions</div>
-    <h3 class="section-title">Impact vs Urgency Matrix</h3>
-    <div class="matrix-grid">
-      <div class="matrix-header">
-        <span>High Urgency</span>
-        <span>Lower Urgency</span>
-      </div>
-      <div class="matrix-cell matrix-q1">
-        <div class="matrix-label">Critical &mdash; Act Now</div>
-        <div class="matrix-item">Clarify escalation authority between COO and BU Heads</div>
-        <div class="matrix-item">Formalise decision rights across regional units</div>
-      </div>
-      <div class="matrix-cell matrix-q2">
-        <div class="matrix-label">Strategic &mdash; Plan</div>
-        <div class="matrix-item">Formalise AI governance ownership at executive level</div>
-      </div>
-      <div class="matrix-cell matrix-q3">
-        <div class="matrix-label">Operational &mdash; Improve</div>
-        <div class="matrix-item">Align strategic interpretation of growth targets</div>
-      </div>
-      <div class="matrix-cell matrix-q4">
-        <div class="matrix-label">Monitor</div>
-        <div class="matrix-item">Risk ownership distribution within acceptable range</div>
+    <!-- Left: Priority Action Matrix -->
+    <div>
+      <div class="section-label">Priority Action Matrix</div>
+      <div class="matrix">
+        <div class="matrix-header">
+          <span>High Urgency</span>
+          <span>Lower Urgency</span>
+        </div>
+        <div class="matrix-cell matrix-q1">
+          <div class="matrix-cell-label">Critical — Act Now</div>
+          <div class="matrix-item">Clarify escalation authority between COO and regional leaders</div>
+          <div class="matrix-item">Formalise decision rights across business units</div>
+        </div>
+        <div class="matrix-cell matrix-q2">
+          <div class="matrix-cell-label">Strategic — Plan</div>
+          <div class="matrix-item">Formalise AI governance ownership at executive level</div>
+        </div>
+        <div class="matrix-cell">
+          <div class="matrix-cell-label">Operational — Improve</div>
+          <div class="matrix-item">Align strategic interpretation of growth targets</div>
+        </div>
+        <div class="matrix-cell">
+          <div class="matrix-cell-label">Monitor</div>
+          <div class="matrix-item">Risk ownership within acceptable range</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Section 5: Governance Commentary -->
-  <div>
-    <div class="section-num">Section 5 &mdash; Governance Risk</div>
-    <h3 class="section-title">Escalation Commentary</h3>
-    <ul class="commentary-list">
-      <li>Variance in decision rights may slow execution under growth pressure.</li>
-      <li>Escalation pathways lack clarity across regional units, creating governance risk during rapid scaling.</li>
-      <li>AI governance accountability is currently distributed without defined oversight at executive level.</li>
-      <li>Strategic interpretation is broadly coherent but diverges on timeline expectations for growth targets.</li>
-      <li>Accountability architecture is well-defined; no immediate action required.</li>
-    </ul>
+    <!-- Right: Governance Commentary -->
+    <div>
+      <div class="section-label">Governance Risk &amp; Escalation Commentary</div>
+      <ul class="commentary-list">
+        <li>Variance in decision authority may slow execution during growth acceleration.</li>
+        <li>Escalation pathways across regional leadership remain inconsistent.</li>
+        <li>Strategic interpretation of AI investment priorities differs between executive roles.</li>
+        <li>Cross-functional coordination is adequate but lacks defined ownership at interface points.</li>
+        <li>Accountability architecture is well-defined; no immediate action required.</li>
+      </ul>
+    </div>
+
   </div>
 
   <!-- Footer -->
   <div class="report-footer">
-    <div>&copy; 2026 Bright Leadership Consulting. All rights reserved.</div>
-    <div>Executive Alignment Index &mdash; Confidential</div>
+    <div>
+      Executive Alignment Index™<br>
+      Bright Leadership Consulting
+    </div>
+    <div class="report-footer-right">
+      Confidential Advisory Document
+    </div>
   </div>
+
 </div>
 
 <!-- Download Bar -->
