@@ -8,6 +8,11 @@ const footerLinks = [
   { label: "Enquire Confidentially", href: "/contact", isRoute: true },
 ];
 
+const programmeLinks = [
+  { label: "Executive Leadership Mastery", href: "/executive-leadership-mastery", isRoute: true },
+  { label: "All Courses", href: "/courses", isRoute: true },
+];
+
 const Footer = () => {
   return (
     <footer className="border-t border-border/60">
@@ -41,6 +46,20 @@ const Footer = () => {
                 </a>
               )
             )}
+          </nav>
+
+          {/* Programme Links */}
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground/50 uppercase tracking-wider mb-1">Programmes</span>
+            {programmeLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.href}
+                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
 
