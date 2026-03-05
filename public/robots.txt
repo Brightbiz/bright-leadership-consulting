@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://www.brightleadershipconsulting.com/sitemap.xml
+Sitemap: https://brightleadershipconsulting.com/sitemap.xml

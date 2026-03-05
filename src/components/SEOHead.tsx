@@ -8,8 +8,8 @@ interface SEOHeadProps {
 }
 
 const SITE_URL = "https://brightleadershipconsulting.com";
-const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Leadership Mastery & Coaching";
-const DEFAULT_DESCRIPTION = "Transform your leadership potential with Bright Leadership Consulting. CPD-accredited Executive Leadership Mastery Program, personalized executive coaching, and immersive corporate retreats.";
+const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Alignment Advisory";
+const DEFAULT_DESCRIPTION = "Governance-level advisory measuring executive variance across decision rights, strategic interpretation, and escalation architecture.";
 
 const SEOHead = ({
   title,
@@ -17,7 +17,7 @@ const SEOHead = ({
   path = "/",
   type = "website",
 }: SEOHeadProps) => {
-  const fullTitle = title ? `${title} | Bright Leadership Consulting` : DEFAULT_TITLE;
+  const fullTitle = title || DEFAULT_TITLE;
   const canonicalUrl = `${SITE_URL}${path}`;
 
   return (
