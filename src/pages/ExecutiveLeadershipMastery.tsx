@@ -93,7 +93,7 @@ const ExecutiveLeadershipMastery = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Executive Leadership Mastery Programme | Bright Leadership Consulting"
+        title="Executive Leadership Mastery | Bright Leadership"
         description="CPD-accredited 33-module executive programme. 80+ hours, 66 CPD points. Seven integrated disciplines for senior leaders and board-level executives."
         path="/executive-leadership-mastery"
       />

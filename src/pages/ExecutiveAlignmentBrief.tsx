@@ -7,7 +7,7 @@ const ExecutiveAlignmentBrief = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Executive Alignment Brief"
+        title="Executive Alignment Brief | Bright Leadership"
         description="A governance-level overview of how structural alignment is measured, diagnosed, and sustained across executive teams."
         path="/executive-alignment-brief"
       />
