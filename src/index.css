@@ -4,7 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Bright Leadership Consulting - Elegant Design System */
+/* Bright Leadership Consulting — Editorial Design System */
 
 @layer base {
   html {
@@ -12,65 +12,57 @@
   }
 
   :root {
-    /* Core brand colors - Teal to Amber palette */
-    --background: 180 10% 99%;
-    --foreground: 200 25% 10%;
+    /* Core palette: Charcoal / White / Muted Teal / Light Grey */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 25% 10%;
+    --card-foreground: 0 0% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 25% 10%;
+    --popover-foreground: 0 0% 12%;
 
-    /* Primary - Deep Teal */
-    --primary: 180 65% 28%;
+    /* Primary — Muted Teal #1F5C63 */
+    --primary: 186 52% 25%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Warm Amber */
+    /* Secondary — kept for internal use */
     --secondary: 38 92% 55%;
-    --secondary-foreground: 200 25% 10%;
+    --secondary-foreground: 0 0% 12%;
 
     /* Muted surfaces */
-    --muted: 180 15% 96%;
-    --muted-foreground: 200 10% 45%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Accent - Light Teal */
-    --accent: 180 45% 92%;
-    --accent-foreground: 180 65% 25%;
+    /* Accent — same as primary for editorial consistency */
+    --accent: 186 20% 95%;
+    --accent-foreground: 186 52% 25%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 180 15% 90%;
-    --input: 180 15% 90%;
-    --ring: 180 65% 28%;
+    /* Divider: #E6E6E6 */
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 186 52% 25%;
 
-    --radius: 0.75rem;
+    --radius: 0.375rem;
 
-    /* Extended palette */
-    --teal-50: 180 50% 97%;
-    --teal-100: 180 45% 92%;
-    --teal-500: 180 60% 40%;
-    --teal-600: 180 65% 28%;
-    --teal-700: 180 70% 22%;
-    --teal-900: 180 75% 12%;
+    /* Extended palette — kept for EAI dashboard etc. */
+    --teal-50: 186 30% 97%;
+    --teal-100: 186 25% 92%;
+    --teal-500: 186 45% 35%;
+    --teal-600: 186 52% 25%;
+    --teal-700: 186 55% 20%;
+    --teal-900: 186 60% 12%;
 
     --amber-400: 38 95% 60%;
     --amber-500: 38 92% 55%;
     --amber-600: 32 90% 48%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(180 65% 28%) 0%, hsl(195 70% 35%) 50%, hsl(180 50% 40%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(38 92% 55%) 0%, hsl(32 90% 48%) 100%);
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(180 20% 20% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(180 20% 20% / 0.1), 0 2px 4px -2px hsl(180 20% 20% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(180 20% 20% / 0.1), 0 4px 6px -4px hsl(180 20% 20% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(180 20% 20% / 0.1), 0 8px 10px -6px hsl(180 20% 20% / 0.1);
-    --shadow-glow: 0 0 40px hsl(180 65% 28% / 0.15);
-    --shadow-amber: 0 8px 25px hsl(38 92% 55% / 0.35);
+    /* Shadows — restrained */
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
 
     /* Score level semantic colors */
     --score-master: 160 60% 45%;
@@ -104,7 +96,7 @@
     --internal-quiz-bg: 187 70% 96%;
     --internal-quiz-border: 187 60% 88%;
 
-    /* Sidebar - keeping existing */
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -116,33 +108,33 @@
   }
 
   .dark {
-    --background: 200 25% 8%;
-    --foreground: 180 10% 95%;
+    --background: 0 0% 6%;
+    --foreground: 0 0% 92%;
 
-    --card: 200 20% 12%;
-    --card-foreground: 180 10% 95%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 92%;
 
-    --popover: 200 20% 12%;
-    --popover-foreground: 180 10% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 92%;
 
-    --primary: 180 55% 45%;
-    --primary-foreground: 200 25% 8%;
+    --primary: 186 45% 40%;
+    --primary-foreground: 0 0% 6%;
 
     --secondary: 38 85% 50%;
-    --secondary-foreground: 200 25% 8%;
+    --secondary-foreground: 0 0% 6%;
 
-    --muted: 200 20% 18%;
-    --muted-foreground: 180 10% 65%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 180 30% 20%;
-    --accent-foreground: 180 55% 45%;
+    --accent: 186 20% 16%;
+    --accent-foreground: 186 45% 40%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 18%;
-    --input: 200 20% 18%;
-    --ring: 180 55% 45%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 186 45% 40%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -153,7 +145,6 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Score level semantic colors - dark mode */
     --score-master: 160 50% 50%;
     --score-master-foreground: 160 40% 75%;
     --score-master-bg: 160 30% 15%;
@@ -169,7 +160,6 @@
     --score-aspiring-bg: 210 40% 15%;
     --score-aspiring-border: 210 45% 25%;
 
-    /* Internal/Production document colors - dark mode */
     --internal-video: 271 65% 60%;
     --internal-video-foreground: 271 55% 80%;
     --internal-video-bg: 271 40% 15%;
@@ -195,152 +185,108 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
-    scroll-behavior: smooth;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', Georgia, serif;
     @apply font-medium tracking-tight;
   }
-
-  /* Smooth scroll for anchor links */
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 @layer components {
-  /* Board-pack grid container — 1140px max, generous margins */
+  /* Board-pack container — 1140px max */
   .container-brief {
     @apply max-w-[1140px] mx-auto px-8 md:px-16 lg:px-20;
   }
 
-  /* Narrow reading column — 60-70 chars per line */
+  /* Narrow reading column — 680px */
   .prose-narrow {
     @apply max-w-[680px];
   }
 
-  /* Section spacing — executive briefing rhythm */
+  /* Section spacing — 100px vertical rhythm */
   .section-brief {
-    @apply py-[100px] lg:py-[120px];
+    @apply py-[100px];
   }
 
-  /* Section divider — thin, restrained */
+  /* Thin horizontal divider */
   .section-divider {
-    @apply border-t border-border/60 mx-auto max-w-[680px];
+    @apply border-t border-border mx-auto max-w-[680px];
   }
 
-  /* Typography: Board-pack hierarchy */
+  /* Full-width divider */
+  .section-divider-full {
+    @apply border-t border-border;
+  }
+
+  /* Hero headline: 42–48px */
   .heading-hero {
-    @apply font-serif text-[2.625rem] sm:text-[2.875rem] lg:text-[3rem] font-semibold leading-[1.2] tracking-tight text-foreground;
+    @apply font-serif text-[2.625rem] lg:text-[3rem] font-semibold leading-[1.15] tracking-tight text-foreground;
   }
 
+  /* Section headings: 28–32px */
   .heading-section {
-    @apply font-serif text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-semibold leading-[1.3] tracking-tight text-foreground;
+    @apply font-serif text-[1.75rem] lg:text-[2rem] font-semibold leading-[1.25] tracking-tight text-foreground;
   }
 
   .heading-sub {
     @apply font-serif text-xl lg:text-[1.375rem] font-medium leading-[1.4] text-foreground;
   }
 
-  /* Body text — 18px with 1.6 line height for executive readability */
+  /* Body text — 18px, 1.6 line height */
   .body-brief {
     @apply text-lg leading-[1.65] text-muted-foreground;
   }
 
-  /* Kicker / eyebrow label */
+  /* Kicker / eyebrow */
   .kicker {
     @apply text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase;
   }
 
-  /* Quiet CTA link — restrained, no marketing weight */
+  /* Quiet CTA link */
   .link-quiet {
     @apply inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300 tracking-wide;
   }
 
-  /* Scan list — short lines for executive scanning */
+  /* Scan list — declarative short lines */
   .scan-list {
-    @apply space-y-2 border-l-2 border-border/50 pl-6;
+    @apply space-y-2 border-l-2 border-border pl-6;
   }
 
   .scan-list p, .scan-list li {
     @apply text-lg text-muted-foreground leading-relaxed;
   }
 
-  /* Emphasis line — serif pull-quote style */
+  /* Emphasis line — serif pull-quote */
   .emphasis-line {
     @apply font-serif text-foreground font-medium text-xl leading-snug;
   }
 
-  .glass-card {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.85) 100%
-    );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  }
-
-  .dark .glass-card {
-    background: linear-gradient(
-      135deg,
-      rgba(30, 40, 50, 0.95) 0%,
-      rgba(20, 30, 40, 0.85) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .gradient-text {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hover-lift {
-    @apply transition-all duration-300 ease-out;
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
-  }
-
-  .section-padding {
-    @apply py-20 md:py-28 lg:py-32;
+  /* Outlined button — brief spec */
+  .btn-brief {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium tracking-wide
+           border border-foreground/20 bg-background text-foreground rounded-sm
+           transition-colors duration-200
+           hover:border-primary hover:text-primary;
   }
 
   .container-narrow {
     @apply max-w-6xl mx-auto px-6 md:px-8;
   }
 
-  /* Enhanced button glow effect */
-  .btn-glow {
-    position: relative;
-    overflow: hidden;
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
   }
-  
-  .btn-glow::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(45deg, hsl(var(--secondary)), hsl(var(--primary)), hsl(var(--secondary)));
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    filter: blur(10px);
+
+  /* Glass card — kept for internal pages */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid hsl(var(--border));
   }
-  
-  .btn-glow:hover::before {
-    opacity: 0.6;
+
+  .dark .glass-card {
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid hsl(var(--border));
   }
 }
 
@@ -357,30 +303,15 @@
     animation: fadeUp 0.6s ease-out 0.2s forwards;
     opacity: 0;
   }
-
-  .animate-scale-in {
-    animation: scaleIn 0.5s ease-out forwards;
-  }
 }
 
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }

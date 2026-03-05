@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Executive Alignment Index™", href: "/executive-alignment-index" },
+  { label: "Executive Alignment Index", href: "/executive-alignment-index" },
   { label: "Selected Engagements", href: "/selected-engagements" },
 ];
 
@@ -26,7 +25,7 @@ const Header = () => {
       "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
       isScrolled
         ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
-        : "bg-background/80 backdrop-blur-lg border-b border-border/30"
+        : "bg-background border-b border-border/40"
     )}>
       <div className="container-brief">
         <nav className={cn(
@@ -38,9 +37,9 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-10 md:flex">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
+                to={link.href}
                 className={cn(
                   "text-sm font-medium tracking-wide transition-colors hover:text-foreground",
                   location.pathname === link.href
@@ -49,22 +48,20 @@ const Header = () => {
                 )}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <Button
-              variant="outline"
-              size="default"
-              className="border-primary/20 text-foreground hover:border-secondary hover:text-secondary transition-colors"
-              asChild
+            <Link
+              to="/contact"
+              className="btn-brief text-sm py-2 px-5"
             >
-              <a href="/contact">Enquire Confidentially</a>
-            </Button>
+              Enquire Confidentially
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded md:hidden"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -73,12 +70,12 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="absolute left-0 right-0 top-full border-b border-border bg-background p-8 shadow-lg md:hidden">
+          <div className="absolute left-0 right-0 top-full border-b border-border bg-background p-8 shadow-sm md:hidden">
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   className={cn(
                     "text-base font-medium tracking-wide",
                     location.pathname === link.href ? "text-foreground" : "text-muted-foreground"
@@ -86,15 +83,15 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <Button
-                variant="outline"
-                className="w-full border-primary/20 text-foreground hover:border-secondary hover:text-secondary"
-                asChild
+              <Link
+                to="/contact"
+                className="btn-brief w-full text-center"
+                onClick={() => setIsMenuOpen(false)}
               >
-                <a href="/contact" onClick={() => setIsMenuOpen(false)}>Enquire Confidentially</a>
-              </Button>
+                Enquire Confidentially
+              </Link>
             </div>
           </div>
         )}

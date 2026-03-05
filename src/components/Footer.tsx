@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const footerLinks = [
-  { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
+  { label: "Executive Alignment Index", href: "/executive-alignment-index", isRoute: true },
   { label: "Selected Engagements", href: "/selected-engagements", isRoute: true },
-  { label: "Executive Alignment Brief™ (PDF)", href: "/downloads/executive-alignment-brief.html", isRoute: false },
+  { label: "Executive Alignment Brief (PDF)", href: "/downloads/executive-alignment-brief.html", isRoute: false },
   { label: "Enquire Confidentially", href: "/contact", isRoute: true },
 ];
 
@@ -15,15 +15,13 @@ const programmeLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border/60">
+    <footer className="border-t border-border">
       <div className="container-brief py-16">
         <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
-          {/* Logo */}
           <div>
             <Logo />
           </div>
 
-          {/* Links */}
           <nav className="flex flex-col gap-3">
             {footerLinks.map((link) =>
               link.isRoute ? (
@@ -48,9 +46,8 @@ const Footer = () => {
             )}
           </nav>
 
-          {/* Programme Links */}
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-muted-foreground/50 uppercase tracking-wider mb-1">Programmes</span>
+            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Programmes</span>
             {programmeLinks.map((link) => (
               <Link
                 key={link.label}
@@ -63,13 +60,12 @@ const Footer = () => {
           </nav>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-border/40">
-          <p className="text-xs text-muted-foreground/50 mb-1">
-            Confidential Executive Advisory
+        <div className="mt-12 pt-8 border-t border-border">
+          <p className="text-xs text-muted-foreground mb-1">
+            Bright Leadership Consulting
           </p>
-          <p className="text-xs text-muted-foreground/40">
-            © {new Date().getFullYear()} Bright Leadership Consulting. All rights reserved.
+          <p className="text-xs text-muted-foreground/60">
+            Confidential Executive Advisory · © {new Date().getFullYear()}
           </p>
         </div>
       </div>
