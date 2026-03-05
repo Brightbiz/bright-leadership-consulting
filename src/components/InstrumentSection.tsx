@@ -15,7 +15,7 @@ const InstrumentSection = () => {
     <>
       <div className="section-divider" />
 
-      <section className="section-brief bg-background">
+      <section aria-label="The instrument" className="section-brief bg-background">
         <div className="container-brief">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left — explanation */}

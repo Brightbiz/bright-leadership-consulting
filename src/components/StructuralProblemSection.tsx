@@ -12,7 +12,7 @@ const StructuralProblemSection = () => {
     <>
       <div className="section-divider" />
 
-      <section className="section-brief bg-background">
+      <section aria-label="Strategic insight" className="section-brief bg-background">
         <div className="container-brief">
           <div className="prose-narrow mx-auto">
             <motion.h2 className="heading-section mb-8" {...fade}>
