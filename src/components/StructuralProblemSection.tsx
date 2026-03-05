@@ -9,48 +9,44 @@ const fade = {
 
 const StructuralProblemSection = () => {
   return (
-    <section className="section-brief bg-background">
-      <div className="container-brief">
-        <div className="prose-narrow mx-auto">
-          <motion.p className="kicker mb-6" {...fade}>
-            The Execution Reality
-          </motion.p>
+    <>
+      <div className="section-divider" />
 
-          <motion.h2
-            className="heading-section mb-8"
-            {...fade}
-            transition={{ ...fade.transition, delay: 0.1 }}
-          >
-            Strategy Slows Before It Fails
-          </motion.h2>
+      <section className="section-brief bg-background">
+        <div className="container-brief">
+          <div className="prose-narrow mx-auto">
+            <motion.h2 className="heading-section mb-8" {...fade}>
+              Strategy Slows Before It Fails
+            </motion.h2>
 
-          <motion.div
-            className="space-y-6 body-brief"
-            {...fade}
-            transition={{ ...fade.transition, delay: 0.15 }}
-          >
-            <p>
-              As organisations scale or transform, complexity increases faster 
-              than executive coordination.
-            </p>
+            <motion.div
+              className="space-y-6 body-brief"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              <p>
+                As organisations scale or transform, complexity increases faster 
+                than executive coordination.
+              </p>
 
-            <div className="scan-list">
-              <p>Strategic interpretation diverges.</p>
-              <p>Decision rights overlap.</p>
-              <p>Escalation becomes inconsistent.</p>
-            </div>
+              <div className="scan-list">
+                <p>Strategic interpretation diverges.</p>
+                <p>Decision rights overlap.</p>
+                <p>Escalation becomes inconsistent.</p>
+              </div>
 
-            <p>Performance rarely collapses overnight.</p>
+              <p>Performance rarely collapses overnight.</p>
 
-            <p className="emphasis-line">It drifts.</p>
+              <p className="emphasis-line">It drifts.</p>
 
-            <p className="emphasis-line">
-              Structural alignment must be measured — not assumed.
-            </p>
-          </motion.div>
+              <p className="emphasis-line">
+                Structural alignment must be measured — not assumed.
+              </p>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

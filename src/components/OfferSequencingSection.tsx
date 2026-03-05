@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -9,78 +7,50 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const EAIInstrumentSection = () => {
+const pathways = [
+  {
+    title: "Executive Alignment Index",
+    description: "Measure variance across strategic interpretation, decision rights, and escalation architecture.",
+  },
+  {
+    title: "ALIGN Executive Intervention",
+    description: "Install structural clarity through defined decision architecture and escalation protocols.",
+  },
+  {
+    title: "Executive Oversight",
+    description: "Sustain alignment under growth, transformation, and governance complexity.",
+  },
+];
+
+const AdvisoryPathwaySection = () => {
   return (
     <>
-      {/* Section divider */}
       <div className="section-divider" />
 
-      {/* Section 2 — The Instrument */}
       <section className="section-brief bg-background">
         <div className="container-brief">
-          <div className="prose-narrow mx-auto">
-            <motion.p className="kicker mb-6" {...fade}>
-              The Instrument
-            </motion.p>
+          <motion.h2
+            className="heading-section mb-16 prose-narrow mx-auto"
+            {...fade}
+          >
+            A Structured Path to Sustained Strategic Execution
+          </motion.h2>
 
-            <motion.h2
-              className="heading-section mb-8"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.1 }}
-            >
-              Executive Alignment Index
-            </motion.h2>
-
-            <motion.div
-              className="space-y-6 body-brief"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
-            >
-              <p>
-                A governance-level assessment identifying executive variance across 
-                strategic interpretation, decision rights, and escalation architecture.
-              </p>
-
-              <p>
-                The outcome is a concise, board-ready dashboard providing objective 
-                clarity before intervention.
-              </p>
-
-              <Link
-                to="/executive-alignment-index"
-                className="link-quiet"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+            {pathways.map((pathway, i) => (
+              <motion.div
+                key={pathway.title}
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 * (i + 1) }}
               >
-                Executive Alignment Index™
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section divider */}
-      <div className="section-divider" />
-
-      {/* Section 3 — The Structured Path */}
-      <section className="section-brief bg-background">
-        <div className="container-brief">
-          <div className="prose-narrow mx-auto">
-            <motion.h2
-              className="heading-section mb-8"
-              {...fade}
-            >
-              A Structured Path to Sustained Strategic Execution
-            </motion.h2>
-
-            <motion.div
-              className="scan-list"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
-            >
-              <p>Measure variance.</p>
-              <p>Install structural clarity.</p>
-              <p>Sustain alignment under growth and transformation.</p>
-            </motion.div>
+                <h3 className="font-serif text-lg font-medium text-foreground mb-4 leading-snug">
+                  {pathway.title}
+                </h3>
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {pathway.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -88,4 +58,4 @@ const EAIInstrumentSection = () => {
   );
 };
 
-export default EAIInstrumentSection;
+export default AdvisoryPathwaySection;
