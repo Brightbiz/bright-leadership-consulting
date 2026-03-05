@@ -1,3 +1,4 @@
+import React from "react";
 import { Helmet } from "react-helmet-async";
 
 interface SEOHeadProps {
@@ -11,12 +12,12 @@ const SITE_URL = "https://brightleadershipconsulting.com";
 const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Alignment Advisory";
 const DEFAULT_DESCRIPTION = "Governance-level advisory measuring executive variance across decision rights, strategic interpretation, and escalation architecture.";
 
-const SEOHead = ({
+const SEOHead = React.forwardRef<HTMLElement, SEOHeadProps>(({
   title,
   description = DEFAULT_DESCRIPTION,
   path = "/",
   type = "website",
-}: SEOHeadProps) => {
+}, _ref) => {
   const fullTitle = title || DEFAULT_TITLE;
   const canonicalUrl = `${SITE_URL}${path}`;
 
@@ -34,6 +35,8 @@ const SEOHead = ({
       <meta name="twitter:description" content={description} />
     </Helmet>
   );
-};
+});
+
+SEOHead.displayName = "SEOHead";
 
 export default SEOHead;
