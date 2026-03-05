@@ -7,17 +7,17 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const stagger = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7, ease: "easeOut" as const, staggerChildren: 0.12 },
+const containerVariants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
 };
 
-const child = {
-  initial: { opacity: 0, y: 12 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: "easeOut" as const },
+const childVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 const StructuralProblemSection = () => {
@@ -34,27 +34,27 @@ const StructuralProblemSection = () => {
 
             <motion.div
               className="space-y-6 body-brief"
-              variants={{ whileInView: { transition: { staggerChildren: 0.1 } } }}
-              initial="initial"
-              whileInView="whileInView"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
             >
-              <motion.p variants={child}>
+              <motion.p variants={childVariants}>
                 As organisations scale or transform, complexity increases faster 
                 than executive coordination.
               </motion.p>
 
-              <motion.div className="scan-list" variants={child}>
+              <motion.div className="scan-list" variants={childVariants}>
                 <p>Strategic interpretation diverges.</p>
                 <p>Decision rights overlap.</p>
                 <p>Escalation becomes inconsistent.</p>
               </motion.div>
 
-              <motion.p variants={child}>Performance rarely collapses overnight.</motion.p>
+              <motion.p variants={childVariants}>Performance rarely collapses overnight.</motion.p>
 
-              <motion.p className="emphasis-line" variants={child}>It drifts.</motion.p>
+              <motion.p className="emphasis-line" variants={childVariants}>It drifts.</motion.p>
 
-              <motion.p className="emphasis-line" variants={child}>
+              <motion.p className="emphasis-line" variants={childVariants}>
                 Structural alignment must be measured — not assumed.
               </motion.p>
             </motion.div>
