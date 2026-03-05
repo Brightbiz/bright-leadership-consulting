@@ -189,9 +189,9 @@
     @apply text-lg text-muted-foreground leading-relaxed;
   }
 
-  /* Emphasis line — serif pull-quote */
+  /* Emphasis line — serif pull-quote with dramatic whitespace */
   .emphasis-line {
-    @apply font-serif text-foreground font-medium text-xl leading-snug;
+    @apply font-serif text-foreground font-semibold text-2xl lg:text-[1.75rem] leading-snug py-3;
   }
 
   /* Outlined button — brief spec */

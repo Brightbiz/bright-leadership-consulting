@@ -7,6 +7,19 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
+const stagger = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.7, ease: "easeOut" as const, staggerChildren: 0.12 },
+};
+
+const child = {
+  initial: { opacity: 0, y: 12 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, ease: "easeOut" as const },
+};
+
 const StructuralProblemSection = () => {
   return (
     <>
@@ -21,27 +34,29 @@ const StructuralProblemSection = () => {
 
             <motion.div
               className="space-y-6 body-brief"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
+              variants={{ whileInView: { transition: { staggerChildren: 0.1 } } }}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true }}
             >
-              <p>
+              <motion.p variants={child}>
                 As organisations scale or transform, complexity increases faster 
                 than executive coordination.
-              </p>
+              </motion.p>
 
-              <div className="scan-list">
+              <motion.div className="scan-list" variants={child}>
                 <p>Strategic interpretation diverges.</p>
                 <p>Decision rights overlap.</p>
                 <p>Escalation becomes inconsistent.</p>
-              </div>
+              </motion.div>
 
-              <p>Performance rarely collapses overnight.</p>
+              <motion.p variants={child}>Performance rarely collapses overnight.</motion.p>
 
-              <p className="emphasis-line">It drifts.</p>
+              <motion.p className="emphasis-line" variants={child}>It drifts.</motion.p>
 
-              <p className="emphasis-line">
+              <motion.p className="emphasis-line" variants={child}>
                 Structural alignment must be measured — not assumed.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </div>
