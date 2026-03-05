@@ -22,7 +22,7 @@ const CommissionedBySection = () => {
     <>
       <div className="section-divider" />
 
-      <section className="section-brief bg-background">
+      <section aria-label="Commissioning context" className="section-brief bg-background">
         <div className="container-brief">
           <div className="max-w-[640px] mx-auto text-center">
             <motion.h2 className="heading-section mb-8" {...fade}>

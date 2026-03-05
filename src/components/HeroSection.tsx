@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="bg-background pt-[140px] pb-[140px]">
+    <section aria-label="Hero" className="bg-background pt-[140px] pb-[140px]">
       <div className="container-brief">
         <div className="prose-narrow">
           {/* Headline with teal accent rule */}

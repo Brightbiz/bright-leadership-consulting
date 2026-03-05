@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import { cn } from "@/lib/utils";
 
@@ -69,32 +70,40 @@ const Header = () => {
         </nav>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="absolute left-0 right-0 top-full border-b border-border bg-background p-8 shadow-sm md:hidden">
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="absolute left-0 right-0 top-full overflow-hidden border-b border-border bg-background shadow-sm md:hidden"
+            >
+              <div className="flex flex-col gap-6 p-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className={cn(
+                      "text-base font-medium tracking-wide",
+                      location.pathname === link.href ? "text-foreground" : "text-muted-foreground"
+                    )}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
                 <Link
-                  key={link.label}
-                  to={link.href}
-                  className={cn(
-                    "text-base font-medium tracking-wide",
-                    location.pathname === link.href ? "text-foreground" : "text-muted-foreground"
-                  )}
+                  to="/contact"
+                  className="btn-brief w-full text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {link.label}
+                  Enquire Confidentially
                 </Link>
-              ))}
-              <Link
-                to="/contact"
-                className="btn-brief w-full text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Enquire Confidentially
-              </Link>
-            </div>
-          </div>
-        )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
