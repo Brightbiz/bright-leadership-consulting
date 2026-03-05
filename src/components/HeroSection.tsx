@@ -1,14 +1,20 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
     <section aria-label="Hero" className="bg-background pt-[140px] pb-[140px]">
       <div className="container-brief">
         <div className="prose-narrow">
-          {/* Headline with teal accent rule */}
+          {/* Headline with animated teal accent rule */}
           <div className="flex gap-5">
-            <div className="w-[2px] bg-primary flex-shrink-0 mt-2" />
+            <motion.div
+              className="w-[2px] bg-primary flex-shrink-0 mt-2 origin-top"
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={{ scaleY: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            />
             <h1 className="heading-hero animate-fade-up">
               Executive Alignment Determines Whether Strategy Accelerates or Stalls
             </h1>

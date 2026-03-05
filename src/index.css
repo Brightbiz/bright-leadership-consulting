@@ -141,14 +141,33 @@
     @apply py-[100px];
   }
 
-  /* Thin horizontal divider */
+  /* Thin horizontal divider — teal gradient */
   .section-divider {
-    @apply border-t border-border mx-auto max-w-[680px];
+    @apply mx-auto max-w-[680px] h-px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--teal-500) / 0.35) 30%,
+      hsl(var(--teal-500) / 0.35) 70%,
+      transparent 100%
+    );
   }
 
-  /* Full-width divider */
+  /* Full-width divider — teal gradient */
   .section-divider-full {
-    @apply border-t border-border;
+    @apply h-px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--teal-500) / 0.3) 20%,
+      hsl(var(--teal-500) / 0.3) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Tinted section background */
+  .section-tinted {
+    background-color: hsl(var(--teal-50));
   }
 
   /* Hero headline: 42–48px */
