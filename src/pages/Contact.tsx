@@ -1,6 +1,7 @@
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -21,6 +22,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRateLimit } from "@/hooks/useRateLimit";
+
+const fade = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true } as const,
+  transition: { duration: 0.7, ease: "easeOut" as const },
+};
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, { message: "Please complete this field." }).max(100),
@@ -83,22 +91,31 @@ const Contact = () => {
         description="Executive alignment engagements are discussed confidentially and by arrangement."
         path="/contact"
       />
+      <ScrollProgress />
       <Header />
 
-      <main className="pt-32 pb-24">
-        <div className="container-brief">
-          <div className="prose-narrow mx-auto">
-            {/* Heading */}
-            <p className="kicker mb-6">Confidential Enquiry</p>
-            <h1 className="heading-hero mb-8">
-              Confidential Executive Enquiries
-            </h1>
-            <p className="body-brief mb-16">
-              Executive alignment engagements are discussed confidentially and by arrangement.
-            </p>
+      <main>
+        <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-background">
+          <div className="container-brief">
+            <div className="max-w-[520px]">
+              {/* Heading */}
+              <motion.p className="kicker mb-6" {...fade}>Confidential Enquiry</motion.p>
+              <motion.h1
+                className="heading-hero mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Confidential Executive Enquiries
+              </motion.h1>
+              <motion.p
+                className="body-brief mb-16"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                Executive alignment engagements are discussed confidentially and by arrangement.
+              </motion.p>
 
-            {/* Divider */}
-            <div className="section-divider mb-16" />
+              <div className="section-divider mb-16" />
 
             {isSubmitted ? (
               <motion.div
@@ -204,8 +221,9 @@ const Contact = () => {
                 </form>
               </Form>
             )}
+            </div>
           </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
