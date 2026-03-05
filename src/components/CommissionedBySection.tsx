@@ -31,27 +31,49 @@ const CommissionedBySection = () => {
 
             <motion.div
               className="space-y-6"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
             >
               <div className="inline-block text-left">
                 <div className="scan-list">
                   {contexts.map((ctx) => (
-                    <p key={ctx}>{ctx}</p>
+                    <motion.p
+                      key={ctx}
+                      variants={{
+                        hidden: { opacity: 0, x: -10 },
+                        visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+                      }}
+                    >
+                      {ctx}
+                    </motion.p>
                   ))}
                 </div>
               </div>
 
-              <p className="body-brief">
+              <motion.p
+                className="body-brief"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
                 Engagements are confidential and calibrated to organisational complexity.
-              </p>
+              </motion.p>
 
-              <div className="pt-4">
+              <motion.div
+                className="pt-4"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
                 <Link to="/contact" className="btn-brief">
                   Enquire Regarding Executive Alignment
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
