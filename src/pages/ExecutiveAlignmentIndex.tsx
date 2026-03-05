@@ -1,19 +1,53 @@
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
-import AnimatedGradient from "@/components/AnimatedGradient";
-import TextReveal from "@/components/TextReveal";
-import MagneticButton from "@/components/MagneticButton";
 import EAIDashboardPreview from "@/components/EAIDashboardPreview";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
+const fade = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true } as const,
+  transition: { duration: 0.7, ease: "easeOut" as const },
 };
+
+const dimensions = [
+  {
+    title: "Strategic Interpretation",
+    description: "The degree to which executives share a consistent interpretation of the organisation's strategic direction and growth priorities.",
+  },
+  {
+    title: "Decision Rights Clarity",
+    description: "Whether authority boundaries are formally defined — or informally contested — across executive roles.",
+  },
+  {
+    title: "Cross-Functional Coordination",
+    description: "How effectively executive functions collaborate at interface points without requiring escalation.",
+  },
+  {
+    title: "Escalation Pathways",
+    description: "The clarity and consistency of escalation logic when decisions exceed individual authority.",
+  },
+  {
+    title: "Accountability Architecture",
+    description: "Whether accountability for outcomes is structurally assigned or ambiguously distributed.",
+  },
+  {
+    title: "Risk Ownership",
+    description: "The extent to which risk is formally owned at executive level rather than deferred or diffused.",
+  },
+];
+
+const maturityLevels = [
+  { score: 1, label: "Fragmented" },
+  { score: 2, label: "Emerging" },
+  { score: 3, label: "Structured" },
+  { score: 4, label: "Cohesive" },
+  { score: 5, label: "Integrated" },
+];
 
 const ExecutiveAlignmentIndex = () => {
   return (
@@ -27,278 +61,333 @@ const ExecutiveAlignmentIndex = () => {
       <Header />
 
       <main>
-        {/* Hero */}
-        <section className="relative min-h-[70vh] overflow-hidden flex items-center">
-          <AnimatedGradient />
-          <div className="container-narrow relative z-10 py-24 lg:py-32">
-            <div className="max-w-3xl">
-              <div className="mb-8 inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-md px-5 py-2.5 border border-white/20 shadow-lg animate-fade-up">
-                <Shield className="h-4 w-4 text-secondary" />
-                <span className="text-sm font-semibold text-primary-foreground tracking-wider uppercase">
-                  Governance Instrument
-                </span>
-              </div>
-
-              <h1 className="mb-6 font-serif text-3xl font-semibold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <TextReveal delay={0.2}>
-                  Executive Alignment Must Be Measured — Not Assumed
-                </TextReveal>
-              </h1>
-
-              <p className="mb-10 text-lg leading-relaxed text-primary-foreground/80 max-w-2xl sm:text-xl animate-fade-up" style={{ animationDelay: '0.4s' }}>
-                The Executive Alignment Index provides governance-level visibility 
-                into executive variance before strategic execution slows.
-              </p>
-
-              <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
-                <MagneticButton variant="hero" size="xl" className="group shadow-xl shadow-secondary/30" href="/contact">
-                  Enquire Confidentially
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </MagneticButton>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 100" fill="none" className="w-full">
-              <path d="M0 50C360 100 720 0 1080 50C1260 75 1380 75 1440 50V100H0V50Z" className="fill-background" />
-            </svg>
-          </div>
-        </section>
-
-        {/* Section 1 — Why Measurement Matters */}
-        <section className="py-24 lg:py-32 bg-background">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
-              <motion.p
-                className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
-                Why Measurement Matters
+        {/* Section 1 — Introduction */}
+        <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
+                Governance Instrument
               </motion.p>
 
-              <motion.div
-                className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.15 }}
+              <motion.h1
+                className="heading-hero mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
               >
-                <p>Executive teams rarely lack intent.</p>
+                Executive Alignment Index
+              </motion.h1>
 
-                <p>Misalignment emerges through variance in:</p>
+              <motion.div
+                className="space-y-6 body-brief"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  The Executive Alignment Index is a governance-level diagnostic
+                  that measures how consistently an executive team is aligned on
+                  the structures that determine strategic execution.
+                </p>
 
-                <div className="space-y-1.5 border-l-2 border-border pl-6">
-                  <p>Strategic interpretation</p>
-                  <p>Decision authority</p>
-                  <p>Escalation logic</p>
-                  <p>Risk ownership</p>
-                </div>
-
-                <p>Averages conceal dispersion.</p>
-
-                <p className="font-serif text-foreground font-medium text-xl">
-                  The Executive Alignment Index identifies structural variance before it compounds.
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  It quantifies variance across decision rights, strategic
+                  interpretation, and escalation architecture — providing
+                  boards and CEOs with objective clarity before intervention.
                 </p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Section 2 — Methodology */}
-        <section className="py-24 lg:py-32 bg-muted/30">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
-              <motion.p
-                className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
-                Methodology
+        <div className="section-divider" />
+
+        {/* Section 2 — Alignment Drift */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
+                The Problem
               </motion.p>
 
+              <motion.h2
+                className="heading-section mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Executive Alignment Rarely Breaks. It Drifts.
+              </motion.h2>
+
               <motion.div
-                className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.15 }}
+                className="space-y-6 body-brief"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
               >
                 <p>
-                  Executives are assessed across six structural alignment dimensions 
-                  using calibrated 1–5 maturity scales.
+                  In complex organisations, misalignment does not announce
+                  itself. It accumulates through small interpretive differences
+                  — each individually reasonable, collectively corrosive.
                 </p>
 
-                <p>Results are aggregated into:</p>
+                <p>
+                  Executives may share intent while diverging on execution
+                  logic: who decides, who escalates, who owns the consequence.
+                </p>
 
-                <div className="space-y-1.5 border-l-2 border-border pl-6">
-                  <p>Composite Alignment Score</p>
-                  <p>Dimension-Level Scores</p>
-                  <p>Variance Indicators (Low / Moderate / Elevated)</p>
-                </div>
+                <p>
+                  The result is not conflict. It is friction — slow enough to
+                  be normalised, material enough to erode strategic velocity.
+                </p>
 
-                <p className="font-serif text-foreground font-medium text-xl">
-                  The emphasis is not sentiment — but structural cohesion.
+                <p className="font-serif text-foreground font-medium text-xl leading-relaxed">
+                  Averages conceal dispersion. Consensus meetings mask
+                  structural variance.
+                </p>
+
+                <p>
+                  The Executive Alignment Index replaces assumption with
+                  measurement.
                 </p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Section 3 — The Report */}
-        <section className="py-24 lg:py-32 bg-background">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
-              <motion.p
-                className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
-                The Executive Alignment Index Report
+        <div className="section-divider" />
+
+        {/* Section 3 — Six Structural Dimensions */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Alignment Dimensions
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[680px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Six Structural Dimensions
+            </motion.h2>
+
+            <motion.p
+              className="body-brief max-w-[680px] mb-16"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              Executives are assessed across six dimensions that collectively
+              determine whether strategic intent translates into coordinated
+              execution.
+            </motion.p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-14">
+              {dimensions.map((dim, i) => (
+                <motion.div
+                  key={dim.title}
+                  {...fade}
+                  transition={{ ...fade.transition, delay: 0.1 + i * 0.06 }}
+                >
+                  <div className="border-l-2 border-primary pl-5">
+                    <h3 className="font-serif text-lg font-semibold text-foreground mb-3">
+                      {dim.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {dim.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 4 — Alignment Maturity Scale */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
+                Maturity Scale
               </motion.p>
 
-              <motion.div
-                className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.15 }}
+              <motion.h2
+                className="heading-section mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
               >
-                <p>Each engagement produces a concise, board-ready dashboard including:</p>
+                Alignment Maturity
+              </motion.h2>
+
+              <motion.p
+                className="body-brief mb-16"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                Each dimension is scored on a calibrated 1–5 maturity scale,
+                providing granular visibility into structural readiness.
+              </motion.p>
+            </div>
+
+            {/* Scale visual */}
+            <motion.div
+              className="max-w-3xl"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.2 }}
+            >
+              {/* Horizontal bar */}
+              <div className="relative mb-8">
+                <div className="h-[2px] bg-border w-full" />
+                <div className="flex justify-between -mt-[7px]">
+                  {maturityLevels.map((level) => (
+                    <div key={level.score} className="flex flex-col items-center" style={{ width: '20%' }}>
+                      <div className="w-3 h-3 rounded-full border-2 border-primary bg-background" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Labels */}
+              <div className="flex justify-between">
+                {maturityLevels.map((level) => (
+                  <div key={level.score} className="text-center" style={{ width: '20%' }}>
+                    <span className="block font-serif text-lg font-semibold text-foreground">
+                      {level.score}
+                    </span>
+                    <span className="block text-xs text-muted-foreground tracking-wide mt-1">
+                      {level.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 5 — Index Output */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px] mb-16">
+              <motion.p className="kicker mb-6" {...fade}>
+                The Report
+              </motion.p>
+
+              <motion.h2
+                className="heading-section mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Executive Alignment Index Report
+              </motion.h2>
+
+              <motion.div
+                className="space-y-6 body-brief"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                <p>
+                  Each engagement produces a concise, board-ready dashboard
+                  providing objective clarity across five output areas:
+                </p>
 
                 <div className="space-y-1.5 border-l-2 border-border pl-6">
                   <p>Composite Alignment Score</p>
                   <p>Dimension-Level Variance Indicators</p>
                   <p>Executive Dispersion Mapping</p>
                   <p>Priority Action Matrix</p>
-                  <p>Governance Risk & Escalation Commentary</p>
+                  <p>Governance Risk and Escalation Commentary</p>
                 </div>
 
-                <p className="font-serif text-foreground font-medium text-xl">
-                  The report anchors board discussion and strategic recalibration.
+                <p className="font-serif text-foreground font-medium text-xl leading-relaxed">
+                  The report anchors board discussion and strategic
+                  recalibration.
                 </p>
               </motion.div>
             </div>
 
-            {/* Dashboard Preview — full width within container */}
-            <div className="mt-16 max-w-4xl mx-auto">
+            {/* Dashboard */}
+            <motion.div
+              className="max-w-4xl"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.25 }}
+            >
               <EAIDashboardPreview />
-              <p className="mt-4 text-center text-xs text-muted-foreground italic tracking-wide">
-                Example Executive Alignment Index™ dashboard (illustrative).
+              <p className="mt-4 text-xs text-muted-foreground italic tracking-wide">
+                Illustrative Executive Alignment Index dashboard.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* Section 4 — Engagement Structure */}
-        <section className="py-24 lg:py-32 bg-muted/30">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
-              <motion.p
-                className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
-                Engagement Structure
-              </motion.p>
+        <div className="section-divider" />
 
-              <motion.div
-                className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.15 }}
-              >
-                <p>Engagements typically include:</p>
-
-                <div className="space-y-1.5 border-l-2 border-border pl-6">
-                  <p>Executive assessment</p>
-                  <p>Structured analysis</p>
-                  <p>Board-level presentation</p>
-                  <p>Advisory guidance on structural clarity</p>
-                </div>
-
-                <p>
-                  Where variance requires intervention, ALIGN executive working sessions 
-                  establish defined decision architecture.
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5 — Commissioning Context */}
-        <section className="py-24 lg:py-32 bg-background">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
-              <motion.p
-                className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
+        {/* Section 6 — Commissioning Context */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
                 Commissioning Context
               </motion.p>
 
-              <motion.div
-                className="space-y-8 text-lg leading-relaxed text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.15 }}
+              <motion.h2
+                className="heading-section mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
               >
-                <p>The Executive Alignment Index is commissioned during:</p>
+                When Executive Alignment Becomes a Strategic Priority
+              </motion.h2>
+
+              <motion.div
+                className="space-y-6 body-brief"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                <p>
+                  The Executive Alignment Index is typically commissioned
+                  during periods of structural change:
+                </p>
 
                 <div className="space-y-1.5 border-l-2 border-border pl-6">
-                  <p>Growth acceleration</p>
-                  <p>Post-merger integration</p>
-                  <p>Leadership transition</p>
-                  <p>AI-driven transformation</p>
+                  <p>Strategic planning cycles</p>
+                  <p>Leadership transitions</p>
+                  <p>AI transformation initiatives</p>
+                  <p>Post-acquisition integration</p>
+                  <p>Rapid organisational growth</p>
                   <p>Governance scrutiny escalation</p>
                 </div>
 
                 <p>
-                  Engagements are delivered by arrangement and calibrated to organisational scale.
+                  Engagements are delivered by arrangement and calibrated to
+                  organisational scale.
                 </p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-24 lg:py-32 bg-muted/30">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto">
+        <div className="section-divider" />
+
+        {/* Section 7 — CTA */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
               <motion.div
-                className="space-y-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
+                className="space-y-6"
+                {...fade}
               >
-                <p className="font-serif text-foreground font-medium text-xl">
+                <p className="font-serif text-foreground font-medium text-xl leading-relaxed">
                   Executive alignment determines execution velocity.
                 </p>
 
-                <p className="text-lg text-muted-foreground">
+                <p className="body-brief">
                   Enquiries are handled confidentially.
                 </p>
 
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 tracking-wide"
+                  className="link-quiet"
                 >
-                  Enquire Regarding Executive Alignment Index
+                  Enquire Regarding Executive Alignment
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </motion.div>
