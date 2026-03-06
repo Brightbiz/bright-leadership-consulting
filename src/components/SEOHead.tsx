@@ -10,7 +10,7 @@ interface SEOHeadProps {
 
 const SITE_URL = "https://brightleadershipconsulting.com";
 const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Alignment Advisory";
-const DEFAULT_DESCRIPTION = "Governance-level advisory measuring executive variance across decision rights, strategic interpretation, and escalation architecture.";
+const DEFAULT_DESCRIPTION = "Executive alignment rarely breaks — it drifts. We measure executive variance through the Executive Alignment Index™, helping leadership teams maintain structural clarity.";
 
 const SEOHead = React.forwardRef<HTMLElement, SEOHeadProps>(({
   title,
