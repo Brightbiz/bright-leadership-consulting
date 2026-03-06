@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import EAIDashboardPreview from "./EAIDashboardPreview";
 import AlignmentFrameworkDiagram from "./diagrams/AlignmentFrameworkDiagram";
+import instrumentStructural from "@/assets/instrument-structural.jpg";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -15,7 +16,19 @@ const InstrumentSection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="The instrument" className="section-brief bg-background">
+      <section aria-label="The instrument" className="section-brief bg-background relative overflow-hidden">
+        {/* Structural anchor image — left side, faint */}
+        <div
+          className="hidden lg:block absolute left-0 top-0 bottom-0 w-1/3 pointer-events-none"
+          style={{
+            backgroundImage: `url(${instrumentStructural})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.04,
+            maskImage: "linear-gradient(to right, black 40%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to right, black 40%, transparent 100%)",
+          }}
+        />
         <div className="container-brief">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left — explanation */}
