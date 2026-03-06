@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
@@ -17,7 +16,7 @@ const engagements = [
   {
     sector: "Financial Services",
     context: "Post-merger integration across two legacy executive teams with overlapping mandates and undefined reporting lines.",
-    scope: "Executive Alignment Index deployment, followed by a 12-week structural advisory engagement with the Group CEO and incoming Chair.",
+    scope: "Executive Alignment Index™ deployment, followed by a 12-week structural advisory engagement with the Group CEO and incoming Chair.",
     outcome: "Alignment clarity achieved across the combined executive committee. Role mandates redefined. Board confidence in leadership structure restored within one quarter.",
   },
   {
@@ -29,7 +28,7 @@ const engagements = [
   {
     sector: "Healthcare & Life Sciences",
     context: "A newly appointed CEO inherited an executive team with strong individual capability but limited collective alignment on strategic priorities.",
-    scope: "Executive Alignment Index followed by a series of structured advisory sessions with the CEO. Parallel engagement with the Chair on board-executive interface.",
+    scope: "Executive Alignment Index™ followed by a series of structured advisory sessions with the CEO. Parallel engagement with the Chair on board-executive interface.",
     outcome: "Strategic priorities were consolidated from twelve to four. Executive team operating rhythm was redesigned. Chair reported measurable improvement in board-executive coherence.",
   },
   {
@@ -41,7 +40,7 @@ const engagements = [
   {
     sector: "Technology & Digital",
     context: "Series C scale-up transitioning from founder-led to professionally managed. Executive hires from different organisational cultures were not integrating effectively.",
-    scope: "Executive Alignment Index deployment across the C-suite. Advisory engagement with the CEO and lead investor on leadership architecture.",
+    scope: "Executive Alignment Index™ deployment across the C-suite. Advisory engagement with the CEO and lead investor on leadership architecture.",
     outcome: "Cultural fault lines were surfaced and addressed structurally. Two executive roles were redefined. Investor confidence in the leadership team was formally documented at the next board review.",
   },
 ];
@@ -160,12 +159,11 @@ const SelectedEngagements = () => {
                 </p>
 
                 <div className="pt-4">
-                  <Link
+                   <Link
                     to="/contact"
                     className="link-quiet"
                   >
                     Enquire Confidentially
-                    <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </motion.div>

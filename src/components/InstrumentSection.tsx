@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import EAIDashboardPreview from "./EAIDashboardPreview";
+import AlignmentFrameworkDiagram from "./diagrams/AlignmentFrameworkDiagram";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -55,15 +56,24 @@ const InstrumentSection = () => {
               </motion.div>
             </div>
 
-            {/* Right — dashboard */}
+            {/* Right — dashboard + framework */}
             <motion.div
+              className="space-y-16"
               {...fade}
               transition={{ ...fade.transition, delay: 0.25 }}
             >
-              <EAIDashboardPreview />
-              <p className="mt-3 text-xs text-muted-foreground italic tracking-wide">
-                Illustrative Executive Alignment Index™ dashboard.
-              </p>
+              <div>
+                <EAIDashboardPreview />
+                <p className="mt-3 text-xs text-muted-foreground italic tracking-wide">
+                  Illustrative Executive Alignment Index™ dashboard.
+                </p>
+              </div>
+              <div>
+                <AlignmentFrameworkDiagram />
+                <p className="mt-3 text-xs text-muted-foreground italic tracking-wide text-center">
+                  Executive Alignment Architecture — six structural dimensions.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>

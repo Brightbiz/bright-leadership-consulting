@@ -6,7 +6,7 @@ import Logo from "./Logo";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Executive Alignment Index", href: "/executive-alignment-index" },
+  { label: "Executive Alignment Index™", href: "/executive-alignment-index" },
   { label: "Selected Engagements", href: "/selected-engagements" },
 ];
 
