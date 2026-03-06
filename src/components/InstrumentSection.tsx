@@ -19,7 +19,7 @@ const InstrumentSection = () => {
         <div className="container-brief">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left — explanation */}
-            <div>
+            <div className="lg:sticky lg:top-24 lg:self-start">
               <motion.p className="kicker mb-6" {...fade}>
                 The Instrument
               </motion.p>
