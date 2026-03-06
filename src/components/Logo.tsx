@@ -11,22 +11,22 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
   ({ className = "", isCompact = false, variant = "stacked" }, ref) => {
     if (variant === "horizontal") {
       return (
-        <a ref={ref} href="/" className={cn("flex items-baseline gap-2", className)}>
+        <a ref={ref} href="/" className={cn("flex items-baseline gap-[0.4em]", className)}>
           <span
             className={cn(
-              "font-serif font-bold text-foreground transition-all duration-300",
-              isCompact ? "text-lg" : "text-xl"
+              "font-serif font-bold text-foreground leading-none transition-all duration-300",
+              isCompact ? "text-[1.15rem]" : "text-[1.35rem]"
             )}
-            style={{ letterSpacing: "0.04em" }}
+            style={{ letterSpacing: "0.035em" }}
           >
             Bright
           </span>
           <span
             className={cn(
-              "font-serif font-normal text-muted-foreground transition-all duration-300",
-              isCompact ? "text-sm" : "text-[0.9rem]"
+              "font-serif font-normal text-foreground/55 leading-none transition-all duration-300",
+              isCompact ? "text-[0.78rem]" : "text-[0.88rem]"
             )}
-            style={{ letterSpacing: "0.03em" }}
+            style={{ letterSpacing: "0.025em" }}
           >
             Leadership Consulting
           </span>
@@ -37,20 +37,14 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
     return (
       <a ref={ref} href="/" className={cn("flex flex-col", className)}>
         <span
-          className={cn(
-            "font-serif font-bold text-foreground leading-none transition-all duration-300",
-            isCompact ? "text-lg" : "text-xl"
-          )}
-          style={{ letterSpacing: "0.04em" }}
+          className="font-serif font-bold text-foreground leading-none text-[1.35rem]"
+          style={{ letterSpacing: "0.035em" }}
         >
           Bright
         </span>
         <span
-          className={cn(
-            "font-serif font-normal text-muted-foreground leading-none transition-all duration-300",
-            isCompact ? "text-xs mt-0.5" : "text-[0.8rem] mt-1"
-          )}
-          style={{ letterSpacing: "0.03em" }}
+          className="font-serif font-normal text-foreground/55 leading-none text-[0.78rem] mt-[0.35em]"
+          style={{ letterSpacing: "0.025em" }}
         >
           Leadership Consulting
         </span>
