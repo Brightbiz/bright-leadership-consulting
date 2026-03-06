@@ -21,9 +21,9 @@ const CommissionedBySection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="Commissioning context" className="section-brief section-tinted">
+      <section aria-label="Commissioning context" className="py-[90px] section-tinted">
         <div className="container-brief">
-          <div className="max-w-[640px] mx-auto text-center">
+          <div className="prose-narrow mx-auto text-center">
             <motion.h2 className="heading-section mb-8" {...fade}>
               When Executive Alignment Becomes a Strategic Priority
             </motion.h2>
@@ -86,6 +86,15 @@ const CommissionedBySection = () => {
           </div>
         </div>
       </section>
+
+      {/* Institutional credibility reinforcement */}
+      <div className="py-12 bg-background border-t border-border">
+        <div className="container-brief">
+          <p className="text-sm text-muted-foreground text-center max-w-[680px] mx-auto leading-relaxed tracking-wide">
+            Bright Leadership Consulting advises executive teams navigating growth, transformation, and leadership transition across complex organisational environments.
+          </p>
+        </div>
+      </div>
     </>
   );
 };

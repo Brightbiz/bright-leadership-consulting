@@ -16,7 +16,7 @@ const InstrumentSection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="The instrument" className="section-brief bg-background relative overflow-hidden">
+      <section aria-label="The instrument" className="py-[120px] bg-background relative overflow-hidden">
         {/* Structural anchor image — left side, faint */}
         <div
           className="hidden lg:block absolute left-0 top-0 bottom-0 w-1/3 pointer-events-none"
@@ -29,10 +29,10 @@ const InstrumentSection = () => {
             WebkitMaskImage: "linear-gradient(to right, black 40%, transparent 100%)",
           }}
         />
-        <div className="container-brief">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="max-w-[1240px] mx-auto px-8 md:px-16 lg:px-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             {/* Left — explanation */}
-            <div className="lg:sticky lg:top-24 lg:self-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
               <motion.p className="kicker mb-6" {...fade}>
                 The Instrument
               </motion.p>
@@ -80,7 +80,7 @@ const InstrumentSection = () => {
 
             {/* Right — dashboard + framework */}
             <motion.div
-              className="space-y-16"
+              className="lg:col-span-7 space-y-16"
               {...fade}
               transition={{ ...fade.transition, delay: 0.25 }}
             >

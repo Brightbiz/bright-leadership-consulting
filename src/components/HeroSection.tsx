@@ -25,7 +25,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
       </div>
 
-      <div className="container-brief relative z-10 pt-[140px] pb-[140px]">
+      <div className="container-brief relative z-10 pt-[160px] pb-[160px]">
         <div className="prose-narrow">
           {/* Headline with animated teal accent rule */}
           <div className="flex gap-5">
