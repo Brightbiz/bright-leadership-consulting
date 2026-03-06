@@ -33,7 +33,7 @@ const Header = () => {
           "flex items-center justify-between transition-all duration-300",
           isScrolled ? "h-16" : "h-20"
         )}>
-          <Logo isCompact={isScrolled} />
+          <Logo isCompact={isScrolled} variant="horizontal" />
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-10 md:flex">
