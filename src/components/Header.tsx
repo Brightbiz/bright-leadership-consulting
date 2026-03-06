@@ -36,16 +36,16 @@ const Header = () => {
           <Logo isCompact={isScrolled} variant="horizontal" />
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-10 md:flex">
+          <div className="hidden items-center gap-11 md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}
                 className={cn(
-                  "text-sm font-medium tracking-wide transition-colors hover:text-foreground",
+                  "text-sm tracking-[0.03em] transition-colors hover:text-foreground",
                   location.pathname === link.href
-                    ? "text-foreground"
-                    : "text-muted-foreground"
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground font-normal"
                 )}
               >
                 {link.label}

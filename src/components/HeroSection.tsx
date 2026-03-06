@@ -36,18 +36,20 @@ const HeroSection = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
             />
             <h1 className="heading-hero animate-fade-up">
-              Executive Alignment Determines Whether Strategy Accelerates or Stalls
+              Executive Alignment Rarely Breaks. It Drifts.
             </h1>
           </div>
 
           <div className="mt-8 space-y-5 animate-fade-up" style={{ animationDelay: '0.15s' }}>
             <p className="body-brief">
-              Clarity at executive level for organisations navigating growth, 
-              leadership transition, and AI-driven transformation.
+              As organisations grow in scale and complexity, differences in strategic 
+              interpretation, decision authority, and accountability structures gradually 
+              emerge across the executive team.
             </p>
             <p className="body-brief">
-              Bright Leadership Consulting measures executive variance — ensuring 
-              alignment is established before execution slows.
+              Bright Leadership Consulting measures executive variance through the 
+              Executive Alignment Index™, helping leadership teams maintain the structural 
+              clarity required for strategy to execute effectively.
             </p>
           </div>
 
