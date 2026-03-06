@@ -18,15 +18,15 @@ const cardVariants = {
 
 const pathways = [
   {
-    title: "Executive Alignment Index",
+    title: "Executive Alignment Index™",
     description: "Measure variance across strategic interpretation, decision rights, and escalation architecture.",
   },
   {
-    title: "ALIGN Executive Intervention",
+    title: "ALIGN™ Executive Intervention",
     description: "Install structural clarity through defined decision architecture and escalation protocols.",
   },
   {
-    title: "Executive Oversight",
+    title: "Executive Oversight™",
     description: "Sustain alignment under growth, transformation, and governance complexity.",
   },
 ];

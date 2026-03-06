@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 
 const contexts = [
   "Strategic planning cycles",
@@ -59,6 +58,16 @@ const CommissionedBySection = () => {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
                 }}
               >
+                Typically commissioned by CEOs, Chairs, Non-Executive Directors, and Chief People Officers.
+              </motion.p>
+
+              <motion.p
+                className="body-brief"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
                 Engagements are confidential and calibrated to organisational complexity.
               </motion.p>
 
@@ -71,7 +80,6 @@ const CommissionedBySection = () => {
               >
                 <Link to="/contact" className="btn-brief">
                   Enquire Regarding Executive Alignment
-                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </motion.div>
             </motion.div>
