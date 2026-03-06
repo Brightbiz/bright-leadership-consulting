@@ -31,8 +31,22 @@ const SEOHead = React.forwardRef<HTMLElement, SEOHeadProps>(({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={`${SITE_URL}/og-image.jpg`} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={`${SITE_URL}/og-image.jpg`} />
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Bright Leadership Consulting",
+        "description": DEFAULT_DESCRIPTION,
+        "url": SITE_URL,
+        "serviceType": "Executive Alignment Advisory",
+        "areaServed": "Worldwide",
+        "logo": `${SITE_URL}/favicon.png`
+      })}</script>
     </Helmet>
   );
 });
