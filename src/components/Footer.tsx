@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const footerLinks = [
-  { label: "Executive Alignment Index", href: "/executive-alignment-index", isRoute: true },
+  { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
   { label: "Selected Engagements", href: "/selected-engagements", isRoute: true },
-  { label: "Executive Alignment Brief (PDF)", href: "/downloads/executive-alignment-brief.html", isRoute: false },
+  { label: "Executive Alignment Brief™", href: "/downloads/executive-alignment-brief.html", isRoute: false },
   { label: "Enquire Confidentially", href: "/contact", isRoute: true },
 ];
 

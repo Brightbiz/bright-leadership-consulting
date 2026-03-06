@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Bright Leadership Consulting — Editorial Design System */
 
@@ -120,8 +120,9 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
-    @apply font-medium tracking-tight;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    @apply font-medium;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -141,52 +142,48 @@
     @apply py-[100px];
   }
 
-  /* Thin horizontal divider — teal gradient */
+  /* Thin horizontal divider — flat grey */
   .section-divider {
     @apply mx-auto max-w-[680px] h-px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      hsl(var(--teal-500) / 0.35) 30%,
-      hsl(var(--teal-500) / 0.35) 70%,
-      transparent 100%
-    );
+    background-color: hsl(var(--border));
   }
 
-  /* Full-width divider — teal gradient */
+  /* Full-width divider — flat grey */
   .section-divider-full {
     @apply h-px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      hsl(var(--teal-500) / 0.3) 20%,
-      hsl(var(--teal-500) / 0.3) 80%,
-      transparent 100%
-    );
+    background-color: hsl(var(--border));
   }
 
-  /* Tinted section background */
+  /* Tinted section background — disabled per brief (white only) */
   .section-tinted {
-    background-color: hsl(var(--teal-50));
+    background-color: hsl(var(--background));
   }
 
   /* Hero headline: 42–48px */
   .heading-hero {
-    @apply font-serif text-[2.625rem] lg:text-[3rem] font-semibold leading-[1.15] tracking-tight text-foreground;
+    @apply font-serif text-[2.625rem] lg:text-[3rem] font-semibold leading-[1.15] text-foreground;
   }
 
   /* Section headings: 28–32px */
   .heading-section {
-    @apply font-serif text-[1.75rem] lg:text-[2rem] font-semibold leading-[1.25] tracking-tight text-foreground;
+    @apply font-serif text-[1.75rem] lg:text-[2rem] font-semibold leading-[1.25] text-foreground;
   }
 
   .heading-sub {
     @apply font-serif text-xl lg:text-[1.375rem] font-medium leading-[1.4] text-foreground;
   }
 
-  /* Body text — 18px, 1.6 line height */
+  /* Body text — 18px, 1.65 line height */
   .body-brief {
     @apply text-lg leading-[1.65] text-muted-foreground;
+  }
+
+  .body-brief p {
+    margin-bottom: 1.2em;
+  }
+
+  .body-brief p:last-child {
+    margin-bottom: 0;
   }
 
   /* Kicker / eyebrow */
@@ -215,10 +212,12 @@
 
   /* Outlined button — brief spec */
   .btn-brief {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium tracking-wide
-           border border-foreground/20 bg-background text-foreground rounded-sm
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm rounded-sm
+           border border-foreground/20 bg-background text-foreground
            transition-colors duration-200
            hover:border-primary hover:text-primary;
+    font-weight: 500;
+    letter-spacing: 0.03em;
   }
 
   .container-narrow {

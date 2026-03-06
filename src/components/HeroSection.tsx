@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section aria-label="Hero" className="bg-background pt-[140px] pb-[140px]">
+    <section aria-label="Hero" className="bg-background pt-[140px] pb-[140px] border-y border-border">
       <div className="container-brief">
         <div className="prose-narrow">
           {/* Headline with animated teal accent rule */}
