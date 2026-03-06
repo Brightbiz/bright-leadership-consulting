@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import EngagementModelDiagram from "@/components/diagrams/EngagementModelDiagram";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -63,6 +64,11 @@ const AdvisoryPathwaySection = () => {
                 </p>
               </motion.div>
             ))}
+          </div>
+
+          {/* Engagement Model Diagram */}
+          <div className="mt-20">
+            <EngagementModelDiagram />
           </div>
         </div>
       </section>
