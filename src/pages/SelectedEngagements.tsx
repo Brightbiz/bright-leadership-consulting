@@ -50,7 +50,7 @@ const SelectedEngagements = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Selected Engagements | Bright Leadership Consulting"
-        description="Anonymised case abstracts from governance-level advisory engagements across financial services, infrastructure, healthcare, professional services, and technology sectors."
+        description="Anonymised case abstracts from governance-level advisory engagements across financial services, infrastructure, healthcare, and technology."
         path="/selected-engagements"
       />
       <ScrollProgress />

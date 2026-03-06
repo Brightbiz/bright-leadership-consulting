@@ -61,11 +61,11 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-xs text-muted-foreground mb-1">
-            Bright Leadership Consulting
+          <p className="text-xs text-muted-foreground">
+            Bright Leadership Consulting — Confidential Executive Advisory
           </p>
-          <p className="text-xs text-muted-foreground/60">
-            Confidential Executive Advisory · © {new Date().getFullYear()}
+          <p className="text-xs text-muted-foreground/60 mt-1">
+            © {new Date().getFullYear()}
           </p>
         </div>
       </div>
