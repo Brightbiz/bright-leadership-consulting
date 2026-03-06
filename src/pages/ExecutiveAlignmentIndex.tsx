@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
@@ -6,6 +5,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import EAIDashboardPreview from "@/components/EAIDashboardPreview";
+import AlignmentFrameworkDiagram from "@/components/diagrams/AlignmentFrameworkDiagram";
+import DispersionModelDiagram from "@/components/diagrams/DispersionModelDiagram";
+import AlignmentDriftDiagram from "@/components/diagrams/AlignmentDriftDiagram";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -147,6 +149,18 @@ const ExecutiveAlignmentIndex = () => {
                   measurement.
                 </p>
               </motion.div>
+
+              {/* Alignment Drift Diagram */}
+              <motion.div
+                className="mt-16"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.25 }}
+              >
+                <AlignmentDriftDiagram />
+                <p className="mt-4 text-xs text-muted-foreground italic tracking-wide text-center">
+                  Illustrative alignment drift as organisational complexity increases.
+                </p>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -196,6 +210,18 @@ const ExecutiveAlignmentIndex = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Alignment Framework Diagram */}
+            <motion.div
+              className="mt-20"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.4 }}
+            >
+              <AlignmentFrameworkDiagram />
+              <p className="mt-4 text-xs text-muted-foreground italic tracking-wide text-center">
+                Executive Alignment Architecture — six structural dimensions.
+              </p>
+            </motion.div>
           </div>
         </section>
 
@@ -316,6 +342,21 @@ const ExecutiveAlignmentIndex = () => {
                 Illustrative Executive Alignment Index dashboard.
               </p>
             </motion.div>
+
+            {/* Dispersion Model */}
+            <motion.div
+              className="max-w-4xl mt-20"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.35 }}
+            >
+              <p className="font-serif text-lg font-semibold text-foreground mb-6">
+                Executive Dispersion
+              </p>
+              <DispersionModelDiagram />
+              <p className="mt-4 text-xs text-muted-foreground italic tracking-wide text-center">
+                Illustrative variance in executive alignment scores.
+              </p>
+            </motion.div>
           </div>
         </section>
 
@@ -388,7 +429,6 @@ const ExecutiveAlignmentIndex = () => {
                   className="link-quiet"
                 >
                   Enquire Regarding Executive Alignment
-                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </motion.div>
             </div>
