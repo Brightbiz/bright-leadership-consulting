@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
@@ -36,8 +35,7 @@ const HeroSection = () => {
               Enquire Confidentially
             </Link>
             <Link to="/executive-alignment-index" className="btn-brief">
-              Executive Alignment Index
-              <ArrowRight className="h-4 w-4" />
+              Executive Alignment Index™
             </Link>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import EAIDashboardPreview from "./EAIDashboardPreview";
 
 const fade = {
@@ -29,7 +28,7 @@ const InstrumentSection = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Alignment Index
+                Executive Alignment Index™
               </motion.h2>
 
               <motion.div
@@ -51,8 +50,7 @@ const InstrumentSection = () => {
                   to="/executive-alignment-index"
                   className="link-quiet"
                 >
-                  Executive Alignment Index
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  Executive Alignment Index™
                 </Link>
               </motion.div>
             </div>
@@ -64,7 +62,7 @@ const InstrumentSection = () => {
             >
               <EAIDashboardPreview />
               <p className="mt-3 text-xs text-muted-foreground italic tracking-wide">
-                Illustrative Executive Alignment Index dashboard.
+                Illustrative Executive Alignment Index™ dashboard.
               </p>
             </motion.div>
           </div>
