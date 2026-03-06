@@ -47,9 +47,18 @@ const InstrumentSection = () => {
                   clarity before intervention.
                 </p>
 
+                <div className="scan-list mt-10">
+                  <p>Strategic Interpretation</p>
+                  <p>Decision Rights Clarity</p>
+                  <p>Cross-Functional Coordination</p>
+                  <p>Escalation Pathways</p>
+                  <p>Accountability Architecture</p>
+                  <p>Risk Ownership</p>
+                </div>
+
                 <Link
                   to="/executive-alignment-index"
-                  className="link-quiet"
+                  className="link-quiet mt-8"
                 >
                   Executive Alignment Index™
                 </Link>
