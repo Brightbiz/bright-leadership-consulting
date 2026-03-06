@@ -23,7 +23,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
           </span>
           <span
             className={cn(
-              "font-serif font-normal text-foreground/55 leading-none transition-all duration-300",
+              "font-serif font-normal text-foreground/70 leading-none transition-all duration-300",
               isCompact ? "text-[0.78rem]" : "text-[0.88rem]"
             )}
             style={{ letterSpacing: "0.025em" }}
@@ -43,7 +43,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
           Bright
         </span>
         <span
-          className="font-serif font-normal text-foreground/55 leading-none text-[0.78rem] mt-[0.35em]"
+          className="font-serif font-normal text-foreground/70 leading-none text-[0.78rem] mt-[0.35em]"
           style={{ letterSpacing: "0.025em" }}
         >
           Leadership Consulting
