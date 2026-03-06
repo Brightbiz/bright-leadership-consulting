@@ -76,7 +76,7 @@ const ExecutiveAlignmentIndex = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Alignment Index
+                Executive Alignment Index™
               </motion.h1>
 
               <motion.div
@@ -85,7 +85,7 @@ const ExecutiveAlignmentIndex = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  The Executive Alignment Index is a governance-level diagnostic
+                  The Executive Alignment Index™ is a governance-level diagnostic
                   that measures how consistently an executive team is aligned on
                   the structures that determine strategic execution.
                 </p>
@@ -145,7 +145,7 @@ const ExecutiveAlignmentIndex = () => {
                 </p>
 
                 <p>
-                  The Executive Alignment Index replaces assumption with
+                  The Executive Alignment Index™ replaces assumption with
                   measurement.
                 </p>
               </motion.div>
@@ -303,7 +303,7 @@ const ExecutiveAlignmentIndex = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Alignment Index Report
+                Executive Alignment Index™ Report
               </motion.h2>
 
               <motion.div
@@ -339,7 +339,7 @@ const ExecutiveAlignmentIndex = () => {
             >
               <EAIDashboardPreview />
               <p className="mt-4 text-xs text-muted-foreground italic tracking-wide">
-                Illustrative Executive Alignment Index dashboard.
+                Illustrative Executive Alignment Index™ dashboard.
               </p>
             </motion.div>
 
@@ -384,7 +384,7 @@ const ExecutiveAlignmentIndex = () => {
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
                 <p>
-                  The Executive Alignment Index is typically commissioned
+                  The Executive Alignment Index™ is typically commissioned
                   during periods of structural change:
                 </p>
 
