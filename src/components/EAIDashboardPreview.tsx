@@ -145,7 +145,7 @@ const EAIDashboardPreview = () => {
               Alignment Variance
             </p>
             <div className="border border-border rounded-sm overflow-hidden">
-              <div className="grid grid-cols-3 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 text-center">
                 {[
                   { label: "Low", desc: "Executive views are closely aligned", active: false },
                   { label: "Moderate", desc: "Some structural interpretation differences exist", active: true },
