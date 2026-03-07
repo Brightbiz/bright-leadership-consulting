@@ -58,7 +58,7 @@ const bundles = [
     link: "https://bright-leadership-consulting.thinkific.com/bundles/effective-management-training-bundle",
   },
   {
-    title: "Complete Training Bundle",
+    title: "Complete Development Bundle",
     courses: ["Advanced Leadership", "Peak Performance", "Future of Work", "Employability Skills"],
     link: "https://bright-leadership-consulting.thinkific.com/bundles/complete-training-bundle-for-transformational-leaders",
   },

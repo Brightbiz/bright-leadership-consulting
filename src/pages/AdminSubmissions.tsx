@@ -140,8 +140,8 @@ const AdminSubmissions = () => {
 
   const tierLabel = (tier: string) => {
     const map: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
-      "executive-coaching": { label: "Executive", variant: "default" },
-      "group-coaching": { label: "Group", variant: "secondary" },
+      "executive-coaching": { label: "Executive Advisory", variant: "default" },
+      "group-coaching": { label: "Group Advisory", variant: "secondary" },
       "self-paced": { label: "Self-Paced", variant: "outline" },
     };
     return map[tier] || { label: tier, variant: "outline" as const };
