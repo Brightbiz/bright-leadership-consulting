@@ -153,7 +153,7 @@ const EAIDashboardPreview = () => {
                 ].map((level) => (
                   <div
                     key={level.label}
-                    className={`px-3 py-4 border-r border-border last:border-r-0 ${
+                    className={`px-3 py-4 sm:border-r sm:border-b-0 border-b border-border last:border-b-0 sm:last:border-r-0 ${
                       level.active
                         ? "bg-[hsl(180,40%,90%)]"
                         : ""
