@@ -137,6 +137,71 @@ const EAIDashboardPreview = () => {
 
         </div>
 
+        {/* Alignment Variance & Confidence */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {/* Alignment Variance */}
+          <div>
+            <p className="text-[9px] font-semibold tracking-[2.5px] uppercase text-muted-foreground mb-4">
+              Alignment Variance
+            </p>
+            <div className="border border-border rounded-sm overflow-hidden">
+              <div className="grid grid-cols-3 text-center">
+                {[
+                  { label: "Low", desc: "Executive views are closely aligned", active: false },
+                  { label: "Moderate", desc: "Some structural interpretation differences exist", active: true },
+                  { label: "High", desc: "Significant divergence in leadership interpretation", active: false },
+                ].map((level) => (
+                  <div
+                    key={level.label}
+                    className={`px-3 py-4 border-r border-border last:border-r-0 ${
+                      level.active
+                        ? "bg-[hsl(180,40%,90%)]"
+                        : ""
+                    }`}
+                  >
+                    <span className={`block text-[10px] font-bold uppercase tracking-wider mb-1 ${
+                      level.active ? "text-[hsl(180,60%,26%)]" : "text-muted-foreground"
+                    }`}>
+                      {level.label}
+                    </span>
+                    <span className="block text-[9px] text-muted-foreground leading-snug">
+                      {level.desc}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Confidence Level */}
+          <div>
+            <p className="text-[9px] font-semibold tracking-[2.5px] uppercase text-muted-foreground mb-4">
+              Confidence Level
+            </p>
+            <div className="border border-border rounded-sm p-5">
+              <div className="flex items-center gap-4 mb-3">
+                {["Low", "Medium", "High"].map((level) => (
+                  <div key={level} className="flex items-center gap-2">
+                    <div className={`w-2.5 h-2.5 rounded-full border-2 ${
+                      level === "High"
+                        ? "border-primary bg-primary"
+                        : "border-muted-foreground/30 bg-background"
+                    }`} />
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider ${
+                      level === "High" ? "text-foreground" : "text-muted-foreground"
+                    }`}>
+                      {level}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Represents consistency of executive responses across the assessed dimensions.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Two-Column: Matrix + Commentary */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
