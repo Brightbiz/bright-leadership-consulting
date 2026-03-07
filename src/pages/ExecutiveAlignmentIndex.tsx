@@ -414,6 +414,30 @@ const ExecutiveAlignmentIndex = () => {
           </div>
         </section>
 
+        {/* Executive Alignment Brief Download */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.div
+                className="border-l-2 border-primary pl-6"
+                {...fade}
+              >
+                <p className="body-brief">
+                  For a concise overview of the Executive Alignment Index™,
+                  download the{" "}
+                  <Link
+                    to="/executive-alignment-brief"
+                    className="link-quiet inline"
+                  >
+                    Executive Alignment Brief
+                  </Link>
+                  .
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         <div className="section-divider" />
 
         {/* Section 7 — CTA */}
