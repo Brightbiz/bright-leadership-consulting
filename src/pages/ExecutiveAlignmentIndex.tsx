@@ -290,12 +290,12 @@ const ExecutiveAlignmentIndex = () => {
 
         <div className="section-divider" />
 
-        {/* Section 5 — Index Output */}
+        {/* Section 5 — Diagnostic Output */}
         <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
-                The Report
+                Diagnostic Output
               </motion.p>
 
               <motion.h2
@@ -303,7 +303,7 @@ const ExecutiveAlignmentIndex = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Alignment Index™ Report
+                Executive Alignment Report
               </motion.h2>
 
               <motion.div
@@ -312,13 +312,21 @@ const ExecutiveAlignmentIndex = () => {
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
                 <p>
-                  Each engagement produces a concise, board-ready dashboard
-                  providing objective clarity across five output areas:
+                  The Executive Alignment Index™ produces a concise Executive
+                  Alignment Report summarising the composite alignment score,
+                  dimension-level results, leadership variance indicators, and
+                  priority areas for executive discussion.
+                </p>
+
+                <p>
+                  Each engagement produces a board-ready dashboard providing
+                  objective clarity across six output areas:
                 </p>
 
                 <div className="space-y-1.5 border-l-2 border-border pl-6">
                   <p>Composite Alignment Score</p>
                   <p>Dimension-Level Variance Indicators</p>
+                  <p>Alignment Variance &amp; Confidence Level</p>
                   <p>Executive Dispersion Mapping</p>
                   <p>Priority Action Matrix</p>
                   <p>Governance Risk and Escalation Commentary</p>
@@ -400,6 +408,30 @@ const ExecutiveAlignmentIndex = () => {
                 <p>
                   Engagements are delivered by arrangement and calibrated to
                   organisational scale.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Executive Alignment Brief Download */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.div
+                className="border-l-2 border-primary pl-6"
+                {...fade}
+              >
+                <p className="body-brief">
+                  For a concise overview of the Executive Alignment Index™,
+                  download the{" "}
+                  <Link
+                    to="/executive-alignment-brief"
+                    className="link-quiet inline"
+                  >
+                    Executive Alignment Brief
+                  </Link>
+                  .
                 </p>
               </motion.div>
             </div>
