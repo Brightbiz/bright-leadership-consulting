@@ -23,6 +23,7 @@ const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershi
 const Courses = lazy(() => import("./pages/Courses"));
 const Slides = lazy(() => import("./pages/Slides"));
 const GenerateWorkbook = lazy(() => import("./pages/GenerateWorkbook"));
+const AIWorkbook = lazy(() => import("./pages/AIWorkbook"));
 
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
