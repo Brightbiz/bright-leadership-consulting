@@ -193,15 +193,27 @@ const Courses = () => {
                       <ArrowRight className="h-3 w-3" />
                     </Link>
                   ) : (
-                    <a
-                      href={programme.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-quiet text-sm"
-                    >
-                      Enquire Confidentially
-                      <ArrowRight className="h-3 w-3" />
-                    </a>
+                    <div className="flex items-center gap-4">
+                      <a
+                        href={programme.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-quiet text-sm"
+                      >
+                        Enquire Confidentially
+                        <ArrowRight className="h-3 w-3" />
+                      </a>
+                      {programme.title === "Strategic Leadership in the Age of AI" && (
+                        <button
+                          onClick={handleDownloadWorkbook}
+                          disabled={isGenerating}
+                          className="link-quiet text-sm text-accent"
+                        >
+                          <Download className="h-3 w-3" />
+                          {isGenerating ? "Generating…" : "Download Workbook"}
+                        </button>
+                      )}
+                    </div>
                   )}
                 </motion.div>
               ))}
