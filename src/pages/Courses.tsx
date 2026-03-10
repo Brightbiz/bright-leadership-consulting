@@ -68,8 +68,8 @@ const Courses = () => {
   const handleDownloadWorkbook = async () => {
     setIsGenerating(true);
     try {
-      await downloadStrategicLeadershipPDF();
-      toast({ title: "Workbook downloaded", description: "Your fillable PDF workbook is ready." });
+      const pdfBytes = await generateStrategicLeadershipPDF();
+      downloadStrategicLeadershipPDF(pdfBytes);
     } catch {
       toast({ title: "Download failed", description: "Please try again.", variant: "destructive" });
     } finally {
