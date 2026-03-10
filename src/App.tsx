@@ -22,6 +22,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Slides = lazy(() => import("./pages/Slides"));
+const GenerateWorkbook = lazy(() => import("./pages/GenerateWorkbook"));
 
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
