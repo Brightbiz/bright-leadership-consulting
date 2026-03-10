@@ -63,6 +63,20 @@ const executiveProgrammes = [
 ];
 
 const Courses = () => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleDownloadWorkbook = async () => {
+    setIsGenerating(true);
+    try {
+      await downloadStrategicLeadershipPDF();
+      toast({ title: "Workbook downloaded", description: "Your fillable PDF workbook is ready." });
+    } catch {
+      toast({ title: "Download failed", description: "Please try again.", variant: "destructive" });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
