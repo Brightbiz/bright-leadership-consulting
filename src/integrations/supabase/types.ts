@@ -230,6 +230,39 @@ export type Database = {
         }
         Relationships: []
       }
+      workbook_responses: {
+        Row: {
+          completed: boolean
+          created_at: string
+          current_section: number
+          email: string
+          id: string
+          name: string | null
+          section_data: Json
+          updated_at: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          current_section?: number
+          email: string
+          id?: string
+          name?: string | null
+          section_data?: Json
+          updated_at?: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          current_section?: number
+          email?: string
+          id?: string
+          name?: string | null
+          section_data?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
