@@ -13,59 +13,49 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const individualCourses = [
+const executiveProgrammes = [
   {
-    title: "Transformational Leadership Skills",
-    description: "Cross-team collaboration, change leadership, and the ability to inspire collective action.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership",
+    title: "Executive Leadership Mastery",
+    subtitle: "Flagship 33-Module Programme",
+    description:
+      "Our comprehensive 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 80+ hours of structured content. 66 CPD points.",
+    features: [
+      "7 Integrated Leadership Disciplines",
+      "80+ Hours of Executive Content",
+      "66 CPD Points Accredited",
+      "Self-Directed or Cohort-Based",
+    ],
+    link: "/executive-leadership-mastery",
+    internal: true,
   },
   {
-    title: "Peak Performance Accelerator",
-    description: "Strategic decision-making, operational efficiency, and sustained personal productivity.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    title: "Strategic Leadership in the Age of AI",
+    subtitle: "AI Governance & Leadership Framework",
+    description:
+      "Artificial intelligence is reshaping industries and redefining how organisations compete. This programme equips senior leaders with the knowledge, governance frameworks, and strategic clarity needed to lead confidently in this new environment.",
+    features: [
+      "AI Strategic Implications Assessment",
+      "Governance Framework Development",
+      "AI Leadership Blueprint Creation",
+      "Responsible Adoption Protocols",
+    ],
+    link: "#", // Placeholder - to be updated when programme page created
+    internal: false,
+    comingSoon: false,
   },
   {
-    title: "Building Professional & Personal Value",
-    description: "Client relations, strategic networking, and professional influence.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value",
-  },
-  {
-    title: "Future of Work & AI-Ready Leadership",
-    description: "AI integration, remote collaboration, and digital transformation.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
-  },
-  {
-    title: "Enhanced Employability Skills",
-    description: "Emotional intelligence, adaptability, and the human skills AI cannot replicate.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees",
-  },
-];
-
-const bundles = [
-  {
-    title: "Leadership + Transformational Bundle",
-    courses: ["Advanced Leadership Development", "Transformational Leadership"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/complete-leadership-bundle",
-  },
-  {
-    title: "Leadership Productivity Bundle",
-    courses: ["Leadership", "Transformational", "Peak Performance Accelerator"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/effective-leadership-productivity-accelerator-training-bundle",
-  },
-  {
-    title: "Effective Management Bundle",
-    courses: ["Leadership", "Transformational", "Peak Performance", "Future of Work"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/effective-management-training-bundle",
-  },
-  {
-    title: "Complete Development Bundle",
-    courses: ["Advanced Leadership", "Peak Performance", "Future of Work", "Employability Skills"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/complete-training-bundle-for-transformational-leaders",
-  },
-  {
-    title: "Ultimate Leadership Development Program",
-    courses: ["All 7 Premium Courses"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/the-ultimate-leadership-development-program-for-leaders-managers",
+    title: "Corporate Retreats",
+    subtitle: "2–3 Day Facilitated Engagements",
+    description:
+      "Intensive facilitated engagements for leadership teams and boards. Diagnostic-led design. Outcome-focused facilitation. Confidential delivery for immediate, intensive strategic alignment.",
+    features: [
+      "Diagnostic-Led Programme Design",
+      "Board & Leadership Team Focus",
+      "Outcome-Focused Facilitation",
+      "Confidential Engagement Protocol",
+    ],
+    link: "/contact",
+    internal: true,
   },
 ];
 
