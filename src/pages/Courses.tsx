@@ -1,6 +1,6 @@
 import { ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import { downloadStrategicLeadershipPDF } from "@/utils/strategicLeadershipPdfGenerator";
+import { generateStrategicLeadershipPDF, downloadStrategicLeadershipPDF } from "@/utils/strategicLeadershipPdfGenerator";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
