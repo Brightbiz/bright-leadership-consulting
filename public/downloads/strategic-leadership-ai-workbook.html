@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Leadership in the Age of AI — Executive Program Workbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal: #1F1F1F;
+      --teal: #1F5C63;
+      --teal-light: #E8F2F3;
+      --accent-gold: #C9A227;
+      --muted: #6B6B6B;
+      --border: #E6E6E6;
+      --bg: #FFFFFF;
+      --field-bg: #FAFAFA;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--charcoal);
+      font-size: 11pt;
+      line-height: 1.65;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { font-size: 10pt; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      .avoid-break { page-break-inside: avoid; }
+      @page { size: A4; margin: 20mm 18mm; }
+      .cover-page { page-break-after: always; }
+      textarea, input[type="text"] {
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+      }
+    }
+
+    /* ── Print Button ── */
+    .print-controls {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      gap: 12px;
+    }
+    .print-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 12px 28px;
+      border: none;
+      cursor: pointer;
+      background: var(--teal);
+      color: #fff;
+      transition: background 0.2s;
+    }
+    .print-btn:hover { background: #174A50; }
+
+    /* ── Cover Page ── */
+    .cover-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 40px;
+      background: var(--charcoal);
+      color: #fff;
+      position: relative;
+    }
+    .cover-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold);
+      padding: 8px 28px;
+      margin-bottom: 60px;
+    }
+    .cover-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      max-width: 680px;
+      margin-bottom: 16px;
+    }
+    .cover-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 8px;
+    }
+    .cover-framework {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-top: 40px;
+    }
+    .cover-divider {
+      width: 80px;
+      height: 2px;
+      background: var(--accent-gold);
+      margin: 40px auto;
+    }
+    .cover-tagline {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+      max-width: 520px;
+    }
+    .cover-footer {
+      position: absolute;
+      bottom: 40px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Page Container ── */
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    /* ── Typography ── */
+    h1.section-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    h2.section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .section-rule {
+      width: 60px;
+      height: 3px;
+      background: var(--accent-gold);
+      margin: 16px 0 32px 0;
+    }
+    h3.subsection {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin: 40px 0 16px 0;
+      letter-spacing: 0.01em;
+    }
+    .prose {
+      max-width: 680px;
+      font-size: 11pt;
+      line-height: 1.65;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+    }
+    .prose-muted {
+      color: var(--muted);
+    }
+
+    /* ── Dividers ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 60px 0;
+    }
+
+    /* ── Instruction Box ── */
+    .instruction-box {
+      border-left: 3px solid var(--teal);
+      background: var(--teal-light);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .instruction-box p {
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: var(--charcoal);
+    }
+
+    /* ── Numbered List ── */
+    .reflection-list {
+      list-style: none;
+      counter-reset: reflection;
+      padding: 0;
+      margin: 24px 0;
+    }
+    .reflection-list li {
+      counter-increment: reflection;
+      padding: 12px 0 12px 40px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      font-size: 11pt;
+      line-height: 1.55;
+    }
+    .reflection-list li::before {
+      content: counter(reflection);
+      position: absolute;
+      left: 0;
+      top: 12px;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    /* ── Fillable Fields ── */
+    .field-group {
+      margin: 24px 0;
+    }
+    .field-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      border: 1px solid var(--border);
+      background: var(--field-bg);
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: var(--charcoal);
+      padding: 14px 16px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus {
+      border-color: var(--teal);
+    }
+    textarea.small { min-height: 60px; }
+    textarea.large { min-height: 140px; }
+
+    input[type="text"] {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5pt;
+      padding: 8px 0;
+      outline: none;
+      color: var(--charcoal);
+    }
+    input[type="text"]:focus {
+      border-bottom-color: var(--teal);
+    }
+
+    /* ── Tables ── */
+    .canvas-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+    .canvas-table th {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--teal);
+      background: var(--teal-light);
+    }
+    .canvas-table td {
+      padding: 4px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .canvas-table td textarea {
+      border: none;
+      background: transparent;
+      min-height: 50px;
+      padding: 8px;
+    }
+    .canvas-table td textarea:focus {
+      background: var(--field-bg);
+    }
+    .canvas-table td.label-cell {
+      font-size: 10.5pt;
+      font-weight: 500;
+      color: var(--charcoal);
+      padding: 14px 16px;
+      width: 200px;
+      white-space: nowrap;
+    }
+
+    /* ── Maturity Scale ── */
+    .maturity-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 24px 0;
+    }
+    .maturity-level {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .maturity-level:last-child { border-bottom: none; }
+    .maturity-number {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--teal);
+      width: 32px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .maturity-label {
+      font-weight: 600;
+      color: var(--charcoal);
+      min-width: 160px;
+    }
+    .maturity-desc {
+      font-size: 10pt;
+      color: var(--muted);
+    }
+    .maturity-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .maturity-radio:hover {
+      border-color: var(--teal);
+    }
+    .maturity-radio.selected {
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    /* ── Stakeholder Grid ── */
+    .stakeholder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .stakeholder-card {
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+    .stakeholder-card .field-label { margin-bottom: 4px; }
+
+    /* ── Phase Block ── */
+    .phase-block {
+      border-left: 3px solid var(--teal);
+      padding: 20px 24px;
+      margin: 24px 0;
+      background: var(--field-bg);
+    }
+    .phase-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+    .phase-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .phase-desc {
+      font-size: 10pt;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* ── Prompt Examples ── */
+    .prompt-example {
+      background: var(--field-bg);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+    .prompt-category {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+    .prompt-text {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 10.5pt;
+      color: var(--charcoal);
+    }
+
+    /* ── Governance Pillars ── */
+    .governance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .governance-pillar {
+      border-top: 3px solid var(--teal);
+      padding: 16px;
+      background: var(--field-bg);
+    }
+    .governance-pillar h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    /* ── Final Reflection ── */
+    .closing-block {
+      text-align: center;
+      padding: 60px 40px;
+      margin-top: 40px;
+    }
+    .closing-quote {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--charcoal);
+      max-width: 520px;
+      margin: 0 auto 12px auto;
+      line-height: 1.4;
+    }
+    .closing-attribution {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── How to Use ── */
+    .how-to-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 32px 0;
+    }
+    .how-to-item {
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .how-to-step {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+    .how-to-title {
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .how-to-desc {
+      font-size: 10pt;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Decision Matrix ── */
+    .decision-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin: 24px 0;
+    }
+    .decision-cell {
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .decision-cell h4 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print Controls -->
+  <div class="print-controls no-print">
+    <button class="print-btn" onclick="window.print()">Export as PDF</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- COVER PAGE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="cover-page">
+    <div class="cover-badge">Executive Program Workbook</div>
+    <h1 class="cover-title">Strategic Leadership in the Age of AI</h1>
+    <p class="cover-subtitle">Executive Leadership Program</p>
+    <div class="cover-framework">Augmented Leadership&trade; Framework</div>
+    <div class="cover-divider"></div>
+    <p class="cover-tagline">AI will transform organisations.<br>Augmented leaders will determine which ones succeed.</p>
+    <p class="cover-footer">&copy; Bright Leadership Consulting &nbsp;&middot;&nbsp; CPD Accredited Programme &nbsp;&middot;&nbsp; Confidential</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HOW TO USE THIS WORKBOOK -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Introduction</h1>
+    <h2 class="section-title">How to Use This Workbook</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">This workbook accompanies the programme <em>Strategic Leadership in the Age of AI</em>. It is designed to help you translate course insights into practical leadership actions and strategy development within your organisation.</p>
+
+    <p class="prose prose-muted">Throughout the programme you will:</p>
+
+    <ul class="reflection-list">
+      <li>Reflect on leadership challenges in the AI era</li>
+      <li>Identify AI opportunities within your organisation</li>
+      <li>Evaluate leadership capabilities against a maturity framework</li>
+      <li>Develop a strategic AI transformation roadmap</li>
+    </ul>
+
+    <div class="instruction-box">
+      <p>By the end of the programme, you will complete an <strong>AI Leadership Blueprint</strong> &mdash; a strategic action document you can present to your board or executive team.</p>
+    </div>
+
+    <div class="how-to-grid">
+      <div class="how-to-item">
+        <div class="how-to-step">1</div>
+        <div class="how-to-title">Read &amp; Reflect</div>
+        <div class="how-to-desc">Engage with each section's context before completing the exercises.</div>
+      </div>
+      <div class="how-to-item">
+        <div class="how-to-step">2</div>
+        <div class="how-to-title">Complete Exercises</div>
+        <div class="how-to-desc">Use the fillable fields to capture your thinking in real time.</div>
+      </div>
+      <div class="how-to-item">
+        <div class="how-to-step">3</div>
+        <div class="how-to-title">Build Your Blueprint</div>
+        <div class="how-to-desc">Each section feeds into your final AI Leadership Blueprint Canvas.</div>
+      </div>
+      <div class="how-to-item">
+        <div class="how-to-step">4</div>
+        <div class="how-to-title">Take Action</div>
+        <div class="how-to-desc">Translate insights into a concrete Leadership Action Plan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: Leadership in the Age of AI -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 1</h1>
+    <h2 class="section-title">Leadership in the Age of AI</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Artificial intelligence is transforming industries, organisations, and leadership responsibilities. Before exploring specific frameworks, reflect on where you and your organisation stand today.</p>
+
+    <h3 class="subsection">Reflection Exercise</h3>
+
+    <ol class="reflection-list">
+      <li>How is AI currently used within your organisation?</li>
+      <li>Which decisions in your organisation rely heavily on data?</li>
+      <li>Which leadership responsibilities cannot be automated?</li>
+      <li>How might AI change leadership roles in the next five years?</li>
+    </ol>
+
+    <div class="field-group">
+      <label class="field-label">Your Reflections</label>
+      <textarea class="large" placeholder="Write your reflections here..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: AI Opportunity Mapping -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 2</h1>
+    <h2 class="section-title">AI Opportunity Mapping</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">AI creates opportunities to improve efficiency, decision-making, and innovation. Identify potential AI opportunities across your organisation's key business areas.</p>
+
+    <h3 class="subsection">Exercise</h3>
+
+    <table class="canvas-table">
+      <thead>
+        <tr>
+          <th>Business Area</th>
+          <th>Current Challenge</th>
+          <th>AI Opportunity</th>
+          <th>Potential Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-cell">Customer Service</td>
+          <td><textarea placeholder="Describe the challenge..."></textarea></td>
+          <td><textarea placeholder="e.g. AI chatbot, sentiment analysis..."></textarea></td>
+          <td><textarea placeholder="Expected impact..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Supply Chain</td>
+          <td><textarea placeholder="Describe the challenge..."></textarea></td>
+          <td><textarea placeholder="e.g. Predictive demand forecasting..."></textarea></td>
+          <td><textarea placeholder="Expected impact..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">HR &amp; Talent</td>
+          <td><textarea placeholder="Describe the challenge..."></textarea></td>
+          <td><textarea placeholder="AI opportunity..."></textarea></td>
+          <td><textarea placeholder="Expected impact..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Finance</td>
+          <td><textarea placeholder="Describe the challenge..."></textarea></td>
+          <td><textarea placeholder="AI opportunity..."></textarea></td>
+          <td><textarea placeholder="Expected impact..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Operations</td>
+          <td><textarea placeholder="Describe the challenge..."></textarea></td>
+          <td><textarea placeholder="AI opportunity..."></textarea></td>
+          <td><textarea placeholder="Expected impact..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: AI Strategy Canvas -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 3</h1>
+    <h2 class="section-title">AI Strategy Canvas</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Use this canvas to align AI initiatives with your organisation's strategic objectives. Each row represents a strategic priority and the AI initiative that supports it.</p>
+
+    <table class="canvas-table">
+      <thead>
+        <tr>
+          <th>Strategic Objective</th>
+          <th>AI Initiative</th>
+          <th>Expected Impact</th>
+          <th>Timeline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-cell">Improve Customer Experience</td>
+          <td><textarea placeholder="Define the initiative..."></textarea></td>
+          <td><textarea placeholder="Quantify where possible..."></textarea></td>
+          <td><textarea placeholder="Q1, Q2, 6 months..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Reduce Operational Costs</td>
+          <td><textarea placeholder="Define the initiative..."></textarea></td>
+          <td><textarea placeholder="Quantify where possible..."></textarea></td>
+          <td><textarea placeholder="Timeline..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Increase Decision Speed</td>
+          <td><textarea placeholder="Define the initiative..."></textarea></td>
+          <td><textarea placeholder="Quantify where possible..."></textarea></td>
+          <td><textarea placeholder="Timeline..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Strengthen Governance</td>
+          <td><textarea placeholder="Define the initiative..."></textarea></td>
+          <td><textarea placeholder="Quantify where possible..."></textarea></td>
+          <td><textarea placeholder="Timeline..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: AI Leadership Maturity Assessment -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 4</h1>
+    <h2 class="section-title">AI Leadership Maturity Assessment</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Organisations typically progress through five stages of AI maturity. Understanding where your organisation sits today is the first step toward a deliberate transformation strategy.</p>
+
+    <div class="maturity-scale">
+      <div class="maturity-level">
+        <div class="maturity-number">1</div>
+        <div class="maturity-label">Awareness</div>
+        <div class="maturity-desc">AI is recognised but rarely used in practice.</div>
+      </div>
+      <div class="maturity-level">
+        <div class="maturity-number">2</div>
+        <div class="maturity-label">Experimentation</div>
+        <div class="maturity-desc">Pilot projects and early experimentation underway.</div>
+      </div>
+      <div class="maturity-level">
+        <div class="maturity-number">3</div>
+        <div class="maturity-label">Operational Adoption</div>
+        <div class="maturity-desc">AI integrated into operational processes.</div>
+      </div>
+      <div class="maturity-level">
+        <div class="maturity-number">4</div>
+        <div class="maturity-label">Strategic Integration</div>
+        <div class="maturity-desc">AI supports strategic decision-making at executive level.</div>
+      </div>
+      <div class="maturity-level">
+        <div class="maturity-number">5</div>
+        <div class="maturity-label">Intelligent Enterprise</div>
+        <div class="maturity-desc">AI embedded across the entire organisation.</div>
+      </div>
+    </div>
+
+    <h3 class="subsection">Exercise</h3>
+
+    <div class="field-group">
+      <label class="field-label">Which stage best describes your organisation?</label>
+      <input type="text" placeholder="Level 1 / 2 / 3 / 4 / 5">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Why? What evidence supports your assessment?</label>
+      <textarea placeholder="Explain your reasoning..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What would need to change to reach the next level?</label>
+      <textarea placeholder="Identify the barriers and enablers..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: AI-Augmented Decision Making -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 5</h1>
+    <h2 class="section-title">AI-Augmented Decision Making</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">AI can support decision-making by providing insights, forecasts, and analysis. However, leaders must combine:</p>
+
+    <div class="instruction-box">
+      <p><strong>Data</strong> &nbsp;+&nbsp; <strong>AI Insights</strong> &nbsp;+&nbsp; <strong>Human Judgement</strong></p>
+    </div>
+
+    <h3 class="subsection">Reflection Questions</h3>
+
+    <div class="field-group">
+      <label class="field-label">1. Which decisions in your organisation could benefit from AI insights?</label>
+      <textarea placeholder="Consider strategic, operational, and tactical decisions..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">2. Where should human judgement remain central?</label>
+      <textarea placeholder="Identify decisions that require empathy, ethics, or contextual nuance..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">3. How can leaders prevent over-reliance on AI?</label>
+      <textarea placeholder="Consider governance, training, and cultural safeguards..."></textarea>
+    </div>
+
+    <h3 class="subsection">Decision Classification Matrix</h3>
+    <div class="decision-matrix">
+      <div class="decision-cell">
+        <h4>AI-Led Decisions</h4>
+        <textarea class="small" placeholder="Decisions best automated or AI-driven..."></textarea>
+      </div>
+      <div class="decision-cell">
+        <h4>AI-Augmented Decisions</h4>
+        <textarea class="small" placeholder="Decisions enhanced by AI but led by humans..."></textarea>
+      </div>
+      <div class="decision-cell">
+        <h4>Human-Led Decisions</h4>
+        <textarea class="small" placeholder="Decisions that must remain fully human..."></textarea>
+      </div>
+      <div class="decision-cell">
+        <h4>Collaborative Decisions</h4>
+        <textarea class="small" placeholder="Decisions requiring AI + multi-stakeholder input..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: Executive AI Prompt Library -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 6</h1>
+    <h2 class="section-title">Executive AI Prompt Library</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Generative AI tools can assist leaders in exploring strategic questions. The quality of AI output is directly proportional to the quality of the prompt. Below are examples of executive-level prompts.</p>
+
+    <div class="prompt-example">
+      <div class="prompt-category">Market Analysis</div>
+      <div class="prompt-text">"Analyse emerging opportunities in the renewable energy sector and identify three strategic implications for a mid-cap industrial company."</div>
+    </div>
+
+    <div class="prompt-example">
+      <div class="prompt-category">Risk Analysis</div>
+      <div class="prompt-text">"Identify the top five strategic risks facing the global banking industry over the next 24 months, with probability and impact assessment."</div>
+    </div>
+
+    <div class="prompt-example">
+      <div class="prompt-category">Innovation</div>
+      <div class="prompt-text">"Suggest three AI-enabled service innovations for healthcare providers that could be piloted within six months."</div>
+    </div>
+
+    <h3 class="subsection">Exercise</h3>
+    <p class="prose prose-muted">Write three prompts relevant to your organisation and leadership context.</p>
+
+    <div class="field-group">
+      <label class="field-label">Prompt 1</label>
+      <textarea class="small" placeholder="Write a strategic AI prompt relevant to your organisation..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Prompt 2</label>
+      <textarea class="small" placeholder="Write a strategic AI prompt..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Prompt 3</label>
+      <textarea class="small" placeholder="Write a strategic AI prompt..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: Cross-Functional AI Leadership -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 7</h1>
+    <h2 class="section-title">Cross-Functional AI Leadership</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">AI initiatives require collaboration across functions. Successful AI transformation is never a technology project alone &mdash; it is a leadership coordination challenge.</p>
+
+    <div class="instruction-box">
+      <p>AI initiatives require alignment between: <strong>Technology Teams</strong>, <strong>Business Units</strong>, <strong>Operations</strong>, <strong>Compliance</strong>, and <strong>Senior Leadership</strong>.</p>
+    </div>
+
+    <h3 class="subsection">Stakeholder Mapping Exercise</h3>
+    <p class="prose prose-muted">Identify the key stakeholders required for AI initiatives in your organisation.</p>
+
+    <div class="stakeholder-grid">
+      <div class="stakeholder-card">
+        <label class="field-label">Role / Function</label>
+        <input type="text" placeholder="e.g. Chief Technology Officer">
+        <label class="field-label" style="margin-top:12px">Responsibility in AI Initiative</label>
+        <textarea class="small" placeholder="Define their role..."></textarea>
+      </div>
+      <div class="stakeholder-card">
+        <label class="field-label">Role / Function</label>
+        <input type="text" placeholder="e.g. Head of Operations">
+        <label class="field-label" style="margin-top:12px">Responsibility in AI Initiative</label>
+        <textarea class="small" placeholder="Define their role..."></textarea>
+      </div>
+      <div class="stakeholder-card">
+        <label class="field-label">Role / Function</label>
+        <input type="text" placeholder="e.g. Chief People Officer">
+        <label class="field-label" style="margin-top:12px">Responsibility in AI Initiative</label>
+        <textarea class="small" placeholder="Define their role..."></textarea>
+      </div>
+      <div class="stakeholder-card">
+        <label class="field-label">Role / Function</label>
+        <input type="text" placeholder="e.g. Compliance Lead">
+        <label class="field-label" style="margin-top:12px">Responsibility in AI Initiative</label>
+        <textarea class="small" placeholder="Define their role..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8: AI Transformation Taskforce -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 8</h1>
+    <h2 class="section-title">AI Transformation Taskforce</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Many organisations create a dedicated AI leadership group to coordinate transformation. Design the composition and mandate of your organisation's AI taskforce.</p>
+
+    <h3 class="subsection">Suggested Roles</h3>
+
+    <table class="canvas-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Suggested Owner</th>
+          <th>Key Mandate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-cell">Executive Sponsor</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Strategic oversight and board reporting..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">AI Strategy Lead</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Define and drive AI strategy..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Technology Lead</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Infrastructure and tooling..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Operations Lead</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Process integration..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Risk &amp; Compliance Lead</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Governance and regulatory alignment..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">HR / Talent Lead</td>
+          <td><textarea class="small" placeholder="Name / title..."></textarea></td>
+          <td><textarea class="small" placeholder="Workforce readiness and reskilling..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9: Responsible AI Governance -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 9</h1>
+    <h2 class="section-title">Responsible AI Governance</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Responsible AI leadership requires strong governance. Without clear principles, AI initiatives risk eroding trust, creating compliance exposure, and producing unintended consequences.</p>
+
+    <h3 class="subsection">Governance Pillars</h3>
+
+    <div class="governance-grid">
+      <div class="governance-pillar">
+        <h4>Transparency</h4>
+        <p class="prose-muted" style="font-size:10pt;margin-bottom:8px">How will AI decisions be explained?</p>
+        <textarea class="small" placeholder="Your governance approach..."></textarea>
+      </div>
+      <div class="governance-pillar">
+        <h4>Fairness &amp; Bias</h4>
+        <p class="prose-muted" style="font-size:10pt;margin-bottom:8px">How will you prevent algorithmic bias?</p>
+        <textarea class="small" placeholder="Your governance approach..."></textarea>
+      </div>
+      <div class="governance-pillar">
+        <h4>Accountability</h4>
+        <p class="prose-muted" style="font-size:10pt;margin-bottom:8px">Who is responsible when AI makes an error?</p>
+        <textarea class="small" placeholder="Your governance approach..."></textarea>
+      </div>
+      <div class="governance-pillar">
+        <h4>Data Privacy</h4>
+        <p class="prose-muted" style="font-size:10pt;margin-bottom:8px">How will sensitive data be protected?</p>
+        <textarea class="small" placeholder="Your governance approach..."></textarea>
+      </div>
+    </div>
+
+    <h3 class="subsection">Exercise</h3>
+    <div class="field-group">
+      <label class="field-label">List the governance principles your organisation should adopt</label>
+      <textarea class="large" placeholder="Define your organisation's AI governance principles..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 10: AI Leadership Blueprint Canvas -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 10</h1>
+    <h2 class="section-title">AI Leadership Blueprint Canvas</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">This is the centrepiece of your workbook. Synthesise everything you have learned into a single strategic document that can be presented to your board or executive team.</p>
+
+    <div class="instruction-box">
+      <p>This canvas draws from every previous section. Take time to consolidate your insights into clear, actionable statements.</p>
+    </div>
+
+    <table class="canvas-table">
+      <thead>
+        <tr>
+          <th style="width:240px">Area</th>
+          <th>Key Insights &amp; Strategic Direction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-cell">Organisational Context</td>
+          <td><textarea placeholder="Current state, industry pressures, competitive landscape..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">AI Opportunities</td>
+          <td><textarea placeholder="Priority opportunities identified in Sections 2 and 3..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Leadership Capabilities Required</td>
+          <td><textarea placeholder="Skills, mindsets, and structures needed..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Governance Considerations</td>
+          <td><textarea placeholder="Principles and safeguards from Section 9..."></textarea></td>
+        </tr>
+        <tr>
+          <td class="label-cell">Transformation Roadmap</td>
+          <td><textarea placeholder="Phased approach from Section 11..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 11: AI Transformation Roadmap -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 11</h1>
+    <h2 class="section-title">AI Transformation Roadmap</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Define the phases of your organisation's AI transformation. Each phase builds on the previous, creating a structured pathway from awareness to enterprise-wide integration.</p>
+
+    <div class="phase-block">
+      <div class="phase-number">Phase 1</div>
+      <div class="phase-title">Discover</div>
+      <div class="phase-desc">Identify opportunities and evaluate feasibility.</div>
+      <textarea class="small" placeholder="Key actions, stakeholders, and milestones for this phase..."></textarea>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-number">Phase 2</div>
+      <div class="phase-title">Design</div>
+      <div class="phase-desc">Develop strategy and define use cases.</div>
+      <textarea class="small" placeholder="Key actions, stakeholders, and milestones for this phase..."></textarea>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-number">Phase 3</div>
+      <div class="phase-title">Deploy</div>
+      <div class="phase-desc">Launch pilot initiatives and validate assumptions.</div>
+      <textarea class="small" placeholder="Key actions, stakeholders, and milestones for this phase..."></textarea>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-number">Phase 4</div>
+      <div class="phase-title">Develop</div>
+      <div class="phase-desc">Build organisational capability and refine processes.</div>
+      <textarea class="small" placeholder="Key actions, stakeholders, and milestones for this phase..."></textarea>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-number">Phase 5</div>
+      <div class="phase-title">Scale</div>
+      <div class="phase-desc">Integrate AI across the enterprise.</div>
+      <textarea class="small" placeholder="Key actions, stakeholders, and milestones for this phase..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 12: Leadership Action Plan -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 12</h1>
+    <h2 class="section-title">Leadership Action Plan</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">Define concrete leadership actions you will take following this programme. Be specific about ownership, timelines, and expected outcomes.</p>
+
+    <table class="canvas-table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Owner</th>
+          <th>Timeline</th>
+          <th>Expected Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><textarea class="small" placeholder="Define a specific action..."></textarea></td>
+          <td><textarea class="small" placeholder="Who is responsible?"></textarea></td>
+          <td><textarea class="small" placeholder="By when?"></textarea></td>
+          <td><textarea class="small" placeholder="What does success look like?"></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea class="small" placeholder="Define a specific action..."></textarea></td>
+          <td><textarea class="small" placeholder="Who is responsible?"></textarea></td>
+          <td><textarea class="small" placeholder="By when?"></textarea></td>
+          <td><textarea class="small" placeholder="What does success look like?"></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea class="small" placeholder="Define a specific action..."></textarea></td>
+          <td><textarea class="small" placeholder="Who is responsible?"></textarea></td>
+          <td><textarea class="small" placeholder="By when?"></textarea></td>
+          <td><textarea class="small" placeholder="What does success look like?"></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea class="small" placeholder="Define a specific action..."></textarea></td>
+          <td><textarea class="small" placeholder="Who is responsible?"></textarea></td>
+          <td><textarea class="small" placeholder="By when?"></textarea></td>
+          <td><textarea class="small" placeholder="What does success look like?"></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea class="small" placeholder="Define a specific action..."></textarea></td>
+          <td><textarea class="small" placeholder="Who is responsible?"></textarea></td>
+          <td><textarea class="small" placeholder="By when?"></textarea></td>
+          <td><textarea class="small" placeholder="What does success look like?"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 13: Final Reflection -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="page page-break">
+    <h1 class="section-number">Section 13</h1>
+    <h2 class="section-title">Final Reflection</h2>
+    <div class="section-rule"></div>
+
+    <p class="prose">After completing the programme, take time to consolidate your thinking. These four questions are designed to crystallise your most important commitments.</p>
+
+    <div class="field-group">
+      <label class="field-label">1. What is the most important AI opportunity for your organisation?</label>
+      <textarea placeholder="Your answer..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">2. What leadership capability must you strengthen most?</label>
+      <textarea placeholder="Your answer..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">3. What will be your first leadership action after this programme?</label>
+      <textarea placeholder="Your answer..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">4. How will you communicate AI transformation to your team?</label>
+      <textarea placeholder="Your answer..."></textarea>
+    </div>
+
+    <hr class="divider">
+
+    <div class="closing-block">
+      <p class="closing-quote">"Artificial intelligence will transform organisations.<br>Leadership will determine which ones succeed."</p>
+      <p class="closing-attribution">Augmented Leadership&trade; Framework &nbsp;&middot;&nbsp; Bright Leadership Consulting</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- BACK COVER -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="cover-page page-break" style="min-height:60vh">
+    <div class="cover-badge">Programme Complete</div>
+    <h2 class="cover-title" style="font-size:28px">Strategic Leadership in the Age of AI</h2>
+    <p class="cover-subtitle">Executive Program Workbook</p>
+    <div class="cover-divider"></div>
+    <p class="cover-tagline">Augmented Leadership&trade; Programme<br>CPD Accredited</p>
+    <p class="cover-footer">&copy; Bright Leadership Consulting &nbsp;&middot;&nbsp; All Rights Reserved &nbsp;&middot;&nbsp; Confidential</p>
+  </div>
+
+</body>
+</html>
