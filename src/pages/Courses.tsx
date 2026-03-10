@@ -13,59 +13,49 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const individualCourses = [
+const executiveProgrammes = [
   {
-    title: "Transformational Leadership Skills",
-    description: "Cross-team collaboration, change leadership, and the ability to inspire collective action.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership",
+    title: "Executive Leadership Mastery",
+    subtitle: "Flagship 33-Module Programme",
+    description:
+      "Our comprehensive 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 80+ hours of structured content. 66 CPD points.",
+    features: [
+      "7 Integrated Leadership Disciplines",
+      "80+ Hours of Executive Content",
+      "66 CPD Points Accredited",
+      "Self-Directed or Cohort-Based",
+    ],
+    link: "/executive-leadership-mastery",
+    internal: true,
   },
   {
-    title: "Peak Performance Accelerator",
-    description: "Strategic decision-making, operational efficiency, and sustained personal productivity.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    title: "Strategic Leadership in the Age of AI",
+    subtitle: "AI Governance & Leadership Framework",
+    description:
+      "Artificial intelligence is reshaping industries and redefining how organisations compete. This programme equips senior leaders with the knowledge, governance frameworks, and strategic clarity needed to lead confidently in this new environment.",
+    features: [
+      "AI Strategic Implications Assessment",
+      "Governance Framework Development",
+      "AI Leadership Blueprint Creation",
+      "Responsible Adoption Protocols",
+    ],
+    link: "#", // Placeholder - to be updated when programme page created
+    internal: false,
+    comingSoon: false,
   },
   {
-    title: "Building Professional & Personal Value",
-    description: "Client relations, strategic networking, and professional influence.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value",
-  },
-  {
-    title: "Future of Work & AI-Ready Leadership",
-    description: "AI integration, remote collaboration, and digital transformation.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
-  },
-  {
-    title: "Enhanced Employability Skills",
-    description: "Emotional intelligence, adaptability, and the human skills AI cannot replicate.",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees",
-  },
-];
-
-const bundles = [
-  {
-    title: "Leadership + Transformational Bundle",
-    courses: ["Advanced Leadership Development", "Transformational Leadership"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/complete-leadership-bundle",
-  },
-  {
-    title: "Leadership Productivity Bundle",
-    courses: ["Leadership", "Transformational", "Peak Performance Accelerator"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/effective-leadership-productivity-accelerator-training-bundle",
-  },
-  {
-    title: "Effective Management Bundle",
-    courses: ["Leadership", "Transformational", "Peak Performance", "Future of Work"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/effective-management-training-bundle",
-  },
-  {
-    title: "Complete Development Bundle",
-    courses: ["Advanced Leadership", "Peak Performance", "Future of Work", "Employability Skills"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/complete-training-bundle-for-transformational-leaders",
-  },
-  {
-    title: "Ultimate Leadership Development Program",
-    courses: ["All 7 Premium Courses"],
-    link: "https://bright-leadership-consulting.thinkific.com/bundles/the-ultimate-leadership-development-program-for-leaders-managers",
+    title: "Corporate Retreats",
+    subtitle: "2–3 Day Facilitated Engagements",
+    description:
+      "Intensive facilitated engagements for leadership teams and boards. Diagnostic-led design. Outcome-focused facilitation. Confidential delivery for immediate, intensive strategic alignment.",
+    features: [
+      "Diagnostic-Led Programme Design",
+      "Board & Leadership Team Focus",
+      "Outcome-Focused Facilitation",
+      "Confidential Engagement Protocol",
+    ],
+    link: "/contact",
+    internal: true,
   },
 ];
 
@@ -73,8 +63,8 @@ const Courses = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Courses | Bright Leadership Consulting"
-        description="CPD-accredited leadership courses and bundles. Self-paced, flexible learning for senior professionals."
+        title="Executive Programmes | Bright Leadership Consulting"
+        description="CPD-accredited executive leadership programmes for senior professionals. Flagship development pathways, AI governance, and facilitated corporate retreats."
         path="/courses"
       />
       <ScrollProgress />
@@ -84,9 +74,9 @@ const Courses = () => {
         {/* Section 1 — Introduction */}
         <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-background">
           <div className="container-brief">
-            <div className="max-w-[680px]">
+            <div className="max-w-[720px]">
               <motion.p className="kicker mb-6" {...fade}>
-                CPD-Accredited Courses
+                Executive Programmes
               </motion.p>
 
               <motion.h1
@@ -94,7 +84,7 @@ const Courses = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Programme Catalogue
+                Structured Development for Consequential Leadership
               </motion.h1>
 
               <motion.p
@@ -102,8 +92,9 @@ const Courses = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
-                A curated selection of self-paced, CPD-accredited courses
-                designed for senior professionals and high-potential leaders.
+                We deliver through three integrated programme streams—each designed
+                for senior leaders who require more than content. They require
+                transformation with accountability.
               </motion.p>
             </div>
           </div>
@@ -111,99 +102,90 @@ const Courses = () => {
 
         <div className="section-divider" />
 
-        {/* Section 2 — Flagship Programme */}
-        <section className="section-brief bg-background">
-          <div className="container-brief">
-            <div className="max-w-[680px]">
-              <motion.p className="kicker mb-6" {...fade}>
-                Flagship Programme
-              </motion.p>
-
-              <motion.h2
-                className="heading-section mb-4"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.1 }}
-              >
-                Executive Leadership Mastery
-              </motion.h2>
-
-              <motion.div
-                className="space-y-6 body-brief"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.15 }}
-              >
-                <p>
-                  Our flagship 33-module programme integrating seven leadership
-                  disciplines into a single accredited development pathway.
-                  80+ hours of content. 66 CPD points.
-                </p>
-
-                <Link
-                  to="/executive-leadership-mastery"
-                  className="link-quiet"
-                >
-                  View Programme Prospectus
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        <div className="section-divider" />
-
-        {/* Section 3 — Individual Courses */}
+        {/* Section 2 — Programme Cards */}
         <section className="section-brief bg-background">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
-              Individual Courses
+              Programme Portfolio
             </motion.p>
 
             <motion.h2
-              className="heading-section mb-4 max-w-[680px]"
+              className="heading-section mb-4 max-w-[720px]"
               {...fade}
               transition={{ ...fade.transition, delay: 0.1 }}
             >
-              Self-Paced Leadership Development
+              Three Pathways. One Objective.
             </motion.h2>
 
             <motion.p
-              className="body-brief max-w-[680px] mb-16"
+              className="body-brief max-w-[720px] mb-16"
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Each course is available independently as a self-paced programme.
-              All courses are CPD-accredited and include downloadable resources.
+              Each programme is grounded in the Executive Alignment Index—our
+              proprietary diagnostic that measures structural leadership health
+              before intervention begins.
             </motion.p>
 
-            <div className="max-w-[680px] space-y-0">
-              {individualCourses.map((course, i) => (
+            <div className="max-w-[720px] space-y-0">
+              {executiveProgrammes.map((programme, i) => (
                 <motion.div
-                  key={course.title}
-                  className="flex gap-6 items-start py-5 border-b border-border last:border-b-0"
+                  key={programme.title}
+                  className="py-8 border-b border-border last:border-b-0"
                   {...fade}
-                  transition={{ ...fade.transition, delay: 0.1 + i * 0.05 }}
+                  transition={{ ...fade.transition, delay: 0.1 + i * 0.08 }}
                 >
-                  <span className="text-sm font-medium text-muted-foreground/40 pt-0.5 w-6 shrink-0 text-right tabular-nums">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-serif text-base font-semibold text-foreground">
-                      {course.title}
+                  <div className="flex items-baseline justify-between mb-3">
+                    <h3 className="font-serif text-lg font-semibold text-foreground">
+                      {programme.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
-                      {course.description}
-                    </p>
+                    {programme.internal ? (
+                      <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
+                        Internal
+                      </span>
+                    ) : (
+                      <span className="text-xs font-medium text-accent uppercase tracking-wider">
+                        Programme
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-sm font-medium text-accent mb-3">
+                    {programme.subtitle}
+                  </p>
+
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    {programme.description}
+                  </p>
+
+                  <ul className="space-y-1.5 mb-5">
+                    {programme.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="text-sm text-muted-foreground flex items-start gap-2"
+                      >
+                        <span className="text-accent mt-1.5 w-1 h-1 rounded-full bg-accent shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {programme.internal ? (
+                    <Link to={programme.link} className="link-quiet text-sm">
+                      View Programme Details
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  ) : (
                     <a
-                      href={course.link}
+                      href={programme.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-quiet text-sm mt-3"
+                      className="link-quiet text-sm"
                     >
-                      View Course
+                      Enquire Confidentially
                       <ArrowRight className="h-3 w-3" />
                     </a>
-                  </div>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -212,70 +194,28 @@ const Courses = () => {
 
         <div className="section-divider" />
 
-        {/* Section 4 — Bundles */}
+        {/* Section 3 — Positioning Statement */}
         <section className="section-brief bg-background">
           <div className="container-brief">
-            <motion.p className="kicker mb-6" {...fade}>
-              Course Bundles
-            </motion.p>
-
-            <motion.h2
-              className="heading-section mb-4 max-w-[680px]"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.1 }}
-            >
-              Combined Development Pathways
-            </motion.h2>
-
-            <motion.p
-              className="body-brief max-w-[680px] mb-16"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
-            >
-              Discounted combinations for broader development objectives.
-            </motion.p>
-
-            <div className="max-w-[680px] space-y-0">
-              {bundles.map((bundle, i) => (
-                <motion.a
-                  key={bundle.title}
-                  href={bundle.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block py-6 border-b border-border last:border-b-0 group"
-                  {...fade}
-                  transition={{ ...fade.transition, delay: 0.1 + i * 0.05 }}
-                >
-                  <h3 className="font-serif text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {bundle.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
-                    {bundle.courses.join(" · ")}
-                  </p>
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <div className="section-divider" />
-
-        {/* Section 5 — CTA */}
-        <section className="section-brief bg-background">
-          <div className="container-brief">
-            <div className="max-w-[680px]">
+            <div className="max-w-[720px]">
               <motion.div className="space-y-6" {...fade}>
                 <p className="font-serif text-foreground font-medium text-xl leading-relaxed">
-                  Programme enquiries are handled confidentially.
+                  We are not a training provider.
                 </p>
 
                 <p className="body-brief">
-                  For group enrolment, bespoke delivery, or programme enquiries,
-                  please submit an enquiry.
+                  We are an executive programme facilitator and strategic advisory
+                  partner to senior leaders, boards, and Chief People Officers. Our
+                  programmes are designed for leaders who operate at the intersection
+                  of complexity and consequence.
+                </p>
+
+                <p className="body-brief text-muted-foreground">
+                  Programme enquiries are handled confidentially.
                 </p>
 
                 <Link to="/contact" className="link-quiet">
-                  Enquire Confidentially
+                  Initiate a Confidential Conversation
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </motion.div>
