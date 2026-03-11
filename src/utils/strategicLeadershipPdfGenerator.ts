@@ -826,7 +826,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   });
   page.drawText('STAGE 1', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.teal });
   page.drawText('Blueprint Canvas', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
-  const stage1Desc = 'Use the AI Leadership Blueprint Canvas (Section 10) to map out the key elements of your strategy at a high level. This step helps you organise your thinking before developing the full blueprint.';
+  const stage1Desc = 'Use the AI Leadership Blueprint(TM) Canvas (Section 10) to map out the key elements of your strategy at a high level. This step helps you organise your thinking before developing the full blueprint.';
   let ty = y - 48;
   for (const line of wrapText(stage1Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
     page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
