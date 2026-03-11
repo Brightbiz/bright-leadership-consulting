@@ -21,6 +21,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 // Programme pages
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
 const Courses = lazy(() => import("./pages/Courses"));
+const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
