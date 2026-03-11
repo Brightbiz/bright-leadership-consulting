@@ -91,6 +91,21 @@ const Footer = () => {
               </a>
             ))}
           </nav>
+
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Executive Exercises</span>
+            {exerciseLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">
