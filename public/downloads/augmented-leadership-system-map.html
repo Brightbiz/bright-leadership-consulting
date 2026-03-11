@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Augmented Leadership System Map — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #111; background: #fff; line-height: 1.6; font-size: 11pt; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 32px 36px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 20px; }
+  .logo-line { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 16px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 24px; font-weight: 700; color: #0A0A0A; margin-bottom: 4px; }
+  .subtitle { font-size: 12px; color: #4B5563; font-weight: 500; margin-bottom: 24px; font-style: italic; }
+
+  /* Layer styling */
+  .layer { margin-bottom: 16px; }
+  .layer-label { font-size: 8px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 6px; }
+  .layer-title { font-family: 'Libre Baskerville', serif; font-size: 14px; font-weight: 700; color: #1F5C63; text-align: center; margin-bottom: 10px; }
+
+  /* Layer 1: Augmented Leadership */
+  .al-box { border: 2px solid #1F5C63; padding: 20px 24px; }
+  .al-heading { font-family: 'Libre Baskerville', serif; font-size: 18px; font-weight: 700; color: #0A0A0A; text-align: center; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .al-sub { font-size: 11px; color: #4B5563; text-align: center; margin-bottom: 16px; }
+  .circles-row { display: flex; justify-content: center; gap: 20px; }
+  .circle-item { width: 160px; text-align: center; }
+  .circle-ring { width: 120px; height: 120px; border-radius: 50%; border: 2px solid #1F5C63; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; background: rgba(31,92,99,0.04); }
+  .circle-ring-inner { text-align: center; }
+  .circle-title { font-size: 10px; font-weight: 700; color: #1F5C63; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .circle-items { font-size: 9.5px; color: #111; line-height: 1.5; }
+
+  /* Connector */
+  .connector { display: flex; justify-content: center; padding: 6px 0; }
+  .connector-line { width: 2px; height: 20px; background: #D4A853; }
+
+  /* Layer 2: Maturity Model */
+  .maturity-box { border: 2px solid #1F5C63; padding: 16px 20px; }
+  .maturity-row { display: flex; align-items: stretch; gap: 0; }
+  .maturity-stage { flex: 1; text-align: center; padding: 10px 6px; border-right: 1px solid #D1D5DB; position: relative; }
+  .maturity-stage:last-child { border-right: none; }
+  .stage-number { font-size: 18px; font-weight: 700; color: #D4A853; margin-bottom: 2px; }
+  .stage-name { font-size: 10px; font-weight: 700; color: #0A0A0A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .stage-desc { font-size: 9px; color: #4B5563; line-height: 1.4; }
+  .maturity-stage::after { content: '→'; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); color: #1F5C63; font-size: 14px; font-weight: 700; z-index: 1; }
+  .maturity-stage:last-child::after { display: none; }
+
+  /* Layer 3: Roadmap */
+  .roadmap-box { border: 2px solid #1F5C63; padding: 16px 20px; }
+  .roadmap-row { display: flex; align-items: stretch; gap: 0; }
+  .roadmap-step { flex: 1; text-align: center; padding: 10px 6px; border-right: 1px solid #D1D5DB; position: relative; }
+  .roadmap-step:last-child { border-right: none; }
+  .step-name { font-size: 12px; font-weight: 700; color: #1F5C63; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .step-desc { font-size: 9px; color: #4B5563; line-height: 1.4; }
+  .roadmap-step::after { content: '→'; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); color: #D4A853; font-size: 14px; font-weight: 700; z-index: 1; }
+  .roadmap-step:last-child::after { display: none; }
+
+  /* Blueprint */
+  .blueprint-box { border: 2px solid #D4A853; background: rgba(212,168,83,0.06); padding: 16px 24px; text-align: center; }
+  .blueprint-title { font-family: 'Libre Baskerville', serif; font-size: 14px; font-weight: 700; color: #0A0A0A; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .blueprint-desc { font-size: 10px; color: #4B5563; margin-bottom: 8px; }
+  .blueprint-list { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .blueprint-item { font-size: 10px; color: #111; font-weight: 600; }
+
+  .footer-line { position: absolute; bottom: 24px; left: 36px; right: 36px; border-top: 1px solid #E6E6E6; padding-top: 8px; font-size: 8px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <h1>The Augmented Leadership System Map</h1>
+  <p class="subtitle">Strategic Leadership in the Age of AI</p>
+
+  <!-- LAYER 1 -->
+  <div class="layer">
+    <div class="layer-label">Layer 1 — Leadership Capability</div>
+    <div class="al-box">
+      <div class="al-heading">Augmented Leadership™</div>
+      <div class="al-sub">Leaders integrate Human Intelligence, Artificial Intelligence &amp; Organizational Intelligence</div>
+      <div class="circles-row">
+        <div class="circle-item">
+          <div class="circle-ring">
+            <div class="circle-ring-inner">
+              <div class="circle-title">Human Intelligence</div>
+              <div class="circle-items">Judgment<br>Ethics<br>Creativity<br>Empathy</div>
+            </div>
+          </div>
+        </div>
+        <div class="circle-item">
+          <div class="circle-ring">
+            <div class="circle-ring-inner">
+              <div class="circle-title">Artificial Intelligence</div>
+              <div class="circle-items">Data<br>Analytics<br>Automation<br>Prediction</div>
+            </div>
+          </div>
+        </div>
+        <div class="circle-item">
+          <div class="circle-ring">
+            <div class="circle-ring-inner">
+              <div class="circle-title">Organizational Intelligence</div>
+              <div class="circle-items">Teams<br>Processes<br>Knowledge<br>Culture</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- LAYER 2 -->
+  <div class="layer">
+    <div class="layer-label">Layer 2 — Organizational Readiness</div>
+    <div class="layer-title">AI Leadership Maturity Model</div>
+    <div class="maturity-box">
+      <div class="maturity-row">
+        <div class="maturity-stage">
+          <div class="stage-number">1</div>
+          <div class="stage-name">Awareness</div>
+          <div class="stage-desc">AI is recognised but rarely used</div>
+        </div>
+        <div class="maturity-stage">
+          <div class="stage-number">2</div>
+          <div class="stage-name">Experimentation</div>
+          <div class="stage-desc">Pilot AI projects underway</div>
+        </div>
+        <div class="maturity-stage">
+          <div class="stage-number">3</div>
+          <div class="stage-name">Adoption</div>
+          <div class="stage-desc">AI embedded in operations</div>
+        </div>
+        <div class="maturity-stage">
+          <div class="stage-number">4</div>
+          <div class="stage-name">Integration</div>
+          <div class="stage-desc">AI informs strategic decisions</div>
+        </div>
+        <div class="maturity-stage">
+          <div class="stage-number">5</div>
+          <div class="stage-name">Enterprise</div>
+          <div class="stage-desc">AI integrated across the organisation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- LAYER 3 -->
+  <div class="layer">
+    <div class="layer-label">Layer 3 — Transformation Execution</div>
+    <div class="layer-title">AI Transformation Leadership Roadmap</div>
+    <div class="roadmap-box">
+      <div class="roadmap-row">
+        <div class="roadmap-step">
+          <div class="step-name">Discover</div>
+          <div class="step-desc">Identify opportunities</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-name">Design</div>
+          <div class="step-desc">Develop strategy &amp; use cases</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-name">Deploy</div>
+          <div class="step-desc">Launch pilot initiatives</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-name">Develop</div>
+          <div class="step-desc">Build organisational capability</div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-name">Drive</div>
+          <div class="step-desc">Scale AI across the enterprise</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- BLUEPRINT -->
+  <div class="layer">
+    <div class="blueprint-box">
+      <div class="blueprint-title">AI Leadership Blueprint</div>
+      <div class="blueprint-desc">Participants produce a strategic roadmap including:</div>
+      <div class="blueprint-list">
+        <div class="blueprint-item">• AI Opportunities</div>
+        <div class="blueprint-item">• Leadership Capability Assessment</div>
+        <div class="blueprint-item">• Governance Framework</div>
+        <div class="blueprint-item">• Transformation Roadmap</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Augmented Leadership System Map</span>
+  </div>
+</div>
+
+</body>
+</html>
