@@ -876,7 +876,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   }
 
   y -= 5;
-  y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint by', y, fonts, 22, 's11_commit');
+  y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint(TM) by', y, fonts, 22, 's11_commit');
 
   // Rubric scoring scale
   if (y > 200) {
