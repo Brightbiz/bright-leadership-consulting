@@ -878,6 +878,78 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   y -= 5;
   y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint by', y, fonts, 22, 's11_commit');
 
+  // Rubric scoring scale
+  if (y > 200) {
+    page.drawText('CAPSTONE EVALUATION RUBRIC', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+    y -= 18;
+
+    y = drawInstructionBox(page, 'Your blueprint will be evaluated on six criteria using a 5-point scale: 5 = Excellent, 4 = Strong, 3 = Adequate, 2 = Limited, 1 = Poor', y, fonts);
+    y -= 5;
+
+    // Rubric criteria boxes
+    const rubricCriteria = [
+      { title: '1. Organisational Context', focus: 'Clarity of strategic environment and challenges', scores: ['5: Clear, insightful analysis', '4: Good understanding', '3: Adequate description', '2: Limited or vague', '1: No meaningful analysis'] },
+      { title: '2. AI Opportunities', focus: 'Ability to identify meaningful AI applications', scores: ['5: Highly relevant opportunities', '4: Strong opportunities', '3: Reasonable opportunities', '2: Limited or poorly defined', '1: Minimal or irrelevant'] },
+      { title: '3. Leadership Capabilities', focus: 'Understanding required leadership capabilities', scores: ['5: Clear, insightful analysis', '4: Good understanding', '3: Basic assessment', '2: Limited discussion', '1: Little reflection'] },
+    ];
+
+    for (const rc of rubricCriteria) {
+      if (y < 120) break;
+      page.drawRectangle({
+        x: MARGIN, y: y - 75, width: CONTENT_WIDTH, height: 78,
+        color: COLORS.lightBg, borderColor: COLORS.border, borderWidth: 0.5,
+      });
+      page.drawRectangle({ x: MARGIN, y: y - 4, width: CONTENT_WIDTH, height: 3, color: COLORS.teal });
+      page.drawText(rc.title, { x: MARGIN + 8, y: y - 16, size: 9, font: fonts.bold, color: COLORS.teal });
+      page.drawText(rc.focus, { x: MARGIN + 8, y: y - 28, size: 7, font: fonts.italic, color: COLORS.muted });
+      for (let i = 0; i < rc.scores.length; i++) {
+        page.drawText(rc.scores[i], { x: MARGIN + 8, y: y - 40 - (i * 10), size: 7, font: fonts.regular, color: COLORS.text });
+      }
+      y -= 88;
+    }
+  }
+
+  // Rubric continuation on new page
+  page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  y = PAGE_HEIGHT - MARGIN;
+
+  page.drawText('CAPSTONE EVALUATION RUBRIC (CONTINUED)', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+  y -= 18;
+
+  const rubricCriteria2 = [
+    { title: '4. Governance and Responsible AI', focus: 'Consideration of ethical, regulatory, and governance issues', scores: ['5: Comprehensive governance framework', '4: Clear governance considerations', '3: Basic governance discussion', '2: Limited governance', '1: Governance not addressed'] },
+    { title: '5. AI Transformation Roadmap', focus: 'Quality and feasibility of implementation plan', scores: ['5: Clear, practical, well-structured', '4: Strong roadmap with clear steps', '3: Reasonable but basic roadmap', '2: Limited planning', '1: No meaningful roadmap'] },
+    { title: '6. Leadership Action Plan', focus: 'Clarity of next steps and leadership actions', scores: ['5: Clear, realistic action plan', '4: Strong action plan', '3: Basic plan', '2: Limited planning', '1: No actionable steps'] },
+  ];
+
+  for (const rc of rubricCriteria2) {
+    if (y < 120) break;
+    page.drawRectangle({
+      x: MARGIN, y: y - 75, width: CONTENT_WIDTH, height: 78,
+      color: COLORS.lightBg, borderColor: COLORS.border, borderWidth: 0.5,
+    });
+    page.drawRectangle({ x: MARGIN, y: y - 4, width: CONTENT_WIDTH, height: 3, color: COLORS.gold });
+    page.drawText(rc.title, { x: MARGIN + 8, y: y - 16, size: 9, font: fonts.bold, color: COLORS.teal });
+    page.drawText(rc.focus, { x: MARGIN + 8, y: y - 28, size: 7, font: fonts.italic, color: COLORS.muted });
+    for (let i = 0; i < rc.scores.length; i++) {
+      page.drawText(rc.scores[i], { x: MARGIN + 8, y: y - 40 - (i * 10), size: 7, font: fonts.regular, color: COLORS.text });
+    }
+    y -= 88;
+  }
+
+  // Overall evaluation box
+  if (y > 180) {
+    y -= 10;
+    page.drawRectangle({
+      x: MARGIN, y: y - 75, width: CONTENT_WIDTH, height: 78,
+      color: COLORS.teal, opacity: 0.1, borderColor: COLORS.teal, borderWidth: 2,
+    });
+    page.drawText('OVERALL EVALUATION', { x: MARGIN + 10, y: y - 18, size: 10, font: fonts.bold, color: COLORS.teal });
+    page.drawText('26-30: Excellent  |  21-25: Strong  |  16-20: Adequate  |  11-15: Limited  |  6-10: Needs development', { x: MARGIN + 10, y: y - 32, size: 8, font: fonts.regular, color: COLORS.text });
+    page.drawText('Certification threshold: Minimum 16 points required for course completion', { x: MARGIN + 10, y: y - 45, size: 8, font: fonts.bold, color: COLORS.gold });
+    y -= 88;
+  }
+
   // ════════════ SECTION 12: AI Transformation Roadmap ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
