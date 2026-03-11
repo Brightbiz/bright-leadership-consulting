@@ -878,6 +878,37 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   y -= 5;
   y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint by', y, fonts, 22, 's11_commit');
 
+  // Rubric scoring scale
+  if (y > 200) {
+    page.drawText('CAPSTONE EVALUATION RUBRIC', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+    y -= 18;
+
+    y = drawInstructionBox(page, 'Your blueprint will be evaluated on six criteria using a 5-point scale: 5 = Excellent, 4 = Strong, 3 = Adequate, 2 = Limited, 1 = Poor', y, fonts);
+    y -= 5;
+
+    // Rubric criteria boxes
+    const rubricCriteria = [
+      { title: '1. Organisational Context', focus: 'Clarity of strategic environment and challenges', scores: ['5: Clear, insightful analysis', '4: Good understanding', '3: Adequate description', '2: Limited or vague', '1: No meaningful analysis'] },
+      { title: '2. AI Opportunities', focus: 'Ability to identify meaningful AI applications', scores: ['5: Highly relevant opportunities', '4: Strong opportunities', '3: Reasonable opportunities', '2: Limited or poorly defined', '1: Minimal or irrelevant'] },
+      { title: '3. Leadership Capabilities', focus: 'Understanding required leadership capabilities', scores: ['5: Clear, insightful analysis', '4: Good understanding', '3: Basic assessment', '2: Limited discussion', '1: Little reflection'] },
+    ];
+
+    for (const rc of rubricCriteria) {
+      if (y < 120) break;
+      page.drawRectangle({
+        x: MARGIN, y: y - 75, width: CONTENT_WIDTH, height: 78,
+        color: COLORS.lightBg, borderColor: COLORS.border, borderWidth: 0.5,
+      });
+      page.drawRectangle({ x: MARGIN, y: y - 4, width: CONTENT_WIDTH, height: 3, color: COLORS.teal });
+      page.drawText(rc.title, { x: MARGIN + 8, y: y - 16, size: 9, font: fonts.bold, color: COLORS.teal });
+      page.drawText(rc.focus, { x: MARGIN + 8, y: y - 28, size: 7, font: fonts.italic, color: COLORS.muted });
+      for (let i = 0; i < rc.scores.length; i++) {
+        page.drawText(rc.scores[i], { x: MARGIN + 8, y: y - 40 - (i * 10), size: 7, font: fonts.regular, color: COLORS.text });
+      }
+      y -= 88;
+    }
+  }
+
   // ════════════ SECTION 12: AI Transformation Roadmap ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
