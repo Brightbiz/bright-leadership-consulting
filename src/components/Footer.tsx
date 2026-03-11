@@ -24,6 +24,13 @@ const downloadLinks = [
   { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
 ];
 
+const exerciseLinks = [
+  { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
+  { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
+  { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
+  { label: "Exercise 4: AI Leadership Blueprint", href: "/downloads/exercise-ai-leadership-blueprint.html" },
+];
+
 const Footer = () => {
   return (
     <footer className="border-t border-border">

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 2: AI Strategy Canvas — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #0A0A0A; background: #fff; line-height: 1.7; font-size: 12pt; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 48px 56px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 40px; }
+  .logo-line { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
+  .exercise-badge { display: inline-block; background: #1F5C63; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 20px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 32px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .subtitle { font-size: 14px; color: #4B5563; font-weight: 500; margin-bottom: 36px; }
+  h2 { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; color: #164349; margin: 32px 0 16px; letter-spacing: 0.02em; }
+  h3 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #164349; margin: 24px 0 10px; }
+  p, li { font-size: 12pt; line-height: 1.7; color: #111111; max-width: 680px; }
+  .purpose-box { background: #1F5C63; color: #fff; padding: 20px 24px; margin: 20px 0 28px; }
+  .purpose-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
+  .purpose-box p { color: #fff; font-size: 12pt; font-weight: 500; }
+  .instructions { background: #F4F8F8; border-left: 4px solid #1F5C63; padding: 16px 20px; margin: 20px 0; font-size: 12pt; color: #111111; }
+  .step-label { display: inline-block; background: #164349; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: #1F5C63; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 14px 16px; }
+  td { border: 1px solid #C8CED0; padding: 14px 16px; font-size: 12pt; color: #111111; vertical-align: top; }
+  td.write-area { min-height: 52px; height: 52px; }
+  .example-list { list-style: none; padding: 0; margin: 12px 0; }
+  .example-list li { padding: 8px 0 8px 20px; font-size: 12pt; color: #111111; position: relative; font-weight: 500; }
+  .example-list li::before { content: '—'; position: absolute; left: 0; color: #1F5C63; font-weight: 700; }
+  .write-block { border: 1px solid #C8CED0; min-height: 90px; margin: 16px 0; padding: 14px; }
+  .reflection-box { background: #FFFBF0; border: 2px solid #D4A853; padding: 20px 24px; margin: 24px 0; }
+  .reflection-box h3 { color: #8B6914; margin-top: 0; }
+  .reflection-box .write-line { border-bottom: 1px solid #E6D5A8; min-height: 36px; margin: 12px 0; }
+  .footer-line { position: absolute; bottom: 48px; left: 56px; right: 56px; border-top: 1px solid #E6E6E6; padding-top: 12px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <div class="exercise-badge">Exercise 2</div>
+  <h1>AI Strategy Canvas</h1>
+  <p class="subtitle">Strategic Leadership in the Age of AI — Executive Programme</p>
+
+  <div class="purpose-box">
+    <strong>Purpose</strong>
+    <p>Align AI initiatives with your organisation's strategic objectives. This exercise ensures AI adoption is driven by business strategy, not technology novelty.</p>
+  </div>
+
+  <div class="step-label">Step 1 — Identify Strategic Objectives</div>
+  <p>Consider your organisation's key strategic priorities. Examples include:</p>
+
+  <ul class="example-list">
+    <li>Improve customer experience</li>
+    <li>Increase operational efficiency</li>
+    <li>Expand into new markets</li>
+    <li>Accelerate innovation</li>
+  </ul>
+
+  <p style="font-weight:600; margin-top:16px;">Write your key strategic objectives:</p>
+  <div class="write-block"></div>
+
+  <div class="step-label">Step 2 — Map AI Initiatives</div>
+  <p>For each strategic objective, identify an AI initiative that could support it.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:25%">Strategic Objective</th>
+        <th style="width:25%">AI Initiative</th>
+        <th style="width:25%">Expected Impact</th>
+        <th style="width:25%">Timeline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td></tr>
+      <tr><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td></tr>
+      <tr><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td></tr>
+      <tr><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td></tr>
+      <tr><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td><td class="write-area"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="reflection-box">
+    <h3>Reflection Questions</h3>
+    <p style="font-weight:600; margin-bottom:4px;">Which AI initiative could provide the fastest value?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">Which initiative could create long-term competitive advantage?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Exercise 2: AI Strategy Canvas</span>
+  </div>
+</div>
+
+</body>
+</html>

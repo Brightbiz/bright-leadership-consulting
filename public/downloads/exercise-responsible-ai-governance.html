@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 3: Responsible AI Governance — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #0A0A0A; background: #fff; line-height: 1.7; font-size: 12pt; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 48px 56px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 40px; }
+  .logo-line { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
+  .exercise-badge { display: inline-block; background: #1F5C63; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 20px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 32px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .subtitle { font-size: 14px; color: #4B5563; font-weight: 500; margin-bottom: 36px; }
+  h2 { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; color: #164349; margin: 32px 0 16px; letter-spacing: 0.02em; }
+  h3 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #164349; margin: 24px 0 10px; }
+  p, li { font-size: 12pt; line-height: 1.7; color: #111111; max-width: 680px; }
+  .purpose-box { background: #1F5C63; color: #fff; padding: 20px 24px; margin: 20px 0 28px; }
+  .purpose-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
+  .purpose-box p { color: #fff; font-size: 12pt; font-weight: 500; }
+  .instructions { background: #F4F8F8; border-left: 4px solid #1F5C63; padding: 16px 20px; margin: 20px 0; font-size: 12pt; color: #111111; }
+  .step-label { display: inline-block; background: #164349; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: #1F5C63; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 14px 16px; }
+  td { border: 1px solid #C8CED0; padding: 14px 16px; font-size: 12pt; color: #111111; vertical-align: top; }
+  td.write-area { min-height: 52px; height: 52px; }
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li { padding: 10px 0 10px 32px; border-bottom: 1px solid #E6E6E6; font-size: 12pt; font-weight: 500; color: #111111; position: relative; }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 16px; color: #1F5C63; }
+  .warning-box { background: #FFF5F5; border-left: 4px solid #C53030; padding: 16px 20px; margin: 20px 0; }
+  .warning-box p { color: #742A2A; font-weight: 500; }
+  .reflection-box { background: #FFFBF0; border: 2px solid #D4A853; padding: 20px 24px; margin: 24px 0; }
+  .reflection-box h3 { color: #8B6914; margin-top: 0; }
+  .reflection-box .write-line { border-bottom: 1px solid #E6D5A8; min-height: 36px; margin: 12px 0; }
+  .footer-line { position: absolute; bottom: 48px; left: 56px; right: 56px; border-top: 1px solid #E6E6E6; padding-top: 12px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <div class="exercise-badge">Exercise 3</div>
+  <h1>Responsible AI Governance</h1>
+  <p class="subtitle">Strategic Leadership in the Age of AI — Executive Programme</p>
+
+  <div class="purpose-box">
+    <strong>Purpose</strong>
+    <p>Identify governance principles for responsible AI adoption. Leaders must establish clear frameworks to manage the risks AI introduces — including bias, privacy concerns, and lack of transparency.</p>
+  </div>
+
+  <div class="warning-box">
+    <p>AI systems can introduce significant risks including algorithmic bias, privacy violations, regulatory non-compliance, and reputational harm. Governance is not optional — it is a leadership imperative.</p>
+  </div>
+
+  <div class="step-label">Step 1 — Identify Key Risks</div>
+  <p>Which AI risks are most relevant for your organisation?</p>
+
+  <ul class="checklist">
+    <li>Bias in decision-making</li>
+    <li>Privacy concerns</li>
+    <li>Data security</li>
+    <li>Regulatory compliance</li>
+    <li>Reputational risk</li>
+  </ul>
+
+  <div class="step-label">Step 2 — Governance Framework</div>
+  <p>Define policies or guidelines for each governance area.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">Governance Area</th>
+        <th style="width:70%">Policy or Guideline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:600;">Bias Monitoring</td><td class="write-area"></td></tr>
+      <tr><td style="font-weight:600;">Data Privacy</td><td class="write-area"></td></tr>
+      <tr><td style="font-weight:600;">Transparency</td><td class="write-area"></td></tr>
+      <tr><td style="font-weight:600;">Accountability</td><td class="write-area"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="reflection-box">
+    <h3>Reflection Questions</h3>
+    <p style="font-weight:600; margin-bottom:4px;">What governance structures should oversee AI initiatives in your organisation?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">Who should be responsible for AI risk management?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Exercise 3: Responsible AI Governance</span>
+  </div>
+</div>
+
+</body>
+</html>
