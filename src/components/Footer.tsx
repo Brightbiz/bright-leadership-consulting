@@ -25,6 +25,7 @@ const downloadLinks = [
 ];
 
 const exerciseLinks = [
+  { label: "Leadership Reflection Exercises", href: "/downloads/exercise-leadership-reflection.html" },
   { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
   { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
   { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
