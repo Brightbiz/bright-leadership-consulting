@@ -841,7 +841,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   });
   page.drawText('STAGE 2', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.gold });
   page.drawText('Blueprint Template', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
-  const stage2Desc = 'Use the AI Leadership Blueprint Template to develop a detailed strategic plan. This document becomes your final capstone submission.';
+  const stage2Desc = 'Use the AI Leadership Blueprint(TM) Template to develop a detailed strategic plan. This document becomes your final capstone submission.';
   ty = y - 48;
   for (const line of wrapText(stage2Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
     page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
