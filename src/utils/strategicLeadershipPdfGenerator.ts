@@ -864,15 +864,14 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
     { title: 'Leadership Action Plan', desc: 'Specify first steps to begin implementation' },
   ];
 
-  for (let i = 0; i < steps.length; i++) {
-    const stepParts = steps[i].split(' — ');
+  for (let i = 0; i < capstoneSteps.length; i++) {
     page.drawRectangle({
       x: MARGIN, y: y - 22, width: CONTENT_WIDTH, height: 25,
       color: COLORS.lightBg, borderColor: COLORS.border, borderWidth: 0.5,
     });
     page.drawText(`${i + 1}`, { x: MARGIN + 10, y: y - 10, size: 12, font: fonts.bold, color: COLORS.teal });
-    page.drawText(stepParts[0], { x: MARGIN + 28, y: y - 10, size: 9, font: fonts.bold, color: COLORS.text });
-    page.drawText(stepParts[1], { x: MARGIN + 28, y: y - 20, size: 8, font: fonts.regular, color: COLORS.muted });
+    page.drawText(capstoneSteps[i].title, { x: MARGIN + 28, y: y - 10, size: 9, font: fonts.bold, color: COLORS.text });
+    page.drawText(capstoneSteps[i].desc, { x: MARGIN + 28, y: y - 20, size: 8, font: fonts.regular, color: COLORS.muted });
     y -= 28;
   }
 
