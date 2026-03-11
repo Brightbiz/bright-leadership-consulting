@@ -808,7 +808,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   y = PAGE_HEIGHT - MARGIN;
   y = drawSectionHeader(page, '11', 'Capstone Project Guide', y, fonts);
 
-  const s11Intro = 'The capstone project allows you to apply the concepts, frameworks, and tools from this programme to your own organisation. Your task is to develop an AI Leadership Blueprint — a strategic plan outlining how artificial intelligence can be implemented responsibly and effectively within your organisation.';
+  const s11Intro = 'The capstone project allows you to apply the concepts, frameworks, and tools from this programme to your own organisation. Your task is to develop an AI Leadership Blueprint(TM) — a strategic plan outlining how artificial intelligence can be implemented responsibly and effectively within your organisation.';
   for (const line of wrapText(s11Intro, CONTENT_WIDTH, fonts.regular, 10)) {
     page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
     y -= 15;
