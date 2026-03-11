@@ -855,13 +855,13 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   page.drawText('STEP-BY-STEP GUIDE', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
   y -= 18;
 
-  const steps = [
-    'Organisational Context — Describe your organisation, industry, and strategic priorities',
-    'AI Opportunities — Identify areas where AI could create value',
-    'Leadership Capabilities — Assess which capabilities require development',
-    'Governance Framework — Define oversight and ethical guidelines',
-    'Transformation Roadmap — Outline phases of AI implementation',
-    'Leadership Action Plan — Specify first steps to begin implementation',
+  const capstoneSteps = [
+    { title: 'Organisational Context', desc: 'Describe your organisation, industry, and strategic priorities' },
+    { title: 'AI Opportunities', desc: 'Identify areas where AI could create value' },
+    { title: 'Leadership Capabilities', desc: 'Assess which capabilities require development' },
+    { title: 'Governance Framework', desc: 'Define oversight and ethical guidelines' },
+    { title: 'Transformation Roadmap', desc: 'Outline phases of AI implementation' },
+    { title: 'Leadership Action Plan', desc: 'Specify first steps to begin implementation' },
   ];
 
   for (let i = 0; i < steps.length; i++) {
