@@ -673,6 +673,42 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   y = drawInstructionBox(page, 'Opening: Why AI matters. Middle: Opportunities & concerns. Conclusion: Vision & commitment.', y, fonts);
   y = drawFieldGroup(page, form, 'YOUR SPEECH', y, fonts, 120, 's7b_draft');
 
+  // ════════════ SECTION 7C: Growth Opportunity Mapping ════════════
+  page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  y = PAGE_HEIGHT - MARGIN;
+
+  page.drawRectangle({ x: MARGIN, y: y - 2, width: CONTENT_WIDTH, height: 4, color: COLORS.gold });
+  y -= 16;
+  page.drawText('GROWTH OPPORTUNITY MAPPING', { x: MARGIN, y, size: 13, font: fonts.bold, color: COLORS.teal });
+  y -= 16;
+  page.drawText('Translating AI Capabilities into Business Growth', { x: MARGIN, y, size: 10, font: fonts.italic, color: COLORS.muted });
+  y -= 25;
+
+  const growthIntro = 'AI Opportunity Mapping identifies what AI can do inside the organisation. Growth Opportunity Mapping translates those capabilities into new revenue, markets, and competitive advantage. For each AI capability, ask: Could this become an external product, service, or competitive advantage?';
+  for (const line of wrapText(growthIntro, CONTENT_WIDTH, fonts.regular, 10)) {
+    page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
+    y -= 15;
+  }
+  y -= 5;
+
+  y = drawTable(page, form,
+    ['GROWTH AREA', 'OPPORTUNITY', 'AI ENABLER', 'REVENUE / STRATEGIC IMPACT'],
+    [
+      { label: 'New Products', cols: 4 },
+      { label: 'Market Expansion', cols: 4 },
+      { label: 'Customer Innovation', cols: 4 },
+      { label: 'New Revenue Streams', cols: 4 },
+      { label: 'Partnerships', cols: 4 },
+    ],
+    y, fonts, 's7c_growth'
+  );
+
+  y -= 5;
+  page.drawText('GROWTH STRATEGY SUMMARY', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+  y -= 18;
+  y = drawFieldGroup(page, form, 'TOP GROWTH OPPORTUNITY & LEADERSHIP ACTION REQUIRED', y, fonts, 70, 's7c_summary');
+  y = drawFieldGroup(page, form, 'WHAT NEW CAPABILITIES ARE NEEDED TO PURSUE THIS OPPORTUNITY?', y, fonts, 70, 's7c_capabilities');
+
   // ════════════ SECTION 8: AI Transformation Taskforce ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;

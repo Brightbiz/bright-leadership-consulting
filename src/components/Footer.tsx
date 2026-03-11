@@ -33,6 +33,7 @@ const exerciseLinks = [
   { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
   { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
   { label: "Exercise 4: AI Leadership Blueprint", href: "/downloads/exercise-ai-leadership-blueprint.html" },
+  { label: "Growth Opportunity Mapping", href: "/downloads/exercise-growth-opportunity-mapping.html" },
 ];
 
 const Footer = () => {
