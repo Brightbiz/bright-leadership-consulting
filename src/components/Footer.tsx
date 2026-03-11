@@ -24,6 +24,13 @@ const downloadLinks = [
   { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
 ];
 
+const exerciseLinks = [
+  { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
+  { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
+  { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
+  { label: "Exercise 4: AI Leadership Blueprint", href: "/downloads/exercise-ai-leadership-blueprint.html" },
+];
+
 const Footer = () => {
   return (
     <footer className="border-t border-border">
@@ -73,6 +80,21 @@ const Footer = () => {
           <nav className="flex flex-col gap-3">
             <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Course Downloads</span>
             {downloadLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Executive Exercises</span>
+            {exerciseLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
