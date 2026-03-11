@@ -36,7 +36,7 @@ const executiveProgrammes = [
     features: [
       "AI Strategic Implications Assessment",
       "Governance Framework Development",
-      "AI Leadership Blueprint Creation",
+      "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
     link: "#", // Placeholder - to be updated when programme page created
