@@ -22,7 +22,7 @@ const downloadLinks = [
   { label: "AI Taskforce Template", href: "/downloads/ai-taskforce-template.html" },
   { label: "Responsible AI Governance", href: "/downloads/responsible-ai-governance-framework.html" },
   { label: "AI Transformation Roadmap", href: "/downloads/ai-transformation-leadership-roadmap.html" },
-  { label: "AI Leadership Blueprint", href: "/downloads/ai-leadership-blueprint-template.html" },
+  { label: "AI Leadership Blueprint Template", href: "/downloads/ai-leadership-blueprint-template.html" },
   { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
 ];
 
