@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership Reflection Exercises — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #0A0A0A; background: #fff; line-height: 1.7; font-size: 12pt; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 48px 56px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 40px; }
+  .logo-line { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
+  .exercise-badge { display: inline-block; background: #1F5C63; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 20px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 32px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .subtitle { font-size: 14px; color: #4B5563; font-weight: 500; margin-bottom: 36px; }
+  h2 { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; color: #164349; margin: 32px 0 16px; letter-spacing: 0.02em; }
+  h3 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #164349; margin: 24px 0 10px; }
+  p, li { font-size: 12pt; line-height: 1.7; color: #111111; max-width: 680px; }
+  .purpose-box { background: #1F5C63; color: #fff; padding: 20px 24px; margin: 20px 0 28px; }
+  .purpose-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
+  .purpose-box p { color: #fff; font-size: 12pt; font-weight: 500; }
+  .step-label { display: inline-block; background: #164349; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; margin-bottom: 14px; margin-top: 8px; }
+  .reflection-prompt { background: #F4F8F8; border-left: 4px solid #1F5C63; padding: 14px 20px; margin: 16px 0 8px; font-size: 12pt; font-weight: 600; color: #164349; }
+  .write-area { border: 1px solid #C8CED0; min-height: 64px; margin: 0 0 20px; padding: 12px; }
+  .write-line { border-bottom: 1px solid #C8CED0; min-height: 32px; margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: #1F5C63; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 14px 16px; }
+  td { border: 1px solid #C8CED0; padding: 14px 16px; font-size: 12pt; color: #111111; vertical-align: top; }
+  td.fill { min-height: 52px; height: 52px; }
+  .section-divider { border-top: 2px solid #1F5C63; margin: 36px 0 0; padding-top: 20px; }
+  .gold-box { background: #FFFBF0; border: 2px solid #D4A853; padding: 20px 24px; margin: 24px 0; }
+  .gold-box h3 { color: #8B6914; margin-top: 0; }
+  .gold-box .write-line { border-bottom: 1px solid #E6D5A8; min-height: 36px; margin: 12px 0; }
+  .numbered-list { list-style: none; padding: 0; margin: 16px 0; counter-reset: item; }
+  .numbered-list li { padding: 8px 0 8px 36px; font-size: 12pt; font-weight: 500; color: #111111; position: relative; counter-increment: item; }
+  .numbered-list li::before { content: counter(item); position: absolute; left: 0; width: 24px; height: 24px; background: #1F5C63; color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 24px; border-radius: 50%; }
+  .scale-row { display: flex; gap: 0; margin: 12px 0 20px; }
+  .scale-cell { flex: 1; border: 1px solid #C8CED0; text-align: center; padding: 10px 4px; font-size: 10px; font-weight: 600; color: #164349; }
+  .scale-cell:first-child { border-radius: 4px 0 0 4px; }
+  .scale-cell:last-child { border-radius: 0 4px 4px 0; }
+  .scale-label { display: flex; justify-content: space-between; font-size: 9px; color: #9CA3AF; margin-top: -4px; margin-bottom: 16px; }
+  .footer-line { position: absolute; bottom: 48px; left: 56px; right: 56px; border-top: 1px solid #E6E6E6; padding-top: 12px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <div class="exercise-badge">Leadership Reflection</div>
+  <h1>Leadership Reflection Exercises</h1>
+  <p class="subtitle">Strategic Leadership in the Age of AI — Executive Programme</p>
+
+  <div class="purpose-box">
+    <strong>Purpose</strong>
+    <p>These reflection exercises are designed to deepen your self-awareness as a leader navigating AI transformation. They span the full arc of the programme — from current-state assessment through to post-programme commitment. Complete each section honestly. There are no right answers — only your answers.</p>
+  </div>
+
+  <!-- REFLECTION 1 -->
+  <div class="step-label">Reflection 1 — Leadership in the Age of AI</div>
+  <p style="margin-bottom:16px;">Before exploring specific AI frameworks, reflect on where you and your organisation stand today.</p>
+
+  <div class="reflection-prompt">1. How is AI currently used within your organisation?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">2. Which decisions in your organisation rely heavily on data?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">3. Which leadership responsibilities cannot be automated?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">4. How might AI change leadership roles in the next five years?</div>
+  <div class="write-area"></div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Reflection Exercises — Page 1</span>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="header-bar"></div>
+
+  <!-- REFLECTION 2 -->
+  <div class="step-label">Reflection 2 — Leadership Self-Assessment</div>
+  <p style="margin-bottom:16px;">Rate your current capability in each leadership competency. Be candid — this is a private diagnostic, not a performance review.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40%">Leadership Competency</th>
+        <th style="width:12%">1</th>
+        <th style="width:12%">2</th>
+        <th style="width:12%">3</th>
+        <th style="width:12%">4</th>
+        <th style="width:12%">5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:600;">Strategic Thinking</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Technology Awareness</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Data-Driven Decision Making</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Cross-Functional Collaboration</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Change Leadership</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Ethical Judgment</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Communication & Influence</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Innovation Mindset</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+    </tbody>
+  </table>
+  <div class="scale-label"><span>1 = Significant development needed</span><span>5 = Confident and experienced</span></div>
+
+  <div class="gold-box">
+    <h3>Key Insight</h3>
+    <p style="font-weight:600; margin-bottom:4px;">Which two competencies are most critical for you to strengthen?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">What specific actions could accelerate your development in these areas?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Reflection Exercises — Page 2</span>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+  <div class="header-bar"></div>
+
+  <!-- REFLECTION 3 -->
+  <div class="step-label">Reflection 3 — Augmented Leadership</div>
+  <p style="margin-bottom:16px;">The Augmented Leadership™ model integrates three forms of intelligence: Human, Artificial, and Organisational. Reflect on how these intersect in your leadership context.</p>
+
+  <div class="reflection-prompt">How do you currently balance human judgment with data-driven insights?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">Where does your organisation's collective knowledge (processes, culture, institutional memory) create the most value?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">In which decisions should AI support — but never replace — human leadership?</div>
+  <div class="write-area"></div>
+
+  <div class="section-divider"></div>
+
+  <!-- REFLECTION 4 -->
+  <div class="step-label">Reflection 4 — Stakeholder & Team Readiness</div>
+  <p style="margin-bottom:16px;">AI transformation succeeds or fails based on people. Assess your team's and stakeholders' readiness.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">Stakeholder Group</th>
+        <th style="width:25%">Current Awareness</th>
+        <th style="width:25%">Likely Resistance</th>
+        <th style="width:20%">Engagement Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:600;">Board / Executive Team</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Middle Management</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Frontline Teams</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">Technology / IT</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+      <tr><td style="font-weight:600;">External Partners</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Reflection Exercises — Page 3</span>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+  <div class="header-bar"></div>
+
+  <!-- REFLECTION 5 -->
+  <div class="step-label">Reflection 5 — Leadership Values & AI Ethics</div>
+  <p style="margin-bottom:16px;">AI introduces new ethical dimensions to leadership. Clarify your personal leadership values and how they relate to responsible AI adoption.</p>
+
+  <div class="reflection-prompt">What are your three core leadership values?</div>
+  <table>
+    <tbody>
+      <tr><td style="width:33%; font-weight:600;">Value 1:</td><td style="width:33%; font-weight:600;">Value 2:</td><td style="width:34%; font-weight:600;">Value 3:</td></tr>
+      <tr><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="reflection-prompt">How do these values guide your approach to AI adoption?</div>
+  <div class="write-area"></div>
+
+  <div class="reflection-prompt">Where might AI create tension with your organisation's values?</div>
+  <div class="write-area"></div>
+
+  <div class="section-divider"></div>
+
+  <!-- REFLECTION 6 -->
+  <div class="step-label">Reflection 6 — Final Reflection</div>
+  <p style="margin-bottom:16px;">After completing the programme, consolidate your thinking. These questions crystallise your most important commitments.</p>
+
+  <div class="gold-box">
+    <h3>Programme Commitments</h3>
+    <p style="font-weight:600; margin-bottom:4px;">What is the most important AI opportunity for your organisation?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">What leadership capability must you strengthen most?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">What will be your first leadership action after this programme?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">How will you communicate AI transformation to your team?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Reflection Exercises — Page 4</span>
+  </div>
+</div>
+
+</body>
+</html>
