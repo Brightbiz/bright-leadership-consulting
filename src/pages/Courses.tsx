@@ -5,6 +5,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import CourseJourneyMap from "@/components/CourseJourneyMap";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -36,7 +37,7 @@ const executiveProgrammes = [
     features: [
       "AI Strategic Implications Assessment",
       "Governance Framework Development",
-      "AI Leadership Blueprint Creation",
+      "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
     link: "#", // Placeholder - to be updated when programme page created
@@ -189,6 +190,32 @@ const Courses = () => {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 3 — Course Journey Map */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Programme Architecture
+            </motion.p>
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Strategic Leadership in the Age of AI — Journey Map
+            </motion.h2>
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              Six stages. Ten modules. One AI Leadership Blueprint™.
+            </motion.p>
+            <CourseJourneyMap />
           </div>
         </section>
 

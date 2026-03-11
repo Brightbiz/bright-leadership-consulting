@@ -372,7 +372,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   const steps = [
     { title: 'Read & Reflect', desc: "Engage with each section's context before completing the exercises." },
     { title: 'Complete Exercises', desc: 'Use the fillable fields to capture your thinking in real time.' },
-    { title: 'Build Your Blueprint', desc: 'Each section feeds into your final AI Leadership Blueprint Canvas.' },
+    { title: 'Build Your Blueprint', desc: 'Each section feeds into your final AI Leadership Blueprint(TM) Canvas.' },
     { title: 'Take Action', desc: 'Translate insights into a concrete Leadership Action Plan.' },
   ];
 
@@ -390,7 +390,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   }
 
   y -= 10;
-  y = drawInstructionBox(page, 'By the end of the programme, you will complete an AI Leadership Blueprint - a strategic action document you can present to your board or executive team.', y, fonts);
+  y = drawInstructionBox(page, 'By the end of the programme, you will complete an AI Leadership Blueprint(TM) - a strategic action document you can present to your board or executive team.', y, fonts);
 
   // ════════════ SECTION 1: Leadership in the Age of AI ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
@@ -781,7 +781,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   // ════════════ SECTION 10: AI Leadership Blueprint Canvas ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
-  y = drawSectionHeader(page, '10', 'AI Leadership Blueprint Canvas', y, fonts);
+  y = drawSectionHeader(page, '10', 'AI Leadership Blueprint(TM) Canvas', y, fonts);
 
   const s10Intro = 'This is the centrepiece of your workbook. Synthesise everything you have learned into a single strategic document that can be presented to your board or executive team.';
   for (const line of wrapText(s10Intro, CONTENT_WIDTH, fonts.regular, 10)) {
@@ -808,7 +808,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   y = PAGE_HEIGHT - MARGIN;
   y = drawSectionHeader(page, '11', 'Capstone Project Guide', y, fonts);
 
-  const s11Intro = 'The capstone project allows you to apply the concepts, frameworks, and tools from this programme to your own organisation. Your task is to develop an AI Leadership Blueprint — a strategic plan outlining how artificial intelligence can be implemented responsibly and effectively within your organisation.';
+  const s11Intro = 'The capstone project allows you to apply the concepts, frameworks, and tools from this programme to your own organisation. Your task is to develop an AI Leadership Blueprint(TM) — a strategic plan outlining how artificial intelligence can be implemented responsibly and effectively within your organisation.';
   for (const line of wrapText(s11Intro, CONTENT_WIDTH, fonts.regular, 10)) {
     page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
     y -= 15;
@@ -826,7 +826,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   });
   page.drawText('STAGE 1', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.teal });
   page.drawText('Blueprint Canvas', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
-  const stage1Desc = 'Use the AI Leadership Blueprint Canvas (Section 10) to map out the key elements of your strategy at a high level. This step helps you organise your thinking before developing the full blueprint.';
+  const stage1Desc = 'Use the AI Leadership Blueprint(TM) Canvas (Section 10) to map out the key elements of your strategy at a high level. This step helps you organise your thinking before developing the full blueprint.';
   let ty = y - 48;
   for (const line of wrapText(stage1Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
     page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
@@ -841,7 +841,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   });
   page.drawText('STAGE 2', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.gold });
   page.drawText('Blueprint Template', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
-  const stage2Desc = 'Use the AI Leadership Blueprint Template to develop a detailed strategic plan. This document becomes your final capstone submission.';
+  const stage2Desc = 'Use the AI Leadership Blueprint(TM) Template to develop a detailed strategic plan. This document becomes your final capstone submission.';
   ty = y - 48;
   for (const line of wrapText(stage2Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
     page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
@@ -876,7 +876,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   }
 
   y -= 5;
-  y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint by', y, fonts, 22, 's11_commit');
+  y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint(TM) by', y, fonts, 22, 's11_commit');
 
   // Rubric scoring scale
   if (y > 200) {
