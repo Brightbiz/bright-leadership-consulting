@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership Speech Exercise — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #0A0A0A; background: #fff; line-height: 1.7; font-size: 12pt; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 48px 56px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 40px; }
+  .logo-line { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
+  .exercise-badge { display: inline-block; background: #1F5C63; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 20px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 32px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .subtitle { font-size: 14px; color: #4B5563; font-weight: 500; margin-bottom: 36px; }
+  h2 { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; color: #164349; margin: 28px 0 14px; letter-spacing: 0.02em; }
+  h3 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #164349; margin: 24px 0 10px; }
+  p, li { font-size: 12pt; line-height: 1.7; color: #111111; max-width: 680px; }
+  .purpose-box { background: #1F5C63; color: #fff; padding: 20px 24px; margin: 20px 0 28px; }
+  .purpose-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
+  .purpose-box p { color: #fff; font-size: 12pt; font-weight: 500; }
+  .scenario-box { background: #F4F8F8; border-left: 4px solid #1F5C63; padding: 16px 20px; margin: 20px 0; }
+  .scenario-box p { font-size: 12pt; color: #111111; font-weight: 500; }
+  .step-label { display: inline-block; background: #164349; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; margin-bottom: 14px; margin-top: 8px; }
+  .prompt-question { font-size: 12pt; font-weight: 600; color: #164349; margin: 12px 0 4px; padding-left: 4px; }
+  .bullet-list { list-style: none; padding: 0; margin: 10px 0 16px; }
+  .bullet-list li { padding: 5px 0 5px 20px; font-size: 12pt; color: #111111; position: relative; }
+  .bullet-list li::before { content: '•'; position: absolute; left: 0; color: #1F5C63; font-weight: 700; }
+  .write-area { border: 1px solid #C8CED0; min-height: 80px; margin: 8px 0 24px; padding: 12px; }
+  .write-area-large { border: 1px solid #C8CED0; min-height: 180px; margin: 8px 0 24px; padding: 12px; }
+  .speech-outline { margin: 16px 0; }
+  .speech-section { border-left: 4px solid #D4A853; padding: 12px 20px; margin: 12px 0; background: #FFFBF0; }
+  .speech-section strong { font-size: 13px; font-weight: 700; color: #8B6914; display: block; margin-bottom: 4px; }
+  .speech-section p { font-size: 11pt; color: #111111; margin: 0; }
+  .ai-prompt-box { background: #F0F4F4; border: 2px dashed #1F5C63; padding: 16px 20px; margin: 20px 0; }
+  .ai-prompt-box h3 { color: #164349; margin-top: 0; margin-bottom: 8px; }
+  .ai-prompt-box code { display: block; background: #fff; border: 1px solid #C8CED0; padding: 12px; margin: 8px 0; font-family: 'Inter', sans-serif; font-size: 11pt; color: #164349; font-style: italic; line-height: 1.6; }
+  .gold-box { background: #FFFBF0; border: 2px solid #D4A853; padding: 20px 24px; margin: 24px 0; }
+  .gold-box h3 { color: #8B6914; margin-top: 0; }
+  .gold-box .write-line { border-bottom: 1px solid #E6D5A8; min-height: 36px; margin: 12px 0; }
+  .insight-box { background: #164349; color: #fff; padding: 20px 24px; margin: 24px 0; }
+  .insight-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
+  .insight-box p { color: #fff; font-size: 12pt; font-weight: 500; line-height: 1.7; }
+  .footer-line { position: absolute; bottom: 48px; left: 56px; right: 56px; border-top: 1px solid #E6E6E6; padding-top: 12px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <div class="exercise-badge">Module 7 — Executive Communication</div>
+  <h1>Leadership Speech Exercise</h1>
+  <p class="subtitle">Communicating AI Transformation — Strategic Leadership in the Age of AI</p>
+
+  <div class="purpose-box">
+    <strong>Purpose</strong>
+    <p>Leaders must communicate clearly and confidently when introducing major technological change. Artificial intelligence can raise excitement but also concern among employees. This exercise helps you practice delivering a leadership message about AI transformation in your organisation.</p>
+  </div>
+
+  <div class="scenario-box">
+    <h3 style="margin-top:0;">Scenario</h3>
+    <p>Your organisation has decided to begin adopting artificial intelligence technologies to improve efficiency, innovation, and decision-making. As a senior leader, you have been asked to address employees and explain the organisation's AI strategy.</p>
+    <p style="margin-top:10px; font-weight:600;">Your message should:</p>
+    <ul class="bullet-list" style="margin-bottom:0;">
+      <li>Explain why AI adoption is necessary</li>
+      <li>Highlight opportunities AI creates</li>
+      <li>Address employee concerns</li>
+      <li>Reinforce the organisation's values</li>
+    </ul>
+  </div>
+
+  <h2>Exercise Task</h2>
+  <p>Prepare a short leadership speech (2–3 minutes) explaining the organisation's AI transformation. Your speech should answer the questions in each part below.</p>
+
+  <div class="step-label">Part 1 — Why AI Matters</div>
+  <p>Explain why artificial intelligence is important for the organisation.</p>
+  <p class="prompt-question">Questions to consider:</p>
+  <ul class="bullet-list">
+    <li>Why is AI becoming important in your industry?</li>
+    <li>What opportunities does AI create for the organisation?</li>
+    <li>How will AI help the organisation remain competitive?</li>
+  </ul>
+  <p class="prompt-question">Write key points:</p>
+  <div class="write-area"></div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Speech Exercise — Page 1</span>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="header-bar"></div>
+
+  <div class="step-label">Part 2 — Impact on Employees</div>
+  <p>Employees often worry about automation and job security. Address the following questions:</p>
+  <ul class="bullet-list">
+    <li>How will AI change the way people work?</li>
+    <li>What new opportunities will AI create for employees?</li>
+    <li>How will the organisation support employees during the transition?</li>
+  </ul>
+  <p class="prompt-question">Write key points:</p>
+  <div class="write-area"></div>
+
+  <div class="step-label">Part 3 — Organisational Vision</div>
+  <p>Explain how AI fits into the organisation's long-term strategy.</p>
+  <ul class="bullet-list">
+    <li>What future does the organisation want to create?</li>
+    <li>How will AI support innovation and growth?</li>
+    <li>What values will guide AI adoption?</li>
+  </ul>
+  <p class="prompt-question">Write key points:</p>
+  <div class="write-area"></div>
+
+  <div class="step-label">Part 4 — Speech Draft</div>
+  <p>Using your notes above, draft a short leadership message following this structure:</p>
+
+  <div class="speech-outline">
+    <div class="speech-section">
+      <strong>Opening</strong>
+      <p>Explain why AI matters to your organisation.</p>
+    </div>
+    <div class="speech-section">
+      <strong>Middle</strong>
+      <p>Describe opportunities and address employee concerns.</p>
+    </div>
+    <div class="speech-section">
+      <strong>Conclusion</strong>
+      <p>Reinforce vision and leadership commitment.</p>
+    </div>
+  </div>
+
+  <p class="prompt-question">Write your speech below:</p>
+  <div class="write-area-large"></div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Speech Exercise — Page 2</span>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+  <div class="header-bar"></div>
+
+  <div class="ai-prompt-box">
+    <h3>Optional AI Exercise</h3>
+    <p>Use an AI tool such as ChatGPT to generate a draft message, then refine it to reflect your leadership voice and organisational culture.</p>
+    <code>Write a message from a CEO explaining the organisation's AI strategy and reassuring employees about technological change.</code>
+    <p style="font-size:11pt; color:#164349; font-weight:500; margin-top:8px;">Compare the AI-generated version with your own draft. What did the AI miss about your organisation's culture?</p>
+  </div>
+
+  <p class="prompt-question">Your refined speech notes:</p>
+  <div class="write-area"></div>
+
+  <div class="gold-box">
+    <h3>Reflection Questions</h3>
+    <p style="font-weight:600; margin-bottom:4px;">What concerns might employees still have after hearing this message?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">What additional communication might be required during AI adoption?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+    <p style="font-weight:600; margin-bottom:4px; margin-top:16px;">How can leaders build trust during technological transformation?</p>
+    <div class="write-line"></div>
+    <div class="write-line"></div>
+  </div>
+
+  <div class="insight-box">
+    <strong>Learning Insight</strong>
+    <p>Technology transformations succeed not only because of strategy and tools — but because leaders communicate vision, direction, and trust. Effective leadership communication helps organisations embrace change rather than fear it.</p>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>Leadership Speech Exercise — Page 3</span>
+  </div>
+</div>
+
+</body>
+</html>
