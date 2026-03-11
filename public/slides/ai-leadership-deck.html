@@ -2535,7 +2535,28 @@
     btn.textContent = document.body.classList.contains('view-all') ? 'Single View' : 'Show All';
   }
 
-  showSlide(0);
+  // Module filtering via ?module= query param
+  const params = new URLSearchParams(window.location.search);
+  const moduleFilter = params.get('module');
+  if (moduleFilter) {
+    document.body.classList.add('module-filtered');
+    document.body.classList.add('view-all');
+    const btnToggle = document.getElementById('btnToggle');
+    if (btnToggle) btnToggle.textContent = 'Single View';
+    slides.forEach(s => {
+      if (s.dataset.section !== moduleFilter) {
+        s.classList.add('module-hidden');
+      }
+    });
+    // Auto-print if ?print=1
+    if (params.get('print') === '1') {
+      setTimeout(() => window.print(), 600);
+    }
+  }
+
+  // Find first visible slide
+  const firstVisible = Array.from(slides).findIndex(s => !s.classList.contains('module-hidden'));
+  showSlide(firstVisible >= 0 ? firstVisible : 0);
   window.addEventListener('resize', fitSlide);
 </script>
 
