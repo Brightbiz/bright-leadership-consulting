@@ -803,13 +803,89 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
     y, fonts, 's10_blueprint'
   );
 
-  // ════════════ SECTION 11: AI Transformation Roadmap ════════════
+// ════════════ SECTION 11: Capstone Project Guide ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
-  y = drawSectionHeader(page, '11', 'AI Transformation Roadmap', y, fonts);
+  y = drawSectionHeader(page, '11', 'Capstone Project Guide', y, fonts);
 
-  const s11Intro = 'Define the phases of your organisation\'s AI transformation. Each phase builds on the previous, creating a structured pathway from awareness to enterprise-wide integration.';
+  const s11Intro = 'The capstone project allows you to apply the concepts, frameworks, and tools from this programme to your own organisation. Your task is to develop an AI Leadership Blueprint — a strategic plan outlining how artificial intelligence can be implemented responsibly and effectively within your organisation.';
   for (const line of wrapText(s11Intro, CONTENT_WIDTH, fonts.regular, 10)) {
+    page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
+    y -= 15;
+  }
+  y -= 5;
+
+  // Two-stage process boxes
+  page.drawText('CAPSTONE PROCESS', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+  y -= 18;
+
+  // Stage 1 box
+  page.drawRectangle({
+    x: MARGIN, y: y - 55, width: CONTENT_WIDTH, height: 58,
+    color: COLORS.lightBg, borderColor: COLORS.teal, borderWidth: 2,
+  });
+  page.drawText('STAGE 1', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.teal });
+  page.drawText('Blueprint Canvas', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
+  const stage1Desc = 'Use the AI Leadership Blueprint Canvas (Section 10) to map out the key elements of your strategy at a high level. This step helps you organise your thinking before developing the full blueprint.';
+  let ty = y - 48;
+  for (const line of wrapText(stage1Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
+    page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
+    ty -= 11;
+  }
+  y -= 70;
+
+  // Stage 2 box
+  page.drawRectangle({
+    x: MARGIN, y: y - 55, width: CONTENT_WIDTH, height: 58,
+    color: COLORS.lightBg, borderColor: COLORS.gold, borderWidth: 2,
+  });
+  page.drawText('STAGE 2', { x: MARGIN + 12, y: y - 18, size: 8, font: fonts.bold, color: COLORS.gold });
+  page.drawText('Blueprint Template', { x: MARGIN + 12, y: y - 32, size: 12, font: fonts.bold, color: COLORS.text });
+  const stage2Desc = 'Use the AI Leadership Blueprint Template to develop a detailed strategic plan. This document becomes your final capstone submission.';
+  ty = y - 48;
+  for (const line of wrapText(stage2Desc, CONTENT_WIDTH - 20, fonts.regular, 8)) {
+    page.drawText(line, { x: MARGIN + 12, y: ty, size: 8, font: fonts.regular, color: COLORS.muted });
+    ty -= 11;
+  }
+  y -= 75;
+
+  y = drawInstructionBox(page, 'Your blueprint should integrate: AI opportunities, leadership capabilities, governance considerations, and a transformation roadmap. The final document should be approximately 3-5 pages.', y, fonts);
+  y -= 5;
+
+  page.drawText('STEP-BY-STEP GUIDE', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+  y -= 18;
+
+  const steps = [
+    'Organisational Context — Describe your organisation, industry, and strategic priorities',
+    'AI Opportunities — Identify areas where AI could create value',
+    'Leadership Capabilities — Assess which capabilities require development',
+    'Governance Framework — Define oversight and ethical guidelines',
+    'Transformation Roadmap — Outline phases of AI implementation',
+    'Leadership Action Plan — Specify first steps to begin implementation',
+  ];
+
+  for (let i = 0; i < steps.length; i++) {
+    const stepParts = steps[i].split(' — ');
+    page.drawRectangle({
+      x: MARGIN, y: y - 22, width: CONTENT_WIDTH, height: 25,
+      color: COLORS.lightBg, borderColor: COLORS.border, borderWidth: 0.5,
+    });
+    page.drawText(`${i + 1}`, { x: MARGIN + 10, y: y - 10, size: 12, font: fonts.bold, color: COLORS.teal });
+    page.drawText(stepParts[0], { x: MARGIN + 28, y: y - 10, size: 9, font: fonts.bold, color: COLORS.text });
+    page.drawText(stepParts[1], { x: MARGIN + 28, y: y - 20, size: 8, font: fonts.regular, color: COLORS.muted });
+    y -= 28;
+  }
+
+  y -= 5;
+  y = drawFieldGroup(page, form, 'MY COMMITMENT: I will complete my AI Leadership Blueprint by', y, fonts, 22, 's11_commit');
+
+  // ════════════ SECTION 12: AI Transformation Roadmap ════════════
+  page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  y = PAGE_HEIGHT - MARGIN;
+  y = drawSectionHeader(page, '12', 'AI Transformation Roadmap', y, fonts);
+
+  const s12Intro = 'Define the phases of your organisation\'s AI transformation. Each phase builds on the previous, creating a structured pathway from awareness to enterprise-wide integration.';
+  for (const line of wrapText(s12Intro, CONTENT_WIDTH, fonts.regular, 10)) {
     page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
     y -= 15;
   }
@@ -836,17 +912,17 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
     page.drawText(`PHASE ${phase.num}`, { x: MARGIN + 12, y: y - 14, size: 8, font: fonts.bold, color: COLORS.teal });
     page.drawText(phase.title, { x: MARGIN + 12, y: y - 28, size: 12, font: fonts.bold, color: COLORS.text });
     page.drawText(phase.desc, { x: MARGIN + 12, y: y - 42, size: 8, font: fonts.regular, color: COLORS.muted });
-    addTextField(page, form, fieldName('s11_phase'), MARGIN + 10, y - 48, CONTENT_WIDTH - 20, 28, true);
+    addTextField(page, form, fieldName('s12_phase'), MARGIN + 10, y - 48, CONTENT_WIDTH - 20, 28, true);
     y -= 90;
   }
 
-  // ════════════ SECTION 12: Leadership Action Plan ════════════
+  // ════════════ SECTION 13: Leadership Action Plan ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
-  y = drawSectionHeader(page, '12', 'Leadership Action Plan', y, fonts);
+  y = drawSectionHeader(page, '13', 'Leadership Action Plan', y, fonts);
 
-  const s12Intro = 'Define concrete leadership actions you will take following this programme. Be specific about ownership, timelines, and expected outcomes.';
-  for (const line of wrapText(s12Intro, CONTENT_WIDTH, fonts.regular, 10)) {
+  const s13Intro = 'Define concrete leadership actions you will take following this programme. Be specific about ownership, timelines, and expected outcomes.';
+  for (const line of wrapText(s13Intro, CONTENT_WIDTH, fonts.regular, 10)) {
     page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
     y -= 15;
   }
@@ -861,15 +937,15 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
       { cols: 4 },
       { cols: 4 },
     ],
-    y, fonts, 's12_action'
+    y, fonts, 's13_action'
   );
 
-  // ════════════ SECTION 13: Final Reflection ════════════
+  // ════════════ SECTION 14: Final Reflection ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
-  y = drawSectionHeader(page, '13', 'Final Reflection', y, fonts);
+  y = drawSectionHeader(page, '14', 'Final Reflection', y, fonts);
 
-  const s13Intro = 'After completing the programme, take time to consolidate your thinking. These four questions are designed to crystallise your most important commitments.';
+  const s14Intro = 'After completing the programme, take time to consolidate your thinking. These four questions are designed to crystallise your most important commitments.';
   for (const line of wrapText(s13Intro, CONTENT_WIDTH, fonts.regular, 10)) {
     page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
     y -= 15;
