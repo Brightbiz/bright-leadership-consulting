@@ -11,8 +11,6 @@ const footerLinks = [
 const programmeLinks = [
   { label: "Executive Leadership Mastery", href: "/executive-leadership-mastery", isRoute: true },
   { label: "All Courses", href: "/courses", isRoute: true },
-  { label: "AI Leadership Slides", href: "/slides", isRoute: true },
-  { label: "Module Slide Downloads", href: "/slides#modules", isRoute: true },
 ];
 
 const Footer = () => {
