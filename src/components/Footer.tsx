@@ -36,6 +36,20 @@ const exerciseLinks = [
 ];
 
 const Footer = () => {
+  const [generating, setGenerating] = useState(false);
+
+  const handleWorkbookDownload = async () => {
+    setGenerating(true);
+    try {
+      const pdfBytes = await generateStrategicLeadershipPDF();
+      downloadStrategicLeadershipPDF(pdfBytes);
+    } catch (e) {
+      console.error('Workbook generation failed:', e);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   return (
     <footer className="border-t border-border">
       <div className="container-brief py-16">
