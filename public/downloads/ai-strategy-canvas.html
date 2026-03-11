@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Strategy Canvas — Bright Leadership Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 landscape; margin: 0; }
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .page { page-break-after: always; break-after: page; }
+    .page:last-child { page-break-after: avoid; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Inter', sans-serif; color: #1F1F1F; background: #fff; line-height: 1.65; font-size: 10.5pt; }
+  .page { width: 297mm; min-height: 210mm; margin: 0 auto; padding: 36px 44px; position: relative; background: #fff; }
+  .header-bar { height: 4px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 28px; }
+  .logo-line { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #1F5C63; margin-bottom: 20px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 24px; font-weight: 700; color: #1F1F1F; letter-spacing: 0.02em; margin-bottom: 6px; }
+  .subtitle { font-size: 12px; color: #6B7280; margin-bottom: 24px; }
+  .canvas-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto auto auto; gap: 0; border: 2px solid #1F5C63; }
+  .canvas-cell { border: 1px solid #E5E7EB; padding: 14px 16px; min-height: 120px; }
+  .canvas-cell.span-2 { grid-column: span 2; }
+  .canvas-cell.span-4 { grid-column: span 4; }
+  .cell-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
+  .cell-hint { font-size: 9px; color: #9CA3AF; line-height: 1.5; }
+  .header-cell { background: #1F5C63; }
+  .header-cell .cell-label { color: #fff; }
+  .header-cell .cell-hint { color: rgba(255,255,255,0.6); }
+  .footer-line { position: absolute; bottom: 32px; left: 44px; right: 44px; border-top: 1px solid #E6E6E6; padding-top: 10px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: 0.9; }
+  .instructions { background: #F9FAFB; border-left: 3px solid #1F5C63; padding: 12px 16px; margin-bottom: 20px; font-size: 10pt; color: #4B5563; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+
+<!-- PAGE 1: THE CANVAS -->
+<div class="page">
+  <div class="header-bar"></div>
+  <div class="logo-line">Bright Leadership Consulting</div>
+  <h1>AI Strategy Canvas</h1>
+  <p class="subtitle">One-page strategic view of your organisation's AI transformation</p>
+
+  <div class="canvas-grid">
+    <!-- Row 1: Vision & Problem -->
+    <div class="canvas-cell span-2 header-cell">
+      <div class="cell-label">Strategic Vision</div>
+      <div class="cell-hint">What is the overarching vision for AI in your organisation? How does AI connect to your 3–5 year strategic plan?</div>
+    </div>
+    <div class="canvas-cell span-2 header-cell">
+      <div class="cell-label">Problem Statement</div>
+      <div class="cell-hint">What critical business problems will AI solve? What is the cost of inaction?</div>
+    </div>
+
+    <!-- Row 2: Four pillars -->
+    <div class="canvas-cell">
+      <div class="cell-label">Data & Infrastructure</div>
+      <div class="cell-hint">Data readiness, quality, governance, and technology stack requirements</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">People & Capabilities</div>
+      <div class="cell-hint">Talent gaps, upskilling needs, change management, and cultural readiness</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">Use Cases & Prioritisation</div>
+      <div class="cell-hint">Top 3–5 AI use cases ranked by value, feasibility, and time-to-impact</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">Governance & Ethics</div>
+      <div class="cell-hint">Responsible AI principles, risk controls, regulatory considerations</div>
+    </div>
+
+    <!-- Row 3: Four pillars continued -->
+    <div class="canvas-cell">
+      <div class="cell-label">Investment & Resources</div>
+      <div class="cell-hint">Budget allocation, partnership strategy, build vs. buy decisions</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">Quick Wins (0–6 months)</div>
+      <div class="cell-hint">Immediate, low-risk initiatives to build momentum and demonstrate value</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">Strategic Bets (6–24 months)</div>
+      <div class="cell-hint">Transformational initiatives requiring sustained investment and leadership focus</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="cell-label">Success Metrics & KPIs</div>
+      <div class="cell-hint">How will you measure progress? Leading and lagging indicators</div>
+    </div>
+
+    <!-- Row 4: Full width -->
+    <div class="canvas-cell span-4">
+      <div class="cell-label">Executive Sponsor & Accountability</div>
+      <div class="cell-hint">Who owns the AI strategy? Define sponsorship, governance cadence, and reporting structure</div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    <span>Bright Leadership Consulting — Confidential</span>
+    <span>AI Strategy Canvas — Page 1 of 1</span>
+  </div>
+</div>
+
+</body>
+</html>
