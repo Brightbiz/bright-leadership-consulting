@@ -781,7 +781,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   // ════════════ SECTION 10: AI Leadership Blueprint Canvas ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
-  y = drawSectionHeader(page, '10', 'AI Leadership Blueprint Canvas', y, fonts);
+  y = drawSectionHeader(page, '10', 'AI Leadership Blueprint(TM) Canvas', y, fonts);
 
   const s10Intro = 'This is the centrepiece of your workbook. Synthesise everything you have learned into a single strategic document that can be presented to your board or executive team.';
   for (const line of wrapText(s10Intro, CONTENT_WIDTH, fonts.regular, 10)) {
