@@ -57,18 +57,6 @@ const Footer = () => {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/ai-workbook"
-              className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
-            >
-              AI Leadership Workbook
-            </Link>
-            <Link
-              to="/generate-workbook"
-              className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
-            >
-              AI Leadership Workbook (PDF)
-            </Link>
           </nav>
         </div>
 
