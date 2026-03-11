@@ -5,6 +5,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import CourseJourneyMap from "@/components/CourseJourneyMap";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
