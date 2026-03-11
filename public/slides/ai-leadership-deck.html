@@ -466,11 +466,29 @@
     }
   }
 
+  /* ── Module filtered ── */
+  .slide.module-hidden { display: none !important; }
+
+  /* ── Module header banner ── */
+  .module-header-banner {
+    display: none;
+    width: 1920px;
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+    color: #fff;
+    padding: 60px 72px;
+    margin: 0 auto;
+    font-family: 'Playfair Display', serif;
+  }
+  .module-header-banner h1 { font-size: 48px; margin-bottom: 8px; }
+  .module-header-banner p { font-size: 20px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; }
+  body.module-filtered .module-header-banner { display: block; }
+
   /* ── Print ── */
   @media print {
     body { background: #fff; }
     .controls, .slide-nav { display: none !important; }
-    .deck-wrapper .slide {
+    .module-header-banner { display: none !important; }
+    .deck-wrapper .slide:not(.module-hidden) {
       display: block !important;
       transform: none !important;
       margin: 0 !important;
@@ -478,7 +496,7 @@
       height: 100vh;
       page-break-after: always;
     }
-    .deck-wrapper .slide:last-child {
+    .deck-wrapper .slide:not(.module-hidden):last-of-type {
       page-break-after: auto;
     }
     @page {
@@ -2517,7 +2535,28 @@
     btn.textContent = document.body.classList.contains('view-all') ? 'Single View' : 'Show All';
   }
 
-  showSlide(0);
+  // Module filtering via ?module= query param
+  const params = new URLSearchParams(window.location.search);
+  const moduleFilter = params.get('module');
+  if (moduleFilter) {
+    document.body.classList.add('module-filtered');
+    document.body.classList.add('view-all');
+    const btnToggle = document.getElementById('btnToggle');
+    if (btnToggle) btnToggle.textContent = 'Single View';
+    slides.forEach(s => {
+      if (s.dataset.section !== moduleFilter) {
+        s.classList.add('module-hidden');
+      }
+    });
+    // Auto-print if ?print=1
+    if (params.get('print') === '1') {
+      setTimeout(() => window.print(), 600);
+    }
+  }
+
+  // Find first visible slide
+  const firstVisible = Array.from(slides).findIndex(s => !s.classList.contains('module-hidden'));
+  showSlide(firstVisible >= 0 ? firstVisible : 0);
   window.addEventListener('resize', fitSlide);
 </script>
 
