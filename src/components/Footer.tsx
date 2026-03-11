@@ -13,6 +13,16 @@ const programmeLinks = [
   { label: "All Courses", href: "/courses", isRoute: true },
 ];
 
+const downloadLinks = [
+  { label: "AI Opportunity Worksheet", href: "/downloads/ai-opportunity-worksheet.html" },
+  { label: "AI Strategy Canvas", href: "/downloads/ai-strategy-canvas.html" },
+  { label: "Executive AI Prompt Library", href: "/downloads/executive-ai-prompt-library.html" },
+  { label: "AI Taskforce Template", href: "/downloads/ai-taskforce-template.html" },
+  { label: "Responsible AI Governance", href: "/downloads/responsible-ai-governance-framework.html" },
+  { label: "AI Transformation Roadmap", href: "/downloads/ai-transformation-leadership-roadmap.html" },
+  { label: "AI Leadership Blueprint", href: "/downloads/ai-leadership-blueprint-template.html" },
+];
+
 const Footer = () => {
   return (
     <footer className="border-t border-border">
@@ -56,6 +66,21 @@ const Footer = () => {
               >
                 {link.label}
               </Link>
+            ))}
+          </nav>
+
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Course Downloads</span>
+            {downloadLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
             ))}
           </nav>
         </div>
