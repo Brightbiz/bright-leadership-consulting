@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exercise 4: AI Leadership Blueprint Development — Bright Leadership Consulting</title>
+<title>AI Leadership Blueprint Canvas — Bright Leadership Consulting</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,36 +15,29 @@
     .no-print { display: none !important; }
   }
   body { font-family: 'Inter', sans-serif; color: #0A0A0A; background: #fff; line-height: 1.7; font-size: 12pt; }
-  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 48px 56px; position: relative; background: #fff; }
-  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 40px; }
+  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 44px 48px; position: relative; background: #fff; }
+  .header-bar { height: 5px; background: linear-gradient(90deg, #1F5C63 0%, #1F5C63 70%, #D4A853 100%); margin-bottom: 32px; }
   .logo-line { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #1F5C63; margin-bottom: 8px; }
-  .exercise-badge { display: inline-block; background: #D4A853; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 20px; }
-  h1 { font-family: 'Libre Baskerville', serif; font-size: 30px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 10px; }
-  .subtitle { font-size: 14px; color: #4B5563; font-weight: 500; margin-bottom: 36px; }
-  h2 { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; color: #164349; margin: 32px 0 16px; letter-spacing: 0.02em; }
-  h3 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #164349; margin: 24px 0 10px; }
-  p, li { font-size: 12pt; line-height: 1.7; color: #111111; max-width: 680px; }
-  .purpose-box { background: #1F5C63; color: #fff; padding: 20px 24px; margin: 20px 0 28px; }
-  .purpose-box strong { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 8px; color: #D4A853; }
-  .purpose-box p { color: #fff; font-size: 12pt; font-weight: 500; }
-  .capstone-banner { background: linear-gradient(135deg, #164349, #1F5C63); color: #fff; padding: 16px 24px; margin: 0 0 28px; text-align: center; }
-  .capstone-banner span { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #D4A853; }
-  .step-label { display: inline-block; background: #164349; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; margin-bottom: 14px; }
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-  th { background: #1F5C63; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 14px 16px; }
-  td { border: 1px solid #C8CED0; padding: 14px 16px; font-size: 12pt; color: #111111; vertical-align: top; }
-  td.write-area { min-height: 52px; height: 52px; }
-  .field-group { margin: 16px 0; }
-  .field-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #164349; margin-bottom: 6px; }
-  .write-block { border: 1px solid #C8CED0; min-height: 60px; margin: 8px 0 20px; padding: 14px; }
-  .write-block.large { min-height: 90px; }
-  .example-list { list-style: none; padding: 0; margin: 12px 0; }
-  .example-list li { padding: 6px 0 6px 20px; font-size: 12pt; color: #111111; position: relative; font-weight: 500; }
-  .example-list li::before { content: '—'; position: absolute; left: 0; color: #1F5C63; font-weight: 700; }
-  .reflection-box { background: #FFFBF0; border: 2px solid #D4A853; padding: 20px 24px; margin: 24px 0; }
-  .reflection-box h3 { color: #8B6914; margin-top: 0; }
-  .reflection-box .write-line { border-bottom: 1px solid #E6D5A8; min-height: 36px; margin: 12px 0; }
-  .footer-line { position: absolute; bottom: 48px; left: 56px; right: 56px; border-top: 1px solid #E6E6E6; padding-top: 12px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
+  .exercise-badge { display: inline-block; background: #D4A853; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 16px; }
+  h1 { font-family: 'Libre Baskerville', serif; font-size: 28px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.02em; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #4B5563; font-weight: 500; margin-bottom: 20px; }
+  .canvas-intro { background: #1F5C63; color: #fff; padding: 16px 20px; margin: 0 0 24px; }
+  .canvas-intro strong { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 6px; color: #D4A853; }
+  .canvas-intro p { color: #fff; font-size: 11pt; font-weight: 500; line-height: 1.6; }
+  .canvas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid #1F5C63; }
+  .canvas-cell { border: 1px solid #C8CED0; padding: 14px 16px; min-height: 120px; }
+  .canvas-cell.full-width { grid-column: 1 / -1; }
+  .canvas-cell-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1F5C63; margin-bottom: 4px; }
+  .canvas-cell-prompt { font-size: 9px; color: #6B7280; font-style: italic; margin-bottom: 10px; line-height: 1.5; }
+  .canvas-cell .write-area { min-height: 70px; }
+  .sequence-bar { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 20px 0 16px; flex-wrap: wrap; }
+  .sequence-step { background: #F4F8F8; border: 1px solid #C8CED0; padding: 6px 12px; font-size: 9px; font-weight: 600; color: #164349; text-align: center; }
+  .sequence-step.active { background: #1F5C63; color: #fff; border-color: #1F5C63; }
+  .sequence-arrow { color: #C8CED0; font-size: 14px; }
+  .next-step { background: #FFFBF0; border: 2px solid #D4A853; padding: 14px 20px; margin: 16px 0 0; }
+  .next-step strong { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B6914; display: block; margin-bottom: 4px; }
+  .next-step p { font-size: 11pt; color: #111111; }
+  .footer-line { position: absolute; bottom: 40px; left: 48px; right: 48px; border-top: 1px solid #E6E6E6; padding-top: 10px; font-size: 8.5px; color: #9CA3AF; display: flex; justify-content: space-between; }
   .print-btn { position: fixed; top: 20px; right: 20px; background: #1F5C63; color: #fff; border: none; padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; z-index: 100; }
   .print-btn:hover { opacity: 0.9; }
 </style>
@@ -53,112 +46,67 @@
 
 <button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
 
-<!-- PAGE 1 -->
+<!-- PAGE 1: THE CANVAS -->
 <div class="page">
   <div class="header-bar"></div>
   <div class="logo-line">Bright Leadership Consulting</div>
-  <div class="exercise-badge">Capstone Exercise</div>
-  <h1>AI Leadership Blueprint Development</h1>
+  <div class="exercise-badge">Capstone Canvas</div>
+  <h1>AI Leadership Blueprint Canvas</h1>
   <p class="subtitle">Strategic Leadership in the Age of AI — Executive Programme</p>
 
-  <div class="capstone-banner">
-    <span>This exercise forms the Capstone Project of the course</span>
-  </div>
-
-  <div class="purpose-box">
+  <div class="canvas-intro">
     <strong>Purpose</strong>
-    <p>Develop a strategic blueprint for AI adoption in your organisation. This comprehensive exercise synthesises all course learning into a single actionable leadership document.</p>
+    <p>Map the key elements of your AI transformation strategy on a single page. Use this canvas to organise your thinking before completing the detailed AI Leadership Blueprint Template.</p>
   </div>
 
-  <div class="step-label">Step 1 — Organisational Context</div>
-  <p>Describe your organisation's current position.</p>
-
-  <div class="field-group">
-    <div class="field-label">Industry</div>
-    <div class="write-block"></div>
-  </div>
-  <div class="field-group">
-    <div class="field-label">Strategic Priorities</div>
-    <div class="write-block"></div>
-  </div>
-  <div class="field-group">
-    <div class="field-label">Key Challenges</div>
-    <div class="write-block"></div>
+  <div class="sequence-bar">
+    <div class="sequence-step">AI Opportunity Mapping</div>
+    <div class="sequence-arrow">&#8594;</div>
+    <div class="sequence-step">AI Strategy Canvas</div>
+    <div class="sequence-arrow">&#8594;</div>
+    <div class="sequence-step">Growth Opportunity Mapping</div>
+    <div class="sequence-arrow">&#8594;</div>
+    <div class="sequence-step active">Blueprint Canvas</div>
+    <div class="sequence-arrow">&#8594;</div>
+    <div class="sequence-step">Blueprint Template</div>
   </div>
 
-  <div class="step-label">Step 2 — AI Opportunities</div>
-  <p>List the most promising AI opportunities for your organisation.</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th style="width:50%">Opportunity</th>
-        <th style="width:50%">Potential Impact</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td class="write-area"></td><td class="write-area"></td></tr>
-      <tr><td class="write-area"></td><td class="write-area"></td></tr>
-      <tr><td class="write-area"></td><td class="write-area"></td></tr>
-      <tr><td class="write-area"></td><td class="write-area"></td></tr>
-    </tbody>
-  </table>
-
-  <div class="footer-line">
-    <span>Bright Leadership Consulting — Confidential</span>
-    <span>Capstone: AI Leadership Blueprint — Page 1 of 2</span>
-  </div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page">
-  <div class="header-bar"></div>
-
-  <div class="step-label">Step 3 — Leadership Capabilities</div>
-  <p>What leadership capabilities will be required to drive AI transformation?</p>
-
-  <ul class="example-list">
-    <li>Strategic thinking</li>
-    <li>Technology awareness</li>
-    <li>Cross-functional collaboration</li>
-    <li>Change leadership</li>
-  </ul>
-
-  <div class="field-group">
-    <div class="field-label">Capabilities your organisation must develop</div>
-    <div class="write-block large"></div>
+  <div class="canvas-grid">
+    <div class="canvas-cell">
+      <div class="canvas-cell-label">Organisational Context</div>
+      <div class="canvas-cell-prompt">Industry, strategic priorities, key challenges facing the organisation today.</div>
+      <div class="write-area"></div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-cell-label">AI Opportunities</div>
+      <div class="canvas-cell-prompt">The most promising AI use cases and growth opportunities you identified.</div>
+      <div class="write-area"></div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-cell-label">Leadership Capabilities</div>
+      <div class="canvas-cell-prompt">What leadership skills and behaviours are needed to drive AI transformation?</div>
+      <div class="write-area"></div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-cell-label">Governance Framework</div>
+      <div class="canvas-cell-prompt">How will you ensure responsible, ethical, and accountable AI adoption?</div>
+      <div class="write-area"></div>
+    </div>
+    <div class="canvas-cell full-width">
+      <div class="canvas-cell-label">Transformation Roadmap</div>
+      <div class="canvas-cell-prompt">Define the key phases: Discover &#8594; Design &#8594; Deploy &#8594; Develop &#8594; Scale. What happens at each stage?</div>
+      <div class="write-area" style="min-height: 90px;"></div>
+    </div>
   </div>
 
-  <div class="step-label">Step 4 — Transformation Roadmap</div>
-  <p>Define the phases of implementation for your AI strategy.</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th style="width:20%">Phase</th>
-        <th style="width:80%">Key Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td style="font-weight:700; color:#164349;">Discover</td><td class="write-area"></td></tr>
-      <tr><td style="font-weight:700; color:#164349;">Design</td><td class="write-area"></td></tr>
-      <tr><td style="font-weight:700; color:#164349;">Deploy</td><td class="write-area"></td></tr>
-      <tr><td style="font-weight:700; color:#164349;">Develop</td><td class="write-area"></td></tr>
-      <tr><td style="font-weight:700; color:#164349;">Drive</td><td class="write-area"></td></tr>
-    </tbody>
-  </table>
-
-  <div class="reflection-box">
-    <h3>Final Reflection</h3>
-    <p style="font-weight:600; margin-bottom:4px;">What is the first action you will take after completing this programme?</p>
-    <div class="write-line"></div>
-    <div class="write-line"></div>
-    <div class="write-line"></div>
+  <div class="next-step">
+    <strong>Next Step</strong>
+    <p>Use the AI Leadership Blueprint Template to expand this canvas into a detailed 3-page strategic plan with maturity assessment, leadership commitments, and a 90-day action plan.</p>
   </div>
 
   <div class="footer-line">
     <span>Bright Leadership Consulting — Confidential</span>
-    <span>Capstone: AI Leadership Blueprint — Page 2 of 2</span>
+    <span>AI Leadership Blueprint Canvas — Capstone Project</span>
   </div>
 </div>
 

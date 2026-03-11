@@ -22,7 +22,7 @@ const downloadLinks = [
   { label: "AI Taskforce Template", href: "/downloads/ai-taskforce-template.html" },
   { label: "Responsible AI Governance", href: "/downloads/responsible-ai-governance-framework.html" },
   { label: "AI Transformation Roadmap", href: "/downloads/ai-transformation-leadership-roadmap.html" },
-  { label: "AI Leadership Blueprint", href: "/downloads/ai-leadership-blueprint-template.html" },
+  { label: "AI Leadership Blueprint Template", href: "/downloads/ai-leadership-blueprint-template.html" },
   { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
 ];
 
@@ -32,7 +32,7 @@ const exerciseLinks = [
   { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
   { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
   { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
-  { label: "Exercise 4: AI Leadership Blueprint", href: "/downloads/exercise-ai-leadership-blueprint.html" },
+  { label: "AI Leadership Blueprint Canvas", href: "/downloads/exercise-ai-leadership-blueprint.html" },
   { label: "Growth Opportunity Mapping", href: "/downloads/exercise-growth-opportunity-mapping.html" },
 ];
 
