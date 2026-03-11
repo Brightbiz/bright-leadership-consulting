@@ -372,7 +372,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   const steps = [
     { title: 'Read & Reflect', desc: "Engage with each section's context before completing the exercises." },
     { title: 'Complete Exercises', desc: 'Use the fillable fields to capture your thinking in real time.' },
-    { title: 'Build Your Blueprint', desc: 'Each section feeds into your final AI Leadership Blueprint Canvas.' },
+    { title: 'Build Your Blueprint', desc: 'Each section feeds into your final AI Leadership Blueprint(TM) Canvas.' },
     { title: 'Take Action', desc: 'Translate insights into a concrete Leadership Action Plan.' },
   ];
 
