@@ -632,6 +632,47 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   }
   y -= 200;
 
+  // ════════════ SECTION 7B: Leadership Speech Exercise ════════════
+  page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  y = PAGE_HEIGHT - MARGIN;
+
+  page.drawRectangle({ x: MARGIN, y: y - 2, width: CONTENT_WIDTH, height: 4, color: COLORS.teal });
+  y -= 16;
+  page.drawText('LEADERSHIP SPEECH EXERCISE', { x: MARGIN, y, size: 13, font: fonts.bold, color: COLORS.teal });
+  y -= 16;
+  page.drawText('Communicating AI Transformation', { x: MARGIN, y, size: 10, font: fonts.italic, color: COLORS.muted });
+  y -= 25;
+
+  const speechIntro = 'Your organisation has decided to adopt AI technologies. As a senior leader, you must address employees and explain the AI strategy. Prepare a short leadership speech (2\u20133 minutes) covering the questions below.';
+  for (const line of wrapText(speechIntro, CONTENT_WIDTH, fonts.regular, 10)) {
+    page.drawText(line, { x: MARGIN, y, size: 10, font: fonts.regular, color: COLORS.text });
+    y -= 15;
+  }
+  y -= 5;
+
+  const speechParts = [
+    { label: 'PART 1 \u2014 WHY AI MATTERS', prompt: 'Why is AI important for your industry and organisation? How will it help remain competitive?' },
+    { label: 'PART 2 \u2014 IMPACT ON EMPLOYEES', prompt: 'How will AI change the way people work? What new opportunities will it create? How will you support employees?' },
+    { label: 'PART 3 \u2014 ORGANISATIONAL VISION', prompt: 'What future does the organisation want to create? What values will guide AI adoption?' },
+  ];
+
+  for (const sp of speechParts) {
+    page.drawText(sp.label, { x: MARGIN, y, size: 9, font: fonts.bold, color: COLORS.teal });
+    y -= 14;
+    const spLines = wrapText(sp.prompt, CONTENT_WIDTH - 10, fonts.italic, 8);
+    for (const sl of spLines) {
+      page.drawText(sl, { x: MARGIN + 5, y, size: 8, font: fonts.italic, color: COLORS.muted });
+      y -= 11;
+    }
+    y -= 2;
+    y = drawFieldGroup(page, form, 'KEY POINTS', y, fonts, 55, 's7b_speech');
+  }
+
+  page.drawText('SPEECH DRAFT', { x: MARGIN, y, size: 11, font: fonts.bold, color: COLORS.teal });
+  y -= 14;
+  y = drawInstructionBox(page, 'Opening: Why AI matters. Middle: Opportunities & concerns. Conclusion: Vision & commitment.', y, fonts);
+  y = drawFieldGroup(page, form, 'YOUR SPEECH', y, fonts, 120, 's7b_draft');
+
   // ════════════ SECTION 8: AI Transformation Taskforce ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   y = PAGE_HEIGHT - MARGIN;
