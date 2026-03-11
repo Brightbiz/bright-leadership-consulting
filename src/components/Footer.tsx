@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Logo from "./Logo";
+import { generateStrategicLeadershipPDF, downloadStrategicLeadershipPDF } from "@/utils/strategicLeadershipPdfGenerator";
 
 const footerLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
@@ -34,6 +36,20 @@ const exerciseLinks = [
 ];
 
 const Footer = () => {
+  const [generating, setGenerating] = useState(false);
+
+  const handleWorkbookDownload = async () => {
+    setGenerating(true);
+    try {
+      const pdfBytes = await generateStrategicLeadershipPDF();
+      downloadStrategicLeadershipPDF(pdfBytes);
+    } catch (e) {
+      console.error('Workbook generation failed:', e);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   return (
     <footer className="border-t border-border">
       <div className="container-brief py-16">
@@ -77,6 +93,13 @@ const Footer = () => {
                 {link.label}
               </Link>
             ))}
+            <button
+              onClick={handleWorkbookDownload}
+              disabled={generating}
+              className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground text-left disabled:opacity-50"
+            >
+              {generating ? "Generating…" : "Executive Workbook (PDF)"}
+            </button>
           </nav>
 
           <nav className="flex flex-col gap-3">
