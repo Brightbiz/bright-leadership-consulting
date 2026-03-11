@@ -390,7 +390,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   }
 
   y -= 10;
-  y = drawInstructionBox(page, 'By the end of the programme, you will complete an AI Leadership Blueprint - a strategic action document you can present to your board or executive team.', y, fonts);
+  y = drawInstructionBox(page, 'By the end of the programme, you will complete an AI Leadership Blueprint(TM) - a strategic action document you can present to your board or executive team.', y, fonts);
 
   // ════════════ SECTION 1: Leadership in the Age of AI ════════════
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
