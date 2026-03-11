@@ -18,10 +18,12 @@ const ExecutiveAlignmentBrief = lazy(() => import("./pages/ExecutiveAlignmentBri
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
+// Programme pages
+const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
+const Courses = lazy(() => import("./pages/Courses"));
+const Slides = lazy(() => import("./pages/Slides"));
+
 // Admin (not in public nav)
-const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-const AdminRegister = lazy(() => import("./pages/AdminRegister"));
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminRegister = lazy(() => import("./pages/AdminRegister"));
