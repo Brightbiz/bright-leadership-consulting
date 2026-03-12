@@ -136,7 +136,14 @@ const Footer = () => {
           </nav>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col gap-3">
+          <a
+            href="/downloads/content-brief-new-project.md"
+            download="content-brief-new-project.md"
+            className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
+          >
+            Download Content Brief (New Project)
+          </a>
           <p className="text-xs text-muted-foreground">
             Bright Leadership Consulting — Confidential Executive Advisory
           </p>
