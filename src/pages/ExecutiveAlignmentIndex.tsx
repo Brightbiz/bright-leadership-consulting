@@ -650,7 +650,7 @@ const ExecutiveAlignmentIndex = () => {
                   to="/contact"
                   className="link-quiet"
                 >
-                  Enquire Regarding Executive Alignment
+                  Enquire Confidentially
                 </Link>
               </motion.div>
             </div>

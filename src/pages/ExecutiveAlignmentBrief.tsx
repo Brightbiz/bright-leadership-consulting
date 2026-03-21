@@ -2,52 +2,72 @@ import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
+
+const fade = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true } as const,
+  transition: { duration: 0.7, ease: "easeOut" as const },
+};
 
 const ExecutiveAlignmentBrief = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Executive Alignment Brief | Bright Leadership"
+        title="Executive Alignment Brief™ | Bright Leadership Consulting"
         description="A governance-level overview of how structural alignment is measured, diagnosed, and sustained across executive teams."
         path="/executive-alignment-brief"
       />
+      <ScrollProgress />
       <Header />
 
-      <main className="pt-32 pb-24 lg:pt-40 lg:pb-32">
-        <div className="container-narrow">
-          <div className="max-w-2xl mx-auto">
-            {/* Header */}
-            <motion.div
-              className="mb-16 lg:mb-20"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-            >
-              <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-6">
+      <main>
+        {/* Section 1 — Hero */}
+        <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
                 Advisory Document
-              </p>
-              <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-foreground leading-tight mb-6">
-                Executive Alignment Brief
-              </h1>
-              <p className="text-muted-foreground text-base leading-relaxed">
-                A concise overview of the Executive Alignment Index and its commissioning context.
-              </p>
-            </motion.div>
+              </motion.p>
 
-            {/* Contents */}
-            <motion.div
-              className="mb-16 border-t border-border pt-12"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-            >
-              <p className="text-xs font-medium tracking-widest text-muted-foreground/70 uppercase mb-6">
+              <motion.h1
+                className="heading-hero mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Executive Alignment Brief™
+              </motion.h1>
+
+              <motion.p
+                className="text-lg leading-relaxed text-muted-foreground"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                A concise overview of the Executive Alignment Index™ and its commissioning context.
+              </motion.p>
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 2 — Contents */}
+        <section className="section-brief section-pearl">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
                 Contents
-              </p>
-              <div className="space-y-4">
+              </motion.p>
+
+              <motion.div
+                className="space-y-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
                 {[
                   "The structural alignment problem in executive teams",
-                  "The Executive Alignment Index — six diagnostic dimensions",
+                  "The Executive Alignment Index™ — six diagnostic dimensions",
                   "Sample composite alignment dashboard",
                   "How engagements are structured — diagnostic, reporting, advisory",
                   "When organisations commission this work",
@@ -57,27 +77,30 @@ const ExecutiveAlignmentBrief = () => {
                     {item}
                   </p>
                 ))}
-              </div>
-            </motion.div>
-
-            {/* Download — open, quiet, no form */}
-            <motion.div
-              className="border-t border-border pt-12"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            >
-              <a
-                href="/downloads/executive-alignment-brief.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 tracking-wide"
-              >
-                Download PDF
-              </a>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 3 — Download */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.div {...fade}>
+                <a
+                  href="/downloads/executive-alignment-brief.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet text-sm"
+                >
+                  Download PDF
+                </a>
+              </motion.div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

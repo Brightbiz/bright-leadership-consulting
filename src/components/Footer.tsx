@@ -137,43 +137,6 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-navy-foreground/15 flex flex-col gap-3">
-          <div className="flex flex-wrap gap-6">
-            <a
-              href="/downloads/developer-handoff.md"
-              download="developer-handoff.md"
-              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
-            >
-              Developer Handoff (Full)
-            </a>
-            <a
-              href="/downloads/content-brief-new-project.md"
-              download="content-brief-new-project.md"
-              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
-            >
-              Download Content Brief (New Project)
-            </a>
-            <a
-              href="/downloads/layout-specification.md"
-              download="layout-specification.md"
-              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
-            >
-              Download Layout Specification
-            </a>
-            <a
-              href="/downloads/institutional-gravity-philosophy.md"
-              download="institutional-gravity-philosophy.md"
-              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
-            >
-              Design Philosophy
-            </a>
-            <a
-              href="/downloads/homepage-comparison-current-vs-proposed.png"
-              download="homepage-comparison-current-vs-proposed.png"
-              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
-            >
-              Homepage Comparison Mockup
-            </a>
-          </div>
 
           {/* Gold CTA */}
           <div className="pt-8 pb-4">

@@ -40,8 +40,8 @@ const executiveProgrammes = [
       "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
-    link: "#", // Placeholder - to be updated when programme page created
-    internal: false,
+    link: "/contact",
+    internal: true,
     comingSoon: false,
   },
   {
