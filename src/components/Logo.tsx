@@ -62,7 +62,3 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
 Logo.displayName = "Logo";
 
 export default Logo;
-
-Logo.displayName = "Logo";
-
-export default Logo;
