@@ -6,11 +6,13 @@ import InstrumentSection from "@/components/InstrumentSection";
 import OfferSequencingSection from "@/components/OfferSequencingSection";
 import CommissionedBySection from "@/components/CommissionedBySection";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead path="/" />
+      <ScrollProgress />
       <Header />
 
       <main>

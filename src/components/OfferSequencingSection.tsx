@@ -32,7 +32,7 @@ const pathways = [
   },
 ];
 
-const AdvisoryPathwaySection = () => {
+const OfferSequencingSection = () => {
   return (
     <>
       <div className="section-divider" />
@@ -77,4 +77,4 @@ const AdvisoryPathwaySection = () => {
   );
 };
 
-export default AdvisoryPathwaySection;
+export default OfferSequencingSection;

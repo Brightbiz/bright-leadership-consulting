@@ -207,7 +207,7 @@ const ExecutiveAlignmentIndex = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         path="/executive-alignment-index"
-        title="Executive Alignment Index | Bright Leadership Consulting"
+        title="Executive Alignment Index™ | Bright Leadership Consulting"
         description="A governance-level instrument measuring executive variance across decision rights, strategic interpretation, and escalation architecture."
       />
       <ScrollProgress />
@@ -566,7 +566,7 @@ const ExecutiveAlignmentIndex = () => {
         </section>
 
         {/* Executive Alignment Brief Download */}
-        <section className="section-brief section-pearl">
+        <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.div
@@ -592,7 +592,7 @@ const ExecutiveAlignmentIndex = () => {
         <div className="section-divider" />
 
         {/* Section 7 — Video Scripts */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
@@ -631,7 +631,7 @@ const ExecutiveAlignmentIndex = () => {
         <div className="section-divider" />
 
         {/* Section 8 — CTA */}
-        <section className="section-brief section-pearl">
+        <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.div
@@ -650,7 +650,7 @@ const ExecutiveAlignmentIndex = () => {
                   to="/contact"
                   className="link-quiet"
                 >
-                  Enquire Regarding Executive Alignment
+                  Enquire Confidentially
                 </Link>
               </motion.div>
             </div>
