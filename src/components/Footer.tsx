@@ -167,6 +167,17 @@ const Footer = () => {
               Homepage Comparison Mockup
             </a>
           </div>
+
+          {/* Gold CTA */}
+          <div className="pt-8 pb-4">
+            <Link
+              to="/contact"
+              className="inline-block border border-[hsl(38,60%,52%)] text-[hsl(38,60%,52%)] px-8 py-3 text-sm font-medium tracking-[0.03em] rounded-sm transition-colors hover:bg-[hsl(38,60%,52%)] hover:text-navy"
+            >
+              Initiate a Confidential Conversation
+            </Link>
+          </div>
+
           <p className="text-xs text-navy-foreground/60">
             Bright Leadership Consulting — Confidential Executive Advisory
           </p>
