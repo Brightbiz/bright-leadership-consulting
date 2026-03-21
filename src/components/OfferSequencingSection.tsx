@@ -32,7 +32,7 @@ const pathways = [
   },
 ];
 
-const AdvisoryPathwaySection = () => {
+const OfferSequencingSection = () => {
   return (
     <>
       <div className="section-divider" />
