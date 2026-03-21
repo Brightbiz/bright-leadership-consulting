@@ -161,6 +161,11 @@
     background-color: hsl(var(--border));
   }
 
+  /* Pearl alternate section background */
+  .section-pearl {
+    background-color: hsl(var(--pearl));
+  }
+
   /* Tinted section background — disabled per brief (white only) */
   .section-tinted {
     background-color: hsl(var(--background));
