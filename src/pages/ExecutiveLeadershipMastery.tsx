@@ -139,7 +139,7 @@ const ExecutiveLeadershipMastery = () => {
         <div className="section-divider" />
 
         {/* Section 2 — Seven Disciplines */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Structure
