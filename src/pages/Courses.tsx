@@ -143,7 +143,7 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.1 }}
             >
-              Three Pathways. One Objective.
+              Five Pathways. One Objective.
             </motion.h2>
 
             <motion.p
