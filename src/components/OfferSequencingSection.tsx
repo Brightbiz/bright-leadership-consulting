@@ -77,4 +77,4 @@ const AdvisoryPathwaySection = () => {
   );
 };
 
-export default AdvisoryPathwaySection;
+export default OfferSequencingSection;
