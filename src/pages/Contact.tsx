@@ -53,26 +53,30 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const rateLimitResult = await checkRateLimit("contact");
-      if (!rateLimitResult.allowed) {
+      const { data: result, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          formType: "contact",
+          formData: {
+            name: data.name,
+            email: data.email,
+            phone: null,
+            company: data.company || null,
+            message: `${data.role ? `Role: ${data.role}\n\n` : ""}${data.message}`,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (result?.error) {
         toast({
           title: "Please try again later",
-          description: rateLimitResult.message || "Too many submissions.",
+          description: result.error,
           variant: "destructive",
         });
         return;
       }
 
-      const { error } = await supabase.from("contact_submissions").insert({
-        name: data.name,
-        email: data.email,
-        phone: null,
-        company: data.company || null,
-        message: `${data.role ? `Role: ${data.role}\n\n` : ""}${data.message}`,
-      });
-
-      if (error) throw error;
-      await recordSubmission("contact");
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting form:", error);
