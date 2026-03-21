@@ -43,7 +43,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  const { checkRateLimit, recordSubmission, isChecking } = useRateLimit();
+  
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
