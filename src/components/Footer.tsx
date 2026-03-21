@@ -137,13 +137,22 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col gap-3">
-          <a
-            href="/downloads/content-brief-new-project.md"
-            download="content-brief-new-project.md"
-            className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
-          >
-            Download Content Brief (New Project)
-          </a>
+          <div className="flex flex-wrap gap-6">
+            <a
+              href="/downloads/content-brief-new-project.md"
+              download="content-brief-new-project.md"
+              className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
+            >
+              Download Content Brief (New Project)
+            </a>
+            <a
+              href="/downloads/layout-specification.md"
+              download="layout-specification.md"
+              className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
+            >
+              Download Layout Specification
+            </a>
+          </div>
           <p className="text-xs text-muted-foreground">
             Bright Leadership Consulting — Confidential Executive Advisory
           </p>
