@@ -192,7 +192,7 @@ const AugmentedLeadership = () => {
         <div className="section-divider" />
 
         {/* Transformation Roadmap */}
-        <section className="section-brief bg-background" aria-label="AI Transformation Leadership Roadmap">
+        <section className="section-brief section-pearl" aria-label="AI Transformation Leadership Roadmap">
           <div className="container-brief">
             <div className="max-w-[720px]">
               <motion.p className="kicker mb-6" {...fade}>

@@ -95,7 +95,7 @@ const Contact = () => {
       <Header />
 
       <main>
-        <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-background">
+        <section className="pt-36 pb-24 lg:pt-44 lg:pb-32 section-pearl">
           <div className="container-brief">
             <div className="max-w-[520px]">
               {/* Heading */}

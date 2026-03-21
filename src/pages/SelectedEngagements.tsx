@@ -91,7 +91,7 @@ const SelectedEngagements = () => {
         <div className="section-divider" />
 
         {/* Section 2 — Engagement Abstracts */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="space-y-0">
               {engagements.map((engagement, index) => (
