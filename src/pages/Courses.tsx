@@ -26,8 +26,9 @@ const executiveProgrammes = [
       "66 CPD Points Accredited",
       "Self-Directed or Cohort-Based",
     ],
-    link: "/executive-leadership-mastery",
-    internal: true,
+    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
+    internal: false,
+    detailPage: "/executive-leadership-mastery",
   },
   {
     title: "Strategic Leadership in the Age of AI",
@@ -40,9 +41,36 @@ const executiveProgrammes = [
       "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
-    link: "/contact",
-    internal: true,
-    comingSoon: false,
+    link: "https://bright-leadership-consulting.thinkific.com/courses/ai-leadership",
+    internal: false,
+  },
+  {
+    title: "The Future of Work",
+    subtitle: "Navigating Workforce Transformation",
+    description:
+      "Equip your leadership team to navigate the structural shifts redefining how organisations attract, develop, and retain talent. From hybrid models to workforce strategy, this programme builds the clarity leaders need to act decisively.",
+    features: [
+      "Workforce Strategy Development",
+      "Hybrid & Remote Leadership Models",
+      "Talent Retention Frameworks",
+      "Organisational Design Principles",
+    ],
+    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+    internal: false,
+  },
+  {
+    title: "Strategic Productivity & Peak Performance",
+    subtitle: "High-Impact Executive Performance",
+    description:
+      "A structured programme for senior leaders seeking to optimise personal and team performance. Grounded in evidence-based productivity frameworks and executive performance science.",
+    features: [
+      "Executive Performance Diagnostics",
+      "Productivity System Design",
+      "Energy & Focus Management",
+      "Team Performance Optimisation",
+    ],
+    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    internal: false,
   },
   {
     title: "Corporate Retreats",
