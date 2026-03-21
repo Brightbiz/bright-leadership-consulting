@@ -566,7 +566,7 @@ const ExecutiveAlignmentIndex = () => {
         </section>
 
         {/* Executive Alignment Brief Download */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.div
