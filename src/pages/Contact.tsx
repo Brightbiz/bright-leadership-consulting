@@ -213,9 +213,9 @@ const Contact = () => {
                       variant="outline"
                       size="lg"
                       className="border-primary/20 text-foreground hover:border-secondary hover:text-secondary transition-colors"
-                      disabled={form.formState.isSubmitting || isChecking}
+                      disabled={form.formState.isSubmitting}
                     >
-                      {form.formState.isSubmitting || isChecking ? (
+                      {form.formState.isSubmitting ? (
                         <span className="animate-pulse">Submitting…</span>
                       ) : (
                         "Submit Enquiry"
