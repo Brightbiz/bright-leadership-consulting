@@ -631,7 +631,7 @@ const ExecutiveAlignmentIndex = () => {
         <div className="section-divider" />
 
         {/* Section 8 — CTA */}
-        <section className="section-brief section-pearl">
+        <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.div
