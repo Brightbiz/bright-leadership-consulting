@@ -89,17 +89,35 @@ Trigger [COLLECT_LEAD] when users say things like:
 - "What sectors do you work with?" → Cross-sector experience including financial services, professional services, technology, healthcare, manufacturing, and the public sector
 - "What outcomes can we expect?" → 40% average improvement in leadership effectiveness, with bespoke KPIs agreed at the outset`;
 
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_LENGTH = 2000;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages } = body;
+
+    // Input validation
+    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: "Invalid request" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Sanitize messages - only allow valid roles and cap content length
+    const sanitized = messages.map((m: any) => ({
+      role: ["user", "assistant"].includes(m.role) ? m.role : "user",
+      content: String(m.content || "").slice(0, MAX_MESSAGE_LENGTH),
+    }));
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+      throw new Error("Service configuration error");
     }
 
     const response = await fetch(
@@ -114,7 +132,7 @@ serve(async (req) => {
           model: "google/gemini-3-flash-preview",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            ...messages,
+            ...sanitized,
           ],
           stream: true,
         }),
@@ -144,8 +162,7 @@ serve(async (req) => {
           }
         );
       }
-      const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
+      console.error("AI gateway error:", response.status);
       return new Response(
         JSON.stringify({ error: "Unable to connect to assistant" }),
         {
@@ -162,7 +179,7 @@ serve(async (req) => {
     console.error("Chat assistant error:", error);
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: "An unexpected error occurred. Please try again.",
       }),
       {
         status: 500,
