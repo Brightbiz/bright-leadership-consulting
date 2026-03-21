@@ -26,7 +26,7 @@ const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-const AdminRegister = lazy(() => import("./pages/AdminRegister"));
+
 
 const queryClient = new QueryClient();
 
