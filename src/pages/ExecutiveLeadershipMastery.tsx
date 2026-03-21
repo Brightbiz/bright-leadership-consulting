@@ -254,7 +254,7 @@ const ExecutiveLeadershipMastery = () => {
               {tiers.map((tier, i) => (
                 <motion.div
                   key={tier.name}
-                  className="bg-background p-8 lg:p-10 flex flex-col"
+                  className="bg-background p-8 lg:p-10 flex flex-col rounded-sm"
                   {...fade}
                   transition={{ ...fade.transition, delay: 0.1 + i * 0.08 }}
                 >
