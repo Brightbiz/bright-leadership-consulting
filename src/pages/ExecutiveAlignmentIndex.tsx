@@ -592,7 +592,7 @@ const ExecutiveAlignmentIndex = () => {
         <div className="section-divider" />
 
         {/* Section 7 — Video Scripts */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
