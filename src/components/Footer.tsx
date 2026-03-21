@@ -152,6 +152,20 @@ const Footer = () => {
             >
               Download Layout Specification
             </a>
+            <a
+              href="/downloads/institutional-gravity-philosophy.md"
+              download="institutional-gravity-philosophy.md"
+              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
+            >
+              Design Philosophy
+            </a>
+            <a
+              href="/downloads/homepage-comparison-current-vs-proposed.png"
+              download="homepage-comparison-current-vs-proposed.png"
+              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
+            >
+              Homepage Comparison Mockup
+            </a>
           </div>
           <p className="text-xs text-navy-foreground/60">
             Bright Leadership Consulting — Confidential Executive Advisory
