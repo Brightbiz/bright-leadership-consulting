@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -91,6 +92,8 @@ Trigger [COLLECT_LEAD] when users say things like:
 
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 2000;
+const CHAT_RATE_LIMIT = 30; // max requests per IP per hour
+const CHAT_WINDOW_MINUTES = 60;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -109,12 +112,40 @@ serve(async (req) => {
       );
     }
 
-    // Sanitize messages - only allow valid roles and cap content length
+    // Sanitize messages
     const sanitized = messages.map((m: any) => ({
       role: ["user", "assistant"].includes(m.role) ? m.role : "user",
       content: String(m.content || "").slice(0, MAX_MESSAGE_LENGTH),
     }));
 
+    // --- IP-based rate limiting ---
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      || req.headers.get("cf-connecting-ip")
+      || "unknown";
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    const windowStart = new Date(Date.now() - CHAT_WINDOW_MINUTES * 60 * 1000).toISOString();
+    const { count, error: countError } = await supabase
+      .from("rate_limits")
+      .select("*", { count: "exact", head: true })
+      .eq("ip_address", clientIp)
+      .eq("form_type", "chat")
+      .gte("created_at", windowStart);
+
+    if (!countError && (count || 0) >= CHAT_RATE_LIMIT) {
+      return new Response(
+        JSON.stringify({ error: "Our assistant is busy right now. Please try again shortly." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Record this request
+    await supabase.from("rate_limits").insert({ ip_address: clientIp, form_type: "chat" });
+
+    // --- Call AI gateway ---
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("Service configuration error");
@@ -142,33 +173,20 @@ serve(async (req) => {
     if (!response.ok) {
       if (response.status === 429) {
         return new Response(
-          JSON.stringify({
-            error: "Our assistant is busy right now. Please try again shortly.",
-          }),
-          {
-            status: 429,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          JSON.stringify({ error: "Our assistant is busy right now. Please try again shortly." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
       if (response.status === 402) {
         return new Response(
-          JSON.stringify({
-            error: "Service temporarily unavailable. Please contact us directly.",
-          }),
-          {
-            status: 402,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          JSON.stringify({ error: "Service temporarily unavailable. Please contact us directly." }),
+          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
       console.error("AI gateway error:", response.status);
       return new Response(
         JSON.stringify({ error: "Unable to connect to assistant" }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -178,13 +196,8 @@ serve(async (req) => {
   } catch (error) {
     console.error("Chat assistant error:", error);
     return new Response(
-      JSON.stringify({
-        error: "An unexpected error occurred. Please try again.",
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      JSON.stringify({ error: "An unexpected error occurred. Please try again." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
