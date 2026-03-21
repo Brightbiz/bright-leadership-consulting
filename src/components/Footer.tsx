@@ -91,23 +91,8 @@ const Footer = () => {
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Course Downloads</span>
-            {downloadLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Executive Exercises</span>
-            {exerciseLinks.map((link) => (
+            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Programme Brochures</span>
+            {brochureLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}

@@ -168,15 +168,6 @@ const Courses = () => {
                     <h3 className="font-serif text-lg font-semibold text-foreground">
                       {programme.title}
                     </h3>
-                    {programme.internal ? (
-                      <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
-                        Internal
-                      </span>
-                    ) : (
-                      <span className="text-xs font-medium text-accent uppercase tracking-wider">
-                        Programme
-                      </span>
-                    )}
                   </div>
 
                   <p className="text-sm font-medium text-accent mb-3">
@@ -199,22 +190,30 @@ const Courses = () => {
                     ))}
                   </ul>
 
-                  {programme.internal ? (
-                    <Link to={programme.link} className="link-quiet text-sm">
-                      View Programme Details
-                      <ArrowRight className="h-3 w-3" />
-                    </Link>
-                  ) : (
-                    <a
-                      href={programme.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-quiet text-sm"
-                    >
-                      Enquire Confidentially
-                      <ArrowRight className="h-3 w-3" />
-                    </a>
-                  )}
+                  <div className="flex items-center gap-4">
+                    {programme.internal ? (
+                      <Link to={programme.link} className="link-quiet text-sm">
+                        Enquire Confidentially
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    ) : (
+                      <a
+                        href={programme.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-quiet text-sm"
+                      >
+                        View Programme
+                        <ArrowRight className="h-3 w-3" />
+                      </a>
+                    )}
+                    {programme.detailPage && (
+                      <Link to={programme.detailPage} className="link-quiet text-sm text-muted-foreground">
+                        Programme Details
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>
