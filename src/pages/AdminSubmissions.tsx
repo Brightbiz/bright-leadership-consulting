@@ -251,7 +251,7 @@ const AdminSubmissions = () => {
 
         {/* Tabs */}
         <Tabs defaultValue="contacts" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="contacts" className="gap-2">
               <Mail className="h-4 w-4" />
               Contacts
@@ -264,6 +264,10 @@ const AdminSubmissions = () => {
             <TabsTrigger value="quiz" className="gap-2">
               <ClipboardCheck className="h-4 w-4" />
               Quiz Results
+            </TabsTrigger>
+            <TabsTrigger value="dev-resources" className="gap-2">
+              <Package className="h-4 w-4" />
+              Dev Resources
             </TabsTrigger>
           </TabsList>
 
@@ -447,6 +451,32 @@ const AdminSubmissions = () => {
                   </TableBody>
                 </Table>
               )}
+            </div>
+          </TabsContent>
+
+          {/* ─── Dev Resources Tab ─── */}
+          <TabsContent value="dev-resources">
+            <div className="rounded-lg border border-border bg-card p-6">
+              <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Developer Handoff Resources</h3>
+              <div className="space-y-3">
+                {[
+                  { label: "Developer Handoff (Full)", href: "/downloads/developer-handoff.md", filename: "developer-handoff.md" },
+                  { label: "Content Brief (New Project)", href: "/downloads/content-brief-new-project.md", filename: "content-brief-new-project.md" },
+                  { label: "Layout Specification", href: "/downloads/layout-specification.md", filename: "layout-specification.md" },
+                  { label: "Design Philosophy", href: "/downloads/institutional-gravity-philosophy.md", filename: "institutional-gravity-philosophy.md" },
+                  { label: "Homepage Comparison Mockup", href: "/downloads/homepage-comparison-current-vs-proposed.png", filename: "homepage-comparison-current-vs-proposed.png" },
+                ].map((resource) => (
+                  <a
+                    key={resource.filename}
+                    href={resource.href}
+                    download={resource.filename}
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/50"
+                  >
+                    <Download className="h-4 w-4 shrink-0" />
+                    {resource.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </TabsContent>
         </Tabs>
