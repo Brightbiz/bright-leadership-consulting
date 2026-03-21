@@ -72,7 +72,7 @@ const AugmentedLeadership = () => {
         <div className="section-divider" />
 
         {/* Three Pillars + Diagram */}
-        <section className="section-brief bg-background" aria-label="Three Intelligence Pillars">
+        <section className="section-brief section-pearl" aria-label="Three Intelligence Pillars">
           <div className="container-brief">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
               {/* Left column: Pillars */}
@@ -192,7 +192,7 @@ const AugmentedLeadership = () => {
         <div className="section-divider" />
 
         {/* Transformation Roadmap */}
-        <section className="section-brief bg-background" aria-label="AI Transformation Leadership Roadmap">
+        <section className="section-brief section-pearl" aria-label="AI Transformation Leadership Roadmap">
           <div className="container-brief">
             <div className="max-w-[720px]">
               <motion.p className="kicker mb-6" {...fade}>
