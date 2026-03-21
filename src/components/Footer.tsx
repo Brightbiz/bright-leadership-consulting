@@ -54,11 +54,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-border">
+    <footer className="bg-navy text-navy-foreground">
       <div className="container-brief py-16">
         <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           <div>
-            <Logo />
+            <Logo variant="light" />
           </div>
 
           <nav className="flex flex-col gap-3">
@@ -67,7 +67,7 @@ const Footer = () => {
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+                  className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
                 >
                   {link.label}
                 </Link>
@@ -77,7 +77,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+                  className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
                 >
                   {link.label}
                 </a>
@@ -86,12 +86,12 @@ const Footer = () => {
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Programmes</span>
+            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Programmes</span>
             {programmeLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}
-                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
               >
                 {link.label}
               </Link>
@@ -99,21 +99,21 @@ const Footer = () => {
             <button
               onClick={handleWorkbookDownload}
               disabled={generating}
-              className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground text-left disabled:opacity-50"
+              className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground text-left disabled:opacity-50"
             >
               {generating ? "Generating…" : "Executive Workbook (PDF)"}
             </button>
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Course Downloads</span>
+            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Course Downloads</span>
             {downloadLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
               >
                 {link.label}
               </a>
@@ -121,14 +121,14 @@ const Footer = () => {
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider mb-1">Executive Exercises</span>
+            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Executive Exercises</span>
             {exerciseLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground tracking-wide transition-colors hover:text-foreground"
+                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
               >
                 {link.label}
               </a>
@@ -136,27 +136,27 @@ const Footer = () => {
           </nav>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border flex flex-col gap-3">
+        <div className="mt-12 pt-8 border-t border-navy-foreground/15 flex flex-col gap-3">
           <div className="flex flex-wrap gap-6">
             <a
               href="/downloads/content-brief-new-project.md"
               download="content-brief-new-project.md"
-              className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
+              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
             >
               Download Content Brief (New Project)
             </a>
             <a
               href="/downloads/layout-specification.md"
               download="layout-specification.md"
-              className="text-xs text-muted-foreground tracking-wide transition-colors hover:text-foreground underline underline-offset-2"
+              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
             >
               Download Layout Specification
             </a>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-navy-foreground/60">
             Bright Leadership Consulting — Confidential Executive Advisory
           </p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
+          <p className="text-xs text-navy-foreground/30 mt-1">
             © {new Date().getFullYear()}
           </p>
         </div>
