@@ -379,7 +379,7 @@ const ExecutiveAlignmentIndex = () => {
         <div className="section-divider" />
 
         {/* Section 4 — Alignment Maturity Scale */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
