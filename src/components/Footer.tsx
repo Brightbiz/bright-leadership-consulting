@@ -139,6 +139,13 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-navy-foreground/15 flex flex-col gap-3">
           <div className="flex flex-wrap gap-6">
             <a
+              href="/downloads/developer-handoff.md"
+              download="developer-handoff.md"
+              className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
+            >
+              Developer Handoff (Full)
+            </a>
+            <a
               href="/downloads/content-brief-new-project.md"
               download="content-brief-new-project.md"
               className="text-xs text-navy-foreground/50 tracking-wide transition-colors hover:text-navy-foreground underline underline-offset-2"
