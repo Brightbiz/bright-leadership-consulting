@@ -198,9 +198,10 @@
     margin-bottom: 0;
   }
 
-  /* Kicker / eyebrow */
+  /* Kicker / eyebrow — gold accent */
   .kicker {
-    @apply text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase;
+    @apply text-xs font-medium tracking-[0.2em] uppercase;
+    color: hsl(var(--gold));
   }
 
   /* Quiet CTA link */
