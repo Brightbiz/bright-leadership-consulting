@@ -171,12 +171,6 @@ const AdminLogin = () => {
             </form>
           </Form>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Need an admin account?{" "}
-            <Link to="/admin/register" className="text-primary hover:underline">
-              Register here
-            </Link>
-          </p>
         </div>
       </div>
     </div>
