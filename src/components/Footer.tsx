@@ -153,7 +153,6 @@ const Footer = () => {
               Download Layout Specification
             </a>
           </div>
-          </a>
           <p className="text-xs text-muted-foreground">
             Bright Leadership Consulting — Confidential Executive Advisory
           </p>
