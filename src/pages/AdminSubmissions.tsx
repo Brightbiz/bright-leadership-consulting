@@ -251,7 +251,7 @@ const AdminSubmissions = () => {
 
         {/* Tabs */}
         <Tabs defaultValue="contacts" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="contacts" className="gap-2">
               <Mail className="h-4 w-4" />
               Contacts
@@ -264,6 +264,10 @@ const AdminSubmissions = () => {
             <TabsTrigger value="quiz" className="gap-2">
               <ClipboardCheck className="h-4 w-4" />
               Quiz Results
+            </TabsTrigger>
+            <TabsTrigger value="dev-resources" className="gap-2">
+              <Package className="h-4 w-4" />
+              Dev Resources
             </TabsTrigger>
           </TabsList>
 
