@@ -139,7 +139,7 @@ const ExecutiveLeadershipMastery = () => {
         <div className="section-divider" />
 
         {/* Section 2 — Seven Disciplines */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Structure
@@ -226,7 +226,7 @@ const ExecutiveLeadershipMastery = () => {
         <div className="section-divider" />
 
         {/* Section 4 — Engagement Tiers */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Engagement Options
@@ -254,7 +254,7 @@ const ExecutiveLeadershipMastery = () => {
               {tiers.map((tier, i) => (
                 <motion.div
                   key={tier.name}
-                  className="bg-background p-8 lg:p-10 flex flex-col"
+                  className="bg-background p-8 lg:p-10 flex flex-col rounded-sm"
                   {...fade}
                   transition={{ ...fade.transition, delay: 0.1 + i * 0.08 }}
                 >

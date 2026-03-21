@@ -104,7 +104,7 @@ const Courses = () => {
         <div className="section-divider" />
 
         {/* Section 2 — Programme Cards */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Portfolio
@@ -222,7 +222,7 @@ const Courses = () => {
         <div className="section-divider" />
 
         {/* Section 3 — Positioning Statement */}
-        <section className="section-brief bg-background">
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[720px]">
               <motion.div className="space-y-6" {...fade}>
