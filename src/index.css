@@ -228,7 +228,7 @@
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm rounded-sm
            border border-foreground/20 bg-background text-foreground
            transition-colors duration-200
-           hover:border-primary hover:text-primary;
+           hover:border-[hsl(38,60%,52%)] hover:text-[hsl(38,60%,52%)];
     font-weight: 500;
     letter-spacing: 0.03em;
   }

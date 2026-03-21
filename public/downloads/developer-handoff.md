@@ -1,414 +1,285 @@
-# Developer Handoff — Bright Leadership Consulting
+# Bright Leadership Consulting — Developer Handoff
+## Institutional Gravity Design System v2.0
 
-> Generated: 2026-02-14 | Last Updated: 2026-02-17
-
----
-
-## Tech Stack
-
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
-- **UI Library**: shadcn/ui (Radix primitives)
-- **Animation**: Framer Motion
-- **Backend**: Supabase (Lovable Cloud)
-- **Routing**: React Router v6
+> Comprehensive specification for reconstructing the design system in a new project environment.
 
 ---
 
-## Supabase Project
+## 1. Design Philosophy
 
-| Key | Value |
-|-----|-------|
-| **Project ID** | `kjpvtgprikfnjkczbuyp` |
-| **API URL** | `https://kjpvtgprikfnjkczbuyp.supabase.co` |
-| **Anon Key** | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqcHZ0Z3ByaWtmbmprY3pidXlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2ODIzNzYsImV4cCI6MjA4NTI1ODM3Nn0.j-lIdPLClzRHPPpkagEWodsWbIOQ87yH98Pg9M_hEy4` |
+**Institutional Gravity** is a two-tier visual system that balances board-pack clarity with strategy-firm polish. It avoids decorative graphics, stock imagery, and marketing-heavy aesthetics in favour of typographic precision, structured whitespace, and institutional composure.
 
-> ⚠️ **Never share the Service Role Key** — it bypasses all RLS.
+**Reference models:** Strategy&, The Economist, Stripe, IDEO, Bridgewater Associates.
 
 ---
 
-## Database Tables
+## 2. Colour Palette (HSL)
 
-### 1. `contact_submissions`
+### Core Ratio: 60 / 25 / 10 / 5
 
-Stores contact form entries.
+| Role | Token | HSL | Hex | Usage % |
+|------|-------|-----|-----|---------|
+| White (background) | `--background` | `0 0% 100%` | `#FFFFFF` | 60% |
+| Pearl (alt sections) | `--pearl` | `220 20% 97%` | `#F5F6F8` | Part of 60% |
+| Deep Navy (footer, high-impact) | `--navy` | `216 70% 14%` | `#0B1D3B` | 25% |
+| Navy text | `--navy-foreground` | `220 20% 92%` | Light grey on navy | — |
+| Charcoal (body text) | `--foreground` | `0 0% 12%` | `#1F1F1F` | — |
+| Muted text | `--muted-foreground` | `0 0% 40%` | `#666666` | — |
+| Muted Teal (analytical) | `--primary` | `186 52% 25%` | `#1F5C63` | 10% |
+| Soft Gold (kickers, CTAs) | `--gold` | `42 50% 52%` | `#C2A24D` | 5% |
+| Gold muted | `--gold-muted` | `42 40% 65%` | — | — |
+| Divider grey | `--border` | `0 0% 90%` | `#E6E6E6` | — |
 
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| name | text | No | — |
-| email | text | No | — |
-| phone | text | Yes | — |
-| company | text | Yes | — |
-| message | text | No | — |
-| is_read | boolean | No | `false` |
-| created_at | timestamptz | No | `now()` |
+### Extended Teal Scale
+| Token | HSL |
+|-------|-----|
+| `--teal-50` | `186 30% 97%` |
+| `--teal-100` | `186 25% 92%` |
+| `--teal-500` | `186 45% 35%` |
+| `--teal-600` | `186 52% 25%` |
+| `--teal-700` | `186 55% 20%` |
+| `--teal-900` | `186 60% 12%` |
 
-**RLS Policies:**
-- `Anyone can submit contact form` — INSERT with check `true`
-- `Admins can view submissions` — SELECT where `has_role(auth.uid(), 'admin')`
-- `Admins can update submissions` — UPDATE where `has_role(auth.uid(), 'admin')`
-- `Admins can delete submissions` — DELETE where `has_role(auth.uid(), 'admin')`
-
----
-
-### 2. `newsletter_subscribers`
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| email | text | No | — |
-| source | text | No | `'blog'` |
-| subscribed_at | timestamptz | No | `now()` |
-
-**RLS Policies:**
-- `Anyone can subscribe to newsletter` — INSERT with check `true`
-- `Admins can view subscribers` — SELECT where `has_role(auth.uid(), 'admin')`
-- `Admins can delete subscribers` — DELETE where `has_role(auth.uid(), 'admin')`
-- No UPDATE allowed
+### Amber/Gold Scale
+| Token | HSL |
+|-------|-----|
+| `--amber-400` | `38 95% 60%` |
+| `--amber-500` | `38 92% 55%` |
+| `--amber-600` | `32 90% 48%` |
 
 ---
 
-### 3. `lead_magnet_downloads`
+## 3. Typography
 
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| name | text | Yes | — |
-| email | text | No | — |
-| lead_magnet_name | text | No | `'5-leadership-secrets'` |
-| downloaded_at | timestamptz | No | `now()` |
+### Fonts
+- **Headings:** Libre Baskerville (400, 700, 400i) — `font-serif`
+- **Body:** Inter (300–700) — `font-sans`
+- **Google Fonts import:** `Libre+Baskerville:ital,wght@0,400;0,700;1,400&Inter:wght@300;400;500;600;700`
 
-**RLS Policies:**
-- `Anyone can submit their email for lead magnet` — INSERT with check `true`
-- `Admins can view all lead magnet downloads` — SELECT (admin only)
-- No UPDATE or DELETE allowed
+### Scale
 
----
+| Class | Size | Line Height | Weight | Letter Spacing |
+|-------|------|-------------|--------|----------------|
+| `.heading-hero` | 42px / 48px (lg) | 1.15 | 600 | 0.02em |
+| `.heading-section` | 28px / 32px (lg) | 1.25 | 600 | 0.02em |
+| `.heading-sub` | 20px / 22px (lg) | 1.4 | 500 | 0.02em |
+| `.body-brief` | 18px | 1.65 | 400 | normal |
+| `.kicker` | 12px (xs) | default | 500 | 0.2em, uppercase |
+| `.emphasis-line` | 24px / 28px (lg) | snug | 600 (serif) | 0.02em |
 
-### 4. `checklist_results`
-
-Stores leadership checklist assessment results (authenticated users only).
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| user_id | uuid | No | — |
-| checked_items | text[] | No | `'{}'` |
-| score | integer | No | `0` |
-| created_at | timestamptz | No | `now()` |
-| updated_at | timestamptz | No | `now()` |
-
-**RLS Policies:**
-- `Users can insert their own results` — INSERT where `auth.uid() = user_id`
-- `Users can view their own results` — SELECT where `auth.uid() = user_id`
-- `Users can update their own results` — UPDATE where `auth.uid() = user_id`
-- No DELETE allowed
+### Paragraph Rules
+- `.body-brief p` — bottom margin: 1.2em; last-child: 0
+- Max reading width: `.prose-narrow` = 680px
 
 ---
 
-### 5. `assessment_results`
+## 4. Layout Architecture
 
-Stores pre-course and post-course assessment results (authenticated users only).
+### Container
+- `.container-brief` — max-width: 1140px, px: 32/64/80px (responsive)
+- `.prose-narrow` — max-width: 680px
 
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| user_id | uuid | No | — |
-| assessment_type | text | No | — |
-| answers | jsonb | No | `'{}'` |
-| total_score | integer | No | `0` |
-| max_score | integer | No | `0` |
-| percentage | numeric | No | `0` |
-| competency_scores | jsonb | No | `'{}'` |
-| completed_at | timestamptz | No | `now()` |
-| created_at | timestamptz | No | `now()` |
+### Section Spacing
+- `.section-brief` — 100px vertical padding
+- Hero sections: `pt-36 pb-24 lg:pt-44 lg:pb-32`
 
-**RLS Policies:**
-- `Users can insert their own results` — INSERT where `auth.uid() = user_id`
-- `Users can view their own results` — SELECT where `auth.uid() = user_id`
+### Section Alternation Pattern
+Sections alternate between White (`bg-background`) and Pearl (`section-pearl`):
 
----
-
-### 6. `readiness_quiz_results`
-
-Stores leadership readiness quiz submissions (public, no auth required).
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| name | text | Yes | — |
-| email | text | No | — |
-| answers | jsonb | No | `'{}'` |
-| total_score | integer | No | `0` |
-| recommended_tier | text | No | — |
-| created_at | timestamptz | No | `now()` |
-
-**RLS Policies:**
-- `Anyone can submit quiz results` — INSERT with check `true`
-- `Admins can view quiz results` — SELECT (admin only)
-
----
-
-### 7. `rate_limits`
-
-Server-side rate limiting tracker.
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| ip_address | text | No | — |
-| form_type | text | No | — |
-| created_at | timestamptz | No | `now()` |
-
-**RLS Policies:**
-- `Service role can manage rate limits` — ALL where `true` (service role only)
-
----
-
-### 8. `user_roles`
-
-RBAC role assignments.
-
-| Column | Type | Nullable | Default |
-|--------|------|----------|---------|
-| id | uuid | No | `gen_random_uuid()` |
-| user_id | uuid | No | — |
-| role | app_role (`admin` \| `user`) | No | — |
-| created_at | timestamptz | No | `now()` |
-
-**RLS Policies:**
-- `Admins can manage roles` — ALL where `has_role(auth.uid(), 'admin')`
-- `Admins can view all roles` — SELECT where `has_role(auth.uid(), 'admin')`
-
----
-
-## Database Functions
-
-### `has_role(_user_id uuid, _role app_role) → boolean`
-Checks if a user has a specific role. Used in RLS policies.
-
-### `cleanup_old_rate_limits() → void`
-Deletes rate limit entries older than 1 hour. Called by the rate-limit edge function.
-
-### `update_updated_at_column() → trigger`
-Auto-updates `updated_at` on row modification.
-
----
-
-## Enums
-
-- **`app_role`**: `'admin'` | `'user'`
-
----
-
-## Edge Functions
-
-### 1. `check-rate-limit`
-
-**Purpose:** Server-side rate limiting for forms.
-
-**Endpoint:** `POST /functions/v1/check-rate-limit`
-
-**Request body:**
-```json
-{ "formType": "contact" | "newsletter" | "lead_magnet", "action": "check" | "record" }
+```
+Hero (White) → Section A (Pearl) → Section B (White) → Section C (Pearl) → ...
 ```
 
-**Rate limits:**
-- `contact`: 3 per hour
-- `newsletter`: 5 per hour
-- `lead_magnet`: 5 per hour
+Each page follows this rhythm. The hero is always white.
 
-**Returns:** `{ allowed: boolean, remaining: number, retryAfterMinutes?: number }`
+### Dividers
+- `.section-divider` — 1px, max-width 680px, centered, `hsl(var(--border))`
+- `.section-divider-full` — 1px, full width
 
 ---
 
-### 2. `chat-assistant`
+## 5. Component Patterns
 
-**Purpose:** AI-powered leadership assistant chatbot (streaming).
-
-**Endpoint:** `POST /functions/v1/chat-assistant`
-
-**Request body:**
-```json
-{ "messages": [{ "role": "user", "content": "..." }] }
+### Kicker (Section Eyebrow)
+```css
+.kicker {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--gold)); /* Soft Gold #C2A24D */
+}
 ```
 
-**Returns:** SSE stream (`text/event-stream`)
-
-**Required secret:** `LOVABLE_API_KEY`
-
----
-
-## Authentication
-
-- Email/password auth with **mandatory email verification** (auto-confirm disabled)
-- Anonymous signups **disabled**
-- Admin routes: `/admin/login`, `/admin/register`, `/admin/submissions`
-- Admin access determined by `user_roles` table
-
----
-
-## Key Frontend Routes
-
-| Route | Page | Auth Required |
-|-------|------|---------------|
-| `/` | Homepage | No |
-| `/about` | About Us | No |
-| `/services` | Services | No |
-| `/courses` | Courses | No |
-| `/blog` | Blog | No |
-| `/contact` | Contact | No |
-| `/masterclass` | Masterclass landing | No |
-| `/leadership-checklist` | Assessment tool | No |
-| `/brochures` | Brochure downloads | No |
-| `/pre-assessment` | Pre-course assessment | Yes (auth) |
-| `/post-assessment` | Post-course assessment | Yes (auth) |
-| `/quiz` | Standalone quiz | No |
-| `/admin/login` | Admin login | No |
-| `/admin/register` | Admin registration | No |
-| `/admin/submissions` | View submissions | Admin |
-| `/admin/thinkific-export` | Thinkific content export | Admin |
-
----
-
-## Secrets (Edge Function Environment)
-
-| Secret | Purpose |
-|--------|---------|
-| `SUPABASE_URL` | Auto-provided |
-| `SUPABASE_ANON_KEY` | Auto-provided |
-| `SUPABASE_SERVICE_ROLE_KEY` | Auto-provided |
-| `LOVABLE_API_KEY` | AI gateway for chat assistant |
-
----
-
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Run dev server
-npm run dev
-
-# Build for production
-npm run build
+### Button — Primary CTA
+```css
+.btn-brief {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(foreground, 0.2);
+  background: white;
+  color: charcoal;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: colors 200ms;
+}
+.btn-brief:hover {
+  border-color: hsl(38, 60%, 52%); /* Gold */
+  color: hsl(38, 60%, 52%);
+}
 ```
 
-The Supabase client is pre-configured at `src/integrations/supabase/client.ts` — import from there, never create a new client.
-
----
-
-## WordPress Migration Guide
-
-### Option 1: Iframe Embedding (Recommended)
-
-Embed the published Lovable app (or specific routes) directly into WordPress pages using an iframe. This preserves all interactive features — assessments, quizzes, chat widget, and lead capture — without re-building them.
-
-```html
-<!-- Full site embed -->
-<iframe
-  src="https://your-published-url.lovable.app"
-  width="100%"
-  height="800"
-  style="border: none; max-width: 100%;"
-  loading="lazy"
-  title="Bright Leadership Consulting"
-></iframe>
-
-<!-- Embed a specific tool (e.g., Pre-Course Assessment) -->
-<iframe
-  src="https://your-published-url.lovable.app/pre-assessment"
-  width="100%"
-  height="900"
-  style="border: none; max-width: 100%;"
-  loading="lazy"
-  title="Leadership Pre-Course Assessment"
-></iframe>
+### Quiet Link CTA
+```css
+.link-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(foreground, 0.7);
+  letter-spacing: wider;
+  transition: color 300ms;
+}
+.link-quiet:hover {
+  color: hsl(var(--primary)); /* Muted Teal */
+}
 ```
 
-**Recommended pages to embed individually:**
-
-| WordPress Page | Iframe Route |
-|---------------|--------------|
-| Pre-Course Assessment | `/pre-assessment` |
-| Post-Course Assessment | `/post-assessment` |
-| Leadership Readiness Quiz | `/masterclass` (contains quiz modal) |
-| Leadership Checklist | `/leadership-checklist` |
-| Contact Form | `/contact` |
-
-**WordPress plugin tip:** Use a plugin like *Advanced iFrame* or *Insert Headers and Footers* for responsive iframe sizing and auto-height adjustment.
-
-### Option 2: Custom Domain Pointing
-
-Point your domain (or a subdomain like `app.yourdomain.com`) directly to the Lovable app:
-
-**DNS Records Required:**
-
-| Type | Name | Value |
-|------|------|-------|
-| A | `@` (root) | `185.158.133.1` |
-| A | `www` | `185.158.133.1` |
-| TXT | `_lovable` | `lovable_verify=<your-verification-code>` |
-
-> SSL is provisioned automatically once DNS propagates (up to 72 hours).
-
-If your WordPress site lives at `yourdomain.com`, you can point a subdomain like `tools.yourdomain.com` to the Lovable app and link to it from WordPress navigation.
-
-### Option 3: Static Build Self-Hosting
-
-The GitHub repository contains the full source. To build and host independently:
-
-```bash
-git clone <YOUR_GITHUB_REPO_URL>
-cd <PROJECT_FOLDER>
-npm install
-npm run build
-# Deploy the dist/ folder to any static host (Netlify, Vercel, etc.)
+### Scan List (Declarative Short Lines)
+```css
+.scan-list {
+  border-left: 2px solid hsl(var(--border));
+  padding-left: 24px;
+  space-y: 8px;
+}
+.scan-list p {
+  font-size: 18px;
+  color: hsl(var(--muted-foreground));
+  line-height: relaxed;
+}
 ```
 
-> **Note:** The app depends on the Lovable Cloud backend for database, auth, and edge functions. These will continue to work regardless of where the frontend is hosted, as long as the environment variables (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) are set.
+### Emphasis Line (Serif Pull-Quote)
+```css
+.emphasis-line {
+  font-family: 'Libre Baskerville';
+  font-weight: 600;
+  font-size: 24px / 28px (lg);
+  line-height: snug;
+  color: charcoal;
+  padding: 12px 0;
+}
+```
 
 ---
 
-## Key Interactive Tools (Preserve During Migration)
+## 6. Header
 
-These features rely on the backend and should NOT be rebuilt in WordPress — use iframe embedding instead:
-
-| Feature | Route | Backend Dependency |
-|---------|-------|--------------------|
-| Pre-Course Assessment | `/pre-assessment` | `assessment_results` table (auth required) |
-| Post-Course Assessment | `/post-assessment` | `assessment_results` table (auth required) |
-| Leadership Readiness Quiz | `/masterclass` | `readiness_quiz_results` table |
-| Contact Form | `/contact` | `contact_submissions` + rate limiting |
-| AI Chat Assistant | Floating widget | `chat-assistant` edge function |
-| Lead Magnet Download | Homepage section | `lead_magnet_downloads` table |
-| Newsletter Signup | Footer / Blog | `newsletter_subscribers` table |
-| Leadership Checklist | `/leadership-checklist` | `checklist_results` table (auth required) |
+- Sticky, reduces from 80px → 64px on scroll
+- Background blur on scroll: `bg-background/95 backdrop-blur-md`
+- Three nav items: Executive Alignment Index™, Selected Engagements, Enquire Confidentially
+- Nav link style: 14px, `tracking-[0.03em]`, weight 400 (500 when active)
+- CTA button: `.btn-brief` with gold hover accent
+- Gap between items: `gap-11` (44px)
+- Mobile: hamburger → slide-down panel with AnimatePresence
 
 ---
 
-## Thinkific Enrollment Link Mapping
+## 7. Footer
 
-All enrollment buttons and CTA links point to the Thinkific platform. These are the canonical URLs:
+- Background: Deep Navy `hsl(var(--navy))` — `#0B1D3B`
+- Text: `hsl(var(--navy-foreground))` — light grey
+- Column headers: Soft Gold (`hsl(var(--gold))`)
+- Five columns: Brand, Navigation, Programmes, Course Downloads, Executive Exercises
+- Developer Resources row: download links for Content Brief, Layout Spec, Design Philosophy, Mockups
+- Bottom CTA: Gold-outlined button — `border: 1px solid hsl(38, 60%, 52%)`, hover fills gold
 
-| Program / Course | Thinkific URL |
-|-----------------|---------------|
-| **Executive Leadership Mastery (Self-Paced)** | `https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program` |
-| **Advanced Leadership Skills** | `https://bright-leadership-consulting.thinkific.com/courses/executive-leadership-mastery-program` |
-| Transformational Leadership | `https://bright-leadership-consulting.thinkific.com/courses/transformational-leadership` |
-| Achieving Peak Performance | `https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance` |
-| Building Professional & Personal Value | `https://bright-leadership-consulting.thinkific.com/courses/building-professional-and-personal-value` |
-| The Future of Work | `https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work` |
-| Employability Skills for Employees | `https://bright-leadership-consulting.thinkific.com/courses/employability-skills-for-employees` |
+---
 
-**Where each link appears:**
+## 8. Animation
 
-| Link | Used In |
-|------|---------|
-| Self-Paced (`/new-executive-leadership-mastery-program`) | PricingTiers, ExecutiveProgramSection, Courses page, ReadinessQuizModal, readinessQuizQuestions data, Masterclass VSL, Executive brochure |
-| Advanced Leadership (`/executive-leadership-mastery-program`) | Advanced Leadership brochure |
-| Individual courses | Courses page course cards, respective brochures |
+- **Library:** Framer Motion
+- **Standard fade pattern:**
+  ```js
+  const fade = {
+    initial: { opacity: 0, y: 16 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.7, ease: "easeOut" },
+  };
+  ```
+- Stagger children: `staggerChildren: 0.12`
+- Diagrams: `scale: 0.95 → 1`, duration 0.8
+- No decorative animations, no bouncing, no parallax
 
-> **Important:** The Self-Paced tier and the Masterclass funnel both use the same `/new-executive-leadership-mastery-program` URL. Do not confuse with `/executive-leadership-mastery-program` (Advanced Leadership Skills) or the legacy `/copy-of-executive-leadership-mastery-program` (deprecated).
+---
+
+## 9. Page Structure
+
+### Every page follows:
+1. `<SEOHead>` — title <60 chars, description <160 chars
+2. `<ScrollProgress>` — thin progress bar at top
+3. `<Header>` — sticky nav
+4. `<main>` — sections with pearl alternation
+5. `<Footer>` — navy institutional footer
+
+### Section pattern within pages:
+```
+Hero (white, kicker + heading-hero + body-brief)
+  ↓ section-divider
+Section A (section-pearl, kicker + heading-section + content)
+  ↓ section-divider
+Section B (bg-background, kicker + heading-section + content)
+  ↓ section-divider
+Section C (section-pearl, kicker + heading-section + content)
+  ↓
+Footer (navy)
+```
+
+---
+
+## 10. Key Pages
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Homepage — value proposition, structural problem, EAI intro |
+| `/executive-alignment-index` | Diagnostic instrument page |
+| `/executive-alignment-brief` | Downloadable HTML brief |
+| `/selected-engagements` | Anonymised case abstracts |
+| `/executive-leadership-mastery` | 33-module CPD programme |
+| `/courses` | Programme portfolio overview |
+| `/augmented-leadership` | Proprietary AI methodology |
+| `/contact` | Confidential enquiry form |
+
+---
+
+## 11. Conversion Language
+
+- **Never use:** "Book a call", "Get started", "Sign up", "Free trial"
+- **Always use:** "Enquire Confidentially", "Initiate a Confidential Conversation", "Arrange a Conversation"
+- Confirmation copy: "Your enquiry has been received. A member of our team will respond shortly."
+
+---
+
+## 12. Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + TypeScript |
+| Build | Vite 5 |
+| Styling | Tailwind CSS 3 + CSS custom properties |
+| Animation | Framer Motion |
+| Components | shadcn/ui (Radix primitives) |
+| Forms | React Hook Form + Zod |
+| Backend | Supabase (auth, database, edge functions) |
+| Routing | React Router v6 |
+
+---
+
+*Document generated for project handoff. All design tokens, ratios, and patterns are derived from the live codebase.*
