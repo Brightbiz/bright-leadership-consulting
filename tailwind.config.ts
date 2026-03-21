@@ -64,6 +64,15 @@ export default {
           500: "hsl(var(--amber-500))",
           600: "hsl(var(--amber-600))",
         },
+        pearl: "hsl(var(--pearl))",
+        navy: {
+          DEFAULT: "hsl(var(--navy))",
+          foreground: "hsl(var(--navy-foreground))",
+        },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          muted: "hsl(var(--gold-muted))",
+        },
         score: {
           master: {
             DEFAULT: "hsl(var(--score-master))",

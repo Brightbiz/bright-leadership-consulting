@@ -60,6 +60,13 @@
     --amber-500: 38 92% 55%;
     --amber-600: 32 90% 48%;
 
+    /* Institutional palette — Two-Tier design */
+    --pearl: 220 20% 97%;
+    --navy: 216 70% 14%;
+    --navy-foreground: 220 20% 92%;
+    --gold: 42 50% 52%;
+    --gold-muted: 42 40% 65%;
+
     /* Shadows — restrained */
     --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.04);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
@@ -154,6 +161,11 @@
     background-color: hsl(var(--border));
   }
 
+  /* Pearl alternate section background */
+  .section-pearl {
+    background-color: hsl(var(--pearl));
+  }
+
   /* Tinted section background — disabled per brief (white only) */
   .section-tinted {
     background-color: hsl(var(--background));
@@ -186,9 +198,10 @@
     margin-bottom: 0;
   }
 
-  /* Kicker / eyebrow */
+  /* Kicker / eyebrow — gold accent */
   .kicker {
-    @apply text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase;
+    @apply text-xs font-medium tracking-[0.2em] uppercase;
+    color: hsl(var(--gold));
   }
 
   /* Quiet CTA link */
