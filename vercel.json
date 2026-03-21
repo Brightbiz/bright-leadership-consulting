@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!brochures|downloads|favicon|robots|sitemap|placeholder).*)", "destination": "/index.html" }
+  ]
+}
