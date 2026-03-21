@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface LogoProps {
   className?: string;
   isCompact?: boolean;
-  variant?: "stacked" | "horizontal";
+  variant?: "stacked" | "horizontal" | "light";
 }
 
 const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
