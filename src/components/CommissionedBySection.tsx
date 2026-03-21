@@ -21,9 +21,10 @@ const CommissionedBySection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="Commissioning context" className="py-[90px] section-tinted">
+      <section aria-label="Commissioning context" className="py-[90px] bg-background">
         <div className="container-brief">
           <div className="prose-narrow mx-auto text-center">
+            <motion.p className="kicker mb-4" {...fade}>Commissioned By</motion.p>
             <motion.h2 className="heading-section mb-8" {...fade}>
               When Executive Alignment Becomes a Strategic Priority
             </motion.h2>

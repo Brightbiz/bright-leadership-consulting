@@ -37,8 +37,9 @@ const AdvisoryPathwaySection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="Advisory pathway" className="py-[90px] bg-background">
+      <section aria-label="Advisory pathway" className="py-[90px] section-pearl">
         <div className="container-brief">
+          <motion.p className="kicker mb-4" {...fade}>Advisory Pathway</motion.p>
           <motion.h2
             className="heading-section mb-16 prose-narrow mx-auto"
             {...fade}

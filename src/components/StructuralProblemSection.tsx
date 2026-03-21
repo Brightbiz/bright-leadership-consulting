@@ -25,9 +25,10 @@ const StructuralProblemSection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="Strategic insight" className="py-[80px] section-tinted">
+      <section aria-label="Strategic insight" className="py-[80px] section-pearl">
         <div className="container-brief">
           <div className="prose-narrow mx-auto">
+            <motion.p className="kicker mb-4" {...fade}>Strategic Insight</motion.p>
             <motion.h2 className="heading-section mb-8" {...fade}>
               Strategy Slows Before It Fails
             </motion.h2>
