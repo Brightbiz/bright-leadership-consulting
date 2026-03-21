@@ -207,7 +207,7 @@ const ExecutiveAlignmentIndex = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         path="/executive-alignment-index"
-        title="Executive Alignment Index | Bright Leadership Consulting"
+        title="Executive Alignment Index™ | Bright Leadership Consulting"
         description="A governance-level instrument measuring executive variance across decision rights, strategic interpretation, and escalation architecture."
       />
       <ScrollProgress />
