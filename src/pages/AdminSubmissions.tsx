@@ -456,26 +456,82 @@ const AdminSubmissions = () => {
 
           {/* ─── Dev Resources Tab ─── */}
           <TabsContent value="dev-resources">
-            <div className="rounded-lg border border-border bg-card p-6">
-              <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Developer Handoff Resources</h3>
-              <div className="space-y-3">
-                {[
-                  { label: "Developer Handoff (Full)", href: "/downloads/developer-handoff.md", filename: "developer-handoff.md" },
-                  { label: "Content Brief (New Project)", href: "/downloads/content-brief-new-project.md", filename: "content-brief-new-project.md" },
-                  { label: "Layout Specification", href: "/downloads/layout-specification.md", filename: "layout-specification.md" },
-                  { label: "Design Philosophy", href: "/downloads/institutional-gravity-philosophy.md", filename: "institutional-gravity-philosophy.md" },
-                  { label: "Homepage Comparison Mockup", href: "/downloads/homepage-comparison-current-vs-proposed.png", filename: "homepage-comparison-current-vs-proposed.png" },
-                ].map((resource) => (
-                  <a
-                    key={resource.filename}
-                    href={resource.href}
-                    download={resource.filename}
-                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/50"
-                  >
-                    <Download className="h-4 w-4 shrink-0" />
-                    {resource.label}
-                  </a>
-                ))}
+            <div className="space-y-8">
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Developer Handoff Resources</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: "Developer Handoff (Full)", href: "/downloads/developer-handoff.md", filename: "developer-handoff.md" },
+                    { label: "Content Brief (New Project)", href: "/downloads/content-brief-new-project.md", filename: "content-brief-new-project.md" },
+                    { label: "Layout Specification", href: "/downloads/layout-specification.md", filename: "layout-specification.md" },
+                    { label: "Design Philosophy", href: "/downloads/institutional-gravity-philosophy.md", filename: "institutional-gravity-philosophy.md" },
+                    { label: "Homepage Comparison Mockup", href: "/downloads/homepage-comparison-current-vs-proposed.png", filename: "homepage-comparison-current-vs-proposed.png" },
+                  ].map((resource) => (
+                    <a
+                      key={resource.filename}
+                      href={resource.href}
+                      download={resource.filename}
+                      className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/50"
+                    >
+                      <Download className="h-4 w-4 shrink-0" />
+                      {resource.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Course Downloads (Thinkific)</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: "AI Opportunity Worksheet", href: "/downloads/ai-opportunity-worksheet.html" },
+                    { label: "AI Strategy Canvas", href: "/downloads/ai-strategy-canvas.html" },
+                    { label: "Executive AI Prompt Library", href: "/downloads/executive-ai-prompt-library.html" },
+                    { label: "AI Taskforce Template", href: "/downloads/ai-taskforce-template.html" },
+                    { label: "Responsible AI Governance", href: "/downloads/responsible-ai-governance-framework.html" },
+                    { label: "AI Transformation Roadmap", href: "/downloads/ai-transformation-leadership-roadmap.html" },
+                    { label: "AI Leadership Blueprint™ Template", href: "/downloads/ai-leadership-blueprint-template.html" },
+                    { label: "Capstone Project Guide", href: "/downloads/capstone-project-guide.html" },
+                    { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
+                  ].map((resource) => (
+                    <a
+                      key={resource.label}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/50"
+                    >
+                      <Download className="h-4 w-4 shrink-0" />
+                      {resource.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Executive Exercises</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: "Leadership Reflection Exercises", href: "/downloads/exercise-leadership-reflection.html" },
+                    { label: "Leadership Speech Exercise", href: "/downloads/exercise-leadership-speech.html" },
+                    { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
+                    { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
+                    { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
+                    { label: "AI Leadership Blueprint™ Canvas", href: "/downloads/exercise-ai-leadership-blueprint.html" },
+                    { label: "Growth Opportunity Mapping", href: "/downloads/exercise-growth-opportunity-mapping.html" },
+                  ].map((resource) => (
+                    <a
+                      key={resource.label}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-muted/50"
+                    >
+                      <Download className="h-4 w-4 shrink-0" />
+                      {resource.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </TabsContent>

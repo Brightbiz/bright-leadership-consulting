@@ -26,8 +26,9 @@ const executiveProgrammes = [
       "66 CPD Points Accredited",
       "Self-Directed or Cohort-Based",
     ],
-    link: "/executive-leadership-mastery",
-    internal: true,
+    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
+    internal: false,
+    detailPage: "/executive-leadership-mastery",
   },
   {
     title: "Strategic Leadership in the Age of AI",
@@ -40,9 +41,36 @@ const executiveProgrammes = [
       "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
-    link: "/contact",
-    internal: true,
-    comingSoon: false,
+    link: "https://bright-leadership-consulting.thinkific.com/courses/ai-leadership",
+    internal: false,
+  },
+  {
+    title: "The Future of Work",
+    subtitle: "Navigating Workforce Transformation",
+    description:
+      "Equip your leadership team to navigate the structural shifts redefining how organisations attract, develop, and retain talent. From hybrid models to workforce strategy, this programme builds the clarity leaders need to act decisively.",
+    features: [
+      "Workforce Strategy Development",
+      "Hybrid & Remote Leadership Models",
+      "Talent Retention Frameworks",
+      "Organisational Design Principles",
+    ],
+    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+    internal: false,
+  },
+  {
+    title: "Strategic Productivity & Peak Performance",
+    subtitle: "High-Impact Executive Performance",
+    description:
+      "A structured programme for senior leaders seeking to optimise personal and team performance. Grounded in evidence-based productivity frameworks and executive performance science.",
+    features: [
+      "Executive Performance Diagnostics",
+      "Productivity System Design",
+      "Energy & Focus Management",
+      "Team Performance Optimisation",
+    ],
+    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    internal: false,
   },
   {
     title: "Corporate Retreats",
@@ -140,15 +168,6 @@ const Courses = () => {
                     <h3 className="font-serif text-lg font-semibold text-foreground">
                       {programme.title}
                     </h3>
-                    {programme.internal ? (
-                      <span className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
-                        Internal
-                      </span>
-                    ) : (
-                      <span className="text-xs font-medium text-accent uppercase tracking-wider">
-                        Programme
-                      </span>
-                    )}
                   </div>
 
                   <p className="text-sm font-medium text-accent mb-3">
@@ -171,22 +190,30 @@ const Courses = () => {
                     ))}
                   </ul>
 
-                  {programme.internal ? (
-                    <Link to={programme.link} className="link-quiet text-sm">
-                      View Programme Details
-                      <ArrowRight className="h-3 w-3" />
-                    </Link>
-                  ) : (
-                    <a
-                      href={programme.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-quiet text-sm"
-                    >
-                      Enquire Confidentially
-                      <ArrowRight className="h-3 w-3" />
-                    </a>
-                  )}
+                  <div className="flex items-center gap-4">
+                    {programme.internal ? (
+                      <Link to={programme.link} className="link-quiet text-sm">
+                        Enquire Confidentially
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    ) : (
+                      <a
+                        href={programme.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-quiet text-sm"
+                      >
+                        View Programme
+                        <ArrowRight className="h-3 w-3" />
+                      </a>
+                    )}
+                    {programme.detailPage && (
+                      <Link to={programme.detailPage} className="link-quiet text-sm text-muted-foreground">
+                        Programme Details
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>

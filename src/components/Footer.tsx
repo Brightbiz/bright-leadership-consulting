@@ -16,26 +16,11 @@ const programmeLinks = [
   { label: "Augmented Leadership™", href: "/augmented-leadership", isRoute: true },
 ];
 
-const downloadLinks = [
-  { label: "AI Opportunity Worksheet", href: "/downloads/ai-opportunity-worksheet.html" },
-  { label: "AI Strategy Canvas", href: "/downloads/ai-strategy-canvas.html" },
-  { label: "Executive AI Prompt Library", href: "/downloads/executive-ai-prompt-library.html" },
-  { label: "AI Taskforce Template", href: "/downloads/ai-taskforce-template.html" },
-  { label: "Responsible AI Governance", href: "/downloads/responsible-ai-governance-framework.html" },
-  { label: "AI Transformation Roadmap", href: "/downloads/ai-transformation-leadership-roadmap.html" },
-  { label: "AI Leadership Blueprint™ Template", href: "/downloads/ai-leadership-blueprint-template.html" },
-  { label: "Capstone Project Guide", href: "/downloads/capstone-project-guide.html" },
-  { label: "Augmented Leadership System Map", href: "/downloads/augmented-leadership-system-map.html" },
-];
-
-const exerciseLinks = [
-  { label: "Leadership Reflection Exercises", href: "/downloads/exercise-leadership-reflection.html" },
-  { label: "Leadership Speech Exercise", href: "/downloads/exercise-leadership-speech.html" },
-  { label: "Exercise 1: AI Opportunity Mapping", href: "/downloads/exercise-ai-opportunity-mapping.html" },
-  { label: "Exercise 2: AI Strategy Canvas", href: "/downloads/exercise-ai-strategy-canvas.html" },
-  { label: "Exercise 3: Responsible AI Governance", href: "/downloads/exercise-responsible-ai-governance.html" },
-  { label: "AI Leadership Blueprint™ Canvas", href: "/downloads/exercise-ai-leadership-blueprint.html" },
-  { label: "Growth Opportunity Mapping", href: "/downloads/exercise-growth-opportunity-mapping.html" },
+const brochureLinks = [
+  { label: "Executive Leadership Mastery", href: "/brochures/executive-leadership-mastery-brochure.html" },
+  { label: "Executive Alignment Index™", href: "/brochures/executive-alignment-index-brochure.html" },
+  { label: "Peak Performance", href: "/brochures/peak-performance-brochure.html" },
+  { label: "Future of Work", href: "/brochures/future-of-work-brochure.html" },
 ];
 
 const Footer = () => {
@@ -106,23 +91,8 @@ const Footer = () => {
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Course Downloads</span>
-            {downloadLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <nav className="flex flex-col gap-3">
-            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Executive Exercises</span>
-            {exerciseLinks.map((link) => (
+            <span className="text-xs font-medium text-gold uppercase tracking-wider mb-1">Programme Brochures</span>
+            {brochureLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
