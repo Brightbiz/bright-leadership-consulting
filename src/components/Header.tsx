@@ -55,7 +55,7 @@ const Header = () => {
               to="/contact"
               className="btn-brief text-sm py-2 px-5"
             >
-              Enquire Confidentially
+              Discuss Executive Alignment
             </Link>
           </div>
 
