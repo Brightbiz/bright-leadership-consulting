@@ -55,7 +55,7 @@ const HeroSection = () => {
 
           <div className="mt-10 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <Link to="/contact" className="btn-brief">
-              Enquire Confidentially
+              Discuss Executive Alignment
             </Link>
             <Link to="/executive-alignment-index" className="btn-brief">
               Executive Alignment Index™
