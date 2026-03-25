@@ -313,7 +313,7 @@ const ExecutiveLeadershipMastery = () => {
 
                 <div className="flex flex-wrap gap-8 pt-2">
                   <Link to="/contact" className="link-quiet">
-                    Enquire Confidentially
+                    Discuss Executive Alignment
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                   <Link to="/courses" className="link-quiet">
