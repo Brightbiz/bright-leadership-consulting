@@ -40,7 +40,7 @@ const HeroSection = () => {
             </h1>
           </div>
 
-          <div className="mt-8 space-y-5 animate-fade-up" style={{ animationDelay: '0.15s' }}>
+          <div className="mt-12 space-y-6 animate-fade-up" style={{ animationDelay: '0.15s' }}>
             <p className="body-brief">
               As organisations scale, differences in strategic interpretation, decision 
               authority, and accountability structures quietly emerge across the executive team.
@@ -51,7 +51,7 @@ const HeroSection = () => {
             </p>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          <div className="mt-14 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <Link to="/contact" className="btn-brief">
               Discuss Executive Alignment
             </Link>
