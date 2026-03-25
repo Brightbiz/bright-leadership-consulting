@@ -16,7 +16,7 @@ const InstrumentSection = () => {
     <>
       <div className="section-divider" />
 
-      <section aria-label="The instrument" className="py-[140px] bg-background relative overflow-hidden">
+      <section aria-label="The instrument" className="py-[160px] bg-background relative overflow-hidden">
         {/* Structural anchor image — left side, faint */}
         <div
           className="hidden lg:block absolute left-0 top-0 bottom-0 w-1/3 pointer-events-none"
