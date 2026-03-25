@@ -57,7 +57,6 @@ const HeroSection = () => {
             <Link to="/contact" className="btn-brief">
               Discuss Executive Alignment
             </Link>
-            </Link>
             <Link to="/executive-alignment-index" className="btn-brief">
               Executive Alignment Index™
             </Link>
