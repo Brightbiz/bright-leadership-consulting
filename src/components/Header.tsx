@@ -55,7 +55,7 @@ const Header = () => {
               to="/contact"
               className="btn-brief text-sm py-2 px-5"
             >
-              Enquire Confidentially
+              Discuss Executive Alignment
             </Link>
           </div>
 
@@ -98,7 +98,7 @@ const Header = () => {
                   className="btn-brief w-full text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Enquire Confidentially
+                  Discuss Executive Alignment
                 </Link>
               </div>
             </motion.div>
