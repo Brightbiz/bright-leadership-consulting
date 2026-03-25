@@ -193,7 +193,7 @@ const Courses = () => {
                   <div className="flex items-center gap-4">
                     {programme.internal ? (
                       <Link to={programme.link} className="link-quiet text-sm">
-                        Enquire Confidentially
+                        Enquire Regarding This Programme
                         <ArrowRight className="h-3 w-3" />
                       </Link>
                     ) : (

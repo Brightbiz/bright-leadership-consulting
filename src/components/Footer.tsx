@@ -7,7 +7,7 @@ const footerLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
   { label: "Selected Engagements", href: "/selected-engagements", isRoute: true },
   { label: "Executive Alignment Brief™", href: "/downloads/executive-alignment-brief.html", isRoute: false },
-  { label: "Enquire Confidentially", href: "/contact", isRoute: true },
+  { label: "Discuss Executive Alignment", href: "/contact", isRoute: true },
 ];
 
 const programmeLinks = [
