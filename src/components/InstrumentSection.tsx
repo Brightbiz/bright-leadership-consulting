@@ -51,13 +51,18 @@ const InstrumentSection = () => {
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
                 <p>
-                  A governance-level assessment identifying executive variance across 
+                  A governance-level diagnostic identifying executive variance across 
                   strategic interpretation, decision rights, and escalation architecture.
                 </p>
 
                 <p>
-                  The outcome is a concise, board-ready dashboard providing objective 
-                  clarity before intervention.
+                  The Index is designed to support executive discussion and decision-making, 
+                  not simply to assess alignment.
+                </p>
+
+                <p>
+                  The output is delivered as a concise Executive Alignment Report, typically 
+                  used to inform leadership discussion, strategic planning, and governance review.
                 </p>
 
                 <div className="scan-list mt-10">

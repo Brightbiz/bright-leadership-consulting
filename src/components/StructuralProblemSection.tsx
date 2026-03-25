@@ -51,9 +51,17 @@ const StructuralProblemSection = () => {
                 <p>Escalation becomes inconsistent.</p>
               </motion.div>
 
+              <motion.p variants={childVariants}>
+                When executive alignment begins to drift, organisations rarely experience 
+                immediate failure. Instead, the effects appear in slower decision-making, 
+                duplicated effort, and reduced execution velocity — often without a clear cause.
+              </motion.p>
+
               <motion.p variants={childVariants}>Performance rarely collapses overnight.</motion.p>
 
-              <motion.p className="emphasis-line" variants={childVariants}>It drifts.</motion.p>
+              <motion.p className="emphasis-line" variants={childVariants}>
+                Misalignment slows execution — often without being immediately visible.
+              </motion.p>
 
               <motion.p className="emphasis-line" variants={childVariants}>
                 Structural alignment must be measured — not assumed.

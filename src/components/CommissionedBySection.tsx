@@ -59,6 +59,17 @@ const CommissionedBySection = () => {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
                 }}
               >
+                The need for executive alignment has become more acute as organisations 
+                navigate increasing complexity, cross-functional dependency, and AI-driven transformation.
+              </motion.p>
+
+              <motion.p
+                className="body-brief"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
                 Typically commissioned by CEOs, Chairs, Non-Executive Directors, and Chief People Officers.
               </motion.p>
 
