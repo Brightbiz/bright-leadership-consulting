@@ -246,9 +246,41 @@ const Courses = () => {
           </div>
         </section>
 
-        <div className="section-divider" />
+        {/* Section — Advisory Context */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[620px] mx-auto text-center">
+              <motion.p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3" {...fade}>
+                Where Programmes Sit
+              </motion.p>
+              <motion.h2
+                className="font-serif text-xl font-medium text-foreground mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Measure → Install → Sustain → Develop
+              </motion.h2>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mb-5"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                Executive programmes represent the fourth stage of our advisory
+                architecture. Before development begins, structural alignment is
+                measured through the Executive Alignment Index™ — ensuring
+                investment targets the right gaps.
+              </motion.p>
+              <motion.div {...fade} transition={{ ...fade.transition, delay: 0.2 }}>
+                <Link to="/executive-alignment-index" className="link-quiet text-sm">
+                  Explore the Executive Alignment Index™
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-        {/* Section 3 — Positioning Statement */}
+        <div className="section-divider" />
         <section className="section-brief section-pearl">
           <div className="container-brief">
             <div className="max-w-[720px]">
