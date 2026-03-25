@@ -98,7 +98,7 @@ const Header = () => {
                   className="btn-brief w-full text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Enquire Confidentially
+                  Discuss Executive Alignment
                 </Link>
               </div>
             </motion.div>
