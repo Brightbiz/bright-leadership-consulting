@@ -163,7 +163,7 @@ const SelectedEngagements = () => {
                     to="/contact"
                     className="link-quiet"
                   >
-                    Enquire Confidentially
+                    Discuss Executive Alignment
                   </Link>
                 </div>
               </motion.div>
