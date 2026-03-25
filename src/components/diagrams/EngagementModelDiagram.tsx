@@ -75,7 +75,7 @@ const EngagementModelDiagram = () => {
       <div className="hidden md:block mt-4">
         <div className="h-px bg-primary/15 w-full" />
         <p className="text-center text-[10px] text-primary/50 mt-2 tracking-wide">
-          Continuous engagement model
+          Continuous engagement model — Measure · Install · Sustain · Develop
         </p>
       </div>
     </motion.div>
