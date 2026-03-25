@@ -42,14 +42,12 @@ const HeroSection = () => {
 
           <div className="mt-8 space-y-5 animate-fade-up" style={{ animationDelay: '0.15s' }}>
             <p className="body-brief">
-              As organisations grow in scale and complexity, differences in strategic 
-              interpretation, decision authority, and accountability structures gradually 
-              emerge across the executive team.
+              As organisations scale, differences in strategic interpretation, decision 
+              authority, and accountability structures quietly emerge across the executive team.
             </p>
             <p className="body-brief">
-              Bright Leadership Consulting measures executive variance through the 
-              Executive Alignment Index™, helping leadership teams maintain the structural 
-              clarity required for strategy to execute effectively.
+              The Executive Alignment Index™ measures that variance — giving leadership 
+              teams the structural clarity required for strategy to execute.
             </p>
           </div>
 

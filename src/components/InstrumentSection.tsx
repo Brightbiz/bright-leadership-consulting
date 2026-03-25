@@ -85,7 +85,7 @@ const InstrumentSection = () => {
 
             {/* Right — dashboard + framework */}
             <motion.div
-              className="lg:col-span-7 space-y-16"
+              className="lg:col-span-7 space-y-20"
               {...fade}
               transition={{ ...fade.transition, delay: 0.25 }}
             >
