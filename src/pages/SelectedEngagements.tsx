@@ -15,33 +15,33 @@ const fade = {
 const engagements = [
   {
     sector: "Financial Services",
-    context: "Post-merger integration across two legacy executive teams with overlapping mandates and undefined reporting lines.",
+    context: "Post-acquisition executive alignment across two newly integrated leadership teams with overlapping mandates and undefined escalation authority.",
     scope: "Executive Alignment Index™ deployment, followed by a 12-week structural advisory engagement with the Group CEO and incoming Chair.",
-    outcome: "Alignment clarity achieved across the combined executive committee. Role mandates redefined. Board confidence in leadership structure restored within one quarter.",
+    outcome: "Alignment clarity achieved across the combined executive committee. Decision rights and role mandates redefined. Board confidence in the leadership structure restored within one quarter.",
   },
   {
     sector: "Infrastructure & Engineering",
-    context: "Rapid international expansion had outpaced the executive team's structural coherence. Strategic decisions were being deferred or duplicated across regions.",
-    scope: "Diagnostic phase covering eight senior leaders across three geographies. Advisory engagement with the CEO and CPO on executive architecture.",
-    outcome: "Decision-making authority was clarified regionally. Executive meeting cadence restructured. Two latent succession risks were identified and addressed proactively.",
+    context: "Rapid international expansion had outpaced executive structural coherence. Strategic decisions were being deferred or duplicated across regional leadership.",
+    scope: "Diagnostic phase covering eight senior leaders across three geographies. Structural advisory engagement with the CEO and CPO on executive decision architecture.",
+    outcome: "Decision-making authority was clarified regionally. Executive governance cadence restructured. Two latent succession risks were identified and addressed before they compounded.",
   },
   {
     sector: "Healthcare & Life Sciences",
-    context: "A newly appointed CEO inherited an executive team with strong individual capability but limited collective alignment on strategic priorities.",
-    scope: "Executive Alignment Index™ followed by a series of structured advisory sessions with the CEO. Parallel engagement with the Chair on board-executive interface.",
-    outcome: "Strategic priorities were consolidated from twelve to four. Executive team operating rhythm was redesigned. Chair reported measurable improvement in board-executive coherence.",
+    context: "A newly appointed CEO inherited an executive team with strong individual capability but material variance in strategic interpretation across the leadership group.",
+    scope: "Executive Alignment Index™ followed by structured advisory sessions with the CEO. Parallel governance engagement with the Chair on the board-executive interface.",
+    outcome: "Strategic priorities consolidated from twelve to four. Executive operating rhythm redesigned around decision rights. Chair reported measurable improvement in board-executive coherence.",
   },
   {
     sector: "Professional Services",
-    context: "Partnership-led governance model was creating structural ambiguity at the executive layer. Growth targets were being set without aligned leadership capacity.",
+    context: "Partnership-led governance was creating structural ambiguity at the executive layer. Growth targets were being set without aligned leadership accountability or escalation clarity.",
     scope: "Alignment diagnostic across the senior partner group and executive leadership. Advisory engagement with the Managing Partner and incoming Senior Independent Director.",
-    outcome: "Leadership mandates were formalised for the first time. A governance framework was introduced between the partnership board and the executive team. Strategic planning cycles were shortened by 40%.",
+    outcome: "Leadership mandates were formalised for the first time. A governance framework was installed between the partnership board and the executive team. Strategic planning cycles shortened by 40%.",
   },
   {
     sector: "Technology & Digital",
-    context: "Series C scale-up transitioning from founder-led to professionally managed. Executive hires from different organisational cultures were not integrating effectively.",
-    scope: "Executive Alignment Index™ deployment across the C-suite. Advisory engagement with the CEO and lead investor on leadership architecture.",
-    outcome: "Cultural fault lines were surfaced and addressed structurally. Two executive roles were redefined. Investor confidence in the leadership team was formally documented at the next board review.",
+    context: "Series C organisation transitioning from founder-led to professionally managed governance. Executive hires from different institutional cultures were not integrating into a coherent leadership architecture.",
+    scope: "Executive Alignment Index™ deployment across the C-suite. Structural advisory engagement with the CEO and lead investor on leadership architecture and decision rights.",
+    outcome: "Cultural and structural fault lines were surfaced and addressed through governance redesign. Two executive roles were redefined. Investor confidence in the leadership team was formally documented at the next board review.",
   },
 ];
 
