@@ -19,6 +19,10 @@ const programmeLinks = [
 const brochureLinks = [
   { label: "Executive Leadership Mastery", href: "/brochures/executive-leadership-mastery-brochure.html" },
   { label: "Executive Alignment Index™", href: "/brochures/executive-alignment-index-brochure.html" },
+  { label: "Advanced Leadership Skills", href: "/brochures/advanced-leadership-skills-brochure.html" },
+  { label: "Future of Work", href: "/brochures/future-of-work-brochure.html" },
+  { label: "Peak Performance", href: "/brochures/peak-performance-brochure.html" },
+  { label: "Enhanced Employability Skills", href: "/brochures/enhanced-employability-skills-brochure.html" },
 ];
 
 const Footer = () => {
