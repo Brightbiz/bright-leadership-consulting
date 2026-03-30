@@ -24,19 +24,6 @@ const brochureLinks = [
 ];
 
 const Footer = () => {
-  const [generating, setGenerating] = useState(false);
-
-  const handleWorkbookDownload = async () => {
-    setGenerating(true);
-    try {
-      const pdfBytes = await generateStrategicLeadershipPDF();
-      downloadStrategicLeadershipPDF(pdfBytes);
-    } catch (e) {
-      console.error('Workbook generation failed:', e);
-    } finally {
-      setGenerating(false);
-    }
-  };
 
   return (
     <footer className="bg-navy text-navy-foreground">
