@@ -83,13 +83,6 @@ const Footer = () => {
                 {link.label}
               </Link>
             ))}
-            <button
-              onClick={handleWorkbookDownload}
-              disabled={generating}
-              className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground text-left disabled:opacity-50"
-            >
-              {generating ? "Generating…" : "Executive Workbook (PDF)"}
-            </button>
           </nav>
 
           <nav className="flex flex-col gap-3">
