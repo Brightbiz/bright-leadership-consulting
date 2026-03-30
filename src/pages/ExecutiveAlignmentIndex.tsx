@@ -443,45 +443,6 @@ const ExecutiveAlignmentIndex = () => {
 
         <div className="section-divider" />
 
-        {/* Section 7 — Video Scripts */}
-        <section className="section-brief section-pearl">
-          <div className="container-brief">
-            <div className="max-w-[680px] mb-16">
-              <motion.p className="kicker mb-6" {...fade}>
-                Production Assets
-              </motion.p>
-
-              <motion.h2
-                className="heading-section mb-4"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.1 }}
-              >
-                Institutional Video Scripts
-              </motion.h2>
-
-              <motion.p
-                className="body-brief"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.15 }}
-              >
-                Two authoritative video scripts — each 90–120 seconds — position the firm
-                as an institutional executive programme provider. One anchors the
-                primary website, the other frames the Thinkific learning platform.
-              </motion.p>
-            </div>
-
-            <motion.div
-              className="max-w-4xl"
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.2 }}
-            >
-              <VideoScriptsTabs />
-            </motion.div>
-          </div>
-        </section>
-
-        <div className="section-divider" />
-
         {/* Section 8 — CTA */}
         <section className="section-brief bg-background">
           <div className="container-brief">
