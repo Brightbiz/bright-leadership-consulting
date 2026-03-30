@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FileText, ExternalLink, Clock, Volume2 } from "lucide-react";
+
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
