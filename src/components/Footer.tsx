@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import Logo from "./Logo";
-import { generateStrategicLeadershipPDF, downloadStrategicLeadershipPDF } from "@/utils/strategicLeadershipPdfGenerator";
 
 const footerLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
