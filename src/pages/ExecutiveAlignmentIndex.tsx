@@ -441,6 +441,39 @@ const ExecutiveAlignmentIndex = () => {
           </div>
         </section>
 
+        {/* Development Pathway Cross-Link */}
+        <section className="section-brief section-pearl">
+          <div className="container-brief">
+            <div className="max-w-[620px] mx-auto text-center">
+              <motion.p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3" {...fade}>
+                What Follows Diagnosis
+              </motion.p>
+              <motion.h2
+                className="font-serif text-xl font-medium text-foreground mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                Measure → Install → Sustain → Develop
+              </motion.h2>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mb-5"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                Diagnostic clarity creates the conditions for targeted
+                development. Our executive programmes represent the fourth stage
+                of the advisory architecture — building capability where
+                alignment has been structurally secured.
+              </motion.p>
+              <motion.div {...fade} transition={{ ...fade.transition, delay: 0.2 }}>
+                <Link to="/courses" className="link-quiet text-sm">
+                  Explore Executive Programmes
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         <div className="section-divider" />
 
         {/* Section 8 — CTA */}
