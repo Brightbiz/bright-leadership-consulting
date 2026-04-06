@@ -15,7 +15,7 @@ const stages = [
     phase: 2,
     label: "Install",
     instrument: "ALIGN™ Intervention",
-    description: "Establish decision architecture, escalation protocols, and accountability structures.",
+    description: "Where the diagnostic reveals structural variance, we establish decision architecture and escalation clarity.",
     link: "/contact",
     linkLabel: "Discuss Advisory",
     category: "Advisory",
@@ -24,7 +24,7 @@ const stages = [
     phase: 3,
     label: "Sustain",
     instrument: "Executive Oversight™",
-    description: "Maintain alignment under growth, transformation, and governance complexity.",
+    description: "In some engagements, we remain involved to support ongoing executive coordination as complexity evolves.",
     link: "/contact",
     linkLabel: "Discuss Advisory",
     category: "Advisory",
@@ -144,7 +144,7 @@ const AdvisoryArchitectureDiagram = () => {
       <div className="mt-5">
         <div className="h-px bg-primary/12 w-full" />
         <p className="text-center text-[10px] text-primary/40 mt-2 tracking-[0.1em]">
-          Measure · Install · Sustain · Develop — a continuous advisory architecture
+          One structured process — each phase shaped by the diagnostic
         </p>
       </div>
     </motion.div>

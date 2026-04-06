@@ -37,10 +37,10 @@ const phases = [
     label: "Install",
     instrument: "ALIGN™ Intervention",
     category: "Advisory",
-    headline: "Establish Structural Clarity",
+    headline: "Where Required, Establish Structural Clarity",
     paragraphs: [
-      "Measurement without action is observation. The ALIGN™ Intervention translates diagnostic findings into defined decision architecture — clarifying who decides what, how escalation flows, and where accountability sits.",
-      "This is not a workshop series or a coaching programme. It is a structured intervention that installs the governance architecture required for coherent strategic execution. The engagement is designed for leadership teams navigating growth, transition, or AI-driven transformation.",
+      "Where the diagnostic reveals structural variance, the ALIGN™ Intervention translates those findings into defined decision architecture — clarifying who decides what, how escalation flows, and where accountability sits.",
+      "This is not a separate service. It is the natural continuation of the diagnostic — a structured intervention that installs the governance architecture required for coherent strategic execution.",
     ],
     outputs: [
       "Decision rights architecture",
@@ -55,10 +55,10 @@ const phases = [
     label: "Sustain",
     instrument: "Executive Oversight™",
     category: "Advisory",
-    headline: "Maintain Alignment Under Pressure",
+    headline: "In Some Cases, We Remain Involved",
     paragraphs: [
-      "Alignment is not a fixed state — it requires ongoing structural attention, particularly during periods of growth, leadership transition, or strategic pivots. Executive Oversight™ provides the governance continuity that prevents drift from returning.",
-      "Through periodic re-measurement, structured executive reviews, and governance recalibration, this engagement ensures that the clarity installed through ALIGN™ remains intact as organisational complexity evolves.",
+      "Alignment is not a fixed state. In some engagements, we remain involved to support ongoing executive coordination — particularly during periods of growth, leadership transition, or strategic pivots.",
+      "Through periodic re-measurement, structured executive reviews, and governance recalibration, Executive Oversight™ ensures that the clarity installed through the intervention remains intact as organisational complexity evolves.",
     ],
     outputs: [
       "Periodic alignment re-measurement",
@@ -119,10 +119,10 @@ const AdvisoryProcess = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
-                Every engagement follows a deliberate four-phase architecture —
-                from diagnostic measurement to sustained development. Each phase
-                builds on the previous, ensuring that intervention is grounded in
-                evidence and that capability investment targets verified gaps.
+                Engagements typically begin with the Executive Alignment Index™.
+                What follows — intervention, ongoing oversight, capability
+                development — is shaped entirely by the outcomes of the diagnostic.
+                This is not a menu of services. It is a structured process.
               </motion.p>
             </div>
           </div>
