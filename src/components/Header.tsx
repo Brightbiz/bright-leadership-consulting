@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index" },
+  { label: "How We Work", href: "/advisory-process" },
   { label: "Selected Engagements", href: "/selected-engagements" },
 ];
 
