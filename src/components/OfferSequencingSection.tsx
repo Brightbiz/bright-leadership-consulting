@@ -17,18 +17,24 @@ const cardVariants = {
   }),
 };
 
-const pathways = [
+const stages = [
   {
-    title: "Executive Alignment Index™",
-    description: "Measure variance across strategic interpretation, decision rights, and escalation architecture.",
+    step: "01",
+    title: "Measure",
+    instrument: "Executive Alignment Index™",
+    description: "Quantify executive variance across six structural dimensions. Every engagement begins here.",
   },
   {
-    title: "ALIGN™ Executive Intervention",
-    description: "Install structural clarity through defined decision architecture and escalation protocols.",
+    step: "02",
+    title: "Install",
+    instrument: "ALIGN™ Intervention",
+    description: "Where the diagnostic reveals structural variance, we establish decision architecture and escalation clarity.",
   },
   {
-    title: "Executive Oversight™",
-    description: "Sustain alignment under growth, transformation, and governance complexity.",
+    step: "03",
+    title: "Sustain",
+    instrument: "Executive Oversight™",
+    description: "In some engagements, we remain involved to support ongoing executive coordination as complexity evolves.",
   },
 ];
 
@@ -41,27 +47,41 @@ const OfferSequencingSection = () => {
         <div className="container-brief">
           <motion.p className="kicker mb-4" {...fade}>Advisory Architecture</motion.p>
           <motion.h2
-            className="heading-section mb-16 prose-narrow mx-auto"
+            className="heading-section mb-6 prose-narrow mx-auto"
             {...fade}
           >
-            A Structured Path to Sustained Strategic Execution
+            One Process. Not Multiple Services.
           </motion.h2>
 
+          <motion.p
+            className="body-brief text-center prose-narrow mx-auto mb-16"
+            {...fade}
+            transition={{ ...fade.transition, delay: 0.1 }}
+          >
+            Engagements typically begin with the Executive Alignment Index™, with further work shaped by the outcomes of the diagnostic.
+          </motion.p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            {pathways.map((pathway, i) => (
+            {stages.map((stage, i) => (
               <motion.div
-                key={pathway.title}
+                key={stage.title}
                 custom={i}
                 variants={cardVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <h3 className="font-serif text-lg font-medium text-foreground mb-4 leading-snug">
-                  {pathway.title}
+                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary/50 mb-3 block">
+                  {stage.step}
+                </span>
+                <h3 className="font-serif text-lg font-medium text-foreground mb-1 leading-snug">
+                  {stage.title}
                 </h3>
+                <p className="text-xs font-medium text-primary mb-3">
+                  {stage.instrument}
+                </p>
                 <p className="text-base leading-relaxed text-muted-foreground">
-                  {pathway.description}
+                  {stage.description}
                 </p>
               </motion.div>
             ))}
