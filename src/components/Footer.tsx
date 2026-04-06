@@ -3,6 +3,7 @@ import Logo from "./Logo";
 
 const footerLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
+  { label: "How We Work", href: "/advisory-process", isRoute: true },
   { label: "Selected Engagements", href: "/selected-engagements", isRoute: true },
   { label: "Executive Alignment Brief™", href: "/downloads/executive-alignment-brief.html", isRoute: false },
   { label: "Discuss Executive Alignment", href: "/contact", isRoute: true },
