@@ -60,7 +60,7 @@ const ExecutiveAlignmentIndex = () => {
       <SEOHead
         path="/executive-alignment-index"
         title="Executive Alignment Index™ | Bright Leadership Consulting"
-        description="A governance-level instrument measuring executive variance across decision rights, strategic interpretation, and escalation architecture."
+        description="A board-level executive alignment diagnostic measuring leadership team variance across decision rights, strategic interpretation, and governance architecture."
       />
       <ScrollProgress />
       <Header />
@@ -88,9 +88,9 @@ const ExecutiveAlignmentIndex = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  The Executive Alignment Index™ is a governance-level diagnostic
-                  that measures how consistently an executive team is aligned on
-                  the structures that determine strategic execution.
+                  The Executive Alignment Index™ is a board-level governance
+                  instrument that measures how consistently a leadership team is
+                  aligned on the structures that determine strategic execution.
                 </p>
 
                 <p className="text-lg leading-relaxed text-muted-foreground">
@@ -149,7 +149,8 @@ const ExecutiveAlignmentIndex = () => {
 
                 <p>
                   The Executive Alignment Index™ replaces assumption with
-                  measurement.
+                  measurement — providing a structured executive alignment
+                  diagnostic where none previously existed.
                 </p>
               </motion.div>
 
@@ -190,9 +191,9 @@ const ExecutiveAlignmentIndex = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Executives are assessed across six dimensions that collectively
-              determine whether strategic intent translates into coordinated
-              execution.
+              The executive alignment diagnostic assesses leadership teams
+              across six dimensions that collectively determine whether
+              strategic intent translates into coordinated execution.
             </motion.p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-14">
@@ -316,9 +317,10 @@ const ExecutiveAlignmentIndex = () => {
               >
                 <p>
                   The Executive Alignment Index™ produces a concise Executive
-                  Alignment Report summarising the composite alignment score,
-                  dimension-level results, leadership variance indicators, and
-                  priority areas for executive discussion.
+                  Alignment Report — a board-level governance instrument
+                  summarising the composite alignment score, dimension-level
+                  results, leadership variance indicators, and priority areas
+                  for executive discussion.
                 </p>
 
                 <p>
