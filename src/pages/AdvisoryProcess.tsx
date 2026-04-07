@@ -22,7 +22,7 @@ const phases = [
     headline: "Before Intervention, Measure",
     paragraphs: [
       "Executive alignment rarely breaks — it drifts. The Executive Alignment Index™ quantifies that drift across six structural dimensions: Strategic Interpretation, Decision Rights Clarity, Cross-Functional Coordination, Escalation Pathways, Accountability Architecture, and Risk Ownership.",
-      "The output is a board-ready Executive Alignment Report™ — not a sentiment survey, but a governance instrument that reveals variance between executives. This diagnostic establishes the factual foundation for every subsequent decision.",
+      "The output is a board-ready Executive Alignment Report™ — not a sentiment survey, but a board-level governance instrument that reveals structural variance between executives. This executive alignment diagnostic establishes the factual foundation for every subsequent advisory decision.",
     ],
     outputs: [
       "Executive Alignment Report™ with dispersion analysis",
@@ -93,7 +93,7 @@ const AdvisoryProcess = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Advisory Process | Bright Leadership Consulting"
-        description="From diagnostic measurement to executive development — how we deliver structured advisory engagements for senior leadership teams."
+        description="From executive alignment diagnostic to leadership advisory — a structured governance process for boards and senior leadership teams."
         path="/advisory-process"
       />
       <ScrollProgress />
@@ -252,9 +252,10 @@ const AdvisoryProcess = () => {
                   Every Engagement Starts With the Diagnostic
                 </h2>
                 <p className="body-brief">
-                  The Executive Alignment Index™ provides the evidence base for
-                  every advisory decision that follows. Whether you are navigating
-                  growth, transition, or AI transformation — measurement comes first.
+                As a board-level executive alignment diagnostic, the Executive
+                  Alignment Index™ provides the evidence base for every advisory
+                  decision that follows. Whether you are navigating growth,
+                  transition, or AI transformation — measurement comes first.
                 </p>
                 <p className="body-brief text-muted-foreground">
                   Advisory enquiries are handled confidentially.
