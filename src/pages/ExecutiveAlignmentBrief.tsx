@@ -16,7 +16,7 @@ const ExecutiveAlignmentBrief = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Executive Alignment Brief™ | Bright Leadership Consulting"
-        description="A governance-level overview of how structural alignment is measured, diagnosed, and sustained across executive teams."
+        description="Download the Executive Alignment Brief™ — a board-level white paper on how executive misalignment is measured, diagnosed, and structurally resolved."
         path="/executive-alignment-brief"
       />
       <ScrollProgress />
