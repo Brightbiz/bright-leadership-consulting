@@ -22,7 +22,7 @@ const phases = [
     headline: "Before Intervention, Measure",
     paragraphs: [
       "Executive alignment rarely breaks — it drifts. The Executive Alignment Index™ quantifies that drift across six structural dimensions: Strategic Interpretation, Decision Rights Clarity, Cross-Functional Coordination, Escalation Pathways, Accountability Architecture, and Risk Ownership.",
-      "The output is a board-ready Executive Alignment Report™ — not a sentiment survey, but a board-level governance instrument that reveals structural variance between executives. This executive alignment diagnostic establishes the factual foundation for every subsequent advisory decision.",
+      "The output is a board-ready Executive Alignment Report™ — not a sentiment survey, but a board-level governance instrument that reveals structural variance between executives and establishes the factual foundation for every subsequent advisory decision.",
     ],
     outputs: [
       "Executive Alignment Report™ with dispersion analysis",
