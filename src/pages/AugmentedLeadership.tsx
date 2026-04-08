@@ -35,7 +35,7 @@ const AugmentedLeadership = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Augmented Leadership™ | Bright Leadership Consulting"
-        description="Augmented Leadership™ unifies Human, AI, and Organisational Intelligence into one framework — helping executives lead AI transformation with structural clarity."
+        description="Augmented Leadership™ unifies Human, AI, and Organisational Intelligence — helping executives lead AI transformation with structural clarity."
         path="/augmented-leadership"
       />
       <ScrollProgress />

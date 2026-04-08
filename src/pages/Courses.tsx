@@ -93,7 +93,7 @@ const Courses = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Executive Programmes | Bright Leadership Consulting"
-        description="CPD-accredited executive programmes in AI governance, strategic leadership, and workforce transformation. Includes the 33-module Executive Leadership Mastery pathway."
+        description="CPD-accredited executive programmes in AI governance, strategic leadership, and workforce transformation. Featuring the 33-module Executive Leadership Mastery."
         path="/courses"
       />
       <ScrollProgress />
