@@ -92,7 +92,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Enquire — Bright Leadership Consulting"
-        description="Enquire about executive alignment advisory, the Executive Alignment Index™, or CPD-accredited leadership programmes. All engagements are discussed confidentially."
+        description="Enquire about executive alignment advisory, the Executive Alignment Index™, or CPD-accredited leadership programmes. Handled confidentially."
         path="/contact"
       />
       <ScrollProgress />
