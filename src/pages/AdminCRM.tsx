@@ -7,7 +7,7 @@ import { format, isAfter, startOfDay, addDays } from "date-fns";
 import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
-  DollarSign, StickyNote, ChevronRight
+  DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
