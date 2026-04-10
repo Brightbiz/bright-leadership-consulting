@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format, isAfter, isBefore, startOfDay, endOfDay } from "date-fns";
-import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X } from "lucide-react";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
@@ -199,6 +199,12 @@ const AdminSubmissions = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <Button asChild variant="outline">
+              <Link to="/admin/crm">
+                <Users className="mr-2 h-4 w-4" />
+                CRM
+              </Link>
+            </Button>
             <Button asChild variant="outline">
               <Link to="/admin/thinkific-export">
                 <Package className="mr-2 h-4 w-4" />
