@@ -88,12 +88,12 @@ const AdminCRM = () => {
   const fetchContacts = useCallback(async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("crm_contacts")
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      setContacts((data as unknown as CrmContact[]) || []);
+      setContacts((data as CrmContact[]) || []);
     } catch (error) {
       console.error("Error fetching CRM contacts:", error);
       toast({ title: "Error loading contacts", variant: "destructive" });
