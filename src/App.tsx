@@ -27,6 +27,7 @@ const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const AnimatedRoutes = () => {
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
           
           <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
+          <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </Suspense>
