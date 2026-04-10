@@ -157,7 +157,7 @@ const AdminCRM = () => {
 
   const updateContact = async (id: string, updates: Record<string, unknown>) => {
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("crm_contacts")
         .update(updates)
         .eq("id", id);
@@ -176,7 +176,7 @@ const AdminCRM = () => {
 
   const deleteContact = async (id: string) => {
     try {
-      const { error } = await supabase.from("crm_contacts").delete().eq("id", id);
+      const { error } = await (supabase as any).from("crm_contacts").delete().eq("id", id);
       if (error) throw error;
       setContacts((prev) => prev.filter((c) => c.id !== id));
       setSelectedContact(null);
@@ -188,7 +188,7 @@ const AdminCRM = () => {
 
   const addContact = async (contact: { name: string; email: string; phone?: string; company?: string; job_title?: string; notes?: string }) => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("crm_contacts")
         .insert({ ...contact, source: "manual" })
         .select()
@@ -303,7 +303,7 @@ const AdminCRM = () => {
         tags: tagsIdx >= 0 && cols[tagsIdx] ? cols[tagsIdx].split(";").map((t: string) => t.trim()).filter(Boolean) : [],
       };
 
-      const { error } = await supabase.from("crm_contacts").insert(record);
+      const { error } = await (supabase as any).from("crm_contacts").insert(record);
       if (error?.code === "23505") { duplicates++; }
       else if (!error) { imported++; }
     }
