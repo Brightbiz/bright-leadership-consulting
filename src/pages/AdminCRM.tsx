@@ -3,11 +3,11 @@ import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { format } from "date-fns";
+import { format, isAfter, startOfDay, addDays } from "date-fns";
 import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
-  DollarSign, StickyNote, ChevronRight
+  DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -144,6 +144,25 @@ const AdminCRM = () => {
     for (const c of contacts) counts[c.status] = (counts[c.status] || 0) + 1;
     return counts;
   }, [contacts]);
+
+  const metrics = useMemo(() => {
+    const now = new Date();
+    const weekEnd = addDays(startOfDay(now), 7);
+    const converted = statusCounts["converted"] || 0;
+    const lost = statusCounts["lost"] || 0;
+    const closed = converted + lost;
+    const conversionRate = closed > 0 ? Math.round((converted / closed) * 100) : 0;
+    const pipelineValue = contacts
+      .filter((c) => c.status !== "converted" && c.status !== "lost")
+      .reduce((sum, c) => sum + (c.estimated_value || 0), 0);
+    const followUpsDue = contacts.filter(
+      (c) => c.next_follow_up && !isAfter(startOfDay(new Date(c.next_follow_up)), weekEnd) && !["converted", "lost"].includes(c.status)
+    ).length;
+    const sourceCounts: Record<string, number> = {};
+    for (const c of contacts) sourceCounts[c.source] = (sourceCounts[c.source] || 0) + 1;
+    const topSource = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1])[0];
+    return { conversionRate, pipelineValue, followUpsDue, topSource };
+  }, [contacts, statusCounts]);
 
   if (authLoading) {
     return (
@@ -357,6 +376,70 @@ const AdminCRM = () => {
             </Button>
           </div>
         </div>
+
+        {/* Dashboard Metrics */}
+        {!loading && contacts.length > 0 && (
+          <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5">
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <Users className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Total Contacts</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">{contacts.length}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {statusCounts["new"] || 0} new
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <TrendingUp className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Conversion Rate</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">{metrics.conversionRate}%</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {statusCounts["converted"] || 0} converted / {(statusCounts["converted"] || 0) + (statusCounts["lost"] || 0)} closed
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <DollarSign className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Pipeline Value</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">
+                ${metrics.pipelineValue > 0 ? metrics.pipelineValue.toLocaleString() : "0"}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {(statusCounts["qualified"] || 0)} qualified leads
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <Clock className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Follow-Ups Due</span>
+              </div>
+              <p className={`text-2xl font-bold ${metrics.followUpsDue > 0 ? "text-orange-600 dark:text-orange-400" : "text-foreground"}`}>
+                {metrics.followUpsDue}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">within 7 days</p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <BarChart3 className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Top Source</span>
+              </div>
+              <p className="text-lg font-bold text-foreground truncate">
+                {metrics.topSource ? (SOURCE_LABELS[metrics.topSource[0]] || metrics.topSource[0]) : "—"}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {metrics.topSource ? `${metrics.topSource[1]} contacts` : "No data"}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Search */}
         <div className="mb-4 flex items-center gap-3">
