@@ -4,11 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format, isAfter, isBefore, startOfDay, endOfDay } from "date-fns";
-import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X, Users } from "lucide-react";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X, Users, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
