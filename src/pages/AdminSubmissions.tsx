@@ -200,6 +200,12 @@ const AdminSubmissions = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button asChild variant="outline">
+              <Link to="/admin/crm">
+                <Users className="mr-2 h-4 w-4" />
+                CRM
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link to="/admin/thinkific-export">
                 <Package className="mr-2 h-4 w-4" />
                 Thinkific Export
