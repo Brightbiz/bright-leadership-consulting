@@ -145,6 +145,25 @@ const AdminCRM = () => {
     return counts;
   }, [contacts]);
 
+  const metrics = useMemo(() => {
+    const now = new Date();
+    const weekEnd = addDays(startOfDay(now), 7);
+    const converted = statusCounts["converted"] || 0;
+    const lost = statusCounts["lost"] || 0;
+    const closed = converted + lost;
+    const conversionRate = closed > 0 ? Math.round((converted / closed) * 100) : 0;
+    const pipelineValue = contacts
+      .filter((c) => c.status !== "converted" && c.status !== "lost")
+      .reduce((sum, c) => sum + (c.estimated_value || 0), 0);
+    const followUpsDue = contacts.filter(
+      (c) => c.next_follow_up && !isAfter(startOfDay(new Date(c.next_follow_up)), weekEnd) && !["converted", "lost"].includes(c.status)
+    ).length;
+    const sourceCounts: Record<string, number> = {};
+    for (const c of contacts) sourceCounts[c.source] = (sourceCounts[c.source] || 0) + 1;
+    const topSource = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1])[0];
+    return { conversionRate, pipelineValue, followUpsDue, topSource };
+  }, [contacts, statusCounts]);
+
   if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
