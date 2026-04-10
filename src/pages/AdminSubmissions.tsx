@@ -220,6 +220,7 @@ const AdminSubmissions = () => {
               <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
             </Button>
+            <ChangePasswordDialog />
             <Button onClick={signOut} variant="ghost" size="sm">
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
