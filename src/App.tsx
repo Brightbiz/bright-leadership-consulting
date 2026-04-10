@@ -27,6 +27,8 @@ const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminForgotPassword = lazy(() => import("./pages/AdminForgotPassword"));
+const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 
 
