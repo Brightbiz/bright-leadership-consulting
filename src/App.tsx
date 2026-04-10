@@ -27,6 +27,8 @@ const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminForgotPassword = lazy(() => import("./pages/AdminForgotPassword"));
+const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 
 
@@ -51,6 +53,8 @@ const AnimatedRoutes = () => {
           
           {/* Admin routes */}
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
+          <Route path="/admin/forgot-password" element={<PageTransition><AdminForgotPassword /></PageTransition>} />
+          <Route path="/admin/reset-password" element={<PageTransition><AdminResetPassword /></PageTransition>} />
           
           <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
           <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
