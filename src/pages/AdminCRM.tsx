@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { format } from "date-fns";
+import { format, isAfter, startOfDay, addDays } from "date-fns";
 import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
