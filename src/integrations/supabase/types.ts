@@ -276,6 +276,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      sync_existing_leads_to_crm: { Args: never; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"
