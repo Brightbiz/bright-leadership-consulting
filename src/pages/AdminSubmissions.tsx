@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { format, isAfter, isBefore, startOfDay, endOfDay } from "date-fns";
-import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X } from "lucide-react";
+import { Mail, MailOpen, Trash2, RefreshCw, LogOut, Loader2, Package, Download, ClipboardCheck, CalendarIcon, X, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
