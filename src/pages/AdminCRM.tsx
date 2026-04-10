@@ -377,6 +377,70 @@ const AdminCRM = () => {
           </div>
         </div>
 
+        {/* Dashboard Metrics */}
+        {!loading && contacts.length > 0 && (
+          <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5">
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <Users className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Total Contacts</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">{contacts.length}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {statusCounts["new"] || 0} new
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <TrendingUp className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Conversion Rate</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">{metrics.conversionRate}%</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {statusCounts["converted"] || 0} converted / {(statusCounts["converted"] || 0) + (statusCounts["lost"] || 0)} closed
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <DollarSign className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Pipeline Value</span>
+              </div>
+              <p className="text-2xl font-bold text-foreground">
+                ${metrics.pipelineValue > 0 ? metrics.pipelineValue.toLocaleString() : "0"}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {(statusCounts["qualified"] || 0)} qualified leads
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <Clock className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Follow-Ups Due</span>
+              </div>
+              <p className={`text-2xl font-bold ${metrics.followUpsDue > 0 ? "text-orange-600 dark:text-orange-400" : "text-foreground"}`}>
+                {metrics.followUpsDue}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">within 7 days</p>
+            </div>
+
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                <BarChart3 className="h-4 w-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Top Source</span>
+              </div>
+              <p className="text-lg font-bold text-foreground truncate">
+                {metrics.topSource ? (SOURCE_LABELS[metrics.topSource[0]] || metrics.topSource[0]) : "—"}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {metrics.topSource ? `${metrics.topSource[1]} contacts` : "No data"}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Search */}
         <div className="mb-4 flex items-center gap-3">
           <div className="relative flex-1 max-w-sm">
