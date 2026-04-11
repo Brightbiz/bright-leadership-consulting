@@ -369,10 +369,9 @@ const AdminCRM = () => {
             <Button onClick={exportCsv} variant="outline" size="sm" disabled={filteredContacts.length === 0}>
               <Download className="mr-2 h-4 w-4" /> Export
             </Button>
-            <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+            <Button variant="outline" size="sm" onClick={() => setShowImportDialog(true)}>
               <Upload className="mr-2 h-4 w-4" /> Import
             </Button>
-            <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleImport} />
             <Button onClick={signOut} variant="ghost" size="sm">
               <LogOut className="mr-2 h-4 w-4" /> Sign Out
             </Button>
