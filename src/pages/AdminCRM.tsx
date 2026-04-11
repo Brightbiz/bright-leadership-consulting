@@ -685,6 +685,13 @@ const AdminCRM = () => {
           <AddContactForm onSubmit={addContact} onCancel={() => setShowAddForm(false)} />
         </SheetContent>
       </Sheet>
+
+      {/* CSV Import Dialog */}
+      <CsvImportDialog
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
+        onImportComplete={fetchContacts}
+      />
     </div>
   );
 };
