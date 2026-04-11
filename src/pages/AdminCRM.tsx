@@ -83,6 +83,7 @@ const AdminCRM = () => {
   const [editForm, setEditForm] = useState<Partial<CrmContact>>({});
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTagInput, setNewTagInput] = useState("");
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
