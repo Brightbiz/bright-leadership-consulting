@@ -29,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { CsvImportDialog } from "@/components/CsvImportDialog";
 
 type CrmStatus = "new" | "contacted" | "qualified" | "converted" | "lost";
 
@@ -82,6 +83,7 @@ const AdminCRM = () => {
   const [editForm, setEditForm] = useState<Partial<CrmContact>>({});
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTagInput, setNewTagInput] = useState("");
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -265,75 +267,6 @@ const AdminCRM = () => {
     URL.revokeObjectURL(url);
   };
 
-  // CSV Import
-  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const text = await file.text();
-    const lines = text.split("\n").filter((l) => l.trim());
-    if (lines.length < 2) {
-      toast({ title: "Invalid CSV", description: "File must have a header row and at least one data row.", variant: "destructive" });
-      return;
-    }
-
-    const parseRow = (row: string): string[] => {
-      const result: string[] = [];
-      let current = "";
-      let inQuotes = false;
-      for (const char of row) {
-        if (char === '"') { inQuotes = !inQuotes; }
-        else if (char === "," && !inQuotes) { result.push(current.trim()); current = ""; }
-        else { current += char; }
-      }
-      result.push(current.trim());
-      return result;
-    };
-
-    const headers = parseRow(lines[0]).map((h) => h.toLowerCase().replace(/[^a-z_]/g, ""));
-    const emailIdx = headers.findIndex((h) => h.includes("email"));
-    if (emailIdx === -1) {
-      toast({ title: "Missing email column", description: "CSV must contain an 'email' column.", variant: "destructive" });
-      return;
-    }
-
-    const nameIdx = headers.findIndex((h) => h.includes("name") && !h.includes("lead") && !h.includes("magnet"));
-    const phoneIdx = headers.findIndex((h) => h.includes("phone"));
-    const companyIdx = headers.findIndex((h) => h.includes("company"));
-    const jobIdx = headers.findIndex((h) => h.includes("job") || h.includes("title"));
-    const notesIdx = headers.findIndex((h) => h.includes("note"));
-    const tagsIdx = headers.findIndex((h) => h.includes("tag"));
-
-    let imported = 0;
-    let duplicates = 0;
-
-    for (let i = 1; i < lines.length; i++) {
-      const cols = parseRow(lines[i]);
-      const email = cols[emailIdx]?.trim();
-      if (!email) continue;
-
-      const record: Record<string, unknown> = {
-        email,
-        source: "csv_import",
-        name: nameIdx >= 0 ? cols[nameIdx] || null : null,
-        phone: phoneIdx >= 0 ? cols[phoneIdx] || null : null,
-        company: companyIdx >= 0 ? cols[companyIdx] || null : null,
-        job_title: jobIdx >= 0 ? cols[jobIdx] || null : null,
-        notes: notesIdx >= 0 ? cols[notesIdx] || null : null,
-        tags: tagsIdx >= 0 && cols[tagsIdx] ? cols[tagsIdx].split(";").map((t: string) => t.trim()).filter(Boolean) : [],
-      };
-
-      const { error } = await (supabase as any).from("crm_contacts").insert(record);
-      if (error?.code === "23505") { duplicates++; }
-      else if (!error) { imported++; }
-    }
-
-    toast({
-      title: "Import complete",
-      description: `${imported} imported, ${duplicates} duplicates skipped.`,
-    });
-    if (imported > 0) await fetchContacts();
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  };
 
   const LoadingSkeleton = () => (
     <div className="p-6 space-y-4">
@@ -367,10 +300,9 @@ const AdminCRM = () => {
             <Button onClick={exportCsv} variant="outline" size="sm" disabled={filteredContacts.length === 0}>
               <Download className="mr-2 h-4 w-4" /> Export
             </Button>
-            <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+            <Button variant="outline" size="sm" onClick={() => setShowImportDialog(true)}>
               <Upload className="mr-2 h-4 w-4" /> Import
             </Button>
-            <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleImport} />
             <Button onClick={signOut} variant="ghost" size="sm">
               <LogOut className="mr-2 h-4 w-4" /> Sign Out
             </Button>
@@ -684,6 +616,13 @@ const AdminCRM = () => {
           <AddContactForm onSubmit={addContact} onCancel={() => setShowAddForm(false)} />
         </SheetContent>
       </Sheet>
+
+      {/* CSV Import Dialog */}
+      <CsvImportDialog
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
+        onImportComplete={fetchContacts}
+      />
     </div>
   );
 };
