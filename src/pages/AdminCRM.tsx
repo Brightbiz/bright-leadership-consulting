@@ -29,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { CsvImportDialog } from "@/components/CsvImportDialog";
 
 type CrmStatus = "new" | "contacted" | "qualified" | "converted" | "lost";
 
