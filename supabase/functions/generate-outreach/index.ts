@@ -69,8 +69,67 @@ serve(async (req) => {
       });
     }
 
-    const { recipients, notes, mode, originalSubject, originalBody, sentDaysAgo } = await req.json();
+    const { recipients, notes, mode, originalSubject, originalBody, sentDaysAgo, replyText } = await req.json();
     const isFollowUp = mode === "follow_up";
+    const isClassify = mode === "classify_reply";
+
+    // --- Reply classifier: standalone short-circuit path ---
+    if (isClassify) {
+      const text = String(replyText || "").slice(0, 4000);
+      if (!text.trim()) {
+        return new Response(JSON.stringify({ error: "replyText required" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const LOVABLE_API_KEY_C = Deno.env.get("LOVABLE_API_KEY");
+      if (!LOVABLE_API_KEY_C) throw new Error("Missing LOVABLE_API_KEY");
+      const classifyPrompt = `Classify the following reply to an outbound advisory email into ONE sentiment bucket, and give a one-sentence summary of what the sender said.
+
+Buckets (choose exactly one key):
+- "meeting_booked" — they proposed a specific time, accepted a call, or asked to schedule.
+- "positive" — interested, engaged, wants more information, referred to a colleague warmly.
+- "neutral" — acknowledged, non-committal, asked a clarifying question without commitment.
+- "negative" — dismissive, mildly annoyed, "not now", "not the right fit".
+- "no_thanks" — explicit decline, unsubscribe, do-not-contact.
+
+Reply text:
+"""
+${text}
+"""
+
+Return ONLY JSON: { "sentiment": "<key>", "confidence": <0-1 number>, "summary": "<one sentence>" }`;
+
+      const clRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${LOVABLE_API_KEY_C}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            { role: "system", content: "You are a precise, terse classifier. Return only valid JSON." },
+            { role: "user", content: classifyPrompt },
+          ],
+          response_format: { type: "json_object" },
+        }),
+      });
+      if (!clRes.ok) {
+        const t = await clRes.text();
+        console.error("classify AI error", clRes.status, t);
+        return new Response(JSON.stringify({ error: "Classification failed", status: clRes.status }), {
+          status: clRes.status, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const clPayload = await clRes.json();
+      const clContent = clPayload?.choices?.[0]?.message?.content ?? "{}";
+      let clParsed: any = {};
+      try { clParsed = JSON.parse(clContent); } catch { /* noop */ }
+      const allowed = ["meeting_booked", "positive", "neutral", "negative", "no_thanks"];
+      const sentiment = allowed.includes(clParsed.sentiment) ? clParsed.sentiment : "neutral";
+      const confidence = typeof clParsed.confidence === "number" ? Math.max(0, Math.min(1, clParsed.confidence)) : 0.5;
+      const summary = String(clParsed.summary || "").slice(0, 240);
+      return new Response(JSON.stringify({ sentiment, confidence, summary }), {
+        status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     if (!Array.isArray(recipients) || recipients.length === 0 || recipients.length > 20) {
       return new Response(JSON.stringify({ error: "Provide 1–20 recipients" }), {
