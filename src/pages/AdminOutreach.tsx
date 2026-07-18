@@ -75,7 +75,91 @@ const AdminOutreach = () => {
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
   const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
   const [hydrating, setHydrating] = useState(true);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const userId = user?.id ?? null;
 
+  // Load recipients + drafts on mount
+  useEffect(() => {
+    if (!userId || !isAdmin) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const [{ data: recData }, { data: draftData }] = await Promise.all([
+          (supabase as any)
+            .from("outreach_recipients")
+            .select("id,name,role,company,email,context,priority,sort_order")
+            .eq("user_id", userId)
+            .order("sort_order", { ascending: true }),
+          (supabase as any)
+            .from("outreach_drafts")
+            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false })
+            .limit(200),
+        ]);
+        if (cancelled) return;
+        if (recData && recData.length > 0) {
+          setRecipients(
+            recData.map((r: any) => ({
+              id: r.id,
+              name: r.name ?? "",
+              role: r.role ?? "Chair",
+              company: r.company ?? "",
+              email: r.email ?? "",
+              context: r.context ?? "",
+              priority: !!r.priority,
+              persisted: true,
+            }))
+          );
+        }
+        if (draftData) setDrafts(draftData as SavedDraft[]);
+      } catch (err) {
+        console.error("Failed to load outreach data", err);
+      } finally {
+        if (!cancelled) setHydrating(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, isAdmin]);
+
+  // Debounced autosave — upsert recipients whenever they change
+  const persistRecipients = useCallback(
+    async (list: Recipient[]) => {
+      if (!userId) return;
+      const rows = list
+        .map((r, idx) => ({
+          id: r.id,
+          user_id: userId,
+          name: r.name,
+          role: r.role || "Chair",
+          company: r.company,
+          email: r.email || null,
+          context: r.context,
+          priority: r.priority,
+          sort_order: idx,
+        }))
+        .filter(r => r.name.trim() || r.company.trim() || r.email || r.context.trim());
+      if (rows.length === 0) return;
+      const { error } = await (supabase as any)
+        .from("outreach_recipients")
+        .upsert(rows, { onConflict: "id" });
+      if (error) console.error("Recipient autosave failed", error);
+    },
+    [userId]
+  );
+
+  useEffect(() => {
+    if (hydrating || !userId) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      persistRecipients(recipients);
+    }, 700);
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [recipients, hydrating, userId, persistRecipients]);
 
   if (isLoading) {
     return (
@@ -85,6 +169,7 @@ const AdminOutreach = () => {
     );
   }
   if (!user || !isAdmin) return <Navigate to="/admin/login" replace />;
+
 
   const updateRecipient = (id: string, patch: Partial<Recipient>) =>
     setRecipients(rs => rs.map(r => (r.id === id ? { ...r, ...patch } : r)));
