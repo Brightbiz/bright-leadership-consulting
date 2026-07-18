@@ -7,7 +7,8 @@ import { format, isAfter, startOfDay, addDays } from "date-fns";
 import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
-  DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3
+  DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3,
+  Mail, Reply
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -85,6 +86,8 @@ const AdminCRM = () => {
   const [newTagInput, setNewTagInput] = useState("");
   const [showImportDialog, setShowImportDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [outreachByContact, setOutreachByContact] = useState<Record<string, { total: number; sent: number; replied: number; lastAt: string | null }>>({});
+  const [contactOutreach, setContactOutreach] = useState<Array<{ id: string; subject: string; status: string; is_follow_up: boolean; sent_at: string | null; replied_at: string | null; reply_sentiment: string | null; reply_text: string | null; created_at: string }>>([]);
   const { toast } = useToast();
 
   const fetchContacts = useCallback(async () => {
@@ -119,9 +122,55 @@ const AdminCRM = () => {
     }
   };
 
+  const fetchOutreachSummaries = useCallback(async () => {
+    try {
+      const { data, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .select("crm_contact_id,status,sent_at,replied_at,created_at")
+        .not("crm_contact_id", "is", null);
+      if (error) throw error;
+      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null }> = {};
+      for (const row of (data ?? []) as any[]) {
+        const id = row.crm_contact_id;
+        if (!id) continue;
+        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null };
+        map[id].total += 1;
+        if (row.status === "sent" || row.status === "replied") map[id].sent += 1;
+        if (row.status === "replied") map[id].replied += 1;
+        const candidate = row.replied_at || row.sent_at || row.created_at;
+        if (candidate && (!map[id].lastAt || candidate > map[id].lastAt)) {
+          map[id].lastAt = candidate;
+        }
+      }
+      setOutreachByContact(map);
+    } catch (err) {
+      console.error("Failed to load outreach summaries", err);
+    }
+  }, []);
+
   useEffect(() => {
-    if (user && isAdmin) fetchContacts();
-  }, [user, isAdmin, fetchContacts]);
+    if (user && isAdmin) {
+      fetchContacts();
+      fetchOutreachSummaries();
+    }
+  }, [user, isAdmin, fetchContacts, fetchOutreachSummaries]);
+
+  useEffect(() => {
+    if (!selectedContact) {
+      setContactOutreach([]);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .select("id,subject,status,is_follow_up,sent_at,replied_at,reply_sentiment,reply_text,created_at")
+        .eq("crm_contact_id", selectedContact.id)
+        .order("created_at", { ascending: false });
+      if (!cancelled && !error) setContactOutreach((data ?? []) as any);
+    })();
+    return () => { cancelled = true; };
+  }, [selectedContact]);
 
   const filteredContacts = useMemo(() => {
     let result = contacts;
@@ -415,6 +464,7 @@ const AdminCRM = () => {
                     <TableHead className="hidden md:table-cell">Company</TableHead>
                     <TableHead className="hidden lg:table-cell">Source</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead className="hidden md:table-cell">Outreach</TableHead>
                     <TableHead className="hidden sm:table-cell">Tags</TableHead>
                     <TableHead className="hidden lg:table-cell">Created</TableHead>
                     <TableHead className="w-[40px]"></TableHead>
@@ -441,6 +491,27 @@ const AdminCRM = () => {
                         <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_CONFIG[contact.status].color}`}>
                           {STATUS_CONFIG[contact.status].label}
                         </span>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {(() => {
+                          const o = outreachByContact[contact.id];
+                          if (!o || o.total === 0) return <span className="text-xs text-muted-foreground">—</span>;
+                          return (
+                            <div className="flex items-center gap-1.5 text-xs">
+                              {o.replied > 0 ? (
+                                <Reply className="h-3.5 w-3.5 text-blue-700" />
+                              ) : o.sent > 0 ? (
+                                <Mail className="h-3.5 w-3.5 text-emerald-700" />
+                              ) : (
+                                <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+                              )}
+                              <span className="text-muted-foreground">
+                                {o.replied}/{o.sent || o.total}
+                                {o.lastAt && <span className="ml-1">· {format(new Date(o.lastAt), "MMM d")}</span>}
+                              </span>
+                            </div>
+                          );
+                        })()}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <div className="flex flex-wrap gap-1">
@@ -592,6 +663,51 @@ const AdminCRM = () => {
                     <Textarea rows={4} value={editForm.notes || ""} onChange={(e) => setEditForm((p) => ({ ...p, notes: e.target.value }))} />
                   ) : (
                     <p className="text-sm text-muted-foreground whitespace-pre-wrap">{selectedContact.notes || "No notes yet."}</p>
+                  )}
+                </div>
+
+                {/* Outreach history */}
+                <div className="space-y-2">
+                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Mail className="h-4 w-4" /> Outreach
+                    <Link to="/admin/outreach" className="ml-auto text-xs text-muted-foreground hover:text-foreground underline decoration-dotted underline-offset-2">Open tool →</Link>
+                  </h3>
+                  {contactOutreach.length === 0 ? (
+                    <p className="text-xs text-muted-foreground">No outreach drafts linked to this contact yet.</p>
+                  ) : (
+                    <ul className="space-y-2">
+                      {contactOutreach.map(o => {
+                        const badge =
+                          o.status === "replied" ? "bg-blue-100 text-blue-800 border-blue-300"
+                          : o.status === "sent" ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                          : "bg-muted text-muted-foreground border-border";
+                        const ts = o.replied_at || o.sent_at || o.created_at;
+                        return (
+                          <li key={o.id} className="text-xs border border-border rounded-md p-2">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="font-medium text-foreground line-clamp-1">{o.subject}</p>
+                              <div className="flex items-center gap-1 shrink-0">
+                                {o.is_follow_up && (
+                                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border bg-amber-50 text-amber-800 border-amber-300 text-[9px] uppercase tracking-wider">
+                                    Follow-up
+                                  </span>
+                                )}
+                                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full border text-[9px] uppercase tracking-wider ${badge}`}>
+                                  {o.status}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-muted-foreground mt-1">
+                              {ts ? format(new Date(ts), "MMM d, yyyy") : "—"}
+                              {o.reply_sentiment ? ` · ${o.reply_sentiment.replace("_", " ")}` : ""}
+                            </p>
+                            {o.reply_text && (
+                              <p className="mt-1 text-foreground line-clamp-2 italic">"{o.reply_text}"</p>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   )}
                 </div>
 

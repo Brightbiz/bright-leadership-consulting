@@ -69,7 +69,9 @@ serve(async (req) => {
       });
     }
 
-    const { recipients, notes } = await req.json();
+    const { recipients, notes, mode, originalSubject, originalBody, sentDaysAgo } = await req.json();
+    const isFollowUp = mode === "follow_up";
+
     if (!Array.isArray(recipients) || recipients.length === 0 || recipients.length > 20) {
       return new Response(JSON.stringify({ error: "Provide 1–20 recipients" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -89,7 +91,27 @@ serve(async (req) => {
       });
     }
 
-    const userPrompt = `Draft one personalised outreach email for each of the following recipients. Return them in the same order.
+    const userPrompt = isFollowUp
+      ? `Draft ONE short follow-up email to a recipient who did not reply to the original outreach below.
+
+## RULES FOR THIS FOLLOW-UP
+- Shorter than the original: 45-65 words total in the body.
+- Do NOT restate the pitch. Do NOT re-explain the EAI.
+- One short opening line acknowledging silence without apology or repetition (e.g. "Circling once — no pressure.").
+- One short paragraph offering a single, specific reason it may still be timely for their board (reference a governance beat: chair review, remuneration cycle, AGM season, effectiveness review).
+- Close with a 20-minute conversation offer. Signed "— Bright Leadership Consulting".
+- Subject: 4-6 words. Not "Following up". Something substantive tied to their remit.
+
+## ORIGINAL EMAIL (sent ${Number(sentDaysAgo) || "several"} days ago)
+Subject: ${String(originalSubject || "").slice(0, 200)}
+
+${String(originalBody || "").slice(0, 2000)}
+
+## RECIPIENT
+${cleaned.map((r) => `${r.name} — ${r.role}${r.company ? `, ${r.company}` : ""}${r.context ? ` | context: ${r.context}` : ""}`).join("\n")}
+
+Return JSON with an "emails" array of length 1.`
+      : `Draft one personalised outreach email for each of the following recipients. Return them in the same order.
 
 ${notes ? `Optional context to weave in where relevant (do not force it):\n${String(notes).slice(0, 800)}\n\n` : ""}Recipients:
 ${cleaned.map((r, i) => `${i + 1}. ${r.name} — ${r.role}${r.company ? `, ${r.company}` : ""}${r.context ? ` | context: ${r.context}` : ""}`).join("\n")}

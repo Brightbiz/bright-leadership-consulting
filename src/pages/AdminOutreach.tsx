@@ -19,11 +19,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 type DraftStatus = "draft" | "sent" | "replied";
+type ReplySentiment = "positive" | "neutral" | "negative" | "no_thanks" | "meeting_booked";
 
 interface Recipient {
   id: string;              // DB uuid (also used locally before save)
@@ -48,6 +49,11 @@ interface SavedDraft {
   sent_at: string | null;
   crm_contact_id: string | null;
   created_at: string;
+  parent_draft_id?: string | null;
+  is_follow_up?: boolean;
+  replied_at?: string | null;
+  reply_text?: string | null;
+  reply_sentiment?: ReplySentiment | null;
 }
 
 const emptyRecipient = (): Recipient => ({
@@ -74,6 +80,10 @@ const AdminOutreach = () => {
   const [drafts, setDrafts] = useState<SavedDraft[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
   const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
+  const [replyDialog, setReplyDialog] = useState<SavedDraft | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [replySentiment, setReplySentiment] = useState<ReplySentiment>("neutral");
+  const [followUpBusyId, setFollowUpBusyId] = useState<string | null>(null);
   const [hydrating, setHydrating] = useState(true);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userId = user?.id ?? null;
@@ -92,7 +102,7 @@ const AdminOutreach = () => {
             .order("sort_order", { ascending: true }),
           (supabase as any)
             .from("outreach_drafts")
-            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at")
+            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at,parent_draft_id,is_follow_up,replied_at,reply_text,reply_sentiment")
             .eq("user_id", userId)
             .order("created_at", { ascending: false })
             .limit(200),
@@ -587,6 +597,132 @@ const AdminOutreach = () => {
     }
   };
 
+  // Save reply text + sentiment and flip status to "replied".
+  const saveReply = async () => {
+    if (!replyDialog || !userId) return;
+    const d = replyDialog;
+    try {
+      const patch: any = {
+        status: "replied" as DraftStatus,
+        replied_at: new Date().toISOString(),
+        reply_text: replyText.trim() || null,
+        reply_sentiment: replySentiment,
+      };
+      const { data: updated, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .update(patch)
+        .eq("id", d.id)
+        .select()
+        .single();
+      if (error) throw error;
+      setDrafts(prev => prev.map(x => (x.id === d.id ? (updated as SavedDraft) : x)));
+
+      // Nudge the CRM row (if any) to reflect the reply.
+      if (d.crm_contact_id) {
+        const stageMap: Record<ReplySentiment, string> = {
+          meeting_booked: "qualified",
+          positive: "qualified",
+          neutral: "contacted",
+          negative: "lost",
+          no_thanks: "lost",
+        };
+        await (supabase as any)
+          .from("crm_contacts")
+          .update({
+            status: stageMap[replySentiment],
+            last_contacted_at: new Date().toISOString(),
+          })
+          .eq("id", d.crm_contact_id);
+      }
+
+      setReplyDialog(null);
+      setReplyText("");
+      setReplySentiment("neutral");
+      toast({ title: "Reply logged" });
+    } catch (err: any) {
+      toast({ title: "Failed to save reply", description: err.message, variant: "destructive" });
+    }
+  };
+
+  // Draft a follow-up email for a specific "sent" draft that hasn't been replied to.
+  const generateFollowUp = async (d: SavedDraft) => {
+    if (!userId) return;
+    const rec = findRecipientForDraft(d);
+    const recipientPayload = {
+      name: d.recipient_name || rec?.name || "",
+      role: d.recipient_role || rec?.role || "",
+      company: d.company || rec?.company || "",
+      context: rec?.context || "",
+    };
+    if (!recipientPayload.name || !recipientPayload.role) {
+      toast({ title: "Missing recipient details", description: "Restore the original recipient row to draft a follow-up.", variant: "destructive" });
+      return;
+    }
+    setFollowUpBusyId(d.id);
+    try {
+      const sentDate = d.sent_at ? new Date(d.sent_at) : new Date(d.created_at);
+      const sentDaysAgo = Math.max(1, Math.round((Date.now() - sentDate.getTime()) / (1000 * 60 * 60 * 24)));
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: {
+          recipients: [recipientPayload],
+          mode: "follow_up",
+          originalSubject: d.subject,
+          originalBody: d.body,
+          sentDaysAgo,
+        },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const emails = data?.emails ?? [];
+      if (emails.length === 0) throw new Error("No follow-up returned");
+      const e = emails[0];
+
+      const { data: inserted, error: insertErr } = await (supabase as any)
+        .from("outreach_drafts")
+        .insert({
+          user_id: userId,
+          recipient_id: d.recipient_id,
+          recipient_name: e.recipient_name || d.recipient_name,
+          recipient_role: e.recipient_role || d.recipient_role,
+          company: e.company || d.company,
+          subject: e.subject,
+          body: e.body,
+          status: "draft" as DraftStatus,
+          parent_draft_id: d.id,
+          is_follow_up: true,
+        })
+        .select()
+        .single();
+      if (insertErr) throw insertErr;
+      setDrafts(prev => [inserted as SavedDraft, ...prev]);
+      toast({ title: "Follow-up drafted", description: "Review it in the drafts log." });
+    } catch (err: any) {
+      toast({ title: "Follow-up failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    } finally {
+      setFollowUpBusyId(null);
+    }
+  };
+
+  // Analytics summary for the drafts log (deduped-by-draft — one row per email).
+  const analytics = (() => {
+    const total = drafts.length;
+    const sent = drafts.filter(d => d.status === "sent" || d.status === "replied").length;
+    const replied = drafts.filter(d => d.status === "replied").length;
+    const followUps = drafts.filter(d => d.is_follow_up).length;
+    const replyRate = sent > 0 ? Math.round((replied / sent) * 100) : 0;
+    const now = Date.now();
+    const needsFollowUp = drafts.filter(d => {
+      if (d.status !== "sent") return false;
+      // exclude drafts that already have a follow-up drafted against them
+      const hasChild = drafts.some(x => x.parent_draft_id === d.id);
+      if (hasChild) return false;
+      const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+      return now - sentAt > 7 * 24 * 60 * 60 * 1000;
+    }).length;
+    return { total, sent, replied, followUps, replyRate, needsFollowUp };
+  })();
+
+
 
   const exportCsv = () => {
     if (drafts.length === 0) return;
@@ -896,6 +1032,45 @@ const AdminOutreach = () => {
 
         {drafts.length > 0 && (
           <div className="space-y-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <BarChart3 className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Drafts</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.total}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <MailCheck className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Sent</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.sent}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <Reply className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Replied</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.replied}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Reply rate</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.replyRate}%</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <Send className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Follow-up due</span>
+                </div>
+                <p className={`text-xl font-semibold ${analytics.needsFollowUp > 0 ? "text-amber-700" : "text-foreground"}`}>
+                  {analytics.needsFollowUp}
+                </p>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between">
               <h2 className="font-serif text-xl">Drafts ({drafts.length})</h2>
               <Button variant="outline" size="sm" onClick={exportCsv}>
@@ -905,6 +1080,10 @@ const AdminOutreach = () => {
             {drafts.map((d) => {
               const rec = findRecipientForDraft(d);
               const hasEmail = !!(rec?.email?.trim());
+              const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+              const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
+              const hasChildFollowUp = drafts.some(x => x.parent_draft_id === d.id);
+              const followUpEligible = d.status === "sent" && daysSinceSent >= 7 && !hasChildFollowUp;
               const statusStyle =
                 d.status === "sent"
                   ? "bg-emerald-100 text-emerald-800 border-emerald-300"
@@ -924,6 +1103,11 @@ const AdminOutreach = () => {
                       </h3>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap justify-end">
+                      {d.is_follow_up && (
+                        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border bg-amber-50 text-amber-800 border-amber-300">
+                          <Send className="h-3 w-3" /> Follow-up
+                        </span>
+                      )}
                       <span className={`inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusStyle}`}>
                         {d.status === "sent" && <CheckCircle2 className="h-3 w-3" />}
                         {d.status}
@@ -942,9 +1126,30 @@ const AdminOutreach = () => {
                           <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
                         </Button>
                       )}
+                      {followUpEligible && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => generateFollowUp(d)}
+                          disabled={followUpBusyId === d.id}
+                          title={`Sent ${daysSinceSent} days ago — draft a shorter second touch`}
+                        >
+                          {followUpBusyId === d.id
+                            ? <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Drafting…</>
+                            : <><Send className="h-3.5 w-3.5 mr-1" /> Draft follow-up</>}
+                        </Button>
+                      )}
                       {d.status === "sent" && (
-                        <Button variant="outline" size="sm" onClick={() => updateDraftStatus(d, "replied")}>
-                          <Reply className="h-3.5 w-3.5 mr-1" /> Mark replied
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setReplyText("");
+                            setReplySentiment("neutral");
+                            setReplyDialog(d);
+                          }}
+                        >
+                          <Reply className="h-3.5 w-3.5 mr-1" /> Log reply
                         </Button>
                       )}
                       <Button variant="ghost" size="icon" onClick={() => deleteDraft(d)} title="Delete draft">
@@ -957,11 +1162,22 @@ const AdminOutreach = () => {
                     <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
                     <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
                   </div>
+                  {d.status === "replied" && (d.reply_text || d.reply_sentiment) && (
+                    <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/50 p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-blue-900 mb-1">
+                        Reply logged{d.replied_at ? ` · ${new Date(d.replied_at).toLocaleDateString()}` : ""}
+                        {d.reply_sentiment ? ` · ${d.reply_sentiment.replace("_", " ")}` : ""}
+                      </p>
+                      {d.reply_text && <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.reply_text}</p>}
+                    </div>
+                  )}
                 </Card>
               );
             })}
           </div>
         )}
+
+
 
       </main>
       <Footer />
@@ -1001,6 +1217,63 @@ const AdminOutreach = () => {
             >
               Generate anyway
             </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) setReplyDialog(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <Reply className="h-4 w-4 text-blue-700" />
+              Log reply from {replyDialog?.recipient_name}
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p className="text-xs text-muted-foreground">
+                  Records what came back so the CRM reflects real conversation state. Sentiment updates the linked CRM stage automatically.
+                </p>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {([
+                      { key: "meeting_booked", label: "Meeting booked" },
+                      { key: "positive", label: "Positive" },
+                      { key: "neutral", label: "Neutral" },
+                      { key: "negative", label: "Negative" },
+                      { key: "no_thanks", label: "No, thanks" },
+                    ] as { key: ReplySentiment; label: string }[]).map(opt => (
+                      <button
+                        key={opt.key}
+                        type="button"
+                        onClick={() => setReplySentiment(opt.key)}
+                        className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
+                          replySentiment === opt.key
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-background text-foreground border-border hover:border-primary/50"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Reply text (optional)</Label>
+                  <Textarea
+                    className="mt-2"
+                    rows={5}
+                    placeholder="Paste the reply here, or note the substance briefly."
+                    value={replyText}
+                    onChange={e => setReplyText(e.target.value)}
+                  />
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setReplyDialog(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={saveReply}>Save reply</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
