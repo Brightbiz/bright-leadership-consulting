@@ -242,7 +242,7 @@ const AdminOutreach = () => {
     setDrafts([]);
     try {
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: valid, notes },
+        body: { recipients: batch, notes },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
