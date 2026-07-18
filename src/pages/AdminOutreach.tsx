@@ -34,6 +34,9 @@ interface Recipient {
   email: string;
   context: string;
   priority: boolean;
+  cadence_days: number;         // 7 | 14 | 21 — days to wait before follow-up is eligible
+  do_not_follow_up: boolean;    // hard exclude from auto follow-ups
+  snooze_until: string | null;  // ISO date; if in future, follow-up is paused
   persisted?: boolean;     // true once at least one save has succeeded
 }
 
@@ -64,7 +67,13 @@ const emptyRecipient = (): Recipient => ({
   email: "",
   context: "",
   priority: false,
+  cadence_days: 14,
+  do_not_follow_up: false,
+  snooze_until: null,
 });
+
+const CADENCE_OPTIONS = [7, 14, 21] as const;
+
 
 const ROLE_PRESETS = ["Chair", "Senior Independent Director", "Nominations Committee Chair", "Non-Executive Director"];
 
