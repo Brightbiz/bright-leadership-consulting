@@ -105,9 +105,10 @@ const AdminOutreach = () => {
           name: parts[0] || "",
           role: parts[1] || "Chair",
           company: parts[2] || "",
+          email: "",
           context: parts[3] || "",
           priority: false,
-        };
+        } satisfies Recipient;
       })
       .filter(r => r.name);
     if (parsed.length === 0) {
