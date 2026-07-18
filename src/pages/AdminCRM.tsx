@@ -459,7 +459,26 @@ const AdminCRM = () => {
               className="pl-10"
             />
           </div>
+          {(() => {
+            const warmCount = contacts.filter((c) => {
+              const s = outreachByContact[c.id]?.bestSentiment;
+              return s === "meeting_booked" || s === "positive";
+            }).length;
+            return (
+              <Button
+                variant={warmOnly ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWarmOnly((v) => !v)}
+                disabled={warmCount === 0 && !warmOnly}
+                title="Show only contacts with a positive or meeting-booked reply, sorted by warmth"
+              >
+                <Flame className={`mr-1.5 h-4 w-4 ${warmOnly ? "" : "text-amber-600"}`} />
+                Warm list · {warmCount}
+              </Button>
+            );
+          })()}
         </div>
+
 
         {/* Status Tabs */}
         <Tabs value={statusFilter} onValueChange={setStatusFilter} className="space-y-4">
