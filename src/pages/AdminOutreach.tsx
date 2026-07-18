@@ -34,6 +34,9 @@ interface Recipient {
   email: string;
   context: string;
   priority: boolean;
+  cadence_days: number;         // 7 | 14 | 21 — days to wait before follow-up is eligible
+  do_not_follow_up: boolean;    // hard exclude from auto follow-ups
+  snooze_until: string | null;  // ISO date; if in future, follow-up is paused
   persisted?: boolean;     // true once at least one save has succeeded
 }
 
@@ -64,7 +67,13 @@ const emptyRecipient = (): Recipient => ({
   email: "",
   context: "",
   priority: false,
+  cadence_days: 14,
+  do_not_follow_up: false,
+  snooze_until: null,
 });
+
+const CADENCE_OPTIONS = [7, 14, 21] as const;
+
 
 const ROLE_PRESETS = ["Chair", "Senior Independent Director", "Nominations Committee Chair", "Non-Executive Director"];
 
@@ -129,7 +138,7 @@ const AdminOutreach = () => {
         const [{ data: recData }, { data: draftData }] = await Promise.all([
           (supabase as any)
             .from("outreach_recipients")
-            .select("id,name,role,company,email,context,priority,sort_order")
+            .select("id,name,role,company,email,context,priority,sort_order,cadence_days,do_not_follow_up,snooze_until")
             .eq("user_id", userId)
             .order("sort_order", { ascending: true }),
           (supabase as any)
@@ -150,10 +159,14 @@ const AdminOutreach = () => {
               email: r.email ?? "",
               context: r.context ?? "",
               priority: !!r.priority,
+              cadence_days: typeof r.cadence_days === "number" ? r.cadence_days : 14,
+              do_not_follow_up: !!r.do_not_follow_up,
+              snooze_until: r.snooze_until ?? null,
               persisted: true,
             }))
           );
         }
+
         if (draftData) setDrafts(draftData as SavedDraft[]);
       } catch (err) {
         console.error("Failed to load outreach data", err);
@@ -181,7 +194,11 @@ const AdminOutreach = () => {
           context: r.context,
           priority: r.priority,
           sort_order: idx,
+          cadence_days: r.cadence_days ?? 14,
+          do_not_follow_up: !!r.do_not_follow_up,
+          snooze_until: r.snooze_until || null,
         }))
+
         .filter(r => r.name.trim() || r.company.trim() || r.email || r.context.trim());
       if (rows.length === 0) return;
       const { error } = await (supabase as any)
@@ -240,7 +257,11 @@ const AdminOutreach = () => {
           email: "",
           context: parts[3] || "",
           priority: false,
+          cadence_days: 14,
+          do_not_follow_up: false,
+          snooze_until: null,
         } satisfies Recipient;
+
       })
       .filter(r => r.name);
     if (parsed.length === 0) {
@@ -340,7 +361,11 @@ const AdminOutreach = () => {
       email: "",
       context: context.slice(0, 400),
       priority: false,
+      cadence_days: 14,
+      do_not_follow_up: false,
+      snooze_until: null,
     } satisfies Recipient;
+
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -559,6 +584,26 @@ const AdminOutreach = () => {
         r.company.trim().toLowerCase() === (d.company || "").trim().toLowerCase()
     );
 
+  // Follow-up gating for a sent draft, using the recipient's cadence settings.
+  const followUpState = (d: SavedDraft): { eligible: boolean; blocked: null | "dnc" | "snoozed" | "waiting"; waitDays: number; cadence: number; snoozeUntil: string | null } => {
+    if (d.status !== "sent") return { eligible: false, blocked: null, waitDays: 0, cadence: 14, snoozeUntil: null };
+    const hasChild = drafts.some(x => x.parent_draft_id === d.id);
+    if (hasChild) return { eligible: false, blocked: null, waitDays: 0, cadence: 14, snoozeUntil: null };
+    const rec = findRecipientForDraft(d);
+    const cadence = rec?.cadence_days ?? 14;
+    if (rec?.do_not_follow_up) return { eligible: false, blocked: "dnc", waitDays: 0, cadence, snoozeUntil: null };
+    if (rec?.snooze_until && new Date(rec.snooze_until).getTime() > Date.now()) {
+      return { eligible: false, blocked: "snoozed", waitDays: 0, cadence, snoozeUntil: rec.snooze_until };
+    }
+    const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+    const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
+    if (daysSinceSent < cadence) {
+      return { eligible: false, blocked: "waiting", waitDays: cadence - daysSinceSent, cadence, snoozeUntil: null };
+    }
+    return { eligible: true, blocked: null, waitDays: 0, cadence, snoozeUntil: null };
+  };
+
+
   const updateDraftStatus = async (d: SavedDraft, status: DraftStatus) => {
     if (!userId) return;
     try {
@@ -743,15 +788,8 @@ const AdminOutreach = () => {
     const replied = drafts.filter(d => d.status === "replied").length;
     const followUps = drafts.filter(d => d.is_follow_up).length;
     const replyRate = sent > 0 ? Math.round((replied / sent) * 100) : 0;
-    const now = Date.now();
-    const needsFollowUp = drafts.filter(d => {
-      if (d.status !== "sent") return false;
-      // exclude drafts that already have a follow-up drafted against them
-      const hasChild = drafts.some(x => x.parent_draft_id === d.id);
-      if (hasChild) return false;
-      const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
-      return now - sentAt > 7 * 24 * 60 * 60 * 1000;
-    }).length;
+    const needsFollowUp = drafts.filter(d => followUpState(d).eligible).length;
+
     return { total, sent, replied, followUps, replyRate, needsFollowUp };
   })();
 
@@ -985,78 +1023,133 @@ const AdminOutreach = () => {
           <div className="space-y-3">
             {recipients
               .filter(r => !showOnlyGeneric || (r.name.trim() && isGenericContext(r.context)))
-              .map((r, i) => (
-              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => updateRecipient(r.id, { priority: !r.priority })}
-                  title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
-                  aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
-                >
-                  <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
-                </Button>
-                <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
-                <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
-                <datalist id={`roles-${i}`}>
-                  {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
-                </datalist>
-                <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
-                <Input
-                  type="email"
-                  placeholder="Email (for CRM link)"
-                  value={r.email}
-                  onChange={e => updateRecipient(r.id, { email: e.target.value })}
-                  title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
-                />
-                <div className="relative">
+              .map((r, i) => {
+              const snoozeActive = !!(r.snooze_until && new Date(r.snooze_until).getTime() > Date.now());
+              return (
+              <div key={r.id} id={`recipient-row-${r.id}`} className="scroll-mt-24 transition-shadow space-y-1.5">
+                <div className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => updateRecipient(r.id, { priority: !r.priority })}
+                    title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
+                    aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
+                  >
+                    <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+                  </Button>
+                  <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
+                  <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
+                  <datalist id={`roles-${i}`}>
+                    {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
+                  </datalist>
+                  <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
                   <Input
-                    placeholder="Optional context (sector, recent event)"
-                    value={r.context}
-                    onChange={e => updateRecipient(r.id, { context: e.target.value })}
-                    className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
-                    aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
-                    aria-describedby={`ctx-hint-${r.id}`}
+                    type="email"
+                    placeholder="Email (for CRM link)"
+                    value={r.email}
+                    onChange={e => updateRecipient(r.id, { email: e.target.value })}
+                    title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
                   />
-                  {r.name.trim() && isGenericContext(r.context) && (
-                    <span
-                      className="absolute right-2 top-[14px] pointer-events-none"
-                      title={contextIssue(r.context) ?? "Context looks generic"}
-                    >
-                      <AlertTriangle
-                        className="h-3.5 w-3.5 text-amber-600"
-                        aria-label={contextIssue(r.context) ?? "Context looks generic"}
-                      />
-                    </span>
-                  )}
-                  {r.name.trim() && contextIssue(r.context) && (
-                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 space-y-1.5">
-                      <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
-                        <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-                        {contextIssue(r.context)}
-                      </p>
-                      <div className="pl-4 border-l border-amber-500/30 space-y-1">
-                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Suggested rewrites — click to apply</p>
-                        {suggestContextRewrites(r).map((prompt, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => updateRecipient(r.id, { context: prompt })}
-                            className="block text-left text-[11px] leading-snug text-primary hover:text-primary/80 hover:underline decoration-dotted underline-offset-2"
-                            title="Apply this rewrite and re-validate"
-                          >
-                            → {prompt}
-                          </button>
-                        ))}
+                  <div className="relative">
+                    <Input
+                      placeholder="Optional context (sector, recent event)"
+                      value={r.context}
+                      onChange={e => updateRecipient(r.id, { context: e.target.value })}
+                      className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                      aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
+                      aria-describedby={`ctx-hint-${r.id}`}
+                    />
+                    {r.name.trim() && isGenericContext(r.context) && (
+                      <span
+                        className="absolute right-2 top-[14px] pointer-events-none"
+                        title={contextIssue(r.context) ?? "Context looks generic"}
+                      >
+                        <AlertTriangle
+                          className="h-3.5 w-3.5 text-amber-600"
+                          aria-label={contextIssue(r.context) ?? "Context looks generic"}
+                        />
+                      </span>
+                    )}
+                    {r.name.trim() && contextIssue(r.context) && (
+                      <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 space-y-1.5">
+                        <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
+                          <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                          {contextIssue(r.context)}
+                        </p>
+                        <div className="pl-4 border-l border-amber-500/30 space-y-1">
+                          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Suggested rewrites — click to apply</p>
+                          {suggestContextRewrites(r).map((prompt, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => updateRecipient(r.id, { context: prompt })}
+                              className="block text-left text-[11px] leading-snug text-primary hover:text-primary/80 hover:underline decoration-dotted underline-offset-2"
+                              title="Apply this rewrite and re-validate"
+                            >
+                              → {prompt}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
+                    <Trash2 className="h-4 w-4 text-muted-foreground" />
+                  </Button>
                 </div>
-                <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
-                  <Trash2 className="h-4 w-4 text-muted-foreground" />
-                </Button>
+
+                {/* Follow-up cadence controls */}
+                <div className="pl-11 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                  <span className="uppercase tracking-wider text-[10px]">Follow-up</span>
+                  <label className="inline-flex items-center gap-1.5">
+                    <span>Cadence</span>
+                    <select
+                      value={r.cadence_days}
+                      onChange={e => updateRecipient(r.id, { cadence_days: Number(e.target.value) })}
+                      disabled={r.do_not_follow_up}
+                      className="h-6 px-1.5 rounded border border-input bg-background text-foreground text-[11px] disabled:opacity-50"
+                      title="Days to wait after send before a follow-up becomes eligible"
+                    >
+                      {CADENCE_OPTIONS.map(d => (
+                        <option key={d} value={d}>{d} days</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="inline-flex items-center gap-1.5">
+                    <span>Snooze until</span>
+                    <input
+                      type="date"
+                      value={r.snooze_until ? r.snooze_until.slice(0, 10) : ""}
+                      onChange={e => updateRecipient(r.id, { snooze_until: e.target.value ? new Date(e.target.value).toISOString() : null })}
+                      disabled={r.do_not_follow_up}
+                      className="h-6 px-1.5 rounded border border-input bg-background text-foreground text-[11px] disabled:opacity-50"
+                      title="Pause auto follow-ups until this date"
+                    />
+                    {snoozeActive && !r.do_not_follow_up && (
+                      <button
+                        type="button"
+                        onClick={() => updateRecipient(r.id, { snooze_until: null })}
+                        className="text-primary hover:underline"
+                        title="Clear snooze"
+                      >
+                        clear
+                      </button>
+                    )}
+                  </label>
+                  <label className="inline-flex items-center gap-1.5">
+                    <input
+                      type="checkbox"
+                      checked={r.do_not_follow_up}
+                      onChange={e => updateRecipient(r.id, { do_not_follow_up: e.target.checked })}
+                      className="h-3 w-3 accent-primary"
+                    />
+                    <span className={r.do_not_follow_up ? "text-amber-700 font-medium" : ""}>Do not follow up</span>
+                  </label>
+                </div>
               </div>
-            ))}
+              );
+            })}
+
             {showOnlyGeneric && recipients.filter(r => r.name.trim() && isGenericContext(r.context)).length === 0 && (
               <p className="text-sm text-muted-foreground py-4">No generic-context warnings. All recipients look specific.</p>
             )}
@@ -1268,14 +1361,14 @@ const AdminOutreach = () => {
               const hasEmail = !!(rec?.email?.trim());
               const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
               const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
-              const hasChildFollowUp = drafts.some(x => x.parent_draft_id === d.id);
-              const followUpEligible = d.status === "sent" && daysSinceSent >= 7 && !hasChildFollowUp;
+              const fu = followUpState(d);
               const statusStyle =
                 d.status === "sent"
                   ? "bg-emerald-100 text-emerald-800 border-emerald-300"
                   : d.status === "replied"
                   ? "bg-blue-100 text-blue-800 border-blue-300"
                   : "bg-muted text-muted-foreground border-border";
+
               return (
                 <Card key={d.id} className="p-6">
                   <div className="flex items-start justify-between mb-3 gap-3">
@@ -1312,19 +1405,36 @@ const AdminOutreach = () => {
                           <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
                         </Button>
                       )}
-                      {followUpEligible && (
+                      {fu.eligible && (
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => generateFollowUp(d)}
                           disabled={followUpBusyId === d.id}
-                          title={`Sent ${daysSinceSent} days ago — draft a shorter second touch`}
+                          title={`Sent ${daysSinceSent} days ago (cadence ${fu.cadence}d) — draft a shorter second touch`}
                         >
                           {followUpBusyId === d.id
                             ? <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Drafting…</>
                             : <><Send className="h-3.5 w-3.5 mr-1" /> Draft follow-up</>}
                         </Button>
                       )}
+                      {d.status === "sent" && !fu.eligible && !drafts.some(x => x.parent_draft_id === d.id) && fu.blocked && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border bg-muted text-muted-foreground border-border"
+                          title={
+                            fu.blocked === "dnc"
+                              ? "Recipient flagged do-not-follow-up"
+                              : fu.blocked === "snoozed"
+                              ? `Snoozed until ${fu.snoozeUntil?.slice(0, 10)}`
+                              : `Waiting ${fu.waitDays} more day${fu.waitDays === 1 ? "" : "s"} (cadence ${fu.cadence}d)`
+                          }
+                        >
+                          {fu.blocked === "dnc" && "DNC"}
+                          {fu.blocked === "snoozed" && `Snoozed · ${fu.snoozeUntil?.slice(5, 10)}`}
+                          {fu.blocked === "waiting" && `+${fu.waitDays}d`}
+                        </span>
+                      )}
+
                       {d.status === "sent" && (
                         <Button
                           variant="outline"
