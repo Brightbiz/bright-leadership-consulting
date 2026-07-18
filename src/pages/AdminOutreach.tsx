@@ -19,11 +19,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 type DraftStatus = "draft" | "sent" | "replied";
+type ReplySentiment = "positive" | "neutral" | "negative" | "no_thanks" | "meeting_booked";
 
 interface Recipient {
   id: string;              // DB uuid (also used locally before save)
@@ -48,6 +49,11 @@ interface SavedDraft {
   sent_at: string | null;
   crm_contact_id: string | null;
   created_at: string;
+  parent_draft_id?: string | null;
+  is_follow_up?: boolean;
+  replied_at?: string | null;
+  reply_text?: string | null;
+  reply_sentiment?: ReplySentiment | null;
 }
 
 const emptyRecipient = (): Recipient => ({
