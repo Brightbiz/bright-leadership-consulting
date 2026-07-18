@@ -98,7 +98,7 @@ const AdminOutreach = () => {
             .order("sort_order", { ascending: true }),
           (supabase as any)
             .from("outreach_drafts")
-            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at")
+            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at,parent_draft_id,is_follow_up,replied_at,reply_text,reply_sentiment")
             .eq("user_id", userId)
             .order("created_at", { ascending: false })
             .limit(200),
