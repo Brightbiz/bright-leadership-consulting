@@ -45,6 +45,37 @@ const engagements = [
   },
 ];
 
+const narratives = [
+  {
+    sector: "Global Financial Services Group",
+    challenge:
+      "Eighteen months after a cross-border acquisition, the combined executive committee remained structurally unresolved. Two Group Executives held overlapping mandates. Escalation to the Chair had become inconsistent, and the integration programme was slipping against board-approved milestones. The Chair described the executive layer as 'busy but unaligned' — a phrase that, on structural interpretation, indicated variance in strategic priority, not effort.",
+    intervention:
+      "The engagement began with a full deployment of the Executive Alignment Index™ across the eleven-member executive committee. The diagnostic surfaced material variance in three areas: interpretation of the integration thesis, decision rights at the Group–Divisional interface, and the definition of 'material' escalation. A twelve-week structural advisory engagement followed, working directly with the Group CEO and Chair to redraw the executive operating model, formalise decision rights, and install a governance cadence at the board–executive interface.",
+    outcome:
+      "By the end of the engagement, the executive committee was operating against a single, documented alignment reference. Two role mandates were formally restructured. The Chair reported to the Nominations Committee that board confidence in the executive layer had been restored, and the integration programme returned to its original milestone trajectory within one quarter.",
+  },
+  {
+    sector: "Infrastructure & Engineering Group",
+    challenge:
+      "A rapidly internationalising engineering group had grown from two operating geographies to five in under three years. Executive decisions were increasingly being deferred, duplicated, or quietly re-litigated at regional level. The CEO described the pattern as 'decisions that don't stay decided.' On diagnostic examination, this was not a behavioural issue — it was a structural absence of decision rights at the Group–Region interface, compounded by two latent succession exposures that had not been formally acknowledged at board level.",
+    intervention:
+      "The Executive Alignment Index™ was deployed across eight senior leaders spanning three geographies. Structural advisory work then focused on the CEO and Chief People Officer, redesigning the executive decision architecture, clarifying regional authority, and reconstructing the Group Executive operating rhythm. A parallel governance workstream surfaced and documented the two succession exposures for the Nominations Committee.",
+    outcome:
+      "Decision-making authority was formally clarified across all five geographies. The Group Executive operating rhythm was restructured around explicit decision rights rather than standing agenda items. Both succession exposures were addressed before they compounded, and the CEO reported a measurable reduction in decisions re-entering the executive agenda after resolution.",
+  },
+  {
+    sector: "Healthcare & Life Sciences",
+    challenge:
+      "A newly appointed CEO inherited an executive team of individually capable leaders whose strategic interpretation of the organisation's mandate varied materially across the group. The board had approved twelve strategic priorities in the preceding cycle; in practice, no two members of the executive team ranked them in the same order. The Chair had begun to describe board–executive interaction as 'polite but unresolved.'",
+    intervention:
+      "The engagement opened with a full Executive Alignment Index™ deployment across the executive team, followed by structured advisory sessions with the CEO on strategic consolidation and executive operating design. A parallel governance engagement was conducted with the Chair, focused specifically on the board–executive interface: how strategy was received, interrogated, and confirmed between the two bodies.",
+    outcome:
+      "Strategic priorities were consolidated from twelve to four, each with a named executive owner and a documented decision right. The executive operating rhythm was redesigned around these four priorities. At the following board review, the Chair formally recorded a measurable improvement in board–executive coherence — the first such entry in the minute record for over two years.",
+  },
+];
+
+
 const SelectedEngagements = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -144,6 +175,71 @@ const SelectedEngagements = () => {
         </section>
 
         <div className="section-divider" />
+
+        {/* Section 2b — Extended Case Narratives */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px] mb-16">
+              <motion.p className="kicker mb-6" {...fade}>
+                Extended Case Narratives
+              </motion.p>
+              <motion.h2 className="heading-section mb-6" {...fade}>
+                Challenge, Intervention, Outcome
+              </motion.h2>
+              <motion.p className="body-brief" {...fade}>
+                A small number of engagements are recorded here in longer form —
+                still fully anonymised — to illustrate how structural misalignment
+                presents, how the diagnostic is deployed, and how governance-level
+                outcomes are documented at board level.
+              </motion.p>
+            </div>
+
+            <div className="space-y-0">
+              {narratives.map((n, index) => (
+                <motion.article
+                  key={n.sector}
+                  className="border-t border-border py-16 lg:py-20 first:border-t-0 first:pt-0"
+                  {...fade}
+                  transition={{ ...fade.transition, delay: 0.05 + index * 0.06 }}
+                >
+                  <div className="max-w-[680px]">
+                    <p className="kicker mb-6">{n.sector}</p>
+
+                    <div className="space-y-10">
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Challenge
+                        </p>
+                        <p className="text-foreground text-[17px] leading-[1.7]">
+                          {n.challenge}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Intervention
+                        </p>
+                        <p className="text-muted-foreground text-[17px] leading-[1.7]">
+                          {n.intervention}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Outcome
+                        </p>
+                        <p className="text-muted-foreground text-[17px] leading-[1.7]">
+                          {n.outcome}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
 
         {/* Section 3 — Closing + CTA */}
         <section className="section-brief bg-background">
