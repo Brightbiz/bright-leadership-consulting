@@ -307,7 +307,16 @@ const AdminOutreach = () => {
 
           <div className="space-y-3">
             {recipients.map((r, i) => (
-              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => updateRecipient(r.id, { priority: !r.priority })}
+                  title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
+                  aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
+                >
+                  <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+                </Button>
                 <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
                 <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
                 <datalist id={`roles-${i}`}>
