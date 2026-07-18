@@ -447,9 +447,51 @@ const AdminOutreach = () => {
             </div>
           </div>
 
+          {(() => {
+            const flagged = recipients
+              .map((r, i) => ({ r, i }))
+              .filter(({ r }) => r.name.trim() && contextIssue(r.context));
+            if (flagged.length === 0) return null;
+            const jumpTo = (id: string) => {
+              const el = document.getElementById(`recipient-row-${id}`);
+              if (!el) return;
+              el.scrollIntoView({ behavior: "smooth", block: "center" });
+              const input = el.querySelector<HTMLInputElement>('input[placeholder^="Optional context"]');
+              input?.focus();
+              el.classList.add("ring-2", "ring-amber-500/50", "rounded-md");
+              setTimeout(() => el.classList.remove("ring-2", "ring-amber-500/50", "rounded-md"), 1600);
+            };
+            return (
+              <div className="mb-4 rounded-md border border-amber-500/40 bg-amber-50/60 p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="h-3.5 w-3.5 text-amber-700" />
+                  <p className="text-xs font-medium text-amber-800">
+                    {flagged.length} recipient{flagged.length === 1 ? "" : "s"} flagged as generic — review before generating
+                  </p>
+                </div>
+                <ul className="space-y-1">
+                  {flagged.map(({ r, i }) => (
+                    <li key={r.id} className="flex items-baseline gap-2 text-[11px] leading-snug">
+                      <button
+                        type="button"
+                        onClick={() => jumpTo(r.id)}
+                        className="text-primary hover:underline decoration-dotted underline-offset-2 shrink-0"
+                        title="Jump to this row"
+                      >
+                        #{i + 1} {r.name || "Unnamed"}{r.company ? ` — ${r.company}` : ""}
+                        {r.priority ? " ★" : ""}
+                      </button>
+                      <span className="text-amber-700">{contextIssue(r.context)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })()}
+
           <div className="space-y-3">
             {recipients.map((r, i) => (
-              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
                 <Button
                   variant="ghost"
                   size="icon"
