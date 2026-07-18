@@ -464,6 +464,7 @@ const AdminCRM = () => {
                     <TableHead className="hidden md:table-cell">Company</TableHead>
                     <TableHead className="hidden lg:table-cell">Source</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead className="hidden md:table-cell">Outreach</TableHead>
                     <TableHead className="hidden sm:table-cell">Tags</TableHead>
                     <TableHead className="hidden lg:table-cell">Created</TableHead>
                     <TableHead className="w-[40px]"></TableHead>
