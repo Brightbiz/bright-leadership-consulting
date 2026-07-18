@@ -438,6 +438,9 @@ const AdminOutreach = () => {
               })()}
             </div>
             <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
+                <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
+              </Button>
               <Button variant="outline" size="sm" onClick={addRecipient}>
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add
               </Button>
