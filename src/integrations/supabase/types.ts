@@ -308,40 +308,49 @@ export type Database = {
       }
       outreach_recipients: {
         Row: {
+          cadence_days: number
           company: string
           context: string
           created_at: string
+          do_not_follow_up: boolean
           email: string | null
           id: string
           name: string
           priority: boolean
           role: string
+          snooze_until: string | null
           sort_order: number
           updated_at: string
           user_id: string
         }
         Insert: {
+          cadence_days?: number
           company?: string
           context?: string
           created_at?: string
+          do_not_follow_up?: boolean
           email?: string | null
           id?: string
           name?: string
           priority?: boolean
           role?: string
+          snooze_until?: string | null
           sort_order?: number
           updated_at?: string
           user_id: string
         }
         Update: {
+          cadence_days?: number
           company?: string
           context?: string
           created_at?: string
+          do_not_follow_up?: boolean
           email?: string | null
           id?: string
           name?: string
           priority?: boolean
           role?: string
+          snooze_until?: string | null
           sort_order?: number
           updated_at?: string
           user_id?: string
