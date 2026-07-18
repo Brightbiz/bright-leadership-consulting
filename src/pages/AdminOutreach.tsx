@@ -406,10 +406,18 @@ const AdminOutreach = () => {
             />
           </div>
 
-          <div className="mt-6 flex items-center justify-between">
-            <p className="text-xs text-muted-foreground">
-              {recipients.filter(r => r.name.trim() && r.role.trim()).length} valid · max 20 per batch
-            </p>
+          <div className="mt-6 flex items-center justify-between gap-4 flex-wrap">
+            {(() => {
+              const validCount = recipients.filter(r => r.name.trim() && r.role.trim()).length;
+              const flaggedCount = recipients.filter(r => r.priority && r.name.trim() && r.role.trim()).length;
+              return (
+                <p className="text-xs text-muted-foreground">
+                  {flaggedCount > 0
+                    ? <><span className="text-foreground font-medium">{flaggedCount} priority</span> of {validCount} valid · only starred contacts will be drafted</>
+                    : <>{validCount} valid · max 20 per batch · star your top 10–15 to draft only those</>}
+                </p>
+              );
+            })()}
             <Button onClick={generate} disabled={generating}>
               {generating ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Drafting…</> : "Generate drafts"}
             </Button>
