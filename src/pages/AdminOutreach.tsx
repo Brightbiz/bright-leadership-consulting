@@ -1929,6 +1929,114 @@ const AdminOutreach = () => {
         </AlertDialogContent>
       </AlertDialog>
 
+      <AlertDialog open={playbookDialogOpen} onOpenChange={setPlaybookDialogOpen}>
+        <AlertDialogContent className="max-w-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <BookOpen className="h-4 w-4" /> Sequence playbooks
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Save a named playbook (tone directive + cadence). Applying a playbook sets follow-up cadence on recipients and forwards the tone directive to the generator on the next draft run.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <div className="space-y-5 py-2">
+            {playbooks.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Saved playbooks</p>
+                <div className="space-y-1.5 max-h-56 overflow-auto pr-1">
+                  {playbooks.map(pb => (
+                    <div key={pb.id} className={`border rounded p-2.5 ${activePlaybookId === pb.id ? "border-primary bg-primary/5" : "border-border"}`}>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-foreground">{pb.name}</p>
+                          <p className="text-[11px] text-muted-foreground">Cadence {pb.cadence_days}d {pb.tone ? `· "${pb.tone.slice(0, 60)}${pb.tone.length > 60 ? "…" : ""}"` : ""}</p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => setPlaybookDraft(pb)}>Edit</Button>
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => applyPlaybookToRecipients(pb, "all")}>Apply all</Button>
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => applyPlaybookToRecipients(pb, "starred")}>Starred</Button>
+                          <Button size="sm" variant="ghost" className="h-7 w-7 p-0 text-rose-700" onClick={() => deletePlaybook(pb.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {activePlaybook && (
+                  <button
+                    className="mt-2 text-[11px] text-muted-foreground underline decoration-dotted underline-offset-2"
+                    onClick={() => persistPlaybooks(playbooks, null)}
+                  >
+                    Clear active playbook
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="border-t border-border pt-4">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                {playbookDraft.id ? "Edit playbook" : "New playbook"}
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="md:col-span-2">
+                  <Label className="text-xs">Name</Label>
+                  <Input
+                    value={playbookDraft.name}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, name: e.target.value }))}
+                    placeholder="e.g. Chairs — post-AGM"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Cadence (days)</Label>
+                  <select
+                    className="mt-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm"
+                    value={playbookDraft.cadence_days}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, cadence_days: Number(e.target.value) }))}
+                  >
+                    <option value={7}>7 days</option>
+                    <option value={14}>14 days</option>
+                    <option value={21}>21 days</option>
+                  </select>
+                </div>
+                <div>
+                  <Label className="text-xs">Context hint (optional)</Label>
+                  <Input
+                    value={playbookDraft.context_hint}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, context_hint: e.target.value }))}
+                    placeholder="e.g. AGM season; effectiveness review cycle"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Label className="text-xs">Tone directive (sent to generator)</Label>
+                  <Textarea
+                    rows={3}
+                    value={playbookDraft.tone}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, tone: e.target.value }))}
+                    placeholder="e.g. Emphasise post-AGM board effectiveness reviews and independent oversight. Keep sentences shorter than baseline."
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-3">
+                <Button size="sm" onClick={savePlaybookDraft}>
+                  {playbookDraft.id ? "Update playbook" : "Save playbook"}
+                </Button>
+                {playbookDraft.id && (
+                  <Button size="sm" variant="outline" onClick={() => setPlaybookDraft({ id: "", name: "", tone: "", cadence_days: 14, context_hint: "" })}>
+                    New
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+
+
       <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) { setReplyDialog(null); setClassifyHint(null); } }}>
         <AlertDialogContent>
           <AlertDialogHeader>
