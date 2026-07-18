@@ -92,6 +92,8 @@ const AdminOutreach = () => {
   const [replyDialog, setReplyDialog] = useState<SavedDraft | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replySentiment, setReplySentiment] = useState<ReplySentiment>("neutral");
+  const [classifyBusy, setClassifyBusy] = useState(false);
+  const [classifyHint, setClassifyHint] = useState<{ sentiment: ReplySentiment; confidence: number; summary: string } | null>(null);
   const [followUpBusyId, setFollowUpBusyId] = useState<string | null>(null);
   const [hydrating, setHydrating] = useState(true);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -716,9 +718,39 @@ const AdminOutreach = () => {
       setReplyDialog(null);
       setReplyText("");
       setReplySentiment("neutral");
+      setClassifyHint(null);
       toast({ title: "Reply logged" });
     } catch (err: any) {
       toast({ title: "Failed to save reply", description: err.message, variant: "destructive" });
+    }
+  };
+
+  // Auto-detect sentiment from pasted reply text via the AI edge function.
+  const autoDetectSentiment = async () => {
+    if (!replyText.trim() || classifyBusy || !replyDialog) return;
+    setClassifyBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: {
+          mode: "classify_reply",
+          replyText,
+          originalSubject: replyDialog.subject,
+          originalBody: replyDialog.body,
+        },
+      });
+      if (error) throw error;
+      if (data?.sentiment) {
+        setReplySentiment(data.sentiment as ReplySentiment);
+        setClassifyHint({
+          sentiment: data.sentiment,
+          confidence: Number(data.confidence ?? 0),
+          summary: String(data.summary ?? ""),
+        });
+      }
+    } catch (err: any) {
+      toast({ title: "Auto-detect failed", description: err.message ?? "Try again shortly.", variant: "destructive" });
+    } finally {
+      setClassifyBusy(false);
     }
   };
 
@@ -869,7 +901,31 @@ const AdminOutreach = () => {
       .filter(r => r.sent > 0)
       .sort((a, b) => b.sent - a.sent);
 
-    return { days, maxBar, roles };
+    // Sentiment breakdown across all replied drafts.
+    const sentimentOrder: ReplySentiment[] = ["meeting_booked", "positive", "neutral", "negative", "no_thanks"];
+    const sentimentLabels: Record<ReplySentiment, string> = {
+      meeting_booked: "Meeting booked",
+      positive: "Positive",
+      neutral: "Neutral",
+      negative: "Negative",
+      no_thanks: "No, thanks",
+    };
+    const sentCounts: Record<ReplySentiment, number> = {
+      meeting_booked: 0, positive: 0, neutral: 0, negative: 0, no_thanks: 0,
+    };
+    let repliedTotal = 0;
+    for (const d of drafts) {
+      if (d.status === "replied") {
+        repliedTotal += 1;
+        const s = (d.reply_sentiment as ReplySentiment) || "neutral";
+        if (s in sentCounts) sentCounts[s] += 1;
+      }
+    }
+    const sentimentRows = sentimentOrder
+      .map(k => ({ key: k, label: sentimentLabels[k], count: sentCounts[k] }))
+      .filter(r => r.count > 0);
+
+    return { days, maxBar, roles, sentimentRows, repliedTotal };
   })();
 
 
@@ -1346,8 +1402,33 @@ const AdminOutreach = () => {
                     )}
                   </div>
                 </div>
+                {insights.sentimentRows.length > 0 && (
+                  <div className="mt-5 pt-4 border-t border-border/60">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Reply sentiment · {insights.repliedTotal} replies
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {insights.sentimentRows.map(s => {
+                        const pct = insights.repliedTotal > 0 ? Math.round((s.count / insights.repliedTotal) * 100) : 0;
+                        const tone =
+                          s.key === "meeting_booked" ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                          : s.key === "positive" ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                          : s.key === "neutral" ? "bg-muted text-foreground border-border"
+                          : s.key === "negative" ? "bg-amber-50 text-amber-900 border-amber-200"
+                          : "bg-rose-50 text-rose-900 border-rose-200";
+                        return (
+                          <span key={s.key} className={`inline-flex items-center gap-2 text-[11px] px-2.5 py-1 rounded-full border ${tone}`}>
+                            <span className="font-medium">{s.label}</span>
+                            <span className="text-muted-foreground">{s.count} · {pct}%</span>
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </Card>
             )}
+
 
 
             <div className="flex items-center justify-between">
@@ -1596,7 +1677,7 @@ const AdminOutreach = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) setReplyDialog(null); }}>
+      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) { setReplyDialog(null); setClassifyHint(null); } }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="font-serif flex items-center gap-2">
@@ -1609,7 +1690,19 @@ const AdminOutreach = () => {
                   Records what came back so the CRM reflects real conversation state. Sentiment updates the linked CRM stage automatically.
                 </p>
                 <div>
-                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 px-2 text-[11px]"
+                      disabled={!replyText.trim() || classifyBusy}
+                      onClick={autoDetectSentiment}
+                    >
+                      {classifyBusy ? "Detecting…" : "Auto-detect from text"}
+                    </Button>
+                  </div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {([
                       { key: "meeting_booked", label: "Meeting booked" },
@@ -1632,6 +1725,13 @@ const AdminOutreach = () => {
                       </button>
                     ))}
                   </div>
+                  {classifyHint && (
+                    <p className="mt-2 text-[11px] text-muted-foreground italic">
+                      Suggested: <span className="text-foreground not-italic">{classifyHint.sentiment.replace("_", " ")}</span>
+                      {classifyHint.confidence > 0 && <> · {Math.round(classifyHint.confidence * 100)}% confidence</>}
+                      {classifyHint.summary && <> — {classifyHint.summary}</>}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label className="text-xs uppercase tracking-wide text-muted-foreground">Reply text (optional)</Label>
@@ -1640,18 +1740,19 @@ const AdminOutreach = () => {
                     rows={5}
                     placeholder="Paste the reply here, or note the substance briefly."
                     value={replyText}
-                    onChange={e => setReplyText(e.target.value)}
+                    onChange={e => { setReplyText(e.target.value); if (classifyHint) setClassifyHint(null); }}
                   />
                 </div>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setReplyDialog(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => { setReplyDialog(null); setClassifyHint(null); }}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={saveReply}>Save reply</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
     </div>
   );
 };
