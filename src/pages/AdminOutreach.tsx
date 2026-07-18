@@ -928,6 +928,98 @@ const AdminOutreach = () => {
     return { days, maxBar, roles, sentimentRows, repliedTotal };
   })();
 
+  // --- Weekly digest (Monday brief): last 7 days vs prior 7, follow-ups due, silent threads, uncontacted priorities.
+  const digest = (() => {
+    const now = new Date();
+    const startOfDay = (d: Date) => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+    const today = startOfDay(now);
+    const wk = new Date(today); wk.setDate(today.getDate() - 7);
+    const prior = new Date(today); prior.setDate(today.getDate() - 14);
+    const inRange = (iso: string | null | undefined, from: Date, to: Date) => {
+      if (!iso) return false;
+      const t = new Date(iso).getTime();
+      return t >= from.getTime() && t < to.getTime();
+    };
+
+    const bucket = (from: Date, to: Date) => {
+      let sent = 0, replied = 0, meetings = 0, positive = 0;
+      for (const d of drafts) {
+        if ((d.status === "sent" || d.status === "replied") && inRange(d.sent_at ?? d.created_at, from, to)) sent += 1;
+        if (d.status === "replied" && inRange(d.replied_at ?? d.sent_at ?? d.created_at, from, to)) {
+          replied += 1;
+          if (d.reply_sentiment === "meeting_booked") meetings += 1;
+          if (d.reply_sentiment === "positive") positive += 1;
+        }
+      }
+      return { sent, replied, meetings, positive };
+    };
+    const thisWk = bucket(wk, new Date(today.getTime() + 24*60*60*1000));
+    const lastWk = bucket(prior, wk);
+    const delta = (a: number, b: number) => a - b;
+
+    const followUpsDue = drafts
+      .filter(d => followUpState(d).eligible)
+      .slice()
+      .sort((a, b) => (a.sent_at ?? a.created_at).localeCompare(b.sent_at ?? b.created_at))
+      .slice(0, 8);
+
+    const twoWeeks = new Date(today); twoWeeks.setDate(today.getDate() - 14);
+    const silent = drafts.filter(d => {
+      if (d.status !== "sent") return false;
+      const t = d.sent_at ? new Date(d.sent_at) : null;
+      if (!t) return false;
+      if (t.getTime() > twoWeeks.getTime()) return false;
+      const r = recipients.find(r => r.id === d.recipient_id);
+      if (r?.do_not_follow_up) return false;
+      if (r?.snooze_until && new Date(r.snooze_until).getTime() > now.getTime()) return false;
+      return true;
+    }).slice(0, 6);
+
+    const contactedIds = new Set(drafts.filter(d => d.status === "sent" || d.status === "replied").map(d => d.recipient_id));
+    const uncontactedPriority = recipients
+      .filter(r => r.priority && !contactedIds.has(r.id) && (r.name.trim() || r.company.trim()))
+      .slice(0, 8);
+
+    const hasAny = thisWk.sent + thisWk.replied + lastWk.sent + followUpsDue.length + silent.length + uncontactedPriority.length > 0;
+
+    return { thisWk, lastWk, delta, followUpsDue, silent, uncontactedPriority, hasAny, today };
+  })();
+
+  const copyDigest = async () => {
+    const dateStr = digest.today.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const arrow = (n: number) => n > 0 ? `▲ ${n}` : n < 0 ? `▼ ${Math.abs(n)}` : "—";
+    const lines: string[] = [];
+    lines.push(`Weekly Outreach Digest · ${dateStr}`);
+    lines.push("");
+    lines.push("— Last 7 days —");
+    lines.push(`Sent: ${digest.thisWk.sent}  (vs prior ${digest.lastWk.sent} · ${arrow(digest.delta(digest.thisWk.sent, digest.lastWk.sent))})`);
+    lines.push(`Replies: ${digest.thisWk.replied}  (vs prior ${digest.lastWk.replied} · ${arrow(digest.delta(digest.thisWk.replied, digest.lastWk.replied))})`);
+    lines.push(`Meetings booked: ${digest.thisWk.meetings}   Positive: ${digest.thisWk.positive}`);
+    if (digest.followUpsDue.length) {
+      lines.push("");
+      lines.push(`— Follow-ups due (${digest.followUpsDue.length}) —`);
+      digest.followUpsDue.forEach(d => lines.push(`• ${d.recipient_name || "—"} · ${d.recipient_role || ""} · ${d.company || ""}`));
+    }
+    if (digest.silent.length) {
+      lines.push("");
+      lines.push(`— Silent > 14 days (${digest.silent.length}) —`);
+      digest.silent.forEach(d => lines.push(`• ${d.recipient_name || "—"} · ${d.company || ""}`));
+    }
+    if (digest.uncontactedPriority.length) {
+      lines.push("");
+      lines.push(`— Priority, not yet contacted (${digest.uncontactedPriority.length}) —`);
+      digest.uncontactedPriority.forEach(r => lines.push(`• ${r.name || "—"} · ${r.role || ""} · ${r.company || ""}`));
+    }
+    try {
+      await navigator.clipboard.writeText(lines.join("\n"));
+      toast({ title: "Digest copied", description: "Weekly brief on your clipboard." });
+    } catch {
+      toast({ title: "Copy failed", description: "Clipboard unavailable.", variant: "destructive" });
+    }
+  };
+
+
+
 
 
 
