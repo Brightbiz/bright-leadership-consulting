@@ -353,7 +353,11 @@ const AdminOutreach = () => {
       email: "",
       context: context.slice(0, 400),
       priority: false,
+      cadence_days: 14,
+      do_not_follow_up: false,
+      snooze_until: null,
     } satisfies Recipient;
+
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
