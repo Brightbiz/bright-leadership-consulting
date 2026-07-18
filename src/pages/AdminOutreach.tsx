@@ -369,7 +369,20 @@ const AdminOutreach = () => {
                   {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
                 </datalist>
                 <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
-                <Input placeholder="Optional context (sector, recent event)" value={r.context} onChange={e => updateRecipient(r.id, { context: e.target.value })} />
+                <div className="relative">
+                  <Input
+                    placeholder="Optional context (sector, recent event)"
+                    value={r.context}
+                    onChange={e => updateRecipient(r.id, { context: e.target.value })}
+                    className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                  />
+                  {r.name.trim() && isGenericContext(r.context) && (
+                    <AlertTriangle
+                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                      aria-label="Context looks generic"
+                    />
+                  )}
+                </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
                   <Trash2 className="h-4 w-4 text-muted-foreground" />
                 </Button>
