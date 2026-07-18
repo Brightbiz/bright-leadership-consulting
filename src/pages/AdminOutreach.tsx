@@ -90,6 +90,132 @@ const AdminOutreach = () => {
     toast({ title: `Imported ${parsed.length} recipients` });
   };
 
+  const normalizeHeader = (h: string) =>
+    h
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, " ")
+      .trim();
+
+  const findColumn = (headers: string[], candidates: string[]) => {
+    const normalized = headers.map(normalizeHeader);
+    for (const candidate of candidates.map(c => normalizeHeader(c))) {
+      const exact = normalized.indexOf(candidate);
+      if (exact !== -1) return exact;
+      const partial = normalized.findIndex(h => h.includes(candidate) || candidate.includes(h));
+      if (partial !== -1) return partial;
+    }
+    return -1;
+  };
+
+  const parseCsvRows = (text: string): { headers: string[]; rows: string[][] } => {
+    const lines: string[][] = [];
+    let current: string[] = [];
+    let field = "";
+    let inQuotes = false;
+    const flushField = () => {
+      current.push(field.trim());
+      field = "";
+    };
+    const flushRow = () => {
+      if (current.length > 0 || field.length > 0) {
+        flushField();
+        lines.push(current);
+        current = [];
+      }
+    };
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const next = text[i + 1];
+      if (char === '"') {
+        if (inQuotes && next === '"') {
+          field += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === "," && !inQuotes) {
+        flushField();
+      } else if ((char === "\n" || char === "\r") && !inQuotes) {
+        flushRow();
+      } else {
+        field += char;
+      }
+    }
+    flushRow();
+    const nonEmpty = lines.filter(r => r.some(c => c.length > 0));
+    if (nonEmpty.length === 0) return { headers: [], rows: [] };
+    return { headers: nonEmpty[0], rows: nonEmpty.slice(1) };
+  };
+
+  const [csvPreview, setCsvPreview] = useState<Recipient[] | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const mapApolloRow = (headers: string[], row: string[]): Recipient => {
+    const nameIdx = findColumn(headers, ["name", "full name"]);
+    const firstNameIdx = findColumn(headers, ["first name"]);
+    const lastNameIdx = findColumn(headers, ["last name"]);
+    const titleIdx = findColumn(headers, ["title", "job title", "role"]);
+    const companyIdx = findColumn(headers, ["company name", "company", "account name", "organization name", "organisation name", "organization", "organisation"]);
+    const industryIdx = findColumn(headers, ["industry", "company industry", "keywords"]);
+
+    let name = "";
+    if (nameIdx !== -1 && row[nameIdx]) {
+      name = row[nameIdx];
+    } else if (firstNameIdx !== -1 || lastNameIdx !== -1) {
+      const parts = [row[firstNameIdx] ?? "", row[lastNameIdx] ?? ""].filter(Boolean);
+      name = parts.join(" ");
+    }
+
+    const role = titleIdx !== -1 ? row[titleIdx] ?? "" : "";
+    const company = companyIdx !== -1 ? row[companyIdx] ?? "" : "";
+    const context = industryIdx !== -1 ? row[industryIdx] ?? "" : "";
+
+    return {
+      id: crypto.randomUUID(),
+      name: name.slice(0, 120),
+      role: role.slice(0, 120) || "Chair",
+      company: company.slice(0, 160),
+      context: context.slice(0, 400),
+    };
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith(".csv")) {
+      toast({ title: "Please upload a CSV file", variant: "destructive" });
+      return;
+    }
+    try {
+      const text = await file.text();
+      const { headers, rows } = parseCsvRows(text);
+      if (headers.length === 0 || rows.length === 0) {
+        toast({ title: "CSV appears empty", description: "No usable rows were found.", variant: "destructive" });
+        return;
+      }
+      const mapped = rows.map(r => mapApolloRow(headers, r)).filter(r => r.name);
+      if (mapped.length === 0) {
+        toast({ title: "No recipients found", description: "Check the CSV has Name, Title, and Company columns.", variant: "destructive" });
+        return;
+      }
+      setCsvPreview(mapped.slice(0, 50));
+      toast({ title: `Parsed ${mapped.length} recipients`, description: "Review the preview, then confirm import." });
+    } catch (err) {
+      toast({ title: "Failed to read CSV", description: (err as Error).message, variant: "destructive" });
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const confirmCsvImport = () => {
+    if (!csvPreview || csvPreview.length === 0) return;
+    setRecipients(csvPreview);
+    setCsvPreview(null);
+    toast({ title: `Imported ${csvPreview.length} recipients` });
+  };
+
+  const cancelCsvImport = () => setCsvPreview(null);
+
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
     if (valid.length === 0) {
