@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -19,25 +19,35 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+type DraftStatus = "draft" | "sent" | "replied";
+
 interface Recipient {
-  id: string;
+  id: string;              // DB uuid (also used locally before save)
   name: string;
   role: string;
   company: string;
+  email: string;
   context: string;
   priority: boolean;
+  persisted?: boolean;     // true once at least one save has succeeded
 }
 
-interface DraftedEmail {
+interface SavedDraft {
+  id: string;
+  recipient_id: string | null;
   recipient_name: string;
   recipient_role: string;
   company: string;
   subject: string;
   body: string;
+  status: DraftStatus;
+  sent_at: string | null;
+  crm_contact_id: string | null;
+  created_at: string;
 }
 
 const emptyRecipient = (): Recipient => ({
@@ -45,6 +55,7 @@ const emptyRecipient = (): Recipient => ({
   name: "",
   role: "Chair",
   company: "",
+  email: "",
   context: "",
   priority: false,
 });
@@ -60,9 +71,11 @@ const AdminOutreach = () => {
   const [notes, setNotes] = useState("");
   const [bulkPaste, setBulkPaste] = useState("");
   const [generating, setGenerating] = useState(false);
-  const [drafts, setDrafts] = useState<DraftedEmail[]>([]);
+  const [drafts, setDrafts] = useState<SavedDraft[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
   const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
+  const [hydrating, setHydrating] = useState(true);
+
 
   if (isLoading) {
     return (
