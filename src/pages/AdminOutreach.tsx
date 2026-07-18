@@ -597,6 +597,132 @@ const AdminOutreach = () => {
     }
   };
 
+  // Save reply text + sentiment and flip status to "replied".
+  const saveReply = async () => {
+    if (!replyDialog || !userId) return;
+    const d = replyDialog;
+    try {
+      const patch: any = {
+        status: "replied" as DraftStatus,
+        replied_at: new Date().toISOString(),
+        reply_text: replyText.trim() || null,
+        reply_sentiment: replySentiment,
+      };
+      const { data: updated, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .update(patch)
+        .eq("id", d.id)
+        .select()
+        .single();
+      if (error) throw error;
+      setDrafts(prev => prev.map(x => (x.id === d.id ? (updated as SavedDraft) : x)));
+
+      // Nudge the CRM row (if any) to reflect the reply.
+      if (d.crm_contact_id) {
+        const stageMap: Record<ReplySentiment, string> = {
+          meeting_booked: "qualified",
+          positive: "qualified",
+          neutral: "contacted",
+          negative: "lost",
+          no_thanks: "lost",
+        };
+        await (supabase as any)
+          .from("crm_contacts")
+          .update({
+            status: stageMap[replySentiment],
+            last_contacted_at: new Date().toISOString(),
+          })
+          .eq("id", d.crm_contact_id);
+      }
+
+      setReplyDialog(null);
+      setReplyText("");
+      setReplySentiment("neutral");
+      toast({ title: "Reply logged" });
+    } catch (err: any) {
+      toast({ title: "Failed to save reply", description: err.message, variant: "destructive" });
+    }
+  };
+
+  // Draft a follow-up email for a specific "sent" draft that hasn't been replied to.
+  const generateFollowUp = async (d: SavedDraft) => {
+    if (!userId) return;
+    const rec = findRecipientForDraft(d);
+    const recipientPayload = {
+      name: d.recipient_name || rec?.name || "",
+      role: d.recipient_role || rec?.role || "",
+      company: d.company || rec?.company || "",
+      context: rec?.context || "",
+    };
+    if (!recipientPayload.name || !recipientPayload.role) {
+      toast({ title: "Missing recipient details", description: "Restore the original recipient row to draft a follow-up.", variant: "destructive" });
+      return;
+    }
+    setFollowUpBusyId(d.id);
+    try {
+      const sentDate = d.sent_at ? new Date(d.sent_at) : new Date(d.created_at);
+      const sentDaysAgo = Math.max(1, Math.round((Date.now() - sentDate.getTime()) / (1000 * 60 * 60 * 24)));
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: {
+          recipients: [recipientPayload],
+          mode: "follow_up",
+          originalSubject: d.subject,
+          originalBody: d.body,
+          sentDaysAgo,
+        },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const emails = data?.emails ?? [];
+      if (emails.length === 0) throw new Error("No follow-up returned");
+      const e = emails[0];
+
+      const { data: inserted, error: insertErr } = await (supabase as any)
+        .from("outreach_drafts")
+        .insert({
+          user_id: userId,
+          recipient_id: d.recipient_id,
+          recipient_name: e.recipient_name || d.recipient_name,
+          recipient_role: e.recipient_role || d.recipient_role,
+          company: e.company || d.company,
+          subject: e.subject,
+          body: e.body,
+          status: "draft" as DraftStatus,
+          parent_draft_id: d.id,
+          is_follow_up: true,
+        })
+        .select()
+        .single();
+      if (insertErr) throw insertErr;
+      setDrafts(prev => [inserted as SavedDraft, ...prev]);
+      toast({ title: "Follow-up drafted", description: "Review it in the drafts log." });
+    } catch (err: any) {
+      toast({ title: "Follow-up failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    } finally {
+      setFollowUpBusyId(null);
+    }
+  };
+
+  // Analytics summary for the drafts log (deduped-by-draft — one row per email).
+  const analytics = (() => {
+    const total = drafts.length;
+    const sent = drafts.filter(d => d.status === "sent" || d.status === "replied").length;
+    const replied = drafts.filter(d => d.status === "replied").length;
+    const followUps = drafts.filter(d => d.is_follow_up).length;
+    const replyRate = sent > 0 ? Math.round((replied / sent) * 100) : 0;
+    const now = Date.now();
+    const needsFollowUp = drafts.filter(d => {
+      if (d.status !== "sent") return false;
+      // exclude drafts that already have a follow-up drafted against them
+      const hasChild = drafts.some(x => x.parent_draft_id === d.id);
+      if (hasChild) return false;
+      const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+      return now - sentAt > 7 * 24 * 60 * 60 * 1000;
+    }).length;
+    return { total, sent, replied, followUps, replyRate, needsFollowUp };
+  })();
+
+
 
   const exportCsv = () => {
     if (drafts.length === 0) return;
