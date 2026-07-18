@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3 } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3, PenLine, ShieldAlert } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -87,6 +87,38 @@ const AdminOutreach = () => {
   const [hydrating, setHydrating] = useState(true);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userId = user?.id ?? null;
+
+  // Sender identity + signature block — persisted per browser in localStorage.
+  const [sender, setSender] = useState<{ name: string; title: string; signature: string }>(() => {
+    try {
+      return {
+        name: localStorage.getItem("outreach.sender.name") ?? "",
+        title: localStorage.getItem("outreach.sender.title") ?? "",
+        signature: localStorage.getItem("outreach.sender.signature") ?? "",
+      };
+    } catch {
+      return { name: "", title: "", signature: "" };
+    }
+  });
+  const [senderDialogOpen, setSenderDialogOpen] = useState(false);
+  const [senderDraft, setSenderDraft] = useState(sender);
+  const signatureBlock = (() => {
+    if (sender.signature.trim()) return sender.signature.trim();
+    const lines = ["— Bright Leadership Consulting"];
+    if (sender.name.trim()) lines.unshift([sender.name, sender.title].filter(Boolean).join(", "));
+    return lines.join("\n");
+  })();
+  const saveSender = () => {
+    try {
+      localStorage.setItem("outreach.sender.name", senderDraft.name);
+      localStorage.setItem("outreach.sender.title", senderDraft.title);
+      localStorage.setItem("outreach.sender.signature", senderDraft.signature);
+    } catch {}
+    setSender(senderDraft);
+    setSenderDialogOpen(false);
+    toast({ title: "Signature saved" });
+  };
+
 
   // Load recipients + drafts on mount
   useEffect(() => {
@@ -513,10 +545,11 @@ const AdminOutreach = () => {
   };
 
   const copyEmail = async (e: SavedDraft) => {
-    const text = `Subject: ${e.subject}\n\n${e.body}\n\n— Bright Leadership Consulting`;
+    const text = `Subject: ${e.subject}\n\n${e.body}\n\n${signatureBlock}`;
     await navigator.clipboard.writeText(text);
     toast({ title: "Copied to clipboard" });
   };
+
 
   const findRecipientForDraft = (d: SavedDraft): Recipient | undefined =>
     recipients.find(r => r.id === d.recipient_id) ??
@@ -722,6 +755,87 @@ const AdminOutreach = () => {
     return { total, sent, replied, followUps, replyRate, needsFollowUp };
   })();
 
+  // --- Draft quality scoring (client-side heuristics) ---
+  const BANNED_PHRASES = [
+    "hope this finds you well", "hope this email finds you", "quick call", "circle back",
+    "touch base", "reach out", "just wanted to", "checking in", "services", "packages",
+    "solutions", "leverage", "synergy", "unlock", "empower", "transform", "excited", "delighted",
+  ];
+  const scoreDraft = (subject: string, body: string): string[] => {
+    const issues: string[] = [];
+    const words = body.trim().split(/\s+/).filter(Boolean).length;
+    if (words > 140) issues.push(`Too long — ${words} words (aim ≤ 140)`);
+    if (words > 0 && words < 40) issues.push(`Too short — ${words} words`);
+    if (!/EAI|Executive Alignment Index/i.test(body)) issues.push("Missing EAI™ reference");
+    const hay = `${subject} ${body}`.toLowerCase();
+    const hits = BANNED_PHRASES.filter(p => hay.includes(p));
+    if (hits.length > 0) issues.push(`Banned phrase${hits.length === 1 ? "" : "s"}: "${hits.join("\", \"")}"`);
+    const subjWords = subject.trim().split(/\s+/).filter(Boolean).length;
+    if (subjWords > 9) issues.push(`Subject too long — ${subjWords} words (aim ≤ 7)`);
+    return issues;
+  };
+
+  // --- 30-day activity + role breakdown for the Insights panel ---
+  const insights = (() => {
+    const now = new Date();
+    const days: { label: string; sent: number; replied: number }[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      days.push({ label: d.toISOString().slice(5, 10), sent: 0, replied: 0 });
+    }
+    const cutoff = new Date(now);
+    cutoff.setDate(now.getDate() - 29);
+    cutoff.setHours(0, 0, 0, 0);
+    const dayIndex = (iso: string | null | undefined) => {
+      if (!iso) return -1;
+      const t = new Date(iso);
+      t.setHours(0, 0, 0, 0);
+      const diff = Math.round((t.getTime() - cutoff.getTime()) / (1000 * 60 * 60 * 24));
+      return diff >= 0 && diff < 30 ? diff : -1;
+    };
+    for (const d of drafts) {
+      if (d.status === "sent" || d.status === "replied") {
+        const idx = dayIndex(d.sent_at ?? d.created_at);
+        if (idx >= 0) days[idx].sent += 1;
+      }
+      if (d.status === "replied") {
+        const idx = dayIndex(d.replied_at ?? d.sent_at ?? d.created_at);
+        if (idx >= 0) days[idx].replied += 1;
+      }
+    }
+    const maxBar = Math.max(1, ...days.map(x => x.sent));
+
+    // Role bucketing: normalise arbitrary titles into governance categories.
+    const roleBucket = (raw: string): string => {
+      const r = raw.toLowerCase();
+      if (r.includes("nomination")) return "Nominations";
+      if (r.includes("senior independent") || r === "sid" || r.includes(" sid")) return "SID";
+      if (r.includes("chair")) return "Chair";
+      if (r.includes("non-exec") || r.includes("non exec") || r.includes("ned")) return "NED";
+      if (r.includes("ceo")) return "CEO";
+      if (r.includes("cfo")) return "CFO";
+      return "Other";
+    };
+    const byRole = new Map<string, { sent: number; replied: number }>();
+    for (const d of drafts) {
+      const bucket = roleBucket(d.recipient_role || "");
+      const row = byRole.get(bucket) ?? { sent: 0, replied: 0 };
+      if (d.status === "sent" || d.status === "replied") row.sent += 1;
+      if (d.status === "replied") row.replied += 1;
+      byRole.set(bucket, row);
+    }
+    const roles = Array.from(byRole.entries())
+      .map(([role, r]) => ({ role, ...r, rate: r.sent > 0 ? Math.round((r.replied / r.sent) * 100) : 0 }))
+      .filter(r => r.sent > 0)
+      .sort((a, b) => b.sent - a.sent);
+
+    return { days, maxBar, roles };
+  })();
+
+
+
 
 
   const exportCsv = () => {
@@ -806,6 +920,17 @@ const AdminOutreach = () => {
                   aria-label="Show only recipients with generic context warnings"
                 />
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => { setSenderDraft(sender); setSenderDialogOpen(true); }}
+                title="Set the sender identity and signature block appended to every copied draft"
+              >
+                <PenLine className="h-3.5 w-3.5 mr-1" /> Signature
+                {!sender.name && !sender.signature && (
+                  <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-500" aria-label="Signature not configured" />
+                )}
+              </Button>
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
@@ -1071,6 +1196,67 @@ const AdminOutreach = () => {
               </div>
             </div>
 
+            {(insights.days.some(d => d.sent > 0) || insights.roles.length > 0) && (
+              <Card className="p-5">
+                <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Sends · last 30 days
+                    </p>
+                    <div className="flex items-end gap-[3px] h-20">
+                      {insights.days.map((d, i) => {
+                        const h = d.sent === 0 ? 3 : Math.max(6, Math.round((d.sent / insights.maxBar) * 76));
+                        const repH = d.replied === 0 ? 0 : Math.max(3, Math.round((d.replied / insights.maxBar) * 76));
+                        return (
+                          <div
+                            key={i}
+                            className="flex-1 flex flex-col justify-end items-stretch"
+                            title={`${d.label} — ${d.sent} sent · ${d.replied} replied`}
+                          >
+                            <div className="bg-primary/25" style={{ height: `${h - repH}px` }} />
+                            {repH > 0 && <div className="bg-primary" style={{ height: `${repH}px` }} />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+                      <span>{insights.days[0].label}</span>
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-2 bg-primary/25" /> sent</span>
+                        <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-2 bg-primary" /> replied</span>
+                      </span>
+                      <span>{insights.days[insights.days.length - 1].label}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Reply rate by role
+                    </p>
+                    {insights.roles.length === 0 ? (
+                      <p className="text-xs text-muted-foreground">No sent drafts yet.</p>
+                    ) : (
+                      <table className="w-full text-xs">
+                        <tbody>
+                          {insights.roles.map(r => (
+                            <tr key={r.role} className="border-b border-border/60 last:border-0">
+                              <td className="py-1.5 text-foreground">{r.role}</td>
+                              <td className="py-1.5 text-muted-foreground text-right w-16">{r.replied}/{r.sent}</td>
+                              <td className="py-1.5 text-right w-14">
+                                <span className={`font-medium ${r.rate >= 20 ? "text-emerald-700" : r.rate >= 10 ? "text-foreground" : "text-muted-foreground"}`}>
+                                  {r.rate}%
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            )}
+
+
             <div className="flex items-center justify-between">
               <h2 className="font-serif text-xl">Drafts ({drafts.length})</h2>
               <Button variant="outline" size="sm" onClick={exportCsv}>
@@ -1157,10 +1343,27 @@ const AdminOutreach = () => {
                       </Button>
                     </div>
                   </div>
+                  {(() => {
+                    const issues = scoreDraft(d.subject, d.body);
+                    if (issues.length === 0) return null;
+                    return (
+                      <div className="mb-3 rounded-md border border-amber-500/40 bg-amber-50/60 p-2.5">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <ShieldAlert className="h-3.5 w-3.5 text-amber-700" />
+                          <p className="text-[11px] font-medium text-amber-800 uppercase tracking-wider">
+                            Quality — {issues.length} issue{issues.length === 1 ? "" : "s"}
+                          </p>
+                        </div>
+                        <ul className="text-[11px] leading-snug text-amber-800 pl-4 list-disc space-y-0.5">
+                          {issues.map(iss => <li key={iss}>{iss}</li>)}
+                        </ul>
+                      </div>
+                    );
+                  })()}
                   <div className="border-l-2 border-border pl-4">
                     <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
                     <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
-                    <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
+                    <p className="text-sm text-muted-foreground mt-3 whitespace-pre-wrap">{signatureBlock}</p>
                   </div>
                   {d.status === "replied" && (d.reply_text || d.reply_sentiment) && (
                     <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/50 p-3">
@@ -1217,6 +1420,68 @@ const AdminOutreach = () => {
             >
               Generate anyway
             </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={senderDialogOpen} onOpenChange={setSenderDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <PenLine className="h-4 w-4" /> Sender identity & signature
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p className="text-xs text-muted-foreground">
+                  Appended to every draft on screen and when you copy to clipboard. Stored locally on this browser.
+                </p>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Name</Label>
+                  <Input
+                    className="mt-1.5"
+                    value={senderDraft.name}
+                    onChange={e => setSenderDraft(p => ({ ...p, name: e.target.value }))}
+                    placeholder="e.g. Jonathan Bright"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Title</Label>
+                  <Input
+                    className="mt-1.5"
+                    value={senderDraft.title}
+                    onChange={e => setSenderDraft(p => ({ ...p, title: e.target.value }))}
+                    placeholder="e.g. Founder, Bright Leadership Consulting"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                    Full signature block (optional — overrides the above)
+                  </Label>
+                  <Textarea
+                    className="mt-1.5 font-mono text-xs"
+                    rows={5}
+                    value={senderDraft.signature}
+                    onChange={e => setSenderDraft(p => ({ ...p, signature: e.target.value }))}
+                    placeholder={"Jonathan Bright\nFounder, Bright Leadership Consulting\nbrightleadershipconsulting.com"}
+                  />
+                </div>
+                <div className="rounded-md border border-border bg-muted/40 p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Preview</p>
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-sans">{
+                    (senderDraft.signature.trim())
+                      ? senderDraft.signature.trim()
+                      : [
+                          [senderDraft.name, senderDraft.title].filter(Boolean).join(", "),
+                          "— Bright Leadership Consulting",
+                        ].filter(Boolean).join("\n")
+                  }</pre>
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={saveSender}>Save signature</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
