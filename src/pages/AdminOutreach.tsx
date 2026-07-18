@@ -1424,6 +1424,68 @@ const AdminOutreach = () => {
         </AlertDialogContent>
       </AlertDialog>
 
+      <AlertDialog open={senderDialogOpen} onOpenChange={setSenderDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <PenLine className="h-4 w-4" /> Sender identity & signature
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p className="text-xs text-muted-foreground">
+                  Appended to every draft on screen and when you copy to clipboard. Stored locally on this browser.
+                </p>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Name</Label>
+                  <Input
+                    className="mt-1.5"
+                    value={senderDraft.name}
+                    onChange={e => setSenderDraft(p => ({ ...p, name: e.target.value }))}
+                    placeholder="e.g. Jonathan Bright"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Title</Label>
+                  <Input
+                    className="mt-1.5"
+                    value={senderDraft.title}
+                    onChange={e => setSenderDraft(p => ({ ...p, title: e.target.value }))}
+                    placeholder="e.g. Founder, Bright Leadership Consulting"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                    Full signature block (optional — overrides the above)
+                  </Label>
+                  <Textarea
+                    className="mt-1.5 font-mono text-xs"
+                    rows={5}
+                    value={senderDraft.signature}
+                    onChange={e => setSenderDraft(p => ({ ...p, signature: e.target.value }))}
+                    placeholder={"Jonathan Bright\nFounder, Bright Leadership Consulting\nbrightleadershipconsulting.com"}
+                  />
+                </div>
+                <div className="rounded-md border border-border bg-muted/40 p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Preview</p>
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-sans">{
+                    (senderDraft.signature.trim())
+                      ? senderDraft.signature.trim()
+                      : [
+                          [senderDraft.name, senderDraft.title].filter(Boolean).join(", "),
+                          "— Bright Leadership Consulting",
+                        ].filter(Boolean).join("\n")
+                  }</pre>
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={saveSender}>Save signature</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) setReplyDialog(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
