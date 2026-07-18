@@ -30,6 +30,7 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminForgotPassword = lazy(() => import("./pages/AdminForgotPassword"));
 const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const AdminCRM = lazy(() => import("./pages/AdminCRM"));
+const AdminOutreach = lazy(() => import("./pages/AdminOutreach"));
 
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const AnimatedRoutes = () => {
           
           <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
           <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
+          <Route path="/admin/outreach" element={<PageTransition><AdminOutreach /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </Suspense>
