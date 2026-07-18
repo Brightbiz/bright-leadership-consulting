@@ -8,7 +8,7 @@ import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
   DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3,
-  Mail, Reply
+  Mail, Reply, Flame
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
