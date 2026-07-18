@@ -197,8 +197,24 @@ const AdminCRM = () => {
           c.tags.some((t) => t.toLowerCase().includes(q))
       );
     }
+    if (warmOnly) {
+      const warmRank: Record<string, number> = { meeting_booked: 5, positive: 4, neutral: 3, negative: 2, no_thanks: 1 };
+      result = result.filter((c) => {
+        const s = outreachByContact[c.id]?.bestSentiment;
+        return s === "meeting_booked" || s === "positive";
+      }).slice().sort((a, b) => {
+        const sa = outreachByContact[a.id]?.bestSentiment ?? "";
+        const sb = outreachByContact[b.id]?.bestSentiment ?? "";
+        const diff = (warmRank[sb] ?? 0) - (warmRank[sa] ?? 0);
+        if (diff !== 0) return diff;
+        const la = outreachByContact[a.id]?.lastAt ?? "";
+        const lb = outreachByContact[b.id]?.lastAt ?? "";
+        return lb.localeCompare(la);
+      });
+    }
     return result;
-  }, [contacts, statusFilter, searchQuery]);
+  }, [contacts, statusFilter, searchQuery, warmOnly, outreachByContact]);
+
 
   const statusCounts = useMemo(() => {
     const counts: Record<string, number> = { all: contacts.length };
