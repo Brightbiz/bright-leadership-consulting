@@ -228,9 +228,14 @@ export type Database = {
           created_at: string
           crm_contact_id: string | null
           id: string
+          is_follow_up: boolean
+          parent_draft_id: string | null
           recipient_id: string | null
           recipient_name: string
           recipient_role: string
+          replied_at: string | null
+          reply_sentiment: string | null
+          reply_text: string | null
           sent_at: string | null
           status: Database["public"]["Enums"]["outreach_draft_status"]
           subject: string
@@ -243,9 +248,14 @@ export type Database = {
           created_at?: string
           crm_contact_id?: string | null
           id?: string
+          is_follow_up?: boolean
+          parent_draft_id?: string | null
           recipient_id?: string | null
           recipient_name: string
           recipient_role: string
+          replied_at?: string | null
+          reply_sentiment?: string | null
+          reply_text?: string | null
           sent_at?: string | null
           status?: Database["public"]["Enums"]["outreach_draft_status"]
           subject: string
@@ -258,9 +268,14 @@ export type Database = {
           created_at?: string
           crm_contact_id?: string | null
           id?: string
+          is_follow_up?: boolean
+          parent_draft_id?: string | null
           recipient_id?: string | null
           recipient_name?: string
           recipient_role?: string
+          replied_at?: string | null
+          reply_sentiment?: string | null
+          reply_text?: string | null
           sent_at?: string | null
           status?: Database["public"]["Enums"]["outreach_draft_status"]
           subject?: string
@@ -273,6 +288,13 @@ export type Database = {
             columns: ["crm_contact_id"]
             isOneToOne: false
             referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_drafts_parent_draft_id_fkey"
+            columns: ["parent_draft_id"]
+            isOneToOne: false
+            referencedRelation: "outreach_drafts"
             referencedColumns: ["id"]
           },
           {
