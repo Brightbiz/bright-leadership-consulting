@@ -447,7 +447,6 @@ const AdminOutreach = () => {
                 </Label>
                 <Switch
                   id="generic-filter"
-                  size="sm"
                   checked={showOnlyGeneric}
                   onCheckedChange={setShowOnlyGeneric}
                   aria-label="Show only recipients with generic context warnings"
