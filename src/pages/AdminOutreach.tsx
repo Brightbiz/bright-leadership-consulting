@@ -138,7 +138,7 @@ const AdminOutreach = () => {
         const [{ data: recData }, { data: draftData }] = await Promise.all([
           (supabase as any)
             .from("outreach_recipients")
-            .select("id,name,role,company,email,context,priority,sort_order")
+            .select("id,name,role,company,email,context,priority,sort_order,cadence_days,do_not_follow_up,snooze_until")
             .eq("user_id", userId)
             .order("sort_order", { ascending: true }),
           (supabase as any)
@@ -159,10 +159,14 @@ const AdminOutreach = () => {
               email: r.email ?? "",
               context: r.context ?? "",
               priority: !!r.priority,
+              cadence_days: typeof r.cadence_days === "number" ? r.cadence_days : 14,
+              do_not_follow_up: !!r.do_not_follow_up,
+              snooze_until: r.snooze_until ?? null,
               persisted: true,
             }))
           );
         }
+
         if (draftData) setDrafts(draftData as SavedDraft[]);
       } catch (err) {
         console.error("Failed to load outreach data", err);
