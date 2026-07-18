@@ -515,6 +515,45 @@ const AdminOutreach = () => {
         )}
       </main>
       <Footer />
+
+      <AlertDialog open={!!genericWarning} onOpenChange={(open) => { if (!open) setGenericWarning(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
+              {genericWarning?.names.length} recipient{genericWarning && genericWarning.names.length === 1 ? "" : "s"} lack specific context
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p>
+                  The Context field for the following recipient{genericWarning && genericWarning.names.length === 1 ? " reads" : "s reads"} as a generic industry keyword dump rather than a board-level observation. Drafts will default to formulaic sector language.
+                </p>
+                <ul className="text-xs text-muted-foreground list-disc pl-5 max-h-40 overflow-auto">
+                  {genericWarning?.names.slice(0, 12).map(n => <li key={n}>{n}</li>)}
+                  {genericWarning && genericWarning.names.length > 12 && (
+                    <li className="italic">…and {genericWarning.names.length - 12} more</li>
+                  )}
+                </ul>
+                <p className="text-xs text-muted-foreground">
+                  Recommended: add one specific line each — e.g. <em>"New Chair appointed following 2024 governance review"</em> or <em>"CEO transition announced Q1 2026"</em>.
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setGenericWarning(null)}>Edit context</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async () => {
+                const batch = genericWarning?.batch ?? [];
+                setGenericWarning(null);
+                if (batch.length > 0) await runGenerate(batch);
+              }}
+            >
+              Generate anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
