@@ -1220,6 +1220,63 @@ const AdminOutreach = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) setReplyDialog(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <Reply className="h-4 w-4 text-blue-700" />
+              Log reply from {replyDialog?.recipient_name}
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p className="text-xs text-muted-foreground">
+                  Records what came back so the CRM reflects real conversation state. Sentiment updates the linked CRM stage automatically.
+                </p>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {([
+                      { key: "meeting_booked", label: "Meeting booked" },
+                      { key: "positive", label: "Positive" },
+                      { key: "neutral", label: "Neutral" },
+                      { key: "negative", label: "Negative" },
+                      { key: "no_thanks", label: "No, thanks" },
+                    ] as { key: ReplySentiment; label: string }[]).map(opt => (
+                      <button
+                        key={opt.key}
+                        type="button"
+                        onClick={() => setReplySentiment(opt.key)}
+                        className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
+                          replySentiment === opt.key
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-background text-foreground border-border hover:border-primary/50"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Reply text (optional)</Label>
+                  <Textarea
+                    className="mt-2"
+                    rows={5}
+                    placeholder="Paste the reply here, or note the substance briefly."
+                    value={replyText}
+                    onChange={e => setReplyText(e.target.value)}
+                  />
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setReplyDialog(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={saveReply}>Save reply</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
