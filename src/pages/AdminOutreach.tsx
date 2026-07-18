@@ -1282,10 +1282,27 @@ const AdminOutreach = () => {
                       </Button>
                     </div>
                   </div>
+                  {(() => {
+                    const issues = scoreDraft(d.subject, d.body);
+                    if (issues.length === 0) return null;
+                    return (
+                      <div className="mb-3 rounded-md border border-amber-500/40 bg-amber-50/60 p-2.5">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <ShieldAlert className="h-3.5 w-3.5 text-amber-700" />
+                          <p className="text-[11px] font-medium text-amber-800 uppercase tracking-wider">
+                            Quality — {issues.length} issue{issues.length === 1 ? "" : "s"}
+                          </p>
+                        </div>
+                        <ul className="text-[11px] leading-snug text-amber-800 pl-4 list-disc space-y-0.5">
+                          {issues.map(iss => <li key={iss}>{iss}</li>)}
+                        </ul>
+                      </div>
+                    );
+                  })()}
                   <div className="border-l-2 border-border pl-4">
                     <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
                     <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
-                    <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
+                    <p className="text-sm text-muted-foreground mt-3 whitespace-pre-wrap">{signatureBlock}</p>
                   </div>
                   {d.status === "replied" && (d.reply_text || d.reply_sentiment) && (
                     <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/50 p-3">
