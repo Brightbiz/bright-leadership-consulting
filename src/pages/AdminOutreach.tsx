@@ -244,18 +244,18 @@ const AdminOutreach = () => {
     "reappointed", "interim",
   ];
 
-  const isGenericContext = (ctx: string): boolean => {
+  const contextIssue = (ctx: string): string | null => {
     const c = ctx.trim().toLowerCase();
-    if (!c) return true;
-    if (c.length < 25) return true;
+    if (!c) return "Empty — add a board-level observation.";
+    if (c.length < 25) return "Too short — add specificity (transition, governance event, appointment).";
     const hasSignal = SPECIFIC_SIGNALS.some(s => c.includes(s));
-    if (hasSignal) return false;
-    // Comma-delimited keyword dump with no full-sentence structure
+    if (hasSignal) return null;
     const commaCount = (c.match(/,/g) || []).length;
     const hasSentence = /[.!?]/.test(c);
-    if (commaCount >= 2 && !hasSentence) return true;
-    return false;
+    if (commaCount >= 2 && !hasSentence) return "Keyword dump — rewrite as a specific observation.";
+    return "No board-level signal — reference a chair change, review, or governance event.";
   };
+  const isGenericContext = (ctx: string): boolean => contextIssue(ctx) !== null;
 
   const runGenerate = async (batch: Recipient[]) => {
     setGenerating(true);
