@@ -249,7 +249,11 @@ const AdminOutreach = () => {
           email: "",
           context: parts[3] || "",
           priority: false,
+          cadence_days: 14,
+          do_not_follow_up: false,
+          snooze_until: null,
         } satisfies Recipient;
+
       })
       .filter(r => r.name);
     if (parsed.length === 0) {
