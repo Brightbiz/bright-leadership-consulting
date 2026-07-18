@@ -42,11 +42,6 @@ const engagements = [
     context: "Series C organisation transitioning from founder-led to professionally managed governance. Executive hires from different institutional cultures were not integrating into a coherent leadership architecture.",
     scope: "Executive Alignment Index™ deployment across the C-suite. Structural advisory engagement with the CEO and lead investor on leadership architecture and decision rights.",
     outcome: "Cultural and structural fault lines were surfaced and addressed through governance redesign. Two executive roles were redefined. Investor confidence in the leadership team was formally documented at the next board review.",
-  {
-    sector: "Technology & Digital",
-    context: "Series C organisation transitioning from founder-led to professionally managed governance. Executive hires from different institutional cultures were not integrating into a coherent leadership architecture.",
-    scope: "Executive Alignment Index™ deployment across the C-suite. Structural advisory engagement with the CEO and lead investor on leadership architecture and decision rights.",
-    outcome: "Cultural and structural fault lines were surfaced and addressed through governance redesign. Two executive roles were redefined. Investor confidence in the leadership team was formally documented at the next board review.",
   },
 ];
 
