@@ -426,10 +426,20 @@ const AdminOutreach = () => {
                     </span>
                   )}
                   {r.name.trim() && contextIssue(r.context) && (
-                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1">
-                      <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-                      {contextIssue(r.context)}
-                    </p>
+                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 flex items-start gap-2 flex-wrap">
+                      <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
+                        <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                        {contextIssue(r.context)}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => updateRecipient(r.id, { context: suggestContextTemplate(r) })}
+                        className="text-[11px] leading-snug underline decoration-dotted underline-offset-2 text-primary hover:text-primary/80"
+                        title="Replace with a specific board-level template and re-validate"
+                      >
+                        Use suggested template
+                      </button>
+                    </div>
                   )}
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
