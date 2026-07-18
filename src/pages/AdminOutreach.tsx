@@ -257,29 +257,64 @@ const AdminOutreach = () => {
   };
   const isGenericContext = (ctx: string): boolean => contextIssue(ctx) !== null;
 
-  // One-click template: produces a specific board-level observation seeded from
-  // the recipient's role and company so the field passes validation and prompts
-  // the user to refine rather than accept as-is.
-  const suggestContextTemplate = (r: Recipient): string => {
+  // Auto-suggested rewrite prompts for flagged recipients. Each prompt is a
+  // fully-formed board-level observation seeded from Name, Title, and Company
+  // so the user can one-click select the closest fit and refine from there.
+  const suggestContextRewrites = (r: Recipient): string[] => {
     const role = (r.role || "").toLowerCase();
     const company = r.company.trim() || "the board";
+    const firstName = (r.name.trim().split(/\s+/)[0]) || "";
+    const surname = r.name.trim().split(/\s+/).slice(-1)[0] || "";
+    const who = surname ? `${surname}'s` : "their";
+
     if (role.includes("chair")) {
-      return `Recently appointed Chair at ${company}; board effectiveness review likely in first 12 months.`;
+      return [
+        `Recently appointed Chair at ${company}; board effectiveness review likely in ${who} first 12 months.`,
+        `Chair at ${company} navigating an executive transition — CEO or CFO succession increasingly on the agenda.`,
+        `Chair overseeing a strategy reset at ${company}; alignment between board intent and executive delivery under pressure.`,
+      ];
     }
     if (role.includes("sid") || role.includes("senior independent")) {
-      return `SID at ${company} during a period of executive transition; succession and governance under review.`;
+      return [
+        `SID at ${company} during a period of executive transition; succession and governance under review.`,
+        `Senior Independent Director at ${company} responsible for the chair's annual effectiveness review — variance likely to surface.`,
+        `SID at ${company} acting as shareholder point of contact during a period of strategic scrutiny.`,
+      ];
     }
     if (role.includes("nomination")) {
-      return `Nominations Committee at ${company} leading a chair or NED refresh; alignment gaps typical at this stage.`;
+      return [
+        `Chair of the Nominations Committee at ${company} leading a NED refresh; alignment gaps typical at this stage.`,
+        `Nominations Committee lead at ${company} handling chair succession — board composition under active review.`,
+        `Nominations Committee at ${company} rebalancing skills matrix following a recent board refresh.`,
+      ];
     }
     if (role.includes("ceo")) {
-      return `CEO at ${company} navigating a strategy reset; board-executive alignment increasingly material.`;
+      return [
+        `CEO at ${company} navigating a strategy reset; board-executive alignment increasingly material.`,
+        `CEO at ${company} following a chair transition — recalibration of board expectations underway.`,
+        `CEO at ${company} preparing for a capital or governance milestone where alignment variance is board-visible.`,
+      ];
     }
     if (role.includes("ned") || role.includes("non-executive")) {
-      return `NED at ${company} following a recent board refresh; committee remit and effectiveness under review.`;
+      return [
+        `NED at ${company} following a recent board refresh; committee remit and effectiveness under review.`,
+        `Non-Executive at ${company} sitting on Audit or Remuneration during a period of regulatory scrutiny.`,
+        `NED at ${company} contributing to an externally-facilitated board evaluation this cycle.`,
+      ];
     }
-    return `Recent governance event at ${company} — board refresh, strategy reset, or committee review — likely to surface alignment variance.`;
+    if (role.includes("cfo")) {
+      return [
+        `CFO at ${company} through a capital or reporting cycle where board-executive alignment on strategy is being tested.`,
+        `CFO at ${company} following a chair or CEO transition — financial narrative under board re-examination.`,
+      ];
+    }
+    return [
+      `Recent governance event at ${company} — board refresh, strategy reset, or committee review — likely to surface alignment variance.`,
+      `${firstName || "Director"} operating at ${company} through a period of executive transition where board alignment is materially tested.`,
+      `Board of ${company} undertaking an externally-facilitated effectiveness review; variance between intent and execution under scrutiny.`,
+    ];
   };
+
 
   const runGenerate = async (batch: Recipient[]) => {
     setGenerating(true);
