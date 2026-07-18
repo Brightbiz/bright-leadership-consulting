@@ -461,19 +461,25 @@ const AdminOutreach = () => {
                     </span>
                   )}
                   {r.name.trim() && contextIssue(r.context) && (
-                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 flex items-start gap-2 flex-wrap">
+                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 space-y-1.5">
                       <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
                         <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
                         {contextIssue(r.context)}
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => updateRecipient(r.id, { context: suggestContextTemplate(r) })}
-                        className="text-[11px] leading-snug underline decoration-dotted underline-offset-2 text-primary hover:text-primary/80"
-                        title="Replace with a specific board-level template and re-validate"
-                      >
-                        Use suggested template
-                      </button>
+                      <div className="pl-4 border-l border-amber-500/30 space-y-1">
+                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Suggested rewrites — click to apply</p>
+                        {suggestContextRewrites(r).map((prompt, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => updateRecipient(r.id, { context: prompt })}
+                            className="block text-left text-[11px] leading-snug text-primary hover:text-primary/80 hover:underline decoration-dotted underline-offset-2"
+                            title="Apply this rewrite and re-validate"
+                          >
+                            → {prompt}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
