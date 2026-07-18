@@ -277,6 +277,12 @@ const AdminSubmissions = () => {
               </Link>
             </Button>
             <Button asChild variant="outline">
+              <Link to="/admin/outreach">
+                <Send className="mr-2 h-4 w-4" />
+                Outreach
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link to="/admin/thinkific-export">
                 <Package className="mr-2 h-4 w-4" />
                 Thinkific Export
