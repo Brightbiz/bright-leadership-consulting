@@ -205,9 +205,10 @@ const AdminOutreach = () => {
       name: name.slice(0, 120),
       role: role.slice(0, 120) || "Chair",
       company: company.slice(0, 160),
+      email: "",
       context: context.slice(0, 400),
       priority: false,
-    };
+    } satisfies Recipient;
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
