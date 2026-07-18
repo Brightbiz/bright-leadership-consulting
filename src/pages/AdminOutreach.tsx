@@ -194,7 +194,11 @@ const AdminOutreach = () => {
           context: r.context,
           priority: r.priority,
           sort_order: idx,
+          cadence_days: r.cadence_days ?? 14,
+          do_not_follow_up: !!r.do_not_follow_up,
+          snooze_until: r.snooze_until || null,
         }))
+
         .filter(r => r.name.trim() || r.company.trim() || r.email || r.context.trim());
       if (rows.length === 0) return;
       const { error } = await (supabase as any)
