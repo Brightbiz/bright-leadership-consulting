@@ -1521,6 +1521,101 @@ const AdminOutreach = () => {
               </Card>
             )}
 
+            {digest.hasAny && (
+              <Card className="p-5">
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Monday brief</p>
+                    <h3 className="font-serif text-lg mt-0.5">Weekly outreach digest</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {digest.today.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={copyDigest}>
+                    <Copy className="h-3.5 w-3.5 mr-1" /> Copy digest
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+                  {([
+                    { label: "Sent · 7d", val: digest.thisWk.sent, prior: digest.lastWk.sent },
+                    { label: "Replies · 7d", val: digest.thisWk.replied, prior: digest.lastWk.replied },
+                    { label: "Meetings booked", val: digest.thisWk.meetings, prior: null as number | null },
+                    { label: "Positive", val: digest.thisWk.positive, prior: null as number | null },
+                  ]).map(m => {
+                    const d = m.prior === null ? null : m.val - m.prior;
+                    return (
+                      <div key={m.label} className="border border-border rounded p-3">
+                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{m.label}</p>
+                        <p className="text-xl font-semibold text-foreground mt-1">{m.val}</p>
+                        {d !== null && (
+                          <p className={`text-[11px] mt-0.5 ${d > 0 ? "text-emerald-700" : d < 0 ? "text-rose-700" : "text-muted-foreground"}`}>
+                            {d > 0 ? "▲" : d < 0 ? "▼" : "—"} {Math.abs(d)} vs prior 7d
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Follow-ups due · {digest.followUpsDue.length}
+                    </p>
+                    {digest.followUpsDue.length === 0 ? (
+                      <p className="text-xs text-muted-foreground">Nothing due.</p>
+                    ) : (
+                      <ul className="space-y-1.5 text-xs">
+                        {digest.followUpsDue.map(d => (
+                          <li key={d.id} className="text-foreground">
+                            <span className="font-medium">{d.recipient_name || "—"}</span>
+                            <span className="text-muted-foreground"> · {d.recipient_role || "—"} · {d.company || "—"}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Silent &gt; 14 days · {digest.silent.length}
+                    </p>
+                    {digest.silent.length === 0 ? (
+                      <p className="text-xs text-muted-foreground">No stale threads.</p>
+                    ) : (
+                      <ul className="space-y-1.5 text-xs">
+                        {digest.silent.map(d => (
+                          <li key={d.id} className="text-foreground">
+                            <span className="font-medium">{d.recipient_name || "—"}</span>
+                            <span className="text-muted-foreground"> · {d.company || "—"}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Priority · not yet contacted · {digest.uncontactedPriority.length}
+                    </p>
+                    {digest.uncontactedPriority.length === 0 ? (
+                      <p className="text-xs text-muted-foreground">All starred recipients engaged.</p>
+                    ) : (
+                      <ul className="space-y-1.5 text-xs">
+                        {digest.uncontactedPriority.map(r => (
+                          <li key={r.id} className="text-foreground">
+                            <span className="font-medium">{r.name || "—"}</span>
+                            <span className="text-muted-foreground"> · {r.role || "—"} · {r.company || "—"}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            )}
+
+
+
 
 
             <div className="flex items-center justify-between">
