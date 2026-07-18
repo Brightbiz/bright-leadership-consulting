@@ -18,6 +18,7 @@ interface Recipient {
   role: string;
   company: string;
   context: string;
+  priority: boolean;
 }
 
 interface DraftedEmail {
@@ -34,6 +35,7 @@ const emptyRecipient = (): Recipient => ({
   role: "Chair",
   company: "",
   context: "",
+  priority: false,
 });
 
 const ROLE_PRESETS = ["Chair", "Senior Independent Director", "Nominations Committee Chair", "Non-Executive Director"];
