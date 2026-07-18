@@ -439,7 +439,20 @@ const AdminOutreach = () => {
                 );
               })()}
             </div>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mr-2">
+                <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+                <Label htmlFor="generic-filter" className="text-xs text-muted-foreground cursor-pointer">
+                  Show only flagged
+                </Label>
+                <Switch
+                  id="generic-filter"
+                  size="sm"
+                  checked={showOnlyGeneric}
+                  onCheckedChange={setShowOnlyGeneric}
+                  aria-label="Show only recipients with generic context warnings"
+                />
+              </div>
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
