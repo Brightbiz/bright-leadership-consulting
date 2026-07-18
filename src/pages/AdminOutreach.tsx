@@ -1306,14 +1306,14 @@ const AdminOutreach = () => {
               const hasEmail = !!(rec?.email?.trim());
               const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
               const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
-              const hasChildFollowUp = drafts.some(x => x.parent_draft_id === d.id);
-              const followUpEligible = d.status === "sent" && daysSinceSent >= 7 && !hasChildFollowUp;
+              const fu = followUpState(d);
               const statusStyle =
                 d.status === "sent"
                   ? "bg-emerald-100 text-emerald-800 border-emerald-300"
                   : d.status === "replied"
                   ? "bg-blue-100 text-blue-800 border-blue-300"
                   : "bg-muted text-muted-foreground border-border";
+
               return (
                 <Card key={d.id} className="p-6">
                   <div className="flex items-start justify-between mb-3 gap-3">
