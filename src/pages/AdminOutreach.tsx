@@ -902,28 +902,67 @@ const AdminOutreach = () => {
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
             </div>
-            {drafts.map((d, i) => (
-              <Card key={i} className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {d.recipient_role}{d.company ? ` · ${d.company}` : ""}
-                    </p>
-                    <h3 className="font-serif text-base mt-0.5">{d.recipient_name}</h3>
+            {drafts.map((d) => {
+              const rec = findRecipientForDraft(d);
+              const hasEmail = !!(rec?.email?.trim());
+              const statusStyle =
+                d.status === "sent"
+                  ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                  : d.status === "replied"
+                  ? "bg-blue-100 text-blue-800 border-blue-300"
+                  : "bg-muted text-muted-foreground border-border";
+              return (
+                <Card key={d.id} className="p-6">
+                  <div className="flex items-start justify-between mb-3 gap-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                        {d.recipient_role}{d.company ? ` · ${d.company}` : ""}
+                      </p>
+                      <h3 className="font-serif text-base mt-0.5">
+                        {d.recipient_name}
+                        {rec?.email && <span className="text-xs text-muted-foreground font-sans ml-2">· {rec.email}</span>}
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
+                      <span className={`inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusStyle}`}>
+                        {d.status === "sent" && <CheckCircle2 className="h-3 w-3" />}
+                        {d.status}
+                        {d.crm_contact_id && <span className="ml-1 opacity-70">· CRM</span>}
+                      </span>
+                      <Button variant="ghost" size="sm" onClick={() => copyEmail(d)}>
+                        <Copy className="h-3.5 w-3.5 mr-1" /> Copy
+                      </Button>
+                      {d.status !== "sent" && d.status !== "replied" && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateDraftStatus(d, "sent")}
+                          title={hasEmail ? "Marks as sent and logs the contact to your CRM" : "Add an email to auto-log to CRM; will still mark sent"}
+                        >
+                          <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
+                        </Button>
+                      )}
+                      {d.status === "sent" && (
+                        <Button variant="outline" size="sm" onClick={() => updateDraftStatus(d, "replied")}>
+                          <Reply className="h-3.5 w-3.5 mr-1" /> Mark replied
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="icon" onClick={() => deleteDraft(d)} title="Delete draft">
+                        <Trash2 className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    </div>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => copyEmail(d)}>
-                    <Copy className="h-3.5 w-3.5 mr-1" /> Copy
-                  </Button>
-                </div>
-                <div className="border-l-2 border-border pl-4">
-                  <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
-                  <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
-                  <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
-                </div>
-              </Card>
-            ))}
+                  <div className="border-l-2 border-border pl-4">
+                    <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
+                    <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
+                    <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         )}
+
       </main>
       <Footer />
 
