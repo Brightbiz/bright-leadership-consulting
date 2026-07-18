@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -19,25 +19,35 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+type DraftStatus = "draft" | "sent" | "replied";
+
 interface Recipient {
-  id: string;
+  id: string;              // DB uuid (also used locally before save)
   name: string;
   role: string;
   company: string;
+  email: string;
   context: string;
   priority: boolean;
+  persisted?: boolean;     // true once at least one save has succeeded
 }
 
-interface DraftedEmail {
+interface SavedDraft {
+  id: string;
+  recipient_id: string | null;
   recipient_name: string;
   recipient_role: string;
   company: string;
   subject: string;
   body: string;
+  status: DraftStatus;
+  sent_at: string | null;
+  crm_contact_id: string | null;
+  created_at: string;
 }
 
 const emptyRecipient = (): Recipient => ({
@@ -45,6 +55,7 @@ const emptyRecipient = (): Recipient => ({
   name: "",
   role: "Chair",
   company: "",
+  email: "",
   context: "",
   priority: false,
 });
@@ -60,9 +71,95 @@ const AdminOutreach = () => {
   const [notes, setNotes] = useState("");
   const [bulkPaste, setBulkPaste] = useState("");
   const [generating, setGenerating] = useState(false);
-  const [drafts, setDrafts] = useState<DraftedEmail[]>([]);
+  const [drafts, setDrafts] = useState<SavedDraft[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
   const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
+  const [hydrating, setHydrating] = useState(true);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const userId = user?.id ?? null;
+
+  // Load recipients + drafts on mount
+  useEffect(() => {
+    if (!userId || !isAdmin) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const [{ data: recData }, { data: draftData }] = await Promise.all([
+          (supabase as any)
+            .from("outreach_recipients")
+            .select("id,name,role,company,email,context,priority,sort_order")
+            .eq("user_id", userId)
+            .order("sort_order", { ascending: true }),
+          (supabase as any)
+            .from("outreach_drafts")
+            .select("id,recipient_id,recipient_name,recipient_role,company,subject,body,status,sent_at,crm_contact_id,created_at")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false })
+            .limit(200),
+        ]);
+        if (cancelled) return;
+        if (recData && recData.length > 0) {
+          setRecipients(
+            recData.map((r: any) => ({
+              id: r.id,
+              name: r.name ?? "",
+              role: r.role ?? "Chair",
+              company: r.company ?? "",
+              email: r.email ?? "",
+              context: r.context ?? "",
+              priority: !!r.priority,
+              persisted: true,
+            }))
+          );
+        }
+        if (draftData) setDrafts(draftData as SavedDraft[]);
+      } catch (err) {
+        console.error("Failed to load outreach data", err);
+      } finally {
+        if (!cancelled) setHydrating(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, isAdmin]);
+
+  // Debounced autosave — upsert recipients whenever they change
+  const persistRecipients = useCallback(
+    async (list: Recipient[]) => {
+      if (!userId) return;
+      const rows = list
+        .map((r, idx) => ({
+          id: r.id,
+          user_id: userId,
+          name: r.name,
+          role: r.role || "Chair",
+          company: r.company,
+          email: r.email || null,
+          context: r.context,
+          priority: r.priority,
+          sort_order: idx,
+        }))
+        .filter(r => r.name.trim() || r.company.trim() || r.email || r.context.trim());
+      if (rows.length === 0) return;
+      const { error } = await (supabase as any)
+        .from("outreach_recipients")
+        .upsert(rows, { onConflict: "id" });
+      if (error) console.error("Recipient autosave failed", error);
+    },
+    [userId]
+  );
+
+  useEffect(() => {
+    if (hydrating || !userId) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      persistRecipients(recipients);
+    }, 700);
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [recipients, hydrating, userId, persistRecipients]);
 
   if (isLoading) {
     return (
@@ -73,11 +170,17 @@ const AdminOutreach = () => {
   }
   if (!user || !isAdmin) return <Navigate to="/admin/login" replace />;
 
+
   const updateRecipient = (id: string, patch: Partial<Recipient>) =>
     setRecipients(rs => rs.map(r => (r.id === id ? { ...r, ...patch } : r)));
 
   const addRecipient = () => setRecipients(rs => [...rs, emptyRecipient()]);
-  const removeRecipient = (id: string) => setRecipients(rs => rs.filter(r => r.id !== id));
+  const removeRecipient = async (id: string) => {
+    setRecipients(rs => rs.filter(r => r.id !== id));
+    if (userId) {
+      await (supabase as any).from("outreach_recipients").delete().eq("id", id);
+    }
+  };
 
   const parseBulk = () => {
     // Format per line: Name | Role | Company | optional context
@@ -92,9 +195,10 @@ const AdminOutreach = () => {
           name: parts[0] || "",
           role: parts[1] || "Chair",
           company: parts[2] || "",
+          email: "",
           context: parts[3] || "",
           priority: false,
-        };
+        } satisfies Recipient;
       })
       .filter(r => r.name);
     if (parsed.length === 0) {
@@ -191,9 +295,10 @@ const AdminOutreach = () => {
       name: name.slice(0, 120),
       role: role.slice(0, 120) || "Chair",
       company: company.slice(0, 160),
+      email: "",
       context: context.slice(0, 400),
       priority: false,
-    };
+    } satisfies Recipient;
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -319,18 +424,51 @@ const AdminOutreach = () => {
 
 
   const runGenerate = async (batch: Recipient[]) => {
+    if (!userId) return;
     setGenerating(true);
-    setDrafts([]);
     try {
+      // Ensure batch recipients are persisted first so we can link drafts to them.
+      await persistRecipients(recipients);
+
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
         body: { recipients: batch, notes },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      const emails: DraftedEmail[] = data?.emails ?? [];
+      const emails: Array<{ recipient_name: string; recipient_role: string; company: string; subject: string; body: string }> =
+        data?.emails ?? [];
       if (emails.length === 0) throw new Error("No drafts returned");
-      setDrafts(emails);
-      toast({ title: `Drafted ${emails.length} emails` });
+
+      // Match each generated email back to the recipient by name+company (order-tolerant).
+      const findRecipient = (e: { recipient_name: string; company: string }) =>
+        batch.find(
+          r =>
+            r.name.trim().toLowerCase() === (e.recipient_name || "").trim().toLowerCase() &&
+            r.company.trim().toLowerCase() === (e.company || "").trim().toLowerCase()
+        ) ?? batch.find(r => r.name.trim().toLowerCase() === (e.recipient_name || "").trim().toLowerCase());
+
+      const rows = emails.map(e => {
+        const rec = findRecipient(e);
+        return {
+          user_id: userId,
+          recipient_id: rec?.id ?? null,
+          recipient_name: e.recipient_name,
+          recipient_role: e.recipient_role,
+          company: e.company ?? "",
+          subject: e.subject,
+          body: e.body,
+          status: "draft" as DraftStatus,
+        };
+      });
+
+      const { data: inserted, error: insertErr } = await (supabase as any)
+        .from("outreach_drafts")
+        .insert(rows)
+        .select();
+      if (insertErr) throw insertErr;
+
+      setDrafts(prev => [...(inserted as SavedDraft[]), ...prev]);
+      toast({ title: `Drafted ${emails.length} emails`, description: "Saved to your outreach log." });
     } catch (err: any) {
       toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
     } finally {
@@ -364,11 +502,91 @@ const AdminOutreach = () => {
     await runGenerate(batch);
   };
 
-  const copyEmail = async (e: DraftedEmail) => {
+  const copyEmail = async (e: SavedDraft) => {
     const text = `Subject: ${e.subject}\n\n${e.body}\n\n— Bright Leadership Consulting`;
     await navigator.clipboard.writeText(text);
     toast({ title: "Copied to clipboard" });
   };
+
+  const findRecipientForDraft = (d: SavedDraft): Recipient | undefined =>
+    recipients.find(r => r.id === d.recipient_id) ??
+    recipients.find(
+      r =>
+        r.name.trim().toLowerCase() === d.recipient_name.trim().toLowerCase() &&
+        r.company.trim().toLowerCase() === (d.company || "").trim().toLowerCase()
+    );
+
+  const updateDraftStatus = async (d: SavedDraft, status: DraftStatus) => {
+    if (!userId) return;
+    try {
+      let crmContactId: string | null = d.crm_contact_id;
+
+      // On first "sent", push into the CRM if we have an email.
+      if (status === "sent" && !crmContactId) {
+        const rec = findRecipientForDraft(d);
+        const email = rec?.email?.trim();
+        if (email) {
+          const { data: crmRow, error: crmErr } = await (supabase as any)
+            .from("crm_contacts")
+            .upsert(
+              {
+                email,
+                name: d.recipient_name || rec?.name || null,
+                company: d.company || rec?.company || null,
+                job_title: d.recipient_role || rec?.role || null,
+                source: "outreach",
+                source_table: "outreach_drafts",
+                source_record_id: d.id,
+                status: "contacted",
+                last_contacted_at: new Date().toISOString(),
+                tags: ["outreach"],
+              },
+              { onConflict: "email" }
+            )
+            .select("id")
+            .single();
+          if (crmErr) {
+            console.error("CRM upsert failed", crmErr);
+            toast({ title: "Draft marked sent — CRM sync failed", description: crmErr.message, variant: "destructive" });
+          } else if (crmRow) {
+            crmContactId = crmRow.id;
+          }
+        } else {
+          toast({
+            title: "Marked sent (no CRM link)",
+            description: "Add an email to the recipient to auto-log this contact in the CRM.",
+          });
+        }
+      }
+
+      const patch: any = {
+        status,
+        sent_at: status === "sent" ? d.sent_at ?? new Date().toISOString() : d.sent_at,
+        crm_contact_id: crmContactId,
+      };
+      const { data: updated, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .update(patch)
+        .eq("id", d.id)
+        .select()
+        .single();
+      if (error) throw error;
+      setDrafts(prev => prev.map(x => (x.id === d.id ? (updated as SavedDraft) : x)));
+    } catch (err: any) {
+      toast({ title: "Update failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    }
+  };
+
+  const deleteDraft = async (d: SavedDraft) => {
+    try {
+      const { error } = await (supabase as any).from("outreach_drafts").delete().eq("id", d.id);
+      if (error) throw error;
+      setDrafts(prev => prev.filter(x => x.id !== d.id));
+    } catch (err: any) {
+      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+    }
+  };
+
 
   const exportCsv = () => {
     if (drafts.length === 0) return;
@@ -507,7 +725,7 @@ const AdminOutreach = () => {
             {recipients
               .filter(r => !showOnlyGeneric || (r.name.trim() && isGenericContext(r.context)))
               .map((r, i) => (
-              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
+              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -523,6 +741,13 @@ const AdminOutreach = () => {
                   {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
                 </datalist>
                 <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
+                <Input
+                  type="email"
+                  placeholder="Email (for CRM link)"
+                  value={r.email}
+                  onChange={e => updateRecipient(r.id, { email: e.target.value })}
+                  title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
+                />
                 <div className="relative">
                   <Input
                     placeholder="Optional context (sector, recent event)"
@@ -677,28 +902,67 @@ const AdminOutreach = () => {
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
             </div>
-            {drafts.map((d, i) => (
-              <Card key={i} className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {d.recipient_role}{d.company ? ` · ${d.company}` : ""}
-                    </p>
-                    <h3 className="font-serif text-base mt-0.5">{d.recipient_name}</h3>
+            {drafts.map((d) => {
+              const rec = findRecipientForDraft(d);
+              const hasEmail = !!(rec?.email?.trim());
+              const statusStyle =
+                d.status === "sent"
+                  ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                  : d.status === "replied"
+                  ? "bg-blue-100 text-blue-800 border-blue-300"
+                  : "bg-muted text-muted-foreground border-border";
+              return (
+                <Card key={d.id} className="p-6">
+                  <div className="flex items-start justify-between mb-3 gap-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                        {d.recipient_role}{d.company ? ` · ${d.company}` : ""}
+                      </p>
+                      <h3 className="font-serif text-base mt-0.5">
+                        {d.recipient_name}
+                        {rec?.email && <span className="text-xs text-muted-foreground font-sans ml-2">· {rec.email}</span>}
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
+                      <span className={`inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusStyle}`}>
+                        {d.status === "sent" && <CheckCircle2 className="h-3 w-3" />}
+                        {d.status}
+                        {d.crm_contact_id && <span className="ml-1 opacity-70">· CRM</span>}
+                      </span>
+                      <Button variant="ghost" size="sm" onClick={() => copyEmail(d)}>
+                        <Copy className="h-3.5 w-3.5 mr-1" /> Copy
+                      </Button>
+                      {d.status !== "sent" && d.status !== "replied" && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateDraftStatus(d, "sent")}
+                          title={hasEmail ? "Marks as sent and logs the contact to your CRM" : "Add an email to auto-log to CRM; will still mark sent"}
+                        >
+                          <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
+                        </Button>
+                      )}
+                      {d.status === "sent" && (
+                        <Button variant="outline" size="sm" onClick={() => updateDraftStatus(d, "replied")}>
+                          <Reply className="h-3.5 w-3.5 mr-1" /> Mark replied
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="icon" onClick={() => deleteDraft(d)} title="Delete draft">
+                        <Trash2 className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    </div>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => copyEmail(d)}>
-                    <Copy className="h-3.5 w-3.5 mr-1" /> Copy
-                  </Button>
-                </div>
-                <div className="border-l-2 border-border pl-4">
-                  <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
-                  <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
-                  <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
-                </div>
-              </Card>
-            ))}
+                  <div className="border-l-2 border-border pl-4">
+                    <p className="text-sm font-medium text-foreground mb-2">Subject: {d.subject}</p>
+                    <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
+                    <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         )}
+
       </main>
       <Footer />
 

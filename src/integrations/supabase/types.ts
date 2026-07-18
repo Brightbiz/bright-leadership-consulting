@@ -113,6 +113,69 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_contacts: {
+        Row: {
+          company: string | null
+          created_at: string
+          deal_stage: string | null
+          email: string
+          estimated_value: number | null
+          id: string
+          job_title: string | null
+          last_contacted_at: string | null
+          name: string | null
+          next_follow_up: string | null
+          notes: string | null
+          phone: string | null
+          source: string
+          source_record_id: string | null
+          source_table: string | null
+          status: string
+          tags: string[]
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          deal_stage?: string | null
+          email: string
+          estimated_value?: number | null
+          id?: string
+          job_title?: string | null
+          last_contacted_at?: string | null
+          name?: string | null
+          next_follow_up?: string | null
+          notes?: string | null
+          phone?: string | null
+          source?: string
+          source_record_id?: string | null
+          source_table?: string | null
+          status?: string
+          tags?: string[]
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          deal_stage?: string | null
+          email?: string
+          estimated_value?: number | null
+          id?: string
+          job_title?: string | null
+          last_contacted_at?: string | null
+          name?: string | null
+          next_follow_up?: string | null
+          notes?: string | null
+          phone?: string | null
+          source?: string
+          source_record_id?: string | null
+          source_table?: string | null
+          status?: string
+          tags?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lead_magnet_downloads: {
         Row: {
           downloaded_at: string
@@ -155,6 +218,111 @@ export type Database = {
           id?: string
           source?: string
           subscribed_at?: string
+        }
+        Relationships: []
+      }
+      outreach_drafts: {
+        Row: {
+          body: string
+          company: string
+          created_at: string
+          crm_contact_id: string | null
+          id: string
+          recipient_id: string | null
+          recipient_name: string
+          recipient_role: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["outreach_draft_status"]
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          company?: string
+          created_at?: string
+          crm_contact_id?: string | null
+          id?: string
+          recipient_id?: string | null
+          recipient_name: string
+          recipient_role: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["outreach_draft_status"]
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          company?: string
+          created_at?: string
+          crm_contact_id?: string | null
+          id?: string
+          recipient_id?: string | null
+          recipient_name?: string
+          recipient_role?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["outreach_draft_status"]
+          subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outreach_drafts_crm_contact_id_fkey"
+            columns: ["crm_contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_drafts_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "outreach_recipients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      outreach_recipients: {
+        Row: {
+          company: string
+          context: string
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          priority: boolean
+          role: string
+          sort_order: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company?: string
+          context?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          priority?: boolean
+          role?: string
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string
+          context?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          priority?: boolean
+          role?: string
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -280,6 +448,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      outreach_draft_status: "draft" | "sent" | "replied"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -408,6 +577,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      outreach_draft_status: ["draft", "sent", "replied"],
     },
   },
 } as const
