@@ -80,6 +80,7 @@ const AdminOutreach = () => {
           role: parts[1] || "Chair",
           company: parts[2] || "",
           context: parts[3] || "",
+          priority: false,
         };
       })
       .filter(r => r.name);
