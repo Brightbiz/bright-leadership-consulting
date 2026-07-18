@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -89,6 +89,132 @@ const AdminOutreach = () => {
     setBulkPaste("");
     toast({ title: `Imported ${parsed.length} recipients` });
   };
+
+  const normalizeHeader = (h: string) =>
+    h
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, " ")
+      .trim();
+
+  const findColumn = (headers: string[], candidates: string[]) => {
+    const normalized = headers.map(normalizeHeader);
+    for (const candidate of candidates.map(c => normalizeHeader(c))) {
+      const exact = normalized.indexOf(candidate);
+      if (exact !== -1) return exact;
+      const partial = normalized.findIndex(h => h.includes(candidate) || candidate.includes(h));
+      if (partial !== -1) return partial;
+    }
+    return -1;
+  };
+
+  const parseCsvRows = (text: string): { headers: string[]; rows: string[][] } => {
+    const lines: string[][] = [];
+    let current: string[] = [];
+    let field = "";
+    let inQuotes = false;
+    const flushField = () => {
+      current.push(field.trim());
+      field = "";
+    };
+    const flushRow = () => {
+      if (current.length > 0 || field.length > 0) {
+        flushField();
+        lines.push(current);
+        current = [];
+      }
+    };
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const next = text[i + 1];
+      if (char === '"') {
+        if (inQuotes && next === '"') {
+          field += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === "," && !inQuotes) {
+        flushField();
+      } else if ((char === "\n" || char === "\r") && !inQuotes) {
+        flushRow();
+      } else {
+        field += char;
+      }
+    }
+    flushRow();
+    const nonEmpty = lines.filter(r => r.some(c => c.length > 0));
+    if (nonEmpty.length === 0) return { headers: [], rows: [] };
+    return { headers: nonEmpty[0], rows: nonEmpty.slice(1) };
+  };
+
+  const [csvPreview, setCsvPreview] = useState<Recipient[] | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const mapApolloRow = (headers: string[], row: string[]): Recipient => {
+    const nameIdx = findColumn(headers, ["name", "full name"]);
+    const firstNameIdx = findColumn(headers, ["first name"]);
+    const lastNameIdx = findColumn(headers, ["last name"]);
+    const titleIdx = findColumn(headers, ["title", "job title", "role"]);
+    const companyIdx = findColumn(headers, ["company name", "company", "account name", "organization name", "organisation name", "organization", "organisation"]);
+    const industryIdx = findColumn(headers, ["industry", "company industry", "keywords"]);
+
+    let name = "";
+    if (nameIdx !== -1 && row[nameIdx]) {
+      name = row[nameIdx];
+    } else if (firstNameIdx !== -1 || lastNameIdx !== -1) {
+      const parts = [row[firstNameIdx] ?? "", row[lastNameIdx] ?? ""].filter(Boolean);
+      name = parts.join(" ");
+    }
+
+    const role = titleIdx !== -1 ? row[titleIdx] ?? "" : "";
+    const company = companyIdx !== -1 ? row[companyIdx] ?? "" : "";
+    const context = industryIdx !== -1 ? row[industryIdx] ?? "" : "";
+
+    return {
+      id: crypto.randomUUID(),
+      name: name.slice(0, 120),
+      role: role.slice(0, 120) || "Chair",
+      company: company.slice(0, 160),
+      context: context.slice(0, 400),
+    };
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith(".csv")) {
+      toast({ title: "Please upload a CSV file", variant: "destructive" });
+      return;
+    }
+    try {
+      const text = await file.text();
+      const { headers, rows } = parseCsvRows(text);
+      if (headers.length === 0 || rows.length === 0) {
+        toast({ title: "CSV appears empty", description: "No usable rows were found.", variant: "destructive" });
+        return;
+      }
+      const mapped = rows.map(r => mapApolloRow(headers, r)).filter(r => r.name);
+      if (mapped.length === 0) {
+        toast({ title: "No recipients found", description: "Check the CSV has Name, Title, and Company columns.", variant: "destructive" });
+        return;
+      }
+      setCsvPreview(mapped.slice(0, 50));
+      toast({ title: `Parsed ${mapped.length} recipients`, description: "Review the preview, then confirm import." });
+    } catch (err) {
+      toast({ title: "Failed to read CSV", description: (err as Error).message, variant: "destructive" });
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const confirmCsvImport = () => {
+    if (!csvPreview || csvPreview.length === 0) return;
+    setRecipients(csvPreview);
+    setCsvPreview(null);
+    toast({ title: `Imported ${csvPreview.length} recipients` });
+  };
+
+  const cancelCsvImport = () => setCsvPreview(null);
 
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
@@ -184,18 +310,68 @@ const AdminOutreach = () => {
             ))}
           </div>
 
-          <div className="mt-6 pt-6 border-t border-border">
-            <Label className="text-xs uppercase tracking-wide text-muted-foreground">Bulk paste (one per line: Name | Role | Company | context)</Label>
-            <Textarea
-              className="mt-2 font-mono text-xs"
-              rows={4}
-              placeholder={"Jane Whitmore | Chair | Meridian Group plc | infrastructure, recent CEO transition\nDavid Ellis | Senior Independent Director | Halevy Holdings"}
-              value={bulkPaste}
-              onChange={e => setBulkPaste(e.target.value)}
-            />
-            <Button variant="outline" size="sm" className="mt-2" onClick={parseBulk} disabled={!bulkPaste.trim()}>
-              Replace list with pasted rows
-            </Button>
+          <div className="mt-6 pt-6 border-t border-border space-y-6">
+            <div>
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground">Upload Apollo CSV</Label>
+              <p className="text-xs text-muted-foreground mt-1">
+                Accepts Apollo exports directly. Name, Title, and Company columns are auto-mapped. Industry/Keywords are used as context.
+              </p>
+              <div className="mt-2 flex items-center gap-2">
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".csv,text/csv"
+                  onChange={handleFileUpload}
+                  className="text-sm file:mr-3 file:py-1 file:px-2 file:rounded file:border-0 file:bg-muted file:text-foreground hover:file:bg-muted/80"
+                />
+              </div>
+            </div>
+
+            {csvPreview && csvPreview.length > 0 && (
+              <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                <h3 className="font-serif text-sm">CSV preview ({csvPreview.length} rows)</h3>
+                <div className="max-h-60 overflow-auto border border-border rounded bg-background">
+                  <table className="w-full text-xs">
+                    <thead className="bg-muted sticky top-0">
+                      <tr>
+                        <th className="text-left p-2 font-medium">Name</th>
+                        <th className="text-left p-2 font-medium">Role</th>
+                        <th className="text-left p-2 font-medium">Company</th>
+                        <th className="text-left p-2 font-medium">Context</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {csvPreview.map(r => (
+                        <tr key={r.id} className="border-t border-border">
+                          <td className="p-2">{r.name}</td>
+                          <td className="p-2">{r.role}</td>
+                          <td className="p-2">{r.company}</td>
+                          <td className="p-2 text-muted-foreground truncate max-w-[200px]">{r.context}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={confirmCsvImport}>Confirm import</Button>
+                  <Button size="sm" variant="outline" onClick={cancelCsvImport}>Cancel</Button>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground">Or bulk paste (one per line: Name | Role | Company | context)</Label>
+              <Textarea
+                className="mt-2 font-mono text-xs"
+                rows={4}
+                placeholder={"Jane Whitmore | Chair | Meridian Group plc | infrastructure, recent CEO transition\nDavid Ellis | Senior Independent Director | Halevy Holdings"}
+                value={bulkPaste}
+                onChange={e => setBulkPaste(e.target.value)}
+              />
+              <Button variant="outline" size="sm" className="mt-2" onClick={parseBulk} disabled={!bulkPaste.trim()}>
+                Replace list with pasted rows
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6">
