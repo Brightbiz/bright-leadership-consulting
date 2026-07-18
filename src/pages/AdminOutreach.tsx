@@ -725,7 +725,7 @@ const AdminOutreach = () => {
             {recipients
               .filter(r => !showOnlyGeneric || (r.name.trim() && isGenericContext(r.context)))
               .map((r, i) => (
-              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
+              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -741,6 +741,13 @@ const AdminOutreach = () => {
                   {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
                 </datalist>
                 <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
+                <Input
+                  type="email"
+                  placeholder="Email (for CRM link)"
+                  value={r.email}
+                  onChange={e => updateRecipient(r.id, { email: e.target.value })}
+                  title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
+                />
                 <div className="relative">
                   <Input
                     placeholder="Optional context (sector, recent event)"
