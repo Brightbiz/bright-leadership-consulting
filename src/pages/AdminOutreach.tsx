@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,6 +18,7 @@ interface Recipient {
   role: string;
   company: string;
   context: string;
+  priority: boolean;
 }
 
 interface DraftedEmail {
@@ -34,6 +35,7 @@ const emptyRecipient = (): Recipient => ({
   role: "Chair",
   company: "",
   context: "",
+  priority: false,
 });
 
 const ROLE_PRESETS = ["Chair", "Senior Independent Director", "Nominations Committee Chair", "Non-Executive Director"];
@@ -78,6 +80,7 @@ const AdminOutreach = () => {
           role: parts[1] || "Chair",
           company: parts[2] || "",
           context: parts[3] || "",
+          priority: false,
         };
       })
       .filter(r => r.name);
@@ -176,6 +179,7 @@ const AdminOutreach = () => {
       role: role.slice(0, 120) || "Chair",
       company: company.slice(0, 160),
       context: context.slice(0, 400),
+      priority: false,
     };
   };
 
@@ -218,19 +222,27 @@ const AdminOutreach = () => {
 
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
-    if (valid.length === 0) {
+    const flagged = valid.filter(r => r.priority);
+    const batch = flagged.length > 0 ? flagged : valid;
+    if (batch.length === 0) {
       toast({ title: "Add at least one recipient", variant: "destructive" });
       return;
     }
-    if (valid.length > 20) {
-      toast({ title: "Maximum 20 recipients per batch", variant: "destructive" });
+    if (batch.length > 20) {
+      toast({
+        title: "Maximum 20 recipients per batch",
+        description: flagged.length > 0
+          ? "Deselect some priority contacts, or generate in multiple passes."
+          : "Flag your top 20 with the star, or trim the list.",
+        variant: "destructive",
+      });
       return;
     }
     setGenerating(true);
     setDrafts([]);
     try {
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: valid, notes },
+        body: { recipients: batch, notes },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -295,7 +307,16 @@ const AdminOutreach = () => {
 
           <div className="space-y-3">
             {recipients.map((r, i) => (
-              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => updateRecipient(r.id, { priority: !r.priority })}
+                  title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
+                  aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
+                >
+                  <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+                </Button>
                 <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
                 <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
                 <datalist id={`roles-${i}`}>
@@ -385,10 +406,18 @@ const AdminOutreach = () => {
             />
           </div>
 
-          <div className="mt-6 flex items-center justify-between">
-            <p className="text-xs text-muted-foreground">
-              {recipients.filter(r => r.name.trim() && r.role.trim()).length} valid · max 20 per batch
-            </p>
+          <div className="mt-6 flex items-center justify-between gap-4 flex-wrap">
+            {(() => {
+              const validCount = recipients.filter(r => r.name.trim() && r.role.trim()).length;
+              const flaggedCount = recipients.filter(r => r.priority && r.name.trim() && r.role.trim()).length;
+              return (
+                <p className="text-xs text-muted-foreground">
+                  {flaggedCount > 0
+                    ? <><span className="text-foreground font-medium">{flaggedCount} priority</span> of {validCount} valid · only starred contacts will be drafted</>
+                    : <>{validCount} valid · max 20 per batch · star your top 10–15 to draft only those</>}
+                </p>
+              );
+            })()}
             <Button onClick={generate} disabled={generating}>
               {generating ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Drafting…</> : "Generate drafts"}
             </Button>
