@@ -1169,6 +1169,19 @@ const AdminOutreach = () => {
                   <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-500" aria-label="Signature not configured" />
                 )}
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPlaybookDraft(activePlaybook ?? { id: "", name: "", tone: "", cadence_days: 14, context_hint: "" });
+                  setPlaybookDialogOpen(true);
+                }}
+                title="Save and apply named sequence playbooks (tone + cadence)"
+              >
+                <BookOpen className="h-3.5 w-3.5 mr-1" />
+                {activePlaybook ? `Playbook · ${activePlaybook.name}` : "Playbooks"}
+              </Button>
+
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
