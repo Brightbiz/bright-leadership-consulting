@@ -419,18 +419,51 @@ const AdminOutreach = () => {
 
 
   const runGenerate = async (batch: Recipient[]) => {
+    if (!userId) return;
     setGenerating(true);
-    setDrafts([]);
     try {
+      // Ensure batch recipients are persisted first so we can link drafts to them.
+      await persistRecipients(recipients);
+
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
         body: { recipients: batch, notes },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      const emails: DraftedEmail[] = data?.emails ?? [];
+      const emails: Array<{ recipient_name: string; recipient_role: string; company: string; subject: string; body: string }> =
+        data?.emails ?? [];
       if (emails.length === 0) throw new Error("No drafts returned");
-      setDrafts(emails);
-      toast({ title: `Drafted ${emails.length} emails` });
+
+      // Match each generated email back to the recipient by name+company (order-tolerant).
+      const findRecipient = (e: { recipient_name: string; company: string }) =>
+        batch.find(
+          r =>
+            r.name.trim().toLowerCase() === (e.recipient_name || "").trim().toLowerCase() &&
+            r.company.trim().toLowerCase() === (e.company || "").trim().toLowerCase()
+        ) ?? batch.find(r => r.name.trim().toLowerCase() === (e.recipient_name || "").trim().toLowerCase());
+
+      const rows = emails.map(e => {
+        const rec = findRecipient(e);
+        return {
+          user_id: userId,
+          recipient_id: rec?.id ?? null,
+          recipient_name: e.recipient_name,
+          recipient_role: e.recipient_role,
+          company: e.company ?? "",
+          subject: e.subject,
+          body: e.body,
+          status: "draft" as DraftStatus,
+        };
+      });
+
+      const { data: inserted, error: insertErr } = await (supabase as any)
+        .from("outreach_drafts")
+        .insert(rows)
+        .select();
+      if (insertErr) throw insertErr;
+
+      setDrafts(prev => [...(inserted as SavedDraft[]), ...prev]);
+      toast({ title: `Drafted ${emails.length} emails`, description: "Saved to your outreach log." });
     } catch (err: any) {
       toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
     } finally {
@@ -464,11 +497,91 @@ const AdminOutreach = () => {
     await runGenerate(batch);
   };
 
-  const copyEmail = async (e: DraftedEmail) => {
+  const copyEmail = async (e: SavedDraft) => {
     const text = `Subject: ${e.subject}\n\n${e.body}\n\n— Bright Leadership Consulting`;
     await navigator.clipboard.writeText(text);
     toast({ title: "Copied to clipboard" });
   };
+
+  const findRecipientForDraft = (d: SavedDraft): Recipient | undefined =>
+    recipients.find(r => r.id === d.recipient_id) ??
+    recipients.find(
+      r =>
+        r.name.trim().toLowerCase() === d.recipient_name.trim().toLowerCase() &&
+        r.company.trim().toLowerCase() === (d.company || "").trim().toLowerCase()
+    );
+
+  const updateDraftStatus = async (d: SavedDraft, status: DraftStatus) => {
+    if (!userId) return;
+    try {
+      let crmContactId: string | null = d.crm_contact_id;
+
+      // On first "sent", push into the CRM if we have an email.
+      if (status === "sent" && !crmContactId) {
+        const rec = findRecipientForDraft(d);
+        const email = rec?.email?.trim();
+        if (email) {
+          const { data: crmRow, error: crmErr } = await (supabase as any)
+            .from("crm_contacts")
+            .upsert(
+              {
+                email,
+                name: d.recipient_name || rec?.name || null,
+                company: d.company || rec?.company || null,
+                job_title: d.recipient_role || rec?.role || null,
+                source: "outreach",
+                source_table: "outreach_drafts",
+                source_record_id: d.id,
+                status: "contacted",
+                last_contacted_at: new Date().toISOString(),
+                tags: ["outreach"],
+              },
+              { onConflict: "email" }
+            )
+            .select("id")
+            .single();
+          if (crmErr) {
+            console.error("CRM upsert failed", crmErr);
+            toast({ title: "Draft marked sent — CRM sync failed", description: crmErr.message, variant: "destructive" });
+          } else if (crmRow) {
+            crmContactId = crmRow.id;
+          }
+        } else {
+          toast({
+            title: "Marked sent (no CRM link)",
+            description: "Add an email to the recipient to auto-log this contact in the CRM.",
+          });
+        }
+      }
+
+      const patch: any = {
+        status,
+        sent_at: status === "sent" ? d.sent_at ?? new Date().toISOString() : d.sent_at,
+        crm_contact_id: crmContactId,
+      };
+      const { data: updated, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .update(patch)
+        .eq("id", d.id)
+        .select()
+        .single();
+      if (error) throw error;
+      setDrafts(prev => prev.map(x => (x.id === d.id ? (updated as SavedDraft) : x)));
+    } catch (err: any) {
+      toast({ title: "Update failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    }
+  };
+
+  const deleteDraft = async (d: SavedDraft) => {
+    try {
+      const { error } = await (supabase as any).from("outreach_drafts").delete().eq("id", d.id);
+      if (error) throw error;
+      setDrafts(prev => prev.filter(x => x.id !== d.id));
+    } catch (err: any) {
+      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+    }
+  };
+
 
   const exportCsv = () => {
     if (drafts.length === 0) return;
