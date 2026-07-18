@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3, PenLine, ShieldAlert } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3, PenLine, ShieldAlert, BookOpen } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -129,6 +129,58 @@ const AdminOutreach = () => {
     setSenderDialogOpen(false);
     toast({ title: "Signature saved" });
   };
+
+  // --- Sequence playbooks: named tone + cadence presets, persisted in localStorage.
+  interface Playbook { id: string; name: string; tone: string; cadence_days: number; context_hint: string; }
+  const [playbooks, setPlaybooks] = useState<Playbook[]>(() => {
+    try { return JSON.parse(localStorage.getItem("outreach.playbooks") ?? "[]") as Playbook[]; }
+    catch { return []; }
+  });
+  const [activePlaybookId, setActivePlaybookId] = useState<string | null>(() => {
+    try { return localStorage.getItem("outreach.playbooks.active") || null; } catch { return null; }
+  });
+  const activePlaybook = playbooks.find(p => p.id === activePlaybookId) ?? null;
+  const [playbookDialogOpen, setPlaybookDialogOpen] = useState(false);
+  const [playbookDraft, setPlaybookDraft] = useState<Playbook>({ id: "", name: "", tone: "", cadence_days: 14, context_hint: "" });
+  const persistPlaybooks = (next: Playbook[], active?: string | null) => {
+    setPlaybooks(next);
+    try { localStorage.setItem("outreach.playbooks", JSON.stringify(next)); } catch {}
+    if (active !== undefined) {
+      setActivePlaybookId(active);
+      try {
+        if (active) localStorage.setItem("outreach.playbooks.active", active);
+        else localStorage.removeItem("outreach.playbooks.active");
+      } catch {}
+    }
+  };
+  const savePlaybookDraft = () => {
+    const name = playbookDraft.name.trim();
+    if (!name) { toast({ title: "Name required", variant: "destructive" }); return; }
+    const cadence = [7, 14, 21].includes(playbookDraft.cadence_days) ? playbookDraft.cadence_days : 14;
+    const isEdit = playbooks.some(p => p.id === playbookDraft.id);
+    const id = playbookDraft.id || crypto.randomUUID();
+    const next: Playbook = { ...playbookDraft, id, name, cadence_days: cadence };
+    const list = isEdit ? playbooks.map(p => p.id === id ? next : p) : [...playbooks, next];
+    persistPlaybooks(list, id);
+    toast({ title: isEdit ? "Playbook updated" : "Playbook saved", description: name });
+  };
+  const deletePlaybook = (id: string) => {
+    const list = playbooks.filter(p => p.id !== id);
+    persistPlaybooks(list, activePlaybookId === id ? null : activePlaybookId);
+  };
+  const applyPlaybookToRecipients = (pb: Playbook, scope: "all" | "starred") => {
+    const targets = scope === "starred" ? recipients.filter(r => r.priority) : recipients;
+    if (targets.length === 0) {
+      toast({ title: "No recipients", description: scope === "starred" ? "Star recipients first." : "Add recipients first.", variant: "destructive" });
+      return;
+    }
+    const ids = new Set(targets.map(r => r.id));
+    setRecipients(prev => prev.map(r => ids.has(r.id) ? { ...r, cadence_days: pb.cadence_days } : r));
+    persistPlaybooks(playbooks, pb.id);
+    toast({ title: "Playbook applied", description: `${pb.name} · cadence ${pb.cadence_days}d · ${targets.length} recipient${targets.length === 1 ? "" : "s"}` });
+  };
+
+
 
 
   // Load recipients + drafts on mount
@@ -500,7 +552,7 @@ const AdminOutreach = () => {
       await persistRecipients(recipients);
 
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: batch, notes },
+        body: { recipients: batch, notes, tone: activePlaybook?.tone || undefined },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -1117,6 +1169,19 @@ const AdminOutreach = () => {
                   <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-500" aria-label="Signature not configured" />
                 )}
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPlaybookDraft(activePlaybook ?? { id: "", name: "", tone: "", cadence_days: 14, context_hint: "" });
+                  setPlaybookDialogOpen(true);
+                }}
+                title="Save and apply named sequence playbooks (tone + cadence)"
+              >
+                <BookOpen className="h-3.5 w-3.5 mr-1" />
+                {activePlaybook ? `Playbook · ${activePlaybook.name}` : "Playbooks"}
+              </Button>
+
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
@@ -1863,6 +1928,114 @@ const AdminOutreach = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={playbookDialogOpen} onOpenChange={setPlaybookDialogOpen}>
+        <AlertDialogContent className="max-w-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <BookOpen className="h-4 w-4" /> Sequence playbooks
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Save a named playbook (tone directive + cadence). Applying a playbook sets follow-up cadence on recipients and forwards the tone directive to the generator on the next draft run.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <div className="space-y-5 py-2">
+            {playbooks.length > 0 && (
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Saved playbooks</p>
+                <div className="space-y-1.5 max-h-56 overflow-auto pr-1">
+                  {playbooks.map(pb => (
+                    <div key={pb.id} className={`border rounded p-2.5 ${activePlaybookId === pb.id ? "border-primary bg-primary/5" : "border-border"}`}>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-foreground">{pb.name}</p>
+                          <p className="text-[11px] text-muted-foreground">Cadence {pb.cadence_days}d {pb.tone ? `· "${pb.tone.slice(0, 60)}${pb.tone.length > 60 ? "…" : ""}"` : ""}</p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => setPlaybookDraft(pb)}>Edit</Button>
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => applyPlaybookToRecipients(pb, "all")}>Apply all</Button>
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[11px]" onClick={() => applyPlaybookToRecipients(pb, "starred")}>Starred</Button>
+                          <Button size="sm" variant="ghost" className="h-7 w-7 p-0 text-rose-700" onClick={() => deletePlaybook(pb.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {activePlaybook && (
+                  <button
+                    className="mt-2 text-[11px] text-muted-foreground underline decoration-dotted underline-offset-2"
+                    onClick={() => persistPlaybooks(playbooks, null)}
+                  >
+                    Clear active playbook
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="border-t border-border pt-4">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                {playbookDraft.id ? "Edit playbook" : "New playbook"}
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="md:col-span-2">
+                  <Label className="text-xs">Name</Label>
+                  <Input
+                    value={playbookDraft.name}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, name: e.target.value }))}
+                    placeholder="e.g. Chairs — post-AGM"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Cadence (days)</Label>
+                  <select
+                    className="mt-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm"
+                    value={playbookDraft.cadence_days}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, cadence_days: Number(e.target.value) }))}
+                  >
+                    <option value={7}>7 days</option>
+                    <option value={14}>14 days</option>
+                    <option value={21}>21 days</option>
+                  </select>
+                </div>
+                <div>
+                  <Label className="text-xs">Context hint (optional)</Label>
+                  <Input
+                    value={playbookDraft.context_hint}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, context_hint: e.target.value }))}
+                    placeholder="e.g. AGM season; effectiveness review cycle"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Label className="text-xs">Tone directive (sent to generator)</Label>
+                  <Textarea
+                    rows={3}
+                    value={playbookDraft.tone}
+                    onChange={e => setPlaybookDraft(p => ({ ...p, tone: e.target.value }))}
+                    placeholder="e.g. Emphasise post-AGM board effectiveness reviews and independent oversight. Keep sentences shorter than baseline."
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-3">
+                <Button size="sm" onClick={savePlaybookDraft}>
+                  {playbookDraft.id ? "Update playbook" : "Save playbook"}
+                </Button>
+                {playbookDraft.id && (
+                  <Button size="sm" variant="outline" onClick={() => setPlaybookDraft({ id: "", name: "", tone: "", cadence_days: 14, context_hint: "" })}>
+                    New
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+
 
       <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) { setReplyDialog(null); setClassifyHint(null); } }}>
         <AlertDialogContent>

@@ -8,7 +8,7 @@ import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
   ArrowLeft, Edit, Trash2, X, Tag, Phone, Building2, Briefcase, Calendar,
   DollarSign, StickyNote, ChevronRight, TrendingUp, Target, Clock, BarChart3,
-  Mail, Reply
+  Mail, Reply, Flame
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -86,7 +86,9 @@ const AdminCRM = () => {
   const [newTagInput, setNewTagInput] = useState("");
   const [showImportDialog, setShowImportDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [outreachByContact, setOutreachByContact] = useState<Record<string, { total: number; sent: number; replied: number; lastAt: string | null }>>({});
+  const [outreachByContact, setOutreachByContact] = useState<Record<string, { total: number; sent: number; replied: number; lastAt: string | null; bestSentiment: string | null }>>({});
+  const [warmOnly, setWarmOnly] = useState(false);
+
   const [contactOutreach, setContactOutreach] = useState<Array<{ id: string; subject: string; status: string; is_follow_up: boolean; sent_at: string | null; replied_at: string | null; reply_sentiment: string | null; reply_text: string | null; created_at: string }>>([]);
   const { toast } = useToast();
 
@@ -126,14 +128,15 @@ const AdminCRM = () => {
     try {
       const { data, error } = await (supabase as any)
         .from("outreach_drafts")
-        .select("crm_contact_id,status,sent_at,replied_at,created_at")
+        .select("crm_contact_id,status,sent_at,replied_at,created_at,reply_sentiment")
         .not("crm_contact_id", "is", null);
       if (error) throw error;
-      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null }> = {};
+      const rank: Record<string, number> = { meeting_booked: 5, positive: 4, neutral: 3, negative: 2, no_thanks: 1 };
+      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null; bestSentiment: string | null }> = {};
       for (const row of (data ?? []) as any[]) {
         const id = row.crm_contact_id;
         if (!id) continue;
-        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null };
+        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null, bestSentiment: null };
         map[id].total += 1;
         if (row.status === "sent" || row.status === "replied") map[id].sent += 1;
         if (row.status === "replied") map[id].replied += 1;
@@ -141,12 +144,19 @@ const AdminCRM = () => {
         if (candidate && (!map[id].lastAt || candidate > map[id].lastAt)) {
           map[id].lastAt = candidate;
         }
+        if (row.reply_sentiment) {
+          const cur = map[id].bestSentiment;
+          if (!cur || (rank[row.reply_sentiment] ?? 0) > (rank[cur] ?? 0)) {
+            map[id].bestSentiment = row.reply_sentiment;
+          }
+        }
       }
       setOutreachByContact(map);
     } catch (err) {
       console.error("Failed to load outreach summaries", err);
     }
   }, []);
+
 
   useEffect(() => {
     if (user && isAdmin) {
@@ -187,8 +197,24 @@ const AdminCRM = () => {
           c.tags.some((t) => t.toLowerCase().includes(q))
       );
     }
+    if (warmOnly) {
+      const warmRank: Record<string, number> = { meeting_booked: 5, positive: 4, neutral: 3, negative: 2, no_thanks: 1 };
+      result = result.filter((c) => {
+        const s = outreachByContact[c.id]?.bestSentiment;
+        return s === "meeting_booked" || s === "positive";
+      }).slice().sort((a, b) => {
+        const sa = outreachByContact[a.id]?.bestSentiment ?? "";
+        const sb = outreachByContact[b.id]?.bestSentiment ?? "";
+        const diff = (warmRank[sb] ?? 0) - (warmRank[sa] ?? 0);
+        if (diff !== 0) return diff;
+        const la = outreachByContact[a.id]?.lastAt ?? "";
+        const lb = outreachByContact[b.id]?.lastAt ?? "";
+        return lb.localeCompare(la);
+      });
+    }
     return result;
-  }, [contacts, statusFilter, searchQuery]);
+  }, [contacts, statusFilter, searchQuery, warmOnly, outreachByContact]);
+
 
   const statusCounts = useMemo(() => {
     const counts: Record<string, number> = { all: contacts.length };
@@ -433,7 +459,26 @@ const AdminCRM = () => {
               className="pl-10"
             />
           </div>
+          {(() => {
+            const warmCount = contacts.filter((c) => {
+              const s = outreachByContact[c.id]?.bestSentiment;
+              return s === "meeting_booked" || s === "positive";
+            }).length;
+            return (
+              <Button
+                variant={warmOnly ? "default" : "outline"}
+                size="sm"
+                onClick={() => setWarmOnly((v) => !v)}
+                disabled={warmCount === 0 && !warmOnly}
+                title="Show only contacts with a positive or meeting-booked reply, sorted by warmth"
+              >
+                <Flame className={`mr-1.5 h-4 w-4 ${warmOnly ? "" : "text-amber-600"}`} />
+                Warm list · {warmCount}
+              </Button>
+            );
+          })()}
         </div>
+
 
         {/* Status Tabs */}
         <Tabs value={statusFilter} onValueChange={setStatusFilter} className="space-y-4">
@@ -509,6 +554,16 @@ const AdminCRM = () => {
                                 {o.replied}/{o.sent || o.total}
                                 {o.lastAt && <span className="ml-1">· {format(new Date(o.lastAt), "MMM d")}</span>}
                               </span>
+                              {(o.bestSentiment === "meeting_booked" || o.bestSentiment === "positive") && (
+                                <Badge
+                                  variant="secondary"
+                                  className={`ml-1 h-5 px-1.5 text-[10px] font-medium ${o.bestSentiment === "meeting_booked" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}
+                                >
+                                  <Flame className="h-3 w-3 mr-0.5" />
+                                  {o.bestSentiment === "meeting_booked" ? "Meeting" : "Warm"}
+                                </Badge>
+                              )}
+
                             </div>
                           );
                         })()}
