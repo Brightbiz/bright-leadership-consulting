@@ -384,6 +384,28 @@ const AdminOutreach = () => {
     URL.revokeObjectURL(url);
   };
 
+  const exportRecipientsCsv = () => {
+    const valid = recipients.filter(r => r.name.trim() || r.role.trim() || r.company.trim() || r.context.trim());
+    if (valid.length === 0) {
+      toast({ title: "Nothing to export", description: "Add at least one recipient first.", variant: "destructive" });
+      return;
+    }
+    const esc = (s: string) => `"${(s ?? "").replace(/"/g, '""')}"`;
+    const header = ["Name", "Role", "Company", "Context", "Priority", "Context Warning"].map(esc).join(",");
+    const rows = valid.map(r =>
+      [r.name, r.role, r.company, r.context, r.priority ? "Yes" : "No", contextIssue(r.context) ?? ""].map(esc).join(",")
+    );
+    const csv = [header, ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `outreach-recipients-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Recipients exported", description: `${valid.length} row${valid.length === 1 ? "" : "s"} saved to CSV.` });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
