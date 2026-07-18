@@ -176,6 +176,71 @@ const SelectedEngagements = () => {
 
         <div className="section-divider" />
 
+        {/* Section 2b — Extended Case Narratives */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px] mb-16">
+              <motion.p className="kicker mb-6" {...fade}>
+                Extended Case Narratives
+              </motion.p>
+              <motion.h2 className="heading-section mb-6" {...fade}>
+                Challenge, Intervention, Outcome
+              </motion.h2>
+              <motion.p className="body-brief" {...fade}>
+                A small number of engagements are recorded here in longer form —
+                still fully anonymised — to illustrate how structural misalignment
+                presents, how the diagnostic is deployed, and how governance-level
+                outcomes are documented at board level.
+              </motion.p>
+            </div>
+
+            <div className="space-y-0">
+              {narratives.map((n, index) => (
+                <motion.article
+                  key={n.sector}
+                  className="border-t border-border py-16 lg:py-20 first:border-t-0 first:pt-0"
+                  {...fade}
+                  transition={{ ...fade.transition, delay: 0.05 + index * 0.06 }}
+                >
+                  <div className="max-w-[680px]">
+                    <p className="kicker mb-6">{n.sector}</p>
+
+                    <div className="space-y-10">
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Challenge
+                        </p>
+                        <p className="text-foreground text-[17px] leading-[1.7]">
+                          {n.challenge}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Intervention
+                        </p>
+                        <p className="text-muted-foreground text-[17px] leading-[1.7]">
+                          {n.intervention}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium tracking-wider text-muted-foreground/60 uppercase mb-3">
+                          Outcome
+                        </p>
+                        <p className="text-muted-foreground text-[17px] leading-[1.7]">
+                          {n.outcome}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+
         {/* Section 3 — Closing + CTA */}
         <section className="section-brief bg-background">
           <div className="container-brief">
