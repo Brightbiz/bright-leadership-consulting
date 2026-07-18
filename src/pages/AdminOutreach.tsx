@@ -92,6 +92,8 @@ const AdminOutreach = () => {
   const [replyDialog, setReplyDialog] = useState<SavedDraft | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replySentiment, setReplySentiment] = useState<ReplySentiment>("neutral");
+  const [classifyBusy, setClassifyBusy] = useState(false);
+  const [classifyHint, setClassifyHint] = useState<{ sentiment: ReplySentiment; confidence: number; summary: string } | null>(null);
   const [followUpBusyId, setFollowUpBusyId] = useState<string | null>(null);
   const [hydrating, setHydrating] = useState(true);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
