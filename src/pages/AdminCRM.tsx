@@ -122,9 +122,55 @@ const AdminCRM = () => {
     }
   };
 
+  const fetchOutreachSummaries = useCallback(async () => {
+    try {
+      const { data, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .select("crm_contact_id,status,sent_at,replied_at,created_at")
+        .not("crm_contact_id", "is", null);
+      if (error) throw error;
+      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null }> = {};
+      for (const row of (data ?? []) as any[]) {
+        const id = row.crm_contact_id;
+        if (!id) continue;
+        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null };
+        map[id].total += 1;
+        if (row.status === "sent" || row.status === "replied") map[id].sent += 1;
+        if (row.status === "replied") map[id].replied += 1;
+        const candidate = row.replied_at || row.sent_at || row.created_at;
+        if (candidate && (!map[id].lastAt || candidate > map[id].lastAt)) {
+          map[id].lastAt = candidate;
+        }
+      }
+      setOutreachByContact(map);
+    } catch (err) {
+      console.error("Failed to load outreach summaries", err);
+    }
+  }, []);
+
   useEffect(() => {
-    if (user && isAdmin) fetchContacts();
-  }, [user, isAdmin, fetchContacts]);
+    if (user && isAdmin) {
+      fetchContacts();
+      fetchOutreachSummaries();
+    }
+  }, [user, isAdmin, fetchContacts, fetchOutreachSummaries]);
+
+  useEffect(() => {
+    if (!selectedContact) {
+      setContactOutreach([]);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await (supabase as any)
+        .from("outreach_drafts")
+        .select("id,subject,status,is_follow_up,sent_at,replied_at,reply_sentiment,reply_text,created_at")
+        .eq("crm_contact_id", selectedContact.id)
+        .order("created_at", { ascending: false });
+      if (!cancelled && !error) setContactOutreach((data ?? []) as any);
+    })();
+    return () => { cancelled = true; };
+  }, [selectedContact]);
 
   const filteredContacts = useMemo(() => {
     let result = contacts;
