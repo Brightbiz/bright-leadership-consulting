@@ -88,6 +88,38 @@ const AdminOutreach = () => {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userId = user?.id ?? null;
 
+  // Sender identity + signature block — persisted per browser in localStorage.
+  const [sender, setSender] = useState<{ name: string; title: string; signature: string }>(() => {
+    try {
+      return {
+        name: localStorage.getItem("outreach.sender.name") ?? "",
+        title: localStorage.getItem("outreach.sender.title") ?? "",
+        signature: localStorage.getItem("outreach.sender.signature") ?? "",
+      };
+    } catch {
+      return { name: "", title: "", signature: "" };
+    }
+  });
+  const [senderDialogOpen, setSenderDialogOpen] = useState(false);
+  const [senderDraft, setSenderDraft] = useState(sender);
+  const signatureBlock = (() => {
+    if (sender.signature.trim()) return sender.signature.trim();
+    const lines = ["— Bright Leadership Consulting"];
+    if (sender.name.trim()) lines.unshift([sender.name, sender.title].filter(Boolean).join(", "));
+    return lines.join("\n");
+  })();
+  const saveSender = () => {
+    try {
+      localStorage.setItem("outreach.sender.name", senderDraft.name);
+      localStorage.setItem("outreach.sender.title", senderDraft.title);
+      localStorage.setItem("outreach.sender.signature", senderDraft.signature);
+    } catch {}
+    setSender(senderDraft);
+    setSenderDialogOpen(false);
+    toast({ title: "Signature saved" });
+  };
+
+
   // Load recipients + drafts on mount
   useEffect(() => {
     if (!userId || !isAdmin) return;
