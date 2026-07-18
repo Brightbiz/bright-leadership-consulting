@@ -112,7 +112,12 @@ const SelectedEngagements = () => {
                 <p className="text-lg leading-relaxed text-muted-foreground">
                   The following abstracts represent a selection of governance-level
                   advisory engagements. All identifying details have been removed
-                  to preserve client confidentiality.
+                  to preserve client confidentiality. Three engagements are
+                  recorded in{" "}
+                  <a href="#narratives" className="underline underline-offset-4 decoration-border hover:decoration-foreground text-foreground transition-colors">
+                    longer narrative form below
+                  </a>
+                  .
                 </p>
               </motion.div>
             </div>
