@@ -8,7 +8,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -50,6 +60,7 @@ const AdminOutreach = () => {
   const [bulkPaste, setBulkPaste] = useState("");
   const [generating, setGenerating] = useState(false);
   const [drafts, setDrafts] = useState<DraftedEmail[]>([]);
+  const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
 
   if (isLoading) {
     return (
@@ -220,6 +231,52 @@ const AdminOutreach = () => {
 
   const cancelCsvImport = () => setCsvPreview(null);
 
+  // Signal words that suggest a specific, board-level observation rather than
+  // a scraped industry-keyword dump. Presence of any of these makes context "specific".
+  const SPECIFIC_SIGNALS = [
+    "chair", "ceo", "cfo", "coo", "sid", "appoint", "transition", "succession",
+    "refresh", "review", "agm", "governance", "strategy", "merger", "acquisition",
+    "acquir", "ipo", "listing", "delist", "restructur", "transformation", "activist",
+    "esg", "audit", "dispute", "resign", "step down", "stepped down", "new chair",
+    "board effectiveness", "remit", "committee", "spin off", "spin-off", "carve out",
+    "carve-out", "takeover", "profit warning", "fundraise", "capital raise",
+    "regulatory", "fine", "probe", "investigation", "turnaround", "scandal",
+    "reappointed", "interim",
+  ];
+
+  const isGenericContext = (ctx: string): boolean => {
+    const c = ctx.trim().toLowerCase();
+    if (!c) return true;
+    if (c.length < 25) return true;
+    const hasSignal = SPECIFIC_SIGNALS.some(s => c.includes(s));
+    if (hasSignal) return false;
+    // Comma-delimited keyword dump with no full-sentence structure
+    const commaCount = (c.match(/,/g) || []).length;
+    const hasSentence = /[.!?]/.test(c);
+    if (commaCount >= 2 && !hasSentence) return true;
+    return false;
+  };
+
+  const runGenerate = async (batch: Recipient[]) => {
+    setGenerating(true);
+    setDrafts([]);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: { recipients: batch, notes },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const emails: DraftedEmail[] = data?.emails ?? [];
+      if (emails.length === 0) throw new Error("No drafts returned");
+      setDrafts(emails);
+      toast({ title: `Drafted ${emails.length} emails` });
+    } catch (err: any) {
+      toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
     const flagged = valid.filter(r => r.priority);
@@ -238,23 +295,12 @@ const AdminOutreach = () => {
       });
       return;
     }
-    setGenerating(true);
-    setDrafts([]);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: batch, notes },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      const emails: DraftedEmail[] = data?.emails ?? [];
-      if (emails.length === 0) throw new Error("No drafts returned");
-      setDrafts(emails);
-      toast({ title: `Drafted ${emails.length} emails` });
-    } catch (err: any) {
-      toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
-    } finally {
-      setGenerating(false);
+    const genericNames = batch.filter(r => isGenericContext(r.context)).map(r => r.name);
+    if (genericNames.length > 0) {
+      setGenericWarning({ names: genericNames, batch });
+      return;
     }
+    await runGenerate(batch);
   };
 
   const copyEmail = async (e: DraftedEmail) => {
@@ -323,7 +369,20 @@ const AdminOutreach = () => {
                   {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
                 </datalist>
                 <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
-                <Input placeholder="Optional context (sector, recent event)" value={r.context} onChange={e => updateRecipient(r.id, { context: e.target.value })} />
+                <div className="relative">
+                  <Input
+                    placeholder="Optional context (sector, recent event)"
+                    value={r.context}
+                    onChange={e => updateRecipient(r.id, { context: e.target.value })}
+                    className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                  />
+                  {r.name.trim() && isGenericContext(r.context) && (
+                    <AlertTriangle
+                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                      aria-label="Context looks generic"
+                    />
+                  )}
+                </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
                   <Trash2 className="h-4 w-4 text-muted-foreground" />
                 </Button>
@@ -456,6 +515,45 @@ const AdminOutreach = () => {
         )}
       </main>
       <Footer />
+
+      <AlertDialog open={!!genericWarning} onOpenChange={(open) => { if (!open) setGenericWarning(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-serif flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
+              {genericWarning?.names.length} recipient{genericWarning && genericWarning.names.length === 1 ? "" : "s"} lack specific context
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p>
+                  The Context field for the following recipient{genericWarning && genericWarning.names.length === 1 ? " reads" : "s reads"} as a generic industry keyword dump rather than a board-level observation. Drafts will default to formulaic sector language.
+                </p>
+                <ul className="text-xs text-muted-foreground list-disc pl-5 max-h-40 overflow-auto">
+                  {genericWarning?.names.slice(0, 12).map(n => <li key={n}>{n}</li>)}
+                  {genericWarning && genericWarning.names.length > 12 && (
+                    <li className="italic">…and {genericWarning.names.length - 12} more</li>
+                  )}
+                </ul>
+                <p className="text-xs text-muted-foreground">
+                  Recommended: add one specific line each — e.g. <em>"New Chair appointed following 2024 governance review"</em> or <em>"CEO transition announced Q1 2026"</em>.
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setGenericWarning(null)}>Edit context</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async () => {
+                const batch = genericWarning?.batch ?? [];
+                setGenericWarning(null);
+                if (batch.length > 0) await runGenerate(batch);
+              }}
+            >
+              Generate anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
