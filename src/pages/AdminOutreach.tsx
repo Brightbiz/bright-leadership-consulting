@@ -310,18 +310,68 @@ const AdminOutreach = () => {
             ))}
           </div>
 
-          <div className="mt-6 pt-6 border-t border-border">
-            <Label className="text-xs uppercase tracking-wide text-muted-foreground">Bulk paste (one per line: Name | Role | Company | context)</Label>
-            <Textarea
-              className="mt-2 font-mono text-xs"
-              rows={4}
-              placeholder={"Jane Whitmore | Chair | Meridian Group plc | infrastructure, recent CEO transition\nDavid Ellis | Senior Independent Director | Halevy Holdings"}
-              value={bulkPaste}
-              onChange={e => setBulkPaste(e.target.value)}
-            />
-            <Button variant="outline" size="sm" className="mt-2" onClick={parseBulk} disabled={!bulkPaste.trim()}>
-              Replace list with pasted rows
-            </Button>
+          <div className="mt-6 pt-6 border-t border-border space-y-6">
+            <div>
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground">Upload Apollo CSV</Label>
+              <p className="text-xs text-muted-foreground mt-1">
+                Accepts Apollo exports directly. Name, Title, and Company columns are auto-mapped. Industry/Keywords are used as context.
+              </p>
+              <div className="mt-2 flex items-center gap-2">
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".csv,text/csv"
+                  onChange={handleFileUpload}
+                  className="text-sm file:mr-3 file:py-1 file:px-2 file:rounded file:border-0 file:bg-muted file:text-foreground hover:file:bg-muted/80"
+                />
+              </div>
+            </div>
+
+            {csvPreview && csvPreview.length > 0 && (
+              <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                <h3 className="font-serif text-sm">CSV preview ({csvPreview.length} rows)</h3>
+                <div className="max-h-60 overflow-auto border border-border rounded bg-background">
+                  <table className="w-full text-xs">
+                    <thead className="bg-muted sticky top-0">
+                      <tr>
+                        <th className="text-left p-2 font-medium">Name</th>
+                        <th className="text-left p-2 font-medium">Role</th>
+                        <th className="text-left p-2 font-medium">Company</th>
+                        <th className="text-left p-2 font-medium">Context</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {csvPreview.map(r => (
+                        <tr key={r.id} className="border-t border-border">
+                          <td className="p-2">{r.name}</td>
+                          <td className="p-2">{r.role}</td>
+                          <td className="p-2">{r.company}</td>
+                          <td className="p-2 text-muted-foreground truncate max-w-[200px]">{r.context}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={confirmCsvImport}>Confirm import</Button>
+                  <Button size="sm" variant="outline" onClick={cancelCsvImport}>Cancel</Button>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground">Or bulk paste (one per line: Name | Role | Company | context)</Label>
+              <Textarea
+                className="mt-2 font-mono text-xs"
+                rows={4}
+                placeholder={"Jane Whitmore | Chair | Meridian Group plc | infrastructure, recent CEO transition\nDavid Ellis | Senior Independent Director | Halevy Holdings"}
+                value={bulkPaste}
+                onChange={e => setBulkPaste(e.target.value)}
+              />
+              <Button variant="outline" size="sm" className="mt-2" onClick={parseBulk} disabled={!bulkPaste.trim()}>
+                Replace list with pasted rows
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6">
