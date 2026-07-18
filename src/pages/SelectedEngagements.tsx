@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -84,6 +85,29 @@ const SelectedEngagements = () => {
         description="Anonymised board-level advisory case narratives — executive alignment diagnostics, governance interventions, and documented outcomes across financial services, infrastructure, healthcare, professional services, and technology."
         path="/selected-engagements"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Selected Engagements — Anonymised Case Narratives",
+          "url": "https://brightleadershipconsulting.com/selected-engagements",
+          "itemListElement": narratives.map((n, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "item": {
+              "@type": "Article",
+              "headline": `${n.sector} — Executive Alignment Engagement`,
+              "about": n.sector,
+              "articleSection": "Case Narrative",
+              "description": n.challenge.slice(0, 200),
+              "publisher": {
+                "@type": "Organization",
+                "name": "Bright Leadership Consulting",
+              },
+            },
+          })),
+        })}</script>
+      </Helmet>
       <ScrollProgress />
       <Header />
 
