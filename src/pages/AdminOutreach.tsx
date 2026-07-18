@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle } from "lucide-react";
+import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -61,6 +62,7 @@ const AdminOutreach = () => {
   const [generating, setGenerating] = useState(false);
   const [drafts, setDrafts] = useState<DraftedEmail[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
+  const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
 
   if (isLoading) {
     return (
@@ -437,7 +439,19 @@ const AdminOutreach = () => {
                 );
               })()}
             </div>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mr-2">
+                <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+                <Label htmlFor="generic-filter" className="text-xs text-muted-foreground cursor-pointer">
+                  Show only flagged
+                </Label>
+                <Switch
+                  id="generic-filter"
+                  checked={showOnlyGeneric}
+                  onCheckedChange={setShowOnlyGeneric}
+                  aria-label="Show only recipients with generic context warnings"
+                />
+              </div>
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
@@ -490,7 +504,9 @@ const AdminOutreach = () => {
           })()}
 
           <div className="space-y-3">
-            {recipients.map((r, i) => (
+            {recipients
+              .filter(r => !showOnlyGeneric || (r.name.trim() && isGenericContext(r.context)))
+              .map((r, i) => (
               <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
                 <Button
                   variant="ghost"
@@ -555,6 +571,9 @@ const AdminOutreach = () => {
                 </Button>
               </div>
             ))}
+            {showOnlyGeneric && recipients.filter(r => r.name.trim() && isGenericContext(r.context)).length === 0 && (
+              <p className="text-sm text-muted-foreground py-4">No generic-context warnings. All recipients look specific.</p>
+            )}
           </div>
 
           <div className="mt-6 pt-6 border-t border-border space-y-6">
