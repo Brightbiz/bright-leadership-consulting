@@ -1032,6 +1032,45 @@ const AdminOutreach = () => {
 
         {drafts.length > 0 && (
           <div className="space-y-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <BarChart3 className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Drafts</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.total}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <MailCheck className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Sent</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.sent}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <Reply className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Replied</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.replied}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Reply rate</span>
+                </div>
+                <p className="text-xl font-semibold text-foreground">{analytics.replyRate}%</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-3">
+                <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                  <Send className="h-3.5 w-3.5" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Follow-up due</span>
+                </div>
+                <p className={`text-xl font-semibold ${analytics.needsFollowUp > 0 ? "text-amber-700" : "text-foreground"}`}>
+                  {analytics.needsFollowUp}
+                </p>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between">
               <h2 className="font-serif text-xl">Drafts ({drafts.length})</h2>
               <Button variant="outline" size="sm" onClick={exportCsv}>
@@ -1041,6 +1080,10 @@ const AdminOutreach = () => {
             {drafts.map((d) => {
               const rec = findRecipientForDraft(d);
               const hasEmail = !!(rec?.email?.trim());
+              const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+              const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
+              const hasChildFollowUp = drafts.some(x => x.parent_draft_id === d.id);
+              const followUpEligible = d.status === "sent" && daysSinceSent >= 7 && !hasChildFollowUp;
               const statusStyle =
                 d.status === "sent"
                   ? "bg-emerald-100 text-emerald-800 border-emerald-300"
@@ -1060,6 +1103,11 @@ const AdminOutreach = () => {
                       </h3>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap justify-end">
+                      {d.is_follow_up && (
+                        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border bg-amber-50 text-amber-800 border-amber-300">
+                          <Send className="h-3 w-3" /> Follow-up
+                        </span>
+                      )}
                       <span className={`inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusStyle}`}>
                         {d.status === "sent" && <CheckCircle2 className="h-3 w-3" />}
                         {d.status}
@@ -1078,9 +1126,30 @@ const AdminOutreach = () => {
                           <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
                         </Button>
                       )}
+                      {followUpEligible && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => generateFollowUp(d)}
+                          disabled={followUpBusyId === d.id}
+                          title={`Sent ${daysSinceSent} days ago — draft a shorter second touch`}
+                        >
+                          {followUpBusyId === d.id
+                            ? <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Drafting…</>
+                            : <><Send className="h-3.5 w-3.5 mr-1" /> Draft follow-up</>}
+                        </Button>
+                      )}
                       {d.status === "sent" && (
-                        <Button variant="outline" size="sm" onClick={() => updateDraftStatus(d, "replied")}>
-                          <Reply className="h-3.5 w-3.5 mr-1" /> Mark replied
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setReplyText("");
+                            setReplySentiment("neutral");
+                            setReplyDialog(d);
+                          }}
+                        >
+                          <Reply className="h-3.5 w-3.5 mr-1" /> Log reply
                         </Button>
                       )}
                       <Button variant="ghost" size="icon" onClick={() => deleteDraft(d)} title="Delete draft">
@@ -1093,11 +1162,22 @@ const AdminOutreach = () => {
                     <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.body}</p>
                     <p className="text-sm text-muted-foreground mt-3">— Bright Leadership Consulting</p>
                   </div>
+                  {d.status === "replied" && (d.reply_text || d.reply_sentiment) && (
+                    <div className="mt-4 rounded-md border border-blue-200 bg-blue-50/50 p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-blue-900 mb-1">
+                        Reply logged{d.replied_at ? ` · ${new Date(d.replied_at).toLocaleDateString()}` : ""}
+                        {d.reply_sentiment ? ` · ${d.reply_sentiment.replace("_", " ")}` : ""}
+                      </p>
+                      {d.reply_text && <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{d.reply_text}</p>}
+                    </div>
+                  )}
                 </Card>
               );
             })}
           </div>
         )}
+
+
 
       </main>
       <Footer />
