@@ -788,15 +788,8 @@ const AdminOutreach = () => {
     const replied = drafts.filter(d => d.status === "replied").length;
     const followUps = drafts.filter(d => d.is_follow_up).length;
     const replyRate = sent > 0 ? Math.round((replied / sent) * 100) : 0;
-    const now = Date.now();
-    const needsFollowUp = drafts.filter(d => {
-      if (d.status !== "sent") return false;
-      // exclude drafts that already have a follow-up drafted against them
-      const hasChild = drafts.some(x => x.parent_draft_id === d.id);
-      if (hasChild) return false;
-      const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
-      return now - sentAt > 7 * 24 * 60 * 60 * 1000;
-    }).length;
+    const needsFollowUp = drafts.filter(d => followUpState(d).eligible).length;
+
     return { total, sent, replied, followUps, replyRate, needsFollowUp };
   })();
 
