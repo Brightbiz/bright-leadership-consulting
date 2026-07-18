@@ -179,6 +179,7 @@ const AdminOutreach = () => {
       role: role.slice(0, 120) || "Chair",
       company: company.slice(0, 160),
       context: context.slice(0, 400),
+      priority: false,
     };
   };
 
