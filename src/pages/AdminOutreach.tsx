@@ -257,6 +257,30 @@ const AdminOutreach = () => {
   };
   const isGenericContext = (ctx: string): boolean => contextIssue(ctx) !== null;
 
+  // One-click template: produces a specific board-level observation seeded from
+  // the recipient's role and company so the field passes validation and prompts
+  // the user to refine rather than accept as-is.
+  const suggestContextTemplate = (r: Recipient): string => {
+    const role = (r.role || "").toLowerCase();
+    const company = r.company.trim() || "the board";
+    if (role.includes("chair")) {
+      return `Recently appointed Chair at ${company}; board effectiveness review likely in first 12 months.`;
+    }
+    if (role.includes("sid") || role.includes("senior independent")) {
+      return `SID at ${company} during a period of executive transition; succession and governance under review.`;
+    }
+    if (role.includes("nomination")) {
+      return `Nominations Committee at ${company} leading a chair or NED refresh; alignment gaps typical at this stage.`;
+    }
+    if (role.includes("ceo")) {
+      return `CEO at ${company} navigating a strategy reset; board-executive alignment increasingly material.`;
+    }
+    if (role.includes("ned") || role.includes("non-executive")) {
+      return `NED at ${company} following a recent board refresh; committee remit and effectiveness under review.`;
+    }
+    return `Recent governance event at ${company} — board refresh, strategy reset, or committee review — likely to surface alignment variance.`;
+  };
+
   const runGenerate = async (batch: Recipient[]) => {
     setGenerating(true);
     setDrafts([]);
