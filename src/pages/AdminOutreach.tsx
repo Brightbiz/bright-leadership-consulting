@@ -920,6 +920,17 @@ const AdminOutreach = () => {
                   aria-label="Show only recipients with generic context warnings"
                 />
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => { setSenderDraft(sender); setSenderDialogOpen(true); }}
+                title="Set the sender identity and signature block appended to every copied draft"
+              >
+                <PenLine className="h-3.5 w-3.5 mr-1" /> Signature
+                {!sender.name && !sender.signature && (
+                  <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-500" aria-label="Signature not configured" />
+                )}
+              </Button>
               <Button variant="outline" size="sm" onClick={exportRecipientsCsv}>
                 <Download className="h-3.5 w-3.5 mr-1" /> Export CSV
               </Button>
