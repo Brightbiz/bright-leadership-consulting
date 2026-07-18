@@ -1023,78 +1023,133 @@ const AdminOutreach = () => {
           <div className="space-y-3">
             {recipients
               .filter(r => !showOnlyGeneric || (r.name.trim() && isGenericContext(r.context)))
-              .map((r, i) => (
-              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => updateRecipient(r.id, { priority: !r.priority })}
-                  title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
-                  aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
-                >
-                  <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
-                </Button>
-                <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
-                <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
-                <datalist id={`roles-${i}`}>
-                  {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
-                </datalist>
-                <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
-                <Input
-                  type="email"
-                  placeholder="Email (for CRM link)"
-                  value={r.email}
-                  onChange={e => updateRecipient(r.id, { email: e.target.value })}
-                  title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
-                />
-                <div className="relative">
+              .map((r, i) => {
+              const snoozeActive = !!(r.snooze_until && new Date(r.snooze_until).getTime() > Date.now());
+              return (
+              <div key={r.id} id={`recipient-row-${r.id}`} className="scroll-mt-24 transition-shadow space-y-1.5">
+                <div className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => updateRecipient(r.id, { priority: !r.priority })}
+                    title={r.priority ? "Priority — will be included in generation" : "Flag as priority"}
+                    aria-label={r.priority ? "Unflag priority" : "Flag as priority"}
+                  >
+                    <Star className={`h-4 w-4 ${r.priority ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+                  </Button>
+                  <Input placeholder="Name" value={r.name} onChange={e => updateRecipient(r.id, { name: e.target.value })} />
+                  <Input placeholder="Role" list={`roles-${i}`} value={r.role} onChange={e => updateRecipient(r.id, { role: e.target.value })} />
+                  <datalist id={`roles-${i}`}>
+                    {ROLE_PRESETS.map(p => <option key={p} value={p} />)}
+                  </datalist>
+                  <Input placeholder="Company" value={r.company} onChange={e => updateRecipient(r.id, { company: e.target.value })} />
                   <Input
-                    placeholder="Optional context (sector, recent event)"
-                    value={r.context}
-                    onChange={e => updateRecipient(r.id, { context: e.target.value })}
-                    className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
-                    aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
-                    aria-describedby={`ctx-hint-${r.id}`}
+                    type="email"
+                    placeholder="Email (for CRM link)"
+                    value={r.email}
+                    onChange={e => updateRecipient(r.id, { email: e.target.value })}
+                    title="Optional — required to auto-log this contact to the CRM when a draft is marked sent"
                   />
-                  {r.name.trim() && isGenericContext(r.context) && (
-                    <span
-                      className="absolute right-2 top-[14px] pointer-events-none"
-                      title={contextIssue(r.context) ?? "Context looks generic"}
-                    >
-                      <AlertTriangle
-                        className="h-3.5 w-3.5 text-amber-600"
-                        aria-label={contextIssue(r.context) ?? "Context looks generic"}
-                      />
-                    </span>
-                  )}
-                  {r.name.trim() && contextIssue(r.context) && (
-                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 space-y-1.5">
-                      <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
-                        <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-                        {contextIssue(r.context)}
-                      </p>
-                      <div className="pl-4 border-l border-amber-500/30 space-y-1">
-                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Suggested rewrites — click to apply</p>
-                        {suggestContextRewrites(r).map((prompt, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => updateRecipient(r.id, { context: prompt })}
-                            className="block text-left text-[11px] leading-snug text-primary hover:text-primary/80 hover:underline decoration-dotted underline-offset-2"
-                            title="Apply this rewrite and re-validate"
-                          >
-                            → {prompt}
-                          </button>
-                        ))}
+                  <div className="relative">
+                    <Input
+                      placeholder="Optional context (sector, recent event)"
+                      value={r.context}
+                      onChange={e => updateRecipient(r.id, { context: e.target.value })}
+                      className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                      aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
+                      aria-describedby={`ctx-hint-${r.id}`}
+                    />
+                    {r.name.trim() && isGenericContext(r.context) && (
+                      <span
+                        className="absolute right-2 top-[14px] pointer-events-none"
+                        title={contextIssue(r.context) ?? "Context looks generic"}
+                      >
+                        <AlertTriangle
+                          className="h-3.5 w-3.5 text-amber-600"
+                          aria-label={contextIssue(r.context) ?? "Context looks generic"}
+                        />
+                      </span>
+                    )}
+                    {r.name.trim() && contextIssue(r.context) && (
+                      <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 space-y-1.5">
+                        <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
+                          <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                          {contextIssue(r.context)}
+                        </p>
+                        <div className="pl-4 border-l border-amber-500/30 space-y-1">
+                          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Suggested rewrites — click to apply</p>
+                          {suggestContextRewrites(r).map((prompt, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => updateRecipient(r.id, { context: prompt })}
+                              className="block text-left text-[11px] leading-snug text-primary hover:text-primary/80 hover:underline decoration-dotted underline-offset-2"
+                              title="Apply this rewrite and re-validate"
+                            >
+                              → {prompt}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
+                    <Trash2 className="h-4 w-4 text-muted-foreground" />
+                  </Button>
                 </div>
-                <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
-                  <Trash2 className="h-4 w-4 text-muted-foreground" />
-                </Button>
+
+                {/* Follow-up cadence controls */}
+                <div className="pl-11 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                  <span className="uppercase tracking-wider text-[10px]">Follow-up</span>
+                  <label className="inline-flex items-center gap-1.5">
+                    <span>Cadence</span>
+                    <select
+                      value={r.cadence_days}
+                      onChange={e => updateRecipient(r.id, { cadence_days: Number(e.target.value) })}
+                      disabled={r.do_not_follow_up}
+                      className="h-6 px-1.5 rounded border border-input bg-background text-foreground text-[11px] disabled:opacity-50"
+                      title="Days to wait after send before a follow-up becomes eligible"
+                    >
+                      {CADENCE_OPTIONS.map(d => (
+                        <option key={d} value={d}>{d} days</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="inline-flex items-center gap-1.5">
+                    <span>Snooze until</span>
+                    <input
+                      type="date"
+                      value={r.snooze_until ? r.snooze_until.slice(0, 10) : ""}
+                      onChange={e => updateRecipient(r.id, { snooze_until: e.target.value ? new Date(e.target.value).toISOString() : null })}
+                      disabled={r.do_not_follow_up}
+                      className="h-6 px-1.5 rounded border border-input bg-background text-foreground text-[11px] disabled:opacity-50"
+                      title="Pause auto follow-ups until this date"
+                    />
+                    {snoozeActive && !r.do_not_follow_up && (
+                      <button
+                        type="button"
+                        onClick={() => updateRecipient(r.id, { snooze_until: null })}
+                        className="text-primary hover:underline"
+                        title="Clear snooze"
+                      >
+                        clear
+                      </button>
+                    )}
+                  </label>
+                  <label className="inline-flex items-center gap-1.5">
+                    <input
+                      type="checkbox"
+                      checked={r.do_not_follow_up}
+                      onChange={e => updateRecipient(r.id, { do_not_follow_up: e.target.checked })}
+                      className="h-3 w-3 accent-primary"
+                    />
+                    <span className={r.do_not_follow_up ? "text-amber-700 font-medium" : ""}>Do not follow up</span>
+                  </label>
+                </div>
               </div>
-            ))}
+              );
+            })}
+
             {showOnlyGeneric && recipients.filter(r => r.name.trim() && isGenericContext(r.context)).length === 0 && (
               <p className="text-sm text-muted-foreground py-4">No generic-context warnings. All recipients look specific.</p>
             )}
