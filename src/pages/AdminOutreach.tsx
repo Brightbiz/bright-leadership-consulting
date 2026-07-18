@@ -901,7 +901,31 @@ const AdminOutreach = () => {
       .filter(r => r.sent > 0)
       .sort((a, b) => b.sent - a.sent);
 
-    return { days, maxBar, roles };
+    // Sentiment breakdown across all replied drafts.
+    const sentimentOrder: ReplySentiment[] = ["meeting_booked", "positive", "neutral", "negative", "no_thanks"];
+    const sentimentLabels: Record<ReplySentiment, string> = {
+      meeting_booked: "Meeting booked",
+      positive: "Positive",
+      neutral: "Neutral",
+      negative: "Negative",
+      no_thanks: "No, thanks",
+    };
+    const sentCounts: Record<ReplySentiment, number> = {
+      meeting_booked: 0, positive: 0, neutral: 0, negative: 0, no_thanks: 0,
+    };
+    let repliedTotal = 0;
+    for (const d of drafts) {
+      if (d.status === "replied") {
+        repliedTotal += 1;
+        const s = (d.reply_sentiment as ReplySentiment) || "neutral";
+        if (s in sentCounts) sentCounts[s] += 1;
+      }
+    }
+    const sentimentRows = sentimentOrder
+      .map(k => ({ key: k, label: sentimentLabels[k], count: sentCounts[k] }))
+      .filter(r => r.count > 0);
+
+    return { days, maxBar, roles, sentimentRows, repliedTotal };
   })();
 
 
