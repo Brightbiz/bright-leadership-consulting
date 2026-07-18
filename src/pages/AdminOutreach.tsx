@@ -393,11 +393,13 @@ const AdminOutreach = () => {
                   {r.name.trim() && isGenericContext(r.context) && (
                     <AlertTriangle
                       className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-[14px] pointer-events-none"
-                      aria-label="Context looks generic"
+                      aria-label={contextIssue(r.context) ?? "Context looks generic"}
+                      title={contextIssue(r.context) ?? "Context looks generic"}
                     />
                   )}
                   {r.name.trim() && contextIssue(r.context) && (
-                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700">
+                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1">
+                      <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
                       {contextIssue(r.context)}
                     </p>
                   )}
