@@ -244,18 +244,18 @@ const AdminOutreach = () => {
     "reappointed", "interim",
   ];
 
-  const isGenericContext = (ctx: string): boolean => {
+  const contextIssue = (ctx: string): string | null => {
     const c = ctx.trim().toLowerCase();
-    if (!c) return true;
-    if (c.length < 25) return true;
+    if (!c) return "Empty — add a board-level observation.";
+    if (c.length < 25) return "Too short — add specificity (transition, governance event, appointment).";
     const hasSignal = SPECIFIC_SIGNALS.some(s => c.includes(s));
-    if (hasSignal) return false;
-    // Comma-delimited keyword dump with no full-sentence structure
+    if (hasSignal) return null;
     const commaCount = (c.match(/,/g) || []).length;
     const hasSentence = /[.!?]/.test(c);
-    if (commaCount >= 2 && !hasSentence) return true;
-    return false;
+    if (commaCount >= 2 && !hasSentence) return "Keyword dump — rewrite as a specific observation.";
+    return "No board-level signal — reference a chair change, review, or governance event.";
   };
+  const isGenericContext = (ctx: string): boolean => contextIssue(ctx) !== null;
 
   const runGenerate = async (batch: Recipient[]) => {
     setGenerating(true);
@@ -343,7 +343,19 @@ const AdminOutreach = () => {
 
         <Card className="p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-serif text-lg">Recipients</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="font-serif text-lg">Recipients</h2>
+              {(() => {
+                const flagged = recipients.filter(r => r.name.trim() && isGenericContext(r.context)).length;
+                if (flagged === 0) return null;
+                return (
+                  <span className="inline-flex items-center gap-1 text-xs text-amber-700">
+                    <AlertTriangle className="h-3 w-3" />
+                    {flagged} generic context{flagged === 1 ? "" : "s"}
+                  </span>
+                );
+              })()}
+            </div>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={addRecipient}>
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add
@@ -375,12 +387,19 @@ const AdminOutreach = () => {
                     value={r.context}
                     onChange={e => updateRecipient(r.id, { context: e.target.value })}
                     className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                    aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
+                    aria-describedby={`ctx-hint-${r.id}`}
                   />
                   {r.name.trim() && isGenericContext(r.context) && (
                     <AlertTriangle
-                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-[14px] pointer-events-none"
                       aria-label="Context looks generic"
                     />
+                  )}
+                  {r.name.trim() && contextIssue(r.context) && (
+                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700">
+                      {contextIssue(r.context)}
+                    </p>
                   )}
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
