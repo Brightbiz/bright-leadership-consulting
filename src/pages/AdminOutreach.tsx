@@ -387,12 +387,19 @@ const AdminOutreach = () => {
                     value={r.context}
                     onChange={e => updateRecipient(r.id, { context: e.target.value })}
                     className={r.name.trim() && isGenericContext(r.context) ? "border-amber-500/60 pr-8" : "pr-2"}
+                    aria-invalid={r.name.trim() ? isGenericContext(r.context) : undefined}
+                    aria-describedby={`ctx-hint-${r.id}`}
                   />
                   {r.name.trim() && isGenericContext(r.context) && (
                     <AlertTriangle
-                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                      className="h-3.5 w-3.5 text-amber-600 absolute right-2 top-[14px] pointer-events-none"
                       aria-label="Context looks generic"
                     />
+                  )}
+                  {r.name.trim() && contextIssue(r.context) && (
+                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700">
+                      {contextIssue(r.context)}
+                    </p>
                   )}
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
