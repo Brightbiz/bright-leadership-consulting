@@ -491,7 +491,7 @@ const AdminOutreach = () => {
 
           <div className="space-y-3">
             {recipients.map((r, i) => (
-              <div key={r.id} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start">
+              <div key={r.id} id={`recipient-row-${r.id}`} className="grid grid-cols-1 md:grid-cols-[auto_1.2fr_1.4fr_1.4fr_2fr_auto] gap-2 items-start scroll-mt-24 transition-shadow">
                 <Button
                   variant="ghost"
                   size="icon"
