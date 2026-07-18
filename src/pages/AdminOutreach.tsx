@@ -552,7 +552,7 @@ const AdminOutreach = () => {
       await persistRecipients(recipients);
 
       const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: batch, notes },
+        body: { recipients: batch, notes, tone: activePlaybook?.tone || undefined },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
