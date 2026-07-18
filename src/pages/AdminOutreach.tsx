@@ -130,6 +130,58 @@ const AdminOutreach = () => {
     toast({ title: "Signature saved" });
   };
 
+  // --- Sequence playbooks: named tone + cadence presets, persisted in localStorage.
+  interface Playbook { id: string; name: string; tone: string; cadence_days: number; context_hint: string; }
+  const [playbooks, setPlaybooks] = useState<Playbook[]>(() => {
+    try { return JSON.parse(localStorage.getItem("outreach.playbooks") ?? "[]") as Playbook[]; }
+    catch { return []; }
+  });
+  const [activePlaybookId, setActivePlaybookId] = useState<string | null>(() => {
+    try { return localStorage.getItem("outreach.playbooks.active") || null; } catch { return null; }
+  });
+  const activePlaybook = playbooks.find(p => p.id === activePlaybookId) ?? null;
+  const [playbookDialogOpen, setPlaybookDialogOpen] = useState(false);
+  const [playbookDraft, setPlaybookDraft] = useState<Playbook>({ id: "", name: "", tone: "", cadence_days: 14, context_hint: "" });
+  const persistPlaybooks = (next: Playbook[], active?: string | null) => {
+    setPlaybooks(next);
+    try { localStorage.setItem("outreach.playbooks", JSON.stringify(next)); } catch {}
+    if (active !== undefined) {
+      setActivePlaybookId(active);
+      try {
+        if (active) localStorage.setItem("outreach.playbooks.active", active);
+        else localStorage.removeItem("outreach.playbooks.active");
+      } catch {}
+    }
+  };
+  const savePlaybookDraft = () => {
+    const name = playbookDraft.name.trim();
+    if (!name) { toast({ title: "Name required", variant: "destructive" }); return; }
+    const cadence = [7, 14, 21].includes(playbookDraft.cadence_days) ? playbookDraft.cadence_days : 14;
+    const isEdit = playbooks.some(p => p.id === playbookDraft.id);
+    const id = playbookDraft.id || crypto.randomUUID();
+    const next: Playbook = { ...playbookDraft, id, name, cadence_days: cadence };
+    const list = isEdit ? playbooks.map(p => p.id === id ? next : p) : [...playbooks, next];
+    persistPlaybooks(list, id);
+    toast({ title: isEdit ? "Playbook updated" : "Playbook saved", description: name });
+  };
+  const deletePlaybook = (id: string) => {
+    const list = playbooks.filter(p => p.id !== id);
+    persistPlaybooks(list, activePlaybookId === id ? null : activePlaybookId);
+  };
+  const applyPlaybookToRecipients = (pb: Playbook, scope: "all" | "starred") => {
+    const targets = scope === "starred" ? recipients.filter(r => r.priority) : recipients;
+    if (targets.length === 0) {
+      toast({ title: "No recipients", description: scope === "starred" ? "Star recipients first." : "Add recipients first.", variant: "destructive" });
+      return;
+    }
+    const ids = new Set(targets.map(r => r.id));
+    setRecipients(prev => prev.map(r => ids.has(r.id) ? { ...r, cadence_days: pb.cadence_days } : r));
+    persistPlaybooks(playbooks, pb.id);
+    toast({ title: "Playbook applied", description: `${pb.name} · cadence ${pb.cadence_days}d · ${targets.length} recipient${targets.length === 1 ? "" : "s"}` });
+  };
+
+
+
 
   // Load recipients + drafts on mount
   useEffect(() => {
