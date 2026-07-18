@@ -1628,7 +1628,7 @@ const AdminOutreach = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) setReplyDialog(null); }}>
+      <AlertDialog open={!!replyDialog} onOpenChange={(open) => { if (!open) { setReplyDialog(null); setClassifyHint(null); } }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="font-serif flex items-center gap-2">
@@ -1641,7 +1641,19 @@ const AdminOutreach = () => {
                   Records what came back so the CRM reflects real conversation state. Sentiment updates the linked CRM stage automatically.
                 </p>
                 <div>
-                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs uppercase tracking-wide text-muted-foreground">Sentiment</Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 px-2 text-[11px]"
+                      disabled={!replyText.trim() || classifyBusy}
+                      onClick={autoDetectSentiment}
+                    >
+                      {classifyBusy ? "Detecting…" : "Auto-detect from text"}
+                    </Button>
+                  </div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {([
                       { key: "meeting_booked", label: "Meeting booked" },
@@ -1664,6 +1676,13 @@ const AdminOutreach = () => {
                       </button>
                     ))}
                   </div>
+                  {classifyHint && (
+                    <p className="mt-2 text-[11px] text-muted-foreground italic">
+                      Suggested: <span className="text-foreground not-italic">{classifyHint.sentiment.replace("_", " ")}</span>
+                      {classifyHint.confidence > 0 && <> · {Math.round(classifyHint.confidence * 100)}% confidence</>}
+                      {classifyHint.summary && <> — {classifyHint.summary}</>}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label className="text-xs uppercase tracking-wide text-muted-foreground">Reply text (optional)</Label>
@@ -1672,18 +1691,19 @@ const AdminOutreach = () => {
                     rows={5}
                     placeholder="Paste the reply here, or note the substance briefly."
                     value={replyText}
-                    onChange={e => setReplyText(e.target.value)}
+                    onChange={e => { setReplyText(e.target.value); if (classifyHint) setClassifyHint(null); }}
                   />
                 </div>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setReplyDialog(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => { setReplyDialog(null); setClassifyHint(null); }}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={saveReply}>Save reply</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
     </div>
   );
 };
