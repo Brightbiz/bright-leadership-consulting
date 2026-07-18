@@ -718,9 +718,39 @@ const AdminOutreach = () => {
       setReplyDialog(null);
       setReplyText("");
       setReplySentiment("neutral");
+      setClassifyHint(null);
       toast({ title: "Reply logged" });
     } catch (err: any) {
       toast({ title: "Failed to save reply", description: err.message, variant: "destructive" });
+    }
+  };
+
+  // Auto-detect sentiment from pasted reply text via the AI edge function.
+  const autoDetectSentiment = async () => {
+    if (!replyText.trim() || classifyBusy || !replyDialog) return;
+    setClassifyBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: {
+          mode: "classify_reply",
+          replyText,
+          originalSubject: replyDialog.subject,
+          originalBody: replyDialog.body,
+        },
+      });
+      if (error) throw error;
+      if (data?.sentiment) {
+        setReplySentiment(data.sentiment as ReplySentiment);
+        setClassifyHint({
+          sentiment: data.sentiment,
+          confidence: Number(data.confidence ?? 0),
+          summary: String(data.summary ?? ""),
+        });
+      }
+    } catch (err: any) {
+      toast({ title: "Auto-detect failed", description: err.message ?? "Try again shortly.", variant: "destructive" });
+    } finally {
+      setClassifyBusy(false);
     }
   };
 
