@@ -644,6 +644,51 @@ const AdminCRM = () => {
                   )}
                 </div>
 
+                {/* Outreach history */}
+                <div className="space-y-2">
+                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Mail className="h-4 w-4" /> Outreach
+                    <Link to="/admin/outreach" className="ml-auto text-xs text-muted-foreground hover:text-foreground underline decoration-dotted underline-offset-2">Open tool →</Link>
+                  </h3>
+                  {contactOutreach.length === 0 ? (
+                    <p className="text-xs text-muted-foreground">No outreach drafts linked to this contact yet.</p>
+                  ) : (
+                    <ul className="space-y-2">
+                      {contactOutreach.map(o => {
+                        const badge =
+                          o.status === "replied" ? "bg-blue-100 text-blue-800 border-blue-300"
+                          : o.status === "sent" ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                          : "bg-muted text-muted-foreground border-border";
+                        const ts = o.replied_at || o.sent_at || o.created_at;
+                        return (
+                          <li key={o.id} className="text-xs border border-border rounded-md p-2">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="font-medium text-foreground line-clamp-1">{o.subject}</p>
+                              <div className="flex items-center gap-1 shrink-0">
+                                {o.is_follow_up && (
+                                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border bg-amber-50 text-amber-800 border-amber-300 text-[9px] uppercase tracking-wider">
+                                    Follow-up
+                                  </span>
+                                )}
+                                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full border text-[9px] uppercase tracking-wider ${badge}`}>
+                                  {o.status}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-muted-foreground mt-1">
+                              {ts ? format(new Date(ts), "MMM d, yyyy") : "—"}
+                              {o.reply_sentiment ? ` · ${o.reply_sentiment.replace("_", " ")}` : ""}
+                            </p>
+                            {o.reply_text && (
+                              <p className="mt-1 text-foreground line-clamp-2 italic">"{o.reply_text}"</p>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+
                 {/* Meta */}
                 <div className="border-t pt-4 space-y-1 text-xs text-muted-foreground">
                   <p>Source: {SOURCE_LABELS[selectedContact.source] || selectedContact.source}</p>
