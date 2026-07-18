@@ -92,6 +92,16 @@ const OfferSequencingSection = () => {
           <div className="mt-20">
             <AdvisoryArchitectureDiagram />
           </div>
+
+          <motion.div
+            className="mt-16 flex justify-center"
+            {...fade}
+            transition={{ ...fade.transition, delay: 0.15 }}
+          >
+            <Link to="/selected-engagements" className="link-quiet">
+              Selected Engagements →
+            </Link>
+          </motion.div>
         </div>
       </section>
     </>
