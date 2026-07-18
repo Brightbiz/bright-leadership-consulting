@@ -222,12 +222,20 @@ const AdminOutreach = () => {
 
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
-    if (valid.length === 0) {
+    const flagged = valid.filter(r => r.priority);
+    const batch = flagged.length > 0 ? flagged : valid;
+    if (batch.length === 0) {
       toast({ title: "Add at least one recipient", variant: "destructive" });
       return;
     }
-    if (valid.length > 20) {
-      toast({ title: "Maximum 20 recipients per batch", variant: "destructive" });
+    if (batch.length > 20) {
+      toast({
+        title: "Maximum 20 recipients per batch",
+        description: flagged.length > 0
+          ? "Deselect some priority contacts, or generate in multiple passes."
+          : "Flag your top 20 with the star, or trim the list.",
+        variant: "destructive",
+      });
       return;
     }
     setGenerating(true);
