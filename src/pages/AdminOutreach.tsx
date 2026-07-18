@@ -175,7 +175,12 @@ const AdminOutreach = () => {
     setRecipients(rs => rs.map(r => (r.id === id ? { ...r, ...patch } : r)));
 
   const addRecipient = () => setRecipients(rs => [...rs, emptyRecipient()]);
-  const removeRecipient = (id: string) => setRecipients(rs => rs.filter(r => r.id !== id));
+  const removeRecipient = async (id: string) => {
+    setRecipients(rs => rs.filter(r => r.id !== id));
+    if (userId) {
+      await (supabase as any).from("outreach_recipients").delete().eq("id", id);
+    }
+  };
 
   const parseBulk = () => {
     // Format per line: Name | Role | Company | optional context
