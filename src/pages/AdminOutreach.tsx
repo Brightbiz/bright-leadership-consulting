@@ -1196,6 +1196,67 @@ const AdminOutreach = () => {
               </div>
             </div>
 
+            {(insights.days.some(d => d.sent > 0) || insights.roles.length > 0) && (
+              <Card className="p-5">
+                <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Sends · last 30 days
+                    </p>
+                    <div className="flex items-end gap-[3px] h-20">
+                      {insights.days.map((d, i) => {
+                        const h = d.sent === 0 ? 3 : Math.max(6, Math.round((d.sent / insights.maxBar) * 76));
+                        const repH = d.replied === 0 ? 0 : Math.max(3, Math.round((d.replied / insights.maxBar) * 76));
+                        return (
+                          <div
+                            key={i}
+                            className="flex-1 flex flex-col justify-end items-stretch"
+                            title={`${d.label} — ${d.sent} sent · ${d.replied} replied`}
+                          >
+                            <div className="bg-primary/25" style={{ height: `${h - repH}px` }} />
+                            {repH > 0 && <div className="bg-primary" style={{ height: `${repH}px` }} />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+                      <span>{insights.days[0].label}</span>
+                      <span className="flex items-center gap-3">
+                        <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-2 bg-primary/25" /> sent</span>
+                        <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-2 bg-primary" /> replied</span>
+                      </span>
+                      <span>{insights.days[insights.days.length - 1].label}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Reply rate by role
+                    </p>
+                    {insights.roles.length === 0 ? (
+                      <p className="text-xs text-muted-foreground">No sent drafts yet.</p>
+                    ) : (
+                      <table className="w-full text-xs">
+                        <tbody>
+                          {insights.roles.map(r => (
+                            <tr key={r.role} className="border-b border-border/60 last:border-0">
+                              <td className="py-1.5 text-foreground">{r.role}</td>
+                              <td className="py-1.5 text-muted-foreground text-right w-16">{r.replied}/{r.sent}</td>
+                              <td className="py-1.5 text-right w-14">
+                                <span className={`font-medium ${r.rate >= 20 ? "text-emerald-700" : r.rate >= 10 ? "text-foreground" : "text-muted-foreground"}`}>
+                                  {r.rate}%
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            )}
+
+
             <div className="flex items-center justify-between">
               <h2 className="font-serif text-xl">Drafts ({drafts.length})</h2>
               <Button variant="outline" size="sm" onClick={exportCsv}>
