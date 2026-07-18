@@ -86,7 +86,9 @@ const AdminCRM = () => {
   const [newTagInput, setNewTagInput] = useState("");
   const [showImportDialog, setShowImportDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [outreachByContact, setOutreachByContact] = useState<Record<string, { total: number; sent: number; replied: number; lastAt: string | null }>>({});
+  const [outreachByContact, setOutreachByContact] = useState<Record<string, { total: number; sent: number; replied: number; lastAt: string | null; bestSentiment: string | null }>>({});
+  const [warmOnly, setWarmOnly] = useState(false);
+
   const [contactOutreach, setContactOutreach] = useState<Array<{ id: string; subject: string; status: string; is_follow_up: boolean; sent_at: string | null; replied_at: string | null; reply_sentiment: string | null; reply_text: string | null; created_at: string }>>([]);
   const { toast } = useToast();
 
