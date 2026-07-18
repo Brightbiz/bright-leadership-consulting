@@ -754,6 +754,87 @@ const AdminOutreach = () => {
     return { total, sent, replied, followUps, replyRate, needsFollowUp };
   })();
 
+  // --- Draft quality scoring (client-side heuristics) ---
+  const BANNED_PHRASES = [
+    "hope this finds you well", "hope this email finds you", "quick call", "circle back",
+    "touch base", "reach out", "just wanted to", "checking in", "services", "packages",
+    "solutions", "leverage", "synergy", "unlock", "empower", "transform", "excited", "delighted",
+  ];
+  const scoreDraft = (subject: string, body: string): string[] => {
+    const issues: string[] = [];
+    const words = body.trim().split(/\s+/).filter(Boolean).length;
+    if (words > 140) issues.push(`Too long — ${words} words (aim ≤ 140)`);
+    if (words > 0 && words < 40) issues.push(`Too short — ${words} words`);
+    if (!/EAI|Executive Alignment Index/i.test(body)) issues.push("Missing EAI™ reference");
+    const hay = `${subject} ${body}`.toLowerCase();
+    const hits = BANNED_PHRASES.filter(p => hay.includes(p));
+    if (hits.length > 0) issues.push(`Banned phrase${hits.length === 1 ? "" : "s"}: "${hits.join("\", \"")}"`);
+    const subjWords = subject.trim().split(/\s+/).filter(Boolean).length;
+    if (subjWords > 9) issues.push(`Subject too long — ${subjWords} words (aim ≤ 7)`);
+    return issues;
+  };
+
+  // --- 30-day activity + role breakdown for the Insights panel ---
+  const insights = (() => {
+    const now = new Date();
+    const days: { label: string; sent: number; replied: number }[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      days.push({ label: d.toISOString().slice(5, 10), sent: 0, replied: 0 });
+    }
+    const cutoff = new Date(now);
+    cutoff.setDate(now.getDate() - 29);
+    cutoff.setHours(0, 0, 0, 0);
+    const dayIndex = (iso: string | null | undefined) => {
+      if (!iso) return -1;
+      const t = new Date(iso);
+      t.setHours(0, 0, 0, 0);
+      const diff = Math.round((t.getTime() - cutoff.getTime()) / (1000 * 60 * 60 * 24));
+      return diff >= 0 && diff < 30 ? diff : -1;
+    };
+    for (const d of drafts) {
+      if (d.status === "sent" || d.status === "replied") {
+        const idx = dayIndex(d.sent_at ?? d.created_at);
+        if (idx >= 0) days[idx].sent += 1;
+      }
+      if (d.status === "replied") {
+        const idx = dayIndex(d.replied_at ?? d.sent_at ?? d.created_at);
+        if (idx >= 0) days[idx].replied += 1;
+      }
+    }
+    const maxBar = Math.max(1, ...days.map(x => x.sent));
+
+    // Role bucketing: normalise arbitrary titles into governance categories.
+    const roleBucket = (raw: string): string => {
+      const r = raw.toLowerCase();
+      if (r.includes("nomination")) return "Nominations";
+      if (r.includes("senior independent") || r === "sid" || r.includes(" sid")) return "SID";
+      if (r.includes("chair")) return "Chair";
+      if (r.includes("non-exec") || r.includes("non exec") || r.includes("ned")) return "NED";
+      if (r.includes("ceo")) return "CEO";
+      if (r.includes("cfo")) return "CFO";
+      return "Other";
+    };
+    const byRole = new Map<string, { sent: number; replied: number }>();
+    for (const d of drafts) {
+      const bucket = roleBucket(d.recipient_role || "");
+      const row = byRole.get(bucket) ?? { sent: 0, replied: 0 };
+      if (d.status === "sent" || d.status === "replied") row.sent += 1;
+      if (d.status === "replied") row.replied += 1;
+      byRole.set(bucket, row);
+    }
+    const roles = Array.from(byRole.entries())
+      .map(([role, r]) => ({ role, ...r, rate: r.sent > 0 ? Math.round((r.replied / r.sent) * 100) : 0 }))
+      .filter(r => r.sent > 0)
+      .sort((a, b) => b.sent - a.sent);
+
+    return { days, maxBar, roles };
+  })();
+
+
+
 
 
   const exportCsv = () => {
