@@ -571,6 +571,9 @@ const AdminOutreach = () => {
                 </Button>
               </div>
             ))}
+            {showOnlyGeneric && recipients.filter(r => r.name.trim() && isGenericContext(r.context)).length === 0 && (
+              <p className="text-sm text-muted-foreground py-4">No generic-context warnings. All recipients look specific.</p>
+            )}
           </div>
 
           <div className="mt-6 pt-6 border-t border-border space-y-6">
