@@ -182,7 +182,7 @@ const SelectedEngagements = () => {
         <div className="section-divider" />
 
         {/* Section 2b — Extended Case Narratives */}
-        <section className="section-brief bg-background">
+        <section id="narratives" className="section-brief bg-background scroll-mt-24">
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
