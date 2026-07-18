@@ -1402,8 +1402,33 @@ const AdminOutreach = () => {
                     )}
                   </div>
                 </div>
+                {insights.sentimentRows.length > 0 && (
+                  <div className="mt-5 pt-4 border-t border-border/60">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                      Reply sentiment · {insights.repliedTotal} replies
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {insights.sentimentRows.map(s => {
+                        const pct = insights.repliedTotal > 0 ? Math.round((s.count / insights.repliedTotal) * 100) : 0;
+                        const tone =
+                          s.key === "meeting_booked" ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                          : s.key === "positive" ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                          : s.key === "neutral" ? "bg-muted text-foreground border-border"
+                          : s.key === "negative" ? "bg-amber-50 text-amber-900 border-amber-200"
+                          : "bg-rose-50 text-rose-900 border-rose-200";
+                        return (
+                          <span key={s.key} className={`inline-flex items-center gap-2 text-[11px] px-2.5 py-1 rounded-full border ${tone}`}>
+                            <span className="font-medium">{s.label}</span>
+                            <span className="text-muted-foreground">{s.count} · {pct}%</span>
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </Card>
             )}
+
 
 
             <div className="flex items-center justify-between">
