@@ -554,6 +554,16 @@ const AdminCRM = () => {
                                 {o.replied}/{o.sent || o.total}
                                 {o.lastAt && <span className="ml-1">· {format(new Date(o.lastAt), "MMM d")}</span>}
                               </span>
+                              {(o.bestSentiment === "meeting_booked" || o.bestSentiment === "positive") && (
+                                <Badge
+                                  variant="secondary"
+                                  className={`ml-1 h-5 px-1.5 text-[10px] font-medium ${o.bestSentiment === "meeting_booked" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}
+                                >
+                                  <Flame className="h-3 w-3 mr-0.5" />
+                                  {o.bestSentiment === "meeting_booked" ? "Meeting" : "Warm"}
+                                </Badge>
+                              )}
+
                             </div>
                           );
                         })()}
