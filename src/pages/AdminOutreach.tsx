@@ -80,6 +80,10 @@ const AdminOutreach = () => {
   const [drafts, setDrafts] = useState<SavedDraft[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
   const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
+  const [replyDialog, setReplyDialog] = useState<SavedDraft | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [replySentiment, setReplySentiment] = useState<ReplySentiment>("neutral");
+  const [followUpBusyId, setFollowUpBusyId] = useState<string | null>(null);
   const [hydrating, setHydrating] = useState(true);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userId = user?.id ?? null;
