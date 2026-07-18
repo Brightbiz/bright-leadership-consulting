@@ -492,6 +492,27 @@ const AdminCRM = () => {
                           {STATUS_CONFIG[contact.status].label}
                         </span>
                       </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {(() => {
+                          const o = outreachByContact[contact.id];
+                          if (!o || o.total === 0) return <span className="text-xs text-muted-foreground">—</span>;
+                          return (
+                            <div className="flex items-center gap-1.5 text-xs">
+                              {o.replied > 0 ? (
+                                <Reply className="h-3.5 w-3.5 text-blue-700" />
+                              ) : o.sent > 0 ? (
+                                <Mail className="h-3.5 w-3.5 text-emerald-700" />
+                              ) : (
+                                <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+                              )}
+                              <span className="text-muted-foreground">
+                                {o.replied}/{o.sent || o.total}
+                                {o.lastAt && <span className="ml-1">· {format(new Date(o.lastAt), "MMM d")}</span>}
+                              </span>
+                            </div>
+                          );
+                        })()}
+                      </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <div className="flex flex-wrap gap-1">
                           {(contact.tags || []).slice(0, 2).map((tag) => (
