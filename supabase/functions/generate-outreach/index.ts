@@ -69,7 +69,7 @@ serve(async (req) => {
       });
     }
 
-    const { recipients, notes, mode, originalSubject, originalBody, sentDaysAgo, replyText } = await req.json();
+    const { recipients, notes, mode, originalSubject, originalBody, sentDaysAgo, replyText, tone } = await req.json();
     const isFollowUp = mode === "follow_up";
     const isClassify = mode === "classify_reply";
 
