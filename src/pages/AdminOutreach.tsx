@@ -257,6 +257,30 @@ const AdminOutreach = () => {
   };
   const isGenericContext = (ctx: string): boolean => contextIssue(ctx) !== null;
 
+  // One-click template: produces a specific board-level observation seeded from
+  // the recipient's role and company so the field passes validation and prompts
+  // the user to refine rather than accept as-is.
+  const suggestContextTemplate = (r: Recipient): string => {
+    const role = (r.role || "").toLowerCase();
+    const company = r.company.trim() || "the board";
+    if (role.includes("chair")) {
+      return `Recently appointed Chair at ${company}; board effectiveness review likely in first 12 months.`;
+    }
+    if (role.includes("sid") || role.includes("senior independent")) {
+      return `SID at ${company} during a period of executive transition; succession and governance under review.`;
+    }
+    if (role.includes("nomination")) {
+      return `Nominations Committee at ${company} leading a chair or NED refresh; alignment gaps typical at this stage.`;
+    }
+    if (role.includes("ceo")) {
+      return `CEO at ${company} navigating a strategy reset; board-executive alignment increasingly material.`;
+    }
+    if (role.includes("ned") || role.includes("non-executive")) {
+      return `NED at ${company} following a recent board refresh; committee remit and effectiveness under review.`;
+    }
+    return `Recent governance event at ${company} — board refresh, strategy reset, or committee review — likely to surface alignment variance.`;
+  };
+
   const runGenerate = async (batch: Recipient[]) => {
     setGenerating(true);
     setDrafts([]);
@@ -402,10 +426,20 @@ const AdminOutreach = () => {
                     </span>
                   )}
                   {r.name.trim() && contextIssue(r.context) && (
-                    <p id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1">
-                      <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-                      {contextIssue(r.context)}
-                    </p>
+                    <div id={`ctx-hint-${r.id}`} role="status" aria-live="polite" className="mt-1 flex items-start gap-2 flex-wrap">
+                      <p className="text-[11px] leading-snug text-amber-700 inline-flex items-start gap-1 m-0">
+                        <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                        {contextIssue(r.context)}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => updateRecipient(r.id, { context: suggestContextTemplate(r) })}
+                        className="text-[11px] leading-snug underline decoration-dotted underline-offset-2 text-primary hover:text-primary/80"
+                        title="Replace with a specific board-level template and re-validate"
+                      >
+                        Use suggested template
+                      </button>
+                    </div>
                   )}
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => removeRecipient(r.id)} disabled={recipients.length <= 1}>
