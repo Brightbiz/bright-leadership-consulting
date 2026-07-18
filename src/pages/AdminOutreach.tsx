@@ -584,6 +584,26 @@ const AdminOutreach = () => {
         r.company.trim().toLowerCase() === (d.company || "").trim().toLowerCase()
     );
 
+  // Follow-up gating for a sent draft, using the recipient's cadence settings.
+  const followUpState = (d: SavedDraft): { eligible: boolean; blocked: null | "dnc" | "snoozed" | "waiting"; waitDays: number; cadence: number; snoozeUntil: string | null } => {
+    if (d.status !== "sent") return { eligible: false, blocked: null, waitDays: 0, cadence: 14, snoozeUntil: null };
+    const hasChild = drafts.some(x => x.parent_draft_id === d.id);
+    if (hasChild) return { eligible: false, blocked: null, waitDays: 0, cadence: 14, snoozeUntil: null };
+    const rec = findRecipientForDraft(d);
+    const cadence = rec?.cadence_days ?? 14;
+    if (rec?.do_not_follow_up) return { eligible: false, blocked: "dnc", waitDays: 0, cadence, snoozeUntil: null };
+    if (rec?.snooze_until && new Date(rec.snooze_until).getTime() > Date.now()) {
+      return { eligible: false, blocked: "snoozed", waitDays: 0, cadence, snoozeUntil: rec.snooze_until };
+    }
+    const sentAt = d.sent_at ? new Date(d.sent_at).getTime() : new Date(d.created_at).getTime();
+    const daysSinceSent = Math.floor((Date.now() - sentAt) / (1000 * 60 * 60 * 24));
+    if (daysSinceSent < cadence) {
+      return { eligible: false, blocked: "waiting", waitDays: cadence - daysSinceSent, cadence, snoozeUntil: null };
+    }
+    return { eligible: true, blocked: null, waitDays: 0, cadence, snoozeUntil: null };
+  };
+
+
   const updateDraftStatus = async (d: SavedDraft, status: DraftStatus) => {
     if (!userId) return;
     try {
