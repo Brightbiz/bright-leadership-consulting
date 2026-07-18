@@ -231,6 +231,52 @@ const AdminOutreach = () => {
 
   const cancelCsvImport = () => setCsvPreview(null);
 
+  // Signal words that suggest a specific, board-level observation rather than
+  // a scraped industry-keyword dump. Presence of any of these makes context "specific".
+  const SPECIFIC_SIGNALS = [
+    "chair", "ceo", "cfo", "coo", "sid", "appoint", "transition", "succession",
+    "refresh", "review", "agm", "governance", "strategy", "merger", "acquisition",
+    "acquir", "ipo", "listing", "delist", "restructur", "transformation", "activist",
+    "esg", "audit", "dispute", "resign", "step down", "stepped down", "new chair",
+    "board effectiveness", "remit", "committee", "spin off", "spin-off", "carve out",
+    "carve-out", "takeover", "profit warning", "fundraise", "capital raise",
+    "regulatory", "fine", "probe", "investigation", "turnaround", "scandal",
+    "reappointed", "interim",
+  ];
+
+  const isGenericContext = (ctx: string): boolean => {
+    const c = ctx.trim().toLowerCase();
+    if (!c) return true;
+    if (c.length < 25) return true;
+    const hasSignal = SPECIFIC_SIGNALS.some(s => c.includes(s));
+    if (hasSignal) return false;
+    // Comma-delimited keyword dump with no full-sentence structure
+    const commaCount = (c.match(/,/g) || []).length;
+    const hasSentence = /[.!?]/.test(c);
+    if (commaCount >= 2 && !hasSentence) return true;
+    return false;
+  };
+
+  const runGenerate = async (batch: Recipient[]) => {
+    setGenerating(true);
+    setDrafts([]);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-outreach", {
+        body: { recipients: batch, notes },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const emails: DraftedEmail[] = data?.emails ?? [];
+      if (emails.length === 0) throw new Error("No drafts returned");
+      setDrafts(emails);
+      toast({ title: `Drafted ${emails.length} emails` });
+    } catch (err: any) {
+      toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const generate = async () => {
     const valid = recipients.filter(r => r.name.trim() && r.role.trim());
     const flagged = valid.filter(r => r.priority);
@@ -249,23 +295,12 @@ const AdminOutreach = () => {
       });
       return;
     }
-    setGenerating(true);
-    setDrafts([]);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-outreach", {
-        body: { recipients: batch, notes },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      const emails: DraftedEmail[] = data?.emails ?? [];
-      if (emails.length === 0) throw new Error("No drafts returned");
-      setDrafts(emails);
-      toast({ title: `Drafted ${emails.length} emails` });
-    } catch (err: any) {
-      toast({ title: "Generation failed", description: err.message ?? "Please try again.", variant: "destructive" });
-    } finally {
-      setGenerating(false);
+    const genericNames = batch.filter(r => isGenericContext(r.context)).map(r => r.name);
+    if (genericNames.length > 0) {
+      setGenericWarning({ names: genericNames, batch });
+      return;
     }
+    await runGenerate(batch);
   };
 
   const copyEmail = async (e: DraftedEmail) => {
