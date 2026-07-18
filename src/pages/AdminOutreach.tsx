@@ -62,6 +62,7 @@ const AdminOutreach = () => {
   const [generating, setGenerating] = useState(false);
   const [drafts, setDrafts] = useState<DraftedEmail[]>([]);
   const [genericWarning, setGenericWarning] = useState<{ names: string[]; batch: Recipient[] } | null>(null);
+  const [showOnlyGeneric, setShowOnlyGeneric] = useState(false);
 
   if (isLoading) {
     return (
