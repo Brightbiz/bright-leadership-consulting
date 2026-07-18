@@ -1350,19 +1350,36 @@ const AdminOutreach = () => {
                           <MailCheck className="h-3.5 w-3.5 mr-1" /> Mark sent
                         </Button>
                       )}
-                      {followUpEligible && (
+                      {fu.eligible && (
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => generateFollowUp(d)}
                           disabled={followUpBusyId === d.id}
-                          title={`Sent ${daysSinceSent} days ago — draft a shorter second touch`}
+                          title={`Sent ${daysSinceSent} days ago (cadence ${fu.cadence}d) — draft a shorter second touch`}
                         >
                           {followUpBusyId === d.id
                             ? <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Drafting…</>
                             : <><Send className="h-3.5 w-3.5 mr-1" /> Draft follow-up</>}
                         </Button>
                       )}
+                      {d.status === "sent" && !fu.eligible && !drafts.some(x => x.parent_draft_id === d.id) && fu.blocked && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border bg-muted text-muted-foreground border-border"
+                          title={
+                            fu.blocked === "dnc"
+                              ? "Recipient flagged do-not-follow-up"
+                              : fu.blocked === "snoozed"
+                              ? `Snoozed until ${fu.snoozeUntil?.slice(0, 10)}`
+                              : `Waiting ${fu.waitDays} more day${fu.waitDays === 1 ? "" : "s"} (cadence ${fu.cadence}d)`
+                          }
+                        >
+                          {fu.blocked === "dnc" && "DNC"}
+                          {fu.blocked === "snoozed" && `Snoozed · ${fu.snoozeUntil?.slice(5, 10)}`}
+                          {fu.blocked === "waiting" && `+${fu.waitDays}d`}
+                        </span>
+                      )}
+
                       {d.status === "sent" && (
                         <Button
                           variant="outline"
