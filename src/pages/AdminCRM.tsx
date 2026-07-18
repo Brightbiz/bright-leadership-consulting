@@ -128,14 +128,15 @@ const AdminCRM = () => {
     try {
       const { data, error } = await (supabase as any)
         .from("outreach_drafts")
-        .select("crm_contact_id,status,sent_at,replied_at,created_at")
+        .select("crm_contact_id,status,sent_at,replied_at,created_at,reply_sentiment")
         .not("crm_contact_id", "is", null);
       if (error) throw error;
-      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null }> = {};
+      const rank: Record<string, number> = { meeting_booked: 5, positive: 4, neutral: 3, negative: 2, no_thanks: 1 };
+      const map: Record<string, { total: number; sent: number; replied: number; lastAt: string | null; bestSentiment: string | null }> = {};
       for (const row of (data ?? []) as any[]) {
         const id = row.crm_contact_id;
         if (!id) continue;
-        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null };
+        if (!map[id]) map[id] = { total: 0, sent: 0, replied: 0, lastAt: null, bestSentiment: null };
         map[id].total += 1;
         if (row.status === "sent" || row.status === "replied") map[id].sent += 1;
         if (row.status === "replied") map[id].replied += 1;
@@ -143,12 +144,19 @@ const AdminCRM = () => {
         if (candidate && (!map[id].lastAt || candidate > map[id].lastAt)) {
           map[id].lastAt = candidate;
         }
+        if (row.reply_sentiment) {
+          const cur = map[id].bestSentiment;
+          if (!cur || (rank[row.reply_sentiment] ?? 0) > (rank[cur] ?? 0)) {
+            map[id].bestSentiment = row.reply_sentiment;
+          }
+        }
       }
       setOutreachByContact(map);
     } catch (err) {
       console.error("Failed to load outreach summaries", err);
     }
   }, []);
+
 
   useEffect(() => {
     if (user && isAdmin) {
