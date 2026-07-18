@@ -545,10 +545,11 @@ const AdminOutreach = () => {
   };
 
   const copyEmail = async (e: SavedDraft) => {
-    const text = `Subject: ${e.subject}\n\n${e.body}\n\n— Bright Leadership Consulting`;
+    const text = `Subject: ${e.subject}\n\n${e.body}\n\n${signatureBlock}`;
     await navigator.clipboard.writeText(text);
     toast({ title: "Copied to clipboard" });
   };
+
 
   const findRecipientForDraft = (d: SavedDraft): Recipient | undefined =>
     recipients.find(r => r.id === d.recipient_id) ??
