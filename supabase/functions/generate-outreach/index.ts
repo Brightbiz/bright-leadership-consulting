@@ -172,10 +172,11 @@ ${cleaned.map((r) => `${r.name} — ${r.role}${r.company ? `, ${r.company}` : ""
 Return JSON with an "emails" array of length 1.`
       : `Draft one personalised outreach email for each of the following recipients. Return them in the same order.
 
-${notes ? `Optional context to weave in where relevant (do not force it):\n${String(notes).slice(0, 800)}\n\n` : ""}Recipients:
+${tone ? `Playbook tone directive (apply in addition to house voice, do not violate house voice):\n${String(tone).slice(0, 400)}\n\n` : ""}${notes ? `Optional context to weave in where relevant (do not force it):\n${String(notes).slice(0, 800)}\n\n` : ""}Recipients:
 ${cleaned.map((r, i) => `${i + 1}. ${r.name} — ${r.role}${r.company ? `, ${r.company}` : ""}${r.context ? ` | context: ${r.context}` : ""}`).join("\n")}
 
 Return JSON with an "emails" array of length ${cleaned.length}, in the same order as above.`;
+
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("Missing LOVABLE_API_KEY");
