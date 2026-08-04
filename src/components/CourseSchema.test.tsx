@@ -118,7 +118,10 @@ describe("CourseSchema — Executive Leadership Mastery page", () => {
   });
 
   it("renders nothing for an unknown programme title", async () => {
-    const blocks = await renderSchema(<CourseSchema programmeTitle="Not A Programme" />);
+    const blocks = await renderSchema(
+      <CourseSchema programmeTitle="Not A Programme" />,
+      true
+    );
     expect(blocks).toHaveLength(0);
   });
 });
