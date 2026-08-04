@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { programmeInterestOptions } from "@/data/programmes";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -30,11 +39,37 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
+const enquiryTypes = [
+  "Individual executive",
+  "Organisational / leadership team",
+];
+
+const deliveryFormats = [
+  "Self-directed",
+  "Cohort-based",
+  "1:1 advisory",
+  "In-house / bespoke delivery",
+  "Not yet decided",
+];
+
+const timeframes = [
+  "Immediate start",
+  "Within 3 months",
+  "3–6 months",
+  "6–12 months",
+  "Exploratory",
+];
+
 const contactSchema = z.object({
   name: z.string().trim().min(1, { message: "Please complete this field." }).max(100),
   email: z.string().trim().email({ message: "Email format appears invalid." }).max(255),
   company: z.string().trim().max(100).optional(),
   role: z.string().trim().max(100).optional(),
+  enquiryType: z.string().min(1, { message: "Please select an option." }),
+  programme: z.string().optional(),
+  deliveryFormat: z.string().optional(),
+  participants: z.string().trim().max(20).optional(),
+  timeframe: z.string().optional(),
   message: z.string().trim().min(10, { message: "Please provide further detail." }).max(1000),
 });
 
@@ -43,11 +78,27 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  
+  const [searchParams] = useSearchParams();
+
+  const prefilledProgramme = programmeInterestOptions.find(
+    (option) =>
+      option.toLowerCase() === (searchParams.get("programme") ?? "").toLowerCase()
+  );
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", company: "", role: "", message: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      role: "",
+      enquiryType: "",
+      programme: prefilledProgramme ?? "",
+      deliveryFormat: "",
+      participants: "",
+      timeframe: "",
+      message: "",
+    },
     mode: "onTouched",
   });
 
