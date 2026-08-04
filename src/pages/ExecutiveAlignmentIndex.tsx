@@ -112,9 +112,10 @@ const ExecutiveAlignmentIndex = () => {
 
                 <p className="text-lg leading-relaxed text-muted-foreground">
                   It quantifies variance across decision rights, strategic
-                  interpretation, and escalation architecture — providing
-                  boards and CEOs with objective clarity before intervention.
+                  interpretation, and escalation architecture — giving boards and
+                  CEOs structured diagnostic evidence before intervention.
                 </p>
+
               </motion.div>
             </div>
           </div>
@@ -324,7 +325,7 @@ const ExecutiveAlignmentIndex = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Alignment Report
+                Executive Alignment Report™
               </motion.h2>
 
               <motion.div
@@ -334,16 +335,17 @@ const ExecutiveAlignmentIndex = () => {
               >
                 <p>
                   The Executive Alignment Index™ produces a concise Executive
-                  Alignment Report — a board-level governance instrument
+                  Alignment Report™ — a board-level governance instrument
                   summarising the composite alignment score, dimension-level
                   results, leadership variance indicators, and priority areas
                   for executive discussion.
                 </p>
 
                 <p>
-                  Each engagement produces a board-ready dashboard providing
-                  objective clarity across six output areas:
+                  Each engagement produces a board-ready dashboard presenting
+                  structured diagnostic evidence across six output areas:
                 </p>
+
 
                 <div className="space-y-1.5 border-l-2 border-border pl-6">
                   <p>Composite Alignment Score</p>
