@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { programmeInterestOptions } from "@/data/programmes";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -30,11 +39,37 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
+const enquiryTypes = [
+  "Individual executive",
+  "Organisational / leadership team",
+];
+
+const deliveryFormats = [
+  "Self-directed",
+  "Cohort-based",
+  "1:1 advisory",
+  "In-house / bespoke delivery",
+  "Not yet decided",
+];
+
+const timeframes = [
+  "Immediate start",
+  "Within 3 months",
+  "3–6 months",
+  "6–12 months",
+  "Exploratory",
+];
+
 const contactSchema = z.object({
   name: z.string().trim().min(1, { message: "Please complete this field." }).max(100),
   email: z.string().trim().email({ message: "Email format appears invalid." }).max(255),
   company: z.string().trim().max(100).optional(),
   role: z.string().trim().max(100).optional(),
+  enquiryType: z.string().min(1, { message: "Please select an option." }),
+  programme: z.string().optional(),
+  deliveryFormat: z.string().optional(),
+  participants: z.string().trim().max(20).optional(),
+  timeframe: z.string().optional(),
   message: z.string().trim().min(10, { message: "Please provide further detail." }).max(1000),
 });
 
@@ -43,15 +78,40 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  
+  const [searchParams] = useSearchParams();
+
+  const prefilledProgramme = programmeInterestOptions.find(
+    (option) =>
+      option.toLowerCase() === (searchParams.get("programme") ?? "").toLowerCase()
+  );
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", company: "", role: "", message: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      role: "",
+      enquiryType: "",
+      programme: prefilledProgramme ?? "",
+      deliveryFormat: "",
+      participants: "",
+      timeframe: "",
+      message: "",
+    },
     mode: "onTouched",
   });
 
   const onSubmit = async (data: ContactFormData) => {
+    const details = [
+      data.role ? `Role: ${data.role}` : null,
+      `Enquiry type: ${data.enquiryType}`,
+      data.programme ? `Programme of interest: ${data.programme}` : null,
+      data.deliveryFormat ? `Preferred delivery: ${data.deliveryFormat}` : null,
+      data.participants ? `Approx. participants: ${data.participants}` : null,
+      data.timeframe ? `Timeframe: ${data.timeframe}` : null,
+    ].filter(Boolean);
+
     try {
       const { data: result, error } = await supabase.functions.invoke("submit-form", {
         body: {
@@ -61,7 +121,7 @@ const Contact = () => {
             email: data.email,
             phone: null,
             company: data.company || null,
-            message: `${data.role ? `Role: ${data.role}\n\n` : ""}${data.message}`,
+            message: `${details.join("\n")}\n\n${data.message}`,
           },
         },
       });
@@ -189,6 +249,139 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
+
+                  <div className="section-divider !my-2" />
+
+                  <FormField
+                    control={form.control}
+                    name="enquiryType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Is this an individual or organisational enquiry?
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {enquiryTypes.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="programme"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Programme of interest
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {programmeInterestOptions.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="deliveryFormat"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Preferred delivery format
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {deliveryFormats.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="participants"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Approximate number of participants
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            inputMode="numeric"
+                            placeholder="e.g. 1, or 12 for a leadership team"
+                            className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="timeframe"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Desired timeframe
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {timeframes.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="section-divider !my-2" />
                   <FormField
                     control={form.control}
                     name="message"
