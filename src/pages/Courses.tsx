@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
 import { programmes, facilitatedEngagement } from "@/data/programmes";
+import { trackCourseCtaClick } from "@/lib/analytics";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -108,6 +109,14 @@ const Courses = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-quiet text-sm"
+                  onClick={() =>
+                    trackCourseCtaClick({
+                      programme: programmes[0].title,
+                      url: programmes[0].link,
+                      surface: "/courses",
+                      label: "Enrol on a Programme",
+                    })
+                  }
                 >
                   Enrol on a Programme
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -206,6 +215,14 @@ const Courses = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="link-quiet text-sm"
+                      onClick={() =>
+                        trackCourseCtaClick({
+                          programme: programme.title,
+                          url: programme.link,
+                          surface: "/courses",
+                          label: "View Programme & Enrol",
+                        })
+                      }
                     >
                       View Programme &amp; Enrol
                       <ArrowRight className="h-3 w-3" />
