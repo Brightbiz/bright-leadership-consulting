@@ -24,6 +24,10 @@ const Courses = lazy(() => import("./pages/Courses"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 
+// Legal
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
