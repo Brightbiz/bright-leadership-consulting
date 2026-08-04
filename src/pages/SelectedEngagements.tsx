@@ -82,23 +82,24 @@ const SelectedEngagements = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Selected Engagements | Bright Leadership Consulting"
-        description="Anonymised board-level advisory case narratives: executive alignment diagnostics, governance interventions and documented outcomes."
+        description="Composite case examples of board-level advisory work: executive alignment diagnostics, governance interventions and structural outcomes."
         path="/selected-engagements"
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Selected Engagements — Anonymised Case Narratives",
+          "name": "Selected Engagements — Composite Case Examples",
           "url": "https://brightleadershipconsulting.com/selected-engagements",
           "itemListElement": narratives.map((n, i) => ({
             "@type": "ListItem",
             "position": i + 1,
             "item": {
               "@type": "Article",
-              "headline": `${n.sector} — Executive Alignment Engagement`,
+              "headline": `${n.sector} — Composite Executive Alignment Scenario`,
               "about": n.sector,
-              "articleSection": "Case Narrative",
+              "articleSection": "Composite Case Example",
+
               "description": n.challenge.slice(0, 200),
               "datePublished": "2026-01-15",
               "author": {
