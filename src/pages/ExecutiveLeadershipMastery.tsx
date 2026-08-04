@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { programmes } from "@/data/programmes";
+import { trackCourseCtaClick } from "@/lib/analytics";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -296,6 +297,14 @@ const ExecutiveLeadershipMastery = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="link-quiet text-sm"
+                      onClick={() =>
+                        trackCourseCtaClick({
+                          programme: programmes[0].title,
+                          url: tier.link,
+                          surface: "/executive-leadership-mastery",
+                          label: tier.cta,
+                        })
+                      }
                     >
                       {tier.cta}
                       <ArrowRight className="h-3.5 w-3.5" />
