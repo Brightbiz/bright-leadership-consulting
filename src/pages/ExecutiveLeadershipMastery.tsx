@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import SEOHead from "@/components/SEOHead";
+import ProgrammeMeta from "@/components/ProgrammeMeta";
 import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -95,11 +95,13 @@ const tiers = [
 const ExecutiveLeadershipMastery = () => {
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead
+      <ProgrammeMeta
+        programmeTitle="Executive Leadership Mastery"
         title="Executive Leadership Mastery | Bright Leadership"
         description="The flagship 33-module executive programme — 80+ hours and 66 CPD points across seven leadership disciplines, from AI governance to strategic productivity."
         path="/executive-leadership-mastery"
       />
+
       <CourseSchema programmeTitle="Executive Leadership Mastery" />
       <ScrollProgress />
       <Header />

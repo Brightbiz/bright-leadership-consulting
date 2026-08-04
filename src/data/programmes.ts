@@ -13,7 +13,10 @@ export type Programme = {
   link: string;
   /** Optional in-site detail page */
   detailPage?: string;
+  /** Optional social-preview image path under /public (absolute path from site root) */
+  ogImage?: string;
 };
+
 
 export const programmes: Programme[] = [
   {
@@ -114,3 +117,39 @@ export const brochureCtaLinks: Record<string, string> = {
   "enhanced-employability-skills":
     "https://bright-leadership-consulting.thinkific.com/products/courses/employability-skills-for-employees",
 };
+
+/** Site origin used for canonical and social-preview URLs. */
+export const SITE_ORIGIN = "https://brightleadershipconsulting.com";
+
+/** Default social-preview image when a programme has no dedicated one. */
+export const DEFAULT_OG_IMAGE = "/og-image.jpg";
+
+export type ProgrammeMeta = {
+  title: string;
+  description: string;
+  path: string;
+  canonical: string;
+  image: string;
+};
+
+/**
+ * Derives Open Graph / Twitter Card metadata for a single programme.
+ * Programmes without an in-site detail page canonicalise to /courses.
+ */
+export function getProgrammeMeta(programme: Programme): ProgrammeMeta {
+  const path = programme.detailPage ?? "/courses";
+  const image = programme.ogImage ?? DEFAULT_OG_IMAGE;
+  return {
+    title: `${programme.title} | Bright Leadership Consulting`,
+    description: programme.description,
+    path,
+    canonical: `${SITE_ORIGIN}${path}`,
+    image: image.startsWith("http") ? image : `${SITE_ORIGIN}${image}`,
+  };
+}
+
+/** Lookup by catalogue title. Returns null for unknown titles. */
+export function getProgrammeMetaByTitle(title: string): ProgrammeMeta | null {
+  const programme = programmes.find((p) => p.title === title);
+  return programme ? getProgrammeMeta(programme) : null;
+}
