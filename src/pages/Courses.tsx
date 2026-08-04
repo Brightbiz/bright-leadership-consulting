@@ -331,15 +331,18 @@ const Courses = () => {
             <div className="max-w-[720px]">
               <motion.div className="space-y-6" {...fade}>
                 <p className="font-serif text-foreground font-medium text-xl leading-relaxed">
-                  We are not a training provider.
+                  We are not a conventional training provider.
                 </p>
 
                 <p className="body-brief">
-                  We are an executive programme facilitator and strategic advisory
-                  partner to senior leaders, boards, and Chief People Officers. Our
-                  programmes are designed for leaders who operate at the intersection
-                  of complexity and consequence.
+                  Our programmes connect executive development to the strategic,
+                  governance and organisational conditions in which leadership
+                  decisions are actually made. We work as an executive programme
+                  facilitator and advisory partner to senior leaders, boards and
+                  Chief People Officers — for leaders operating at the
+                  intersection of complexity and consequence.
                 </p>
+
 
                 <p className="body-brief text-muted-foreground">
                   Programme enquiries are handled confidentially.

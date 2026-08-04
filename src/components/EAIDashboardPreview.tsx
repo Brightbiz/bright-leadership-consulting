@@ -28,7 +28,15 @@ const barStyles: Record<string, string> = {
   Elevated: "bg-[hsl(180,70%,18%)]",
 };
 
-const EAIDashboardPreview = () => {
+type EAIDashboardPreviewProps = {
+  /**
+   * Shortened homepage variant: header, composite score, dimension breakdown
+   * and dispersion only. The full illustration lives on the Index page.
+   */
+  compact?: boolean;
+};
+
+const EAIDashboardPreview = ({ compact = false }: EAIDashboardPreviewProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -138,6 +146,7 @@ const EAIDashboardPreview = () => {
         </div>
 
         {/* Alignment Variance & Confidence */}
+        {!compact && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Alignment Variance */}
           <div>
@@ -201,8 +210,11 @@ const EAIDashboardPreview = () => {
             </div>
           </div>
         </div>
+        )}
+
 
         {/* Two-Column: Matrix + Commentary */}
+        {!compact && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           {/* Priority Matrix */}
@@ -257,6 +269,8 @@ const EAIDashboardPreview = () => {
           </div>
 
         </div>
+        )}
+
 
         {/* Footer */}
         <div className="mt-8 pt-4 border-t border-border flex justify-between items-center text-[10px] text-muted-foreground tracking-wide">

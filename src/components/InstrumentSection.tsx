@@ -61,7 +61,7 @@ const InstrumentSection = () => {
                 </p>
 
                 <p>
-                  The output is delivered as a concise Executive Alignment Report, typically 
+                  The output is delivered as a concise Executive Alignment Report™, typically 
                   used to inform leadership discussion, strategic planning, and governance review.
                 </p>
 
@@ -95,9 +95,13 @@ const InstrumentSection = () => {
               transition={{ ...fade.transition, delay: 0.25 }}
             >
               <div>
-                <EAIDashboardPreview />
+                <EAIDashboardPreview compact />
                 <p className="mt-3 text-xs text-muted-foreground italic tracking-wide">
-                  Illustrative Executive Alignment Index™ dashboard.
+                  Illustrative Executive Alignment Index™ dashboard — extract.{" "}
+                  <Link to="/executive-alignment-index" className="underline underline-offset-4 hover:text-foreground">
+                    View the full report structure
+                  </Link>
+                  .
                 </p>
               </div>
               <div>

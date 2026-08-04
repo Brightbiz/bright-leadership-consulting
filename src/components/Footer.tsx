@@ -98,12 +98,44 @@ const Footer = () => {
             </Link>
           </div>
 
-          <p className="text-xs text-navy-foreground/60">
-            Bright Leadership Consulting — Confidential Executive Advisory
-          </p>
-          <p className="text-xs text-navy-foreground/30 mt-1">
-            © {new Date().getFullYear()}
-          </p>
+          <div className="flex flex-col gap-4 border-t border-navy-foreground/10 pt-8 md:flex-row md:items-start md:justify-between">
+            <div className="space-y-1.5">
+              <p className="text-xs text-navy-foreground/60">
+                Bright Leadership Consulting — Confidential Executive Advisory
+              </p>
+              <p className="text-xs text-navy-foreground/50">
+                Registered in England and Wales. Company number 07258400.
+              </p>
+              <p className="text-xs text-navy-foreground/50">
+                <a href="mailto:info@brightleadershipconsulting.com" className="transition-colors hover:text-navy-foreground">
+                  info@brightleadershipconsulting.com
+                </a>
+                <span className="mx-2 text-navy-foreground/25">·</span>
+                <a href="tel:+443333355045" className="transition-colors hover:text-navy-foreground">
+                  0333 335 5045
+                </a>
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link
+                to="/privacy"
+                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+              >
+                Privacy Notice
+              </Link>
+              <Link
+                to="/terms"
+                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+              >
+                Terms of Use
+              </Link>
+              <span className="text-xs text-navy-foreground/30">
+                © {new Date().getFullYear()}
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </footer>

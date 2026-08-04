@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
@@ -23,6 +23,10 @@ const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershi
 const Courses = lazy(() => import("./pages/Courses"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
+
+// Legal
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 
 // Admin (not in public nav)
 const AdminSubmissions = lazy(() => import("./pages/AdminSubmissions"));
@@ -51,6 +55,16 @@ const AnimatedRoutes = () => {
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
           <Route path="/augmented-leadership" element={<PageTransition><AugmentedLeadership /></PageTransition>} />
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
+          <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+          <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+
+          {/* Legacy indexed URLs — redirect rather than 404 so existing search
+              results and inbound links land on the closest live equivalent. */}
+          <Route path="/about" element={<Navigate to="/advisory-process" replace />} />
+          <Route path="/resources" element={<Navigate to="/courses" replace />} />
+          <Route path="/faq" element={<Navigate to="/advisory-process" replace />} />
+
+
           
           {/* Admin routes */}
           <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />

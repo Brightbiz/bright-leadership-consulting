@@ -36,7 +36,7 @@ const engagements = [
     sector: "Professional Services",
     context: "Partnership-led governance was creating structural ambiguity at the executive layer. Growth targets were being set without aligned leadership accountability or escalation clarity.",
     scope: "Alignment diagnostic across the senior partner group and executive leadership. Advisory engagement with the Managing Partner and incoming Senior Independent Director.",
-    outcome: "Leadership mandates were formalised for the first time. A governance framework was installed between the partnership board and the executive team. Strategic planning cycles shortened by 40%.",
+    outcome: "Leadership mandates were formalised for the first time. A governance framework was installed between the partnership board and the executive team. Strategic planning cycles were materially shortened.",
   },
   {
     sector: "Technology & Digital",
@@ -82,23 +82,24 @@ const SelectedEngagements = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Selected Engagements | Bright Leadership Consulting"
-        description="Anonymised board-level advisory case narratives: executive alignment diagnostics, governance interventions and documented outcomes."
+        description="Composite case examples of board-level advisory work: executive alignment diagnostics, governance interventions and structural outcomes."
         path="/selected-engagements"
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Selected Engagements — Anonymised Case Narratives",
+          "name": "Selected Engagements — Composite Case Examples",
           "url": "https://brightleadershipconsulting.com/selected-engagements",
           "itemListElement": narratives.map((n, i) => ({
             "@type": "ListItem",
             "position": i + 1,
             "item": {
               "@type": "Article",
-              "headline": `${n.sector} — Executive Alignment Engagement`,
+              "headline": `${n.sector} — Composite Executive Alignment Scenario`,
               "about": n.sector,
-              "articleSection": "Case Narrative",
+              "articleSection": "Composite Case Example",
+
               "description": n.challenge.slice(0, 200),
               "datePublished": "2026-01-15",
               "author": {
@@ -131,7 +132,7 @@ const SelectedEngagements = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Anonymised Case Abstracts
+                Composite Case Examples
               </motion.h1>
 
               <motion.div
@@ -140,16 +141,23 @@ const SelectedEngagements = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  The following abstracts represent a selection of governance-level
-                  advisory engagements. All identifying details have been removed
-                  to preserve client confidentiality. Three engagements are
-                  recorded in{" "}
+                  The examples below are composite scenarios developed from
+                  advisory and executive leadership experience. Sectors,
+                  circumstances and outcomes have been adapted and combined to
+                  preserve confidentiality; they are not accounts of individual,
+                  identifiable clients. Three are recorded in{" "}
                   <a href="#narratives" className="underline underline-offset-4 decoration-border hover:decoration-foreground text-foreground transition-colors">
                     longer narrative form below
                   </a>
                   .
                 </p>
+                <p className="border-l-2 border-border pl-5 text-sm leading-relaxed text-muted-foreground/80">
+                  Illustrative composite scenarios based on recurring executive
+                  alignment patterns. They indicate the nature of the work
+                  undertaken rather than documented results for a named client.
+                </p>
               </motion.div>
+
             </div>
           </div>
         </section>
@@ -216,17 +224,19 @@ const SelectedEngagements = () => {
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
-                Extended Case Narratives
+                Extended Composite Narratives
               </motion.p>
               <motion.h2 className="heading-section mb-6" {...fade}>
                 Challenge, Intervention, Outcome
               </motion.h2>
               <motion.p className="body-brief" {...fade}>
-                A small number of engagements are recorded here in longer form —
-                still fully anonymised — to illustrate how structural misalignment
-                presents, how the diagnostic is deployed, and how governance-level
-                outcomes are documented at board level.
+                Three composite scenarios are recorded here in longer form to
+                illustrate how structural misalignment presents, how the
+                diagnostic is deployed, and how governance-level outcomes are
+                documented at board level. Details have been adapted and
+                combined from advisory and leadership experience.
               </motion.p>
+
             </div>
 
             <div className="space-y-0">
@@ -285,9 +295,12 @@ const SelectedEngagements = () => {
                 {...fade}
               >
                 <p className="text-sm leading-relaxed text-muted-foreground italic">
-                  All engagements are conducted under strict confidentiality.
-                  Further detail is available on request to qualified commissioning parties.
+                  All engagements are conducted under strict confidentiality. The
+                  scenarios above are composite illustrations rather than named
+                  client records. The nature and scope of advisory work can be
+                  discussed directly with qualified commissioning parties.
                 </p>
+
 
                 <div className="pt-4">
                    <Link

@@ -23,7 +23,7 @@ const stages = [
     step: "01",
     title: "Measure",
     instrument: "Executive Alignment Index™",
-    description: "Quantify executive variance across six structural dimensions. Every engagement begins here.",
+    description: "Quantify executive variance across six structural dimensions. Every organisational advisory engagement begins here.",
   },
   {
     step: "02",

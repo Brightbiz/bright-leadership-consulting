@@ -39,9 +39,22 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const enquiryTypes = [
-  "Individual executive",
-  "Organisational / leadership team",
+const ORGANISATIONAL = "Organisational / leadership team";
+const INDIVIDUAL = "Individual executive";
+
+const tracks = [
+  {
+    value: ORGANISATIONAL,
+    label: "Organisational",
+    detail:
+      "A board, chair or executive sponsor commissioning work for a leadership team. Engagements begin with the Executive Alignment Index™.",
+  },
+  {
+    value: INDIVIDUAL,
+    label: "Individual executive",
+    detail:
+      "An executive enrolling personally on a programme. No diagnostic is required to begin.",
+  },
 ];
 
 const deliveryFormats = [
@@ -92,7 +105,7 @@ const Contact = () => {
       email: "",
       company: "",
       role: "",
-      enquiryType: "",
+      enquiryType: prefilledProgramme ? INDIVIDUAL : "",
       programme: prefilledProgramme ?? "",
       deliveryFormat: "",
       participants: "",
@@ -101,6 +114,10 @@ const Contact = () => {
     },
     mode: "onTouched",
   });
+
+  const track = form.watch("enquiryType");
+
+
 
   const onSubmit = async (data: ContactFormData) => {
     const details = [
@@ -199,6 +216,46 @@ const Contact = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
+                    name="enquiryType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Which applies to you?
+                        </FormLabel>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {tracks.map((option) => {
+                            const active = field.value === option.value;
+                            return (
+                              <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => field.onChange(option.value)}
+                                aria-pressed={active}
+                                className={`rounded-sm border p-4 text-left transition-colors ${
+                                  active
+                                    ? "border-secondary bg-secondary/5"
+                                    : "border-border/50 bg-muted/20 hover:border-border"
+                                }`}
+                              >
+                                <span className="block text-sm font-medium text-foreground">
+                                  {option.label}
+                                </span>
+                                <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
+                                  {option.detail}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="section-divider !my-2" />
+
+                  <FormField
+                    control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
@@ -210,19 +267,21 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="company"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">Organisation</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {track === ORGANISATIONAL && (
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-medium text-foreground">Organisation</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
                   <FormField
                     control={form.control}
                     name="role"
@@ -250,109 +309,93 @@ const Contact = () => {
                     )}
                   />
 
-                  <div className="section-divider !my-2" />
+                  {track === INDIVIDUAL && (
+                    <>
+                      <div className="section-divider !my-2" />
 
-                  <FormField
-                    control={form.control}
-                    name="enquiryType"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">
-                          Is this an individual or organisational enquiry?
-                        </FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {enquiryTypes.map((option) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      <FormField
+                        control={form.control}
+                        name="programme"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-sm font-medium text-foreground">
+                              Programme of interest
+                            </FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                                  <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {programmeInterestOptions.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  <FormField
-                    control={form.control}
-                    name="programme"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">
-                          Programme of interest
-                        </FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {programmeInterestOptions.map((option) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      <FormField
+                        control={form.control}
+                        name="deliveryFormat"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-sm font-medium text-foreground">
+                              Preferred delivery format
+                            </FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
+                                  <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {deliveryFormats.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </>
+                  )}
 
-                  <FormField
-                    control={form.control}
-                    name="deliveryFormat"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">
-                          Preferred delivery format
-                        </FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="h-12 bg-muted/30 border-border/50 focus:border-secondary">
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {deliveryFormats.map((option) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {track === ORGANISATIONAL && (
+                    <>
+                      <div className="section-divider !my-2" />
 
-                  <FormField
-                    control={form.control}
-                    name="participants"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">
-                          Approximate number of participants
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            inputMode="numeric"
-                            placeholder="e.g. 1, or 12 for a leadership team"
-                            className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      <FormField
+                        control={form.control}
+                        name="participants"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-sm font-medium text-foreground">
+                              Size of the leadership team in scope
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                inputMode="numeric"
+                                placeholder="e.g. 9 direct reports, or 12 including the executive committee"
+                                className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </>
+                  )}
+
 
                   <FormField
                     control={form.control}
