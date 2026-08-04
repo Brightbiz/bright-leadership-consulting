@@ -96,3 +96,21 @@ export const programmeInterestOptions = [
   "Executive Alignment Index™ (diagnostic)",
   "Not yet decided",
 ];
+
+/**
+ * Single source of truth for the static brochure CTA links in
+ * `public/brochures/*.html`. Keyed by the `data-programme` attribute on each
+ * brochure's `.cta-btn` anchor; the Vite plugin in
+ * `scripts/vite-plugin-brochure-links.ts` rewrites those hrefs on dev start
+ * and on every build, so brochures can never drift from the catalogue.
+ */
+export const brochureCtaLinks: Record<string, string> = {
+  "executive-leadership-mastery": programmes[0].link,
+  "future-of-work": programmes[2].link,
+  "peak-performance": programmes[3].link,
+  // Standalone Thinkific courses that sit outside the four-programme catalogue.
+  "advanced-leadership-skills":
+    "https://bright-leadership-consulting.thinkific.com/products/courses/executive-leadership-mastery-program",
+  "enhanced-employability-skills":
+    "https://bright-leadership-consulting.thinkific.com/products/courses/employability-skills-for-employees",
+};
