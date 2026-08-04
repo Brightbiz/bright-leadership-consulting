@@ -1,4 +1,5 @@
 import SEOHead from "@/components/SEOHead";
+import OrganizationSchema from "@/components/OrganizationSchema";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import StructuralProblemSection from "@/components/StructuralProblemSection";
