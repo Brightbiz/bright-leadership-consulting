@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index" },
+  { label: "Executive Programmes", href: "/courses" },
   { label: "How We Work", href: "/advisory-process" },
   { label: "Selected Engagements", href: "/selected-engagements" },
 ];
@@ -37,7 +38,7 @@ const Header = () => {
           <Logo isCompact={isScrolled} variant="horizontal" />
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-11 md:flex">
+          <div className="hidden items-center gap-7 lg:gap-9 md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
