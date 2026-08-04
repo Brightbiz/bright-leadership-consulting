@@ -61,7 +61,7 @@ const InstrumentSection = () => {
                 </p>
 
                 <p>
-                  The output is delivered as a concise Executive Alignment Report, typically 
+                  The output is delivered as a concise Executive Alignment Report™, typically 
                   used to inform leadership discussion, strategic planning, and governance review.
                 </p>
 
