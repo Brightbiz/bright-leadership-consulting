@@ -212,6 +212,46 @@ const Contact = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
+                    name="enquiryType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground">
+                          Which applies to you?
+                        </FormLabel>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {tracks.map((option) => {
+                            const active = field.value === option.value;
+                            return (
+                              <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => field.onChange(option.value)}
+                                aria-pressed={active}
+                                className={`rounded-sm border p-4 text-left transition-colors ${
+                                  active
+                                    ? "border-secondary bg-secondary/5"
+                                    : "border-border/50 bg-muted/20 hover:border-border"
+                                }`}
+                              >
+                                <span className="block text-sm font-medium text-foreground">
+                                  {option.label}
+                                </span>
+                                <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
+                                  {option.detail}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="section-divider !my-2" />
+
+                  <FormField
+                    control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
