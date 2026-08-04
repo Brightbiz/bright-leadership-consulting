@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -60,8 +61,24 @@ const ExecutiveAlignmentIndex = () => {
       <SEOHead
         path="/executive-alignment-index"
         title="Executive Alignment Index™ | Bright Leadership Consulting"
-        description="A board-level executive alignment diagnostic measuring leadership team variance across decision rights, strategic interpretation, and governance architecture."
+        description="A board-level executive alignment diagnostic measuring leadership team variance across decision rights, strategic interpretation and governance."
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Executive Alignment Index™",
+          "serviceType": "Board-level executive alignment diagnostic",
+          "description": "A board-level governance instrument measuring leadership team variance across decision rights, strategic interpretation and governance architecture.",
+          "url": "https://brightleadershipconsulting.com/executive-alignment-index",
+          "areaServed": "GB",
+          "provider": {
+            "@type": "Organization",
+            "name": "Bright Leadership Consulting",
+            "url": "https://brightleadershipconsulting.com",
+          },
+        })}</script>
+      </Helmet>
       <ScrollProgress />
       <Header />
 
