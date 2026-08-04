@@ -210,6 +210,8 @@ const EAIDashboardPreview = ({ compact = false }: EAIDashboardPreviewProps) => {
             </div>
           </div>
         </div>
+        )}
+
 
         {/* Two-Column: Matrix + Commentary */}
         {!compact && (
