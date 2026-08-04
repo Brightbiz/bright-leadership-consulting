@@ -211,6 +211,7 @@ const EAIDashboardPreview = ({ compact = false }: EAIDashboardPreviewProps) => {
         </div>
 
         {/* Two-Column: Matrix + Commentary */}
+        {!compact && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           {/* Priority Matrix */}
