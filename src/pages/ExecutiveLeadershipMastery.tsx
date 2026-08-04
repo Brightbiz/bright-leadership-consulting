@@ -5,6 +5,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import { programmes } from "@/data/programmes";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -57,7 +58,7 @@ const tiers = [
       "Lifetime access to materials",
     ],
     cta: "Begin Your Programme",
-    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
+    link: programmes[0].link,
   },
   {
     name: "Cohort-Based Development",
