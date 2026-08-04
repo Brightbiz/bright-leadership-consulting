@@ -37,16 +37,8 @@ const SEOHead = React.forwardRef<HTMLElement, SEOHeadProps>(({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={`${SITE_URL}/og-image.jpg`} />
-      <script type="application/ld+json">{JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "Bright Leadership Consulting",
-        "description": DEFAULT_DESCRIPTION,
-        "url": SITE_URL,
-        "serviceType": "Executive Alignment Advisory",
-        "areaServed": "Worldwide",
-        "logo": `${SITE_URL}/favicon.png`
-      })}</script>
+      {/* Organization/WebSite entity markup lives in OrganizationSchema (homepage) to avoid duplicate nodes. */}
+
     </Helmet>
   );
 });
