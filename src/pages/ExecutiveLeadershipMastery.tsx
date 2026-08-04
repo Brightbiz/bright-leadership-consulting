@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -98,6 +99,7 @@ const ExecutiveLeadershipMastery = () => {
         description="The flagship 33-module executive programme — 80+ hours and 66 CPD points across seven leadership disciplines, from AI governance to strategic productivity."
         path="/executive-leadership-mastery"
       />
+      <CourseSchema programmeTitle="Executive Leadership Mastery" />
       <ScrollProgress />
       <Header />
 

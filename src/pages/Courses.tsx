@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -23,6 +24,7 @@ const Courses = () => {
         description="Four CPD-accredited executive programmes in AI governance, strategic leadership, workforce transformation and executive performance. Individual enrolment or organisational commissioning."
         path="/courses"
       />
+      <CourseSchema />
       <ScrollProgress />
       <Header />
 
