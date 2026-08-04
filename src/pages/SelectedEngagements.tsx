@@ -82,7 +82,7 @@ const SelectedEngagements = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Selected Engagements | Bright Leadership Consulting"
-        description="Anonymised board-level advisory case narratives — executive alignment diagnostics, governance interventions, and documented outcomes across financial services, infrastructure, healthcare, professional services, and technology."
+        description="Anonymised board-level advisory case narratives: executive alignment diagnostics, governance interventions and documented outcomes."
         path="/selected-engagements"
       />
       <Helmet>
@@ -100,6 +100,12 @@ const SelectedEngagements = () => {
               "about": n.sector,
               "articleSection": "Case Narrative",
               "description": n.challenge.slice(0, 200),
+              "datePublished": "2026-01-15",
+              "author": {
+                "@type": "Organization",
+                "name": "Bright Leadership Consulting",
+                "url": "https://brightleadershipconsulting.com",
+              },
               "publisher": {
                 "@type": "Organization",
                 "name": "Bright Leadership Consulting",
