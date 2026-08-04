@@ -103,6 +103,15 @@ const Contact = () => {
   });
 
   const onSubmit = async (data: ContactFormData) => {
+    const details = [
+      data.role ? `Role: ${data.role}` : null,
+      `Enquiry type: ${data.enquiryType}`,
+      data.programme ? `Programme of interest: ${data.programme}` : null,
+      data.deliveryFormat ? `Preferred delivery: ${data.deliveryFormat}` : null,
+      data.participants ? `Approx. participants: ${data.participants}` : null,
+      data.timeframe ? `Timeframe: ${data.timeframe}` : null,
+    ].filter(Boolean);
+
     try {
       const { data: result, error } = await supabase.functions.invoke("submit-form", {
         body: {
@@ -112,7 +121,7 @@ const Contact = () => {
             email: data.email,
             phone: null,
             company: data.company || null,
-            message: `${data.role ? `Role: ${data.role}\n\n` : ""}${data.message}`,
+            message: `${details.join("\n")}\n\n${data.message}`,
           },
         },
       });
