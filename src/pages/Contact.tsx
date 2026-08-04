@@ -105,7 +105,7 @@ const Contact = () => {
       email: "",
       company: "",
       role: "",
-      enquiryType: "",
+      enquiryType: prefilledProgramme ? INDIVIDUAL : "",
       programme: prefilledProgramme ?? "",
       deliveryFormat: "",
       participants: "",
@@ -114,6 +114,10 @@ const Contact = () => {
     },
     mode: "onTouched",
   });
+
+  const track = form.watch("enquiryType");
+
+
 
   const onSubmit = async (data: ContactFormData) => {
     const details = [
