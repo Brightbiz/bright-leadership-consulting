@@ -14,6 +14,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead path="/" />
+      <OrganizationSchema />
       <ScrollProgress />
       <Header />
 
