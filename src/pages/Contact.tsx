@@ -263,19 +263,21 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="company"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-foreground">Organisation</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {track === ORGANISATIONAL && (
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-medium text-foreground">Organisation</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="h-12 bg-muted/30 border-border/50 focus:border-secondary" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
                   <FormField
                     control={form.control}
                     name="role"
