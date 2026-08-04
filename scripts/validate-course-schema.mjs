@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 
 const result = spawnSync(
   process.platform === "win32" ? "npx.cmd" : "npx",
-  ["vitest", "run", "src/test/courseSchema.test.tsx", "--reporter=basic"],
+  ["vitest", "run", "src/test/courseSchema.test.tsx"],
   { stdio: "inherit", env: { ...process.env, CI: "true" } }
 );
 
