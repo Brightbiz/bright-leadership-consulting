@@ -13,7 +13,10 @@ export type Programme = {
   link: string;
   /** Optional in-site detail page */
   detailPage?: string;
+  /** Optional social-preview image path under /public (absolute path from site root) */
+  ogImage?: string;
 };
+
 
 export const programmes: Programme[] = [
   {
