@@ -28,7 +28,15 @@ const barStyles: Record<string, string> = {
   Elevated: "bg-[hsl(180,70%,18%)]",
 };
 
-const EAIDashboardPreview = () => {
+type EAIDashboardPreviewProps = {
+  /**
+   * Shortened homepage variant: header, composite score, dimension breakdown
+   * and dispersion only. The full illustration lives on the Index page.
+   */
+  compact?: boolean;
+};
+
+const EAIDashboardPreview = ({ compact = false }: EAIDashboardPreviewProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
