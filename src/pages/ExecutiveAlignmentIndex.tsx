@@ -394,6 +394,107 @@ const ExecutiveAlignmentIndex = () => {
 
         <div className="section-divider" />
 
+        {/* Section 5b — Methodology, Confidentiality & Data Governance */}
+        <section id="methodology" className="section-brief bg-background scroll-mt-24">
+          <div className="container-brief">
+            <div className="max-w-[680px] mb-14">
+              <motion.p className="kicker mb-6" {...fade}>
+                Methodology &amp; Data Governance
+              </motion.p>
+
+              <motion.h2
+                className="heading-section mb-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                How the Diagnostic Is Constructed
+              </motion.h2>
+
+              <motion.div
+                className="space-y-6 body-brief"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                <p>
+                  The Executive Alignment Index™ is a structured diagnostic
+                  instrument, not a psychometric test. It is designed to make
+                  variance in executive interpretation visible and discussable
+                  at board level. The methodology is set out below so that
+                  commissioning parties can assess it before deployment.
+                </p>
+              </motion.div>
+            </div>
+
+            <motion.dl
+              className="max-w-[820px] border-t border-border"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.2 }}
+            >
+              {[
+                {
+                  term: "Who completes it",
+                  detail:
+                    "Members of the executive team, and where relevant the Chair or Non-Executive Directors at the board–executive interface. Participation is by named invitation from the commissioning party.",
+                },
+                {
+                  term: "Typical group size",
+                  detail:
+                    "Six to fourteen participants. Smaller groups are accommodated, though dispersion indicators become less informative below six respondents.",
+                },
+                {
+                  term: "Evidence base",
+                  detail:
+                    "Structured self-report across the six dimensions, supported where commissioned by individual interviews and review of governance documentation such as terms of reference, delegated authority schedules and board papers. Multi-source engagements are identified as such in the report.",
+                },
+                {
+                  term: "Variance and confidence",
+                  detail:
+                    "Variance is the observed spread of participant responses within each dimension, reported as a range against the group median. Confidence reflects the internal consistency of each participant's responses across related items and the completeness of the response set. Both are descriptive indicators of agreement, not statistical significance tests.",
+                },
+                {
+                  term: "Anonymity",
+                  detail:
+                    "Individual responses are never disclosed. Reporting is aggregated at group level; dimension results are presented as distributions rather than attributed scores. No individual is identified to the commissioning party, the CEO or the Chair.",
+                },
+                {
+                  term: "Who sees what",
+                  detail:
+                    "The commissioning party receives the aggregated Executive Alignment Report™. Individual response data is seen only by the principal adviser conducting the analysis.",
+                },
+                {
+                  term: "Timeline",
+                  detail:
+                    "Completion typically requires 25–40 minutes per participant. Deployment to report delivery is normally two to three weeks, depending on scheduling and whether interviews are included.",
+                },
+                {
+                  term: "Data storage and deletion",
+                  detail:
+                    "Response data is held in encrypted storage for the duration of the engagement and deleted within 90 days of report delivery unless the commissioning party requests retention for comparative re-measurement. Data is not used for research, benchmarking or any secondary purpose without written agreement.",
+                },
+                {
+                  term: "Validation status",
+                  detail:
+                    "The instrument has been developed from advisory and executive leadership practice. It has not been subjected to independent psychometric or academic validation, and no such claim is made. Its purpose is to provide structured diagnostic evidence for board discussion.",
+                },
+              ].map((row) => (
+                <div
+                  key={row.term}
+                  className="grid gap-2 border-b border-border py-7 md:grid-cols-[220px_1fr] md:gap-12"
+                >
+                  <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground/70">
+                    {row.term}
+                  </dt>
+                  <dd className="text-[15px] leading-relaxed text-muted-foreground">
+                    {row.detail}
+                  </dd>
+                </div>
+              ))}
+            </motion.dl>
+          </div>
+        </section>
+
+
+
         {/* Section 6 — Commissioning Context */}
         <section className="section-brief section-pearl">
           <div className="container-brief">
