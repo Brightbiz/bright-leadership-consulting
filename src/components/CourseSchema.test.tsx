@@ -1,23 +1,36 @@
-import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { describe, it, expect, beforeEach } from "vitest";
+import { render, cleanup } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import CourseSchema from "@/components/CourseSchema";
 import { programmes } from "@/data/programmes";
 
 const SITE_URL = "https://brightleadershipconsulting.com";
 
-/** Render the component and read back the JSON-LD it hands to Helmet (isolated per test). */
-const renderSchema = async (element: React.ReactElement) => {
-  const context: { helmet?: any } = {};
-  render(<HelmetProvider context={context}>{element}</HelmetProvider>);
-  await new Promise((r) => setTimeout(r, 0));
-  const markup: string = context.helmet?.script?.toString() ?? "";
-  const container = document.createElement("div");
-  container.innerHTML = markup;
-  return Array.from(
-    container.querySelectorAll('script[type="application/ld+json"]')
-  ).map((el) => JSON.parse(el.textContent || "{}"));
+const readBlocks = () =>
+  Array.from(document.head.querySelectorAll('script[type="application/ld+json"]')).map(
+    (el) => JSON.parse(el.textContent || "{}")
+  );
+
+/** Render the component and read back the JSON-LD Helmet writes into document.head. */
+const renderSchema = async (element: React.ReactElement, expectEmpty = false) => {
+  render(<HelmetProvider>{element}</HelmetProvider>);
+  // Helmet flushes to the head asynchronously.
+  for (let i = 0; i < 40; i++) {
+    const blocks = readBlocks();
+    if (blocks.length > 0) return blocks;
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  if (!expectEmpty) throw new Error("no JSON-LD was emitted");
+  return [];
 };
+
+beforeEach(() => {
+  cleanup();
+  document.head
+    .querySelectorAll('script[type="application/ld+json"]')
+    .forEach((el) => el.remove());
+});
+
 
 const expectedUrl = (title: string) => {
   const p = programmes.find((x) => x.title === title)!;
