@@ -95,11 +95,13 @@ const tiers = [
 const ExecutiveLeadershipMastery = () => {
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead
+      <ProgrammeMeta
+        programmeTitle="Executive Leadership Mastery"
         title="Executive Leadership Mastery | Bright Leadership"
         description="The flagship 33-module executive programme — 80+ hours and 66 CPD points across seven leadership disciplines, from AI governance to strategic productivity."
         path="/executive-leadership-mastery"
       />
+
       <CourseSchema programmeTitle="Executive Leadership Mastery" />
       <ScrollProgress />
       <Header />
