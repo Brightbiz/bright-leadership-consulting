@@ -6,14 +6,17 @@ import { programmes } from "@/data/programmes";
 
 const SITE_URL = "https://brightleadershipconsulting.com";
 
-/** Render the component and read back the JSON-LD it writes into document.head. */
+/** Render the component and read back the JSON-LD it hands to Helmet (isolated per test). */
 const renderSchema = async (element: React.ReactElement) => {
-  render(<HelmetProvider>{element}</HelmetProvider>);
+  const context: { helmet?: any } = {};
+  render(<HelmetProvider context={context}>{element}</HelmetProvider>);
   await new Promise((r) => setTimeout(r, 0));
-  const blocks = Array.from(
-    document.head.querySelectorAll('script[type="application/ld+json"]')
+  const markup: string = context.helmet?.script?.toString() ?? "";
+  const container = document.createElement("div");
+  container.innerHTML = markup;
+  return Array.from(
+    container.querySelectorAll('script[type="application/ld+json"]')
   ).map((el) => JSON.parse(el.textContent || "{}"));
-  return blocks;
 };
 
 const expectedUrl = (title: string) => {
