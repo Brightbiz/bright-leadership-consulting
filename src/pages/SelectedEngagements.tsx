@@ -223,17 +223,19 @@ const SelectedEngagements = () => {
           <div className="container-brief">
             <div className="max-w-[680px] mb-16">
               <motion.p className="kicker mb-6" {...fade}>
-                Extended Case Narratives
+                Extended Composite Narratives
               </motion.p>
               <motion.h2 className="heading-section mb-6" {...fade}>
                 Challenge, Intervention, Outcome
               </motion.h2>
               <motion.p className="body-brief" {...fade}>
-                A small number of engagements are recorded here in longer form —
-                still fully anonymised — to illustrate how structural misalignment
-                presents, how the diagnostic is deployed, and how governance-level
-                outcomes are documented at board level.
+                Three composite scenarios are recorded here in longer form to
+                illustrate how structural misalignment presents, how the
+                diagnostic is deployed, and how governance-level outcomes are
+                documented at board level. Details have been adapted and
+                combined from advisory and leadership experience.
               </motion.p>
+
             </div>
 
             <div className="space-y-0">
@@ -292,9 +294,12 @@ const SelectedEngagements = () => {
                 {...fade}
               >
                 <p className="text-sm leading-relaxed text-muted-foreground italic">
-                  All engagements are conducted under strict confidentiality.
-                  Further detail is available on request to qualified commissioning parties.
+                  All engagements are conducted under strict confidentiality. The
+                  scenarios above are composite illustrations rather than named
+                  client records. The nature and scope of advisory work can be
+                  discussed directly with qualified commissioning parties.
                 </p>
+
 
                 <div className="pt-4">
                    <Link
