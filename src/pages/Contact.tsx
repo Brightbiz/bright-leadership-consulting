@@ -39,9 +39,22 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const enquiryTypes = [
-  "Individual executive",
-  "Organisational / leadership team",
+const ORGANISATIONAL = "Organisational / leadership team";
+const INDIVIDUAL = "Individual executive";
+
+const tracks = [
+  {
+    value: ORGANISATIONAL,
+    label: "Organisational",
+    detail:
+      "A board, chair or executive sponsor commissioning work for a leadership team. Engagements begin with the Executive Alignment Index™.",
+  },
+  {
+    value: INDIVIDUAL,
+    label: "Individual executive",
+    detail:
+      "An executive enrolling personally on a programme. No diagnostic is required to begin.",
+  },
 ];
 
 const deliveryFormats = [
