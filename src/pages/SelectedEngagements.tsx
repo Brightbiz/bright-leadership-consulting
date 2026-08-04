@@ -36,7 +36,7 @@ const engagements = [
     sector: "Professional Services",
     context: "Partnership-led governance was creating structural ambiguity at the executive layer. Growth targets were being set without aligned leadership accountability or escalation clarity.",
     scope: "Alignment diagnostic across the senior partner group and executive leadership. Advisory engagement with the Managing Partner and incoming Senior Independent Director.",
-    outcome: "Leadership mandates were formalised for the first time. A governance framework was installed between the partnership board and the executive team. Strategic planning cycles shortened by 40%.",
+    outcome: "Leadership mandates were formalised for the first time. A governance framework was installed between the partnership board and the executive team. Strategic planning cycles were materially shortened.",
   },
   {
     sector: "Technology & Digital",
@@ -131,7 +131,7 @@ const SelectedEngagements = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Anonymised Case Abstracts
+                Composite Case Examples
               </motion.h1>
 
               <motion.div
@@ -140,16 +140,23 @@ const SelectedEngagements = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  The following abstracts represent a selection of governance-level
-                  advisory engagements. All identifying details have been removed
-                  to preserve client confidentiality. Three engagements are
-                  recorded in{" "}
+                  The examples below are composite scenarios developed from
+                  advisory and executive leadership experience. Sectors,
+                  circumstances and outcomes have been adapted and combined to
+                  preserve confidentiality; they are not accounts of individual,
+                  identifiable clients. Three are recorded in{" "}
                   <a href="#narratives" className="underline underline-offset-4 decoration-border hover:decoration-foreground text-foreground transition-colors">
                     longer narrative form below
                   </a>
                   .
                 </p>
+                <p className="border-l-2 border-border pl-5 text-sm leading-relaxed text-muted-foreground/80">
+                  Illustrative composite scenarios based on recurring executive
+                  alignment patterns. They indicate the nature of the work
+                  undertaken rather than documented results for a named client.
+                </p>
               </motion.div>
+
             </div>
           </div>
         </section>
