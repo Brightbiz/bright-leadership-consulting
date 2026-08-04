@@ -27,7 +27,7 @@ export const programmes: Programme[] = [
       "66 CPD Points Accredited",
       "Self-Directed, Cohort-Based or 1:1",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
+    link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
     detailPage: "/executive-leadership-mastery",
   },
   {
@@ -54,7 +54,7 @@ export const programmes: Programme[] = [
       "Talent Retention Frameworks",
       "Organisational Design Principles",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+    link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
   },
   {
     title: "Strategic Productivity & Peak Performance",
@@ -67,7 +67,7 @@ export const programmes: Programme[] = [
       "Energy & Focus Management",
       "Team Performance Optimisation",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
+    link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
   },
 ];
 
