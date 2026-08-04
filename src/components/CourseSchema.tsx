@@ -18,6 +18,11 @@ const courseNode = (p: Programme) => ({
   description: p.description,
   url: programmeUrl(p),
   provider: PROVIDER,
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "online",
+    courseWorkload: "PT10H",
+  },
   ...(p.detailPage ? { sameAs: p.link } : {}),
 });
 
