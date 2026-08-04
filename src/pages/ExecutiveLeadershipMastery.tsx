@@ -241,13 +241,27 @@ const ExecutiveLeadershipMastery = () => {
             </motion.h2>
 
             <motion.p
-              className="body-brief max-w-[680px] mb-16"
+              className="body-brief max-w-[680px] mb-6"
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
               All tiers include the complete 33-module curriculum and CPD
               accreditation. Select the level of advisory support appropriate
               to your development objectives.
+            </motion.p>
+
+            <motion.p
+              className="text-sm text-muted-foreground max-w-[680px] mb-16 border-l-2 border-border pl-5 leading-relaxed"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.18 }}
+            >
+              Self-directed enrolment is available for immediate start. Cohort
+              dates, group enrolment and 1:1 advisory availability are confirmed
+              on request.{" "}
+              <Link to="/contact" className="text-foreground underline underline-offset-4 decoration-border">
+                Request programme fees and current availability
+              </Link>
+              .
             </motion.p>
 
             <div className="grid md:grid-cols-3 gap-px bg-border max-w-[1100px]">

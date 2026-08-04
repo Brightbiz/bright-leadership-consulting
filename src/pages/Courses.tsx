@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
+import { programmes, facilitatedEngagement } from "@/data/programmes";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -14,86 +15,12 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const executiveProgrammes = [
-  {
-    title: "Executive Leadership Mastery",
-    subtitle: "Flagship 33-Module Programme",
-    description:
-      "Our comprehensive 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 80+ hours of structured content. 66 CPD points.",
-    features: [
-      "7 Integrated Leadership Disciplines",
-      "80+ Hours of Executive Content",
-      "66 CPD Points Accredited",
-      "Self-Directed or Cohort-Based",
-    ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/new-executive-leadership-mastery-program",
-    internal: false,
-    detailPage: "/executive-leadership-mastery",
-  },
-  {
-    title: "Strategic Leadership in the Age of AI",
-    subtitle: "AI Governance & Leadership Framework",
-    description:
-      "Artificial intelligence is reshaping industries and redefining how organisations compete. This programme equips senior leaders with the knowledge, governance frameworks, and strategic clarity needed to lead confidently in this new environment.",
-    features: [
-      "AI Strategic Implications Assessment",
-      "Governance Framework Development",
-      "AI Leadership Blueprint™ Creation",
-      "Responsible Adoption Protocols",
-    ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/ai-leadership",
-    internal: false,
-  },
-  {
-    title: "The Future of Work",
-    subtitle: "Navigating Workforce Transformation",
-    description:
-      "Equip your leadership team to navigate the structural shifts redefining how organisations attract, develop, and retain talent. From hybrid models to workforce strategy, this programme builds the clarity leaders need to act decisively.",
-    features: [
-      "Workforce Strategy Development",
-      "Hybrid & Remote Leadership Models",
-      "Talent Retention Frameworks",
-      "Organisational Design Principles",
-    ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
-    internal: false,
-  },
-  {
-    title: "Strategic Productivity & Peak Performance",
-    subtitle: "High-Impact Executive Performance",
-    description:
-      "A structured programme for senior leaders seeking to optimise personal and team performance. Grounded in evidence-based productivity frameworks and executive performance science.",
-    features: [
-      "Executive Performance Diagnostics",
-      "Productivity System Design",
-      "Energy & Focus Management",
-      "Team Performance Optimisation",
-    ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/achieving-peak-performance",
-    internal: false,
-  },
-  {
-    title: "Corporate Retreats",
-    subtitle: "2–3 Day Facilitated Engagements",
-    description:
-      "Intensive facilitated engagements for leadership teams and boards. Diagnostic-led design. Outcome-focused facilitation. Confidential delivery for immediate, intensive strategic alignment.",
-    features: [
-      "Diagnostic-Led Programme Design",
-      "Board & Leadership Team Focus",
-      "Outcome-Focused Facilitation",
-      "Confidential Engagement Protocol",
-    ],
-    link: "/contact",
-    internal: true,
-  },
-];
-
 const Courses = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Executive Programmes | Bright Leadership Consulting"
-        description="CPD-accredited executive programmes in AI governance, strategic leadership, and workforce transformation. Featuring the 33-module Executive Leadership Mastery."
+        description="Four CPD-accredited executive programmes in AI governance, strategic leadership, workforce transformation and executive performance. Individual enrolment or organisational commissioning."
         path="/courses"
       />
       <ScrollProgress />
@@ -121,9 +48,10 @@ const Courses = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
-                We deliver through three integrated programme streams—each designed
-                for senior leaders who require more than content. They require
-                transformation with accountability.
+                Four CPD-accredited programmes for senior leaders who require
+                more than content. Individual executives enrol directly.
+                Organisations commissioning development for a leadership team
+                begin with structural measurement.
               </motion.p>
             </div>
           </div>
@@ -131,7 +59,88 @@ const Courses = () => {
 
         <div className="section-divider" />
 
-        {/* Section 2 — Programme Cards */}
+        {/* Section 2 — Two Pathways */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Two Routes In
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Individual Enrolment or Organisational Commissioning
+            </motion.h2>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              The two routes are separate. No diagnostic is required to enrol
+              on a programme as an individual.
+            </motion.p>
+
+            <div className="grid gap-px bg-border md:grid-cols-2 max-w-[1000px]">
+              <motion.div
+                className="bg-background p-8 lg:p-10 rounded-sm"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                <p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3">
+                  Individual Executive
+                </p>
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
+                  Select a programme and enrol directly
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                  Choose the programme appropriate to your development
+                  objectives and begin immediately, or apply for the next
+                  facilitated cohort. There is no prerequisite diagnostic and
+                  no organisational sponsorship requirement.
+                </p>
+                <a
+                  href={programmes[0].link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet text-sm"
+                >
+                  Enrol on a Programme
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+              </motion.div>
+
+              <motion.div
+                className="bg-background p-8 lg:p-10 rounded-sm"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.18 }}
+              >
+                <p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3">
+                  Organisation or Board
+                </p>
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
+                  Measure → Install → Sustain → Develop
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                  Where development is commissioned for a leadership team,
+                  structural alignment is measured first through the Executive
+                  Alignment Index™ — ensuring investment targets the right
+                  gaps rather than the most visible ones.
+                </p>
+                <Link to="/executive-alignment-index" className="link-quiet text-sm">
+                  Explore the Executive Alignment Index™
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 3 — Programme Portfolio */}
         <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
@@ -143,7 +152,7 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.1 }}
             >
-              Five Pathways. One Objective.
+              Four Accredited Programmes
             </motion.h2>
 
             <motion.p
@@ -151,13 +160,12 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Each programme is grounded in the Executive Alignment Index—our
-              proprietary diagnostic that measures structural leadership health
-              before intervention begins.
+              This is the complete programme catalogue. Fees and current
+              availability are confirmed on request.
             </motion.p>
 
             <div className="max-w-[720px] space-y-0">
-              {executiveProgrammes.map((programme, i) => (
+              {programmes.map((programme, i) => (
                 <motion.div
                   key={programme.title}
                   className="py-8 border-b border-border last:border-b-0"
@@ -190,29 +198,28 @@ const Courses = () => {
                     ))}
                   </ul>
 
-                  <div className="flex items-center gap-4">
-                    {programme.internal ? (
-                      <Link to={programme.link} className="link-quiet text-sm">
-                        Enquire Regarding This Programme
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    ) : (
-                      <a
-                        href={programme.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-quiet text-sm"
-                      >
-                        View Programme
-                        <ArrowRight className="h-3 w-3" />
-                      </a>
-                    )}
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <a
+                      href={programme.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-quiet text-sm"
+                    >
+                      View Programme &amp; Enrol
+                      <ArrowRight className="h-3 w-3" />
+                    </a>
                     {programme.detailPage && (
                       <Link to={programme.detailPage} className="link-quiet text-sm text-muted-foreground">
                         Programme Details
                         <ArrowRight className="h-3 w-3" />
                       </Link>
                     )}
+                    <Link
+                      to="/contact"
+                      className="text-sm text-muted-foreground underline underline-offset-4 decoration-border hover:text-foreground transition-colors"
+                    >
+                      Request programme fees and current availability
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -222,8 +229,60 @@ const Courses = () => {
 
         <div className="section-divider" />
 
-        {/* Section 3 — Course Journey Map */}
+        {/* Section 4 — Facilitated Engagement (not a course) */}
         <section className="section-brief bg-background">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Separate From the Catalogue
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Facilitated Organisational Engagement
+            </motion.h2>
+
+            <motion.div
+              className="max-w-[720px] py-8 border-t border-border"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
+                {facilitatedEngagement.title}
+              </h3>
+              <p className="text-sm font-medium text-accent mb-3">
+                {facilitatedEngagement.subtitle}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                {facilitatedEngagement.description} This is a commissioned
+                engagement rather than a programme, and is not available for
+                individual enrolment.
+              </p>
+              <ul className="space-y-1.5 mb-5">
+                {facilitatedEngagement.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="text-sm text-muted-foreground flex items-start gap-2"
+                  >
+                    <span className="text-accent mt-1.5 w-1 h-1 rounded-full bg-accent shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Link to="/contact" className="link-quiet text-sm">
+                Enquire Regarding a Facilitated Engagement
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 5 — Course Journey Map */}
+        <section className="section-brief section-pearl">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Architecture
@@ -246,42 +305,9 @@ const Courses = () => {
           </div>
         </section>
 
-        {/* Section — Advisory Context */}
-        <section className="section-brief bg-background">
-          <div className="container-brief">
-            <div className="max-w-[620px] mx-auto text-center">
-              <motion.p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3" {...fade}>
-                Where Programmes Sit
-              </motion.p>
-              <motion.h2
-                className="font-serif text-xl font-medium text-foreground mb-4"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.1 }}
-              >
-                Measure → Install → Sustain → Develop
-              </motion.h2>
-              <motion.p
-                className="text-sm text-muted-foreground leading-relaxed mb-5"
-                {...fade}
-                transition={{ ...fade.transition, delay: 0.15 }}
-              >
-                Executive programmes represent the fourth stage of our advisory
-                architecture. Before development begins, structural alignment is
-                measured through the Executive Alignment Index™ — ensuring
-                investment targets the right gaps.
-              </motion.p>
-              <motion.div {...fade} transition={{ ...fade.transition, delay: 0.2 }}>
-                <Link to="/executive-alignment-index" className="link-quiet text-sm">
-                  Explore the Executive Alignment Index™
-                  <ArrowRight className="h-3 w-3" />
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         <div className="section-divider" />
-        <section className="section-brief section-pearl">
+
+        <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[720px]">
               <motion.div className="space-y-6" {...fade}>
