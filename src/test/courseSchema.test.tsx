@@ -1,0 +1,82 @@
+import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import Courses from "@/pages/Courses";
+import ExecutiveLeadershipMastery from "@/pages/ExecutiveLeadershipMastery";
+import { programmes } from "@/data/programmes";
+
+/**
+ * Build-time guard: renders the course pages and asserts the emitted JSON-LD
+ * carries valid Course fields with no empty values.
+ * Wired into `npm run build` via scripts/validate-course-schema.mjs.
+ */
+
+const renderPage = async (ui: React.ReactElement) => {
+  render(
+    <HelmetProvider>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </HelmetProvider>
+  );
+  // react-helmet-async writes to document.head asynchronously.
+  await new Promise((r) => setTimeout(r, 0));
+  return Array.from(
+    document.head.querySelectorAll('script[type="application/ld+json"]')
+  ).map((el) => JSON.parse(el.textContent || "{}"));
+};
+
+const nonEmptyString = (value: unknown) =>
+  typeof value === "string" && value.trim().length > 0;
+
+const assertValidCourse = (course: Record<string, unknown>) => {
+  expect(course["@type"]).toBe("Course");
+  for (const field of ["name", "description", "url"]) {
+    expect(nonEmptyString(course[field]), `${field} must be a non-empty string`).toBe(true);
+  }
+  expect(String(course.url)).toMatch(/^https:\/\//);
+  expect(course.provider).toBeTruthy();
+  // No empty or null values anywhere in the node.
+  const walk = (node: unknown, path: string) => {
+    if (node === null || node === undefined) throw new Error(`empty value at ${path}`);
+    if (typeof node === "string") {
+      expect(node.trim().length, `empty string at ${path}`).toBeGreaterThan(0);
+    } else if (Array.isArray(node)) {
+      expect(node.length, `empty array at ${path}`).toBeGreaterThan(0);
+      node.forEach((v, i) => walk(v, `${path}[${i}]`));
+    } else if (typeof node === "object") {
+      const entries = Object.entries(node as Record<string, unknown>);
+      expect(entries.length, `empty object at ${path}`).toBeGreaterThan(0);
+      entries.forEach(([k, v]) => walk(v, `${path}.${k}`));
+    }
+  };
+  walk(course, "Course");
+};
+
+describe("course page JSON-LD", () => {
+  it("emits a complete ItemList of Courses on /courses", async () => {
+    const blocks = await renderPage(<Courses />);
+    const list = blocks.find((b) => b["@type"] === "ItemList");
+    expect(list, "ItemList JSON-LD missing on /courses").toBeTruthy();
+    expect(list.url).toMatch(/^https:\/\//);
+    expect(list.numberOfItems).toBe(programmes.length);
+    expect(list.itemListElement).toHaveLength(programmes.length);
+
+    list.itemListElement.forEach((entry: Record<string, unknown>, i: number) => {
+      expect(entry.position).toBe(i + 1);
+      expect(nonEmptyString(entry.url)).toBe(true);
+      assertValidCourse(entry.item as Record<string, unknown>);
+    });
+
+    // Every catalogue programme is represented exactly once.
+    const names = list.itemListElement.map((e: any) => e.item.name).sort();
+    expect(names).toEqual(programmes.map((p) => p.title).sort());
+  });
+
+  it("emits a valid single Course node on the flagship programme page", async () => {
+    const blocks = await renderPage(<ExecutiveLeadershipMastery />);
+    const course = blocks.find((b) => b["@type"] === "Course");
+    expect(course, "Course JSON-LD missing on the programme page").toBeTruthy();
+    assertValidCourse(course);
+    expect(course.name).toBe("Executive Leadership Mastery");
+  });
+});

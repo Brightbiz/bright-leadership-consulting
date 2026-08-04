@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "vite",
     "validate:links": "node scripts/validate-thinkific-links.mjs",
-    "build": "node scripts/validate-thinkific-links.mjs && vite build",
-    "build:dev": "node scripts/validate-thinkific-links.mjs && vite build --mode development",
+    "build": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && vite build",
+    "build:dev": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "validate:schema": "node scripts/validate-course-schema.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
