@@ -230,13 +230,21 @@ const Principal = () => {
 
 
 
-          <motion.section {...fade} className="mt-14 max-w-[680px] border-t border-border pt-10">
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-6 border-t border-border pt-10">
+            <div className="space-y-3">
+              <h2 className="font-serif text-2xl">Start with a confidential conversation</h2>
+              <p className="leading-relaxed text-muted-foreground">
+                There is no fee and no commitment. The first step is simply to establish whether
+                the Executive Alignment Index™ is the appropriate starting point for the board or
+                executive team.
+              </p>
+            </div>
             <div className="flex flex-wrap gap-x-8 gap-y-3">
               <Link
                 to="/contact"
                 className="btn-brief px-6 py-2.5 text-sm"
               >
-                Discuss Executive Alignment
+                Request a confidential initial conversation
               </Link>
               <Link
                 to="/advisory-process"
@@ -245,7 +253,7 @@ const Principal = () => {
                 How we work
               </Link>
             </div>
-            <p className="mt-8 text-xs leading-relaxed text-muted-foreground/70">
+            <p className="text-xs leading-relaxed text-muted-foreground/70">
               Bright Leadership Consulting is registered in England and Wales, company number
               07258400.
             </p>
