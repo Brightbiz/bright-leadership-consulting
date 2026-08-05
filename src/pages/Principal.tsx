@@ -103,13 +103,13 @@ const Principal = () => {
             </p>
           </motion.section>
 
-          {/* Deliberately the last section before the CTA, and deliberately short: two
-              paragraphs establishing who applies the method, not a founder story. No
+          {/* Deliberately the last content section before the CTA, and deliberately short:
+              two paragraphs establishing who applies the method, not a founder story. No
               photograph, no autobiography, no first-person voice. Restricted to claims the
               practice already makes elsewhere on the site (EAI™ authorship, the
-              four-programme catalogue, board-level clientele). Do not add tenures, sectors,
-              client names or accreditation bodies until supplied and verifiable, and do not
-              promote this section higher up the page. */}
+              four-programme catalogue, board-level clientele). Do not add tenures, sectors
+              or client names until supplied and verifiable, and do not promote this section
+              higher up the page. */}
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Who applies the method</h2>
             <p className="leading-relaxed text-muted-foreground">
