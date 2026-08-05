@@ -103,6 +103,27 @@ const Principal = () => {
             </p>
           </motion.section>
 
+          {/* Deliberately the last section before the CTA, and deliberately short: two
+              paragraphs establishing who applies the method, not a founder story. No
+              photograph, no autobiography, no first-person voice. Restricted to claims the
+              practice already makes elsewhere on the site (EAI™ authorship, the
+              four-programme catalogue, board-level clientele). Do not add tenures, sectors,
+              client names or accreditation bodies until supplied and verifiable, and do not
+              promote this section higher up the page. */}
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">Who applies the method</h2>
+            <p className="leading-relaxed text-muted-foreground">
+              Irene Bright is the principal of Bright Leadership Consulting. She authored the
+              Executive Alignment Index™ and the executive programmes the practice publishes, and
+              she conducts, interprets and reports every diagnostic engagement herself.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              The instrument came out of advisory work rather than academic study: the recurring
+              constraint observed across senior teams was not capability but dispersion, and no
+              existing measure reported it at group level in terms a board could act on.
+            </p>
+          </motion.section>
+
           <motion.section {...fade} className="mt-14 max-w-[680px] border-t border-border pt-10">
             <div className="flex flex-wrap gap-x-8 gap-y-3">
               <Link
@@ -124,26 +145,6 @@ const Principal = () => {
             </p>
           </motion.section>
 
-          {/* Deliberately the last section before the CTA, and deliberately short: two
-              paragraphs establishing who applies the method, not a founder story. No
-              photograph, no autobiography, no first-person voice. Restricted to claims the
-              practice already makes elsewhere on the site (EAI™ authorship, the
-              four-programme catalogue, board-level clientele). Do not add tenures, sectors,
-              client names or accreditation bodies until supplied and verifiable, and do not
-              promote this section higher up the page. */}
-          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
-            <h2 className="font-serif text-2xl">Who applies the method</h2>
-            <p className="leading-relaxed text-muted-foreground">
-              Irene Bright is the principal of Bright Leadership Consulting. She authored the
-              Executive Alignment Index™ and the executive programmes the practice publishes, and
-              she conducts, interprets and reports every diagnostic engagement herself.
-            </p>
-            <p className="leading-relaxed text-muted-foreground">
-              The instrument came out of advisory work rather than academic study: the recurring
-              constraint observed across senior teams was not capability but dispersion, and no
-              existing measure reported it at group level in terms a board could act on.
-            </p>
-          </motion.section>
 
 
         </div>
