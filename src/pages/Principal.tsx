@@ -128,6 +128,71 @@ const Principal = () => {
             </p>
           </motion.section>
 
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">Questions chairs and chief executives ask</h2>
+            <div className="space-y-0">
+              <details name="principal-faq" className="border-b border-border py-4">
+                <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                  What does a typical engagement look like?
+                </summary>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  Organisational mandates begin with a confidential conversation to establish whether
+                  measurement is the appropriate first step. Where it is, the Executive Alignment
+                  Index™ is administered to the senior team, individual responses are anonymised,
+                  and a group-level Executive Alignment Report™ is produced for the commissioning
+                  board. The report is then presented in person.
+                </p>
+              </details>
+
+              <details name="principal-faq" className="border-b border-border py-4">
+                <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                  How is confidentiality maintained?
+                </summary>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  Individual diagnostic responses are never disclosed to the client organisation.
+                  The output is an aggregated group-level report. Client identities are not published,
+                  and no case material is used for marketing or social proof.
+                </p>
+              </details>
+
+              <details name="principal-faq" className="border-b border-border py-4">
+                <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                  What does the Executive Alignment Index™ measure?
+                </summary>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  It measures the variance between what individual executives believe has been
+                  decided — the quiet dispersion that often undermines execution. The instrument
+                  reports that variance at group level and can be re-administered to establish
+                  whether it has narrowed.
+                </p>
+              </details>
+
+              <details name="principal-faq" className="border-b border-border py-4">
+                <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                  What does principal-led delivery mean?
+                </summary>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  The person who scopes the mandate is the person who conducts the diagnostic,
+                  writes the report and sits in the room when it is put to the board. Capacity is
+                  limited by design because the work is not delegated.
+                </p>
+              </details>
+
+              <details name="principal-faq" className="border-b border-border py-4">
+                <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                  What can a client expect after the diagnostic?
+                </summary>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  A clear, board-ready statement of alignment variance and, where appropriate, a
+                  recommended advisory path to narrow it. If measurement is not the appropriate first
+                  step, that is said plainly.
+                </p>
+              </details>
+            </div>
+          </motion.section>
+
+
+
           {/* Accreditation. Body, provider number and period are taken from the certificate
               issued by The CPD Standards Office. The accredited-activity mark is reproduced
               as required by the accreditation terms — it is a verification mark, not
