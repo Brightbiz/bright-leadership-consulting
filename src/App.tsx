@@ -23,6 +23,7 @@ const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershi
 const Courses = lazy(() => import("./pages/Courses"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
+const Principal = lazy(() => import("./pages/Principal"));
 
 // Legal
 const Privacy = lazy(() => import("./pages/Privacy"));
