@@ -46,6 +46,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://brightleadershipconsulting.com/principal</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://brightleadershipconsulting.com/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
