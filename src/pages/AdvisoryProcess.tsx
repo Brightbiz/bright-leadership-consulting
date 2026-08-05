@@ -264,9 +264,12 @@ const AdvisoryProcess = () => {
                   Discuss Executive Alignment
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
-                <div className="pt-2">
+                <div className="pt-2 flex flex-col gap-2">
                   <Link to="/selected-engagements" className="link-quiet text-sm text-muted-foreground">
                     Selected Engagements →
+                  </Link>
+                  <Link to="/principal" className="link-quiet text-sm text-muted-foreground">
+                    Principal →
                   </Link>
                 </div>
               </motion.div>
