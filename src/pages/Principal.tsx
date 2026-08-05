@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import cpdMark from "@/assets/cpd-standards-office-accredited.png.asset.json";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
