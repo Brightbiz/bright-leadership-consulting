@@ -110,6 +110,29 @@ const Principal = () => {
             </p>
           </motion.section>
 
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">What you receive</h2>
+            <ul className="space-y-4 leading-relaxed text-muted-foreground">
+              <li>
+                <span className="block font-medium text-foreground">Executive Alignment Report™</span>
+                A board-ready document setting out the group-level variance in the senior team.
+                Individual responses are anonymised and reported only in aggregate.
+              </li>
+              <li>
+                <span className="block font-medium text-foreground">In-person presentation</span>
+                The report is delivered in a face-to-face board or executive session, with time
+                set aside to examine the findings and respond to questions.
+              </li>
+              <li>
+                <span className="block font-medium text-foreground">Clear next step</span>
+                Where variance is material, a recommended advisory path to narrow it. Where it
+                is not, a clear statement that no further advisory work is required.
+              </li>
+            </ul>
+          </motion.section>
+
+
+
           {/* Deliberately the last content section before the CTA. A restrained bio establishing
               who applies the method, not a founder story. No photograph, no autobiography, no
               first-person voice. Do not promote this section higher up the page. */}
