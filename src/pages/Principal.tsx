@@ -116,22 +116,15 @@ const Principal = () => {
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Who applies the method</h2>
             <p className="leading-relaxed text-muted-foreground">
-              Irene A. Agunbiade is the Principal Adviser at Bright Leadership Consulting. She
-              brings senior leadership experience from UK banking, together with a background in
-              management consulting and business advisory.
+              Irene A. Agunbiade is the Principal Adviser at Bright Leadership Consulting. Her
+              background spans senior leadership in UK banking, management consulting and business
+              advisory, with academic foundations in Industrial Engineering and an MBA in
+              International Business.
             </p>
             <p className="leading-relaxed text-muted-foreground">
-              With academic foundations in Industrial Engineering and an MBA in International
-              Business, her work combines analytical rigour with practical insight into strategy,
-              organisational performance and executive decision-making. Her advisory focus is on
-              helping leaders identify hidden misalignment, strengthen decision structures and
-              improve execution where the stakes are high.
-            </p>
-            <p className="leading-relaxed text-muted-foreground">
-              She is also an author and leadership thinker whose work explores leadership
-              judgement, organisational effectiveness and sustainable performance. Client
-              engagements are principal-led, ensuring senior attention, continuity and discretion
-              throughout the advisory process.
+              She developed the Executive Alignment Index™ and the executive programmes that sit
+              beneath it. Client engagements are principal-led, ensuring senior attention,
+              continuity and discretion throughout the advisory process.
             </p>
           </motion.section>
 
