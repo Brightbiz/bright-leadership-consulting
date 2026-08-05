@@ -12,11 +12,11 @@ const fade = {
 };
 
 /**
- * CPD Certification Service provider/certificate reference. Set this to the string on
- * the accreditation certificate to surface the provider-number line on /principal.
- * Leave null until verified — never substitute an example or placeholder number.
+ * Verified from the accreditation certificate issued by The CPD Standards Office.
+ * Do not alter without a corresponding certificate.
  */
-const CPD_PROVIDER_NUMBER: string | null = null;
+const CPD_PROVIDER_NUMBER = "50838";
+const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
 /**
  * Verification page, not a destination. Deliberately excluded from the primary
@@ -131,25 +131,33 @@ const Principal = () => {
             </p>
           </motion.section>
 
-          {/* Accreditation. The accrediting body and point value are the claims the practice
-              already makes on its programme pages and brochures. CPD_PROVIDER_NUMBER stays
-              null until the certificate reference is supplied — the line is suppressed rather
-              than filled with a placeholder, because a fabricated provider number on a
-              verification page is worse than an absent one. */}
+          {/* Accreditation. Body, provider number and period are taken from the certificate
+              issued by The CPD Standards Office. The accredited-activity mark is reproduced
+              as required by the accreditation terms — it is a verification mark, not
+              decoration, and is the only image permitted on this page. */}
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Accreditation</h2>
             <p className="leading-relaxed text-muted-foreground">
-              The executive programmes are accredited by The CPD Certification Service.
-              Completion of all thirty-three modules of Executive Leadership Mastery confers 66
-              CPD points, awarded at two points per module, and a certificate is issued on
-              completion.
+              The executive programmes are accredited by The CPD Standards Office, CPD provider
+              number {CPD_PROVIDER_NUMBER} ({CPD_ACCREDITATION_PERIOD}). Completion of all
+              thirty-three modules of Executive Leadership Mastery confers 66 CPD points, awarded
+              at two points per module, and a certificate is issued on completion.
             </p>
-            {CPD_PROVIDER_NUMBER && (
-              <p className="leading-relaxed text-muted-foreground">
-                Bright Leadership Consulting is a registered CPD provider, provider number{" "}
-                {CPD_PROVIDER_NUMBER}.
+            <div className="flex items-start gap-5 border-t border-border pt-6">
+              <img
+                src="/cpd-standards-office-accredited.png"
+                alt="Accredited CPD Activity — The CPD Standards Office, CPD provider 50838, 2025–2026"
+                width={96}
+                height={96}
+                loading="lazy"
+                className="h-24 w-24 flex-shrink-0 object-contain"
+              />
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Accredited CPD Activity · The CPD Standards Office · CPD Provider {CPD_PROVIDER_NUMBER}
+                {" "}· {CPD_ACCREDITATION_PERIOD}. Participants remain responsible for recording
+                CPD with their own professional body.
               </p>
-            )}
+            </div>
             <p className="leading-relaxed text-muted-foreground">
               Accreditation applies to the programmes only. The Executive Alignment Index™ and
               the advisory work built on it are proprietary to the practice and are not
