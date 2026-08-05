@@ -48,6 +48,35 @@ const Principal = () => {
             </p>
           </motion.div>
 
+          {/* Background: restricted to claims the practice already makes elsewhere on the
+              site (EAI™ authorship, the four-programme catalogue, board-level clientele,
+              UK registration). No tenures, sectors, client names or accreditation bodies
+              until supplied and verifiable. */}
+          <motion.section {...fade} className="mt-16 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">Background</h2>
+            <p className="leading-relaxed text-muted-foreground">
+              Irene Bright is the principal of Bright Leadership Consulting, a UK advisory practice
+              retained by chairs, chief executives and nominations committees on questions of
+              senior-team alignment. Her work sits at the point where strategy meets execution: not
+              whether a board has set a direction, but whether the executives responsible for
+              carrying it out hold the same understanding of what was decided.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              She is the author of the Executive Alignment Index™, the diagnostic instrument through
+              which the practice measures dispersion across a leadership team, and of the executive
+              programmes the practice publishes — including Executive Leadership Mastery, Augmented
+              Leadership™, Future of Work and Peak Performance. Both bodies of work draw on the same
+              observation made repeatedly in advisory rooms: alignment is assumed far more often than
+              it is verified.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              Engagements are conducted under confidentiality. Client organisations are not named,
+              and individual responses collected during a diagnostic are reported only in aggregate.
+            </p>
+          </motion.section>
+
+
+
           <motion.section {...fade} className="mt-16 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Remit</h2>
             <p className="leading-relaxed text-muted-foreground">
