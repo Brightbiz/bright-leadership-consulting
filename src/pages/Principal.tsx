@@ -48,10 +48,10 @@ const Principal = () => {
             <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">Principal</h1>
 
             <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
-              Engagements are led personally by Irene Bright. There is no account layer and no
-              delegated delivery team: the person who scopes a mandate is the person who conducts
-              the diagnostic, writes the Executive Alignment Report™ and sits in the room when it
-              is put to the board.
+              Engagements are led personally by Irene A. Agunbiade. There is no account layer and
+              no delegated delivery team: the person who scopes a mandate is the person who
+              conducts the diagnostic, writes the Executive Alignment Report™ and sits in the room
+              when it is put to the board.
             </p>
           </motion.div>
 
@@ -110,24 +110,28 @@ const Principal = () => {
             </p>
           </motion.section>
 
-          {/* Deliberately the last content section before the CTA, and deliberately short:
-              two paragraphs establishing who applies the method, not a founder story. No
-              photograph, no autobiography, no first-person voice. Restricted to claims the
-              practice already makes elsewhere on the site (EAI™ authorship, the
-              four-programme catalogue, board-level clientele). Do not add tenures, sectors
-              or client names until supplied and verifiable, and do not promote this section
-              higher up the page. */}
+          {/* Deliberately the last content section before the CTA. A restrained bio establishing
+              who applies the method, not a founder story. No photograph, no autobiography, no
+              first-person voice. Do not promote this section higher up the page. */}
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Who applies the method</h2>
             <p className="leading-relaxed text-muted-foreground">
-              Irene Bright is the principal of Bright Leadership Consulting. She authored the
-              Executive Alignment Index™ and the executive programmes the practice publishes, and
-              she conducts, interprets and reports every diagnostic engagement herself.
+              Irene A. Agunbiade is the Principal Adviser at Bright Leadership Consulting. She
+              brings senior leadership experience from UK banking, together with a background in
+              management consulting and business advisory.
             </p>
             <p className="leading-relaxed text-muted-foreground">
-              The instrument came out of advisory work rather than academic study: the recurring
-              constraint observed across senior teams was not capability but dispersion, and no
-              existing measure reported it at group level in terms a board could act on.
+              With academic foundations in Industrial Engineering and an MBA in International
+              Business, her work combines analytical rigour with practical insight into strategy,
+              organisational performance and executive decision-making. Her advisory focus is on
+              helping leaders identify hidden misalignment, strengthen decision structures and
+              improve execution where the stakes are high.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              She is also an author and leadership thinker whose work explores leadership
+              judgement, organisational effectiveness and sustainable performance. Client
+              engagements are principal-led, ensuring senior attention, continuity and discretion
+              throughout the advisory process.
             </p>
           </motion.section>
 
