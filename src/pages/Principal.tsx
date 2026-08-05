@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import cpdMark from "@/assets/cpd-standards-office-accredited.png.asset.json";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -146,7 +145,7 @@ const Principal = () => {
             </p>
             <div className="flex items-start gap-5 border-t border-border pt-6">
               <img
-                src={cpdMark.url}
+                src="/cpd-standards-office-accredited.png"
                 alt="Accredited CPD Activity — The CPD Standards Office, CPD provider 50838, 2025–2026"
                 width={96}
                 height={96}
