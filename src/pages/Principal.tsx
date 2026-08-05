@@ -12,11 +12,11 @@ const fade = {
 };
 
 /**
- * CPD Certification Service provider/certificate reference. Set this to the string on
- * the accreditation certificate to surface the provider-number line on /principal.
- * Leave null until verified — never substitute an example or placeholder number.
+ * Verified from the accreditation certificate issued by The CPD Standards Office.
+ * Do not alter without a corresponding certificate.
  */
-const CPD_PROVIDER_NUMBER: string | null = null;
+const CPD_PROVIDER_NUMBER = "50838";
+const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
 /**
  * Verification page, not a destination. Deliberately excluded from the primary
