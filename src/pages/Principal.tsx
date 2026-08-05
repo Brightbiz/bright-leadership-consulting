@@ -12,6 +12,13 @@ const fade = {
 };
 
 /**
+ * CPD Certification Service provider/certificate reference. Set this to the string on
+ * the accreditation certificate to surface the provider-number line on /principal.
+ * Leave null until verified — never substitute an example or placeholder number.
+ */
+const CPD_PROVIDER_NUMBER: string | null = null;
+
+/**
  * Verification page, not a destination. Deliberately excluded from the primary
  * navigation and linked only from the footer and /advisory-process.
  *
@@ -103,13 +110,13 @@ const Principal = () => {
             </p>
           </motion.section>
 
-          {/* Deliberately the last section before the CTA, and deliberately short: two
-              paragraphs establishing who applies the method, not a founder story. No
+          {/* Deliberately the last content section before the CTA, and deliberately short:
+              two paragraphs establishing who applies the method, not a founder story. No
               photograph, no autobiography, no first-person voice. Restricted to claims the
               practice already makes elsewhere on the site (EAI™ authorship, the
-              four-programme catalogue, board-level clientele). Do not add tenures, sectors,
-              client names or accreditation bodies until supplied and verifiable, and do not
-              promote this section higher up the page. */}
+              four-programme catalogue, board-level clientele). Do not add tenures, sectors
+              or client names until supplied and verifiable, and do not promote this section
+              higher up the page. */}
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Who applies the method</h2>
             <p className="leading-relaxed text-muted-foreground">
@@ -123,6 +130,35 @@ const Principal = () => {
               existing measure reported it at group level in terms a board could act on.
             </p>
           </motion.section>
+
+          {/* Accreditation. The accrediting body and point value are the claims the practice
+              already makes on its programme pages and brochures. CPD_PROVIDER_NUMBER stays
+              null until the certificate reference is supplied — the line is suppressed rather
+              than filled with a placeholder, because a fabricated provider number on a
+              verification page is worse than an absent one. */}
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">Accreditation</h2>
+            <p className="leading-relaxed text-muted-foreground">
+              The executive programmes are accredited by The CPD Certification Service.
+              Completion of all thirty-three modules of Executive Leadership Mastery confers 66
+              CPD points, awarded at two points per module, and a certificate is issued on
+              completion.
+            </p>
+            {CPD_PROVIDER_NUMBER && (
+              <p className="leading-relaxed text-muted-foreground">
+                Bright Leadership Consulting is a registered CPD provider, provider number{" "}
+                {CPD_PROVIDER_NUMBER}.
+              </p>
+            )}
+            <p className="leading-relaxed text-muted-foreground">
+              Accreditation applies to the programmes only. The Executive Alignment Index™ and
+              the advisory work built on it are proprietary to the practice and are not
+              accredited, certified or endorsed by any third party; neither is presented as a
+              regulated or licensed activity.
+            </p>
+          </motion.section>
+
+
 
           <motion.section {...fade} className="mt-14 max-w-[680px] border-t border-border pt-10">
             <div className="flex flex-wrap gap-x-8 gap-y-3">
