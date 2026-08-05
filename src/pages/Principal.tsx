@@ -124,6 +124,35 @@ const Principal = () => {
             </p>
           </motion.section>
 
+          {/* Accreditation. The accrediting body and point value are the claims the practice
+              already makes on its programme pages and brochures. CPD_PROVIDER_NUMBER stays
+              null until the certificate reference is supplied — the line is suppressed rather
+              than filled with a placeholder, because a fabricated provider number on a
+              verification page is worse than an absent one. */}
+          <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
+            <h2 className="font-serif text-2xl">Accreditation</h2>
+            <p className="leading-relaxed text-muted-foreground">
+              The executive programmes are accredited by The CPD Certification Service.
+              Completion of all thirty-three modules of Executive Leadership Mastery confers 66
+              CPD points, awarded at two points per module, and a certificate is issued on
+              completion.
+            </p>
+            {CPD_PROVIDER_NUMBER && (
+              <p className="leading-relaxed text-muted-foreground">
+                Bright Leadership Consulting is a registered CPD provider, provider number{" "}
+                {CPD_PROVIDER_NUMBER}.
+              </p>
+            )}
+            <p className="leading-relaxed text-muted-foreground">
+              Accreditation applies to the programmes only. The Executive Alignment Index™ and
+              the advisory work built on it are proprietary to the practice and are not
+              accredited, certified or endorsed by any third party; neither is presented as a
+              regulated or licensed activity.
+            </p>
+          </motion.section>
+
+
+
           <motion.section {...fade} className="mt-14 max-w-[680px] border-t border-border pt-10">
             <div className="flex flex-wrap gap-x-8 gap-y-3">
               <Link
