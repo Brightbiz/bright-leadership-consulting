@@ -44,6 +44,12 @@ const queryClient = new QueryClient();
 const AnimatedRoutes = () => {
   const location = useLocation();
 
+  useEffect(() => {
+    trackPageView(location.pathname + location.search);
+  }, [location.pathname, location.search]);
+
+
+
   return (
     <AnimatePresence mode="wait">
       <Suspense fallback={<PageLoader />}>
