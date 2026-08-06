@@ -54,6 +54,13 @@ const structure = [
 ];
 
 const StrategicLeadershipAI = () => {
+  useEffect(() => {
+    trackProgrammeView({
+      programme: PROGRAMME_TITLE,
+      surface: "/strategic-leadership-ai",
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
