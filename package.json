@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "validate:links": "node scripts/validate-thinkific-links.mjs",
-    "build": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && vite build",
-    "build:dev": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && vite build --mode development",
+    "validate:redirects": "node scripts/validate-redirects.mjs",
+    "validate:redirects:live": "node scripts/validate-redirects.mjs --live",
+    "build": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && vite build",
+    "build:dev": "node scripts/validate-thinkific-links.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
