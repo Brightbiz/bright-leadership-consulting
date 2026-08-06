@@ -89,9 +89,10 @@ if (process.argv.includes("--live")) {
         continue;
       }
       if (path === CANONICAL) {
+        // The app is client-rendered, so the shell is checked rather than page copy.
         const html = await res.text();
-        if (!/strategic-leadership-ai/i.test(html) && !/Age of AI/i.test(html)) {
-          errors.push(`${url} responded 200 but does not reference the AI programme page`);
+        if (!/<div id="root"/.test(html)) {
+          errors.push(`${url} responded 200 but did not serve the application shell`);
         }
       }
       console.log(`  ok  ${url} → ${res.status}`);
