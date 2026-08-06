@@ -310,7 +310,93 @@ const StrategicLeadershipAI = () => {
 
         <div className="section-divider" />
 
-        {/* Section 7 — CTA */}
+        {/* Section 7 — FAQ */}
+        <section className="section-brief bg-background">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.p className="kicker mb-6" {...fade}>
+                Common Questions
+              </motion.p>
+              <motion.h2
+                className="heading-section mb-10"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.1 }}
+              >
+                What Enrollees Ask
+              </motion.h2>
+
+              <motion.div
+                className="space-y-0"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                <details name="ai-faq" className="border-b border-border py-4">
+                  <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                    How many CPD points does the programme carry?
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    Completion of the wider accredited pathway confers 66 CPD points. The
+                    programme is accredited by The CPD Standards Office (Provider Number 50838) as
+                    Accredited CPD Activity for the 2025–2026 period. Participants are responsible
+                    for recording CPD with their own professional body.
+                  </p>
+                </details>
+
+                <details name="ai-faq" className="border-b border-border py-4">
+                  <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                    Is the programme delivered live or self-paced?
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    The individual route is self-paced online, with immediate access to all ten
+                    modules and downloadable working documents. Organisational cohorts can include
+                    facilitated sessions and board-level adaptation; those are scoped and scheduled
+                    on request.
+                  </p>
+                </details>
+
+                <details name="ai-faq" className="border-b border-border py-4">
+                  <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                    What happens after I enrol?
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    Enrolment is handled through the Thinkific learning platform. You will receive
+                    login credentials and immediate access to the first module. You can progress
+                    through the ten modules at your own pace, complete the capstone AI Leadership
+                    Blueprint™ Canvas, and download your certificate on completion.
+                  </p>
+                </details>
+
+                <details name="ai-faq" className="border-b border-border py-4">
+                  <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                    Can a board or executive team take this together?
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    Yes. The organisational route is designed for cohorts and can be adapted to a
+                    board or senior team. Fees and delivery structure are agreed on request; where
+                    the development is part of a wider advisory mandate, structural alignment is
+                    measured first.
+                  </p>
+                </details>
+
+                <details name="ai-faq" className="border-b border-border py-4">
+                  <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
+                    What do I receive on completion?
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    A completed AI Leadership Blueprint™ Canvas, a board-ready governance framework
+                    for AI adoption, and a CPD certificate confirming 66 points for the accredited
+                    pathway. Individual module completion records are also available within the
+                    learning platform.
+                  </p>
+                </details>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 8 — CTA */}
         <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
