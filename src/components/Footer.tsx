@@ -13,6 +13,7 @@ const footerLinks = [
 const programmeLinks = [
   { label: "Executive Programmes", href: "/courses", isRoute: true },
   { label: "Executive Leadership Mastery", href: "/executive-leadership-mastery", isRoute: true },
+  { label: "Strategic Leadership in the Age of AI", href: "/strategic-leadership-ai", isRoute: true },
   { label: "Augmented Leadership™", href: "/augmented-leadership", isRoute: true },
 ];
 

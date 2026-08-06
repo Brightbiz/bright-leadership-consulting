@@ -13,6 +13,8 @@ export type Programme = {
   link: string;
   /** Optional in-site detail page */
   detailPage?: string;
+  /** Individual self-directed enrolment fee, when published publicly (GBP). */
+  individualFee?: string;
   /** Optional social-preview image path under /public (absolute path from site root) */
   ogImage?: string;
 };
@@ -45,6 +47,8 @@ export const programmes: Programme[] = [
       "Responsible Adoption Protocols",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/ai-leadership",
+    detailPage: "/strategic-leadership-ai",
+    individualFee: "£895",
   },
   {
     title: "The Future of Work",

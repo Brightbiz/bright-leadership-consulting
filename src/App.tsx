@@ -21,6 +21,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 // Programme pages
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
 const Courses = lazy(() => import("./pages/Courses"));
+const StrategicLeadershipAI = lazy(() => import("./pages/StrategicLeadershipAI"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
@@ -54,6 +55,7 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/executive-leadership-mastery" element={<PageTransition><ExecutiveLeadershipMastery /></PageTransition>} />
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
+          <Route path="/strategic-leadership-ai" element={<PageTransition><StrategicLeadershipAI /></PageTransition>} />
           <Route path="/augmented-leadership" element={<PageTransition><AugmentedLeadership /></PageTransition>} />
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
@@ -65,6 +67,10 @@ const AnimatedRoutes = () => {
           <Route path="/about" element={<Navigate to="/advisory-process" replace />} />
           <Route path="/resources" element={<Navigate to="/courses" replace />} />
           <Route path="/faq" element={<Navigate to="/advisory-process" replace />} />
+          <Route path="/programs/ai-leadership" element={<Navigate to="/strategic-leadership-ai" replace />} />
+          <Route path="/ai-leadership" element={<Navigate to="/strategic-leadership-ai" replace />} />
+          <Route path="/programs/*" element={<Navigate to="/courses" replace />} />
+          <Route path="/programmes" element={<Navigate to="/courses" replace />} />
 
 
           

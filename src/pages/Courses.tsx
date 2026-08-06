@@ -104,21 +104,8 @@ const Courses = () => {
                   facilitated cohort. There is no prerequisite diagnostic and
                   no organisational sponsorship requirement.
                 </p>
-                <a
-                  href={programmes[0].link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-quiet text-sm"
-                  onClick={() =>
-                    trackCourseCtaClick({
-                      programme: programmes[0].title,
-                      url: programmes[0].link,
-                      surface: "/courses",
-                      label: "Enrol on a Programme",
-                    })
-                  }
-                >
-                  Enrol on a Programme
+                <a href="#programme-catalogue" className="link-quiet text-sm">
+                  View All Programmes
                   <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               </motion.div>
@@ -152,7 +139,7 @@ const Courses = () => {
         <div className="section-divider" />
 
         {/* Section 3 — Programme Portfolio */}
-        <section className="section-brief section-pearl">
+        <section id="programme-catalogue" className="section-brief section-pearl scroll-mt-24">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Portfolio
@@ -171,8 +158,10 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              This is the complete programme catalogue. Fees and current
-              availability are confirmed on request.
+              This is the complete programme catalogue. Where an individual
+              self-directed fee is published, it is stated below. Organisational,
+              cohort and facilitated delivery is scoped individually and the fee
+              is confirmed on request.
             </motion.p>
 
             <div className="max-w-[720px] space-y-0">
@@ -191,6 +180,12 @@ const Courses = () => {
 
                   <p className="text-sm font-medium text-accent mb-3">
                     {programme.subtitle}
+                  </p>
+
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {programme.individualFee
+                      ? `Individual self-directed enrolment: ${programme.individualFee}. Organisational, cohort and facilitated delivery: fee on request.`
+                      : "Individual and organisational fees confirmed on request."}
                   </p>
 
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">
