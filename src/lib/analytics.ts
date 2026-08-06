@@ -79,3 +79,22 @@ export function trackCourseCtaClick(event: CourseCtaEvent) {
     outbound: true,
   });
 }
+
+export interface ProgrammeViewEvent {
+  /** Programme title, e.g. "Strategic Leadership in the Age of AI". */
+  programme: string;
+  /** Route the programme page is served from. */
+  surface: string;
+}
+
+/**
+ * Fired once per mount of an internal programme detail page. Pair with
+ * `course_cta_click` on the same `programme_name` to measure the
+ * page-view → Thinkific enrolment click-through rate.
+ */
+export function trackProgrammeView(event: ProgrammeViewEvent) {
+  trackEvent("programme_view", {
+    programme_name: event.programme,
+    page_surface: event.surface,
+  });
+}
