@@ -8,7 +8,8 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
 import { programmes } from "@/data/programmes";
-import { trackCourseCtaClick } from "@/lib/analytics";
+import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
+import { useEffect } from "react";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
