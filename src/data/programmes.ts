@@ -63,7 +63,9 @@ export const programmes: Programme[] = [
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
     detailPage: "/strategic-leadership-ai",
     enrolmentAvailable: true,
+    cpdHours: "20–30 CPD hours",
     individualFee: "£895",
+
   },
   {
     title: "The Future of Work",
@@ -79,6 +81,8 @@ export const programmes: Programme[] = [
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
     detailPage: "/future-of-work",
     enrolmentAvailable: false,
+    cpdHours: "20–25 CPD hours",
+
 
   },
   {
@@ -95,6 +99,8 @@ export const programmes: Programme[] = [
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
     detailPage: "/strategic-productivity-peak-performance",
     enrolmentAvailable: false,
+    cpdHours: "20–25 CPD hours",
+
 
   },
 ];
