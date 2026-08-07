@@ -64,13 +64,20 @@ const ProgrammeCta = ({
 
   const [opening, setOpening] = useState(false);
 
-  const handleCta = (label: string, destination: string) => {
-    trackCourseCtaClick({ programme: programme.title, url: destination, surface, label });
-    onCtaClick?.({ label, destination });
-  };
-
   const handleEnrol = () => {
-    handleCta("Enrol Now", programme.link);
+    trackCourseCtaClick({
+      programme: programme.title,
+      url: programme.link,
+      surface,
+      label: "Enrol Now",
+    });
+    trackProgrammeEnrolClick({
+      programme: programme.title,
+      destination: programme.link,
+      surface,
+      label: "Enrol Now",
+    });
+    onCtaClick?.({ label: "Enrol Now", destination: programme.link });
     // The new tab takes a moment to hand off; show progress so the click is
     // acknowledged and repeat clicks are prevented.
     setOpening(true);
@@ -83,7 +90,33 @@ const ProgrammeCta = ({
       cta_surface: surface,
       reason: "missing_or_invalid_enrolment_url",
     });
-    handleCta("Request Enrolment Link", "/contact");
+    trackProgrammeEnquiryClick({
+      programme: programme.title,
+      destination: "/contact",
+      surface,
+      label: "Request Enrolment Link",
+    });
+    onCtaClick?.({ label: "Request Enrolment Link", destination: "/contact" });
+  };
+
+  const handleRequestAvailability = () => {
+    trackProgrammeEnquiryClick({
+      programme: programme.title,
+      destination: "/contact",
+      surface,
+      label: "Request Availability",
+    });
+    onCtaClick?.({ label: "Request Availability", destination: "/contact" });
+  };
+
+  const handleAdvisory = () => {
+    trackProgrammeAdvisoryClick({
+      programme: programme.title,
+      destination: "/contact",
+      surface,
+      label: "Discuss Executive Alignment",
+    });
+    onCtaClick?.({ label: "Discuss Executive Alignment", destination: "/contact" });
   };
 
   return (
