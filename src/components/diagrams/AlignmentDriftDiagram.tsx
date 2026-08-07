@@ -15,8 +15,11 @@ const AlignmentDriftDiagram = () => {
           viewBox="0 0 500 250"
           className="absolute inset-0 w-full h-full"
           fill="none"
+          role="img"
+          aria-label="Alignment drift chart: stated strategic intent stays constant over time while executive interpretation diverges from it, widening the alignment gap the Executive Alignment Index™ measures."
           xmlns="http://www.w3.org/2000/svg"
         >
+
           {/* Y axis */}
           <line x1="50" y1="20" x2="50" y2="210" stroke="hsl(0 0% 90%)" strokeWidth="1" />
           {/* X axis */}
