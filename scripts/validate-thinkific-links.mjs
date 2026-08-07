@@ -16,6 +16,11 @@ const EXTS = new Set([
 
 const LEGACY = /thinkific\.com\/courses\//gi;
 
+/** Legacy URLs that Thinkific still serves and are intentionally retained. */
+const ALLOWED_LEGACY = new Set([
+  "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+]);
+
 function walk(path, out) {
   let s;
   try {
@@ -41,9 +46,12 @@ for (const file of files) {
   const lines = readFileSync(file, "utf8").split(/\r?\n/);
   lines.forEach((line, i) => {
     LEGACY.lastIndex = 0;
-    if (LEGACY.test(line)) {
-      violations.push({ file, line: i + 1, text: line.trim().slice(0, 200) });
-    }
+    if (!LEGACY.test(line)) return;
+    const urlMatch = line.match(
+      /https:\/\/bright-leadership-consulting\.thinkific\.com\/courses\/[a-z0-9-]+/i
+    );
+    if (urlMatch && ALLOWED_LEGACY.has(urlMatch[0])) return;
+    violations.push({ file, line: i + 1, text: line.trim().slice(0, 200) });
   });
 }
 

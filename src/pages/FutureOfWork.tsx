@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { programmes } from "@/data/programmes";
-import { trackProgrammeView } from "@/lib/analytics";
+import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -265,17 +265,30 @@ const FutureOfWork = () => {
                   Individual, Self-Directed
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  Next intake on request
+                  {programme.individualFee}
                 </h3>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                  The individual route is not currently open for direct
-                  enrolment. Intake dates are confirmed on enquiry, and
-                  enquiries are handled confidentially.
+                  Immediate enrolment for a single executive, with full access
+                  to all modules and working documents. No diagnostic and no
+                  organisational sponsorship required.
                 </p>
-                <Link to="/contact" className="link-quiet text-sm">
-                  Request availability
+                <a
+                  href={programme.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet text-sm"
+                  onClick={() =>
+                    trackCourseCtaClick({
+                      programme: programme.title,
+                      url: programme.link,
+                      surface: "/future-of-work",
+                      label: "Enrol as an individual",
+                    })
+                  }
+                >
+                  Enrol as an individual
                   <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
+                </a>
               </motion.div>
 
               <motion.div
