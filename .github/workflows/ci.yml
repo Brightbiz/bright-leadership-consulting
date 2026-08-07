@@ -26,7 +26,7 @@ jobs:
       # Fails the pipeline on any CPD hours mismatch between
       # src/data/programmes.ts and downloadable assets / PDF generators.
       - name: Validate CPD hours
-        run: npm run validate:cpd
+        run: node scripts/validate-cpd-hours-report.mjs --always-write --out ./cpd-validation-report
 
       - name: Upload CPD validation report
         if: always()
