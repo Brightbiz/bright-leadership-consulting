@@ -9,6 +9,8 @@ import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
 import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
 import ProgrammeSelector from "@/components/ProgrammeSelector";
+import CpdHoursFaq from "@/components/CpdHoursFaq";
+
 import { programmes, facilitatedEngagement } from "@/data/programmes";
 import { trackCourseCtaClick } from "@/lib/analytics";
 
@@ -329,6 +331,37 @@ const Courses = () => {
         </section>
 
         <div className="section-divider" />
+
+        {/* Section 3d — CPD hours explained */}
+        <section id="cpd-hours" className="section-brief bg-background scroll-mt-24">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Accreditation
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              How CPD Hours Are Determined
+            </motion.h2>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              Each programme carries a stated range of accredited CPD hours. The
+              range, and what completion requires, is set out below.
+            </motion.p>
+
+            <CpdHoursFaq />
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
 
         {/* Section 4 — Facilitated Engagement (not a course) */}
         <section className="section-brief bg-background">
