@@ -126,15 +126,8 @@ const ProgrammeComparisonTable = () => {
         Table scrolls horizontally.
       </p>
 
-      <p className="sr-only">
-        <Link to="/contact">
-          Prefer to discuss the comparison directly? Contact the practice.
-        </Link>
-      </p>
-      <span className="sr-only">
-        <ArrowRight aria-hidden="true" className="hidden" />
-      </span>
     </motion.div>
+
   );
 };
 
