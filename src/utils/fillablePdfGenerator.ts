@@ -297,7 +297,7 @@ export async function generateFillableWorkbookPDF(module: ModuleData): Promise<U
   // Footer info
   const footerTexts = [
     'Executive Leadership Mastery Program',
-    'CPD Accredited • 66 CPD Points Total',
+    'CPD Accredited • 50-66 Accredited CPD Hours',
     '© Bright Leadership Consulting',
   ];
   let footerY = 120;
