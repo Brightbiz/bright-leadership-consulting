@@ -206,8 +206,10 @@
 
   /* Quiet CTA link */
   .link-quiet {
-    @apply inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300 tracking-wide;
+    @apply inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300 tracking-wide
+           rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
+
 
   /* Scan list — declarative short lines */
   .scan-list {
@@ -227,8 +229,10 @@
   .btn-brief {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm rounded-sm
            border border-foreground/20 bg-background text-foreground
-           transition-colors duration-200
-           hover:border-[hsl(38,60%,52%)] hover:text-[hsl(38,60%,52%)];
+           transition-colors duration-200 min-h-11
+           hover:border-[hsl(38,60%,52%)] hover:text-[hsl(38,60%,52%)]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+
     font-weight: 500;
     letter-spacing: 0.03em;
   }

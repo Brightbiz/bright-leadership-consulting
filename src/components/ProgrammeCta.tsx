@@ -16,6 +16,9 @@ type Props = {
  * Primary enrolment CTA for a programme.
  * Live programmes route to the enrolment platform; unpublished programmes
  * route to /contact so no CTA can lead to a dead end.
+ *
+ * Every control carries the programme title in its accessible name, so a
+ * screen-reader user moving link-by-link can tell repeated CTAs apart.
  */
 const ProgrammeCta = ({
   programme,
@@ -44,8 +47,10 @@ const ProgrammeCta = ({
             }
           >
             Enrol Now
-            <span className="sr-only"> (opens in a new tab)</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span className="sr-only">
+              {` in ${programme.title} (opens in a new tab)`}
+            </span>
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
         ) : (
           <Link
@@ -61,7 +66,8 @@ const ProgrammeCta = ({
             }
           >
             Request Availability
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span className="sr-only">{` for ${programme.title}`}</span>
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
         )}
 
@@ -78,17 +84,18 @@ const ProgrammeCta = ({
           }
         >
           Discuss Executive Alignment
-          <ArrowRight className="h-3 w-3" />
+          <span className="sr-only">{` regarding ${programme.title}`}</span>
+          <ArrowRight className="h-3 w-3" aria-hidden="true" />
         </Link>
 
         {programme.detailPage && (
           <Link to={programme.detailPage} className="link-quiet text-sm">
             View programme detail
-            <ArrowRight className="h-3 w-3" />
+            <span className="sr-only">{` for ${programme.title}`}</span>
+            <ArrowRight className="h-3 w-3" aria-hidden="true" />
           </Link>
         )}
       </div>
-
 
       {helperText && (
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
