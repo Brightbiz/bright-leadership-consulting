@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-08-07T20:02:16.235Z",
+  "catalogue": "src/data/programmes.ts",
+  "programmes": [
+    {
+      "title": "Executive Leadership Mastery",
+      "cpdHours": "50–66 CPD hours",
+      "assetCount": 4
+    },
+    {
+      "title": "Strategic Leadership in the Age of AI",
+      "cpdHours": "20–30 CPD hours",
+      "assetCount": 2
+    },
+    {
+      "title": "The Future of Work",
+      "cpdHours": "20–25 CPD hours",
+      "assetCount": 1
+    },
+    {
+      "title": "Strategic Productivity & Peak Performance",
+      "cpdHours": "20–25 CPD hours",
+      "assetCount": 1
+    }
+  ],
+  "filesScanned": 31,
+  "assets": [
+    {
+      "file": "public/brochures/executive-leadership-mastery-brochure.html",
+      "programme": "Executive Leadership Mastery",
+      "expected": "50–66 CPD hours",
+      "found": [
+        "50–66 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 208,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        },
+        {
+          "line": 352,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        },
+        {
+          "line": 385,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        },
+        {
+          "line": 447,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "public/downloads/executive-leadership-mastery-introduction.html",
+      "programme": "Executive Leadership Mastery",
+      "expected": "50–66 CPD hours",
+      "found": [
+        "50–66 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 481,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "public/downloads/executive-leadership-mastery-overview.html",
+      "programme": "Executive Leadership Mastery",
+      "expected": "50–66 CPD hours",
+      "found": [
+        "50–66 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 347,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "src/utils/fillablePdfGenerator.ts",
+      "programme": "Executive Leadership Mastery",
+      "expected": "50–66 CPD hours",
+      "found": [
+        "50–66 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 300,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "public/downloads/strategic-leadership-ai-workbook.html",
+      "programme": "Strategic Leadership in the Age of AI",
+      "expected": "20–30 CPD hours",
+      "found": [
+        "20–30 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 556,
+          "min": 20,
+          "max": 30,
+          "value": "20–30 CPD hours"
+        },
+        {
+          "line": 1219,
+          "min": 20,
+          "max": 30,
+          "value": "20–30 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "src/utils/strategicLeadershipPdfGenerator.ts",
+      "programme": "Strategic Leadership in the Age of AI",
+      "expected": "20–30 CPD hours",
+      "found": [
+        "20–30 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 350,
+          "min": 20,
+          "max": 30,
+          "value": "20–30 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "public/brochures/peak-performance-brochure.html",
+      "programme": "Strategic Productivity & Peak Performance",
+      "expected": "20–25 CPD hours",
+      "found": [],
+      "occurrences": [],
+      "bannedTerms": [],
+      "status": "error",
+      "issues": [
+        "Mapped to \"Strategic Productivity & Peak Performance\" but never states its CPD range 20–25 CPD hours."
+      ]
+    },
+    {
+      "file": "public/brochures/future-of-work-brochure.html",
+      "programme": "The Future of Work",
+      "expected": "20–25 CPD hours",
+      "found": [],
+      "occurrences": [],
+      "bannedTerms": [],
+      "status": "error",
+      "issues": [
+        "Mapped to \"The Future of Work\" but never states its CPD range 20–25 CPD hours."
+      ]
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "ok": 6,
+    "unmapped": 0,
+    "errors": 2
+  }
+}
