@@ -78,47 +78,24 @@ const ProgrammeComparisonTable = () => {
             </tr>
           ))}
           <tr>
-            <th scope="row" className="py-5 pr-6 sr-only">
-              Next step
+            <th
+              scope="row"
+              className="py-6 pr-6 align-top text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground"
+            >
+              Next Step
             </th>
             {programmes.map((p) => (
-              <td key={p.title} className="py-5 pr-6 align-top">
-                {p.enrolmentAvailable === false ? (
-                  <Link
-                    to="/contact"
-                    className="link-quiet text-sm"
-                    onClick={() =>
-                      trackCourseCtaClick({
-                        programme: p.title,
-                        url: "/contact",
-                        surface: "/courses#comparison",
-                        label: "Request Availability",
-                      })
-                    }
-                  >
-                    Request Availability
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                ) : (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link-quiet text-sm"
-                    onClick={() =>
-                      trackCourseCtaClick({
-                        programme: p.title,
-                        url: p.link,
-                        surface: "/courses#comparison",
-                        label: "View Programme & Enrol",
-                      })
-                    }
-                  >
-                    View Programme &amp; Enrol
-                    <span className="sr-only"> (opens in a new tab)</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </a>
-                )}
+              <td key={p.title} className="py-6 pr-6 align-top">
+                <ProgrammeCta
+                  programme={p}
+                  surface="/courses#comparison"
+                  helperText={false}
+                />
+                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                  {p.enrolmentAvailable === false
+                    ? "Intake dates confirmed on enquiry."
+                    : "Individual enrolment completes on the programme platform."}
+                </p>
               </td>
             ))}
           </tr>
