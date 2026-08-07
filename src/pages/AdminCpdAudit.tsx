@@ -139,10 +139,11 @@ const AdminCpdAudit = () => {
             Expected ranges (catalogue)
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {programmes.map((p) => (
-              <div key={p.slug ?? p.title} className="border-l-2 border-primary/40 pl-4">
+            {programmes.filter((p) => p.cpdHours).map((p) => (
+              <div key={p.title} className="border-l-2 border-primary/40 pl-4">
                 <p className="text-sm text-foreground">{p.title}</p>
                 <p className="mt-1 font-serif text-xl text-foreground">{p.cpdHours}</p>
+
               </div>
             ))}
           </div>
