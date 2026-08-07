@@ -18,7 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:schema": "node scripts/validate-course-schema.mjs",
-    "validate:cpd": "node scripts/validate-cpd-hours.mjs",
+    "validate:cpd": "node scripts/validate-cpd-hours-report.mjs --always-write",
     "check:a11y:keyboard": "python3 scripts/a11y-keyboard-check.py"
   },
   "dependencies": {
