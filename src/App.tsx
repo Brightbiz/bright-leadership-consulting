@@ -24,6 +24,9 @@ const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershi
 const Courses = lazy(() => import("./pages/Courses"));
 const StrategicLeadershipAI = lazy(() => import("./pages/StrategicLeadershipAI"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
+const FutureOfWork = lazy(() => import("./pages/FutureOfWork"));
+const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity"));
+
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
 
