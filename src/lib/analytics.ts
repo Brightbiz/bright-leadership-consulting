@@ -80,6 +80,72 @@ export function trackCourseCtaClick(event: CourseCtaEvent) {
   });
 }
 
+export interface ProgrammeCtaEvent {
+  programme: string;
+  destination: string;
+  surface: string;
+  label: string;
+  /** Whether the click leaves the site for the enrolment platform. */
+  outbound: boolean;
+  /** High-level CTA intent: enrol, enquiry, or advisory. */
+  intent: "enrol" | "enquiry" | "advisory";
+}
+
+/**
+ * Generic ProgrammeCta interaction. Fires alongside the intent-specific
+ * events below so every click carries both a precise event name and a
+ * common `programme_cta_click` event for funnel analysis by programme.
+ */
+function trackProgrammeCtaClick(event: ProgrammeCtaEvent) {
+  trackEvent("programme_cta_click", {
+    programme_name: event.programme,
+    destination_url: event.destination,
+    cta_surface: event.surface,
+    cta_label: event.label,
+    cta_intent: event.intent,
+    outbound: event.outbound,
+  });
+}
+
+/** A direct enrolment click ("Enrol Now"). Reported as `programme_enrol_click`. */
+export function trackProgrammeEnrolClick(event: Omit<ProgrammeCtaEvent, "intent" | "outbound">) {
+  const payload: ProgrammeCtaEvent = { ...event, intent: "enrol", outbound: true };
+  trackEvent("programme_enrol_click", {
+    programme_name: payload.programme,
+    destination_url: payload.destination,
+    cta_surface: payload.surface,
+    cta_label: payload.label,
+    outbound: payload.outbound,
+  });
+  trackProgrammeCtaClick(payload);
+}
+
+/** An enquiry click ("Request Availability" / "Request Enrolment Link"). Reported as `programme_enquiry_click`. */
+export function trackProgrammeEnquiryClick(event: Omit<ProgrammeCtaEvent, "intent" | "outbound">) {
+  const payload: ProgrammeCtaEvent = { ...event, intent: "enquiry", outbound: false };
+  trackEvent("programme_enquiry_click", {
+    programme_name: payload.programme,
+    destination_url: payload.destination,
+    cta_surface: payload.surface,
+    cta_label: payload.label,
+    outbound: payload.outbound,
+  });
+  trackProgrammeCtaClick(payload);
+}
+
+/** An advisory click ("Discuss Executive Alignment"). Reported as `programme_advisory_click`. */
+export function trackProgrammeAdvisoryClick(event: Omit<ProgrammeCtaEvent, "intent" | "outbound">) {
+  const payload: ProgrammeCtaEvent = { ...event, intent: "advisory", outbound: false };
+  trackEvent("programme_advisory_click", {
+    programme_name: payload.programme,
+    destination_url: payload.destination,
+    cta_surface: payload.surface,
+    cta_label: payload.label,
+    outbound: payload.outbound,
+  });
+  trackProgrammeCtaClick(payload);
+}
+
 export interface ProgrammeViewEvent {
   /** Programme title, e.g. "Strategic Leadership in the Age of AI". */
   programme: string;
