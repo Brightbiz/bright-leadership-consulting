@@ -186,6 +186,8 @@ const Courses = () => {
                     {programme.individualFee
                       ? `Individual self-directed enrolment: ${programme.individualFee}. Organisational, cohort and facilitated delivery: fee on request.`
                       : "Individual and organisational fees confirmed on request."}
+                    {programme.enrolmentAvailable === false &&
+                      " Next intake dates confirmed on request."}
                   </p>
 
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">
@@ -205,23 +207,42 @@ const Courses = () => {
                   </ul>
 
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                    <a
-                      href={programme.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-quiet text-sm"
-                      onClick={() =>
-                        trackCourseCtaClick({
-                          programme: programme.title,
-                          url: programme.link,
-                          surface: "/courses",
-                          label: "View Programme & Enrol",
-                        })
-                      }
-                    >
-                      View Programme &amp; Enrol
-                      <ArrowRight className="h-3 w-3" />
-                    </a>
+                    {programme.enrolmentAvailable === false ? (
+                      <Link
+                        to="/contact"
+                        className="link-quiet text-sm"
+                        onClick={() =>
+                          trackCourseCtaClick({
+                            programme: programme.title,
+                            url: "/contact",
+                            surface: "/courses",
+                            label: "Request Availability",
+                          })
+                        }
+                      >
+                        Request Availability
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    ) : (
+                      <a
+                        href={programme.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-quiet text-sm"
+                        onClick={() =>
+                          trackCourseCtaClick({
+                            programme: programme.title,
+                            url: programme.link,
+                            surface: "/courses",
+                            label: "View Programme & Enrol",
+                          })
+                        }
+                      >
+                        View Programme &amp; Enrol
+                        <span className="sr-only"> (opens in a new tab)</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </a>
+                    )}
                     {programme.detailPage && (
                       <Link to={programme.detailPage} className="link-quiet text-sm text-muted-foreground">
                         Programme Details
@@ -235,6 +256,7 @@ const Courses = () => {
                       Request programme fees and current availability
                     </Link>
                   </div>
+
                 </motion.div>
               ))}
             </div>

@@ -13,11 +13,18 @@ export type Programme = {
   link: string;
   /** Optional in-site detail page */
   detailPage?: string;
+  /**
+   * Whether the enrolment platform link is live and purchasable.
+   * When false the surface must show "Request Availability" (→ /contact)
+   * instead of an enrolment link, so no CTA can lead to a 404.
+   */
+  enrolmentAvailable?: boolean;
   /** Individual self-directed enrolment fee, when published publicly (GBP). */
   individualFee?: string;
   /** Optional social-preview image path under /public (absolute path from site root) */
   ogImage?: string;
 };
+
 
 
 export const programmes: Programme[] = [
@@ -34,6 +41,7 @@ export const programmes: Programme[] = [
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
     detailPage: "/executive-leadership-mastery",
+    enrolmentAvailable: true,
   },
   {
     title: "Strategic Leadership in the Age of AI",
@@ -48,6 +56,7 @@ export const programmes: Programme[] = [
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
     detailPage: "/strategic-leadership-ai",
+    enrolmentAvailable: true,
     individualFee: "£895",
   },
   {
@@ -62,6 +71,7 @@ export const programmes: Programme[] = [
       "Organisational Design Principles",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
+    enrolmentAvailable: false,
   },
   {
     title: "Strategic Productivity & Peak Performance",
@@ -75,6 +85,7 @@ export const programmes: Programme[] = [
       "Team Performance Optimisation",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
+    enrolmentAvailable: false,
   },
 ];
 
