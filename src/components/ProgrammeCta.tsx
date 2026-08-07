@@ -184,8 +184,6 @@ const ProgrammeCta = ({
   );
 };
 
-    </div>
-  );
-};
+
 
 export default ProgrammeCta;
