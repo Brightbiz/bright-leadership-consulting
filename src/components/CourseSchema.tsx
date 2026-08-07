@@ -12,19 +12,60 @@ const PROVIDER = {
 const programmeUrl = (p: Programme) =>
   p.detailPage ? `${SITE_URL}${p.detailPage}` : p.link;
 
-const courseNode = (p: Programme) => ({
-  "@type": "Course",
-  name: p.title,
-  description: p.description,
-  url: programmeUrl(p),
-  provider: PROVIDER,
-  hasCourseInstance: {
-    "@type": "CourseInstance",
-    courseMode: "online",
-    courseWorkload: "PT10H",
-  },
-  ...(p.detailPage ? { sameAs: p.link } : {}),
-});
+/** Parses "50–66 CPD hours" (en dash or hyphen) into its numeric bounds. */
+const cpdRange = (cpdHours?: string) => {
+  const match = cpdHours?.match(/(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)/);
+  if (!match) return null;
+  return { min: Number(match[1]), max: Number(match[2]) };
+};
+
+/**
+ * Accredited CPD hours expressed for search engines:
+ *  - timeRequired / courseWorkload as ISO 8601 durations (lower and upper bound)
+ *  - educationalCredentialAwarded naming the accredited hours
+ *  - an additionalProperty carrying the human-readable range
+ */
+const cpdNodes = (p: Programme) => {
+  const range = cpdRange(p.cpdHours);
+  if (!range) return { workload: "PT10H", extra: {} };
+
+  return {
+    workload: `PT${range.max}H`,
+    extra: {
+      timeRequired: `PT${range.min}H`,
+      educationalCredentialAwarded: `${p.cpdHours} — accredited by The CPD Standards Office (Provider 50838)`,
+      additionalProperty: [
+        {
+          "@type": "PropertyValue",
+          name: "Accredited CPD hours",
+          value: p.cpdHours,
+          minValue: range.min,
+          maxValue: range.max,
+          unitText: "HUR",
+        },
+      ],
+    },
+  };
+};
+
+const courseNode = (p: Programme) => {
+  const { workload, extra } = cpdNodes(p);
+  return {
+    "@type": "Course",
+    name: p.title,
+    description: p.description,
+    url: programmeUrl(p),
+    provider: PROVIDER,
+    ...extra,
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "online",
+      courseWorkload: workload,
+    },
+    ...(p.detailPage ? { sameAs: p.link } : {}),
+  };
+};
+
 
 interface CourseSchemaProps {
   /** Emit a single Course node for this programme title; omit for the full catalogue list. */
