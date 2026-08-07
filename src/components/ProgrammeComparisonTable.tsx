@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 import { programmes } from "@/data/programmes";
 import ProgrammeCta from "@/components/ProgrammeCta";
 
