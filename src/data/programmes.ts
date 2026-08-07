@@ -46,7 +46,7 @@ export const programmes: Programme[] = [
       "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/products/courses/ai-leadership",
+    link: "https://bright-leadership-consulting.thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
     detailPage: "/strategic-leadership-ai",
     individualFee: "£895",
   },
