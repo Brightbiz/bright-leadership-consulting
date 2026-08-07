@@ -21,6 +21,10 @@ export type Programme = {
   enrolmentAvailable?: boolean;
   /** Individual self-directed enrolment fee, when published publicly (GBP). */
   individualFee?: string;
+  /** Short instalment summary shown alongside the individual fee. */
+  paymentPlanSummary?: string;
+  /** Full instalment breakdown, shown on the programme detail page. */
+  paymentPlanDetail?: string;
   /** Accredited CPD hours range, as stated on the accreditation record. */
   cpdHours?: string;
 
