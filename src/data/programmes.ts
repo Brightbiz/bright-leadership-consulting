@@ -87,7 +87,9 @@ export const programmes: Programme[] = [
       "Team Performance Optimisation",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
+    detailPage: "/strategic-productivity-peak-performance",
     enrolmentAvailable: false,
+
   },
 ];
 
