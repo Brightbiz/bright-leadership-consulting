@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { programmes } from "@/data/programmes";
-import { trackCourseCtaClick } from "@/lib/analytics";
+import ProgrammeCta from "@/components/ProgrammeCta";
+
 
 type Route = {
   condition: string;
