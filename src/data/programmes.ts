@@ -71,7 +71,9 @@ export const programmes: Programme[] = [
       "Organisational Design Principles",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
+    detailPage: "/future-of-work",
     enrolmentAvailable: false,
+
   },
   {
     title: "Strategic Productivity & Peak Performance",
