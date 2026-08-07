@@ -42,7 +42,14 @@ const ProgrammeCta = ({
 
   return (
     <div className={className}>
-      <div className="flex flex-wrap items-center gap-3">
+      {/* Grouped so a screen reader announces which programme the repeated
+          controls belong to, and so keyboard users landing mid-table have
+          context for the next few tab stops. */}
+      <div
+        role="group"
+        aria-label={`Next steps for ${programme.title}`}
+        className="flex flex-wrap items-center gap-3"
+      >
         {live ? (
           <a
             href={programme.link}
