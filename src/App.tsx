@@ -24,6 +24,9 @@ const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershi
 const Courses = lazy(() => import("./pages/Courses"));
 const StrategicLeadershipAI = lazy(() => import("./pages/StrategicLeadershipAI"));
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
+const FutureOfWork = lazy(() => import("./pages/FutureOfWork"));
+const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity"));
+
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
 
@@ -64,6 +67,9 @@ const AnimatedRoutes = () => {
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
           <Route path="/strategic-leadership-ai" element={<PageTransition><StrategicLeadershipAI /></PageTransition>} />
           <Route path="/augmented-leadership" element={<PageTransition><AugmentedLeadership /></PageTransition>} />
+          <Route path="/future-of-work" element={<PageTransition><FutureOfWork /></PageTransition>} />
+          <Route path="/strategic-productivity-peak-performance" element={<PageTransition><StrategicProductivity /></PageTransition>} />
+
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
