@@ -11,14 +11,14 @@
     "validate:redirects": "node scripts/validate-redirects.mjs",
     "validate:links:live": "node scripts/validate-thinkific-urls-live.mjs",
     "validate:redirects:live": "node scripts/validate-redirects.mjs --live",
-    "build": "node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours.mjs && vite build",
-    "build:dev": "node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours.mjs && vite build --mode development",
+    "build": "node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours-report.mjs && vite build",
+    "build:dev": "node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours-report.mjs && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:schema": "node scripts/validate-course-schema.mjs",
-    "validate:cpd": "node scripts/validate-cpd-hours.mjs",
+    "validate:cpd": "node scripts/validate-cpd-hours-report.mjs --always-write",
     "check:a11y:keyboard": "python3 scripts/a11y-keyboard-check.py"
   },
   "dependencies": {
