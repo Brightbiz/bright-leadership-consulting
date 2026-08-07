@@ -49,7 +49,7 @@ const structure = [
   "Modular programme progressing from performance diagnosis to system design",
   "Self-directed online delivery with downloadable working documents",
   "Cohort and 1:1 delivery available for leadership teams",
-  "Accredited CPD Activity as part of the wider accredited pathway",
+  "20–25 accredited CPD hours on completion",
 ];
 
 const StrategicProductivity = () => {

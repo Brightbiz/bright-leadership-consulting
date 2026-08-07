@@ -52,8 +52,9 @@ const tiers = [
     name: "Self-Directed Executive Programme",
     description: "Complete programme access. Master the full executive curriculum at your own pace.",
     inclusions: [
-      "All 33 modules (80+ hours)",
-      "66 CPD points upon completion",
+      "All 33 modules",
+      "50–66 accredited CPD hours on completion",
+
       "Downloadable workbooks and templates",
       "Case studies and action plans",
       "Certificate of completion",
@@ -98,7 +99,7 @@ const ExecutiveLeadershipMastery = () => {
       <ProgrammeMeta
         programmeTitle="Executive Leadership Mastery"
         title="Executive Leadership Mastery | Bright Leadership"
-        description="The flagship 33-module executive programme — 80+ hours and 66 CPD points across seven leadership disciplines, from AI governance to strategic productivity."
+        description="The flagship 33-module executive programme — 50–66 accredited CPD hours across seven leadership disciplines, from AI governance to strategic productivity."
         path="/executive-leadership-mastery"
       />
 
@@ -135,7 +136,7 @@ const ExecutiveLeadershipMastery = () => {
                 </p>
 
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  80+ hours of content. 66 CPD points. Seven integrated disciplines.
+                  50–66 accredited CPD hours. Seven integrated disciplines.
                 </p>
               </motion.div>
             </div>
@@ -219,8 +220,9 @@ const ExecutiveLeadershipMastery = () => {
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
                 <p>33 comprehensive modules across 7 disciplines</p>
-                <p>80+ hours of structured executive content</p>
-                <p>66 CPD points upon completion</p>
+                <p>50–66 accredited CPD hours on completion</p>
+                <p>Structured executive content across seven disciplines</p>
+
                 <p>Downloadable workbooks, templates and action plans</p>
                 <p>Real-world capstone project</p>
                 <p>Flexible self-paced learning</p>

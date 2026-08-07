@@ -15,9 +15,14 @@ const rows: { label: string; value: (i: number) => string }[] = [
     value: (i) => programmes[i].features[0],
   },
   {
+    label: "Accredited CPD",
+    value: (i) => programmes[i].cpdHours ?? "On request",
+  },
+  {
     label: "Individual Fee",
     value: (i) => programmes[i].individualFee ?? "On request",
   },
+
   {
     label: "Availability",
     value: (i) =>
@@ -48,9 +53,10 @@ const ProgrammeComparisonTable = () => {
         <table className="w-full min-w-[720px] border-collapse text-left">
           <caption className="sr-only">
             Comparison of the four executive programmes by structure, primary
-            focus, individual fee and current availability. The final row gives
-            the next step for each programme.
+            focus, accredited CPD hours, individual fee and current
+            availability. The final row gives the next step for each programme.
           </caption>
+
           <thead>
             <tr className="border-b border-border">
               <th
