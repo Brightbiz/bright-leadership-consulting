@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { programmes } from "@/data/programmes";
 import ProgrammeCta from "@/components/ProgrammeCta";
 
-
 type Route = {
   condition: string;
   programme: (typeof programmes)[number];
@@ -49,44 +48,71 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
+const slug = (title: string) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+/**
+ * "Which programme is right for me?" — an ordered set of If / Then routes.
+ * Rendered as a semantic list so screen readers announce the number of routes,
+ * with each condition programmatically tied to its recommendation.
+ */
 const ProgrammeSelector = () => {
   return (
-    <div className="max-w-[860px] divide-y divide-border border-t border-border">
-      {routes.map((route, i) => (
-        <motion.div
-          key={route.programme.title}
-          className="grid gap-4 py-8 md:grid-cols-[1fr_1fr] md:gap-10"
-          {...fade}
-          transition={{ ...fade.transition, delay: 0.08 + i * 0.07 }}
-        >
-          <div>
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
-              If
-            </p>
-            <p className="text-sm leading-relaxed text-foreground">
-              {route.condition}
-            </p>
-          </div>
+    <ul className="max-w-[860px] list-none divide-y divide-border border-t border-border pl-0">
+      {routes.map((route, i) => {
+        const id = slug(route.programme.title);
+        return (
+          <motion.li
+            key={route.programme.title}
+            className="grid gap-4 py-8 md:grid-cols-[1fr_1fr] md:gap-10"
+            aria-labelledby={`selector-heading-${id}`}
+            aria-describedby={`selector-condition-${id}`}
+            {...fade}
+            transition={{ ...fade.transition, delay: 0.08 + i * 0.07 }}
+          >
+            <div>
+              <p
+                className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3"
+                aria-hidden="true"
+              >
+                If
+              </p>
+              <p
+                id={`selector-condition-${id}`}
+                className="text-sm leading-relaxed text-foreground"
+              >
+                <span className="sr-only">If: </span>
+                {route.condition}
+              </p>
+            </div>
 
-          <div>
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
-              Then
-            </p>
-            <h3 className="font-serif text-base font-semibold text-foreground mb-2">
-              {route.programme.title}
-            </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-              {route.rationale}
-            </p>
-            <ProgrammeCta
-              programme={route.programme}
-              surface="/courses#which-programme"
-            />
-          </div>
-        </motion.div>
-      ))}
+            <div>
+              <p
+                className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3"
+                aria-hidden="true"
+              >
+                Then
+              </p>
+              <h3
+                id={`selector-heading-${id}`}
+                className="font-serif text-base font-semibold text-foreground mb-2"
+              >
+                <span className="sr-only">Then: </span>
+                {route.programme.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                {route.rationale}
+              </p>
+              <ProgrammeCta
+                programme={route.programme}
+                surface="/courses#which-programme"
+              />
+            </div>
+          </motion.li>
+        );
+      })}
 
-      <motion.div className="py-8" {...fade}>
+      <motion.li className="py-8" {...fade}>
         <p className="text-sm leading-relaxed text-muted-foreground mb-4">
           Where development is being commissioned for a leadership team rather
           than an individual, the appropriate programme is determined by
@@ -94,10 +120,10 @@ const ProgrammeSelector = () => {
         </p>
         <Link to="/executive-alignment-index" className="link-quiet text-sm">
           Explore the Executive Alignment Index™
-          <ArrowRight className="h-3 w-3" />
+          <ArrowRight className="h-3 w-3" aria-hidden="true" />
         </Link>
-      </motion.div>
-    </div>
+      </motion.li>
+    </ul>
   );
 };
 
