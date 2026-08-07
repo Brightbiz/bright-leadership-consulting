@@ -17,6 +17,7 @@ import { join, relative, resolve } from "node:path";
 const args = process.argv.slice(2);
 const ROOT = resolve(args.includes("--root") ? args[args.indexOf("--root") + 1] : process.cwd());
 const OUT_DIR = resolve(args.includes("--out") ? args[args.indexOf("--out") + 1] : "/mnt/documents/cpd-validation-report");
+const ALWAYS_WRITE = args.includes("--always-write");
 const CATALOGUE = "src/data/programmes.ts";
 
 /* ---------------------------------------------------------------- catalogue */
