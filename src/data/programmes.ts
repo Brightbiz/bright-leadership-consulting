@@ -21,6 +21,9 @@ export type Programme = {
   enrolmentAvailable?: boolean;
   /** Individual self-directed enrolment fee, when published publicly (GBP). */
   individualFee?: string;
+  /** Accredited CPD hours range, as stated on the accreditation record. */
+  cpdHours?: string;
+
   /** Optional social-preview image path under /public (absolute path from site root) */
   ogImage?: string;
 };
@@ -32,16 +35,18 @@ export const programmes: Programme[] = [
     title: "Executive Leadership Mastery",
     subtitle: "Flagship 33-Module Programme",
     description:
-      "A 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 80+ hours of structured content. 66 CPD points.",
+      "A 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 50–66 accredited CPD hours.",
     features: [
       "7 Integrated Leadership Disciplines",
-      "80+ Hours of Executive Content",
-      "66 CPD Points Accredited",
+      "50–66 Accredited CPD Hours",
+      "Accredited CPD Activity (Provider 50838)",
       "Self-Directed, Cohort-Based or 1:1",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
     detailPage: "/executive-leadership-mastery",
     enrolmentAvailable: true,
+    cpdHours: "50–66 CPD hours",
+
     individualFee: "£1,297",
   },
   {
