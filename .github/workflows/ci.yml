@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # sitemap lastmod dates are derived from git history
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Fails the pipeline on any CPD hours mismatch between
+      # src/data/programmes.ts and downloadable assets / PDF generators.
+      - name: Validate CPD hours
+        run: node scripts/validate-cpd-hours-report.mjs --always-write --out ./cpd-validation-report
+
+      - name: Upload CPD validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpd-validation-report
+          path: |
+            cpd-validation-report/**
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
