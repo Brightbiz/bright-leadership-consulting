@@ -274,9 +274,11 @@ if (mismatches.length > 0) {
   process.exit(1);
 }
 
-const { jsonPath, htmlPath } = writeReports();
 console.log(`✓ CPD hours consistent across ${targets.length} asset(s) for ${programmes.length} programme(s).`);
-console.log(`  Reports written to:`);
-console.log(`    JSON: ${jsonPath}`);
-console.log(`    HTML: ${htmlPath}`);
+if (ALWAYS_WRITE) {
+  const { jsonPath, htmlPath } = writeReports();
+  console.log(`  Reports written to:`);
+  console.log(`    JSON: ${jsonPath}`);
+  console.log(`    HTML: ${htmlPath}`);
+}
 for (const p of programmes) console.log(`    ${p.title}: ${p.cpdHours}`);
