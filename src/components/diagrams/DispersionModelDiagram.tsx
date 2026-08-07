@@ -23,7 +23,12 @@ const fade = {
 
 const DispersionModelDiagram = () => {
   return (
-    <motion.div className="w-full max-w-2xl mx-auto" {...fade}>
+    <motion.div
+      className="w-full max-w-2xl mx-auto"
+      role="img"
+      aria-label="Dispersion model: five executives plotted on a low-to-high alignment scale — CFO 2.1, COO 2.8, CHRO 3.2, CTO 3.6, CMO 4.1 — against a median of 3.2, showing the spread of interpretation across the leadership team."
+      {...fade}
+    >
       {/* Axis labels */}
       <div className="flex justify-between mb-2 px-1">
         <span className="text-xs text-muted-foreground">Low Alignment</span>
