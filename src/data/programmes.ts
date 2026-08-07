@@ -41,6 +41,7 @@ export const programmes: Programme[] = [
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
     detailPage: "/executive-leadership-mastery",
+    enrolmentAvailable: true,
   },
   {
     title: "Strategic Leadership in the Age of AI",
@@ -55,6 +56,7 @@ export const programmes: Programme[] = [
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
     detailPage: "/strategic-leadership-ai",
+    enrolmentAvailable: true,
     individualFee: "£895",
   },
   {
@@ -69,6 +71,7 @@ export const programmes: Programme[] = [
       "Organisational Design Principles",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
+    enrolmentAvailable: false,
   },
   {
     title: "Strategic Productivity & Peak Performance",
@@ -82,6 +85,7 @@ export const programmes: Programme[] = [
       "Team Performance Optimisation",
     ],
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
+    enrolmentAvailable: false,
   },
 ];
 
