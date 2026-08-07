@@ -18,7 +18,12 @@ const fade = {
 
 const AlignmentFrameworkDiagram = () => {
   return (
-    <motion.div className="w-full max-w-3xl mx-auto" {...fade}>
+    <motion.div
+      className="w-full max-w-3xl mx-auto"
+      role="img"
+      aria-label="Alignment framework: strategy above six measured dimensions — Strategic Interpretation, Decision Rights Clarity, Cross-Functional Coordination, Escalation Pathways, Accountability Architecture and Risk Ownership — resolving into execution."
+      {...fade}
+    >
       {/* Strategy layer */}
       <div className="border border-border px-6 py-4 text-center">
         <span className="font-serif text-lg font-semibold text-foreground tracking-wide">
