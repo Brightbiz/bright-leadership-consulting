@@ -101,10 +101,10 @@ const Courses = () => {
                   Select a programme and enrol directly
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Choose the programme appropriate to your development
-                  objectives and begin immediately, or apply for the next
-                  facilitated cohort. There is no prerequisite diagnostic and
-                  no organisational sponsorship requirement.
+                  Choose an available programme and begin immediately, or
+                  request the next intake or a facilitated cohort. There is no
+                  prerequisite diagnostic and no organisational sponsorship
+                  requirement.
                 </p>
                 <a href="#programme-catalogue" className="link-quiet text-sm">
                   View All Programmes
