@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { Programme } from "@/data/programmes";
-import { trackCourseCtaClick, trackProgrammeDetailClick, trackEvent } from "@/lib/analytics";
+import {
+  trackCourseCtaClick,
+  trackProgrammeEnrolClick,
+  trackProgrammeEnquiryClick,
+  trackProgrammeAdvisoryClick,
+  trackProgrammeDetailClick,
+  trackEvent,
+} from "@/lib/analytics";
 
 type Props = {
   programme: Programme;
