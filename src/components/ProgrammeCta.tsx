@@ -166,7 +166,7 @@ const ProgrammeCta = ({
           <Link
             to="/contact"
             className="btn-brief"
-            onClick={() => handleCta("Request Availability", "/contact")}
+            onClick={handleRequestAvailability}
           >
             Request Availability
             <span className="sr-only">{` for ${programme.title}`}</span>
@@ -177,7 +177,7 @@ const ProgrammeCta = ({
         <Link
           to="/contact"
           className="link-quiet text-sm"
-          onClick={() => handleCta("Discuss Executive Alignment", "/contact")}
+          onClick={handleAdvisory}
         >
           Discuss Executive Alignment
           <span className="sr-only">{` regarding ${programme.title}`}</span>
