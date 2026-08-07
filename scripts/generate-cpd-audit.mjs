@@ -51,7 +51,7 @@ const ASSET_MAP = {
   "src/utils/fillablePdfGenerator.ts": "Executive Leadership Mastery",
   "public/downloads/strategic-leadership-ai-workbook.html": "Strategic Leadership in the Age of AI",
   "src/utils/strategicLeadershipPdfGenerator.ts": "Strategic Leadership in the Age of AI",
-  "public/brochures/future-of-work-brochure.html": "The Future of Work",
+  "public/brochures/future-of-work-brochure.html": "The Future Workplace & Workforce Strategy",
   "public/brochures/peak-performance-brochure.html": "Strategic Productivity & Peak Performance",
 };
 
