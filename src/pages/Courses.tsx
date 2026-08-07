@@ -188,7 +188,11 @@ const Courses = () => {
 
                   <p className="text-sm text-muted-foreground mb-3">
                     {programme.individualFee
-                      ? `Individual self-directed enrolment: ${programme.individualFee}. Organisational, cohort and facilitated delivery: fee on request.`
+                      ? `Individual self-directed enrolment: ${programme.individualFee}${
+                          programme.paymentPlanSummary
+                            ? `, with ${programme.paymentPlanSummary}`
+                            : ""
+                        }. Organisational, cohort and facilitated delivery: fee on request.`
                       : "Individual and organisational fees confirmed on request."}
                     {programme.enrolmentAvailable === false &&
                       " Next intake dates confirmed on request."}

@@ -21,6 +21,10 @@ export type Programme = {
   enrolmentAvailable?: boolean;
   /** Individual self-directed enrolment fee, when published publicly (GBP). */
   individualFee?: string;
+  /** Short instalment summary shown alongside the individual fee. */
+  paymentPlanSummary?: string;
+  /** Full instalment breakdown, shown on the programme detail page. */
+  paymentPlanDetail?: string;
   /** Accredited CPD hours range, as stated on the accreditation record. */
   cpdHours?: string;
 
@@ -48,6 +52,9 @@ export const programmes: Programme[] = [
     cpdHours: "50–66 CPD hours",
 
     individualFee: "£1,297",
+    paymentPlanSummary: "a three-month payment plan is available",
+    paymentPlanDetail:
+      "Pay in full: £1,297. Or pay in three monthly instalments of £435. Total payable: £1,305. The first instalment is taken at enrolment; the remaining two are collected on the same date in each of the following two months. Programme access continues after the final instalment.",
   },
   {
     title: "Strategic Leadership in the Age of AI",
