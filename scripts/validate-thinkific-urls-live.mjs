@@ -23,7 +23,6 @@ const URL_RE =
 
 /** Slugs known to be unpublished on Thinkific — warn instead of fail. */
 const KNOWN_UNPUBLISHED = new Set([
-  "the-future-of-work",
   "achieving-peak-performance",
   "executive-leadership-mastery-program",
   "employability-skills-for-employees",

@@ -16,6 +16,11 @@ const EXTS = new Set([
 
 const LEGACY = /thinkific\.com\/courses\//gi;
 
+/** Legacy URLs that Thinkific still serves and are intentionally retained. */
+const ALLOWED_LEGACY = new Set([
+  "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+]);
+
 function walk(path, out) {
   let s;
   try {

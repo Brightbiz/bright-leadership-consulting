@@ -85,9 +85,10 @@ export const programmes: Programme[] = [
       "Talent Retention Frameworks",
       "Organisational Design Principles",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/products/courses/the-future-of-work",
+    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
     detailPage: "/future-of-work",
-    enrolmentAvailable: false,
+    enrolmentAvailable: true,
+    individualFee: "£895",
     cpdHours: "20–25 CPD hours",
 
 
