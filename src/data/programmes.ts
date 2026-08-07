@@ -42,6 +42,7 @@ export const programmes: Programme[] = [
     link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
     detailPage: "/executive-leadership-mastery",
     enrolmentAvailable: true,
+    individualFee: "£1,297",
   },
   {
     title: "Strategic Leadership in the Age of AI",
