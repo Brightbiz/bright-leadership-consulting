@@ -24,6 +24,22 @@ const Header = () => {
   }, []);
 
   return (
+    <>
+    <a
+      href="#main-content"
+      className="skip-link"
+      onClick={(e) => {
+        const main = document.querySelector("main");
+        if (main) {
+          e.preventDefault();
+          main.setAttribute("tabindex", "-1");
+          (main as HTMLElement).focus();
+          main.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }}
+    >
+      Skip to main content
+    </a>
     <header className={cn(
       "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
       isScrolled
@@ -64,8 +80,10 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded md:hidden"
-            aria-label="Toggle menu"
+            className="flex h-11 w-11 items-center justify-center rounded md:hidden"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -75,6 +93,7 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
+              id="mobile-navigation"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -108,6 +127,7 @@ const Header = () => {
         </AnimatePresence>
       </div>
     </header>
+    </>
   );
 };
 

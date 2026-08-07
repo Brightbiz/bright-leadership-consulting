@@ -44,6 +44,9 @@ const EAIDashboardPreview = ({ compact = false }: EAIDashboardPreviewProps) => {
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: 0.15 }}
       className="border border-border rounded bg-card shadow-sm overflow-hidden"
+      role="group"
+      aria-label="Sample Executive Alignment Report™ — illustrative dimension scores and dispersion ranges. All figures are indicative."
+
     >
       {/* Inner page with generous padding */}
       <div className="px-8 py-10 sm:px-12 sm:py-12">
