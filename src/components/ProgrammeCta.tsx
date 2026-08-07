@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Programme } from "@/data/programmes";
-import { trackCourseCtaClick } from "@/lib/analytics";
+import { trackCourseCtaClick, trackProgrammeDetailClick } from "@/lib/analytics";
 
 type Props = {
   programme: Programme;
@@ -10,6 +10,12 @@ type Props = {
   /** Show the supporting helper line beneath the buttons */
   helperText?: boolean;
   className?: string;
+  /**
+   * Optional extra analytics hook, fired alongside `course_cta_click` when a
+   * primary/secondary CTA is used. Lets a host section (e.g. the programme
+   * selector) attribute the click to its own context.
+   */
+  onCtaClick?: (detail: { label: string; destination: string }) => void;
 };
 
 /**
@@ -25,8 +31,14 @@ const ProgrammeCta = ({
   surface,
   helperText = true,
   className = "",
+  onCtaClick,
 }: Props) => {
   const live = programme.enrolmentAvailable !== false;
+
+  const handleCta = (label: string, destination: string) => {
+    trackCourseCtaClick({ programme: programme.title, url: destination, surface, label });
+    onCtaClick?.({ label, destination });
+  };
 
   return (
     <div className={className}>
@@ -37,14 +49,7 @@ const ProgrammeCta = ({
             target="_blank"
             rel="noopener noreferrer"
             className="btn-brief"
-            onClick={() =>
-              trackCourseCtaClick({
-                programme: programme.title,
-                url: programme.link,
-                surface,
-                label: "Enrol Now",
-              })
-            }
+            onClick={() => handleCta("Enrol Now", programme.link)}
           >
             Enrol Now
             <span className="sr-only">
@@ -56,14 +61,7 @@ const ProgrammeCta = ({
           <Link
             to="/contact"
             className="btn-brief"
-            onClick={() =>
-              trackCourseCtaClick({
-                programme: programme.title,
-                url: "/contact",
-                surface,
-                label: "Request Availability",
-              })
-            }
+            onClick={() => handleCta("Request Availability", "/contact")}
           >
             Request Availability
             <span className="sr-only">{` for ${programme.title}`}</span>
@@ -74,14 +72,7 @@ const ProgrammeCta = ({
         <Link
           to="/contact"
           className="link-quiet text-sm"
-          onClick={() =>
-            trackCourseCtaClick({
-              programme: programme.title,
-              url: "/contact",
-              surface,
-              label: "Discuss Executive Alignment",
-            })
-          }
+          onClick={() => handleCta("Discuss Executive Alignment", "/contact")}
         >
           Discuss Executive Alignment
           <span className="sr-only">{` regarding ${programme.title}`}</span>
@@ -89,7 +80,18 @@ const ProgrammeCta = ({
         </Link>
 
         {programme.detailPage && (
-          <Link to={programme.detailPage} className="link-quiet text-sm">
+          <Link
+            to={programme.detailPage}
+            className="link-quiet text-sm"
+            onClick={() =>
+              trackProgrammeDetailClick({
+                programme: programme.title,
+                surface,
+                destination: programme.detailPage!,
+                control: "cta-detail-link",
+              })
+            }
+          >
             View programme detail
             <span className="sr-only">{` for ${programme.title}`}</span>
             <ArrowRight className="h-3 w-3" aria-hidden="true" />
