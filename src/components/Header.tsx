@@ -24,6 +24,22 @@ const Header = () => {
   }, []);
 
   return (
+    <>
+    <a
+      href="#main-content"
+      className="skip-link"
+      onClick={(e) => {
+        const main = document.querySelector("main");
+        if (main) {
+          e.preventDefault();
+          main.setAttribute("tabindex", "-1");
+          (main as HTMLElement).focus();
+          main.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }}
+    >
+      Skip to main content
+    </a>
     <header className={cn(
       "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
       isScrolled
