@@ -75,11 +75,26 @@ describe("CourseSchema — courses listing", () => {
         name: "Bright Leadership Consulting",
         url: SITE_URL,
       });
+      const [min, max] = (programme.cpdHours ?? "")
+        .match(/(\d+(?:\.\d+)?)\s*[\u2013-]\s*(\d+(?:\.\d+)?)/)!
+        .slice(1)
+        .map(Number);
       expect(course.hasCourseInstance).toEqual({
         "@type": "CourseInstance",
         courseMode: "online",
-        courseWorkload: "PT10H",
+        courseWorkload: `PT${max}H`,
       });
+      expect(course.timeRequired).toBe(`PT${min}H`);
+      expect(course.educationalCredentialAwarded).toContain(programme.cpdHours);
+      expect(course.additionalProperty[0]).toMatchObject({
+        "@type": "PropertyValue",
+        name: "Accredited CPD hours",
+        value: programme.cpdHours,
+        minValue: min,
+        maxValue: max,
+        unitText: "HUR",
+      });
+
       // sameAs points at the external enrolment page only when an in-site page exists.
       if (programme.detailPage) {
         expect(course.sameAs).toBe(programme.link);
