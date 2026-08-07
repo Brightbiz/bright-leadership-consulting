@@ -51,9 +51,16 @@ const ProgrammeComparisonTable = () => {
                 scope="col"
                 className="py-4 pr-6 align-bottom font-serif text-sm font-semibold text-foreground"
               >
-                {p.title}
+                {p.detailPage ? (
+                  <Link to={p.detailPage} className="hover:text-primary transition-colors">
+                    {p.title}
+                  </Link>
+                ) : (
+                  p.title
+                )}
               </th>
             ))}
+
           </tr>
         </thead>
         <tbody>
