@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
+import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
+import ProgrammeSelector from "@/components/ProgrammeSelector";
 import { programmes, facilitatedEngagement } from "@/data/programmes";
 import { trackCourseCtaClick } from "@/lib/analytics";
 
@@ -260,6 +262,69 @@ const Courses = () => {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 3b — Comparison */}
+        <section id="comparison" className="section-brief bg-background scroll-mt-24">
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Side by Side
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Programme Comparison
+            </motion.h2>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              Structure, focus, published individual fee and current
+              availability across the four programmes.
+            </motion.p>
+
+            <ProgrammeComparisonTable />
+          </div>
+        </section>
+
+        <div className="section-divider" />
+
+        {/* Section 3c — Which programme is right for me */}
+        <section
+          id="which-programme"
+          className="section-brief section-pearl scroll-mt-24"
+        >
+          <div className="container-brief">
+            <motion.p className="kicker mb-6" {...fade}>
+              Selection
+            </motion.p>
+
+            <motion.h2
+              className="heading-section mb-4 max-w-[720px]"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.1 }}
+            >
+              Which Programme Is Right For Me?
+            </motion.h2>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.15 }}
+            >
+              Selection follows the constraint you are actually carrying, not
+              the subject that sounds most current.
+            </motion.p>
+
+            <ProgrammeSelector />
           </div>
         </section>
 
