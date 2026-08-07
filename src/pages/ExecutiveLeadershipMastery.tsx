@@ -258,6 +258,28 @@ const ExecutiveLeadershipMastery = () => {
               to your development objectives.
             </motion.p>
 
+            <motion.div
+              className="max-w-[680px] mb-8 border-l-2 border-border pl-5"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.17 }}
+            >
+              <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
+                Individual Enrolment Fee
+              </p>
+              <p className="font-serif text-base text-foreground mb-2">
+                Pay in full: {programmes[0].individualFee}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Or pay in three monthly instalments of £435. Total payable:
+                £1,305.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                The first instalment is taken at enrolment; the remaining two
+                are collected on the same date in each of the following two
+                months. Programme access continues after the final instalment.
+              </p>
+            </motion.div>
+
             <motion.p
               className="text-sm text-muted-foreground max-w-[680px] mb-16 border-l-2 border-border pl-5 leading-relaxed"
               {...fade}
