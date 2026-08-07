@@ -52,6 +52,30 @@ const assertValidCourse = (course: Record<string, unknown>) => {
   walk(course, "Course");
 };
 
+/** Accredited CPD hours must be present and match the catalogue exactly. */
+const assertCpdHours = (course: Record<string, unknown>) => {
+  const programme = programmes.find((p) => p.title === course.name);
+  expect(programme, `no catalogue entry for ${String(course.name)}`).toBeTruthy();
+  if (!programme?.cpdHours) return;
+
+  const [min, max] = programme.cpdHours
+    .match(/(\d+(?:\.\d+)?)\s*[\u2013-]\s*(\d+(?:\.\d+)?)/)!
+    .slice(1)
+    .map(Number);
+
+  expect(course.timeRequired).toBe(`PT${min}H`);
+  expect((course.hasCourseInstance as any).courseWorkload).toBe(`PT${max}H`);
+  expect(String(course.educationalCredentialAwarded)).toContain(programme.cpdHours);
+
+  const prop = (course.additionalProperty as any[])?.find(
+    (a) => a.name === "Accredited CPD hours"
+  );
+  expect(prop, "additionalProperty for CPD hours missing").toBeTruthy();
+  expect(prop.value).toBe(programme.cpdHours);
+  expect(prop.minValue).toBe(min);
+  expect(prop.maxValue).toBe(max);
+};
+
 describe("course page JSON-LD", () => {
   it("emits a complete ItemList of Courses on /courses", async () => {
     const blocks = await renderPage(<Courses />);
@@ -65,6 +89,7 @@ describe("course page JSON-LD", () => {
       expect(entry.position).toBe(i + 1);
       expect(nonEmptyString(entry.url)).toBe(true);
       assertValidCourse(entry.item as Record<string, unknown>);
+      assertCpdHours(entry.item as Record<string, unknown>);
     });
 
     // Every catalogue programme is represented exactly once.
@@ -78,5 +103,6 @@ describe("course page JSON-LD", () => {
     expect(course, "Course JSON-LD missing on the programme page").toBeTruthy();
     assertValidCourse(course);
     expect(course.name).toBe("Executive Leadership Mastery");
+    assertCpdHours(course);
   });
 });
