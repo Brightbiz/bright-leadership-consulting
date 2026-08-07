@@ -80,7 +80,15 @@ const ProgrammeCta = ({
           Discuss Executive Alignment
           <ArrowRight className="h-3 w-3" />
         </Link>
+
+        {programme.detailPage && (
+          <Link to={programme.detailPage} className="link-quiet text-sm">
+            View programme detail
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        )}
       </div>
+
 
       {helperText && (
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
