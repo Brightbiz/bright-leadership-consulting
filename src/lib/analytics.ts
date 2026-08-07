@@ -98,3 +98,64 @@ export function trackProgrammeView(event: ProgrammeViewEvent) {
     page_surface: event.surface,
   });
 }
+
+export interface ProgrammeDetailClickEvent {
+  /** Programme title. */
+  programme: string;
+  /** Where the link lives, e.g. "/courses#comparison". */
+  surface: string;
+  /** In-site destination, e.g. "/future-of-work". */
+  destination: string;
+  /** Which control was used, e.g. "table-heading" or "cta-detail-link". */
+  control: string;
+}
+
+/**
+ * Click on an in-site programme detail link (comparison table headings and the
+ * "View programme detail" CTA). Reported as `programme_detail_click`.
+ */
+export function trackProgrammeDetailClick(event: ProgrammeDetailClickEvent) {
+  trackEvent("programme_detail_click", {
+    programme_name: event.programme,
+    cta_surface: event.surface,
+    destination_url: event.destination,
+    cta_control: event.control,
+  });
+}
+
+export interface ProgrammeSelectorChoiceEvent {
+  /** Programme recommended by the chosen route. */
+  programme: string;
+  /** The "If" condition the visitor acted on. */
+  condition: string;
+  /** 1-based position of the route in the selector. */
+  position: number;
+  /** CTA label acted on, e.g. "Enrol Now". */
+  label: string;
+  /** Destination of the CTA. */
+  destination: string;
+}
+
+/**
+ * A visitor acting on one of the "which programme is right for me?" routes.
+ * Reported as `programme_selector_choice`; group by `programme_name` to see
+ * which self-diagnosed constraint converts best.
+ */
+export function trackProgrammeSelectorChoice(event: ProgrammeSelectorChoiceEvent) {
+  trackEvent("programme_selector_choice", {
+    programme_name: event.programme,
+    selector_condition: event.condition,
+    selector_position: event.position,
+    cta_label: event.label,
+    destination_url: event.destination,
+    cta_surface: "/courses#which-programme",
+  });
+}
+
+/**
+ * Fired once when a measured section scrolls into view. Provides the
+ * denominator for click-through rates on the comparison table and selector.
+ */
+export function trackSectionView(section: string, surface: string) {
+  trackEvent("section_view", { section_name: section, page_surface: surface });
+}
