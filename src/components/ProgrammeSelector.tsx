@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { programmes } from "@/data/programmes";
-import { trackCourseCtaClick } from "@/lib/analytics";
+import ProgrammeCta from "@/components/ProgrammeCta";
+
 
 type Route = {
   condition: string;
@@ -77,42 +78,10 @@ const ProgrammeSelector = () => {
             <p className="text-sm leading-relaxed text-muted-foreground mb-4">
               {route.rationale}
             </p>
-            {route.programme.enrolmentAvailable === false ? (
-              <Link
-                to="/contact"
-                className="link-quiet text-sm"
-                onClick={() =>
-                  trackCourseCtaClick({
-                    programme: route.programme.title,
-                    url: "/contact",
-                    surface: "/courses#which-programme",
-                    label: "Request Availability",
-                  })
-                }
-              >
-                Request Availability
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            ) : (
-              <a
-                href={route.programme.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-quiet text-sm"
-                onClick={() =>
-                  trackCourseCtaClick({
-                    programme: route.programme.title,
-                    url: route.programme.link,
-                    surface: "/courses#which-programme",
-                    label: "View Programme & Enrol",
-                  })
-                }
-              >
-                View Programme &amp; Enrol
-                <span className="sr-only"> (opens in a new tab)</span>
-                <ArrowRight className="h-3 w-3" />
-              </a>
-            )}
+            <ProgrammeCta
+              programme={route.programme}
+              surface="/courses#which-programme"
+            />
           </div>
         </motion.div>
       ))}
