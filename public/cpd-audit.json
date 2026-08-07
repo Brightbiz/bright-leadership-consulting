@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T21:30:12.486Z",
+  "generatedAt": "2026-08-07T21:36:30.844Z",
   "catalogue": "src/data/programmes.ts",
   "programmes": [
     {
@@ -13,7 +13,7 @@
       "assetCount": 2
     },
     {
-      "title": "The Future of Work",
+      "title": "The Future Workplace & Workforce Strategy",
       "cpdHours": "20–25 CPD hours",
       "assetCount": 1
     },
@@ -190,7 +190,7 @@
     },
     {
       "file": "public/brochures/future-of-work-brochure.html",
-      "programme": "The Future of Work",
+      "programme": "The Future Workplace & Workforce Strategy",
       "expected": "20–25 CPD hours",
       "found": [
         "20–25 CPD hours"
