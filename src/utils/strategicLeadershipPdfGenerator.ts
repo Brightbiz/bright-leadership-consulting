@@ -347,7 +347,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
   });
 
   // Footer
-  const cfooter = '(c) Bright Leadership Consulting  -  CPD Accredited Programme  -  Confidential';
+  const cfooter = '(c) Bright Leadership Consulting  -  CPD Accredited Programme - 20-30 CPD Hours  -  Confidential';
   cover.drawText(cfooter, {
     x: (PAGE_WIDTH - fonts.regular.widthOfTextAtSize(cfooter, 7)) / 2,
     y: 40, size: 7, font: fonts.regular, color: rgb(0.4, 0.4, 0.4),
