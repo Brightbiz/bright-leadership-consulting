@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T20:02:16.235Z",
+  "generatedAt": "2026-08-07T20:02:31.044Z",
   "catalogue": "src/data/programmes.ts",
   "programmes": [
     {
@@ -33,6 +33,12 @@
         "50–66 CPD hours"
       ],
       "occurrences": [
+        {
+          "line": 192,
+          "min": 50,
+          "max": 66,
+          "value": "50–66 CPD hours"
+        },
         {
           "line": 208,
           "min": 50,
@@ -109,7 +115,7 @@
       ],
       "occurrences": [
         {
-          "line": 300,
+          "line": 287,
           "min": 50,
           "max": 66,
           "value": "50–66 CPD hours"
@@ -153,7 +159,7 @@
       ],
       "occurrences": [
         {
-          "line": 350,
+          "line": 296,
           "min": 20,
           "max": 30,
           "value": "20–30 CPD hours"
@@ -167,31 +173,45 @@
       "file": "public/brochures/peak-performance-brochure.html",
       "programme": "Strategic Productivity & Peak Performance",
       "expected": "20–25 CPD hours",
-      "found": [],
-      "occurrences": [],
+      "found": [
+        "20–25 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 95,
+          "min": 20,
+          "max": 25,
+          "value": "20–25 CPD hours"
+        }
+      ],
       "bannedTerms": [],
-      "status": "error",
-      "issues": [
-        "Mapped to \"Strategic Productivity & Peak Performance\" but never states its CPD range 20–25 CPD hours."
-      ]
+      "status": "ok",
+      "issues": []
     },
     {
       "file": "public/brochures/future-of-work-brochure.html",
       "programme": "The Future of Work",
       "expected": "20–25 CPD hours",
-      "found": [],
-      "occurrences": [],
+      "found": [
+        "20–25 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 98,
+          "min": 20,
+          "max": 25,
+          "value": "20–25 CPD hours"
+        }
+      ],
       "bannedTerms": [],
-      "status": "error",
-      "issues": [
-        "Mapped to \"The Future of Work\" but never states its CPD range 20–25 CPD hours."
-      ]
+      "status": "ok",
+      "issues": []
     }
   ],
   "summary": {
     "total": 8,
-    "ok": 6,
+    "ok": 8,
     "unmapped": 0,
-    "errors": 2
+    "errors": 0
   }
 }

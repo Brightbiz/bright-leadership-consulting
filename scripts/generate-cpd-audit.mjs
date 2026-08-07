@@ -86,7 +86,10 @@ const assets = [];
 for (const file of targets) {
   const rel = relative(ROOT, file);
   const text = decode(readFileSync(file, "utf8"));
-  const lines = text.split("\n");
+  // Strip HTML tags so markup between the number and the "CPD Hours" label
+  // (e.g. <div class="num">20&ndash;25</div><div class="label">CPD Hours</div>)
+  // does not hide a valid range. Newlines are preserved so line numbers hold.
+  const lines = text.replace(/<[^>]*>/g, " ").split("\n");
   const expected = byTitle(ASSET_MAP[rel]);
 
   const found = [];
