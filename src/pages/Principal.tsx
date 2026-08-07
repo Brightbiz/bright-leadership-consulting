@@ -225,9 +225,10 @@ const Principal = () => {
             <p className="leading-relaxed text-muted-foreground">
               The executive programmes are accredited by The CPD Standards Office, CPD provider
               number {CPD_PROVIDER_NUMBER} ({CPD_ACCREDITATION_PERIOD}). Completion of all
-              thirty-three modules of Executive Leadership Mastery confers 66 CPD points, awarded
-              at two points per module, and a certificate is issued on completion.
+              thirty-three modules of Executive Leadership Mastery confers 50–66 accredited CPD
+              hours, and a certificate is issued on completion.
             </p>
+
             <div className="flex items-start gap-5 border-t border-border pt-6">
               <img
                 src="/cpd-standards-office-accredited.png"

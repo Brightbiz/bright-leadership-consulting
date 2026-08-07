@@ -50,7 +50,7 @@ const structure = [
   "Ten modules across six stages, from awareness to integration",
   "Self-paced online delivery with downloadable working documents",
   "Capstone: the AI Leadership Blueprint™ Canvas",
-  "66 CPD points on completion of the wider accredited pathway",
+  "20–30 accredited CPD hours on completion",
 ];
 
 const StrategicLeadershipAI = () => {
@@ -340,13 +340,15 @@ const StrategicLeadershipAI = () => {
               >
                 <details name="ai-faq" className="border-b border-border py-4">
                   <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
-                    How many CPD points does the programme carry?
+                    How many CPD hours does the programme carry?
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    Completion of the wider accredited pathway confers 66 CPD points. The
-                    programme is accredited by The CPD Standards Office (Provider Number 50838) as
-                    Accredited CPD Activity for the 2025–2026 period. Participants are responsible
-                    for recording CPD with their own professional body.
+                    The programme carries 20–30 accredited CPD hours, depending on depth of
+                    engagement with the working documents and capstone. It is accredited by The
+                    CPD Standards Office (Provider Number 50838) as Accredited CPD Activity for
+                    the 2025–2026 period. Participants are responsible for recording CPD with
+                    their own professional body.
+
                   </p>
                 </details>
 
@@ -392,8 +394,9 @@ const StrategicLeadershipAI = () => {
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
                     A completed AI Leadership Blueprint™ Canvas, a board-ready governance framework
-                    for AI adoption, and a CPD certificate confirming 66 points for the accredited
-                    pathway. Individual module completion records are also available within the
+                    for AI adoption, and a CPD certificate confirming 20–30 accredited CPD hours.
+                    Individual module completion records are also available within the
+
                     learning platform.
                   </p>
                 </details>

@@ -36,7 +36,7 @@ const sections = [
     heading: "Programmes and third-party platforms",
     body: [
       "Executive programmes are delivered through a third-party learning platform. Enrolment, payment, access and refunds for those programmes are subject to that platform's own terms and to any programme terms provided at the point of enrolment.",
-      "CPD points are stated as accredited at programme level; participants remain responsible for recording CPD with their own professional body.",
+      "Accredited CPD hours are stated as ranges at programme level; participants remain responsible for recording CPD with their own professional body.",
     ],
   },
   {
