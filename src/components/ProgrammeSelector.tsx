@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { programmes } from "@/data/programmes";
 import ProgrammeCta from "@/components/ProgrammeCta";
+import {
+  trackProgrammeSelectorChoice,
+  trackSectionView,
+} from "@/lib/analytics";
 
 type Route = {
   condition: string;
@@ -58,7 +62,9 @@ const slug = (title: string) =>
  */
 const ProgrammeSelector = () => {
   return (
-    <ul className="max-w-[860px] list-none divide-y divide-border border-t border-border pl-0">
+    <ul
+      className="max-w-[860px] list-none divide-y divide-border border-t border-border pl-0"
+    >
       {routes.map((route, i) => {
         const id = slug(route.programme.title);
         return (
@@ -68,6 +74,11 @@ const ProgrammeSelector = () => {
             aria-labelledby={`selector-heading-${id}`}
             aria-describedby={`selector-condition-${id}`}
             {...fade}
+            onViewportEnter={
+              i === 0
+                ? () => trackSectionView("programme_selector", "/courses")
+                : undefined
+            }
             transition={{ ...fade.transition, delay: 0.08 + i * 0.07 }}
           >
             <div>
@@ -106,6 +117,15 @@ const ProgrammeSelector = () => {
               <ProgrammeCta
                 programme={route.programme}
                 surface="/courses#which-programme"
+                onCtaClick={({ label, destination }) =>
+                  trackProgrammeSelectorChoice({
+                    programme: route.programme.title,
+                    condition: route.condition,
+                    position: i + 1,
+                    label,
+                    destination,
+                  })
+                }
               />
             </div>
           </motion.li>

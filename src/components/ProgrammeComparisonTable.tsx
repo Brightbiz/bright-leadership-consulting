@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { programmes } from "@/data/programmes";
 import ProgrammeCta from "@/components/ProgrammeCta";
+import { trackProgrammeDetailClick, trackSectionView } from "@/lib/analytics";
 
 const rows: { label: string; value: (i: number) => string }[] = [
   {
@@ -33,6 +34,7 @@ const ProgrammeComparisonTable = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, ease: "easeOut" }}
+      onViewportEnter={() => trackSectionView("programme_comparison", "/courses")}
     >
       {/* The table scrolls horizontally on narrow viewports, so the scroll
           container is a focusable, labelled region: keyboard-only users can
@@ -67,6 +69,14 @@ const ProgrammeComparisonTable = () => {
                     <Link
                       to={p.detailPage}
                       className="rounded-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      onClick={() =>
+                        trackProgrammeDetailClick({
+                          programme: p.title,
+                          surface: "/courses#comparison",
+                          destination: p.detailPage!,
+                          control: "table-heading",
+                        })
+                      }
                     >
                       {p.title}
                     </Link>
