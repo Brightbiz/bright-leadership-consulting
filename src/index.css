@@ -206,7 +206,7 @@
 
   /* Quiet CTA link */
   .link-quiet {
-    @apply inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300 tracking-wide
+    @apply inline-flex items-center gap-2 min-h-11 text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300 tracking-wide
            rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
