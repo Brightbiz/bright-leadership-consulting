@@ -28,7 +28,7 @@ const CpdHoursFaq = () => {
     },
     {
       q: "What counts as completion?",
-      a: "Completion means every module in the programme has been worked through and the capstone or closing exercise has been submitted within the learning platform. For Executive Leadership Mastery this is all thirty-three modules; for Strategic Leadership in the Age of AI it is the ten modules plus the AI Leadership Blueprint™ Canvas; for The Future of Work and Strategic Productivity & Peak Performance it is the full module sequence plus the closing applied exercise. Partial completion is recorded module by module but does not carry the full accredited range.",
+      a: "Completion means every module in the programme has been worked through and the capstone or closing exercise has been submitted within the learning platform. For Executive Leadership Mastery this is all thirty-three modules; for Strategic Leadership in the Age of AI it is the ten modules plus the AI Leadership Blueprint™ Canvas; for The Future Workplace & Workforce Strategy and Strategic Productivity & Peak Performance it is the full module sequence plus the closing applied exercise. Partial completion is recorded module by module but does not carry the full accredited range.",
     },
     {
       q: "Who records the hours?",

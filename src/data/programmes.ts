@@ -75,7 +75,7 @@ export const programmes: Programme[] = [
 
   },
   {
-    title: "The Future of Work",
+    title: "The Future Workplace & Workforce Strategy",
     subtitle: "Navigating Workforce Transformation",
     description:
       "Addresses the structural shifts redefining how organisations attract, develop and retain talent — from hybrid models to workforce strategy.",
@@ -88,7 +88,7 @@ export const programmes: Programme[] = [
     link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
     detailPage: "/future-of-work",
     enrolmentAvailable: true,
-    individualFee: "£895",
+    individualFee: "£449",
     cpdHours: "20–25 CPD hours",
 
 

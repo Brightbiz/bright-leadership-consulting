@@ -17,7 +17,7 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const PROGRAMME_TITLE = "The Future of Work";
+const PROGRAMME_TITLE = "The Future Workplace & Workforce Strategy";
 const programme = programmes.find((p) => p.title === PROGRAMME_TITLE)!;
 
 const audience = [
@@ -64,7 +64,7 @@ const FutureOfWork = () => {
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
-        title="The Future of Work | Bright Leadership Consulting"
+        title="The Future Workplace & Workforce Strategy | Bright Leadership Consulting"
         description="A board-level programme on workforce transformation: hybrid and distributed structures, talent retention and organisational design. Next intake dates confirmed on request."
         path="/future-of-work"
       />
@@ -86,7 +86,7 @@ const FutureOfWork = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                The Future of Work
+                The Future Workplace & Workforce Strategy
               </motion.h1>
 
               <motion.div
