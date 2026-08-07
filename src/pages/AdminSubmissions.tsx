@@ -283,11 +283,18 @@ const AdminSubmissions = () => {
               </Link>
             </Button>
             <Button asChild variant="outline">
+              <Link to="/admin/cpd-audit">
+                <ClipboardCheck className="mr-2 h-4 w-4" />
+                CPD Audit
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link to="/admin/thinkific-export">
                 <Package className="mr-2 h-4 w-4" />
                 Thinkific Export
               </Link>
             </Button>
+
             <Button onClick={fetchAll} variant="outline" disabled={loading}>
               <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
