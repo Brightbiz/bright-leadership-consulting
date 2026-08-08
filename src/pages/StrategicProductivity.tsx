@@ -8,7 +8,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { programmes } from "@/data/programmes";
-import { trackProgrammeView } from "@/lib/analytics";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_SCOPE_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
+import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -17,7 +23,7 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const PROGRAMME_TITLE = "Strategic Productivity & Peak Performance";
+const PROGRAMME_TITLE = "Strategic Productivity and Peak Performance Accelerator";
 const programme = programmes.find((p) => p.title === PROGRAMME_TITLE)!;
 
 const audience = [
@@ -64,8 +70,8 @@ const StrategicProductivity = () => {
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
-        title="Strategic Productivity & Peak Performance | Bright Leadership"
-        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. Next intake dates confirmed on request."
+        title="Strategic Productivity & Peak Performance — 20–25 CPD Hours"
+        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. 20–25 accredited CPD hours. One-time fee of £499."
         path="/strategic-productivity-peak-performance"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
@@ -86,7 +92,7 @@ const StrategicProductivity = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Strategic Productivity &amp; Peak Performance
+                Strategic Productivity and Peak Performance Accelerator
               </motion.h1>
 
               <motion.div
@@ -227,12 +233,14 @@ const StrategicProductivity = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
-                Bright Leadership Consulting's programmes are accredited by The
-                CPD Standards Office (Provider Number 50838) as Accredited CPD
-                Activity for the 2025–2026 period. Accreditation applies to the
-                programmes only; the Executive Alignment Index™ and advisory
-                engagements are proprietary instruments and are not externally
-                accredited.
+                {CPD_PROVIDER_STATEMENT} {CPD_SCOPE_STATEMENT}
+              </motion.p>
+              <motion.p
+                className="body-brief mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                {CPD_PARTICIPANT_STATEMENT} {CPD_CERTIFICATE_SCOPE_NOTE}
               </motion.p>
             </div>
           </div>
@@ -264,17 +272,31 @@ const StrategicProductivity = () => {
                   Individual, Self-Directed
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  Next intake on request
+                  {programme.individualFee} — one-time
                 </h3>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                  The individual route is not currently open for direct
-                  enrolment. Intake dates are confirmed on enquiry, and
-                  enquiries are handled confidentially.
+                  Immediate enrolment for a single executive at a one-time fee
+                  of {programme.individualFee}, with full access to all modules
+                  and working documents. No diagnostic and no organisational
+                  sponsorship required.
                 </p>
-                <Link to="/contact" className="link-quiet text-sm">
-                  Request availability
+                <a
+                  href={programme.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet text-sm"
+                  onClick={() =>
+                    trackCourseCtaClick({
+                      programme: programme.title,
+                      url: programme.link,
+                      surface: "/strategic-productivity-peak-performance",
+                      label: "Enrol as an individual",
+                    })
+                  }
+                >
+                  Enrol as an individual
                   <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
+                </a>
               </motion.div>
 
               <motion.div

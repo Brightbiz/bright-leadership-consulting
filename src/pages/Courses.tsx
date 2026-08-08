@@ -12,6 +12,12 @@ import ProgrammeSelector from "@/components/ProgrammeSelector";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
 
 import { programmes, facilitatedEngagement } from "@/data/programmes";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_SCOPE_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
 import { trackCourseCtaClick } from "@/lib/analytics";
 
 const fade = {
@@ -358,6 +364,22 @@ const Courses = () => {
             >
               Each programme carries a stated range of accredited CPD hours. The
               range, and what completion requires, is set out below.
+            </motion.p>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-6"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.18 }}
+            >
+              {CPD_PROVIDER_STATEMENT} {CPD_SCOPE_STATEMENT}
+            </motion.p>
+
+            <motion.p
+              className="body-brief max-w-[720px] mb-12"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.2 }}
+            >
+              {CPD_PARTICIPANT_STATEMENT} {CPD_CERTIFICATE_SCOPE_NOTE}
             </motion.p>
 
             <CpdHoursFaq />

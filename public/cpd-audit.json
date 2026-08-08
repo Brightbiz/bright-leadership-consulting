@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-08T13:47:52.869Z",
+  "generatedAt": "2026-08-08T21:34:11.257Z",
   "catalogue": "src/data/programmes.ts",
   "programmes": [
     {
-      "title": "Executive Leadership Mastery",
+      "title": "Executive Leadership Mastery Programme",
       "cpdHours": "50–66 CPD hours",
       "assetCount": 4
     },
@@ -13,12 +13,12 @@
       "assetCount": 2
     },
     {
-      "title": "The Future Workplace & Workforce Strategy",
+      "title": "Future Workplace and Workforce Strategy Programme",
       "cpdHours": "20–25 CPD hours",
       "assetCount": 1
     },
     {
-      "title": "Strategic Productivity & Peak Performance",
+      "title": "Strategic Productivity and Peak Performance Accelerator",
       "cpdHours": "20–25 CPD hours",
       "assetCount": 1
     }
@@ -27,7 +27,7 @@
   "assets": [
     {
       "file": "public/brochures/executive-leadership-mastery-brochure.html",
-      "programme": "Executive Leadership Mastery",
+      "programme": "Executive Leadership Mastery Programme",
       "expected": "50–66 CPD hours",
       "found": [
         "50–66 CPD hours"
@@ -70,7 +70,7 @@
     },
     {
       "file": "public/downloads/executive-leadership-mastery-introduction.html",
-      "programme": "Executive Leadership Mastery",
+      "programme": "Executive Leadership Mastery Programme",
       "expected": "50–66 CPD hours",
       "found": [
         "50–66 CPD hours"
@@ -89,7 +89,7 @@
     },
     {
       "file": "public/downloads/executive-leadership-mastery-overview.html",
-      "programme": "Executive Leadership Mastery",
+      "programme": "Executive Leadership Mastery Programme",
       "expected": "50–66 CPD hours",
       "found": [
         "50–66 CPD hours"
@@ -108,7 +108,7 @@
     },
     {
       "file": "src/utils/fillablePdfGenerator.ts",
-      "programme": "Executive Leadership Mastery",
+      "programme": "Executive Leadership Mastery Programme",
       "expected": "50–66 CPD hours",
       "found": [
         "50–66 CPD hours"
@@ -119,6 +119,25 @@
           "min": 50,
           "max": 66,
           "value": "50–66 CPD hours"
+        }
+      ],
+      "bannedTerms": [],
+      "status": "ok",
+      "issues": []
+    },
+    {
+      "file": "public/brochures/future-of-work-brochure.html",
+      "programme": "Future Workplace and Workforce Strategy Programme",
+      "expected": "20–25 CPD hours",
+      "found": [
+        "20–25 CPD hours"
+      ],
+      "occurrences": [
+        {
+          "line": 98,
+          "min": 20,
+          "max": 25,
+          "value": "20–25 CPD hours"
         }
       ],
       "bannedTerms": [],
@@ -171,7 +190,7 @@
     },
     {
       "file": "public/brochures/peak-performance-brochure.html",
-      "programme": "Strategic Productivity & Peak Performance",
+      "programme": "Strategic Productivity and Peak Performance Accelerator",
       "expected": "20–25 CPD hours",
       "found": [
         "20–25 CPD hours"
@@ -179,25 +198,6 @@
       "occurrences": [
         {
           "line": 95,
-          "min": 20,
-          "max": 25,
-          "value": "20–25 CPD hours"
-        }
-      ],
-      "bannedTerms": [],
-      "status": "ok",
-      "issues": []
-    },
-    {
-      "file": "public/brochures/future-of-work-brochure.html",
-      "programme": "The Future Workplace & Workforce Strategy",
-      "expected": "20–25 CPD hours",
-      "found": [
-        "20–25 CPD hours"
-      ],
-      "occurrences": [
-        {
-          "line": 98,
           "min": 20,
           "max": 25,
           "value": "20–25 CPD hours"

@@ -113,8 +113,8 @@ describe("CourseSchema — courses listing", () => {
   });
 });
 
-describe("CourseSchema — Executive Leadership Mastery page", () => {
-  const TITLE = "Executive Leadership Mastery";
+describe("CourseSchema — Executive Leadership Mastery Programme page", () => {
+  const TITLE = "Executive Leadership Mastery Programme";
 
   it("emits a single Course node for the flagship programme", async () => {
     const [data] = await renderSchema(<CourseSchema programmeTitle={TITLE} />);

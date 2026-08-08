@@ -15,6 +15,8 @@ const fade = {
  * Verified from the accreditation certificate issued by The CPD Standards Office.
  * Do not alter without a corresponding certificate.
  */
+import { CPD_CERTIFICATE_SCOPE_NOTE } from "@/data/accreditation";
+
 const CPD_PROVIDER_NUMBER = "50838";
 const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
@@ -225,8 +227,14 @@ const Principal = () => {
             <p className="leading-relaxed text-muted-foreground">
               The executive programmes are accredited by The CPD Standards Office, CPD provider
               number {CPD_PROVIDER_NUMBER} ({CPD_ACCREDITATION_PERIOD}). Completion of all
-              thirty-three modules of Executive Leadership Mastery confers 50–66 accredited CPD
-              hours, and a certificate is issued on completion.
+              thirty-three core modules of the Executive Leadership Mastery Programme confers 50–66
+              accredited CPD hours. Participants who satisfy the approved completion requirements
+              receive the official CPDSO Certificate of Attendance manually from Bright Leadership
+              Consulting, using the standard template supplied by CPDSO. Certificates are not
+              generated or downloaded automatically.
+            </p>
+            <p className="leading-relaxed text-muted-foreground">
+              {CPD_CERTIFICATE_SCOPE_NOTE}
             </p>
 
             <div className="flex items-start gap-5 border-t border-border pt-6">

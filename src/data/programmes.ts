@@ -36,10 +36,10 @@ export type Programme = {
 
 export const programmes: Programme[] = [
   {
-    title: "Executive Leadership Mastery",
-    subtitle: "Flagship 33-Module Programme",
+    title: "Executive Leadership Mastery Programme",
+    subtitle: "33 Core Modules, Plus Welcome and Foundation Chapter",
     description:
-      "A 33-module pathway integrating seven leadership disciplines into a single CPD-accredited development architecture. 50–66 accredited CPD hours.",
+      "33 core modules — plus an additional welcome and foundation chapter — integrating seven leadership disciplines into a single accredited development architecture. 50–66 accredited CPD hours.",
     features: [
       "7 Integrated Leadership Disciplines",
       "50–66 Accredited CPD Hours",
@@ -75,7 +75,7 @@ export const programmes: Programme[] = [
 
   },
   {
-    title: "The Future Workplace & Workforce Strategy",
+    title: "Future Workplace and Workforce Strategy Programme",
     subtitle: "Navigating Workforce Transformation",
     description:
       "Addresses the structural shifts redefining how organisations attract, develop and retain talent — from hybrid models to workforce strategy.",
@@ -94,7 +94,7 @@ export const programmes: Programme[] = [
 
   },
   {
-    title: "Strategic Productivity & Peak Performance",
+    title: "Strategic Productivity and Peak Performance Accelerator",
     subtitle: "High-Impact Executive Performance",
     description:
       "A structured programme for senior leaders optimising personal and team performance, grounded in evidence-based executive performance frameworks.",
@@ -104,9 +104,10 @@ export const programmes: Programme[] = [
       "Energy & Focus Management",
       "Team Performance Optimisation",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/products/courses/achieving-peak-performance",
+    link: "https://bright-leadership-consulting.thinkific.com/courses/strategic-productivity-peak-performance-accelerator",
     detailPage: "/strategic-productivity-peak-performance",
-    enrolmentAvailable: false,
+    enrolmentAvailable: true,
+    individualFee: "£499",
     cpdHours: "20–25 CPD hours",
 
 
