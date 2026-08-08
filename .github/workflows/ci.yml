@@ -38,8 +38,14 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      # Fails the pipeline if page titles, Course JSON-LD or canonical URLs
+      # drift from the programme catalogue in src/data/programmes.ts.
+      - name: Validate SEO metadata
+        run: npm run validate:seo
+
       - name: Unit tests
         run: npm test
+
 
       - name: Build
         run: npm run build
