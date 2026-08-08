@@ -219,8 +219,10 @@ kicker("The Catalogue");
 text("Four Programmes", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
 
 programmes.forEach((p, i) => {
+  const before = pageNo;
   need(210);
-  if (i > 0) rule(20);
+  // Only separate siblings that share a page; a fresh page needs no rule.
+  if (i > 0 && pageNo === before) rule(20);
 
   text(p.title, { font: serifBold, size: 14, lead: 1.3, gap: 2 });
   if (p.subtitle) text(p.subtitle, { size: 9, color: MUTED, gap: 8 });
@@ -246,7 +248,8 @@ programmes.forEach((p, i) => {
 
 /* --------------------------------------------------------- accreditation */
 
-newPage();
+need(200);
+rule(24);
 kicker("Accreditation");
 text("CPD Hours and Certificates", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
 text(CPD_PARTICIPANT_STATEMENT, { size: 9.5, lead: 1.55, gap: 8 });
