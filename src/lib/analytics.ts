@@ -55,7 +55,7 @@ export function trackPageView(path: string) {
 }
 
 export interface CourseCtaEvent {
-  /** Programme title, e.g. "Executive Leadership Mastery". */
+  /** Programme title, e.g. "Executive Leadership Mastery Programme". */
   programme: string;
   /** Destination Thinkific URL. */
   url: string;

@@ -8,6 +8,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { programmes } from "@/data/programmes";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_SCOPE_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
 import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
 
 const fade = {
@@ -17,7 +23,7 @@ const fade = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const PROGRAMME_TITLE = "The Future Workplace & Workforce Strategy";
+const PROGRAMME_TITLE = "Future Workplace and Workforce Strategy Programme";
 const programme = programmes.find((p) => p.title === PROGRAMME_TITLE)!;
 
 const audience = [
@@ -64,8 +70,8 @@ const FutureOfWork = () => {
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
-        title="The Future Workplace & Workforce Strategy | Bright Leadership Consulting"
-        description="A board-level programme on workforce transformation: hybrid and distributed structures, talent retention and organisational design. Next intake dates confirmed on request."
+        title="Future Workplace and Workforce Strategy — 20–25 CPD Hours"
+        description="A board-level programme on workforce transformation: hybrid and distributed structures, talent retention and organisational design. 20–25 accredited CPD hours. Individual enrolment £449."
         path="/future-of-work"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
@@ -86,7 +92,7 @@ const FutureOfWork = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                The Future Workplace & Workforce Strategy
+                Future Workplace and Workforce Strategy Programme
               </motion.h1>
 
               <motion.div
@@ -228,12 +234,14 @@ const FutureOfWork = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
-                Bright Leadership Consulting's programmes are accredited by The
-                CPD Standards Office (Provider Number 50838) as Accredited CPD
-                Activity for the 2025–2026 period. Accreditation applies to the
-                programmes only; the Executive Alignment Index™ and advisory
-                engagements are proprietary instruments and are not externally
-                accredited.
+                {CPD_PROVIDER_STATEMENT} {CPD_SCOPE_STATEMENT}
+              </motion.p>
+              <motion.p
+                className="body-brief mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                {CPD_PARTICIPANT_STATEMENT} {CPD_CERTIFICATE_SCOPE_NOTE}
               </motion.p>
             </div>
           </div>

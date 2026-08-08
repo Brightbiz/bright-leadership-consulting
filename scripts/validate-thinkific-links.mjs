@@ -19,6 +19,7 @@ const LEGACY = /thinkific\.com\/courses\//gi;
 /** Legacy URLs that Thinkific still serves and are intentionally retained. */
 const ALLOWED_LEGACY = new Set([
   "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+  "https://bright-leadership-consulting.thinkific.com/courses/strategic-productivity-peak-performance-accelerator",
 ]);
 
 function walk(path, out) {

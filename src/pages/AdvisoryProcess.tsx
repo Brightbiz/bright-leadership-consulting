@@ -76,7 +76,7 @@ const phases = [
     headline: "Extend Leadership Capability",
     paragraphs: [
       "Once structural alignment is installed, capability development becomes meaningful. Our CPD-accredited executive programmes extend leadership capability across seven disciplines — from AI governance and strategic productivity to workforce transformation.",
-      "Programmes are delivered through our dedicated learning platform and include the flagship 33-module Executive Leadership Mastery pathway, Strategic Leadership in the Age of AI, and facilitated Corporate Retreats for boards and leadership teams.",
+      "Programmes are delivered through our dedicated learning platform and include the flagship Executive Leadership Mastery Programme (33 core modules), Strategic Leadership in the Age of AI, and facilitated Corporate Retreats for boards and leadership teams.",
     ],
     outputs: [
       "CPD-accredited executive programmes",

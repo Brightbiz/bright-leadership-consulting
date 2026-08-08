@@ -45,14 +45,14 @@ const byTitle = (t) => programmes.find((p) => p.title === t);
 
 /* Kept in sync with scripts/validate-cpd-hours-report.mjs */
 const ASSET_MAP = {
-  "public/downloads/executive-leadership-mastery-overview.html": "Executive Leadership Mastery",
-  "public/downloads/executive-leadership-mastery-introduction.html": "Executive Leadership Mastery",
-  "public/brochures/executive-leadership-mastery-brochure.html": "Executive Leadership Mastery",
-  "src/utils/fillablePdfGenerator.ts": "Executive Leadership Mastery",
+  "public/downloads/executive-leadership-mastery-overview.html": "Executive Leadership Mastery Programme",
+  "public/downloads/executive-leadership-mastery-introduction.html": "Executive Leadership Mastery Programme",
+  "public/brochures/executive-leadership-mastery-brochure.html": "Executive Leadership Mastery Programme",
+  "src/utils/fillablePdfGenerator.ts": "Executive Leadership Mastery Programme",
   "public/downloads/strategic-leadership-ai-workbook.html": "Strategic Leadership in the Age of AI",
   "src/utils/strategicLeadershipPdfGenerator.ts": "Strategic Leadership in the Age of AI",
-  "public/brochures/future-of-work-brochure.html": "The Future Workplace & Workforce Strategy",
-  "public/brochures/peak-performance-brochure.html": "Strategic Productivity & Peak Performance",
+  "public/brochures/future-of-work-brochure.html": "Future Workplace and Workforce Strategy Programme",
+  "public/brochures/peak-performance-brochure.html": "Strategic Productivity and Peak Performance Accelerator",
 };
 
 /* -------------------------------------------------------------- file walker */

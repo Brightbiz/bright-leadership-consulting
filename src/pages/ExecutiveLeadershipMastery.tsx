@@ -57,7 +57,7 @@ const tiers = [
 
       "Downloadable workbooks and templates",
       "Case studies and action plans",
-      "Certificate of completion",
+      "CPDSO Certificate of Attendance, issued manually on approved completion",
       "Lifetime access to materials",
     ],
     cta: "Begin Your Programme",
@@ -97,13 +97,13 @@ const ExecutiveLeadershipMastery = () => {
   return (
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
-        programmeTitle="Executive Leadership Mastery"
-        title="Executive Leadership Mastery | Bright Leadership"
-        description="The flagship 33-module executive programme — 50–66 accredited CPD hours across seven leadership disciplines, from AI governance to strategic productivity."
+        programmeTitle="Executive Leadership Mastery Programme"
+        title="Executive Leadership Mastery Programme — 50–66 CPD Hours"
+        description="33 core modules plus a welcome and foundation chapter across seven leadership disciplines. 50–66 accredited CPD hours. £1,297 in full, or three monthly instalments of £435."
         path="/executive-leadership-mastery"
       />
 
-      <CourseSchema programmeTitle="Executive Leadership Mastery" />
+      <CourseSchema programmeTitle="Executive Leadership Mastery Programme" />
       <ScrollProgress />
       <Header />
 
@@ -121,7 +121,7 @@ const ExecutiveLeadershipMastery = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Executive Leadership Mastery
+                Executive Leadership Mastery Programme
               </motion.h1>
 
               <motion.div

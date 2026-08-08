@@ -65,8 +65,8 @@ const StrategicLeadershipAI = () => {
     <div className="min-h-screen bg-background">
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
-        title="Strategic Leadership in the Age of AI | Bright Leadership"
-        description="A board-level programme in AI governance and strategy: ten modules, six stages, and a written AI Leadership Blueprint™. Individual enrolment £895; organisational delivery on request."
+        title="Strategic Leadership in the Age of AI — 20–30 CPD Hours"
+        description="A board-level programme in AI governance and strategy: ten modules, six stages, and a written AI Leadership Blueprint™. Individual enrolment £895. 20–30 accredited CPD hours."
         path="/strategic-leadership-ai"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
@@ -372,7 +372,9 @@ const StrategicLeadershipAI = () => {
                     Enrolment is handled through the Thinkific learning platform. You will receive
                     login credentials and immediate access to the first module. You can progress
                     through the ten modules at your own pace, complete the capstone AI Leadership
-                    Blueprint™ Canvas, and download your certificate on completion.
+                    Blueprint™ Canvas. Certificates are not generated or downloaded automatically: the
+                    official CPDSO Certificate of Attendance is issued manually by Bright Leadership
+                    Consulting once the approved completion requirements are satisfied.
                   </p>
                 </details>
 
@@ -394,7 +396,10 @@ const StrategicLeadershipAI = () => {
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
                     A completed AI Leadership Blueprint™ Canvas, a board-ready governance framework
-                    for AI adoption, and a CPD certificate confirming 20–30 accredited CPD hours.
+                    for AI adoption, and the official CPDSO Certificate of Attendance confirming 20–30 accredited CPD
+                    hours, issued manually on approved completion. The Certificate of Attendance
+                    records participation in an accredited CPD activity; it is not a qualification,
+                    professional certification or academic award.
                     Individual module completion records are also available within the
 
                     learning platform.

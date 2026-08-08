@@ -18,11 +18,18 @@ const renderPage = async (ui: React.ReactElement) => {
       <MemoryRouter>{ui}</MemoryRouter>
     </HelmetProvider>
   );
-  // react-helmet-async writes to document.head asynchronously.
-  await new Promise((r) => setTimeout(r, 0));
-  return Array.from(
-    document.head.querySelectorAll('script[type="application/ld+json"]')
-  ).map((el) => JSON.parse(el.textContent || "{}"));
+  // react-helmet-async writes to document.head asynchronously, and the timing
+  // varies between runs. Poll until the JSON-LD lands rather than waiting once.
+  const read = () =>
+    Array.from(
+      document.head.querySelectorAll('script[type="application/ld+json"]')
+    ).map((el) => JSON.parse(el.textContent || "{}"));
+
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    if (read().length > 0) break;
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  return read();
 };
 
 const nonEmptyString = (value: unknown) =>
@@ -102,7 +109,7 @@ describe("course page JSON-LD", () => {
     const course = blocks.find((b) => b["@type"] === "Course");
     expect(course, "Course JSON-LD missing on the programme page").toBeTruthy();
     assertValidCourse(course);
-    expect(course.name).toBe("Executive Leadership Mastery");
+    expect(course.name).toBe("Executive Leadership Mastery Programme");
     assertCpdHours(course);
   });
 });

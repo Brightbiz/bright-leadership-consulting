@@ -33,7 +33,7 @@ const cpdNodes = (p: Programme) => {
     workload: `PT${range.max}H`,
     extra: {
       timeRequired: `PT${range.min}H`,
-      educationalCredentialAwarded: `${p.cpdHours} — accredited by The CPD Standards Office (Provider 50838)`,
+      educationalCredentialAwarded: `CPDSO Certificate of Attendance — ${p.cpdHours}, accredited by The CPD Standards Office (Provider 50838). Not a qualification, professional certification or academic award.`,
       additionalProperty: [
         {
           "@type": "PropertyValue",

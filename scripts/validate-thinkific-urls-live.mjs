@@ -18,8 +18,10 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+// Matches both the canonical /products/courses/ paths and the intentionally
+// allowed legacy /courses/ paths still served by Thinkific.
 const URL_RE =
-  /https:\/\/bright-leadership-consulting\.thinkific\.com\/products\/courses\/[a-z0-9-]+/gi;
+  /https:\/\/bright-leadership-consulting\.thinkific\.com\/(?:products\/)?courses\/[a-z0-9-]+/gi;
 
 /** Slugs known to be unpublished on Thinkific — warn instead of fail. */
 const KNOWN_UNPUBLISHED = new Set([

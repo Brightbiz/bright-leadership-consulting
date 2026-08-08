@@ -12,16 +12,16 @@ const footerLinks = [
 
 const programmeLinks = [
   { label: "Executive Programmes", href: "/courses", isRoute: true },
-  { label: "Executive Leadership Mastery", href: "/executive-leadership-mastery", isRoute: true },
+  { label: "Executive Leadership Mastery Programme", href: "/executive-leadership-mastery", isRoute: true },
   { label: "Strategic Leadership in the Age of AI", href: "/strategic-leadership-ai", isRoute: true },
   { label: "Augmented Leadership™", href: "/augmented-leadership", isRoute: true },
 ];
 
 /** Brochures mirror the authoritative four-programme catalogue only. */
 const brochureLinks = [
-  { label: "Executive Leadership Mastery", href: "/brochures/executive-leadership-mastery-brochure.html" },
-  { label: "The Future Workplace & Workforce Strategy", href: "/brochures/future-of-work-brochure.html" },
-  { label: "Peak Performance", href: "/brochures/peak-performance-brochure.html" },
+  { label: "Executive Leadership Mastery Programme", href: "/brochures/executive-leadership-mastery-brochure.html" },
+  { label: "Future Workplace and Workforce Strategy Programme", href: "/brochures/future-of-work-brochure.html" },
+  { label: "Strategic Productivity and Peak Performance Accelerator", href: "/brochures/peak-performance-brochure.html" },
   { label: "Executive Alignment Index™", href: "/brochures/executive-alignment-index-brochure.html" },
 ];
 

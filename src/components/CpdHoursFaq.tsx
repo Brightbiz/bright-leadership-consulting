@@ -28,11 +28,11 @@ const CpdHoursFaq = () => {
     },
     {
       q: "What counts as completion?",
-      a: "Completion means every module in the programme has been worked through and the capstone or closing exercise has been submitted within the learning platform. For Executive Leadership Mastery this is all thirty-three modules; for Strategic Leadership in the Age of AI it is the ten modules plus the AI Leadership Blueprint™ Canvas; for The Future Workplace & Workforce Strategy and Strategic Productivity & Peak Performance it is the full module sequence plus the closing applied exercise. Partial completion is recorded module by module but does not carry the full accredited range.",
+      a: "Completion means every module in the programme has been worked through and the capstone or closing exercise has been submitted within the learning platform. For the Executive Leadership Mastery Programme this is all thirty-three modules; for Strategic Leadership in the Age of AI it is the ten modules plus the AI Leadership Blueprint™ Canvas; for the Future Workplace and Workforce Strategy Programme and the Strategic Productivity and Peak Performance Accelerator it is the full module sequence plus the closing applied exercise. Partial completion is recorded module by module but does not carry the full accredited range.",
     },
     {
       q: "Who records the hours?",
-      a: "A certificate stating the accredited CPD hours is issued on completion. Participants remain responsible for recording those hours with their own professional body, in line with that body's own CPD scheme.",
+      a: "Participants who satisfy the approved completion requirements receive the official CPDSO Certificate of Attendance manually from Bright Leadership Consulting, using the standard template supplied by CPDSO. Certificates are not generated or downloaded automatically. The Certificate of Attendance records participation in an accredited CPD activity; it is not a qualification, professional certification or academic award. Participants remain responsible for recording those hours with their own professional body, in line with that body's own CPD scheme.",
     },
   ];
 
