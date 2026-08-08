@@ -219,7 +219,7 @@ kicker("The Catalogue");
 text("Four Programmes", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
 
 programmes.forEach((p, i) => {
-  need(120);
+  need(210);
   if (i > 0) rule(20);
 
   text(p.title, { font: serifBold, size: 14, lead: 1.3, gap: 2 });
