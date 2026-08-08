@@ -239,6 +239,20 @@ const StrategicLeadershipAI = () => {
                 engagements are proprietary instruments and are not externally
                 accredited.
               </motion.p>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.18 }}
+              >
+                {CPD_PARTICIPANT_STATEMENT}
+              </motion.p>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mt-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                {CPD_CERTIFICATE_SCOPE_NOTE}
+              </motion.p>
             </div>
           </div>
         </section>
