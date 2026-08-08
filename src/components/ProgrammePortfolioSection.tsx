@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { programmes } from "@/data/programmes";
+import { CPD_PROVIDER_STATEMENT } from "@/data/accreditation";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -61,7 +62,7 @@ const ProgrammePortfolioSection = () => {
                   {programme.subtitle}
                 </p>
                 <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
-                  {programme.cpdHours} accredited CPD hours
+                  Accredited · {programme.cpdHours}
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-grow">
                   {programme.description}
