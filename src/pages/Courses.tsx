@@ -383,6 +383,25 @@ const Courses = () => {
             </motion.p>
 
             <CpdHoursFaq />
+
+            <motion.p
+              className="mt-10"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.24 }}
+            >
+              <a
+                href="/downloads/programme-portfolio.pdf"
+                className="link-quiet"
+                download
+              >
+                Download the Programme Portfolio (PDF)
+              </a>
+              <span className="block mt-2 text-sm text-muted-foreground">
+                Four programmes, accredited CPD hour ranges, fees and
+                certificate terms — generated from this catalogue.
+              </span>
+            </motion.p>
+
           </div>
         </section>
 
