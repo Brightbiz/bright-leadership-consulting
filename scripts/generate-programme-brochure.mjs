@@ -256,11 +256,17 @@ text(CPD_PARTICIPANT_STATEMENT, { size: 9.5, lead: 1.55, gap: 8 });
 text(CPD_CERTIFICATE_SCOPE_NOTE, { size: 9.5, lead: 1.55, gap: 20 });
 rule(20);
 
+// Keep the section heading on the same page as its first question.
+need(200);
+kicker("Common Questions");
+text("How CPD Hours Are Determined", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
+
 for (const item of faqItems) {
-  need(80);
+  need(90);
   text(item.q, { font: serifBold, size: 11.5, lead: 1.35, gap: 4 });
   text(item.a, { size: 9.5, lead: 1.55, gap: 16 });
 }
+
 
 rule(20);
 text("Enquiries: admin@brightleadershipconsulting.com", { size: 9, font: sansBold });
