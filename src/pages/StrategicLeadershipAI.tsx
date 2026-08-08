@@ -7,6 +7,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
 import { programmes } from "@/data/programmes";
 import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
 import { useEffect } from "react";
