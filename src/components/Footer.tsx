@@ -20,7 +20,7 @@ const programmeLinks = [
 /** Brochures mirror the authoritative four-programme catalogue only. */
 const brochureLinks = [
   { label: "Executive Leadership Mastery", href: "/brochures/executive-leadership-mastery-brochure.html" },
-  { label: "Future of Work", href: "/brochures/future-of-work-brochure.html" },
+  { label: "The Future Workplace & Workforce Strategy", href: "/brochures/future-of-work-brochure.html" },
   { label: "Peak Performance", href: "/brochures/peak-performance-brochure.html" },
   { label: "Executive Alignment Index™", href: "/brochures/executive-alignment-index-brochure.html" },
 ];
