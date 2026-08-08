@@ -68,17 +68,25 @@ const ROUTES = read("src/App.tsx");
 /** Resolves the page component file that App.tsx routes to for a path. */
 function pageFileForRoute(routePath) {
   const escaped = routePath.replace(/[/-]/g, (c) => `\\${c}`);
-  const component = ROUTES.match(
-    new RegExp(`path="${escaped}"\\s+element=\\{<([A-Za-z0-9_]+)`),
+  const elementSrc = ROUTES.match(
+    new RegExp(`path="${escaped}"\\s+element=\\{([^]*?)\\}\\s*/>`),
   )?.[1];
-  if (!component) return null;
-  const importPath = ROUTES.match(
-    new RegExp(`${component}\\s*=\\s*lazy\\(\\(\\)\\s*=>\\s*import\\("([^"]+)"\\)`),
-  )?.[1]
-    ?? ROUTES.match(new RegExp(`import ${component} from "([^"]+)"`))?.[1];
-  if (!importPath) return null;
-  const file = importPath.replace(/^@\//, "src/") + ".tsx";
-  return existsSync(resolve(ROOT, file)) ? file : null;
+  if (!elementSrc) return null;
+
+  // Routes wrap pages (e.g. <PageTransition><Page /></PageTransition>);
+  // take the innermost component that resolves to a file under src/pages.
+  const names = [...elementSrc.matchAll(/<([A-Z][A-Za-z0-9_]*)/g)].map((m) => m[1]);
+  for (const name of names.reverse()) {
+    const importPath =
+      ROUTES.match(
+        new RegExp(`${name}\\s*=\\s*lazy\\(\\(\\)\\s*=>\\s*import\\("([^"]+)"\\)`),
+      )?.[1] ?? ROUTES.match(new RegExp(`import ${name} from "([^"]+)"`))?.[1];
+    if (!importPath) continue;
+    const file =
+      importPath.replace(/^@\//, "src/").replace(/^\.\//, "src/") + ".tsx";
+    if (file.startsWith("src/pages/") && existsSync(resolve(ROOT, file))) return file;
+  }
+  return null;
 }
 
 /** Reads a prop value off a JSX element, resolving `{CONST}` references. */
