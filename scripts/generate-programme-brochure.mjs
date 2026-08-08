@@ -109,15 +109,8 @@ const serifBold = await doc.embedFont(StandardFonts.TimesRomanBold);
 const sans = await doc.embedFont(StandardFonts.Helvetica);
 const sansBold = await doc.embedFont(StandardFonts.HelveticaBold);
 
-/** WinAnsi-safe text: the standard fonts have no en dash, ™ or curly quotes. */
-const ascii = (s) =>
-  s
-    .replace(/\u2013|\u2014/g, "-")
-    .replace(/\u2019|\u2018/g, "'")
-    .replace(/\u201c|\u201d/g, '"')
-    .replace(/\u2122/g, "(TM)")
-    .replace(/\u00a0/g, " ")
-    .replace(/\u00a3/g, "\u00a3");
+/** WinAnsi covers en dash, ™, £ and curly quotes; only NBSP needs replacing. */
+const ascii = (s) => s.replace(/\u00a0/g, " ");
 
 let page = doc.addPage(PAGE);
 let y = PAGE[1] - MARGIN;
@@ -218,13 +211,15 @@ rule(22);
 text(CPD_PROVIDER_STATEMENT, { size: 9.5, gap: 8 });
 text(CPD_SCOPE_STATEMENT, { size: 9.5, color: MUTED, gap: 24 });
 
+newPage();
+
 /* -------------------------------------------------------------- programmes */
 
 kicker("The Catalogue");
 text("Four Programmes", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
 
 programmes.forEach((p, i) => {
-  need(150);
+  need(120);
   if (i > 0) rule(20);
 
   text(p.title, { font: serifBold, size: 14, lead: 1.3, gap: 2 });
