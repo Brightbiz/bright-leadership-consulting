@@ -105,7 +105,7 @@ doc.setSubject("Accredited executive development programmes, CPD hours and fees"
 doc.setCreator("Bright Leadership Consulting");
 
 const serif = await doc.embedFont(StandardFonts.TimesRoman);
-const serifBold = await doc.embedFont(StandardFonts.TimesBold);
+const serifBold = await doc.embedFont(StandardFonts.TimesRomanBold);
 const sans = await doc.embedFont(StandardFonts.Helvetica);
 const sansBold = await doc.embedFont(StandardFonts.HelveticaBold);
 
