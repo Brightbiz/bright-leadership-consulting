@@ -6,6 +6,11 @@ import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
 import { programmes } from "@/data/programmes";
 import { trackCourseCtaClick } from "@/lib/analytics";
 
@@ -227,7 +232,24 @@ const ExecutiveLeadershipMastery = () => {
                 <p>Real-world capstone project</p>
                 <p>Flexible self-paced learning</p>
               </motion.div>
+
+              <motion.div
+                className="mt-10 space-y-4 border-l-2 border-border pl-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {CPD_PROVIDER_STATEMENT}
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {CPD_PARTICIPANT_STATEMENT}
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {CPD_CERTIFICATE_SCOPE_NOTE}
+                </p>
+              </motion.div>
             </div>
+
           </div>
         </section>
 

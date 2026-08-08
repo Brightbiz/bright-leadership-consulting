@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { programmes } from "@/data/programmes";
+import { CPD_PROVIDER_STATEMENT } from "@/data/accreditation";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -29,13 +30,21 @@ const ProgrammePortfolioSection = () => {
           </motion.h2>
 
           <motion.p
-            className="body-brief max-w-[680px] mb-14"
+            className="body-brief max-w-[680px] mb-6"
             {...fade}
             transition={{ ...fade.transition, delay: 0.15 }}
           >
             Four accredited programmes. Individual executives enrol directly.
             Organisations commissioning development for a leadership team begin
             with structural measurement.
+          </motion.p>
+
+          <motion.p
+            className="text-sm text-muted-foreground leading-relaxed max-w-[680px] mb-14 border-l-2 border-border pl-5"
+            {...fade}
+            transition={{ ...fade.transition, delay: 0.17 }}
+          >
+            {CPD_PROVIDER_STATEMENT}
           </motion.p>
 
           <div className="grid gap-px bg-border sm:grid-cols-2 max-w-[1100px]">
@@ -52,9 +61,13 @@ const ProgrammePortfolioSection = () => {
                 <p className="text-sm font-medium text-accent mb-3">
                   {programme.subtitle}
                 </p>
+                <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
+                  Accredited · {programme.cpdHours}
+                </p>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-grow">
                   {programme.description}
                 </p>
+
                 <Link
                   to={programme.detailPage ?? "/courses"}
                   className="link-quiet text-sm"

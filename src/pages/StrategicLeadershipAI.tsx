@@ -7,6 +7,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
+import {
+  CPD_PROVIDER_STATEMENT,
+  CPD_PARTICIPANT_STATEMENT,
+  CPD_CERTIFICATE_SCOPE_NOTE,
+} from "@/data/accreditation";
 import { programmes } from "@/data/programmes";
 import { trackCourseCtaClick, trackProgrammeView } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -233,6 +238,20 @@ const StrategicLeadershipAI = () => {
                 programmes only; the Executive Alignment Index™ and advisory
                 engagements are proprietary instruments and are not externally
                 accredited.
+              </motion.p>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.18 }}
+              >
+                {CPD_PARTICIPANT_STATEMENT}
+              </motion.p>
+              <motion.p
+                className="text-sm text-muted-foreground leading-relaxed mt-4"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                {CPD_CERTIFICATE_SCOPE_NOTE}
               </motion.p>
             </div>
           </div>
