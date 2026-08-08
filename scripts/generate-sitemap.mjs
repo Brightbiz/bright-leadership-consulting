@@ -38,6 +38,9 @@ const entries = [
   { path: "/contact", source: "src/pages/Contact.tsx", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-leadership-mastery", source: "src/pages/ExecutiveLeadershipMastery.tsx", changefreq: "monthly", priority: "0.8" },
   { path: "/strategic-leadership-ai", source: "src/pages/StrategicLeadershipAI.tsx", changefreq: "monthly", priority: "0.8" },
+  { path: "/future-of-work", source: "src/pages/FutureOfWork.tsx", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-productivity-peak-performance", source: "src/pages/StrategicProductivity.tsx", changefreq: "monthly", priority: "0.8" },
+
   { path: "/courses", source: "src/pages/Courses.tsx", changefreq: "monthly", priority: "0.7" },
   { path: "/augmented-leadership", source: "src/pages/AugmentedLeadership.tsx", changefreq: "monthly", priority: "0.7" },
   { path: "/advisory-process", source: "src/pages/AdvisoryProcess.tsx", changefreq: "monthly", priority: "0.8" },
