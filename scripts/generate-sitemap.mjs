@@ -48,10 +48,8 @@ const entries = [
   { path: "/privacy", source: "src/pages/Privacy.tsx", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", source: "src/pages/Terms.tsx", changefreq: "yearly", priority: "0.3" },
   { path: "/brochures/executive-leadership-mastery-brochure.html", source: "public/brochures/executive-leadership-mastery-brochure.html", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/advanced-leadership-skills-brochure.html", source: "public/brochures/advanced-leadership-skills-brochure.html", changefreq: "monthly", priority: "0.6" },
   { path: "/brochures/future-of-work-brochure.html", source: "public/brochures/future-of-work-brochure.html", changefreq: "monthly", priority: "0.6" },
   { path: "/brochures/peak-performance-brochure.html", source: "public/brochures/peak-performance-brochure.html", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/enhanced-employability-skills-brochure.html", source: "public/brochures/enhanced-employability-skills-brochure.html", changefreq: "monthly", priority: "0.6" },
   { path: "/brochures/executive-alignment-index-brochure.html", source: "public/brochures/executive-alignment-index-brochure.html", changefreq: "monthly", priority: "0.6" },
 ];
 
