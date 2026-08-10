@@ -64,7 +64,7 @@ const tiers = [
       "Downloadable workbooks and templates",
       "Case studies and action plans",
       "CPDSO Certificate of Attendance, issued manually on approved completion",
-      "Access to programme materials for the enrolment period stated at purchase",
+      "Access to programme materials is currently not subject to a fixed expiry date on the programme platform",
     ],
     cta: "Begin Your Programme",
     link: programmes[0].link,

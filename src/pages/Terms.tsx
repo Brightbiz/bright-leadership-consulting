@@ -46,7 +46,7 @@ const sections: Section[] = [
       {
         subheading: "Platform and contracting party",
         paragraphs: [
-          "Bright Leadership Consulting's self-directed executive programmes are delivered through a third-party learning platform. The programme description, price, payment options, access period and applicable completion requirements displayed at purchase form part of the terms of the purchase.",
+          "Bright Leadership Consulting's self-directed executive programmes are delivered through a third-party learning platform. The programme description, price, payment options, access arrangements and applicable completion requirements displayed at purchase form part of the terms of the purchase.",
           "The platform processes enrolment, payment and programme access. Its technical and payment-processing terms may also apply, but they do not remove any statutory rights that cannot lawfully be excluded.",
         ],
       },
@@ -60,8 +60,7 @@ const sections: Section[] = [
       {
         subheading: "Access",
         paragraphs: [
-          "Access begins when enrolment is confirmed and runs for the access period stated at purchase. Purchasers are responsible for completing the programme before that period ends.",
-          "An extension may be requested before access expires but is not automatic. Any extension, associated conditions or additional charge will be confirmed in writing.",
+          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform.",
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
         ],
       },
