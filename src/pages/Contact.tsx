@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { reportEnquiryConversion } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -152,6 +153,17 @@ const Contact = () => {
           variant: "destructive",
         });
         return;
+      }
+
+      // Confirmed success only: the request returned without a transport or
+      // server error. Google Ads conversion for organisational / cohort
+      // enquiries, fired at most once (guarded in reportEnquiryConversion).
+      if (
+        data.enquiryType === ORGANISATIONAL ||
+        data.deliveryFormat === "Cohort-based" ||
+        data.deliveryFormat === "In-house / bespoke delivery"
+      ) {
+        reportEnquiryConversion();
       }
 
       setIsSubmitted(true);

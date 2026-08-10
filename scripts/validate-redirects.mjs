@@ -21,11 +21,16 @@ const DEFAULT_ORIGIN = "https://brightleadershipconsulting.com";
 const errors = [];
 const app = readFileSync("src/App.tsx", "utf8");
 
-for (const legacy of LEGACY_PATHS) {
-  const pattern = new RegExp(
-    `path=["']${legacy.replace(/\//g, "\\/")}["'][^>]*<Navigate\\s+to=["']${CANONICAL}["']`,
-    "s",
+// Redirects use <KeepQueryRedirect>, a thin wrapper around
+// <Navigate ... replace /> that carries the query string through so campaign
+// parameters (gclid / gbraid / wbraid / utm_*) survive the redirect.
+if (!/const KeepQueryRedirect[\s\S]{0,400}useLocation\(\)[\s\S]{0,300}<Navigate to=\{`\$\{to\}\$\{search\}`\} replace/.test(app)) {
+  errors.push(
+    "KeepQueryRedirect must resolve to <Navigate to={`${to}${search}`} replace /> so campaign parameters are preserved",
   );
+}
+
+for (const legacy of LEGACY_PATHS) {
   const routeLine = app
     .split("\n")
     .find((l) => l.includes(`path="${legacy}"`) || l.includes(`path='${legacy}'`));
@@ -33,10 +38,13 @@ for (const legacy of LEGACY_PATHS) {
     errors.push(`Missing redirect route for legacy URL ${legacy} in src/App.tsx`);
   } else if (!routeLine.includes(`to="${CANONICAL}"`)) {
     errors.push(`Legacy URL ${legacy} does not redirect to ${CANONICAL}: ${routeLine.trim()}`);
-  } else if (!routeLine.includes("replace")) {
-    errors.push(`Redirect for ${legacy} must use <Navigate ... replace /> so history is not polluted`);
+  } else if (!/<(Navigate[^>]*replace|KeepQueryRedirect)\b/.test(routeLine)) {
+    errors.push(
+      `Redirect for ${legacy} must use <KeepQueryRedirect> or <Navigate ... replace /> so history is not polluted`,
+    );
   }
 }
+
 
 if (!app.includes(`path="${CANONICAL}"`)) {
   errors.push(`Canonical route ${CANONICAL} is not defined in src/App.tsx`);
