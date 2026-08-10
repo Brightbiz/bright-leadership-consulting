@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CancellationFaq from "@/components/CancellationFaq";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
+
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -212,10 +214,21 @@ const Terms = () => {
                 className="font-serif text-xl font-medium text-foreground mb-6"
                 {...fade}
               >
+                Cancellation for online consumers
+              </motion.h2>
+              <CancellationFaq />
+            </div>
+
+            <div className="max-w-[680px] pt-16">
+              <motion.h2
+                className="font-serif text-xl font-medium text-foreground mb-6"
+                {...fade}
+              >
                 How CPD hours are determined
               </motion.h2>
               <CpdHoursFaq />
             </div>
+
           </div>
         </section>
       </main>
