@@ -46,8 +46,15 @@ const AdminCpdAudit = lazy(() => import("./pages/AdminCpdAudit"));
 
 const queryClient = new QueryClient();
 
+/** Redirect that carries the query string across, keeping campaign params. */
+const KeepQueryRedirect = ({ to }: { to: string }) => {
+  const { search } = useLocation();
+  return <Navigate to={`${to}${search}`} replace />;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
+
 
   useEffect(() => {
     trackPageView(location.pathname + location.search);
@@ -77,14 +84,17 @@ const AnimatedRoutes = () => {
           <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
 
           {/* Legacy indexed URLs — redirect rather than 404 so existing search
-              results and inbound links land on the closest live equivalent. */}
-          <Route path="/about" element={<Navigate to="/advisory-process" replace />} />
-          <Route path="/resources" element={<Navigate to="/courses" replace />} />
-          <Route path="/faq" element={<Navigate to="/advisory-process" replace />} />
-          <Route path="/programs/ai-leadership" element={<Navigate to="/strategic-leadership-ai" replace />} />
-          <Route path="/ai-leadership" element={<Navigate to="/strategic-leadership-ai" replace />} />
-          <Route path="/programs/*" element={<Navigate to="/courses" replace />} />
-          <Route path="/programmes" element={<Navigate to="/courses" replace />} />
+              results and inbound links land on the closest live equivalent.
+              The query string is preserved so campaign parameters
+              (gclid / gbraid / wbraid / utm_*) survive the redirect. */}
+          <Route path="/about" element={<KeepQueryRedirect to="/advisory-process" />} />
+          <Route path="/resources" element={<KeepQueryRedirect to="/courses" />} />
+          <Route path="/faq" element={<KeepQueryRedirect to="/advisory-process" />} />
+          <Route path="/programs/ai-leadership" element={<KeepQueryRedirect to="/strategic-leadership-ai" />} />
+          <Route path="/ai-leadership" element={<KeepQueryRedirect to="/strategic-leadership-ai" />} />
+          <Route path="/programs/*" element={<KeepQueryRedirect to="/courses" />} />
+          <Route path="/programmes" element={<KeepQueryRedirect to="/courses" />} />
+
 
 
           
