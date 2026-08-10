@@ -70,7 +70,7 @@ const sections: Section[] = [
         paragraphs: [
           "Individual consumers purchasing online may have a statutory right to cancel within 14 days, subject to the applicable law governing digital content and services.",
           "Where a purchaser expressly requests or consents to immediate access to digital programme content during the cancellation period and acknowledges that beginning the supply will result in the loss of the statutory cancellation right, that right may be lost once access to the digital content begins.",
-          "If the required consent and acknowledgement have not been obtained, the purchaser's statutory rights remain as a consumer remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
+          "If the required consent and acknowledgement have not been obtained, the purchaser's statutory rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
           "To request cancellation, the purchaser must contact Bright Leadership Consulting in writing, providing their name, programme, purchase date and the email address used to enrol.",
         ],
       },
