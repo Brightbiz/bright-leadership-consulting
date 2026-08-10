@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CancellationFaq from "@/components/CancellationFaq";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
+
 
 const fade = {
   initial: { opacity: 0, y: 16 },
