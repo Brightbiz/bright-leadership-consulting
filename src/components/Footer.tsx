@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { openCookiePreferences } from "@/lib/consent";
 
 const footerLinks = [
   { label: "Executive Alignment Index™", href: "/executive-alignment-index", isRoute: true },
@@ -132,6 +133,13 @@ const Footer = () => {
               >
                 Terms of Use
               </Link>
+              <button
+                type="button"
+                onClick={openCookiePreferences}
+                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+              >
+                Cookie Preferences
+              </button>
               <span className="text-xs text-navy-foreground/30">
                 © {new Date().getFullYear()}
               </span>
