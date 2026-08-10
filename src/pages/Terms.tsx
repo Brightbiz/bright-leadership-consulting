@@ -60,9 +60,11 @@ const sections: Section[] = [
       {
         subheading: "Access",
         paragraphs: [
-          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform.",
+          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers should contact Bright Leadership Consulting if they require assistance with access.",
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
+          "Bright Leadership Consulting reserves the right to make reasonable changes to the learning platform or programme-delivery arrangements. Any such change will not affect access rights already granted to a purchaser without appropriate notice or an appropriate alternative arrangement.",
         ],
+
       },
       {
         subheading: "Cancellation by individual consumers",
