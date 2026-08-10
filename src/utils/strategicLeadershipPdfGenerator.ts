@@ -946,7 +946,7 @@ export async function generateStrategicLeadershipPDF(): Promise<Uint8Array> {
     });
     page.drawText('OVERALL EVALUATION', { x: MARGIN + 10, y: y - 18, size: 10, font: fonts.bold, color: COLORS.teal });
     page.drawText('26-30: Excellent  |  21-25: Strong  |  16-20: Adequate  |  11-15: Limited  |  6-10: Needs development', { x: MARGIN + 10, y: y - 32, size: 8, font: fonts.regular, color: COLORS.text });
-    page.drawText('Certification threshold: Minimum 16 points required for course completion', { x: MARGIN + 10, y: y - 45, size: 8, font: fonts.bold, color: COLORS.gold });
+    page.drawText('Capstone completion threshold: A minimum assessment score of 16 is required for course completion.', { x: MARGIN + 10, y: y - 45, size: 7, font: fonts.bold, color: COLORS.gold });
     y -= 88;
   }
 
