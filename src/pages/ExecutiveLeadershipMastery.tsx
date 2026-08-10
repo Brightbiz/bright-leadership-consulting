@@ -5,6 +5,7 @@ import ProgrammeMeta from "@/components/ProgrammeMeta";
 import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BeforeYouEnrol from "@/components/BeforeYouEnrol";
 import ScrollProgress from "@/components/ScrollProgress";
 import {
   CPD_PROVIDER_STATEMENT,
@@ -63,7 +64,7 @@ const tiers = [
       "Downloadable workbooks and templates",
       "Case studies and action plans",
       "CPDSO Certificate of Attendance, issued manually on approved completion",
-      "Lifetime access to materials",
+      "Access to programme materials for the enrolment period stated at purchase",
     ],
     cta: "Begin Your Programme",
     link: programmes[0].link,
@@ -73,11 +74,10 @@ const tiers = [
     description: "Facilitated cohort sessions and structured peer learning alongside the full curriculum.",
     inclusions: [
       "Everything in Self-Directed",
-      "6 live facilitated sessions",
-      "Peer learning community",
-      "Monthly Q&A with facilitators",
-      "Cohort accountability partners",
-      "Priority email support",
+      "Live facilitated sessions, scheduled with the cohort",
+      "Structured peer learning group",
+      "Facilitator Q&A during the programme window",
+      "Named point of contact for learner support",
     ],
     cta: "Enquire About Availability",
     link: "/contact",
@@ -87,11 +87,9 @@ const tiers = [
     description: "Dedicated advisory support with personalised development planning.",
     inclusions: [
       "Everything in Cohort-Based",
-      "6 private 1:1 advisory sessions",
-      "360-degree leadership diagnostic",
+      "Private 1:1 advisory sessions, number agreed at scoping",
       "Personalised development plan",
-      "Direct access to your advisor",
-      "Executive network introductions",
+      "Direct access to your adviser during the engagement",
     ],
     cta: "Enquire About Availability",
     link: "/contact",
@@ -399,6 +397,7 @@ const ExecutiveLeadershipMastery = () => {
             </div>
           </div>
         </section>
+        <BeforeYouEnrol programmeTitle="Executive Leadership Mastery Programme" />
       </main>
 
       <Footer />

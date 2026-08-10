@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T21:54:09.932Z",
+  "generatedAt": "2026-08-10T10:48:18.438Z",
   "catalogue": "src/data/programmes.ts",
   "programmes": [
     {
@@ -58,7 +58,7 @@
           "value": "50–66 CPD hours"
         },
         {
-          "line": 447,
+          "line": 446,
           "min": 50,
           "max": 66,
           "value": "50–66 CPD hours"

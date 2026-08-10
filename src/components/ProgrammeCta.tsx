@@ -214,10 +214,10 @@ const ProgrammeCta = ({
           {linkUnavailable
             ? "This programme's enrolment link is being reconfirmed. Use the enquiry route and we will reply with the current enrolment page, next intake date and team-delivery options."
             : live
-              ? `Enrol Now is for individual leaders joining an open cohort — you will complete payment and access on the Thinkific platform${
+              ? `Enrol Now is for individual leaders purchasing immediate self-directed access${
                   programme.individualFee ? ` (${programme.individualFee})` : ""
-                }. For team, board or organisational delivery, choose Discuss Executive Alignment: you will be asked for your role, organisation size and preferred format, then we confirm availability and pricing directly.`
-              : "Direct enrolment is paused. Enquire for the next open cohort date, or to scope a private cohort, board or organisational session. Replies are confidential and usually sent within one working day."}
+                }. Payment and course access are completed securely on the Thinkific platform. For team, board or organisational delivery, choose Discuss Executive Alignment: you will be asked for your role, organisation size and preferred format, then we confirm availability and pricing directly.`
+              : "Direct enrolment is paused. Enquire for the next intake date, or to scope a private cohort, board or organisational session. Replies are confidential and usually sent within one working day."}
         </p>
       )}
     </div>
