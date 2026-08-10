@@ -6,6 +6,7 @@ import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BeforeYouEnrol from "@/components/BeforeYouEnrol";
+import ProgrammeFaq from "@/components/ProgrammeFaq";
 import ScrollProgress from "@/components/ScrollProgress";
 import CourseJourneyMap from "@/components/CourseJourneyMap";
 import {
@@ -454,6 +455,7 @@ const StrategicLeadershipAI = () => {
             </div>
           </div>
         </section>
+        <ProgrammeFaq programmeTitle="Strategic Leadership in the Age of AI" />
         <BeforeYouEnrol programmeTitle="Strategic Leadership in the Age of AI" />
       </main>
 
