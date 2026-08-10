@@ -11,7 +11,14 @@ const fade = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
-const sections = [
+type SectionBody = string | { subheading: string; paragraphs: string[] };
+
+type Section = {
+  heading: string;
+  body: SectionBody[];
+};
+
+const sections: Section[] = [
   {
     heading: "These terms",
     body: [
@@ -34,10 +41,84 @@ const sections = [
     ],
   },
   {
-    heading: "Programmes and third-party platforms",
+    heading: "Executive Programme Purchases",
     body: [
-      "Executive programmes are delivered through a third-party learning platform. Enrolment, payment, access and refunds for those programmes are subject to that platform's own terms and to any programme terms provided at the point of enrolment.",
-      "Accredited CPD hours are stated as ranges at programme level; participants remain responsible for recording CPD with their own professional body.",
+      {
+        subheading: "Platform and contracting party",
+        paragraphs: [
+          "Bright Leadership Consulting's self-directed executive programmes are delivered through a third-party learning platform. The programme description, price, payment options, access period and applicable completion requirements displayed at purchase form part of the terms of the purchase.",
+          "The platform processes enrolment, payment and programme access. Its technical and payment-processing terms may also apply, but they do not remove any statutory rights that cannot lawfully be excluded.",
+        ],
+      },
+      {
+        subheading: "Prices, taxes and payment",
+        paragraphs: [
+          "Programme fees are stated in British Pounds unless otherwise shown. The price, payment schedule and any tax or VAT applicable to the purchaser are displayed at checkout before payment is completed.",
+          "Where an instalment plan is selected, the purchaser is responsible for all instalments forming part of the agreed total price. An instalment plan is a method of paying the full programme fee and is not a monthly subscription that may be cancelled at will.",
+        ],
+      },
+      {
+        subheading: "Access",
+        paragraphs: [
+          "Access begins when enrolment is confirmed and runs for the access period stated at purchase. Purchasers are responsible for completing the programme before that period ends.",
+          "An extension may be requested before access expires but is not automatic. Any extension, associated conditions or additional charge will be confirmed in writing.",
+          "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
+        ],
+      },
+      {
+        subheading: "Cancellation by individual consumers",
+        paragraphs: [
+          "Individual consumers purchasing online may have a statutory right to cancel within 14 days, subject to the applicable law governing digital content and services.",
+          "Where a purchaser expressly requests or consents to immediate access to digital programme content during the cancellation period and acknowledges that beginning the supply will result in the loss of the statutory cancellation right, that right may be lost once access to the digital content begins.",
+          "If the required consent and acknowledgement have not been obtained, the purchaser's statutory rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
+          "To request cancellation, the purchaser must contact Bright Leadership Consulting in writing, providing their name, programme, purchase date and the email address used to enrol.",
+        ],
+      },
+      {
+        subheading: "Digital-content problems",
+        paragraphs: [
+          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify Bright Leadership Consulting promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
+          "Nothing in these terms limits the purchaser's statutory rights concerning digital content or services.",
+        ],
+      },
+      {
+        subheading: "Organisational and cohort purchases",
+        paragraphs: [
+          "Organisational, cohort, facilitated and advisory-supported purchases are governed by the proposal, order form or written agreement issued for that engagement.",
+          "Cancellation, postponement, substitution of participants, payment and refund arrangements for those purchases will be stated in the relevant written agreement. Consumer cancellation provisions do not ordinarily apply to purchases made wholly for business purposes.",
+        ],
+      },
+      {
+        subheading: "Receipts, invoices and purchase orders",
+        paragraphs: [
+          "A payment receipt is issued through the programme platform following an online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins.",
+          "Providing a purchase-order number does not replace the organisation's obligation to pay an invoice in accordance with the agreed payment terms.",
+        ],
+      },
+      {
+        subheading: "Completion and certificates",
+        paragraphs: [
+          "Each programme has stated completion requirements. Completion is reviewed and approved by Bright Leadership Consulting.",
+          "Participants who satisfy the approved requirements for a CPD-accredited activity receive the official CPDSO Certificate of Attendance manually from Bright Leadership Consulting, using the standard template supplied by The CPD Standards Office. Certificates are normally issued within ten working days of approved completion and are not generated or downloaded automatically through the learning platform.",
+          "A CPDSO Certificate of Attendance records participation in an accredited CPD activity. It is not a qualification, professional certification or academic award. Participants remain responsible for recording CPD with their own professional institute, regulator or employer.",
+        ],
+      },
+      {
+        subheading: "Platform availability",
+        paragraphs: [
+          "Bright Leadership Consulting will take reasonable steps to maintain programme availability but cannot guarantee uninterrupted access where disruption is caused by maintenance, third-party platform failure or circumstances outside its reasonable control.",
+          "Where a material interruption prevents access for a significant period, Bright Leadership Consulting may provide an appropriate access extension.",
+        ],
+      },
+      {
+        subheading: "Important checkout requirement",
+        paragraphs: [
+          "The Terms wording alone is not sufficient to remove a consumer's 14-day cancellation right when immediate digital access begins. The checkout should capture:",
+          "express consent to immediate supply; and",
+          "acknowledgement that the cancellation right will be lost once supply begins.",
+          "That requirement follows regulation 37 of the UK Consumer Contracts Regulations.",
+        ],
+      },
     ],
   },
   {
@@ -102,11 +183,33 @@ const Terms = () => {
                     {section.heading}
                   </h2>
                   <div className="space-y-4">
-                    {section.body.map((paragraph) => (
-                      <p key={paragraph} className="text-[15px] leading-relaxed text-muted-foreground">
-                        {paragraph}
-                      </p>
-                    ))}
+                    {section.body.map((item, i) =>
+                      typeof item === "string" ? (
+                        <p
+                          key={item}
+                          className="text-[15px] leading-relaxed text-muted-foreground"
+                        >
+                          {item}
+                        </p>
+                      ) : (
+                        <div
+                          key={`${item.subheading}-${i}`}
+                          className="space-y-3"
+                        >
+                          <h3 className="font-serif text-base font-medium text-foreground">
+                            {item.subheading}
+                          </h3>
+                          {item.paragraphs.map((paragraph) => (
+                            <p
+                              key={paragraph}
+                              className="text-[15px] leading-relaxed text-muted-foreground"
+                            >
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      )
+                    )}
                   </div>
                 </motion.div>
               ))}
