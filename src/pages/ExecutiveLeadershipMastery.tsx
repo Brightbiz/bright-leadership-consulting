@@ -5,6 +5,7 @@ import ProgrammeMeta from "@/components/ProgrammeMeta";
 import CourseSchema from "@/components/CourseSchema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BeforeYouEnrol from "@/components/BeforeYouEnrol";
 import ScrollProgress from "@/components/ScrollProgress";
 import {
   CPD_PROVIDER_STATEMENT,
@@ -396,6 +397,7 @@ const ExecutiveLeadershipMastery = () => {
             </div>
           </div>
         </section>
+        <BeforeYouEnrol programmeTitle="Executive Leadership Mastery Programme" />
       </main>
 
       <Footer />
