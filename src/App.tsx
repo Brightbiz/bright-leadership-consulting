@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import PageLoader from "@/components/PageLoader";
+import CookieConsent from "@/components/CookieConsent";
 
 // Core pages
 const Index = lazy(() => import("./pages/Index"));
@@ -123,6 +124,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AnimatedRoutes />
+            <CookieConsent />
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
