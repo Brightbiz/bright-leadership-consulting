@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import EAIDashboardPreview from "./EAIDashboardPreview";
 import AlignmentFrameworkDiagram from "./diagrams/AlignmentFrameworkDiagram";
-import instrumentStructural from "@/assets/instrument-structural.jpg";
+import instrumentStructural from "@/assets/instrument-structural.webp";
 
 const fade = {
   initial: { opacity: 0, y: 16 },

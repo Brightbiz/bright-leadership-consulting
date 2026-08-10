@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import heroStructural from "@/assets/hero-structural.jpg";
+import heroStructural from "@/assets/hero-structural.webp";
 
 const HeroSection = () => {
   return (
@@ -17,6 +17,10 @@ const HeroSection = () => {
             src={heroStructural}
             alt=""
             aria-hidden="true"
+            width={1100}
+            height={623}
+            decoding="async"
+            fetchPriority="low"
             className="w-full h-full object-cover"
             style={{ opacity: 0.06 }}
           />

@@ -15,6 +15,26 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: 'es2022',
+    // Long-term caching: split rarely-changing vendor code out of the app
+    // entry so a copy change doesn't invalidate React/Motion for returning
+    // visitors.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/.test(id))
+            return "vendor-react";
+          if (id.includes("framer-motion") || id.includes("motion-dom") || id.includes("motion-utils"))
+            return "vendor-motion";
+          if (id.includes("@supabase")) return "vendor-supabase";
+          if (id.includes("@tanstack")) return "vendor-query";
+          if (id.includes("lucide-react")) return "vendor-icons";
+          // Everything else keeps Rollup's own splitting, so route-only
+          // dependencies stay out of the initial download.
+          return undefined;
+        },
+      },
+    },
   },
   optimizeDeps: {
     esbuildOptions: {
