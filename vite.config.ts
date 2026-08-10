@@ -29,7 +29,9 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("@supabase")) return "vendor-supabase";
           if (id.includes("@tanstack")) return "vendor-query";
           if (id.includes("lucide-react")) return "vendor-icons";
-          return "vendor";
+          // Everything else keeps Rollup's own splitting, so route-only
+          // dependencies stay out of the initial download.
+          return undefined;
         },
       },
     },
