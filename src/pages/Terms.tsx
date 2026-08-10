@@ -90,7 +90,7 @@ const sections: Section[] = [
       {
         subheading: "Receipts, invoices and purchase orders",
         paragraphs: [
-          "A payment receipt is issued through the programme platform following an online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins.",
+          "A receipt showing the order details is provided following a completed online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins.",
           "Providing a purchase-order number does not replace the organisation's obligation to pay an invoice in accordance with the agreed payment terms.",
         ],
       },
@@ -106,16 +106,7 @@ const sections: Section[] = [
         subheading: "Platform availability",
         paragraphs: [
           "Bright Leadership Consulting will take reasonable steps to maintain programme availability but cannot guarantee uninterrupted access where disruption is caused by maintenance, third-party platform failure or circumstances outside its reasonable control.",
-          "Where a material interruption prevents access for a significant period, Bright Leadership Consulting may provide an appropriate access extension.",
-        ],
-      },
-      {
-        subheading: "Important checkout requirement",
-        paragraphs: [
-          "The Terms wording alone is not sufficient to remove a consumer's 14-day cancellation right when immediate digital access begins. The checkout should capture:",
-          "express consent to immediate supply; and",
-          "acknowledgement that the cancellation right will be lost once supply begins.",
-          "That requirement follows regulation 37 of the UK Consumer Contracts Regulations.",
+          "Where a material interruption prevents access for a significant period, Bright Leadership Consulting may provide an appropriate remedy or access adjustment.",
         ],
       },
     ],
