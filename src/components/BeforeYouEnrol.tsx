@@ -36,7 +36,7 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
   const items: { q: string; a: string }[] = [
     {
       q: "How long do I have access?",
-      a: "Access to programme materials runs for the enrolment period stated at purchase on the learning platform. If you need the period extended, contact us before it ends.",
+      a: "Access to programme materials is currently not subject to a fixed expiry date on the programme platform.",
     },
     {
       q: "How long does completion usually take?",

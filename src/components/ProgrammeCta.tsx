@@ -216,7 +216,7 @@ const ProgrammeCta = ({
             : live
               ? `Enrol Now is for individual leaders purchasing immediate self-directed access${
                   programme.individualFee ? ` (${programme.individualFee})` : ""
-                }. Payment and course access are completed securely on the Thinkific platform. For team, board or organisational delivery, choose Discuss Executive Alignment: you will be asked for your role, organisation size and preferred format, then we confirm availability and pricing directly.`
+                }. Payment and course access are completed securely on the programme platform. The individual route is not an open cohort. For team, board or organisational delivery, choose Discuss Executive Alignment: you will be asked for your role, organisation size and preferred format, then we confirm availability and pricing directly.`
               : "Direct enrolment is paused. Enquire for the next intake date, or to scope a private cohort, board or organisational session. Replies are confidential and usually sent within one working day."}
         </p>
       )}
