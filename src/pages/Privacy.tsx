@@ -14,8 +14,8 @@ const sections = [
   {
     heading: "Who we are",
     body: [
-      "Bright Business Solutions (Int'l) Company Limited, trading as Bright Leadership Consulting (company number 07258400, registered in England and Wales), is the data controller for personal information collected through this website and through advisory engagements.",
-      "Registered office: 82 James Carter Road, Mildenhall, England IP28 7DE.",
+      "Bright Business Solutions (Int’l) Company Limited, trading as Bright Leadership Consulting (Company No. 07258400), registered office: 82 James Carter Road, Mildenhall, England IP28 7DE. Registered in England and Wales.",
+      "The company is the data controller for personal information collected through this website and through advisory engagements.",
       "Privacy enquiries and data-rights requests may be directed to info@brightleadershipconsulting.com. Programme and account support is handled at admin@brightleadershipconsulting.com.",
     ],
   },
@@ -75,7 +75,8 @@ const sections = [
     heading: "Google Ads conversion measurement on this website",
     body: [
       "With your consent we use Google Ads conversion measurement, provided by Google Ireland Limited, on brightleadershipconsulting.com. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational, cohort or in-house programme enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes.",
-      "One conversion is currently configured: an organisational enquiry, recorded only after our systems confirm that such an enquiry has been received. It is not recorded on a page view, a form interaction, a button click, a validation failure or a general contact enquiry. No Google Analytics property, Google Tag Manager container or Enhanced Conversions feature is active on this website.",
+      "One conversion is currently configured: an organisational enquiry, recorded only after our systems confirm that such an enquiry has been received. It is not recorded on a page view, a form interaction, a button click, a validation failure or a general contact enquiry.",
+      "No Google Analytics property, Google Tag Manager container or Enhanced Conversions feature is active on brightleadershipconsulting.com. This statement is limited to this website. It does not describe the separately hosted learning platform, which is operated by its provider and may use its own analytics, tag-management or advertising technologies under its own privacy notice and cookie controls.",
       "The categories of information processed for this purpose are: a Google advertising click identifier present in the landing page address (for example gclid, gbraid or wbraid), campaign parameters such as utm_source and utm_campaign, the page address and referring source, approximate location derived from IP address, and general device and browser information. The content of your enquiry is not sent to Google.",
       "Advertising storage is controlled entirely through consent. Google Consent Mode v2 is configured so that ad_storage, analytics_storage, ad_user_data and ad_personalization are all set to denied before the Google tag loads. They are set to granted only if you accept advertising measurement, and returned to denied if you reject or later withdraw consent. When advertising measurement is accepted, Google may set conversion-linker cookies in the _gcl family on this domain, which typically expire up to 90 days after they are set. If consent is not given, no such cookies are set.",
       "Google's own information about how it processes advertising data is available in the Google Privacy Policy (policies.google.com/privacy) and in Google's description of how it uses cookies and similar technologies in advertising (policies.google.com/technologies/ads).",
@@ -92,7 +93,7 @@ const sections = [
   {
     heading: "The learning platform and payment providers",
     body: [
-      "Self-directed executive programmes are hosted on a separate learning platform provided by Thinkific Labs Inc. When you enrol, register or browse on that platform, your information is processed on that platform under its own privacy notice and cookie arrangements, not through this website. Bright Leadership Consulting receives enrolment, progress and completion information from the platform in order to administer programmes and issue certificates.",
+      "Self-directed executive programmes are hosted on a separate learning platform provided by Thinkific Labs Inc. When you enrol, register or browse on that platform, your information is processed on that platform under its own privacy notice and cookie arrangements, not through this website. The consent choice you make on brightleadershipconsulting.com does not carry across to it, and we do not represent which analytics or advertising technologies that platform uses. Bright Leadership Consulting receives enrolment, progress and completion information from the platform in order to administer programmes and issue certificates.",
       "Payments made on the learning platform are processed by the platform's payment providers. Bright Leadership Consulting does not receive or store full card details.",
       "The learning platform and payment providers may process information outside the United Kingdom. Where personal information is transferred internationally, we rely on the transfer safeguards required by UK data-protection law, such as the International Data Transfer Agreement or the UK Addendum to the European Commission's standard contractual clauses.",
     ],

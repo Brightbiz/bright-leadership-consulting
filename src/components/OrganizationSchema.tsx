@@ -23,7 +23,7 @@ const OrganizationSchema = () => {
         url: `${SITE_URL}/`,
         description: DESCRIPTION,
         slogan: "Executive alignment rarely breaks — it drifts.",
-        legalName: "Bright Leadership Consulting",
+        legalName: "Bright Business Solutions (Int’l) Company Limited",
         identifier: {
           "@type": "PropertyValue",
           name: "Company registration number",
@@ -40,7 +40,14 @@ const OrganizationSchema = () => {
         },
         image: { "@id": `${SITE_URL}/#logo` },
         email: "info@brightleadershipconsulting.com",
-        telephone: "+44 333 335 5045",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "82 James Carter Road",
+          addressLocality: "Mildenhall",
+          addressRegion: "England",
+          postalCode: "IP28 7DE",
+          addressCountry: "GB",
+        },
         areaServed: [
           { "@type": "Country", name: "United Kingdom" },
           { "@type": "Place", name: "Worldwide" },
@@ -56,7 +63,6 @@ const OrganizationSchema = () => {
             "@type": "ContactPoint",
             contactType: "executive enquiries",
             email: "info@brightleadershipconsulting.com",
-            telephone: "+44 333 335 5045",
             areaServed: "GB",
             availableLanguage: "English",
           },
