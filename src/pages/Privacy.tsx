@@ -14,8 +14,9 @@ const sections = [
   {
     heading: "Who we are",
     body: [
-      "Bright Leadership Consulting (company number 07258400, registered in England and Wales) is the data controller for personal information collected through this website and through advisory engagements.",
-      "Enquiries about this notice may be directed to info@brightleadershipconsulting.com or 0333 335 5045.",
+      "Bright Business Solutions (Int'l) Company Limited, trading as Bright Leadership Consulting (company number 07258400, registered in England and Wales), is the data controller for personal information collected through this website and through advisory engagements.",
+      "Registered office: 82 James Carter Road, Mildenhall, England IP28 7DE.",
+      "Privacy enquiries and data-rights requests may be directed to info@brightleadershipconsulting.com. Programme and account support is handled at admin@brightleadershipconsulting.com.",
     ],
   },
   {
