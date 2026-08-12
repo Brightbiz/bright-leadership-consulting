@@ -80,7 +80,6 @@ Trigger [COLLECT_LEAD] when users say things like:
 - "Tell me more about working with you" (when they've already explored options)
 
 ## CONTACT
-- Phone: 0333 335 5045 (Mon-Fri, 9am-6pm)
 - Email: info@brightleadershipconsulting.com
 - Confidential enquiry: Encourage through the website
 
@@ -88,7 +87,7 @@ Trigger [COLLECT_LEAD] when users say things like:
 - "Is this right for our organisation?" → Ask about their context, then recommend the most relevant service area
 - "Can you customise?" → Every engagement is tailored. Suggest arranging a scoping conversation.
 - "What sectors do you work with?" → Cross-sector experience including financial services, professional services, technology, healthcare, manufacturing, and the public sector
-- "What outcomes can we expect?" → 40% average improvement in leadership effectiveness, with bespoke KPIs agreed at the outset`;
+- "What outcomes can we expect?" → Outcomes and measurement criteria are agreed at the outset of each engagement. Never quote a percentage or statistic.`;
 
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 2000;
