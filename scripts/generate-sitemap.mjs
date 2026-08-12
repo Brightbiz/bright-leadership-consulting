@@ -40,6 +40,7 @@ const entries = [
   { path: "/strategic-leadership-ai", source: "src/pages/StrategicLeadershipAI.tsx", changefreq: "monthly", priority: "0.8" },
   { path: "/future-of-work", source: "src/pages/FutureOfWork.tsx", changefreq: "monthly", priority: "0.8" },
   { path: "/strategic-productivity-peak-performance", source: "src/pages/StrategicProductivity.tsx", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-ai-leadership-for-organisations", source: "src/pages/StrategicAiLeadershipOrganisations.tsx", changefreq: "monthly", priority: "0.9" },
 
   { path: "/courses", source: "src/pages/Courses.tsx", changefreq: "monthly", priority: "0.7" },
   { path: "/augmented-leadership", source: "src/pages/AugmentedLeadership.tsx", changefreq: "monthly", priority: "0.7" },

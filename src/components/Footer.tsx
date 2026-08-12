@@ -15,6 +15,7 @@ const programmeLinks = [
   { label: "Executive Programmes", href: "/courses", isRoute: true },
   { label: "Executive Leadership Mastery Programme", href: "/executive-leadership-mastery", isRoute: true },
   { label: "Strategic Leadership in the Age of AI", href: "/strategic-leadership-ai", isRoute: true },
+  { label: "Strategic AI Leadership for Organisations", href: "/strategic-ai-leadership-for-organisations", isRoute: true },
   { label: "Augmented Leadership™", href: "/augmented-leadership", isRoute: true },
 ];
 
@@ -113,12 +114,9 @@ const Footer = () => {
                 <a href="mailto:info@brightleadershipconsulting.com" className="transition-colors hover:text-navy-foreground">
                   info@brightleadershipconsulting.com
                 </a>
-                <span className="mx-2 text-navy-foreground/25">·</span>
-                <a href="tel:+443333355045" className="transition-colors hover:text-navy-foreground">
-                  0333 335 5045
-                </a>
               </p>
             </div>
+
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link

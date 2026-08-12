@@ -24,7 +24,8 @@ const sections: Section[] = [
   {
     heading: "These terms",
     body: [
-      "This website is operated by Bright Leadership Consulting (company number 07258400, registered in England and Wales). By using the site you accept these terms.",
+      "This website is operated by Bright Business Solutions (Int'l) Company Limited, trading as Bright Leadership Consulting (company number 07258400, registered in England and Wales). Registered office: 82 James Carter Road, Mildenhall, England IP28 7DE. By using the site you accept these terms.",
+      "Programme, purchase, cancellation and access enquiries should be sent to admin@brightleadershipconsulting.com.",
     ],
   },
   {
@@ -62,7 +63,7 @@ const sections: Section[] = [
       {
         subheading: "Access",
         paragraphs: [
-          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers should contact Bright Leadership Consulting if they require assistance with access.",
+          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to admin@brightleadershipconsulting.com.",
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
           "Bright Leadership Consulting reserves the right to make reasonable changes to the learning platform or programme-delivery arrangements. Any such change will not affect access rights already granted to a purchaser without appropriate notice or an appropriate alternative arrangement.",
         ],
@@ -73,14 +74,15 @@ const sections: Section[] = [
         paragraphs: [
           "Individual consumers purchasing online may have a statutory right to cancel within 14 days, subject to the applicable law governing digital content and services.",
           "Where a purchaser expressly requests or consents to immediate access to digital programme content during the cancellation period and acknowledges that beginning the supply will result in the loss of the statutory cancellation right, that right may be lost once access to the digital content begins.",
-          "If the required consent and acknowledgement have not been obtained, the purchaser's statutory rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
-          "To request cancellation, the purchaser must contact Bright Leadership Consulting in writing, providing their name, programme, purchase date and the email address used to enrol.",
+          "Agreement to these terms alone does not constitute a separate request, consent or acknowledgement for immediate supply of digital content during the statutory cancellation period. That declaration must be given separately and expressly, and the learning platform does not presently capture it.",
+          "If the required separate request and acknowledgement have not been obtained, the purchaser's statutory cancellation rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
+          "To request cancellation, the purchaser must write to admin@brightleadershipconsulting.com, providing their name, programme, purchase date and the email address used to enrol.",
         ],
       },
       {
         subheading: "Digital-content problems",
         paragraphs: [
-          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify Bright Leadership Consulting promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
+          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify admin@brightleadershipconsulting.com promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
           "Nothing in these terms limits the purchaser's statutory rights concerning digital content or services.",
         ],
       },
@@ -131,7 +133,7 @@ const sections: Section[] = [
   {
     heading: "Governing law",
     body: [
-      "These terms are governed by the laws of England and Wales, and the courts of England and Wales have exclusive jurisdiction.",
+      "These terms are governed by the laws of England and Wales. Where the purchaser is a consumer resident elsewhere, they retain the benefit of any mandatory consumer-protection rights available under the law of their country of residence, and may bring proceedings in that country where the applicable law permits.",
     ],
   },
 ];

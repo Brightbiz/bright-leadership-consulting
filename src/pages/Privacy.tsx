@@ -14,8 +14,9 @@ const sections = [
   {
     heading: "Who we are",
     body: [
-      "Bright Leadership Consulting (company number 07258400, registered in England and Wales) is the data controller for personal information collected through this website and through advisory engagements.",
-      "Enquiries about this notice may be directed to info@brightleadershipconsulting.com or 0333 335 5045.",
+      "Bright Business Solutions (Int'l) Company Limited, trading as Bright Leadership Consulting (company number 07258400, registered in England and Wales), is the data controller for personal information collected through this website and through advisory engagements.",
+      "Registered office: 82 James Carter Road, Mildenhall, England IP28 7DE.",
+      "Privacy enquiries and data-rights requests may be directed to info@brightleadershipconsulting.com. Programme and account support is handled at admin@brightleadershipconsulting.com.",
     ],
   },
   {
@@ -71,9 +72,10 @@ const sections = [
     ],
   },
   {
-    heading: "Google Ads conversion measurement",
+    heading: "Google Ads conversion measurement on this website",
     body: [
-      "With your consent we use Google Ads conversion measurement, provided by Google Ireland Limited. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational or cohort enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes, and we do not use Google Analytics or Enhanced Conversions.",
+      "With your consent we use Google Ads conversion measurement, provided by Google Ireland Limited, on brightleadershipconsulting.com. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational, cohort or in-house programme enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes.",
+      "One conversion is currently configured: an organisational enquiry, recorded only after our systems confirm that such an enquiry has been received. It is not recorded on a page view, a form interaction, a button click, a validation failure or a general contact enquiry. No Google Analytics property, Google Tag Manager container or Enhanced Conversions feature is active on this website.",
       "The categories of information processed for this purpose are: a Google advertising click identifier present in the landing page address (for example gclid, gbraid or wbraid), campaign parameters such as utm_source and utm_campaign, the page address and referring source, approximate location derived from IP address, and general device and browser information. The content of your enquiry is not sent to Google.",
       "Advertising storage is controlled entirely through consent. Google Consent Mode v2 is configured so that ad_storage, analytics_storage, ad_user_data and ad_personalization are all set to denied before the Google tag loads. They are set to granted only if you accept advertising measurement, and returned to denied if you reject or later withdraw consent. When advertising measurement is accepted, Google may set conversion-linker cookies in the _gcl family on this domain, which typically expire up to 90 days after they are set. If consent is not given, no such cookies are set.",
       "Google's own information about how it processes advertising data is available in the Google Privacy Policy (policies.google.com/privacy) and in Google's description of how it uses cookies and similar technologies in advertising (policies.google.com/technologies/ads).",
@@ -84,8 +86,25 @@ const sections = [
     body: [
       "When you first visit the site a banner offers Accept all, Reject non-essential and Manage preferences. The advertising measurement category is switched off by default and is never preselected.",
       "You may change or withdraw your choice at any time by selecting Cookie Preferences in the footer of any page, which reopens the same panel. Withdrawing consent returns all four Google consent signals to denied for subsequent activity. You may also delete cookies and local storage through your browser settings.",
+      "This control governs brightleadershipconsulting.com only. It does not govern the separately hosted learning platform, which operates under its own cookie and privacy arrangements.",
     ],
   },
+  {
+    heading: "The learning platform and payment providers",
+    body: [
+      "Self-directed executive programmes are hosted on a separate learning platform provided by Thinkific Labs Inc. When you enrol, register or browse on that platform, your information is processed on that platform under its own privacy notice and cookie arrangements, not through this website. Bright Leadership Consulting receives enrolment, progress and completion information from the platform in order to administer programmes and issue certificates.",
+      "Payments made on the learning platform are processed by the platform's payment providers. Bright Leadership Consulting does not receive or store full card details.",
+      "The learning platform and payment providers may process information outside the United Kingdom. Where personal information is transferred internationally, we rely on the transfer safeguards required by UK data-protection law, such as the International Data Transfer Agreement or the UK Addendum to the European Commission's standard contractual clauses.",
+    ],
+  },
+  {
+    heading: "Measurement we may introduce later",
+    body: [
+      "The technologies currently active on brightleadershipconsulting.com are the strictly necessary storage described above and, where consented, Google Ads conversion measurement for the organisational enquiry.",
+      "We may in future introduce measurement of individual-enrolment link clicks or of purchases completed on the learning platform. Any such measurement is not active today, and would only be introduced once appropriate consent controls have been implemented on the relevant domain. This notice would be updated before that happens.",
+    ],
+  },
+
 
 ];
 
