@@ -15,6 +15,7 @@ const programmeLinks = [
   { label: "Executive Programmes", href: "/courses", isRoute: true },
   { label: "Executive Leadership Mastery Programme", href: "/executive-leadership-mastery", isRoute: true },
   { label: "Strategic Leadership in the Age of AI", href: "/strategic-leadership-ai", isRoute: true },
+  { label: "Strategic AI Leadership for Organisations", href: "/strategic-ai-leadership-for-organisations", isRoute: true },
   { label: "Augmented Leadership™", href: "/augmented-leadership", isRoute: true },
 ];
 
