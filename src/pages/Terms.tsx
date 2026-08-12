@@ -63,7 +63,7 @@ const sections: Section[] = [
       {
         subheading: "Access",
         paragraphs: [
-          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers should contact Bright Leadership Consulting if they require assistance with access.",
+          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to admin@brightleadershipconsulting.com.",
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
           "Bright Leadership Consulting reserves the right to make reasonable changes to the learning platform or programme-delivery arrangements. Any such change will not affect access rights already granted to a purchaser without appropriate notice or an appropriate alternative arrangement.",
         ],
@@ -82,7 +82,7 @@ const sections: Section[] = [
       {
         subheading: "Digital-content problems",
         paragraphs: [
-          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify Bright Leadership Consulting promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
+          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify admin@brightleadershipconsulting.com promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
           "Nothing in these terms limits the purchaser's statutory rights concerning digital content or services.",
         ],
       },
@@ -133,7 +133,7 @@ const sections: Section[] = [
   {
     heading: "Governing law",
     body: [
-      "These terms are governed by the laws of England and Wales, and the courts of England and Wales have exclusive jurisdiction.",
+      "These terms are governed by the laws of England and Wales. Where the purchaser is a consumer resident elsewhere, they retain the benefit of any mandatory consumer-protection rights available under the law of their country of residence, and may bring proceedings in that country where the applicable law permits.",
     ],
   },
 ];
