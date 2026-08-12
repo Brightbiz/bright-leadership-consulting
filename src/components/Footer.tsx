@@ -114,12 +114,9 @@ const Footer = () => {
                 <a href="mailto:info@brightleadershipconsulting.com" className="transition-colors hover:text-navy-foreground">
                   info@brightleadershipconsulting.com
                 </a>
-                <span className="mx-2 text-navy-foreground/25">·</span>
-                <a href="tel:+443333355045" className="transition-colors hover:text-navy-foreground">
-                  0333 335 5045
-                </a>
               </p>
             </div>
+
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link
