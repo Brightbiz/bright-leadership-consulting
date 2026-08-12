@@ -93,7 +93,7 @@ const sections = [
   {
     heading: "The learning platform and payment providers",
     body: [
-      "Self-directed executive programmes are hosted on a separate learning platform provided by Thinkific Labs Inc. When you enrol, register or browse on that platform, your information is processed on that platform under its own privacy notice and cookie arrangements, not through this website. Bright Leadership Consulting receives enrolment, progress and completion information from the platform in order to administer programmes and issue certificates.",
+      "Self-directed executive programmes are hosted on a separate learning platform provided by Thinkific Labs Inc. When you enrol, register or browse on that platform, your information is processed on that platform under its own privacy notice and cookie arrangements, not through this website. The consent choice you make on brightleadershipconsulting.com does not carry across to it, and we do not represent which analytics or advertising technologies that platform uses. Bright Leadership Consulting receives enrolment, progress and completion information from the platform in order to administer programmes and issue certificates.",
       "Payments made on the learning platform are processed by the platform's payment providers. Bright Leadership Consulting does not receive or store full card details.",
       "The learning platform and payment providers may process information outside the United Kingdom. Where personal information is transferred internationally, we rely on the transfer safeguards required by UK data-protection law, such as the International Data Transfer Agreement or the UK Addendum to the European Commission's standard contractual clauses.",
     ],
