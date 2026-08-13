@@ -222,8 +222,9 @@ const StrategicAiLeadershipOrganisations = () => {
                 transition={{ ...fade.transition, delay: 0.35 }}
               >
                 For facilitated team cohorts and in-house organisational
-                delivery. Individual self-directed enrolment is available
-                through a separate route.
+                delivery. Enquiries about individual participation are handled
+                separately on request.
+
               </motion.p>
             </div>
           </div>
