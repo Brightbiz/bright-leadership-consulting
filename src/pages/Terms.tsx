@@ -13,7 +13,10 @@ const fade = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
-type SectionBody = string | { subheading: string; paragraphs: string[] };
+type SectionBody =
+  | string
+  | { subheading: string; paragraphs: string[] }
+  | { list: string[] };
 
 type Section = {
   heading: string;
