@@ -183,46 +183,44 @@ const Terms = () => {
                   </h2>
                   <div className="space-y-4">
                     {section.body.map((item, i) => {
-                      if (typeof item === "string") {
-                        return (
-                          <p
-                            key={item}
-                            className="text-[15px] leading-relaxed text-muted-foreground"
-                          >
-                            {item}
-                          </p>
-                        );
-                      }
-                      if ("list" in item) {
-                        return (
-                          <ul
-                            key={`list-${i}`}
-                            className="list-disc pl-5 space-y-1 text-[15px] leading-relaxed text-muted-foreground"
-                          >
-                            {item.list.map((li) => (
-                              <li key={li}>{li}</li>
-                            ))}
-                          </ul>
-                        );
-                      }
-                      return (
-                        <div
-                          key={`${item.subheading}-${i}`}
-                          className="space-y-3"
-                        >
-                          <h3 className="font-serif text-base font-medium text-foreground">
-                            {item.subheading}
-                          </h3>
-                          {item.paragraphs.map((paragraph) => (
+                      const renderItem = (it: SectionBody, idx: number) => {
+                        if (typeof it === "string") {
+                          return (
                             <p
-                              key={paragraph}
+                              key={`p-${idx}-${it}`}
                               className="text-[15px] leading-relaxed text-muted-foreground"
                             >
-                              {paragraph}
+                              {it}
                             </p>
-                          ))}
-                        </div>
-                      );
+                          );
+                        }
+                        if ("list" in it) {
+                          return (
+                            <ul
+                              key={`list-${idx}`}
+                              className="list-disc pl-5 space-y-1 text-[15px] leading-relaxed text-muted-foreground"
+                            >
+                              {it.list.map((li) => (
+                                <li key={li}>{li}</li>
+                              ))}
+                            </ul>
+                          );
+                        }
+                        return (
+                          <div
+                            key={`${it.subheading}-${idx}`}
+                            className="space-y-3"
+                          >
+                            <h3 className="font-serif text-base font-medium text-foreground">
+                              {it.subheading}
+                            </h3>
+                            {it.paragraphs.map((paragraph, pIdx) =>
+                              renderItem(paragraph, pIdx)
+                            )}
+                          </div>
+                        );
+                      };
+                      return renderItem(item, i);
                     })}
                   </div>
                 </motion.div>
