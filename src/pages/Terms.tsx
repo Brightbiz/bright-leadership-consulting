@@ -75,10 +75,16 @@ const sections: Section[] = [
       {
         subheading: "Cancellation by individual consumers",
         paragraphs: [
-          "Individual consumers purchasing online may have a statutory right to cancel within 14 days, subject to the applicable law governing digital content and services.",
-          "Where a purchaser expressly requests or consents to immediate access to digital programme content during the cancellation period and acknowledges that beginning the supply will result in the loss of the statutory cancellation right, that right may be lost once access to the digital content begins.",
-          "Agreement to these terms alone does not constitute a separate request, consent or acknowledgement for immediate supply of digital content during the statutory cancellation period. That declaration must be given separately and expressly, and the learning platform does not presently capture it.",
-          "If the required separate request and acknowledgement have not been obtained, the purchaser's statutory cancellation rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
+          "Individual consumers purchasing online generally have a statutory right to cancel within 14 days after the day on which the contract is entered into, subject to the applicable law governing digital content and services.",
+          "For digital content not supplied on a tangible medium, the statutory cancellation right ceases once supply begins only where, before supply begins, the consumer has:",
+          {
+            list: [
+              "given prior express consent for the supply to begin during the cancellation period; and",
+              "acknowledged that the right to cancel will be lost when the supply begins.",
+            ],
+          },
+          "Agreement to these Terms alone does not constitute the required prior express consent or acknowledgement. These must be obtained separately and expressly. The learning platform does not presently capture that separate declaration.",
+          "If the required prior express consent and acknowledgement have not been obtained, the purchaser's statutory cancellation rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
           "To request cancellation, the purchaser must write to admin@brightleadershipconsulting.com, providing their name, programme, purchase date and the email address used to enrol.",
         ],
       },
