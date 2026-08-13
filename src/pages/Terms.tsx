@@ -15,7 +15,7 @@ const fade = {
 
 type SectionBody =
   | string
-  | { subheading: string; paragraphs: string[] }
+  | { subheading: string; paragraphs: SectionBody[] }
   | { list: string[] };
 
 type Section = {
