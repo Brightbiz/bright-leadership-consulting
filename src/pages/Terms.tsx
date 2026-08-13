@@ -182,15 +182,30 @@ const Terms = () => {
                     {section.heading}
                   </h2>
                   <div className="space-y-4">
-                    {section.body.map((item, i) =>
-                      typeof item === "string" ? (
-                        <p
-                          key={item}
-                          className="text-[15px] leading-relaxed text-muted-foreground"
-                        >
-                          {item}
-                        </p>
-                      ) : (
+                    {section.body.map((item, i) => {
+                      if (typeof item === "string") {
+                        return (
+                          <p
+                            key={item}
+                            className="text-[15px] leading-relaxed text-muted-foreground"
+                          >
+                            {item}
+                          </p>
+                        );
+                      }
+                      if ("list" in item) {
+                        return (
+                          <ul
+                            key={`list-${i}`}
+                            className="list-disc pl-5 space-y-1 text-[15px] leading-relaxed text-muted-foreground"
+                          >
+                            {item.list.map((li) => (
+                              <li key={li}>{li}</li>
+                            ))}
+                          </ul>
+                        );
+                      }
+                      return (
                         <div
                           key={`${item.subheading}-${i}`}
                           className="space-y-3"
@@ -207,8 +222,8 @@ const Terms = () => {
                             </p>
                           ))}
                         </div>
-                      )
-                    )}
+                      );
+                    })}
                   </div>
                 </motion.div>
               ))}
