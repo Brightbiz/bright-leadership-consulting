@@ -44,21 +44,14 @@ describe("ProgrammeCta destinations", () => {
 
       const primary = found[0];
 
-      if (programme.enrolmentAvailable !== true) {
-        // Places arranged directly → in-site enquiry route with the programme
-        // preselected, and never an external purchase link.
-        expect(primary.name).toMatch(/^Request Individual Enrolment/);
-        expect(primary.href).toBe(
-          `/contact?programme=${encodeURIComponent(programme.title)}`,
-        );
-        expect(found.every((l) => !l.href.startsWith("http"))).toBe(true);
-        expect(found.every((l) => !/thinkific/i.test(l.href))).toBe(true);
-      } else {
-        // Open intake with a usable https URL → the enrolment platform.
-        expect(primary.name).toMatch(/^Request Individual Enrolment/);
-        expect(primary.href).toBe(programme.link);
-        expect(new URL(primary.href).protocol).toBe("https:");
-      }
+      // Places are arranged directly → in-site enquiry route with the
+      // programme preselected, and never an external purchase link.
+      expect(primary.name).toMatch(/^Request Individual Enrolment/);
+      expect(primary.href).toBe(
+        `/contact?programme=${encodeURIComponent(programme.title)}`,
+      );
+      expect(found.every((l) => !l.href.startsWith("http"))).toBe(true);
+      expect(found.every((l) => !/thinkific/i.test(l.href))).toBe(true);
 
       // Detail link, when a detail page exists, points at the in-site route.
       const detail = found.find((l) => l.name.startsWith("View programme detail"));
