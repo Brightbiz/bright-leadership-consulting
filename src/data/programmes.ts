@@ -9,17 +9,23 @@ export type Programme = {
   subtitle: string;
   description: string;
   features: string[];
-  /** Enrolment / platform link (external) */
+  /**
+   * Primary enrolment destination.
+   * While individual places are arranged directly, this is an in-site enquiry
+   * path (/contact?programme=...). It becomes an external https platform URL
+   * only when self-service purchase is genuinely available again.
+   */
   link: string;
   /** Optional in-site detail page */
   detailPage?: string;
   /**
-   * Whether the enrolment platform link is live and purchasable.
-   * When false the surface must show "Request Availability" (→ /contact)
-   * instead of an enrolment link, so no CTA can lead to a 404.
+   * Whether a self-service purchase route is live.
+   * All four catalogue programmes are currently arranged directly, so this is
+   * false and every surface must show "Request Individual Enrolment"
+   * (→ /contact) instead of a purchase link.
    */
   enrolmentAvailable?: boolean;
-  /** Individual self-directed enrolment fee, when published publicly (GBP). */
+  /** Individual fee (GBP). Fixed and published; never presented as indicative. */
   individualFee?: string;
   /** Short instalment summary shown alongside the individual fee. */
   paymentPlanSummary?: string;
@@ -34,6 +40,13 @@ export type Programme = {
 
 
 
+/**
+ * In-site enquiry destination for an individual place, with the programme
+ * preselected in the enquiry form's "Programme of interest" field.
+ */
+export const individualEnquiryPath = (title: string) =>
+  `/contact?programme=${encodeURIComponent(title)}`;
+
 export const programmes: Programme[] = [
   {
     title: "Executive Leadership Mastery Programme",
@@ -46,9 +59,11 @@ export const programmes: Programme[] = [
       "Accredited CPD Activity (Provider 50838)",
       "Self-Directed, Cohort-Based or 1:1",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/products/courses/new-executive-leadership-mastery-program",
+    link: individualEnquiryPath(
+      "Executive Leadership Mastery Programme",
+    ),
     detailPage: "/executive-leadership-mastery",
-    enrolmentAvailable: true,
+    enrolmentAvailable: false,
     cpdHours: "50–66 CPD hours",
 
     individualFee: "£1,297",
@@ -67,9 +82,11 @@ export const programmes: Programme[] = [
       "AI Leadership Blueprint™ Creation",
       "Responsible Adoption Protocols",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
+    link: individualEnquiryPath(
+      "Strategic Leadership in the Age of AI",
+    ),
     detailPage: "/strategic-leadership-ai",
-    enrolmentAvailable: true,
+    enrolmentAvailable: false,
     cpdHours: "20–30 CPD hours",
     individualFee: "£895",
 
@@ -85,9 +102,11 @@ export const programmes: Programme[] = [
       "Talent Retention Frameworks",
       "Organisational Design Principles",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/the-future-of-work",
+    link: individualEnquiryPath(
+      "Future Workplace and Workforce Strategy Programme",
+    ),
     detailPage: "/future-of-work",
-    enrolmentAvailable: true,
+    enrolmentAvailable: false,
     individualFee: "£449",
     cpdHours: "20–25 CPD hours",
 
@@ -104,9 +123,11 @@ export const programmes: Programme[] = [
       "Energy & Focus Management",
       "Team Performance Optimisation",
     ],
-    link: "https://bright-leadership-consulting.thinkific.com/courses/strategic-productivity-peak-performance-accelerator",
+    link: individualEnquiryPath(
+      "Strategic Productivity and Peak Performance Accelerator",
+    ),
     detailPage: "/strategic-productivity-peak-performance",
-    enrolmentAvailable: true,
+    enrolmentAvailable: false,
     individualFee: "£499",
     cpdHours: "20–25 CPD hours",
 
@@ -148,14 +169,27 @@ export const programmeInterestOptions = [
  * and on every build, so brochures can never drift from the catalogue.
  */
 export const brochureCtaLinks: Record<string, string> = {
-  "executive-leadership-mastery": programmes[0].link,
-  "future-of-work": programmes[2].link,
-  "peak-performance": programmes[3].link,
+  // Individual places for the four catalogue programmes are arranged directly,
+  // so brochure CTAs route to the enquiry page rather than a purchase link.
+  "executive-leadership-mastery": `${"https://brightleadershipconsulting.com"}/contact`,
+  "future-of-work": "https://brightleadershipconsulting.com/contact",
+  "peak-performance": "https://brightleadershipconsulting.com/contact",
   // Standalone Thinkific courses that sit outside the four-programme catalogue.
   "advanced-leadership-skills":
     "https://bright-leadership-consulting.thinkific.com/products/courses/executive-leadership-mastery-program",
   "enhanced-employability-skills":
     "https://bright-leadership-consulting.thinkific.com/products/courses/employability-skills-for-employees",
+};
+
+/**
+ * CTA label for each brochure anchor, keyed by `data-programme`.
+ * Only the four catalogue programmes are managed here; the two standalone
+ * course brochures are intentionally left untouched pending a status audit.
+ */
+export const brochureCtaLabels: Record<string, string> = {
+  "executive-leadership-mastery": "Request Individual Enrolment",
+  "future-of-work": "Request Individual Enrolment",
+  "peak-performance": "Request Individual Enrolment",
 };
 
 /** Site origin used for canonical and social-preview URLs. */
