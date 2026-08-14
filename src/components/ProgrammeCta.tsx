@@ -76,15 +76,15 @@ const ProgrammeCta = ({
       programme: programme.title,
       url: programme.link,
       surface,
-      label: "Enrol Now",
+      label: "Enrol on the Programme Platform",
     });
     trackProgrammeEnrolClick({
       programme: programme.title,
       destination: programme.link,
       surface,
-      label: "Enrol Now",
+      label: "Enrol on the Programme Platform",
     });
-    onCtaClick?.({ label: "Enrol Now", destination: programme.link });
+    onCtaClick?.({ label: "Enrol on the Programme Platform", destination: programme.link });
     // The new tab takes a moment to hand off; show progress so the click is
     // acknowledged and repeat clicks are prevented.
     setOpening(true);
@@ -151,7 +151,7 @@ const ProgrammeCta = ({
             aria-busy={opening || undefined}
             onClick={handleEnrol}
           >
-            {opening ? "Opening enrolment" : "Enrol Now"}
+            {opening ? "Opening enrolment" : "Enrol on the Programme Platform"}
             <span className="sr-only">
               {` in ${programme.title} (opens in a new tab)`}
             </span>
