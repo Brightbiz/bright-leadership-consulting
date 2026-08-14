@@ -272,33 +272,32 @@ const FutureOfWork = () => {
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
                 <p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3">
-                  Individual, Self-Directed
+                  Individual Place
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  {programme.individualFee}
+                  Individual fee: {programme.individualFee}
                 </h3>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                  Immediate enrolment for a single executive, with full access
-                  to all modules and working documents. No diagnostic and no
+                  Individual places are arranged directly with Bright
+                  Leadership Consulting. Access is issued once enrolment and
+                  payment arrangements have been confirmed. No diagnostic and no
                   organisational sponsorship required.
                 </p>
-                <a
-                  href={programme.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={programme.link}
                   className="link-quiet text-sm"
                   onClick={() =>
                     trackCourseCtaClick({
                       programme: programme.title,
                       url: programme.link,
                       surface: "/future-of-work",
-                      label: "Enrol as an individual",
+                      label: "Request Individual Enrolment",
                     })
                   }
                 >
-                  Enrol as an individual
+                  Request Individual Enrolment
                   <ArrowRight className="h-3.5 w-3.5" />
-                </a>
+                </Link>
               </motion.div>
 
               <motion.div
