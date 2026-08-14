@@ -28,6 +28,9 @@ type Props = {
  * indefinite or "lifetime" access wording unless the enrolment duration
  * configured on the learning platform has been confirmed as indefinite.
  */
+const TAX =
+  "Fees are stated in GBP. Any applicable tax and the payment arrangements are confirmed before payment. A receipt is issued following payment.";
+
 const BeforeYouEnrol = ({ programmeTitle }: Props) => {
   const programme = programmes.find((p) => p.title === programmeTitle);
   const fee = programme?.individualFee;
@@ -35,8 +38,12 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
 
   const items: { q: string; a: string }[] = [
     {
+      q: "How do I secure a place?",
+      a: "Individual places are arranged directly with Bright Leadership Consulting. Submit an enrolment enquiry and we will confirm availability, payment arrangements and access.",
+    },
+    {
       q: "How long do I have access?",
-      a: "Access to programme materials is currently not subject to a fixed expiry date on the programme platform.",
+      a: "Access is issued once enrolment and payment arrangements have been confirmed, and is currently not subject to a fixed expiry date on the learning platform.",
     },
     {
       q: "How long does completion usually take?",
@@ -46,17 +53,17 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
     },
     {
       q: "What support is included?",
-      a: "Self-directed enrolment includes email support for access and content queries, normally answered within one working day. Facilitated, cohort and organisational delivery includes a named point of contact, confirmed at scoping.",
+      a: "Self-directed study includes email support for access and content queries, normally answered within one working day. Facilitated, cohort and organisational delivery includes a named point of contact, confirmed at scoping.",
     },
     {
-      q: "How is payment taken, and is VAT included?",
+      q: "How is payment taken, and is tax included?",
       a: fee
-        ? `The individual fee is ${fee}, taken securely on the Thinkific platform. Fees are stated in GBP. Any tax or VAT applicable to your purchase is calculated and shown at checkout.`
-        : "Payment is taken securely on the Thinkific platform. Fees are stated in GBP, and any tax or VAT applicable to your purchase is calculated and shown at checkout.",
+        ? `Individual fee: ${fee}. Individual places are arranged directly with Bright Leadership Consulting. ${TAX}`
+        : `Individual places are arranged directly with Bright Leadership Consulting. ${TAX}`,
     },
     {
       q: "Can I have an invoice or use a purchase order?",
-      a: "A receipt is issued automatically at checkout. For organisational purchases, invoices and purchase-order arrangements are available on request — enquire before enrolling so the purchase is raised correctly.",
+      a: "A receipt is issued following payment. For organisational purchases, invoices and purchase-order arrangements are confirmed as part of the enquiry, so the purchase is raised correctly.",
     },
     {
       q: "What are the cancellation terms?",
@@ -94,8 +101,8 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
             {...fade}
             transition={{ ...fade.transition, delay: 0.15 }}
           >
-            The practical information an executive needs before committing to
-            enrolment.
+            The practical information an executive needs before submitting an
+            enrolment enquiry.
           </motion.p>
 
           <dl className="max-w-[720px] divide-y divide-border border-y border-border">

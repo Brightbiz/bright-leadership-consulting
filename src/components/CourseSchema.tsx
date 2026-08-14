@@ -8,9 +8,9 @@ const PROVIDER = {
   url: SITE_URL,
 } as const;
 
-/** Canonical URL for a programme: in-site detail page if present, else the enrolment link. */
+/** Canonical URL for a programme: in-site detail page if present, else /courses. */
 const programmeUrl = (p: Programme) =>
-  p.detailPage ? `${SITE_URL}${p.detailPage}` : p.link;
+  `${SITE_URL}${p.detailPage ?? "/courses"}`;
 
 /** Parses "50–66 CPD hours" (en dash or hyphen) into its numeric bounds. */
 const cpdRange = (cpdHours?: string) => {
@@ -62,7 +62,9 @@ const courseNode = (p: Programme) => {
       courseMode: "online",
       courseWorkload: workload,
     },
-    ...(p.detailPage ? { sameAs: p.link } : {}),
+    // No `sameAs` while individual places are arranged directly: the
+    // catalogue link is an in-site enquiry path, not an external course page.
+    ...(p.detailPage && /^https:/.test(p.link) ? { sameAs: p.link } : {}),
   };
 };
 

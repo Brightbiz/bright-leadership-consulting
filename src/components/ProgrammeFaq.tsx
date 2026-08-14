@@ -37,11 +37,13 @@ type Faq = { q: string; a: string };
  * src/data/accreditation.ts. Do not add cohort dates, outcome claims,
  * "open cohort", "lifetime access" or certification wording here.
  */
+const TAX =
+  "Fees are stated in GBP. Any applicable tax and the payment arrangements are confirmed before payment. A receipt is issued following payment.";
+
 const ProgrammeFaq = ({ programmeTitle }: Props) => {
   const programme = programmes.find((p) => p.title === programmeTitle);
   const fee = programme?.individualFee;
   const hours = programme?.cpdHours;
-  const enrolmentAvailable = programme?.enrolmentAvailable === true;
 
   const admissions: Faq[] = [
     {
@@ -50,9 +52,7 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
     },
     {
       q: "Are there any entry requirements or an application process?",
-      a: enrolmentAvailable
-        ? "There is no application, interview or academic prerequisite for individual enrolment. You enrol directly and begin. Organisational and facilitated delivery is scoped with us first, so the content can be set against the leadership context it is intended to serve."
-        : "There is no application, interview or academic prerequisite. Availability for this programme is confirmed on enquiry, and delivery is scoped with us before enrolment.",
+      a: "There is no application, interview or academic prerequisite. Individual places are arranged directly with Bright Leadership Consulting: submit an enrolment enquiry and we confirm availability, payment arrangements and access. Organisational and facilitated delivery is scoped with us first, so the content can be set against the leadership context it is intended to serve.",
     },
     {
       q: "Do I need to complete the Executive Alignment Index™ first?",
@@ -60,20 +60,18 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
     },
     {
       q: "Can my organisation enrol a group of leaders?",
-      a: "Yes. Group, cohort and bespoke delivery are arranged through enquiry rather than checkout, so scope, sequencing and the fee can be confirmed before commitment.",
+      a: "Yes. Group, cohort and bespoke delivery are arranged through enquiry, so scope, sequencing and the fee can be confirmed before commitment.",
     },
   ];
 
   const access: Faq[] = [
     {
       q: "When can I start?",
-      a: enrolmentAvailable
-        ? "Individual enrolment gives immediate self-directed access on the programme platform once payment is confirmed. This is not an open cohort with fixed start dates."
-        : "Start timing for this programme is confirmed on enquiry, alongside availability and delivery format.",
+      a: "Study is self-directed rather than tied to fixed cohort start dates. Access is issued once enrolment and payment arrangements have been confirmed, which we settle with you following your enrolment enquiry.",
     },
     {
       q: "How long will I have access to the materials?",
-      a: "Access to programme materials is currently not subject to a fixed expiry date on the programme platform. If you need assistance regaining access at any point, contact us directly.",
+      a: "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. If you need assistance regaining access at any point, contact us directly.",
     },
     {
       q: "How is the programme delivered, and on what devices?",
@@ -82,12 +80,12 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
     {
       q: "What does it cost, and can I pay in instalments?",
       a: fee
-        ? `The individual self-directed fee is ${fee}, taken securely at checkout on the programme platform. ${
+        ? `Individual fee: ${fee}. ${
             programme?.paymentPlanDetail
-              ? programme.paymentPlanDetail
-              : "Fees are stated in GBP, and any applicable tax is calculated at checkout."
-          }`
-        : "The fee for this programme is confirmed on enquiry, as delivery is scoped individually. Fees are stated in GBP.",
+              ? `${programme.paymentPlanDetail} `
+              : ""
+          }${TAX}`
+        : `Organisational and facilitated delivery is scoped individually. ${TAX}`,
     },
   ];
 
@@ -100,7 +98,7 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
     },
     {
       q: "What is the difference between self-directed and facilitated delivery?",
-      a: "Self-directed enrolment gives you the full structured programme to work through at your own pace, with email support for access and content queries. Facilitated, cohort and organisational delivery adds scheduled discussion and a named point of contact, and is confirmed at scoping rather than at checkout.",
+      a: "Self-directed study gives you the full structured programme to work through at your own pace, with email support for access and content queries. Facilitated, cohort and organisational delivery adds scheduled discussion and a named point of contact, and is confirmed at scoping.",
     },
     {
       q: "Is this programme CPD accredited?",
@@ -163,8 +161,8 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
             {...fade}
             transition={{ ...fade.transition, delay: 0.15 }}
           >
-            The questions senior leaders ask before enrolling, answered
-            directly.
+            The questions senior leaders ask before submitting an enrolment
+            enquiry, answered directly.
           </motion.p>
 
           <div className="max-w-[720px] space-y-12">
