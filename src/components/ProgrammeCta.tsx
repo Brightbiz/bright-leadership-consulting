@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Loader2 } from "lucide-react";
-import type { Programme } from "@/data/programmes";
+import { individualEnquiryPath, type Programme } from "@/data/programmes";
 import {
   trackCourseCtaClick,
   trackProgrammeEnrolClick,
@@ -39,12 +39,14 @@ const isUsableEnrolmentUrl = (url: unknown): url is string => {
 /**
  * Primary enrolment CTA for a programme.
  *
- * Three states, so no control can ever lead to a dead end:
- *  - live + valid URL  → "Enrol Now", with a brief loading state while the
- *    enrolment platform opens in a new tab.
- *  - closed intake     → "Request Availability" → /contact.
- *  - live but the URL is missing or malformed → the same enquiry route, with
- *    fallback messaging explaining the link is being reconfirmed.
+ * Individual places are currently arranged directly, so the primary control is
+ * an in-site enquiry route. Three states, so no control can ever lead to a
+ * dead end:
+ *  - arranged directly (default) → "Request Individual Enrolment" → /contact
+ *    with the programme preselected.
+ *  - self-service purchase live + valid https URL → "Enrol Now".
+ *  - purchase marked live but the URL is missing or malformed → the same
+ *    enquiry route, with fallback messaging.
  *
  * Every control carries the programme title in its accessible name, so a
  * screen-reader user moving link-by-link can tell repeated CTAs apart.
@@ -61,6 +63,11 @@ const ProgrammeCta = ({
   const live = intakeOpen && linkUsable;
   /** Intake is open but we have no working destination to send people to. */
   const linkUnavailable = intakeOpen && !linkUsable;
+
+  /** Enquiry destination, with the programme preselected on the contact form. */
+  const enquiryPath = programme.link.startsWith("/")
+    ? programme.link
+    : individualEnquiryPath(programme.title);
 
   const [opening, setOpening] = useState(false);
 
@@ -94,19 +101,25 @@ const ProgrammeCta = ({
       programme: programme.title,
       destination: "/contact",
       surface,
-      label: "Request Enrolment Link",
+      label: "Request Individual Enrolment",
     });
-    onCtaClick?.({ label: "Request Enrolment Link", destination: "/contact" });
+    onCtaClick?.({
+      label: "Request Individual Enrolment",
+      destination: enquiryPath,
+    });
   };
 
-  const handleRequestAvailability = () => {
+  const handleRequestIndividualEnrolment = () => {
     trackProgrammeEnquiryClick({
       programme: programme.title,
-      destination: "/contact",
+      destination: enquiryPath,
       surface,
-      label: "Request Availability",
+      label: "Request Individual Enrolment",
     });
-    onCtaClick?.({ label: "Request Availability", destination: "/contact" });
+    onCtaClick?.({
+      label: "Request Individual Enrolment",
+      destination: enquiryPath,
+    });
   };
 
   const handleAdvisory = () => {
@@ -152,11 +165,11 @@ const ProgrammeCta = ({
 
         {linkUnavailable && (
           <Link
-            to="/contact"
+            to={enquiryPath}
             className="btn-brief"
             onClick={handleUnavailable}
           >
-            Request Enrolment Link
+            Request Individual Enrolment
             <span className="sr-only">{` for ${programme.title}`}</span>
             <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
@@ -164,11 +177,11 @@ const ProgrammeCta = ({
 
         {!intakeOpen && (
           <Link
-            to="/contact"
+            to={enquiryPath}
             className="btn-brief"
-            onClick={handleRequestAvailability}
+            onClick={handleRequestIndividualEnrolment}
           >
-            Request Availability
+            Request Individual Enrolment
             <span className="sr-only">{` for ${programme.title}`}</span>
             <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
@@ -211,13 +224,11 @@ const ProgrammeCta = ({
 
       {helperText && (
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          {linkUnavailable
-            ? "This programme's enrolment link is being reconfirmed. Use the enquiry route and we will reply with the current enrolment page, next intake date and team-delivery options."
-            : live
-              ? `Enrol Now is for individual leaders purchasing immediate self-directed access${
-                  programme.individualFee ? ` (${programme.individualFee})` : ""
-                }. Payment and course access are completed securely on the programme platform. The individual route is not an open cohort. For team, board or organisational delivery, choose Discuss Executive Alignment: you will be asked for your role, organisation size and preferred format, then we confirm availability and pricing directly.`
-              : "Direct enrolment is paused. Enquire for the next intake date, or to scope a private cohort, board or organisational session. Replies are confidential and usually sent within one working day."}
+          {"Individual places are currently arranged directly. Submit an enquiry and we will confirm availability, payment arrangements and access."}
+          {programme.individualFee
+            ? ` Individual fee: ${programme.individualFee}.`
+            : ""}
+          {" For team, board or organisational delivery, choose Discuss Executive Alignment."}
         </p>
       )}
     </div>
