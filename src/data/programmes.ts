@@ -171,7 +171,7 @@ export const programmeInterestOptions = [
 export const brochureCtaLinks: Record<string, string> = {
   // Individual places for the four catalogue programmes are arranged directly,
   // so brochure CTAs route to the enquiry page rather than a purchase link.
-  "executive-leadership-mastery": `${"https://brightleadershipconsulting.com"}/contact`,
+  "executive-leadership-mastery": "https://brightleadershipconsulting.com/contact",
   "future-of-work": "https://brightleadershipconsulting.com/contact",
   "peak-performance": "https://brightleadershipconsulting.com/contact",
   // Standalone Thinkific courses that sit outside the four-programme catalogue.
