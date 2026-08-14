@@ -174,22 +174,20 @@ export const brochureCtaLinks: Record<string, string> = {
   "executive-leadership-mastery": "https://brightleadershipconsulting.com/contact",
   "future-of-work": "https://brightleadershipconsulting.com/contact",
   "peak-performance": "https://brightleadershipconsulting.com/contact",
-  // Standalone Thinkific courses that sit outside the four-programme catalogue.
-  "advanced-leadership-skills":
-    "https://bright-leadership-consulting.thinkific.com/products/courses/executive-leadership-mastery-program",
-  "enhanced-employability-skills":
-    "https://bright-leadership-consulting.thinkific.com/products/courses/employability-skills-for-employees",
+  // Standalone courses outside the four-programme catalogue. Both are now
+  // Published, Hidden and Private with checkout blocked, so their brochures
+  // route to the enquiry page rather than a purchase link.
+  "advanced-leadership-skills": "https://brightleadershipconsulting.com/contact",
+  "enhanced-employability-skills": "https://brightleadershipconsulting.com/contact",
 };
 
-/**
- * CTA label for each brochure anchor, keyed by `data-programme`.
- * Only the four catalogue programmes are managed here; the two standalone
- * course brochures are intentionally left untouched pending a status audit.
- */
+/** CTA label for each brochure anchor, keyed by `data-programme`. */
 export const brochureCtaLabels: Record<string, string> = {
   "executive-leadership-mastery": "Request Individual Enrolment",
   "future-of-work": "Request Individual Enrolment",
   "peak-performance": "Request Individual Enrolment",
+  "advanced-leadership-skills": "Enquire About This Programme",
+  "enhanced-employability-skills": "Enquire About This Programme",
 };
 
 /** Site origin used for canonical and social-preview URLs. */

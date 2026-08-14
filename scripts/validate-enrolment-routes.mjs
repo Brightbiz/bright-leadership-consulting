@@ -130,39 +130,90 @@ const CATALOGUE_BROCHURES = [
   "future-of-work-brochure.html",
   "peak-performance-brochure.html",
 ];
-/** Deliberately excluded pending a separate status audit. */
-const OUT_OF_SCOPE_BROCHURES = [
+/**
+ * Standalone brochures (outside the four-programme catalogue) that are now
+ * Published, Hidden and Private with checkout blocked. They stay publicly
+ * reachable by direct URL, must be noindex/follow, and must present an
+ * enquiry-only CTA.
+ */
+const STANDALONE_BROCHURES = [
   "advanced-leadership-skills-brochure.html",
   "enhanced-employability-skills-brochure.html",
 ];
+const STANDALONE_CTA_LABEL = "Enquire About This Programme";
 
-for (const file of CATALOGUE_BROCHURES) {
+for (const file of STANDALONE_BROCHURES) {
   const rel = `public/brochures/${file}`;
   if (!existsSync(resolve(ROOT, rel))) {
-    failures.push(`${rel} is missing.`);
+    failures.push(`${rel} is missing — these brochures must stay reachable.`);
     continue;
   }
   const html = read(rel);
   if (/thinkific/i.test(html)) {
-    failures.push(`${rel} — Thinkific purchase link reintroduced.`);
+    failures.push(`${rel} — Thinkific link present; checkout is blocked.`);
   }
-  if (/Enrol Now/.test(html)) {
-    failures.push(`${rel} — "Enrol Now" CTA reintroduced.`);
+  if (/Enrol Now|checkout/i.test(html)) {
+    failures.push(`${rel} — self-service checkout wording present.`);
   }
-  if (!html.includes(CTA_LABEL)) {
-    failures.push(`${rel} — CTA must read "${CTA_LABEL}".`);
+  if (!html.includes(STANDALONE_CTA_LABEL)) {
+    failures.push(`${rel} — CTA must read "${STANDALONE_CTA_LABEL}".`);
   }
-  if (!html.includes("https://brightleadershipconsulting.com/contact")) {
-    failures.push(`${rel} — CTA must link to the enquiry page.`);
+  if (!html.includes('href="https://brightleadershipconsulting.com/contact"')) {
+    failures.push(`${rel} — CTA must link to the Bright contact page.`);
+  }
+  if (!/<meta\s+name="robots"\s+content="noindex,\s*follow">/i.test(html)) {
+    failures.push(`${rel} — must declare <meta name="robots" content="noindex, follow">.`);
   }
 }
 
-for (const file of OUT_OF_SCOPE_BROCHURES) {
-  const rel = `public/brochures/${file}`;
-  if (existsSync(resolve(ROOT, rel)) && !/Enrol Now/.test(read(rel))) {
+/* ------------------------------------- no dormant self-service enrolment CTA */
+
+const DORMANT = [
+  /Enrol on the Programme Platform/,
+  /Opening enrolment/,
+];
+for (const re of DORMANT) {
+  if (re.test(ctaSrc)) {
     failures.push(
-      `${rel} was changed but is out of scope pending a status audit.`,
+      `src/components/ProgrammeCta.tsx — dormant self-service enrolment wording ${re} must be removed.`,
     );
+  }
+}
+
+/* ------------------------- affected Thinkific purchase URLs: zero occurrences */
+
+const BANNED_THINKIFIC_URLS = [
+  "thinkific.com/products/courses/executive-leadership-mastery-program",
+  "thinkific.com/products/courses/employability-skills-for-employees",
+  "thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai",
+  "thinkific.com/products/courses/the-future-workplace-workforce-strategy",
+  "thinkific.com/products/courses/productivity-and-peak-performance",
+  "thinkific.com/products/courses/advanced-leadership-skills",
+];
+
+const OUTPUT_DIRS = ["src", "public", "scripts"];
+const walkAll = (dir, out = []) => {
+  for (const entry of readdirSync(resolve(ROOT, dir), { withFileTypes: true })) {
+    const rel = join(dir, entry.name);
+    if (entry.isDirectory()) walkAll(rel, out);
+    else out.push(rel);
+  }
+  return out;
+};
+const outputFiles = OUTPUT_DIRS.flatMap((d) => walkAll(d)).filter(
+  (f) => f !== "scripts/validate-enrolment-routes.mjs",
+);
+for (const file of outputFiles) {
+  let src;
+  try {
+    src = read(file);
+  } catch {
+    continue;
+  }
+  for (const url of BANNED_THINKIFIC_URLS) {
+    if (src.includes(url)) {
+      failures.push(`${file} — blocked Thinkific purchase URL present: ${url}`);
+    }
   }
 }
 
@@ -195,5 +246,6 @@ if (failures.length) {
 console.log(
   `✔ Enrolment-route validation passed: 4 enquiry-first programmes, ` +
     `${CATALOGUE_BROCHURES.length} catalogue brochures, ` +
+    `${STANDALONE_BROCHURES.length} standalone brochures noindex + enquiry-only, ` +
     `${sourceFiles.length} source files clean.`,
 );
