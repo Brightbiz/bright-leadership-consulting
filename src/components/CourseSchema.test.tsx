@@ -95,8 +95,9 @@ describe("CourseSchema — courses listing", () => {
         unitText: "HUR",
       });
 
-      // sameAs points at the external enrolment page only when an in-site page exists.
-      if (programme.detailPage) {
+      // While individual places are arranged directly the catalogue link is an
+      // in-site enquiry path, so no external `sameAs` may be emitted.
+      if (programme.detailPage && /^https:/.test(programme.link)) {
         expect(course.sameAs).toBe(programme.link);
       } else {
         expect(course.sameAs).toBeUndefined();
@@ -125,10 +126,9 @@ describe("CourseSchema — Executive Leadership Mastery Programme page", () => {
     expect(data.name).toBe(TITLE);
     expect(data.description).toBe(programme.description);
     expect(data.url).toBe(`${SITE_URL}/executive-leadership-mastery`);
-    expect(data.sameAs).toBe(programme.link);
-    expect(data.sameAs).toMatch(
-      /^https:\/\/bright-leadership-consulting\.thinkific\.com\/products\/courses\//
-    );
+    // No external course page is referenced while places are arranged directly.
+    expect(data.sameAs).toBeUndefined();
+    expect(programme.link.startsWith("/contact")).toBe(true);
     expect(data.itemListElement).toBeUndefined();
   });
 
