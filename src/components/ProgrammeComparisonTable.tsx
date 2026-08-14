@@ -20,15 +20,15 @@ const rows: { label: string; value: (i: number) => string }[] = [
   },
   {
     label: "Individual Fee",
-    value: (i) => programmes[i].individualFee ?? "On request",
+    value: (i) =>
+      programmes[i].individualFee
+        ? `Individual fee: ${programmes[i].individualFee}`
+        : "Fee on request",
   },
 
   {
     label: "Availability",
-    value: (i) =>
-      programmes[i].enrolmentAvailable === false
-        ? "Next intake on request"
-        : "Open for enrolment",
+    value: () => "Individual places available by enquiry",
   },
 ];
 
