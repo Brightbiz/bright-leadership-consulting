@@ -73,7 +73,7 @@ const StrategicProductivity = () => {
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
         title="Strategic Productivity & Peak Performance — 20–25 CPD Hours"
-        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. 20–25 accredited CPD hours. One-time fee of £499."
+        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. 20–25 accredited CPD hours. Individual fee: £499."
         path="/strategic-productivity-peak-performance"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />

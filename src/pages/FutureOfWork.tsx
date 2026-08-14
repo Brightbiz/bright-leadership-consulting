@@ -73,7 +73,7 @@ const FutureOfWork = () => {
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
         title="Future Workplace and Workforce Strategy — 20–25 CPD Hours"
-        description="A board-level programme on workforce transformation: hybrid and distributed structures, talent retention and organisational design. 20–25 accredited CPD hours. Individual enrolment £449."
+        description="A board-level programme on workforce transformation: hybrid and distributed structures, talent retention and organisational design. 20–25 accredited CPD hours. Individual fee: £449."
         path="/future-of-work"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
