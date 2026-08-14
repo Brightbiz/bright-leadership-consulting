@@ -73,7 +73,7 @@ const StrategicProductivity = () => {
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
         title="Strategic Productivity & Peak Performance — 20–25 CPD Hours"
-        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. 20–25 accredited CPD hours. One-time fee of £499."
+        description="An executive programme on performance diagnostics, attention management and team throughput for senior leaders. 20–25 accredited CPD hours. Individual fee: £499."
         path="/strategic-productivity-peak-performance"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
@@ -271,34 +271,32 @@ const StrategicProductivity = () => {
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
                 <p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3">
-                  Individual, Self-Directed
+                  Individual Place
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  {programme.individualFee} — one-time
+                  Individual fee: {programme.individualFee}
                 </h3>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                  Immediate enrolment for a single executive at a one-time fee
-                  of {programme.individualFee}, with full access to all modules
-                  and working documents. No diagnostic and no organisational
-                  sponsorship required.
+                  Individual places are arranged directly with Bright
+                  Leadership Consulting. Access is issued once enrolment and
+                  payment arrangements have been confirmed. No diagnostic and no
+                  organisational sponsorship required.
                 </p>
-                <a
-                  href={programme.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={programme.link}
                   className="link-quiet text-sm"
                   onClick={() =>
                     trackCourseCtaClick({
                       programme: programme.title,
                       url: programme.link,
                       surface: "/strategic-productivity-peak-performance",
-                      label: "Enrol as an individual",
+                      label: "Request Individual Enrolment",
                     })
                   }
                 >
-                  Enrol as an individual
+                  Request Individual Enrolment
                   <ArrowRight className="h-3.5 w-3.5" />
-                </a>
+                </Link>
               </motion.div>
 
               <motion.div

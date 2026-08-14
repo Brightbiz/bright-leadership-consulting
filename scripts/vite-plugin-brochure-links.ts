@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { Plugin } from "vite";
-import { brochureCtaLinks } from "../src/data/programmes";
+import { brochureCtaLinks, brochureCtaLabels } from "../src/data/programmes";
 
 const BROCHURE_DIR = path.resolve(__dirname, "../public/brochures");
 
@@ -21,12 +21,25 @@ export function brochureLinkSync(): Plugin {
       const filePath = path.join(BROCHURE_DIR, file);
       const original = fs.readFileSync(filePath, "utf8");
 
-      const updated = original.replace(
+      // Rewrite both the href and, where a label is managed, the CTA text —
+      // so a Thinkific purchase URL or an "Enrol Now" label can never be
+      // reintroduced into a catalogue brochure by an edit to the HTML.
+      let updated = original.replace(
         /<a\s+href="([^"]*)"\s+data-programme="([^"]+)"/g,
         (match, href: string, key: string) => {
           const canonical = brochureCtaLinks[key];
           if (!canonical || canonical === href) return match;
           return `<a href="${canonical}" data-programme="${key}"`;
+        },
+      );
+
+      updated = updated.replace(
+        /(<a\s+href="[^"]*"\s+data-programme="([^"]+)"[^>]*>)([\s\S]*?)(<\/a>)/g,
+        (match, open: string, key: string, inner: string, close: string) => {
+          const label = brochureCtaLabels[key];
+          if (!label) return match;
+          const arrow = /&rarr;/.test(inner) ? " &rarr;" : "";
+          return `${open}${label}${arrow}${close}`;
         },
       );
 

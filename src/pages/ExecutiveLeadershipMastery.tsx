@@ -67,7 +67,7 @@ const tiers = [
       "CPDSO Certificate of Attendance, issued manually on approved completion",
       "Access to programme materials is currently not subject to a fixed expiry date on the programme platform",
     ],
-    cta: "Begin Your Programme",
+    cta: "Request Individual Enrolment",
     link: programmes[0].link,
   },
   {
@@ -285,19 +285,23 @@ const ExecutiveLeadershipMastery = () => {
               transition={{ ...fade.transition, delay: 0.17 }}
             >
               <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Individual Enrolment Fee
+                Individual Place
               </p>
               <p className="font-serif text-base text-foreground mb-2">
-                Pay in full: {programmes[0].individualFee}
+                Individual fee: {programmes[0].individualFee}
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Or pay in three monthly instalments of £435. Total payable:
-                £1,305.
+                £1,297 in full, or three monthly payments of £435 (£1,305
+                total). The instalment option is available for confirmed
+                individual enrolments.
               </p>
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                The first instalment is taken at enrolment; the remaining two
+                Individual places are arranged directly with Bright Leadership
+                Consulting. Access is issued once enrolment and payment
+                arrangements have been confirmed. The remaining two instalments
                 are collected on the same date in each of the following two
-                months. Programme access continues after the final instalment.
+                months, and programme access continues after the final
+                instalment.
               </p>
             </motion.div>
 
@@ -306,11 +310,15 @@ const ExecutiveLeadershipMastery = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.18 }}
             >
-              Self-directed enrolment is available for immediate start. Cohort
-              dates, group enrolment and 1:1 advisory availability are confirmed
-              on request.{" "}
-              <Link to="/contact" className="text-foreground underline underline-offset-4 decoration-border">
-                Request programme fees and current availability
+              Individual places are currently arranged directly. Submit an
+              enquiry and we will confirm availability, payment arrangements and
+              access. Cohort dates, group enrolment and 1:1 advisory
+              availability are confirmed on request.{" "}
+              <Link
+                to={programmes[0].link}
+                className="text-foreground underline underline-offset-4 decoration-border"
+              >
+                Request Individual Enrolment
               </Link>
               .
             </motion.p>

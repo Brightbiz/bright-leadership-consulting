@@ -11,7 +11,11 @@ import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
 import ProgrammeSelector from "@/components/ProgrammeSelector";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
 
-import { programmes, facilitatedEngagement } from "@/data/programmes";
+import {
+  programmes,
+  facilitatedEngagement,
+  individualEnquiryPath,
+} from "@/data/programmes";
 import {
   CPD_PROVIDER_STATEMENT,
   CPD_PARTICIPANT_STATEMENT,
@@ -92,8 +96,8 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              The two routes are separate. No diagnostic is required to enrol
-              on a programme as an individual.
+              The two routes are separate. No diagnostic is required for an
+              individual place on a programme.
             </motion.p>
 
             <div className="grid gap-px bg-border md:grid-cols-2 max-w-[1000px]">
@@ -106,13 +110,13 @@ const Courses = () => {
                   Individual Executive
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  Select a programme and enrol directly
+                  Explore the programmes and request an individual place
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Choose an available programme and begin immediately, or
-                  request the next intake or a facilitated cohort. There is no
-                  prerequisite diagnostic and no organisational sponsorship
-                  requirement.
+                  Review the programme, fee and intended outcomes before
+                  submitting an enrolment enquiry. Individual places are
+                  arranged directly. There is no prerequisite diagnostic and no
+                  organisational sponsorship requirement.
                 </p>
                 <a href="#programme-catalogue" className="link-quiet text-sm">
                   View All Programmes
@@ -168,10 +172,10 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              This is the complete programme catalogue. Where an individual
-              self-directed fee is published, it is stated below. Organisational,
-              cohort and facilitated delivery is scoped individually and the fee
-              is confirmed on request.
+              This is the complete programme catalogue. The individual fee for
+              each programme is stated below. Organisational, cohort and
+              facilitated delivery is scoped individually and the fee is
+              confirmed on request.
             </motion.p>
 
             <div className="max-w-[720px] space-y-0">
@@ -194,14 +198,12 @@ const Courses = () => {
 
                   <p className="text-sm text-muted-foreground mb-3">
                     {programme.individualFee
-                      ? `Individual self-directed enrolment: ${programme.individualFee}${
+                      ? `Individual fee: ${programme.individualFee}${
                           programme.paymentPlanSummary
                             ? `, with ${programme.paymentPlanSummary}`
                             : ""
                         }. Organisational, cohort and facilitated delivery: fee on request.`
-                      : "Individual and organisational fees confirmed on request."}
-                    {programme.enrolmentAvailable === false &&
-                      " Next intake dates confirmed on request."}
+                      : "Organisational, cohort and facilitated delivery: fee on request."}
                   </p>
 
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">
@@ -221,53 +223,26 @@ const Courses = () => {
                   </ul>
 
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                    {programme.enrolmentAvailable === false ? (
-                      <Link
-                        to="/contact"
-                        className="link-quiet text-sm"
-                        onClick={() =>
-                          trackCourseCtaClick({
-                            programme: programme.title,
-                            url: "/contact",
-                            surface: "/courses",
-                            label: "Request Availability",
-                          })
-                        }
-                      >
-                        Request Availability
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    ) : (
-                      <a
-                        href={programme.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-quiet text-sm"
-                        onClick={() =>
-                          trackCourseCtaClick({
-                            programme: programme.title,
-                            url: programme.link,
-                            surface: "/courses",
-                            label: "View Programme & Enrol",
-                          })
-                        }
-                      >
-                        View Programme &amp; Enrol
-                        <span className="sr-only"> (opens in a new tab)</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </a>
-                    )}
-                    {programme.detailPage && (
-                      <Link to={programme.detailPage} className="link-quiet text-sm text-muted-foreground">
-                        Programme Details
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
                     <Link
-                      to="/contact"
+                      to={programme.detailPage ?? individualEnquiryPath(programme.title)}
+                      className="link-quiet text-sm"
+                      onClick={() =>
+                        trackCourseCtaClick({
+                          programme: programme.title,
+                          url: programme.detailPage ?? individualEnquiryPath(programme.title),
+                          surface: "/courses",
+                          label: "View Programme",
+                        })
+                      }
+                    >
+                      View Programme
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                    <Link
+                      to={individualEnquiryPath(programme.title)}
                       className="text-sm text-muted-foreground underline underline-offset-4 decoration-border hover:text-foreground transition-colors"
                     >
-                      Request programme fees and current availability
+                      Request Individual Enrolment
                     </Link>
                   </div>
 
@@ -299,8 +274,8 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Structure, focus, published individual fee and current
-              availability across the four programmes.
+              Structure, focus, individual fee and how places are arranged
+              across the four programmes.
             </motion.p>
 
             <ProgrammeComparisonTable />

@@ -73,7 +73,7 @@ const StrategicLeadershipAI = () => {
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
         title="Strategic Leadership in the Age of AI — 20–30 CPD Hours"
-        description="A board-level programme in AI governance and strategy: ten modules, six stages, and a written AI Leadership Blueprint™. Individual enrolment £895. 20–30 accredited CPD hours."
+        description="A board-level programme in AI governance and strategy: ten modules, six stages, and a written AI Leadership Blueprint™. Individual fee: £895. 20–30 accredited CPD hours."
         path="/strategic-leadership-ai"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
@@ -282,33 +282,32 @@ const StrategicLeadershipAI = () => {
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
                 <p className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase mb-3">
-                  Individual, Self-Directed
+                  Individual Place
                 </p>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  {programme.individualFee}
+                  Individual fee: {programme.individualFee}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Immediate enrolment for a single executive, with full access
-                  to all ten modules and the blueprint materials. No diagnostic
-                  and no organisational sponsorship required.
+                  Individual places are arranged directly with Bright
+                  Leadership Consulting. Access is issued once enrolment and
+                  payment arrangements have been confirmed. No diagnostic and no
+                  organisational sponsorship required.
                 </p>
-                <a
-                  href={programme.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={programme.link}
                   className="link-quiet text-sm"
                   onClick={() =>
                     trackCourseCtaClick({
                       programme: programme.title,
                       url: programme.link,
                       surface: "/strategic-leadership-ai",
-                      label: "Enrol as an individual",
+                      label: "Request Individual Enrolment",
                     })
                   }
                 >
-                  Enrol as an individual
+                  Request Individual Enrolment
                   <ArrowRight className="h-3.5 w-3.5" />
-                </a>
+                </Link>
               </motion.div>
 
               <motion.div
@@ -378,8 +377,8 @@ const StrategicLeadershipAI = () => {
                     Is the programme delivered live or self-paced?
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    The individual route is self-paced online, with immediate access to all ten
-                    modules and downloadable working documents. Organisational cohorts can include
+                    The individual route is self-directed online, covering all ten modules and
+                    downloadable working documents. Organisational cohorts can include
                     facilitated sessions and board-level adaptation; those are scoped and scheduled
                     on request.
                   </p>
@@ -387,12 +386,13 @@ const StrategicLeadershipAI = () => {
 
                 <details name="ai-faq" className="border-b border-border py-4">
                   <summary className="cursor-pointer font-serif text-lg text-foreground marker:text-foreground">
-                    What happens after I enrol?
+                    What happens after my enrolment enquiry?
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    Enrolment is handled through the Thinkific learning platform. You will receive
-                    login credentials and immediate access to the first module. You can progress
-                    through the ten modules at your own pace, complete the capstone AI Leadership
+                    Individual places are arranged directly with Bright Leadership Consulting. We
+                    confirm availability and payment arrangements, and access is issued once those
+                    are settled. You then progress
+                    through the ten modules at your own pace and complete the capstone AI Leadership
                     Blueprint™ Canvas. Certificates are not generated or downloaded automatically: the
                     official CPDSO Certificate of Attendance is issued manually by Bright Leadership
                     Consulting once the approved completion requirements are satisfied.

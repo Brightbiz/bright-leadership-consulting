@@ -107,7 +107,7 @@ function trackProgrammeCtaClick(event: ProgrammeCtaEvent) {
   });
 }
 
-/** A direct enrolment click ("Enrol Now"). Reported as `programme_enrol_click`. */
+/** A direct self-service enrolment click. Reported as `programme_enrol_click`. */
 export function trackProgrammeEnrolClick(event: Omit<ProgrammeCtaEvent, "intent" | "outbound">) {
   const payload: ProgrammeCtaEvent = { ...event, intent: "enrol", outbound: true };
   trackEvent("programme_enrol_click", {
@@ -120,7 +120,7 @@ export function trackProgrammeEnrolClick(event: Omit<ProgrammeCtaEvent, "intent"
   trackProgrammeCtaClick(payload);
 }
 
-/** An enquiry click ("Request Availability" / "Request Enrolment Link"). Reported as `programme_enquiry_click`. */
+/** An enquiry click ("Request Individual Enrolment"). Reported as `programme_enquiry_click`. */
 export function trackProgrammeEnquiryClick(event: Omit<ProgrammeCtaEvent, "intent" | "outbound">) {
   const payload: ProgrammeCtaEvent = { ...event, intent: "enquiry", outbound: false };
   trackEvent("programme_enquiry_click", {
@@ -196,7 +196,7 @@ export interface ProgrammeSelectorChoiceEvent {
   condition: string;
   /** 1-based position of the route in the selector. */
   position: number;
-  /** CTA label acted on, e.g. "Enrol Now". */
+  /** CTA label acted on, e.g. "Request Individual Enrolment". */
   label: string;
   /** Destination of the CTA. */
   destination: string;

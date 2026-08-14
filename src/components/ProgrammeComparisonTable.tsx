@@ -20,15 +20,15 @@ const rows: { label: string; value: (i: number) => string }[] = [
   },
   {
     label: "Individual Fee",
-    value: (i) => programmes[i].individualFee ?? "On request",
+    value: (i) =>
+      programmes[i].individualFee
+        ? `Individual fee: ${programmes[i].individualFee}`
+        : "Fee on request",
   },
 
   {
     label: "Availability",
-    value: (i) =>
-      programmes[i].enrolmentAvailable === false
-        ? "Next intake on request"
-        : "Open for enrolment",
+    value: () => "Individual places available by enquiry",
   },
 ];
 
@@ -53,8 +53,9 @@ const ProgrammeComparisonTable = () => {
         <table className="w-full min-w-[720px] border-collapse text-left">
           <caption className="sr-only">
             Comparison of the four executive programmes by structure, primary
-            focus, accredited CPD hours, individual fee and current
-            availability. The final row gives the next step for each programme.
+            focus, accredited CPD hours and individual fee. Individual places
+            are available by enquiry. The final row gives the next step for each
+            programme.
           </caption>
 
           <thead>
@@ -127,9 +128,8 @@ const ProgrammeComparisonTable = () => {
                     helperText={false}
                   />
                   <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                    {p.enrolmentAvailable === false
-                      ? "Intake dates confirmed on enquiry."
-                      : "Individual enrolment completes on the programme platform."}
+                    Individual enrolment is arranged directly with Bright
+                    Leadership Consulting.
                   </p>
                 </td>
               ))}
@@ -140,6 +140,11 @@ const ProgrammeComparisonTable = () => {
 
       <p className="mt-4 text-xs text-muted-foreground md:hidden">
         Table scrolls horizontally.
+      </p>
+
+      <p className="mt-4 max-w-[680px] text-xs leading-relaxed text-muted-foreground">
+        Individual enrolment is arranged directly with Bright Leadership
+        Consulting.
       </p>
 
     </motion.div>

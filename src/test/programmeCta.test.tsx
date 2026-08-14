@@ -44,14 +44,18 @@ describe("ProgrammeCta destinations", () => {
 
       const primary = found[0];
 
-      if (programme.enrolmentAvailable === false) {
-        // Closed intake → enquiry route, never an external 404.
-        expect(primary.name).toMatch(/^Request Availability/);
-        expect(primary.href).toBe("/contact");
+      if (programme.enrolmentAvailable !== true) {
+        // Places arranged directly → in-site enquiry route with the programme
+        // preselected, and never an external purchase link.
+        expect(primary.name).toMatch(/^Request Individual Enrolment/);
+        expect(primary.href).toBe(
+          `/contact?programme=${encodeURIComponent(programme.title)}`,
+        );
         expect(found.every((l) => !l.href.startsWith("http"))).toBe(true);
+        expect(found.every((l) => !/thinkific/i.test(l.href))).toBe(true);
       } else {
         // Open intake with a usable https URL → the enrolment platform.
-        expect(primary.name).toMatch(/^Enrol Now/);
+        expect(primary.name).toMatch(/^Enrol on the Programme Platform/);
         expect(primary.href).toBe(programme.link);
         expect(new URL(primary.href).protocol).toBe("https:");
       }
@@ -79,8 +83,10 @@ describe("ProgrammeCta destinations", () => {
     const { group, unmount } = renderCta(broken);
     const found = links(group);
 
-    expect(found[0].name).toMatch(/^Request Enrolment Link/);
-    expect(found[0].href).toBe("/contact");
+    expect(found[0].name).toMatch(/^Request Individual Enrolment/);
+    expect(found[0].href).toBe(
+      `/contact?programme=${encodeURIComponent(broken.title)}`,
+    );
     expect(found.every((l) => !l.href.startsWith("http"))).toBe(true);
     unmount();
   });
@@ -93,7 +99,9 @@ describe("ProgrammeCta destinations", () => {
       enrolmentAvailable: true,
     };
     const { group, unmount } = renderCta(broken);
-    expect(links(group)[0].href).toBe("/contact");
+    expect(links(group)[0].href).toBe(
+      `/contact?programme=${encodeURIComponent(broken.title)}`,
+    );
     unmount();
   });
 });
