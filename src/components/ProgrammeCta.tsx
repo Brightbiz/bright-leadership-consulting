@@ -44,7 +44,7 @@ const isUsableEnrolmentUrl = (url: unknown): url is string => {
  * dead end:
  *  - arranged directly (default) → "Request Individual Enrolment" → /contact
  *    with the programme preselected.
- *  - self-service purchase live + valid https URL → "Enrol Now".
+ *  - self-service purchase live + valid https URL → the platform link.
  *  - purchase marked live but the URL is missing or malformed → the same
  *    enquiry route, with fallback messaging.
  *

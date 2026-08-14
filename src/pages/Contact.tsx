@@ -67,7 +67,7 @@ const deliveryFormats = [
 ];
 
 const timeframes = [
-  "Immediate start",
+  "As soon as possible",
   "Within 3 months",
   "3–6 months",
   "6–12 months",
