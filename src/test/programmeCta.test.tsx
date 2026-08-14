@@ -55,7 +55,7 @@ describe("ProgrammeCta destinations", () => {
         expect(found.every((l) => !/thinkific/i.test(l.href))).toBe(true);
       } else {
         // Open intake with a usable https URL → the enrolment platform.
-        expect(primary.name).toMatch(/^Enrol on the Programme Platform/);
+        expect(primary.name).toMatch(/^Request Individual Enrolment/);
         expect(primary.href).toBe(programme.link);
         expect(new URL(primary.href).protocol).toBe("https:");
       }
