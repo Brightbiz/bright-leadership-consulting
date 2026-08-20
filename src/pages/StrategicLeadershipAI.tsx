@@ -156,34 +156,55 @@ const StrategicLeadershipAI = () => {
 
         <div className="section-divider" />
 
-        {/* Section 3 — Outcomes */}
+        {/* Section 3 — What participants learn */}
         <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
-                Outcomes
+                Capability
               </motion.p>
               <motion.h2
                 className="heading-section mb-4"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                What Participants Leave With
+                Through the Programme, Participants Learn To
               </motion.h2>
               <motion.div
-                className="space-y-1.5 border-l-2 border-border pl-6 mt-10"
+                className="space-y-2.5 border-l-2 border-border pl-6 mt-10"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
-                {outcomes.map((o) => (
+                {learningPoints.map((o) => (
                   <p key={o} className="text-sm text-muted-foreground leading-relaxed">
                     {o}
                   </p>
                 ))}
               </motion.div>
+
+              <motion.p
+                className="body-brief mt-12"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                AI can accelerate analysis, reveal patterns and generate
+                alternatives. Leadership must still determine strategic intent,
+                interpret context and remain accountable for the choices made.
+              </motion.p>
+              <motion.p
+                className="body-brief mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.22 }}
+              >
+                The programme does not prescribe indiscriminate adoption, nor
+                preserve existing practices unchanged. It helps participants
+                determine what should be protected, strengthened, evolved or
+                relinquished as AI capability develops.
+              </motion.p>
             </div>
           </div>
         </section>
+
 
         <div className="section-divider" />
 
