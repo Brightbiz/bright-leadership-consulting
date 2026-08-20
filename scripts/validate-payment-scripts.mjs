@@ -35,7 +35,15 @@ const SELF = "scripts/validate-payment-scripts.mjs";
  * that justifies it. Empty: no page on this site takes payment.
  * @type {Record<string, string>}
  */
-const ALLOWLIST = {};
+const ALLOWLIST = {
+  // Detection-only: these files never load a gateway. They hold the pattern
+  // list and event names used by the runtime watchdog that reports an
+  // unexpected payment surface, so they must name the providers they watch for.
+  "src/lib/paymentSurfaceMonitor.ts":
+    "runtime watchdog — detects unexpected payment surfaces, loads none",
+  "src/lib/analytics.ts":
+    "analytics event types for the payment-surface watchdog, loads no gateway",
+};
 
 /**
  * Loadable provider surfaces: script hosts, SDK package names and embed
