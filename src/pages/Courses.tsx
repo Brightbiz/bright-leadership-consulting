@@ -454,7 +454,9 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              Six stages. Ten modules. One AI Leadership Blueprint™.
+              Ten modules across six learning stages, culminating in one AI
+              Leadership Blueprint™. Delivery sequence for the self-directed
+              individual route.
             </motion.p>
             <CourseJourneyMap />
           </div>
