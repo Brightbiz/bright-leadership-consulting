@@ -248,7 +248,17 @@ const StrategicLeadershipAI = () => {
                 </p>
               ))}
             </motion.div>
+            <motion.p
+              className="max-w-[680px] text-sm leading-relaxed text-muted-foreground mb-14"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.18 }}
+            >
+              The full See · Create · Choose · Mobilise · Adapt architecture is
+              delivered through facilitated organisational and cohort
+              engagements.
+            </motion.p>
             <CourseJourneyMap />
+
           </div>
         </section>
 
