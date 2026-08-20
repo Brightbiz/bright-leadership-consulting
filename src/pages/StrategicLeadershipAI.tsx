@@ -46,19 +46,21 @@ const audience = [
   },
 ];
 
-const outcomes = [
-  "A written AI Leadership Blueprint™ specific to the organisation",
-  "A governance framework covering accountability, escalation and review",
-  "An assessment of organisational AI maturity and material exposure",
-  "A defensible position on responsible adoption for board discussion",
+const learningPoints = [
+  "Interpret AI's strategic implications for their leadership context",
+  "Identify where AI can support meaningful value creation",
+  "Interrogate AI-generated analysis, options and recommendations — challenging assumptions, exposing blind spots and weighing risks and trade-offs more rigorously",
+  "Clarify where human judgement and executive accountability must remain decisive",
+  "Develop an AI Leadership Blueprint™ for responsible strategic application",
 ];
 
 const structure = [
-  "Ten modules across six stages, from awareness to integration",
+  "Ten modules across six learning stages: Awareness, Strategy, Capability, Communication, Governance and Integration",
   "Self-paced online delivery with downloadable working documents",
   "Capstone: the AI Leadership Blueprint™ Canvas",
   "20–30 accredited CPD hours on completion",
 ];
+
 
 const StrategicLeadershipAI = () => {
   useEffect(() => {
