@@ -176,7 +176,7 @@ const StrategicAiLeadershipOrganisations = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Build the Leadership Capability to Direct AI Strategically
+                Convert AI Capability Into Strategic Advantage
               </motion.h1>
               <motion.div
                 className="space-y-5"
@@ -184,18 +184,23 @@ const StrategicAiLeadershipOrganisations = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="body-brief">
-                  AI adoption is not solely a technology initiative. It requires
-                  leaders who can connect emerging capability with strategy,
-                  governance, accountability, organisational change and
-                  responsible execution.
+                  AI is expanding what organisations can analyse, imagine and
+                  execute. But widely available capability does not
+                  automatically create differentiation.
                 </p>
                 <p className="body-brief">
-                  Strategic Leadership in the Age of AI is available for
-                  organisations seeking to develop shared leadership
-                  understanding and a more coherent executive response to
-                  AI-enabled transformation.
+                  When organisations rely on comparable tools, similar data,
+                  familiar assumptions and conventional approaches, they risk
+                  producing comparable analysis, comparable options and
+                  increasingly similar strategies.
+                </p>
+                <p className="body-brief">
+                  The leadership challenge is to convert AI into new value,
+                  stronger strategic choices and coordinated organisational
+                  performance.
                 </p>
               </motion.div>
+
 
               <motion.div
                 className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
