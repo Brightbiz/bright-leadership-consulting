@@ -73,7 +73,7 @@ const StrategicLeadershipAI = () => {
       <ProgrammeMeta
         programmeTitle={PROGRAMME_TITLE}
         title="Strategic Leadership in the Age of AI — 20–30 CPD Hours"
-        description="A board-level programme in AI governance and strategy: ten modules, six stages, and a written AI Leadership Blueprint™. Individual fee: £895. 20–30 accredited CPD hours."
+        description="Develop the executive capability to convert AI into strategic advantage through stronger insight, distinctive value creation, better decisions and coordinated execution. Individual fee: £895. 20–30 accredited CPD hours."
         path="/strategic-leadership-ai"
       />
       <CourseSchema programmeTitle={PROGRAMME_TITLE} />
