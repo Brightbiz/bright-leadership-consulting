@@ -66,12 +66,15 @@ const ShotLayer: React.FC<{
   );
 };
 
-export const LeadershipGap: React.FC = () => {
+export const LeadershipGap: React.FC<{
+  shots?: typeof SHOTS;
+  captions?: typeof CAPTIONS;
+}> = ({ shots = SHOTS, captions = CAPTIONS }) => {
   const { fps } = useVideoConfig();
 
   return (
     <AbsoluteFill style={{ background: C.navyDeep }}>
-      {SHOTS.map((s, i) => {
+      {shots.map((s, i) => {
         if (!s.img) return null;
         const from = Math.round(s.from * fps);
         const frames = Math.round((s.to - s.from) * fps);
@@ -89,7 +92,7 @@ export const LeadershipGap: React.FC = () => {
         );
       })}
 
-      {CAPTIONS.map((c, i) => {
+      {captions.map((c, i) => {
         const from = Math.round(c.from * fps);
         const frames = Math.round((c.to - c.from) * fps);
         return (
