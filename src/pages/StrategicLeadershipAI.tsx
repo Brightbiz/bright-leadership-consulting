@@ -99,21 +99,37 @@ const StrategicLeadershipAI = () => {
                 Strategic Leadership in the Age of AI
               </motion.h1>
 
+              <motion.p
+                className="font-serif text-xl leading-relaxed text-foreground mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                Strengthen strategic judgement in an AI-enabled environment.
+              </motion.p>
+
               <motion.div
                 className="space-y-6"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  A programme for senior leaders who are accountable for
-                  artificial intelligence adoption rather than for building it.
-                  It addresses the governance structures, decision rights and
-                  strategic judgement required to direct AI at board level.
+                  AI is expanding what leaders can analyse, explore and execute.
+                  But access to AI is not, by itself, a competitive advantage.
                 </p>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  Ten modules. Six stages. One written AI Leadership Blueprint™.
+                  When comparable capabilities are widely available, the
+                  advantage lies in the quality of the questions leaders ask,
+                  the assumptions they challenge, the opportunities they
+                  recognise and the judgements they make.
+                </p>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Strategic Leadership in the Age of AI develops the executive
+                  capability to use AI with precision — and to hold strategic
+                  judgement, decision authority and accountability where they
+                  belong.
                 </p>
               </motion.div>
+
             </div>
           </div>
         </section>
