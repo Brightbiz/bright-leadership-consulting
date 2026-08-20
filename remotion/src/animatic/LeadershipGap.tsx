@@ -92,7 +92,7 @@ export const LeadershipGap: React.FC<{
         );
       })}
 
-      {CAPTIONS.map((c, i) => {
+      {captions.map((c, i) => {
         const from = Math.round(c.from * fps);
         const frames = Math.round((c.to - c.from) * fps);
         return (
