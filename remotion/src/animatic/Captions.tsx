@@ -207,9 +207,10 @@ export const CaptionBlock: React.FC<{
     <AbsoluteFill style={{ justifyContent: "flex-end", opacity: out }}>
       <div
         style={{
-          background:
-            "linear-gradient(0deg, rgba(10,18,43,0.92) 0%, rgba(10,18,43,0.72) 60%, rgba(10,18,43,0) 100%)",
-          padding: "150px 130px 92px",
+        background:
+          "linear-gradient(0deg, rgba(10,18,43,0.96) 0%, rgba(10,18,43,0.86) 45%, rgba(10,18,43,0.35) 78%, rgba(10,18,43,0) 100%)",
+        padding: "170px 130px 92px",
+
         }}
       >
         <div style={{ display: "flex", gap: 30 }}>
