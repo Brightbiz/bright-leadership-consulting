@@ -662,7 +662,7 @@ const StrategicAiLeadershipOrganisations = () => {
                     >
                       {form.formState.isSubmitting
                         ? "Submitting…"
-                        : "Discuss Organisational Delivery"}
+                        : "Discuss Executive Alignment"}
                     </Button>
                   </form>
                 </Form>
