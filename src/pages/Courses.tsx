@@ -66,7 +66,8 @@ const Courses = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 Four CPD-accredited programmes for senior leaders who require
-                more than content. Individual executives enrol directly.
+                more than content. Individual places are arranged through
+                individual enrolment on request.
                 Organisations commissioning development for a leadership team
                 begin with structural measurement.
               </motion.p>
