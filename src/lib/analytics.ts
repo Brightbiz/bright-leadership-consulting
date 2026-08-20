@@ -225,3 +225,46 @@ export function trackProgrammeSelectorChoice(event: ProgrammeSelectorChoiceEvent
 export function trackSectionView(section: string, surface: string) {
   trackEvent("section_view", { section_name: section, page_surface: surface });
 }
+
+export interface PaymentSurfaceEvent {
+  /** Provider identified, e.g. "stripe" | "paypal" | "braintree". */
+  provider: string;
+  /** What was seen, e.g. "script[https://js.stripe.com/v3]" or "iframe_focus". */
+  surface: string;
+  /** Route the surface appeared on. */
+  page: string;
+}
+
+/**
+ * A payment-provider script, iframe or embed appeared on the page.
+ * This site takes no payment, so `expected: false` means an unintended
+ * connection (tag manager, extension, third-party widget) is loading provider
+ * UI and should be investigated.
+ */
+export function trackPaymentSurfaceDetected(
+  event: PaymentSurfaceEvent & { expected: boolean },
+) {
+  trackEvent("payment_surface_detected", {
+    payment_provider: event.provider,
+    payment_surface: event.surface,
+    page_path: event.page,
+    expected_surface: event.expected,
+  });
+}
+
+/**
+ * A visitor clicked, submitted or focused inside payment-provider UI.
+ * Highest-signal event: it means someone reached a payment control on a site
+ * that is not meant to charge anyone.
+ */
+export function trackPaymentSurfaceInteraction(
+  event: PaymentSurfaceEvent & { action: string },
+) {
+  trackEvent("payment_surface_interaction", {
+    payment_provider: event.provider,
+    payment_surface: event.surface,
+    interaction: event.action,
+    page_path: event.page,
+    expected_surface: false,
+  });
+}
