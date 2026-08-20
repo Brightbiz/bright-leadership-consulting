@@ -211,7 +211,7 @@ const StrategicAiLeadershipOrganisations = () => {
                   href="#enquiry"
                   className="inline-flex items-center justify-center rounded-sm border border-secondary px-8 py-3.5 text-sm font-medium tracking-[0.03em] text-secondary transition-colors hover:bg-secondary hover:text-secondary-foreground"
                 >
-                  Discuss Organisational Delivery
+                  Discuss Executive Alignment
                 </a>
                 <a
                   href="#outcomes"
