@@ -4,6 +4,7 @@ import { MainVideo, TOTAL } from "./MainVideo";
 import { conviction, provocative } from "./variants";
 import { LeadershipGap } from "./animatic/LeadershipGap";
 import { DURATION_SECONDS } from "./animatic/shots";
+import { SHOTS_30, CAPTIONS_30, DURATION_SECONDS_30 } from "./animatic/shots30";
 
 export const RemotionRoot: React.FC = () => (
   <>
