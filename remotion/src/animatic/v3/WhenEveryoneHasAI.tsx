@@ -67,7 +67,7 @@ const ShotLayer: React.FC<{ s: ShotV3; frames: number; fps: number }> = ({ s, fr
           <AbsoluteFill
             style={{
               background: `radial-gradient(52% 46% at 62% 40%, rgba(201,168,76,${
-                goldIn * 0.55
+                goldIn * 0.85
               }) 0%, rgba(201,168,76,0) 70%)`,
               mixBlendMode: "screen",
             }}
@@ -75,7 +75,7 @@ const ShotLayer: React.FC<{ s: ShotV3; frames: number; fps: number }> = ({ s, fr
           <AbsoluteFill
             style={{
               background: `linear-gradient(180deg, rgba(224,200,126,${
-                goldIn * 0.1
+                goldIn * 0.16
               }) 0%, rgba(201,168,76,0) 60%)`,
             }}
           />
