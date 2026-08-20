@@ -39,6 +39,34 @@ const fade = {
  */
 const ENQUIRY_TYPE = "AI programme — organisational, cohort or in-house delivery";
 
+const capabilities = [
+  {
+    name: "See",
+    description:
+      "Interpret emerging signals, interrogate machine-generated intelligence, expose assumptions and recognise material strategic implications.",
+  },
+  {
+    name: "Create",
+    description:
+      "Combine AI insight with organisational knowledge, client understanding and strategic imagination to develop differentiated opportunities, value propositions and business models.",
+  },
+  {
+    name: "Choose",
+    description:
+      "Evaluate strategic options, risks and trade-offs; establish priorities; allocate resources; and retain named executive accountability for consequential decisions.",
+  },
+  {
+    name: "Mobilise",
+    description:
+      "Align leadership, decision rights, governance, people, capabilities and operating arrangements around the chosen strategic direction.",
+  },
+  {
+    name: "Adapt",
+    description:
+      "Establish strategic learning and feedback mechanisms that support course correction and capability renewal while holding strategic coherence.",
+  },
+];
+
 const leadershipQuestions = [
   "where AI supports strategic priorities, and where it does not;",
   "which decisions must remain subject to human accountability;",
@@ -176,7 +204,7 @@ const StrategicAiLeadershipOrganisations = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Build the Leadership Capability to Direct AI Strategically
+                Convert AI Capability Into Strategic Advantage
               </motion.h1>
               <motion.div
                 className="space-y-5"
@@ -184,18 +212,23 @@ const StrategicAiLeadershipOrganisations = () => {
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="body-brief">
-                  AI adoption is not solely a technology initiative. It requires
-                  leaders who can connect emerging capability with strategy,
-                  governance, accountability, organisational change and
-                  responsible execution.
+                  AI is expanding what organisations can analyse, imagine and
+                  execute. But widely available capability does not
+                  automatically create differentiation.
                 </p>
                 <p className="body-brief">
-                  Strategic Leadership in the Age of AI is available for
-                  organisations seeking to develop shared leadership
-                  understanding and a more coherent executive response to
-                  AI-enabled transformation.
+                  When organisations rely on comparable tools, similar data,
+                  familiar assumptions and conventional approaches, they risk
+                  producing comparable analysis, comparable options and
+                  increasingly similar strategies.
+                </p>
+                <p className="body-brief">
+                  The leadership challenge is to convert AI into new value,
+                  stronger strategic choices and coordinated organisational
+                  performance.
                 </p>
               </motion.div>
+
 
               <motion.div
                 className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
@@ -206,7 +239,7 @@ const StrategicAiLeadershipOrganisations = () => {
                   href="#enquiry"
                   className="inline-flex items-center justify-center rounded-sm border border-secondary px-8 py-3.5 text-sm font-medium tracking-[0.03em] text-secondary transition-colors hover:bg-secondary hover:text-secondary-foreground"
                 >
-                  Discuss Organisational Delivery
+                  Discuss Executive Alignment
                 </a>
                 <a
                   href="#outcomes"
@@ -225,6 +258,78 @@ const StrategicAiLeadershipOrganisations = () => {
                 delivery. Enquiries about individual participation are handled
                 separately on request.
 
+              </motion.p>
+            </div>
+          </div>
+        </section>
+
+        {/* ------------------------------------------- five capabilities */}
+        <section className="py-24 lg:py-28">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <motion.h2 className="heading-section mb-8" {...fade}>
+                Five Connected Executive Capabilities
+              </motion.h2>
+              <motion.p className="body-brief mb-12" {...fade}>
+                Strategic Leadership in the Age of AI develops the leadership
+                architecture through which AI capability becomes organisational
+                advantage.
+              </motion.p>
+
+              <div className="border-t border-border">
+                {capabilities.map((c, i) => (
+                  <motion.div
+                    key={c.name}
+                    className="border-b border-border py-7"
+                    {...fade}
+                    transition={{ ...fade.transition, delay: 0.05 + i * 0.05 }}
+                  >
+                    <p className="kicker mb-3">{c.name}</p>
+                    <p className="text-[15px] leading-relaxed text-muted-foreground">
+                      {c.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p className="body-brief mt-14" {...fade}>
+                AI can accelerate analysis, reveal patterns and generate
+                alternatives. Leadership must still determine what the
+                organisation should become, where it should compete, which value
+                it should create and which trade-offs it is prepared to accept.
+              </motion.p>
+
+              <motion.p className="body-brief mt-8" {...fade}>
+                The purpose is not to preserve the organisation unchanged. It is
+                to determine what must be protected, what should be
+                strengthened, what needs to evolve and what should be
+                relinquished.
+              </motion.p>
+
+              <motion.p className="body-brief mt-8" {...fade}>
+                Human judgement, executive accountability, stakeholder trust and
+                organisational coherence remain essential conditions for
+                sustainable performance.
+              </motion.p>
+
+              <motion.p
+                className="mt-10 border-l-2 border-border pl-6 text-[15px] leading-relaxed text-muted-foreground"
+                {...fade}
+              >
+                For commissioned leadership-team engagements, the Executive
+                Alignment Index™ can provide structured evidence about the
+                leadership conditions affecting the organisation's capacity to
+                decide and act coherently. The diagnostic informs facilitated
+                delivery; it does not claim to measure AI readiness, strategic
+                decision quality or business performance.
+              </motion.p>
+
+              <motion.p
+                className="mt-14 font-serif text-xl leading-relaxed text-foreground"
+                {...fade}
+              >
+                When everyone has AI, what will make your organisation
+                different?
               </motion.p>
             </div>
           </div>
@@ -657,7 +762,7 @@ const StrategicAiLeadershipOrganisations = () => {
                     >
                       {form.formState.isSubmitting
                         ? "Submitting…"
-                        : "Discuss Organisational Delivery"}
+                        : "Discuss Executive Alignment"}
                     </Button>
                   </form>
                 </Form>

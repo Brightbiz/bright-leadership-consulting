@@ -73,9 +73,9 @@ export const programmes: Programme[] = [
   },
   {
     title: "Strategic Leadership in the Age of AI",
-    subtitle: "AI Governance & Leadership Framework",
+    subtitle: "Executive capability for AI-enabled strategic advantage",
     description:
-      "Equips senior leaders with the governance frameworks and strategic clarity required to direct artificial intelligence adoption at board level.",
+      "Develops the leadership capability to turn AI potential into stronger strategic insight, sharper decisions and responsible organisational action, examining where AI can create meaningful value and where human judgement, decision authority and executive accountability must remain decisive.",
     features: [
       "AI Strategic Implications Assessment",
       "Governance Framework Development",

@@ -46,19 +46,21 @@ const audience = [
   },
 ];
 
-const outcomes = [
-  "A written AI Leadership Blueprint™ specific to the organisation",
-  "A governance framework covering accountability, escalation and review",
-  "An assessment of organisational AI maturity and material exposure",
-  "A defensible position on responsible adoption for board discussion",
+const learningPoints = [
+  "Interpret AI's strategic implications for their leadership context",
+  "Identify where AI can support meaningful value creation",
+  "Interrogate AI-generated analysis, options and recommendations — challenging assumptions, exposing blind spots and weighing risks and trade-offs more rigorously",
+  "Clarify where human judgement and executive accountability must remain decisive",
+  "Develop an AI Leadership Blueprint™ for responsible strategic application",
 ];
 
 const structure = [
-  "Ten modules across six stages, from awareness to integration",
+  "Ten modules across six learning stages: Awareness, Strategy, Capability, Communication, Governance and Integration",
   "Self-paced online delivery with downloadable working documents",
   "Capstone: the AI Leadership Blueprint™ Canvas",
   "20–30 accredited CPD hours on completion",
 ];
+
 
 const StrategicLeadershipAI = () => {
   useEffect(() => {
@@ -97,21 +99,37 @@ const StrategicLeadershipAI = () => {
                 Strategic Leadership in the Age of AI
               </motion.h1>
 
+              <motion.p
+                className="font-serif text-xl leading-relaxed text-foreground mb-8"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.15 }}
+              >
+                Strengthen strategic judgement in an AI-enabled environment.
+              </motion.p>
+
               <motion.div
                 className="space-y-6"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  A programme for senior leaders who are accountable for
-                  artificial intelligence adoption rather than for building it.
-                  It addresses the governance structures, decision rights and
-                  strategic judgement required to direct AI at board level.
+                  AI is expanding what leaders can analyse, explore and execute.
+                  But access to AI is not, by itself, a competitive advantage.
                 </p>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  Ten modules. Six stages. One written AI Leadership Blueprint™.
+                  When comparable capabilities are widely available, the
+                  advantage lies in the quality of the questions leaders ask,
+                  the assumptions they challenge, the opportunities they
+                  recognise and the judgements they make.
+                </p>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Strategic Leadership in the Age of AI develops the executive
+                  capability to use AI with precision — and to hold strategic
+                  judgement, decision authority and accountability where they
+                  belong.
                 </p>
               </motion.div>
+
             </div>
           </div>
         </section>
@@ -154,34 +172,55 @@ const StrategicLeadershipAI = () => {
 
         <div className="section-divider" />
 
-        {/* Section 3 — Outcomes */}
+        {/* Section 3 — What participants learn */}
         <section className="section-brief bg-background">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
-                Outcomes
+                Capability
               </motion.p>
               <motion.h2
                 className="heading-section mb-4"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                What Participants Leave With
+                Through the Programme, Participants Learn To
               </motion.h2>
               <motion.div
-                className="space-y-1.5 border-l-2 border-border pl-6 mt-10"
+                className="space-y-2.5 border-l-2 border-border pl-6 mt-10"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
-                {outcomes.map((o) => (
+                {learningPoints.map((o) => (
                   <p key={o} className="text-sm text-muted-foreground leading-relaxed">
                     {o}
                   </p>
                 ))}
               </motion.div>
+
+              <motion.p
+                className="body-brief mt-12"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.2 }}
+              >
+                AI can accelerate analysis, reveal patterns and generate
+                alternatives. Leadership must still determine strategic intent,
+                interpret context and remain accountable for the choices made.
+              </motion.p>
+              <motion.p
+                className="body-brief mt-6"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.22 }}
+              >
+                The programme does not prescribe indiscriminate adoption, nor
+                preserve existing practices unchanged. It helps participants
+                determine what should be protected, strengthened, evolved or
+                relinquished as AI capability develops.
+              </motion.p>
             </div>
           </div>
         </section>
+
 
         <div className="section-divider" />
 
@@ -209,7 +248,17 @@ const StrategicLeadershipAI = () => {
                 </p>
               ))}
             </motion.div>
+            <motion.p
+              className="max-w-[680px] text-sm leading-relaxed text-muted-foreground mb-14"
+              {...fade}
+              transition={{ ...fade.transition, delay: 0.18 }}
+            >
+              The full See · Create · Choose · Mobilise · Adapt architecture is
+              delivered through facilitated organisational and cohort
+              engagements.
+            </motion.p>
             <CourseJourneyMap />
+
           </div>
         </section>
 
