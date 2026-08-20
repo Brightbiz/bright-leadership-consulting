@@ -39,6 +39,34 @@ const fade = {
  */
 const ENQUIRY_TYPE = "AI programme — organisational, cohort or in-house delivery";
 
+const capabilities = [
+  {
+    name: "See",
+    description:
+      "Interpret emerging signals, interrogate machine-generated intelligence, expose assumptions and recognise material strategic implications.",
+  },
+  {
+    name: "Create",
+    description:
+      "Combine AI insight with organisational knowledge, client understanding and strategic imagination to develop differentiated opportunities, value propositions and business models.",
+  },
+  {
+    name: "Choose",
+    description:
+      "Evaluate strategic options, risks and trade-offs; establish priorities; allocate resources; and retain named executive accountability for consequential decisions.",
+  },
+  {
+    name: "Mobilise",
+    description:
+      "Align leadership, decision rights, governance, people, capabilities and operating arrangements around the chosen strategic direction.",
+  },
+  {
+    name: "Adapt",
+    description:
+      "Establish strategic learning and feedback mechanisms that support course correction and capability renewal while holding strategic coherence.",
+  },
+];
+
 const leadershipQuestions = [
   "where AI supports strategic priorities, and where it does not;",
   "which decisions must remain subject to human accountability;",
