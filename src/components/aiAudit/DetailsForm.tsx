@@ -10,8 +10,8 @@ import {
   type Action,
   type AuditState,
 } from "@/data/aiAudit/logic";
-import { reportEnquiryConversion } from "@/lib/analytics";
 import { trackAuditRequestSubmitted } from "@/lib/aiAuditAnalytics";
+import { auditElapsedMs, auditSessionId, clearProgress } from "@/lib/auditSession";
 
 interface DetailsFormProps {
   action: Action;
@@ -31,12 +31,16 @@ const FIELDS = [
 type FieldId = (typeof FIELDS)[number]["id"];
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-sm border border-navy-foreground/25 bg-navy px-4 text-[15px] text-navy-foreground placeholder:text-navy-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy";
+  "mt-2 h-12 w-full rounded-sm border border-navy-foreground/25 bg-navy px-4 text-[15px] text-navy-foreground placeholder:text-navy-note focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy";
 
 /**
  * Contact and delivery details. Reached only after the result and
  * recommendation have been shown, and only for a specific selected action.
  * Required transaction fields are separate from optional marketing consent.
+ *
+ * Submission protection: an invisible honeypot, a minimum credible completion
+ * time, and a per-session idempotency key. A visible challenge appears only
+ * when the server reports the attempt as suspicious.
  */
 const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
   const [values, setValues] = useState<Record<FieldId, string>>({
@@ -49,20 +53,25 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [challenge, setChallenge] = useState<{ token: string; question: string } | null>(null);
+  const [challengeAnswer, setChallengeAnswer] = useState("");
 
   const quantity = resolvedQuantity(state);
   const complete =
-    FIELDS.every(({ id }) => values[id].trim().length > 0) && values.email.includes("@");
+    FIELDS.every(({ id }) => values[id].trim().length > 0) &&
+    values.email.includes("@") &&
+    (!challenge || challengeAnswer.trim().length > 0);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!complete || status === "sending") return;
+    if (!complete || status === "sending" || status === "done") return;
     setStatus("sending");
     setErrorMessage("");
 
     const score = readinessTotal(state);
 
-    const { error } = await supabase.functions.invoke("submit-ai-audit", {
+    const { data, error } = await supabase.functions.invoke("submit-ai-audit", {
       body: {
         requestType: action.kind,
         actionLabel: action.label,
@@ -71,6 +80,11 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
         readinessBand: bandFor(score).title,
         classification: classify(state),
         participantQuantity: quantity,
+        // Duplicate protection: one key per browser session attempt.
+        idempotencyKey: auditSessionId(),
+        elapsedMs: auditElapsedMs(),
+        challengeToken: challenge?.token ?? null,
+        challengeAnswer: challenge ? challengeAnswer.trim() : null,
         routing: {
           q9: state.q9,
           q9a: state.q9a,
@@ -87,21 +101,48 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
           email: values.email.trim(),
           organisation: values.organisation.trim(),
           jobTitle: values.jobTitle.trim(),
+          // Honeypot: must stay empty.
+          companyWebsite: honeypot,
         },
         marketingConsent,
       },
     });
 
-    if (error) {
+    const payload = (data ?? null) as
+      | {
+          ok?: boolean;
+          duplicate?: boolean;
+          replayed?: boolean;
+          error?: string;
+          challengeRequired?: boolean;
+          token?: string;
+          question?: string;
+        }
+      | null;
+
+    if (payload?.challengeRequired && payload.token && payload.question) {
+      setChallenge({ token: payload.token, question: payload.question });
+      setChallengeAnswer("");
+      setStatus("error");
+      setErrorMessage(payload.error ?? "Please complete the short check below and submit again.");
+      return;
+    }
+
+    if (error || !payload?.ok) {
       setStatus("error");
       setErrorMessage(
-        "We could not record that request. Please try again, or email enquiries@brightleadershipconsulting.com and we will complete it manually.",
+        payload?.error ??
+          "We could not record that request. Please try again, or email enquiries@brightleadershipconsulting.com and we will complete it manually.",
       );
       return;
     }
 
-    trackAuditRequestSubmitted(action.kind, quantity);
-    reportEnquiryConversion();
+    trackAuditRequestSubmitted(action.kind, quantity, {
+      duplicate: payload.duplicate,
+      replayed: payload.replayed,
+    });
+    // Unfinished answers must not survive a completed submission.
+    clearProgress();
     setStatus("done");
   };
 
@@ -168,6 +209,20 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
           </div>
         ))}
 
+        {/* Invisible honeypot — never shown to, or announced for, a real visitor. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+          <label htmlFor="audit-company-website">Company website</label>
+          <input
+            id="audit-company-website"
+            name="company_website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+
         <label className="flex items-start gap-3 text-[14px] leading-relaxed text-navy-foreground/75">
           <input
             type="checkbox"
@@ -181,10 +236,28 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
           </span>
         </label>
 
+        {challenge && (
+          <div className="mt-6 rounded-sm border border-gold/50 p-4">
+            <label htmlFor="audit-challenge" className="text-[14px] text-navy-foreground/80">
+              {challenge.question}
+            </label>
+            <input
+              id="audit-challenge"
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              value={challengeAnswer}
+              onChange={(e) => setChallengeAnswer(e.target.value)}
+              className="mt-2 h-12 w-28 rounded-sm border border-navy-foreground/25 bg-navy px-4 text-[15px] text-navy-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            />
+          </div>
+        )}
+
         <p className="mt-5 text-[13px] leading-relaxed text-navy-note">
-          Details submitted here are held only to administer this request and the related
-          organisational record, and are retained for 24 months unless you ask us to remove them
-          sooner. See our{" "}
+          Your audit answers, score and recommendation are held for 90 days from completion. If you
+          ask us to raise an invoice, purchase order, decision pack or scoping discussion, that
+          request record and the related organisational contact are held for 24 months from our last
+          meaningful contact, or longer where a transaction or contract requires it by law. See our{" "}
           <Link
             to="/privacy"
             className="underline underline-offset-4 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
