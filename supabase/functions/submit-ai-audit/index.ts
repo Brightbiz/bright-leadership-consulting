@@ -262,13 +262,16 @@ Deno.serve(async (req) => {
           "crm-failure",
         );
       }
+      // Email status is recorded for visibility only; a failure here never
+      // deletes or invalidates the underlying request record.
       await supabase
         .from("ai_audit_requests")
         .update({
-          buyer_ack_status: buyer === "sent" ? "sent" : "pending_approval",
-          admin_notice_status: admin === "sent" ? "sent" : "pending_approval",
+          buyer_ack_status: buyer === "pending" ? "pending_approval" : buyer,
+          admin_notice_status: admin === "pending" ? "pending_approval" : admin,
         })
         .eq("id", outcome.request_id);
+
     }
 
     return json({
