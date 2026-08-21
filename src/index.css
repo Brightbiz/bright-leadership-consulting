@@ -64,8 +64,11 @@
     --pearl: 220 20% 97%;
     --navy: 216 70% 14%;
     --navy-foreground: 220 20% 92%;
+    /* Accessible small-text note colour on navy — measured 6.98:1 (WCAG AA). */
+    --navy-note: 220 16% 68%;
     --gold: 42 50% 52%;
     --gold-muted: 42 40% 65%;
+
 
     /* Shadows — restrained */
     --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.04);
