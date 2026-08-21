@@ -311,15 +311,19 @@ const AdminAuditRequests = () => {
                 <TableHead>Contact</TableHead>
                 <TableHead>Request</TableHead>
                 <TableHead>Qty</TableHead>
+                <TableHead>Action status</TableHead>
                 <TableHead>CRM mirror</TableHead>
-                <TableHead>Emails</TableHead>
+                <TableHead>Buyer email</TableHead>
                 <TableHead>Retain until</TableHead>
                 <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.map((r) => (
-                <TableRow key={r.id}>
+                <TableRow
+                  key={r.id}
+                  className={r.action_status !== "actioned" ? "bg-destructive/[0.03]" : undefined}
+                >
                   <TableCell className="whitespace-nowrap text-xs">
                     {format(new Date(r.created_at), "dd MMM yyyy HH:mm")}
                     {r.flagged_duplicate && (
@@ -339,6 +343,28 @@ const AdminAuditRequests = () => {
                   </TableCell>
                   <TableCell className="text-xs">{r.participant_quantity ?? "—"}</TableCell>
                   <TableCell className="text-xs">
+                    {r.action_status === "actioned" ? (
+                      <>
+                        <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                          actioned
+                        </Badge>
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          {r.actioned_at ? format(new Date(r.actioned_at), "dd MMM yyyy HH:mm") : "—"}
+                        </span>
+                        <span className="block text-[11px] text-muted-foreground">
+                          {r.actioned_by_email ?? "unrecorded operator"}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Badge variant="destructive">needs action</Badge>
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          waiting {ageLabel(r.created_at)}
+                        </span>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-xs">
                     <Badge className={CRM_BADGE[r.crm_status]}>{r.crm_status}</Badge>
                     {r.crm_error && (
                       <span className="mt-1 block max-w-[220px] text-[11px] text-destructive">
@@ -348,36 +374,69 @@ const AdminAuditRequests = () => {
                     <span className="mt-1 block text-[11px] text-muted-foreground">
                       {r.crm_attempts} attempt{r.crm_attempts === 1 ? "" : "s"}
                     </span>
+                    {r.crm_status === "failed" &&
+                      (r.crm_failure_ack_at ? (
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          acknowledged {format(new Date(r.crm_failure_ack_at), "dd MMM yyyy HH:mm")} by{" "}
+                          {r.crm_failure_ack_by_email ?? "unrecorded operator"}
+                        </span>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="mt-1 h-6 px-2 text-[11px]"
+                          disabled={updating === r.id}
+                          onClick={() => void acknowledgeFailure(r.id)}
+                        >
+                          Acknowledge
+                        </Button>
+                      ))}
                   </TableCell>
                   <TableCell className="text-[11px] text-muted-foreground">
-                    <span className="block">buyer: {r.buyer_ack_status}</span>
-                    <span className="block">admin: {r.admin_notice_status}</span>
+                    {r.buyer_ack_status}
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-xs">
                     {format(new Date(r.retain_until), "dd MMM yyyy")}
                   </TableCell>
                   <TableCell>
-                    {r.crm_status !== "completed" && (
+                    <div className="flex flex-col gap-2">
+                      {r.crm_status !== "completed" && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={retrying === r.id}
+                          onClick={() => void retryMirror(r.id)}
+                        >
+                          {retrying === r.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            "Retry"
+                          )}
+                        </Button>
+                      )}
                       <Button
                         size="sm"
-                        variant="outline"
-                        disabled={retrying === r.id}
-                        onClick={() => void retryMirror(r.id)}
+                        variant={r.action_status === "actioned" ? "ghost" : "default"}
+                        disabled={updating === r.id}
+                        onClick={() => void setActioned(r.id, r.action_status !== "actioned")}
                       >
-                        {retrying === r.id ? (
+                        {updating === r.id ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : r.action_status === "actioned" ? (
+                          "Reopen"
                         ) : (
-                          "Retry"
+                          "Mark actioned"
                         )}
                       </Button>
-                    )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
               {!loading && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={8} className="py-10 text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={9} className="py-10 text-center text-sm text-muted-foreground">
                     No audit requests recorded yet.
+
                   </TableCell>
                 </TableRow>
               )}
