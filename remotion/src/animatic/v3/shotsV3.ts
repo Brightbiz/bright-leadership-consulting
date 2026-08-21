@@ -169,9 +169,10 @@ export const CAPTIONS_69: CaptionV3[] = [
     from: 63.0,
     to: 69.0,
     firm: "Bright Leadership Consulting",
-    cta: "Discuss Executive Alignment",
-    url: "brightleadershipconsulting.com",
-    note: "Executive Alignment Index™ — structured evidence for leadership-team engagements · CPD Standards Office, Provider 50838",
+    cta: "Discuss Organisational Delivery",
+    url: "brightleadershipconsulting.com/strategic-ai-leadership-for-organisations",
+    note: "Strategic Leadership in the Age of AI — organisational delivery · Accredited by The CPD Standards Office",
+
   },
 ];
 
@@ -232,9 +233,10 @@ export const CAPTIONS_30_V3: CaptionV3[] = [
     to: 30.0,
     programme: ["Strategic Leadership", "in the Age of AI"],
     firm: "Bright Leadership Consulting",
-    cta: "Discuss Executive Alignment",
-    url: "brightleadershipconsulting.com",
-    note: "CPD Standards Office — Provider 50838",
+    cta: "Discuss Organisational Delivery",
+    url: "brightleadershipconsulting.com/strategic-ai-leadership-for-organisations",
+    note: "Accredited by The CPD Standards Office",
+
   },
 ];
 
