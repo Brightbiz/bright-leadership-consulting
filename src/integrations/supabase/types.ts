@@ -14,6 +14,104 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_audit_requests: {
+        Row: {
+          action_label: string
+          created_at: string
+          email: string
+          id: string
+          job_title: string | null
+          name: string | null
+          organisation: string | null
+          participant_quantity: number | null
+          product: string
+          request_type: string
+          response_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          action_label?: string
+          created_at?: string
+          email: string
+          id?: string
+          job_title?: string | null
+          name?: string | null
+          organisation?: string | null
+          participant_quantity?: number | null
+          product?: string
+          request_type: string
+          response_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          action_label?: string
+          created_at?: string
+          email?: string
+          id?: string
+          job_title?: string | null
+          name?: string | null
+          organisation?: string | null
+          participant_quantity?: number | null
+          product?: string
+          request_type?: string
+          response_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_audit_requests_response_id_fkey"
+            columns: ["response_id"]
+            isOneToOne: false
+            referencedRelation: "ai_audit_responses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_audit_responses: {
+        Row: {
+          classification: string
+          created_at: string
+          email: string
+          id: string
+          job_title: string | null
+          marketing_consent: boolean
+          name: string | null
+          organisation: string | null
+          readiness_band: string
+          readiness_score: number
+          routing: Json
+        }
+        Insert: {
+          classification?: string
+          created_at?: string
+          email: string
+          id?: string
+          job_title?: string | null
+          marketing_consent?: boolean
+          name?: string | null
+          organisation?: string | null
+          readiness_band?: string
+          readiness_score: number
+          routing?: Json
+        }
+        Update: {
+          classification?: string
+          created_at?: string
+          email?: string
+          id?: string
+          job_title?: string | null
+          marketing_consent?: boolean
+          name?: string | null
+          organisation?: string | null
+          readiness_band?: string
+          readiness_score?: number
+          routing?: Json
+        }
+        Relationships: []
+      }
       assessment_results: {
         Row: {
           answers: Json
