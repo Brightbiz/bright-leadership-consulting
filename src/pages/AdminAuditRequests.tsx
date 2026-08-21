@@ -122,6 +122,50 @@ const AdminAuditRequests = () => {
     await fetchRows();
   };
 
+  /** Marks a request as actioned (or reopens it), recording date and operator. */
+  const setActioned = async (id: string, actioned: boolean) => {
+    setUpdating(id);
+    const { error } = await (supabase as any)
+      .from("ai_audit_requests")
+      .update(
+        actioned
+          ? {
+              action_status: "actioned",
+              actioned_at: new Date().toISOString(),
+              actioned_by: user?.id ?? null,
+              actioned_by_email: user?.email ?? null,
+            }
+          : { action_status: "needs_action", actioned_at: null, actioned_by: null, actioned_by_email: null },
+      )
+      .eq("id", id);
+    setUpdating(null);
+    if (error) {
+      toast({ title: "Could not update status", description: error.message, variant: "destructive" });
+      return;
+    }
+    await fetchRows();
+  };
+
+  /** Acknowledges a persistent CRM-mirroring failure without clearing it. */
+  const acknowledgeFailure = async (id: string) => {
+    setUpdating(id);
+    const { error } = await (supabase as any)
+      .from("ai_audit_requests")
+      .update({
+        crm_failure_ack_at: new Date().toISOString(),
+        crm_failure_ack_by_email: user?.email ?? null,
+      })
+      .eq("id", id);
+    setUpdating(null);
+    if (error) {
+      toast({ title: "Could not acknowledge", description: error.message, variant: "destructive" });
+      return;
+    }
+    await fetchRows();
+  };
+
+
+
   const runSubjectRequest = async (action: "preview" | "export" | "delete") => {
     if (!subjectEmail.includes("@")) {
       toast({ title: "Enter a verified email address", variant: "destructive" });
