@@ -365,6 +365,10 @@ const AdminCRM = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/admin/audit-requests">AI audit requests</Link>
+            </Button>
+
             <Button onClick={syncLeads} variant="outline" size="sm" disabled={syncing}>
               <RefreshCw className={`mr-2 h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
               {syncing ? "Syncing…" : "Sync Leads"}
