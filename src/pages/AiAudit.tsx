@@ -326,6 +326,9 @@ const AiAudit = () => {
     emphasis: "primary" | "secondary" | "tertiary",
     product: ProductKey,
   ) => {
+    // The checkout action is single-use; a second click is ignored entirely.
+    if (action.kind === "thinkific" && checkoutStarted) return;
+
     trackAuditActionClick({
       action: action.kind,
       label: action.label,
@@ -336,11 +339,13 @@ const AiAudit = () => {
     });
 
     if (action.kind === "thinkific") {
+      setCheckoutStarted(true);
       const destination = buildThinkificPurchaseUrl({ campaignSearch: search });
       trackAuditOutboundPurchase(destination);
       window.setTimeout(() => window.location.assign(destination), 120);
       return;
     }
+
 
     if (action.kind === "info" && classification === "Not currently qualified") {
       downloadPublicSummary();
