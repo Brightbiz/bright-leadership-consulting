@@ -1,33 +1,39 @@
 /**
- * AI Leadership Readiness Audit — approved email copy (21 Aug 2026).
+ * AI Leadership Readiness Audit — buyer acknowledgement email (approved copy).
  *
- * Wording approved; sending remains suppressed while `EMAILS_ENABLED` is false.
+ * Architecture (Option C, approved 21 Aug 2026):
+ *  - Buyer acknowledgement: app email, gated by `BUYER_ACK_EMAILS_ENABLED`.
+ *  - Internal operational notification: administrative view only. Not sendable.
+ *  - CRM-mirroring failure notification: administrative view only. Not sendable.
+ *
+ * The internal wording is retained in `docs/ai-audit-internal-notification-wording.md`
+ * for reference only; it is deliberately absent from this module so the buyer
+ * flag cannot activate an internal send.
  *
  * Safeguards applied here:
  *  - Every interpolated value is HTML-escaped before insertion into the HTML part.
  *  - Every message carries a plain-text part as well as an HTML part.
  *  - Each message carries an idempotency key so a trigger sends at most once.
  *  - Delivery status is reported as "pending" | "sent" | "failed" for recording.
- *  - CRM failure notices carry a sanitised failure category only: never raw
- *    server errors, credentials, tokens, database details or stack traces.
  *  - No audit answers, dimension scores, band or classification in any email.
- *  - Marketing consent has no bearing on these messages; they are transactional
- *    and operational only.
+ *  - Marketing consent has no bearing on this message; it is transactional.
+ *  - The buyer's on-screen confirmation is produced independently of delivery.
  *  - In test mode messages go only to the authorised test address and are
  *    clearly marked as tests.
  */
 
-export const EMAILS_ENABLED = false;
+/** Narrowly scoped: governs the buyer acknowledgement and nothing else. */
+export const BUYER_ACK_EMAILS_ENABLED = false;
 
 export const SENDER_NAME = "Bright Leadership Consulting";
 export const SENDER_ADDRESS = "notifications@brightleadershipconsulting.com";
 export const REPLY_TO = "enquiries@brightleadershipconsulting.com";
-export const ADMIN_RECIPIENT = "enquiries@brightleadershipconsulting.com";
 
 /** Authorised test address; test sends go nowhere else. */
 export const TEST_RECIPIENT = "enquiries@brightleadershipconsulting.com";
 
 export type DeliveryStatus = "pending" | "sent" | "failed";
+
 
 export interface RequestSummary {
   requestId: string;
