@@ -212,6 +212,29 @@ const AdminAuditRequests = () => {
   if (!isAdmin) return <Navigate to="/" replace />;
 
   const failures = rows.filter((r) => r.crm_status === "failed");
+  const unactioned = rows.filter((r) => r.action_status !== "actioned");
+  const oldest = unactioned.reduce<string | null>(
+    (acc, r) => (!acc || new Date(r.created_at) < new Date(acc) ? r.created_at : acc),
+    null,
+  );
+  const crmPending = rows.filter((r) => r.crm_status === "pending").length;
+  const crmCompleted = rows.filter((r) => r.crm_status === "completed").length;
+
+  const stats: { label: string; value: string; tone?: "alert" }[] = [
+    {
+      label: "Unactioned requests",
+      value: String(unactioned.length),
+      ...(unactioned.length > 0 ? { tone: "alert" as const } : {}),
+    },
+    { label: "Oldest unactioned", value: oldest ? ageLabel(oldest) : "—" },
+    { label: "CRM pending", value: String(crmPending) },
+    { label: "CRM completed", value: String(crmCompleted) },
+    {
+      label: "CRM failed",
+      value: String(failures.length),
+      ...(failures.length > 0 ? { tone: "alert" as const } : {}),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -226,17 +249,48 @@ const AdminAuditRequests = () => {
 
         <h1 className="font-serif text-3xl">AI audit requests</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Invoice, purchase-order, decision-pack and scoping requests recorded from the AI Leadership
-          Readiness Audit, with CRM mirroring status and the restricted subject-request function.
+          This view is the authoritative operational channel for invoice, purchase-order,
+          decision-pack and scoping requests recorded from the AI Leadership Readiness Audit. No
+          internal operational or CRM-failure emails are sent; all outstanding work is tracked here.
         </p>
 
-        {failures.length > 0 && (
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-5">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className={`rounded-md border p-4 ${
+                s.tone === "alert" ? "border-destructive/50 bg-destructive/5" : ""
+              }`}
+            >
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{s.label}</p>
+              <p
+                className={`mt-1 font-serif text-2xl ${s.tone === "alert" ? "text-destructive" : ""}`}
+              >
+                {s.value}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {unactioned.length > 0 && (
           <div className="mt-6 flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4">
+            <AlertTriangle className="mt-0.5 h-5 w-5 text-destructive" />
+            <p className="text-sm">
+              <strong>Needs action:</strong> {unactioned.length} request
+              {unactioned.length === 1 ? "" : "s"} awaiting a response
+              {oldest ? `, the oldest recorded ${ageLabel(oldest)} ago` : ""}. Mark each record
+              actioned once the buyer has been responded to.
+            </p>
+          </div>
+        )}
+
+        {failures.length > 0 && (
+          <div className="mt-4 flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4">
             <AlertTriangle className="mt-0.5 h-5 w-5 text-destructive" />
             <p className="text-sm">
               {failures.length} request{failures.length === 1 ? "" : "s"} could not be mirrored into
               the CRM. The request records themselves are intact — use Retry below once the cause is
-              resolved.
+              resolved. The failure state persists until mirroring completes.
             </p>
           </div>
         )}
@@ -247,6 +301,7 @@ const AdminAuditRequests = () => {
           </Button>
           <span className="text-sm text-muted-foreground">{rows.length} records</span>
         </div>
+
 
         <div className="mt-4 overflow-x-auto rounded-md border">
           <Table>
