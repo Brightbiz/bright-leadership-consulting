@@ -113,6 +113,34 @@ const AiAudit = () => {
     null,
   );
   const [resultReported, setResultReported] = useState(false);
+  /** Set on the first checkout click so the action cannot fire twice. */
+  const [checkoutStarted, setCheckoutStarted] = useState(false);
+  const [progressRestored, setProgressRestored] = useState(false);
+
+  /* --------------------------------------------- test indicator + progress */
+
+  useEffect(() => {
+    syncTestMode(search);
+  }, [search]);
+
+  // Unfinished answers are preserved for this browser session only. Contact
+  // details are never written to storage.
+  useEffect(() => {
+    const saved = loadProgress();
+    if (saved && saved.screen !== "intro" && saved.screen !== "details") {
+      setState(saved.state as AuditState);
+      setScreen(saved.screen as Screen);
+      setReadinessIndex(saved.readinessIndex);
+    }
+    setProgressRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (!progressRestored) return;
+    if (screen === "intro" || screen === "details") return;
+    saveProgress({ screen, readinessIndex, state });
+  }, [progressRestored, screen, readinessIndex, state]);
+
 
   const route = useMemo(() => computeRoute(state), [state]);
   const classification = useMemo(() => classify(state), [state]);
