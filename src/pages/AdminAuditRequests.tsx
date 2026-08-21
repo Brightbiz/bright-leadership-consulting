@@ -237,6 +237,21 @@ const AdminAuditRequests = () => {
     },
   ];
 
+  /** Deep-link filter used by the outstanding-action indicators. */
+  const filter = searchParams.get("filter") ?? "all";
+  const visibleRows =
+    filter === "needs-action"
+      ? unactioned
+      : filter === "crm-failed"
+        ? failures
+        : rows;
+  const setFilter = (value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (value === "all") next.delete("filter");
+    else next.set("filter", value);
+    setSearchParams(next, { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
