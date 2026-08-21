@@ -311,11 +311,28 @@ const AdminAuditRequests = () => {
           </div>
         )}
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <Button variant="outline" size="sm" onClick={() => void fetchRows()} disabled={loading}>
             <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
           </Button>
-          <span className="text-sm text-muted-foreground">{rows.length} records</span>
+          {(
+            [
+              ["all", `All (${rows.length})`],
+              ["needs-action", `Needs action (${unactioned.length})`],
+              ["crm-failed", `CRM failed (${failures.length})`],
+            ] as const
+          ).map(([value, label]) => (
+            <Button
+              key={value}
+              size="sm"
+              variant={filter === value ? "default" : "outline"}
+              aria-pressed={filter === value}
+              onClick={() => setFilter(value)}
+            >
+              {label}
+            </Button>
+          ))}
+          <span className="text-sm text-muted-foreground">{visibleRows.length} shown</span>
         </div>
 
 
