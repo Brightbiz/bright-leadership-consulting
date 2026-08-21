@@ -217,7 +217,12 @@ for (const file of outputFiles) {
     continue;
   }
   for (const url of BANNED_THINKIFIC_URLS) {
-    if (src.includes(url)) {
+    // Single approved exception: the AI Leadership Readiness Audit sends a buyer
+    // purchasing for themselves to the one verified £895 checkout.
+    const approvedAuditCheckout =
+      file === "src/data/aiAudit/thinkific.ts" &&
+      url === "thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai";
+    if (src.includes(url) && !approvedAuditCheckout) {
       failures.push(`${file} — blocked Thinkific purchase URL present: ${url}`);
     }
   }
