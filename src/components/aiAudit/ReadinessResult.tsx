@@ -18,6 +18,9 @@ const ReadinessResult = ({ state }: { state: AuditState }) => {
   const score = readinessTotal(state);
   const band = bandFor(score);
   const marks = [14, 21, 27].map(position);
+  const answers = state.readiness.map((v) => v ?? 0);
+  // With identical answers every dimension ties, so naming one would be false precision.
+  const evenAcrossDimensions = Math.max(...answers) === Math.min(...answers);
 
   return (
     <section aria-labelledby="readiness-heading">
@@ -56,16 +59,23 @@ const ReadinessResult = ({ state }: { state: AuditState }) => {
         {band.teaser} {band.body}
       </p>
 
-      <dl className="mt-6 space-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-foreground/60">
-        <div className="flex flex-wrap gap-2">
-          <dt>Strongest dimension:</dt>
-          <dd className="text-navy-foreground/90">{strongestDimension(state)}</dd>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <dt>Priority dimension:</dt>
-          <dd className="text-navy-foreground/90">{priorityDimension(state)}</dd>
-        </div>
-      </dl>
+      {evenAcrossDimensions ? (
+        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-foreground/60">
+          Responses were even across all eight dimensions — no single strongest or priority dimension
+          is indicated.
+        </p>
+      ) : (
+        <dl className="mt-6 space-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-foreground/60">
+          <div className="flex flex-wrap gap-2">
+            <dt>Strongest dimension:</dt>
+            <dd className="text-navy-foreground/90">{strongestDimension(state)}</dd>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <dt>Priority dimension:</dt>
+            <dd className="text-navy-foreground/90">{priorityDimension(state)}</dd>
+          </div>
+        </dl>
+      )}
 
       <p className="mt-4 text-[13px] leading-relaxed text-navy-foreground/50">{RESULT_DISCLAIMER}</p>
 
