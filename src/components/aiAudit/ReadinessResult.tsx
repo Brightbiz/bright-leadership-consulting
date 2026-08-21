@@ -42,7 +42,7 @@ const ReadinessResult = ({ state }: { state: AuditState }) => {
           aria-hidden="true"
         />
       </div>
-      <div className="mt-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-navy-foreground/50">
+      <div className="mt-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-navy-note">
         <span>Tool-led</span>
         <span>Experimenting</span>
         <span>Directed</span>
@@ -60,12 +60,12 @@ const ReadinessResult = ({ state }: { state: AuditState }) => {
       </p>
 
       {evenAcrossDimensions ? (
-        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-foreground/60">
+        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-note">
           Responses were even across all eight dimensions — no single strongest or priority dimension
           is indicated.
         </p>
       ) : (
-        <dl className="mt-6 space-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-foreground/60">
+        <dl className="mt-6 space-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-navy-note">
           <div className="flex flex-wrap gap-2">
             <dt>Strongest dimension:</dt>
             <dd className="text-navy-foreground/90">{strongestDimension(state)}</dd>
@@ -77,7 +77,7 @@ const ReadinessResult = ({ state }: { state: AuditState }) => {
         </dl>
       )}
 
-      <p className="mt-4 text-[13px] leading-relaxed text-navy-foreground/50">{RESULT_DISCLAIMER}</p>
+      <p className="mt-4 text-[13px] leading-relaxed text-navy-note">{RESULT_DISCLAIMER}</p>
 
       {showsScalingCaution(state) && (
         <p className="mt-6 border-l-2 border-gold/70 bg-navy-foreground/[0.05] px-4 py-3 text-[14px] leading-relaxed text-navy-foreground/80">

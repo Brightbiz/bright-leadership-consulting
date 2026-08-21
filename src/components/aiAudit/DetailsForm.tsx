@@ -181,7 +181,7 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
           </span>
         </label>
 
-        <p className="mt-5 text-[13px] leading-relaxed text-navy-foreground/50">
+        <p className="mt-5 text-[13px] leading-relaxed text-navy-note">
           Details submitted here are held only to administer this request and the related
           organisational record, and are retained for 24 months unless you ask us to remove them
           sooner. See our{" "}

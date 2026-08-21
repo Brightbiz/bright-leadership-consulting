@@ -362,7 +362,7 @@ const AiAudit = () => {
           >
             Start the audit
           </button>
-          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-navy-foreground/50">
+          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-navy-note">
             This is decision support based on your responses, not a verified assessment of the whole
             organisation.
           </p>

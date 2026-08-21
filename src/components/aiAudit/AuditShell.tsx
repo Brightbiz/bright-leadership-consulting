@@ -17,7 +17,7 @@ const AuditShell = ({ progress, stepLabel, children }: AuditShellProps) => (
   <div className="min-h-dvh bg-navy text-navy-foreground">
     <header className="mx-auto flex w-full max-w-[760px] items-center justify-between px-5 pt-6">
       <Logo variant="light" isCompact />
-      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy-foreground/60">
+      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy-note">
         AI Leadership Readiness Audit
       </p>
     </header>

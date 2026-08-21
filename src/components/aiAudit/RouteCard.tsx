@@ -58,7 +58,7 @@ const RouteCard = ({
             {action.label}
           </button>
           {action.note && (
-            <p className="mt-1 text-[13px] leading-relaxed text-navy-foreground/55">{action.note}</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-navy-note">{action.note}</p>
           )}
         </div>
       );
@@ -80,7 +80,7 @@ const RouteCard = ({
           {action.label}
         </button>
         {action.note && (
-          <p className="mt-2 text-[13px] leading-relaxed text-navy-foreground/60">{action.note}</p>
+          <p className="mt-2 text-[13px] leading-relaxed text-navy-note">{action.note}</p>
         )}
         {blocked && (
           <p className="mt-2 text-[13px] leading-relaxed text-gold-muted">
@@ -101,7 +101,7 @@ const RouteCard = ({
       <p
         className={cn(
           "font-mono text-[10px] uppercase tracking-[0.14em]",
-          isRecommended ? "text-gold" : "text-navy-foreground/50",
+          isRecommended ? "text-gold" : "text-navy-note",
         )}
       >
         {isRecommended ? "Recommended" : "Alternative"}
@@ -109,14 +109,14 @@ const RouteCard = ({
       <h3 className="mt-2 font-serif text-xl leading-snug">{meta.title}</h3>
 
       {participantNote && (
-        <p className="mt-2 text-[13px] text-navy-foreground/60">
+        <p className="mt-2 text-[13px] text-navy-note">
           Participant number to be confirmed.
         </p>
       )}
 
       <p className="mt-3 text-[14px] leading-relaxed text-navy-foreground/75">{meta.incl}</p>
       {meta.proposed && (
-        <p className="mt-2 text-[13px] italic leading-relaxed text-navy-foreground/55">
+        <p className="mt-2 text-[13px] italic leading-relaxed text-navy-note">
           {meta.proposed}
         </p>
       )}
@@ -127,7 +127,7 @@ const RouteCard = ({
             {price.total}
           </p>
           {price.note && (
-            <p className="mt-1 text-[13px] leading-relaxed text-navy-foreground/55">{price.note}</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-navy-note">{price.note}</p>
           )}
           {price.needsExactQty && (
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -169,7 +169,7 @@ const RouteCard = ({
 
       <a
         href={PROGRAMME_PAGE_URL}
-        className="mt-5 inline-block text-[13px] text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+        className="mt-5 inline-block text-[13px] text-navy-note underline underline-offset-4 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
       >
         View full programme information
       </a>
