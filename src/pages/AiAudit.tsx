@@ -785,8 +785,14 @@ const AiAudit = () => {
           name="description"
           content="An eight-question diagnostic on how your organisation connects AI with leadership judgement, with an immediate readiness result and a recommended route."
         />
-        {/* Unpublished pending review: excluded from search and social discovery. */}
+        {/*
+          Launch configuration: reachable only through the video and campaign
+          URL. Kept out of search, sitemap and site navigation until the journey
+          has been proven in production.
+        */}
         <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={CANONICAL_URL} />
+
       </Helmet>
       <AuditShell progress={PROGRESS[screen]} stepLabel={stepLabel}>
         {renderScreen()}
