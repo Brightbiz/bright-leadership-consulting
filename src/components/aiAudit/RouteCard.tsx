@@ -15,6 +15,8 @@ interface RouteCardProps {
   state: AuditState;
   /** Shown when no participant number has been established. */
   participantNote?: boolean;
+  /** True once the checkout action has been used; blocks a second click. */
+  checkoutStarted?: boolean;
   onExactQtyChange: (value: string) => void;
   onAction: (action: Action, emphasis: "primary" | "secondary" | "tertiary", product: ProductKey) => void;
 }
@@ -31,6 +33,7 @@ const RouteCard = ({
   isRecommended,
   state,
   participantNote,
+  checkoutStarted = false,
   onExactQtyChange,
   onAction,
 }: RouteCardProps) => {
@@ -43,7 +46,8 @@ const RouteCard = ({
     emphasis: "primary" | "secondary" | "tertiary",
     index: number,
   ) => {
-    const blocked = isActionBlocked(action, state);
+    const locked = action.kind === "thinkific" && checkoutStarted;
+    const blocked = isActionBlocked(action, state) || locked;
     const key = `${emphasis}-${action.kind}-${index}`;
 
     if (emphasis === "tertiary") {
@@ -55,7 +59,7 @@ const RouteCard = ({
             onClick={() => onAction(action, emphasis, product)}
             className="min-h-[44px] text-left text-[14px] text-navy-foreground/70 underline underline-offset-4 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy disabled:cursor-not-allowed disabled:opacity-45"
           >
-            {action.label}
+            {locked ? "Opening the programme platform…" : action.label}
           </button>
           {action.note && (
             <p className="mt-1 text-[13px] leading-relaxed text-navy-note">{action.note}</p>
@@ -77,12 +81,17 @@ const RouteCard = ({
               : "border border-navy-foreground/25 text-navy-foreground hover:border-gold",
           )}
         >
-          {action.label}
+          {locked ? "Opening the programme platform…" : action.label}
         </button>
         {action.note && (
           <p className="mt-2 text-[13px] leading-relaxed text-navy-note">{action.note}</p>
         )}
-        {blocked && (
+        {locked && (
+          <p role="status" className="mt-2 text-[13px] leading-relaxed text-navy-note">
+            You are being taken to the programme platform to complete payment and enrolment.
+          </p>
+        )}
+        {blocked && !locked && (
           <p className="mt-2 text-[13px] leading-relaxed text-gold-muted">
             Enter the exact number of participants above to continue.
           </p>
