@@ -284,9 +284,14 @@ const AiAudit = () => {
     setQtyChoice(null);
     setPendingAction(null);
     setResultReported(false);
+    setCheckoutStarted(false);
+    // A retake is a genuinely new audit: new idempotency key, no saved answers.
+    clearProgress();
+    resetAuditSession();
     setScreen("intro");
     window.scrollTo({ top: 0 });
   };
+
 
   const downloadPublicSummary = () => {
     const content = [
