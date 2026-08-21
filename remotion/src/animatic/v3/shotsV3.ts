@@ -233,9 +233,10 @@ export const CAPTIONS_30_V3: CaptionV3[] = [
     to: 30.0,
     programme: ["Strategic Leadership", "in the Age of AI"],
     firm: "Bright Leadership Consulting",
-    cta: "Discuss Executive Alignment",
-    url: "brightleadershipconsulting.com",
-    note: "CPD Standards Office — Provider 50838",
+    cta: "Discuss Organisational Delivery",
+    url: "brightleadershipconsulting.com/strategic-ai-leadership-for-organisations",
+    note: "Accredited by The CPD Standards Office",
+
   },
 ];
 
