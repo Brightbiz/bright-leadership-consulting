@@ -317,8 +317,23 @@ const AiAudit = () => {
 
   const stepLabel = useMemo(() => {
     if (screen === "readiness") return `Readiness question ${readinessIndex + 1} of 8`;
-    if (screen === "result") return "Your readiness result and recommended route";
-    return screen;
+    const labels: Record<Exclude<Screen, "readiness">, string> = {
+      intro: "AI Leadership Readiness Audit",
+      q9: "Objective",
+      q9a: "Related leadership need",
+      q10: "Participants",
+      q11: "Delivery format",
+      q11a: "Tailored delivery reason",
+      q12: "Timing",
+      q13: "Decision role",
+      q14: "Purchasing preference",
+      quantityUnresolved: "Participant estimate",
+      details: "Contact and delivery details",
+      result: "Your readiness result and recommended route",
+      mismatch: "Your readiness result",
+      generalInterest: "Your readiness result",
+    };
+    return labels[screen as Exclude<Screen, "readiness">];
   }, [screen, readinessIndex]);
 
   const renderScreen = () => {
