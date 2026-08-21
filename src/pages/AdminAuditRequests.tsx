@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -75,6 +75,7 @@ const ageLabel = (iso: string) => {
  */
 const AdminAuditRequests = () => {
   const { user, isAdmin, isLoading: authLoading } = useAdminAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const [rows, setRows] = useState<AuditRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -236,6 +237,21 @@ const AdminAuditRequests = () => {
     },
   ];
 
+  /** Deep-link filter used by the outstanding-action indicators. */
+  const filter = searchParams.get("filter") ?? "all";
+  const visibleRows =
+    filter === "needs-action"
+      ? unactioned
+      : filter === "crm-failed"
+        ? failures
+        : rows;
+  const setFilter = (value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (value === "all") next.delete("filter");
+    else next.set("filter", value);
+    setSearchParams(next, { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -295,11 +311,28 @@ const AdminAuditRequests = () => {
           </div>
         )}
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <Button variant="outline" size="sm" onClick={() => void fetchRows()} disabled={loading}>
             <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
           </Button>
-          <span className="text-sm text-muted-foreground">{rows.length} records</span>
+          {(
+            [
+              ["all", `All (${rows.length})`],
+              ["needs-action", `Needs action (${unactioned.length})`],
+              ["crm-failed", `CRM failed (${failures.length})`],
+            ] as const
+          ).map(([value, label]) => (
+            <Button
+              key={value}
+              size="sm"
+              variant={filter === value ? "default" : "outline"}
+              aria-pressed={filter === value}
+              onClick={() => setFilter(value)}
+            >
+              {label}
+            </Button>
+          ))}
+          <span className="text-sm text-muted-foreground">{visibleRows.length} shown</span>
         </div>
 
 
@@ -319,7 +352,7 @@ const AdminAuditRequests = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((r) => (
+              {visibleRows.map((r) => (
                 <TableRow
                   key={r.id}
                   className={r.action_status !== "actioned" ? "bg-destructive/[0.03]" : undefined}
@@ -432,10 +465,10 @@ const AdminAuditRequests = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {!loading && rows.length === 0 && (
+              {!loading && visibleRows.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={9} className="py-10 text-center text-sm text-muted-foreground">
-                    No audit requests recorded yet.
+                    No matching audit requests.
 
                   </TableCell>
                 </TableRow>
