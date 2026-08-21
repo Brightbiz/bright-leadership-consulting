@@ -75,6 +75,7 @@ const ageLabel = (iso: string) => {
  */
 const AdminAuditRequests = () => {
   const { user, isAdmin, isLoading: authLoading } = useAdminAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const [rows, setRows] = useState<AuditRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
