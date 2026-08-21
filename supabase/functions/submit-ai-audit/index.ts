@@ -1,11 +1,10 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import {
-  adminNotification,
   buyerAcknowledgement,
-  crmFailureNotification,
-  deliver,
+  deliverBuyerAcknowledgement,
   type RequestSummary,
 } from "../_shared/auditEmails.ts";
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -240,8 +239,10 @@ Deno.serve(async (req) => {
         .insert({ ip_hash: ipHash, email_hash: emailHash });
     }
 
-    /* ---------------------------------------------------------- emails */
+    /* -------------------------------------------- buyer acknowledgement */
 
+    // Internal operational and CRM-failure notifications are NOT emailed. They
+    // are surfaced in the secured administrative audit-requests view only.
     if (!outcome.replayed && COMMERCIAL.has(requestType)) {
       const summary: RequestSummary = {
         requestId: outcome.request_id,
@@ -254,25 +255,19 @@ Deno.serve(async (req) => {
         organisation,
         jobTitle,
       };
-      const buyer = await deliver(buyerAcknowledgement(summary), "buyer-acknowledgement");
-      const admin = await deliver(adminNotification(summary), "admin-notification");
-      if (outcome.crm_status === "failed") {
-        await deliver(
-          crmFailureNotification(summary, "CRM mirror failed at submission time"),
-          "crm-failure",
-        );
-      }
-      // Email status is recorded for visibility only; a failure here never
-      // deletes or invalidates the underlying request record.
+      const buyer = await deliverBuyerAcknowledgement(buyerAcknowledgement(summary));
+      // Status is recorded for visibility only; suppression, bounce or failure
+      // never deletes or invalidates the underlying request record, and the
+      // buyer's on-screen confirmation is returned regardless.
       await supabase
         .from("ai_audit_requests")
         .update({
           buyer_ack_status: buyer === "pending" ? "pending_approval" : buyer,
-          admin_notice_status: admin === "pending" ? "pending_approval" : admin,
+          admin_notice_status: "admin_view_only",
         })
         .eq("id", outcome.request_id);
-
     }
+
 
     return json({
       ok: true,

@@ -37,6 +37,11 @@ interface AuditRequestRow {
   admin_notice_status: string;
   retain_until: string;
   created_at: string;
+  action_status: "needs_action" | "actioned";
+  actioned_at: string | null;
+  actioned_by_email: string | null;
+  crm_failure_ack_at: string | null;
+  crm_failure_ack_by_email: string | null;
 }
 
 interface SubjectResult {
@@ -51,6 +56,16 @@ const CRM_BADGE: Record<string, string> = {
   failed: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
 
+/** Whole hours, or days once beyond 48 hours. */
+const ageLabel = (iso: string) => {
+  const hours = Math.floor((Date.now() - new Date(iso).getTime()) / 3_600_000);
+  if (hours < 1) return "under 1 hour";
+  if (hours < 48) return `${hours} hour${hours === 1 ? "" : "s"}`;
+  const days = Math.floor(hours / 24);
+  return `${days} days`;
+};
+
+
 /**
  * Administrative view for AI Leadership Readiness Audit requests.
  *
@@ -64,6 +79,8 @@ const AdminAuditRequests = () => {
   const [rows, setRows] = useState<AuditRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [retrying, setRetrying] = useState<string | null>(null);
+  const [updating, setUpdating] = useState<string | null>(null);
+
 
   const [subjectEmail, setSubjectEmail] = useState("");
   const [subjectResult, setSubjectResult] = useState<SubjectResult | null>(null);
@@ -106,6 +123,50 @@ const AdminAuditRequests = () => {
     });
     await fetchRows();
   };
+
+  /** Marks a request as actioned (or reopens it), recording date and operator. */
+  const setActioned = async (id: string, actioned: boolean) => {
+    setUpdating(id);
+    const { error } = await (supabase as any)
+      .from("ai_audit_requests")
+      .update(
+        actioned
+          ? {
+              action_status: "actioned",
+              actioned_at: new Date().toISOString(),
+              actioned_by: user?.id ?? null,
+              actioned_by_email: user?.email ?? null,
+            }
+          : { action_status: "needs_action", actioned_at: null, actioned_by: null, actioned_by_email: null },
+      )
+      .eq("id", id);
+    setUpdating(null);
+    if (error) {
+      toast({ title: "Could not update status", description: error.message, variant: "destructive" });
+      return;
+    }
+    await fetchRows();
+  };
+
+  /** Acknowledges a persistent CRM-mirroring failure without clearing it. */
+  const acknowledgeFailure = async (id: string) => {
+    setUpdating(id);
+    const { error } = await (supabase as any)
+      .from("ai_audit_requests")
+      .update({
+        crm_failure_ack_at: new Date().toISOString(),
+        crm_failure_ack_by_email: user?.email ?? null,
+      })
+      .eq("id", id);
+    setUpdating(null);
+    if (error) {
+      toast({ title: "Could not acknowledge", description: error.message, variant: "destructive" });
+      return;
+    }
+    await fetchRows();
+  };
+
+
 
   const runSubjectRequest = async (action: "preview" | "export" | "delete") => {
     if (!subjectEmail.includes("@")) {
@@ -151,6 +212,29 @@ const AdminAuditRequests = () => {
   if (!isAdmin) return <Navigate to="/" replace />;
 
   const failures = rows.filter((r) => r.crm_status === "failed");
+  const unactioned = rows.filter((r) => r.action_status !== "actioned");
+  const oldest = unactioned.reduce<string | null>(
+    (acc, r) => (!acc || new Date(r.created_at) < new Date(acc) ? r.created_at : acc),
+    null,
+  );
+  const crmPending = rows.filter((r) => r.crm_status === "pending").length;
+  const crmCompleted = rows.filter((r) => r.crm_status === "completed").length;
+
+  const stats: { label: string; value: string; tone?: "alert" }[] = [
+    {
+      label: "Unactioned requests",
+      value: String(unactioned.length),
+      ...(unactioned.length > 0 ? { tone: "alert" as const } : {}),
+    },
+    { label: "Oldest unactioned", value: oldest ? ageLabel(oldest) : "—" },
+    { label: "CRM pending", value: String(crmPending) },
+    { label: "CRM completed", value: String(crmCompleted) },
+    {
+      label: "CRM failed",
+      value: String(failures.length),
+      ...(failures.length > 0 ? { tone: "alert" as const } : {}),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -165,17 +249,48 @@ const AdminAuditRequests = () => {
 
         <h1 className="font-serif text-3xl">AI audit requests</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Invoice, purchase-order, decision-pack and scoping requests recorded from the AI Leadership
-          Readiness Audit, with CRM mirroring status and the restricted subject-request function.
+          This view is the authoritative operational channel for invoice, purchase-order,
+          decision-pack and scoping requests recorded from the AI Leadership Readiness Audit. No
+          internal operational or CRM-failure emails are sent; all outstanding work is tracked here.
         </p>
 
-        {failures.length > 0 && (
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-5">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className={`rounded-md border p-4 ${
+                s.tone === "alert" ? "border-destructive/50 bg-destructive/5" : ""
+              }`}
+            >
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{s.label}</p>
+              <p
+                className={`mt-1 font-serif text-2xl ${s.tone === "alert" ? "text-destructive" : ""}`}
+              >
+                {s.value}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {unactioned.length > 0 && (
           <div className="mt-6 flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4">
+            <AlertTriangle className="mt-0.5 h-5 w-5 text-destructive" />
+            <p className="text-sm">
+              <strong>Needs action:</strong> {unactioned.length} request
+              {unactioned.length === 1 ? "" : "s"} awaiting a response
+              {oldest ? `, the oldest recorded ${ageLabel(oldest)} ago` : ""}. Mark each record
+              actioned once the buyer has been responded to.
+            </p>
+          </div>
+        )}
+
+        {failures.length > 0 && (
+          <div className="mt-4 flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4">
             <AlertTriangle className="mt-0.5 h-5 w-5 text-destructive" />
             <p className="text-sm">
               {failures.length} request{failures.length === 1 ? "" : "s"} could not be mirrored into
               the CRM. The request records themselves are intact — use Retry below once the cause is
-              resolved.
+              resolved. The failure state persists until mirroring completes.
             </p>
           </div>
         )}
@@ -187,6 +302,7 @@ const AdminAuditRequests = () => {
           <span className="text-sm text-muted-foreground">{rows.length} records</span>
         </div>
 
+
         <div className="mt-4 overflow-x-auto rounded-md border">
           <Table>
             <TableHeader>
@@ -195,15 +311,19 @@ const AdminAuditRequests = () => {
                 <TableHead>Contact</TableHead>
                 <TableHead>Request</TableHead>
                 <TableHead>Qty</TableHead>
+                <TableHead>Action status</TableHead>
                 <TableHead>CRM mirror</TableHead>
-                <TableHead>Emails</TableHead>
+                <TableHead>Buyer email</TableHead>
                 <TableHead>Retain until</TableHead>
                 <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.map((r) => (
-                <TableRow key={r.id}>
+                <TableRow
+                  key={r.id}
+                  className={r.action_status !== "actioned" ? "bg-destructive/[0.03]" : undefined}
+                >
                   <TableCell className="whitespace-nowrap text-xs">
                     {format(new Date(r.created_at), "dd MMM yyyy HH:mm")}
                     {r.flagged_duplicate && (
@@ -223,6 +343,28 @@ const AdminAuditRequests = () => {
                   </TableCell>
                   <TableCell className="text-xs">{r.participant_quantity ?? "—"}</TableCell>
                   <TableCell className="text-xs">
+                    {r.action_status === "actioned" ? (
+                      <>
+                        <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                          actioned
+                        </Badge>
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          {r.actioned_at ? format(new Date(r.actioned_at), "dd MMM yyyy HH:mm") : "—"}
+                        </span>
+                        <span className="block text-[11px] text-muted-foreground">
+                          {r.actioned_by_email ?? "unrecorded operator"}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Badge variant="destructive">needs action</Badge>
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          waiting {ageLabel(r.created_at)}
+                        </span>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-xs">
                     <Badge className={CRM_BADGE[r.crm_status]}>{r.crm_status}</Badge>
                     {r.crm_error && (
                       <span className="mt-1 block max-w-[220px] text-[11px] text-destructive">
@@ -232,36 +374,69 @@ const AdminAuditRequests = () => {
                     <span className="mt-1 block text-[11px] text-muted-foreground">
                       {r.crm_attempts} attempt{r.crm_attempts === 1 ? "" : "s"}
                     </span>
+                    {r.crm_status === "failed" &&
+                      (r.crm_failure_ack_at ? (
+                        <span className="mt-1 block text-[11px] text-muted-foreground">
+                          acknowledged {format(new Date(r.crm_failure_ack_at), "dd MMM yyyy HH:mm")} by{" "}
+                          {r.crm_failure_ack_by_email ?? "unrecorded operator"}
+                        </span>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="mt-1 h-6 px-2 text-[11px]"
+                          disabled={updating === r.id}
+                          onClick={() => void acknowledgeFailure(r.id)}
+                        >
+                          Acknowledge
+                        </Button>
+                      ))}
                   </TableCell>
                   <TableCell className="text-[11px] text-muted-foreground">
-                    <span className="block">buyer: {r.buyer_ack_status}</span>
-                    <span className="block">admin: {r.admin_notice_status}</span>
+                    {r.buyer_ack_status}
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-xs">
                     {format(new Date(r.retain_until), "dd MMM yyyy")}
                   </TableCell>
                   <TableCell>
-                    {r.crm_status !== "completed" && (
+                    <div className="flex flex-col gap-2">
+                      {r.crm_status !== "completed" && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={retrying === r.id}
+                          onClick={() => void retryMirror(r.id)}
+                        >
+                          {retrying === r.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            "Retry"
+                          )}
+                        </Button>
+                      )}
                       <Button
                         size="sm"
-                        variant="outline"
-                        disabled={retrying === r.id}
-                        onClick={() => void retryMirror(r.id)}
+                        variant={r.action_status === "actioned" ? "ghost" : "default"}
+                        disabled={updating === r.id}
+                        onClick={() => void setActioned(r.id, r.action_status !== "actioned")}
                       >
-                        {retrying === r.id ? (
+                        {updating === r.id ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : r.action_status === "actioned" ? (
+                          "Reopen"
                         ) : (
-                          "Retry"
+                          "Mark actioned"
                         )}
                       </Button>
-                    )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
               {!loading && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={8} className="py-10 text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={9} className="py-10 text-center text-sm text-muted-foreground">
                     No audit requests recorded yet.
+
                   </TableCell>
                 </TableRow>
               )}

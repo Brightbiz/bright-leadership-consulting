@@ -3,6 +3,8 @@ import { Navigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import OutstandingActionsBanner from "@/components/admin/OutstandingActionsBanner";
+
 import { format, isAfter, startOfDay, addDays } from "date-fns";
 import {
   Users, RefreshCw, LogOut, Loader2, Search, Plus, Download, Upload,
@@ -353,7 +355,9 @@ const AdminCRM = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="container-narrow py-8 pt-28 flex-1">
+        <OutstandingActionsBanner />
         {/* Page Header */}
+
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Button asChild variant="ghost" size="sm">

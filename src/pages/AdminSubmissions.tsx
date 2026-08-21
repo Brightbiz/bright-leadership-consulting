@@ -27,6 +27,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import OutstandingActionsBanner from "@/components/admin/OutstandingActionsBanner";
+
 
 interface ContactSubmission {
   id: string;
@@ -261,7 +263,9 @@ const AdminSubmissions = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="container-narrow py-8 pt-28 flex-1">
+        <OutstandingActionsBanner />
         {/* Page Header */}
+
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="font-serif text-3xl font-semibold text-foreground">Admin Dashboard</h1>

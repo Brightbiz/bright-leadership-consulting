@@ -17,12 +17,18 @@ export type Database = {
       ai_audit_requests: {
         Row: {
           action_label: string
+          action_status: string
+          actioned_at: string | null
+          actioned_by: string | null
+          actioned_by_email: string | null
           admin_notice_status: string
           buyer_ack_status: string
           created_at: string
           crm_attempts: number
           crm_contact_id: string | null
           crm_error: string | null
+          crm_failure_ack_at: string | null
+          crm_failure_ack_by_email: string | null
           crm_last_attempt_at: string | null
           crm_status: string
           duplicate_count: number
@@ -44,12 +50,18 @@ export type Database = {
         }
         Insert: {
           action_label?: string
+          action_status?: string
+          actioned_at?: string | null
+          actioned_by?: string | null
+          actioned_by_email?: string | null
           admin_notice_status?: string
           buyer_ack_status?: string
           created_at?: string
           crm_attempts?: number
           crm_contact_id?: string | null
           crm_error?: string | null
+          crm_failure_ack_at?: string | null
+          crm_failure_ack_by_email?: string | null
           crm_last_attempt_at?: string | null
           crm_status?: string
           duplicate_count?: number
@@ -71,12 +83,18 @@ export type Database = {
         }
         Update: {
           action_label?: string
+          action_status?: string
+          actioned_at?: string | null
+          actioned_by?: string | null
+          actioned_by_email?: string | null
           admin_notice_status?: string
           buyer_ack_status?: string
           created_at?: string
           crm_attempts?: number
           crm_contact_id?: string | null
           crm_error?: string | null
+          crm_failure_ack_at?: string | null
+          crm_failure_ack_by_email?: string | null
           crm_last_attempt_at?: string | null
           crm_status?: string
           duplicate_count?: number

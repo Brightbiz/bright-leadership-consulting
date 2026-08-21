@@ -1,33 +1,39 @@
 /**
- * AI Leadership Readiness Audit — approved email copy (21 Aug 2026).
+ * AI Leadership Readiness Audit — buyer acknowledgement email (approved copy).
  *
- * Wording approved; sending remains suppressed while `EMAILS_ENABLED` is false.
+ * Architecture (Option C, approved 21 Aug 2026):
+ *  - Buyer acknowledgement: app email, gated by `BUYER_ACK_EMAILS_ENABLED`.
+ *  - Internal operational notification: administrative view only. Not sendable.
+ *  - CRM-mirroring failure notification: administrative view only. Not sendable.
+ *
+ * The internal wording is retained in `docs/ai-audit-internal-notification-wording.md`
+ * for reference only; it is deliberately absent from this module so the buyer
+ * flag cannot activate an internal send.
  *
  * Safeguards applied here:
  *  - Every interpolated value is HTML-escaped before insertion into the HTML part.
  *  - Every message carries a plain-text part as well as an HTML part.
  *  - Each message carries an idempotency key so a trigger sends at most once.
  *  - Delivery status is reported as "pending" | "sent" | "failed" for recording.
- *  - CRM failure notices carry a sanitised failure category only: never raw
- *    server errors, credentials, tokens, database details or stack traces.
  *  - No audit answers, dimension scores, band or classification in any email.
- *  - Marketing consent has no bearing on these messages; they are transactional
- *    and operational only.
+ *  - Marketing consent has no bearing on this message; it is transactional.
+ *  - The buyer's on-screen confirmation is produced independently of delivery.
  *  - In test mode messages go only to the authorised test address and are
  *    clearly marked as tests.
  */
 
-export const EMAILS_ENABLED = false;
+/** Narrowly scoped: governs the buyer acknowledgement and nothing else. */
+export const BUYER_ACK_EMAILS_ENABLED = false;
 
 export const SENDER_NAME = "Bright Leadership Consulting";
 export const SENDER_ADDRESS = "notifications@brightleadershipconsulting.com";
 export const REPLY_TO = "enquiries@brightleadershipconsulting.com";
-export const ADMIN_RECIPIENT = "enquiries@brightleadershipconsulting.com";
 
 /** Authorised test address; test sends go nowhere else. */
 export const TEST_RECIPIENT = "enquiries@brightleadershipconsulting.com";
 
 export type DeliveryStatus = "pending" | "sent" | "failed";
+
 
 export interface RequestSummary {
   requestId: string;
@@ -147,92 +153,19 @@ export function buyerAcknowledgement(r: RequestSummary): EmailMessage {
   };
 }
 
-/* ------------------------------------------ 2. internal operational notice */
-
-/** Trigger: the same recorded commercial request, once per record reference. */
-export function adminNotification(r: RequestSummary): EmailMessage {
-  const fields: Field[] = [
-    ["Request type", r.requestType],
-    ["Action", r.actionLabel],
-    ["Programme", r.product],
-  ];
-  const places = placesLine(r.quantity);
-  if (places) fields.push(["Quantity", places.replace(/^Quantity: /, "")]);
-  fields.push(
-    ["Contact", r.name],
-    ["Job title", r.jobTitle],
-    ["Organisation", r.organisation],
-    ["Email", r.email],
-    ["Record reference", r.requestId],
-  );
-
-  const lead = "A commercial request from the AI Leadership Readiness Audit has been recorded.";
-  const closing = [
-    "No payment has been taken.",
-    "Open the administrative audit-requests view to review and action the request.",
-  ];
-
-  return {
-    to: ADMIN_RECIPIENT,
-    // No organisation or buyer name in the subject line.
-    subject: `Action required — ${r.requestType} — ${r.requestId}`,
-    idempotencyKey: `admin-notice:${r.requestId}`,
-    text: [lead, "", textBlock(fields), "", ...closing].join("\n"),
-    html: wrap(
-      [
-        htmlParas([escapeHtml(lead)]),
-        htmlBlock(fields),
-        '<div style="height:16px"></div>',
-        htmlParas(closing.map(escapeHtml)),
-      ].join("\n"),
-    ),
-  };
-}
-
-/* ------------------------------------------- 3. CRM mirroring failure notice */
-
-/** Trigger: CRM mirroring still unsuccessful after the automatic retry process. */
-export function crmFailureNotification(r: RequestSummary, error: unknown): EmailMessage {
-  const fields: Field[] = [
-    ["Record reference", r.requestId],
-    ["Request type", r.requestType],
-    ["Organisation", r.organisation],
-    ["Failure category", failureCategory(error)],
-  ];
-
-  const lead =
-    "A recorded audit request could not be mirrored into the CRM after the automatic retry process.";
-  const closing =
-    "The underlying request record remains available. Use the retry control in the administrative audit-requests view after the cause has been resolved.";
-
-  return {
-    to: ADMIN_RECIPIENT,
-    subject: `CRM mirroring failed — request ${r.requestId}`,
-    idempotencyKey: `crm-failure:${r.requestId}`,
-    text: [lead, "", textBlock(fields), "", closing].join("\n"),
-    html: wrap(
-      [
-        htmlParas([escapeHtml(lead)]),
-        htmlBlock(fields),
-        '<div style="height:16px"></div>',
-        htmlParas([escapeHtml(closing)]),
-      ].join("\n"),
-    ),
-  };
-}
-
 /* ------------------------------------------------------------------ delivery */
 
 const attempted = new Set<string>();
 
 /**
- * Delivery gate. While `EMAILS_ENABLED` is false nothing is sent and the intent
- * is recorded in the function logs so wording and volume can be verified.
- * A failed send never invalidates the underlying request record.
+ * Delivery gate for the buyer acknowledgement only. While
+ * `BUYER_ACK_EMAILS_ENABLED` is false nothing is sent and the intent is
+ * recorded in the function logs so wording and volume can be verified.
+ * A suppressed, bounced or failed send never invalidates the underlying
+ * request record and never affects the buyer's on-screen confirmation.
  */
-export async function deliver(
+export async function deliverBuyerAcknowledgement(
   message: EmailMessage,
-  kind: string,
   options: { test?: boolean } = {},
 ): Promise<DeliveryStatus> {
   if (attempted.has(message.idempotencyKey)) return "pending";
@@ -241,9 +174,9 @@ export async function deliver(
   const target = options.test ? TEST_RECIPIENT : message.to;
   const subject = options.test ? `[TEST — do not action] ${message.subject}` : message.subject;
 
-  if (!EMAILS_ENABLED) {
+  if (!BUYER_ACK_EMAILS_ENABLED) {
     console.log(
-      `[email:suppressed:${kind}] to=${target} key=${message.idempotencyKey} subject="${subject}"`,
+      `[email:suppressed:buyer-acknowledgement] to=${target} key=${message.idempotencyKey} subject="${subject}"`,
     );
     return "pending";
   }
@@ -252,7 +185,8 @@ export async function deliver(
     // Activated only after sender authentication (SPF/DKIM/DMARC) is verified.
     return "sent";
   } catch (error) {
-    console.error(`[email:failed:${kind}]`, failureCategory(error));
+    console.error("[email:failed:buyer-acknowledgement]", failureCategory(error));
     return "failed";
   }
 }
+
