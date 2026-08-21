@@ -100,9 +100,27 @@ const OutstandingActionsBanner = () => {
           )}
         </div>
       </div>
-      <Button asChild size="sm" variant={clear ? "outline" : "default"}>
-        <Link to="/admin/audit-requests">Open audit requests</Link>
-      </Button>
+      <div className="flex flex-wrap gap-2">
+        {summary.unactioned > 0 && (
+          <Button asChild size="sm">
+            <Link to="/admin/audit-requests?filter=needs-action">
+              Open {summary.unactioned} needing action
+            </Link>
+          </Button>
+        )}
+        {summary.crmFailed > 0 && (
+          <Button asChild size="sm" variant="outline">
+            <Link to="/admin/audit-requests?filter=crm-failed">
+              Open {summary.crmFailed} CRM failure{summary.crmFailed === 1 ? "" : "s"}
+            </Link>
+          </Button>
+        )}
+        {clear && (
+          <Button asChild size="sm" variant="outline">
+            <Link to="/admin/audit-requests">Open audit requests</Link>
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
