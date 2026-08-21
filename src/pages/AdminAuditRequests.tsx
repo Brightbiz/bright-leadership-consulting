@@ -37,6 +37,11 @@ interface AuditRequestRow {
   admin_notice_status: string;
   retain_until: string;
   created_at: string;
+  action_status: "needs_action" | "actioned";
+  actioned_at: string | null;
+  actioned_by_email: string | null;
+  crm_failure_ack_at: string | null;
+  crm_failure_ack_by_email: string | null;
 }
 
 interface SubjectResult {
@@ -50,6 +55,16 @@ const CRM_BADGE: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
   failed: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
+
+/** Whole hours, or days once beyond 48 hours. */
+const ageLabel = (iso: string) => {
+  const hours = Math.floor((Date.now() - new Date(iso).getTime()) / 3_600_000);
+  if (hours < 1) return "under 1 hour";
+  if (hours < 48) return `${hours} hour${hours === 1 ? "" : "s"}`;
+  const days = Math.floor(hours / 24);
+  return `${days} days`;
+};
+
 
 /**
  * Administrative view for AI Leadership Readiness Audit requests.
