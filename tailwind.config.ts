@@ -68,7 +68,9 @@ export default {
         navy: {
           DEFAULT: "hsl(var(--navy))",
           foreground: "hsl(var(--navy-foreground))",
+          note: "hsl(var(--navy-note))",
         },
+
         gold: {
           DEFAULT: "hsl(var(--gold))",
           muted: "hsl(var(--gold-muted))",
