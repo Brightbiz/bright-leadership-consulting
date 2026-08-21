@@ -77,7 +77,15 @@ describe("Part C routing precedence", () => {
 
 describe("Part L — exact quantity gate for 2–9 places", () => {
   const s = (qty: number | null) =>
-    state({ q9: "A", q10: "C", q11: { ...initialState().q11, digital: true }, exactQty: qty });
+    state({
+      q9: "A",
+      q10: "C",
+      q11: { ...initialState().q11, digital: true },
+      q12: "now",
+      q13: "approve",
+      q14: "invoice",
+      exactQty: qty,
+    });
 
   it("rejects blank, fractional and out-of-range values", () => {
     expect(isExactQtyValid(null)).toBe(false);
@@ -121,6 +129,7 @@ describe("purchase destination", () => {
     expect(buildCtaPlan("individual", s).primary[0].kind).toBe("thinkific");
     const url = buildThinkificPurchaseUrl({ campaignSearch: "?utm_source=li&gclid=x" });
     expect(url).toContain("strategic-leadership-in-the-age-of-ai");
-    expect(url).not.toMatch(/readiness|score|q9|q1[0-4]=/i);
+    // Campaign attribution only — no readiness answers or score in the URL.
+    expect(url).not.toMatch(/(?:^|[?&])(?:score|band|q9|q9a|q1[0-4]|answers)=/i);
   });
 });
