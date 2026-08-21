@@ -749,6 +749,7 @@ const AiAudit = () => {
             product={recommendedProduct}
             isRecommended
             state={state}
+            checkoutStarted={checkoutStarted}
             participantNote={
               state.stillUncertain ||
               ((recommendedProduct === "facilitated" || recommendedProduct === "tailored") &&
@@ -762,10 +763,12 @@ const AiAudit = () => {
               product={alternative}
               isRecommended={false}
               state={state}
+              checkoutStarted={checkoutStarted}
               onExactQtyChange={onExactQtyChange}
               onAction={onAction}
             />
           )}
+
         </div>
         <button type="button" className={`${secondaryBtn} mt-10`} onClick={restart}>
           Retake the audit
