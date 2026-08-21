@@ -17,46 +17,82 @@ export type Database = {
       ai_audit_requests: {
         Row: {
           action_label: string
+          admin_notice_status: string
+          buyer_ack_status: string
           created_at: string
+          crm_attempts: number
+          crm_contact_id: string | null
+          crm_error: string | null
+          crm_last_attempt_at: string | null
+          crm_status: string
+          duplicate_count: number
           email: string
+          flagged_duplicate: boolean
           id: string
+          idempotency_key: string | null
           job_title: string | null
+          last_submitted_at: string
           name: string | null
           organisation: string | null
           participant_quantity: number | null
           product: string
           request_type: string
           response_id: string | null
+          retain_until: string
           status: string
           updated_at: string
         }
         Insert: {
           action_label?: string
+          admin_notice_status?: string
+          buyer_ack_status?: string
           created_at?: string
+          crm_attempts?: number
+          crm_contact_id?: string | null
+          crm_error?: string | null
+          crm_last_attempt_at?: string | null
+          crm_status?: string
+          duplicate_count?: number
           email: string
+          flagged_duplicate?: boolean
           id?: string
+          idempotency_key?: string | null
           job_title?: string | null
+          last_submitted_at?: string
           name?: string | null
           organisation?: string | null
           participant_quantity?: number | null
           product?: string
           request_type: string
           response_id?: string | null
+          retain_until?: string
           status?: string
           updated_at?: string
         }
         Update: {
           action_label?: string
+          admin_notice_status?: string
+          buyer_ack_status?: string
           created_at?: string
+          crm_attempts?: number
+          crm_contact_id?: string | null
+          crm_error?: string | null
+          crm_last_attempt_at?: string | null
+          crm_status?: string
+          duplicate_count?: number
           email?: string
+          flagged_duplicate?: boolean
           id?: string
+          idempotency_key?: string | null
           job_title?: string | null
+          last_submitted_at?: string
           name?: string | null
           organisation?: string | null
           participant_quantity?: number | null
           product?: string
           request_type?: string
           response_id?: string | null
+          retain_until?: string
           status?: string
           updated_at?: string
         }
@@ -76,10 +112,12 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          idempotency_key: string | null
           job_title: string | null
           marketing_consent: boolean
           name: string | null
           organisation: string | null
+          purge_after: string
           readiness_band: string
           readiness_score: number
           routing: Json
@@ -89,10 +127,12 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
+          idempotency_key?: string | null
           job_title?: string | null
           marketing_consent?: boolean
           name?: string | null
           organisation?: string | null
+          purge_after?: string
           readiness_band?: string
           readiness_score: number
           routing?: Json
@@ -102,10 +142,12 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+          idempotency_key?: string | null
           job_title?: string | null
           marketing_consent?: boolean
           name?: string | null
           organisation?: string | null
+          purge_after?: string
           readiness_band?: string
           readiness_score?: number
           routing?: Json
@@ -148,6 +190,27 @@ export type Database = {
           percentage?: number
           total_score?: number
           user_id?: string
+        }
+        Relationships: []
+      }
+      audit_submission_events: {
+        Row: {
+          created_at: string
+          email_hash: string
+          id: string
+          ip_hash: string
+        }
+        Insert: {
+          created_at?: string
+          email_hash: string
+          id?: string
+          ip_hash: string
+        }
+        Update: {
+          created_at?: string
+          email_hash?: string
+          id?: string
+          ip_hash?: string
         }
         Relationships: []
       }
@@ -271,6 +334,33 @@ export type Database = {
           status?: string
           tags?: string[]
           updated_at?: string
+        }
+        Relationships: []
+      }
+      data_subject_request_log: {
+        Row: {
+          action: string
+          affected: Json
+          created_at: string
+          email_hash: string
+          id: string
+          operator_id: string | null
+        }
+        Insert: {
+          action: string
+          affected?: Json
+          created_at?: string
+          email_hash: string
+          id?: string
+          operator_id?: string | null
+        }
+        Update: {
+          action?: string
+          affected?: Json
+          created_at?: string
+          email_hash?: string
+          id?: string
+          operator_id?: string | null
         }
         Relationships: []
       }
@@ -565,6 +655,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_audit_subject_request: {
+        Args: { _action: string; _email: string }
+        Returns: Json
+      }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       has_role: {
         Args: {
@@ -572,6 +666,31 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      purge_expired_ai_audit_data: { Args: never; Returns: Json }
+      record_ai_audit_submission: {
+        Args: {
+          _action_label: string
+          _classification: string
+          _crm_note: string
+          _email: string
+          _idempotency_key: string
+          _job_title: string
+          _marketing_consent: boolean
+          _name: string
+          _organisation: string
+          _participant_quantity: number
+          _product: string
+          _readiness_band: string
+          _readiness_score: number
+          _request_type: string
+          _routing: Json
+        }
+        Returns: Json
+      }
+      retry_ai_audit_crm_mirror: {
+        Args: { _request_id: string }
+        Returns: Json
       }
       sync_existing_leads_to_crm: { Args: never; Returns: number }
     }

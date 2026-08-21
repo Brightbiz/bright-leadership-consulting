@@ -45,11 +45,16 @@ const sections = [
   {
     heading: "Retention and deletion",
     body: [
-      "Enquiry records are retained for up to 24 months from last contact unless an engagement follows.",
-      "Individual diagnostic response data is deleted within 90 days of report delivery unless the commissioning party requests retention for comparative re-measurement.",
+      "Two distinct rules apply to the AI Leadership Readiness Audit, and they are not the same period.",
+      "Audit answers, the readiness score, band and dimension scores, the buyer classification and the recommendation are held for 90 days from completion, and are then deleted.",
+      "Where you ask us to raise an invoice or purchase order, or to provide a decision pack or scoping discussion, that request record and the associated organisational contact are held for 24 months from our last meaningful contact, unless a longer period is legally required following a transaction or contract.",
+      "Enquiry records from other forms are retained for up to 24 months from last contact unless an engagement follows.",
+      "Individual diagnostic response data from commissioned instruments is deleted within 90 days of report delivery unless the commissioning party requests retention for comparative re-measurement.",
       "Engagement records required for legal or accounting purposes are retained for the statutory period.",
+      "Records held on our learning platform, including course accounts, payments and progress, are governed by that platform's own retention arrangements and are handled through a separate process.",
     ],
   },
+
   {
     heading: "Confidentiality and sharing",
     body: [

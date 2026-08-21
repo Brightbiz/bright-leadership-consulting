@@ -48,6 +48,17 @@ import {
   trackAuditStart,
   trackAuditStepView,
 } from "@/lib/aiAuditAnalytics";
+import {
+  clearProgress,
+  loadProgress,
+  resetAuditSession,
+  saveProgress,
+  syncTestMode,
+} from "@/lib/auditSession";
+
+/** Canonical public address for the audit. */
+const CANONICAL_URL = "https://brightleadershipconsulting.com/ai-audit";
+
 
 type Screen =
   | "intro"
@@ -102,6 +113,34 @@ const AiAudit = () => {
     null,
   );
   const [resultReported, setResultReported] = useState(false);
+  /** Set on the first checkout click so the action cannot fire twice. */
+  const [checkoutStarted, setCheckoutStarted] = useState(false);
+  const [progressRestored, setProgressRestored] = useState(false);
+
+  /* --------------------------------------------- test indicator + progress */
+
+  useEffect(() => {
+    syncTestMode(search);
+  }, [search]);
+
+  // Unfinished answers are preserved for this browser session only. Contact
+  // details are never written to storage.
+  useEffect(() => {
+    const saved = loadProgress();
+    if (saved && saved.screen !== "intro" && saved.screen !== "details") {
+      setState(saved.state as AuditState);
+      setScreen(saved.screen as Screen);
+      setReadinessIndex(saved.readinessIndex);
+    }
+    setProgressRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (!progressRestored) return;
+    if (screen === "intro" || screen === "details") return;
+    saveProgress({ screen, readinessIndex, state });
+  }, [progressRestored, screen, readinessIndex, state]);
+
 
   const route = useMemo(() => computeRoute(state), [state]);
   const classification = useMemo(() => classify(state), [state]);
@@ -245,9 +284,14 @@ const AiAudit = () => {
     setQtyChoice(null);
     setPendingAction(null);
     setResultReported(false);
+    setCheckoutStarted(false);
+    // A retake is a genuinely new audit: new idempotency key, no saved answers.
+    clearProgress();
+    resetAuditSession();
     setScreen("intro");
     window.scrollTo({ top: 0 });
   };
+
 
   const downloadPublicSummary = () => {
     const content = [
@@ -282,6 +326,9 @@ const AiAudit = () => {
     emphasis: "primary" | "secondary" | "tertiary",
     product: ProductKey,
   ) => {
+    // The checkout action is single-use; a second click is ignored entirely.
+    if (action.kind === "thinkific" && checkoutStarted) return;
+
     trackAuditActionClick({
       action: action.kind,
       label: action.label,
@@ -292,11 +339,13 @@ const AiAudit = () => {
     });
 
     if (action.kind === "thinkific") {
+      setCheckoutStarted(true);
       const destination = buildThinkificPurchaseUrl({ campaignSearch: search });
       trackAuditOutboundPurchase(destination);
       window.setTimeout(() => window.location.assign(destination), 120);
       return;
     }
+
 
     if (action.kind === "info" && classification === "Not currently qualified") {
       downloadPublicSummary();
@@ -362,7 +411,7 @@ const AiAudit = () => {
           >
             Start the audit
           </button>
-          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-navy-foreground/50">
+          <p className="mt-5 max-w-[560px] text-[13px] leading-relaxed text-navy-note">
             This is decision support based on your responses, not a verified assessment of the whole
             organisation.
           </p>
@@ -700,6 +749,7 @@ const AiAudit = () => {
             product={recommendedProduct}
             isRecommended
             state={state}
+            checkoutStarted={checkoutStarted}
             participantNote={
               state.stillUncertain ||
               ((recommendedProduct === "facilitated" || recommendedProduct === "tailored") &&
@@ -713,10 +763,12 @@ const AiAudit = () => {
               product={alternative}
               isRecommended={false}
               state={state}
+              checkoutStarted={checkoutStarted}
               onExactQtyChange={onExactQtyChange}
               onAction={onAction}
             />
           )}
+
         </div>
         <button type="button" className={`${secondaryBtn} mt-10`} onClick={restart}>
           Retake the audit
@@ -733,8 +785,14 @@ const AiAudit = () => {
           name="description"
           content="An eight-question diagnostic on how your organisation connects AI with leadership judgement, with an immediate readiness result and a recommended route."
         />
-        {/* Unpublished pending review: excluded from search and social discovery. */}
+        {/*
+          Launch configuration: reachable only through the video and campaign
+          URL. Kept out of search, sitemap and site navigation until the journey
+          has been proven in production.
+        */}
         <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={CANONICAL_URL} />
+
       </Helmet>
       <AuditShell progress={PROGRESS[screen]} stepLabel={stepLabel}>
         {renderScreen()}
