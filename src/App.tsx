@@ -33,6 +33,7 @@ const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity")
 
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
+const AiAudit = lazy(() => import("./pages/AiAudit"));
 
 // Legal
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -85,6 +86,8 @@ const AnimatedRoutes = () => {
 
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
+          {/* Unpublished pending review — noindex, not linked from navigation. */}
+          <Route path="/ai-audit" element={<PageTransition><AiAudit /></PageTransition>} />
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
 

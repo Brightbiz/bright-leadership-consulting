@@ -118,7 +118,13 @@ for (const file of sourceFiles) {
     const line = src.split("\n").findIndex((l) => re.test(l));
     if (line >= 0) failures.push(`${file}:${line + 1} — ${why}.`);
   }
-  if (/thinkific\.com\/(?:products\/)?courses\//i.test(src) && file !== "src/data/programmes.ts") {
+  const THINKIFIC_LINK_ALLOWLIST = new Set([
+    "src/data/programmes.ts",
+    // The AI Leadership Readiness Audit sends a self-purchasing buyer straight
+    // to the one verified programme-platform checkout, by explicit approval.
+    "src/data/aiAudit/thinkific.ts",
+  ]);
+  if (/thinkific\.com\/(?:products\/)?courses\//i.test(src) && !THINKIFIC_LINK_ALLOWLIST.has(file)) {
     failures.push(`${file} — direct Thinkific course link in app source.`);
   }
 }
