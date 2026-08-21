@@ -79,6 +79,8 @@ const AdminAuditRequests = () => {
   const [rows, setRows] = useState<AuditRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [retrying, setRetrying] = useState<string | null>(null);
+  const [updating, setUpdating] = useState<string | null>(null);
+
 
   const [subjectEmail, setSubjectEmail] = useState("");
   const [subjectResult, setSubjectResult] = useState<SubjectResult | null>(null);
