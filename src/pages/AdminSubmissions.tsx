@@ -27,6 +27,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import OutstandingActionsBanner from "@/components/admin/OutstandingActionsBanner";
+
 
 interface ContactSubmission {
   id: string;
