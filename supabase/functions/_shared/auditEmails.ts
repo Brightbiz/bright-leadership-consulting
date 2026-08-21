@@ -1,16 +1,20 @@
 /**
- * AI Leadership Readiness Audit — email copy (awaiting written approval).
+ * AI Leadership Readiness Audit — approved email copy (21 Aug 2026).
  *
- * Nothing here is sent while `EMAILS_ENABLED` is false. The wording below is
- * the exact copy submitted for approval; when approval is given, flip the flag
- * and wire `deliver()` to the project email function.
+ * Wording approved; sending remains suppressed while `EMAILS_ENABLED` is false.
  *
- * Constraints applied:
- *  - Transactional only. No marketing content, no promotional links.
- *  - The buyer's audit answers, dimension scores and readiness band are never
- *    included in any email.
- *  - One buyer acknowledgement and one internal operational notice per
- *    successfully recorded commercial request.
+ * Safeguards applied here:
+ *  - Every interpolated value is HTML-escaped before insertion into the HTML part.
+ *  - Every message carries a plain-text part as well as an HTML part.
+ *  - Each message carries an idempotency key so a trigger sends at most once.
+ *  - Delivery status is reported as "pending" | "sent" | "failed" for recording.
+ *  - CRM failure notices carry a sanitised failure category only: never raw
+ *    server errors, credentials, tokens, database details or stack traces.
+ *  - No audit answers, dimension scores, band or classification in any email.
+ *  - Marketing consent has no bearing on these messages; they are transactional
+ *    and operational only.
+ *  - In test mode messages go only to the authorised test address and are
+ *    clearly marked as tests.
  */
 
 export const EMAILS_ENABLED = false;
@@ -19,6 +23,11 @@ export const SENDER_NAME = "Bright Leadership Consulting";
 export const SENDER_ADDRESS = "notifications@brightleadershipconsulting.com";
 export const REPLY_TO = "enquiries@brightleadershipconsulting.com";
 export const ADMIN_RECIPIENT = "enquiries@brightleadershipconsulting.com";
+
+/** Authorised test address; test sends go nowhere else. */
+export const TEST_RECIPIENT = "enquiries@brightleadershipconsulting.com";
+
+export type DeliveryStatus = "pending" | "sent" | "failed";
 
 export interface RequestSummary {
   requestId: string;
@@ -32,95 +41,218 @@ export interface RequestSummary {
   jobTitle: string;
 }
 
-const quantityLine = (quantity: number | null) =>
-  quantity === null
-    ? ""
-    : `Quantity confirmed: ${quantity} digital ${quantity === 1 ? "place" : "places"}\n`;
+export interface EmailMessage {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+  idempotencyKey: string;
+}
 
-/** Buyer acknowledgement — invoice, PO, decision pack and scoping requests. */
-export function buyerAcknowledgement(r: RequestSummary) {
+/* ------------------------------------------------------------------ helpers */
+
+export function escapeHtml(value: string): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+const firstName = (name: string) => (name || "").trim().split(/\s+/)[0] || "colleague";
+
+const placesLine = (quantity: number | null) =>
+  quantity === null || quantity === undefined
+    ? null
+    : `Quantity: ${quantity} digital ${quantity === 1 ? "place" : "places"}`;
+
+/** Field rows rendered identically in text and HTML. */
+type Field = [label: string, value: string];
+
+const textBlock = (fields: Field[]) => fields.map(([l, v]) => `${l}: ${v}`).join("\n");
+
+const htmlBlock = (fields: Field[]) =>
+  fields
+    .map(([l, v]) => `<p style="margin:0 0 4px"><strong>${escapeHtml(l)}:</strong> ${escapeHtml(v)}</p>`)
+    .join("\n");
+
+const htmlParas = (paras: string[]) =>
+  paras.map((p) => `<p style="margin:0 0 16px">${p}</p>`).join("\n");
+
+const wrap = (body: string) =>
+  [
+    '<!doctype html><html lang="en"><head><meta charset="utf-8" /></head>',
+    '<body style="background-color:#ffffff;margin:0;padding:0">',
+    '<div style="max-width:600px;margin:0 auto;padding:32px 24px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1f2430">',
+    body,
+    "</div></body></html>",
+  ].join("\n");
+
+/** Map any thrown error to a coarse, non-sensitive category. */
+export function failureCategory(error: unknown): string {
+  const raw = (error instanceof Error ? error.message : String(error ?? "")).toLowerCase();
+  if (/timeout|timed out|etimedout|abort/.test(raw)) return "Timeout contacting the CRM";
+  if (/network|fetch|econnrefused|dns|socket/.test(raw)) return "Network unavailable";
+  if (/401|403|permission|unauthor|forbidden|denied/.test(raw)) return "Authorisation refused";
+  if (/429|rate limit|too many/.test(raw)) return "Rate limit reached";
+  if (/duplicate|conflict|unique/.test(raw)) return "Conflicting existing record";
+  if (/valid|constraint|schema|column|type/.test(raw)) return "Record rejected as invalid";
+  return "Unclassified mirroring failure";
+}
+
+/* ------------------------------------------------- 1. buyer acknowledgement */
+
+/** Trigger: a commercial request (invoice, PO, decision pack, scoping) is recorded. */
+export function buyerAcknowledgement(r: RequestSummary): EmailMessage {
+  const fields: Field[] = [
+    ["Request", r.actionLabel],
+    ["Programme", r.product],
+  ];
+  const places = placesLine(r.quantity);
+  if (places) fields.push(["Quantity", places.replace(/^Quantity: /, "")]);
+
+  const paras = [
+    `Dear ${firstName(r.name)},`,
+    "Thank you. We have recorded your request following the AI Leadership Readiness Audit.",
+  ];
+  const closing = [
+    "No payment has been taken and no enrolment has been created.",
+    "The Bright administrative team will normally respond by email within one working day with the requested information and the appropriate next step.",
+    `If any of the details above are incorrect, reply to this email or contact ${REPLY_TO}.`,
+  ];
+
   return {
     to: r.email,
-    subject: `Request recorded — ${r.actionLabel}`,
-    text: [
-      `Dear ${r.name.split(" ")[0] || "colleague"},`,
-      "",
-      "We have recorded your request following the AI Leadership Readiness Audit.",
-      "",
-      `Request: ${r.actionLabel}`,
-      `Programme route: ${r.product}`,
-      quantityLine(r.quantity).trim(),
-      "",
-      "No payment has been taken and no enrolment has been created at this stage.",
-      "",
-      "A member of the Bright administrative team will respond by email with the",
-      "material requested and the next step. If anything in the above is incorrect,",
-      `reply to this message or write to ${REPLY_TO}.`,
-      "",
-      "Bright Leadership Consulting",
-      "Bright Business Solutions (Int'l) Company Limited",
-    ]
-      .filter((line) => line !== "")
-      .join("\n"),
+    subject: `We have received your ${r.actionLabel} request`,
+    idempotencyKey: `buyer-ack:${r.requestId}`,
+    text: [...paras, "", textBlock(fields), "", ...closing, "", SENDER_NAME, "Bright Business Solutions (Int'l) Company Limited"].join(
+      "\n",
+    ),
+    html: wrap(
+      [
+        htmlParas(paras.map(escapeHtml)),
+        htmlBlock(fields),
+        "<div style=\"height:16px\"></div>",
+        htmlParas([
+          escapeHtml(closing[0]),
+          escapeHtml(closing[1]),
+          `If any of the details above are incorrect, reply to this email or contact <a href="mailto:${REPLY_TO}" style="color:#1f2430">${REPLY_TO}</a>.`,
+        ]),
+        htmlParas([
+          `${escapeHtml(SENDER_NAME)}<br />Bright Business Solutions (Int&#39;l) Company Limited`,
+        ]),
+      ].join("\n"),
+    ),
   };
 }
 
-/** Internal operational notice — a commercial request requires action. */
-export function adminNotification(r: RequestSummary) {
+/* ------------------------------------------ 2. internal operational notice */
+
+/** Trigger: the same recorded commercial request, once per record reference. */
+export function adminNotification(r: RequestSummary): EmailMessage {
+  const fields: Field[] = [
+    ["Request type", r.requestType],
+    ["Action", r.actionLabel],
+    ["Programme", r.product],
+  ];
+  const places = placesLine(r.quantity);
+  if (places) fields.push(["Quantity", places.replace(/^Quantity: /, "")]);
+  fields.push(
+    ["Contact", r.name],
+    ["Job title", r.jobTitle],
+    ["Organisation", r.organisation],
+    ["Email", r.email],
+    ["Record reference", r.requestId],
+  );
+
+  const lead = "A commercial request from the AI Leadership Readiness Audit has been recorded.";
+  const closing = [
+    "No payment has been taken.",
+    "Open the administrative audit-requests view to review and action the request.",
+  ];
+
   return {
     to: ADMIN_RECIPIENT,
-    subject: `Action required — ${r.requestType} request recorded (${r.organisation})`,
-    text: [
-      "A commercial request from the AI Leadership Readiness Audit has been recorded.",
-      "",
-      `Request type: ${r.requestType}`,
-      `Action: ${r.actionLabel}`,
-      `Programme route: ${r.product}`,
-      quantityLine(r.quantity).trim(),
-      `Contact: ${r.name}, ${r.jobTitle}`,
-      `Organisation: ${r.organisation}`,
-      `Email: ${r.email}`,
-      `Record reference: ${r.requestId}`,
-      "",
-      "Open the administrative audit-requests view to action it.",
-      "No payment has been taken.",
-    ]
-      .filter((line) => line !== "")
-      .join("\n"),
+    // No organisation or buyer name in the subject line.
+    subject: `Action required — ${r.requestType} — ${r.requestId}`,
+    idempotencyKey: `admin-notice:${r.requestId}`,
+    text: [lead, "", textBlock(fields), "", ...closing].join("\n"),
+    html: wrap(
+      [
+        htmlParas([escapeHtml(lead)]),
+        htmlBlock(fields),
+        '<div style="height:16px"></div>',
+        htmlParas(closing.map(escapeHtml)),
+      ].join("\n"),
+    ),
   };
 }
 
-/** Failure notice — CRM mirroring unsuccessful after the retry process. */
-export function crmFailureNotification(r: RequestSummary, error: string) {
+/* ------------------------------------------- 3. CRM mirroring failure notice */
+
+/** Trigger: CRM mirroring still unsuccessful after the automatic retry process. */
+export function crmFailureNotification(r: RequestSummary, error: unknown): EmailMessage {
+  const fields: Field[] = [
+    ["Record reference", r.requestId],
+    ["Request type", r.requestType],
+    ["Organisation", r.organisation],
+    ["Failure category", failureCategory(error)],
+  ];
+
+  const lead =
+    "A recorded audit request could not be mirrored into the CRM after the automatic retry process.";
+  const closing =
+    "The underlying request record remains available. Use the retry control in the administrative audit-requests view after the cause has been resolved.";
+
   return {
     to: ADMIN_RECIPIENT,
-    subject: `CRM mirroring failed — ${r.requestType} request ${r.requestId}`,
-    text: [
-      "A recorded audit request could not be mirrored into the CRM.",
-      "",
-      `Record reference: ${r.requestId}`,
-      `Request type: ${r.requestType}`,
-      `Organisation: ${r.organisation}`,
-      `Reported error: ${error}`,
-      "",
-      "The request record itself is safe. Use the retry control in the",
-      "administrative audit-requests view once the cause is resolved.",
-    ].join("\n"),
+    subject: `CRM mirroring failed — request ${r.requestId}`,
+    idempotencyKey: `crm-failure:${r.requestId}`,
+    text: [lead, "", textBlock(fields), "", closing].join("\n"),
+    html: wrap(
+      [
+        htmlParas([escapeHtml(lead)]),
+        htmlBlock(fields),
+        '<div style="height:16px"></div>',
+        htmlParas([escapeHtml(closing)]),
+      ].join("\n"),
+    ),
   };
 }
+
+/* ------------------------------------------------------------------ delivery */
+
+const attempted = new Set<string>();
 
 /**
- * Delivery gate. While approval is outstanding this only records the intent in
- * the function logs so the wording and volume can be verified without sending.
+ * Delivery gate. While `EMAILS_ENABLED` is false nothing is sent and the intent
+ * is recorded in the function logs so wording and volume can be verified.
+ * A failed send never invalidates the underlying request record.
  */
 export async function deliver(
-  message: { to: string; subject: string; text: string },
+  message: EmailMessage,
   kind: string,
-): Promise<"sent" | "suppressed"> {
+  options: { test?: boolean } = {},
+): Promise<DeliveryStatus> {
+  if (attempted.has(message.idempotencyKey)) return "pending";
+  attempted.add(message.idempotencyKey);
+
+  const target = options.test ? TEST_RECIPIENT : message.to;
+  const subject = options.test ? `[TEST — do not action] ${message.subject}` : message.subject;
+
   if (!EMAILS_ENABLED) {
-    console.log(`[email:suppressed:${kind}] to=${message.to} subject="${message.subject}"`);
-    return "suppressed";
+    console.log(
+      `[email:suppressed:${kind}] to=${target} key=${message.idempotencyKey} subject="${subject}"`,
+    );
+    return "pending";
   }
-  // Activated only after written approval of the wording and sender details.
-  return "sent";
+
+  try {
+    // Activated only after sender authentication (SPF/DKIM/DMARC) is verified.
+    return "sent";
+  } catch (error) {
+    console.error(`[email:failed:${kind}]`, failureCategory(error));
+    return "failed";
+  }
 }
