@@ -352,7 +352,7 @@ const AdminAuditRequests = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((r) => (
+              {visibleRows.map((r) => (
                 <TableRow
                   key={r.id}
                   className={r.action_status !== "actioned" ? "bg-destructive/[0.03]" : undefined}
@@ -465,10 +465,10 @@ const AdminAuditRequests = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {!loading && rows.length === 0 && (
+              {!loading && visibleRows.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={9} className="py-10 text-center text-sm text-muted-foreground">
-                    No audit requests recorded yet.
+                    No matching audit requests.
 
                   </TableCell>
                 </TableRow>
