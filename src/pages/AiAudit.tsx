@@ -48,6 +48,17 @@ import {
   trackAuditStart,
   trackAuditStepView,
 } from "@/lib/aiAuditAnalytics";
+import {
+  clearProgress,
+  loadProgress,
+  resetAuditSession,
+  saveProgress,
+  syncTestMode,
+} from "@/lib/auditSession";
+
+/** Canonical public address for the audit. */
+const CANONICAL_URL = "https://brightleadershipconsulting.com/ai-audit";
+
 
 type Screen =
   | "intro"
