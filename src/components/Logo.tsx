@@ -38,8 +38,8 @@ const BrightMark = ({ size, isLight }: { size: string; isLight: boolean }) => (
     >
       B
     </text>
-    <rect x="158" y="40" width="2.8" height="120" fill="hsl(var(--gold))" />
-    <rect x="133" y="99" width="25" height="2" fill="hsl(var(--gold))" opacity="0.85" />
+    <rect x="157" y="38" width="4.5" height="124" fill="hsl(var(--gold))" />
+    <rect x="131" y="98" width="26" height="3.5" fill="hsl(var(--gold))" opacity="0.9" />
   </svg>
 );
 
