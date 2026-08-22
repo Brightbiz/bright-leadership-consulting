@@ -43,8 +43,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
     }
 
     return (
-      <a ref={ref} href="/" className={cn("flex items-center gap-[0.7em]", className)}>
-        <BrightMark size="2.35rem" isLight={isLight} />
+      <a ref={ref} href="/" className={cn("flex flex-col", className)}>
         <span className="flex flex-col">
         <span
           className={cn("font-serif font-bold leading-none text-[1.35rem]", textColor)}
