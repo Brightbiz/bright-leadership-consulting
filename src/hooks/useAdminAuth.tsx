@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
+import { ADMIN_MFA_ENFORCED, getAdminMfaState } from "@/lib/adminMfa";
 
 interface UseAdminAuthReturn {
   user: User | null;
   isAdmin: boolean;
   isLoading: boolean;
+  /** True when a verified TOTP factor exists but this session is still AAL1. */
+  mfaChallengeRequired: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -14,7 +17,10 @@ export const useAdminAuth = (): UseAdminAuthReturn => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [mfaChallengeRequired, setMfaChallengeRequired] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   useEffect(() => {
     // Set up auth state listener BEFORE checking session
