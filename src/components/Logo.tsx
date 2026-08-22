@@ -7,6 +7,42 @@ interface LogoProps {
   variant?: "stacked" | "horizontal" | "light";
 }
 
+/**
+ * Brand mark: serif "B" registered against a gold alignment axis.
+ */
+const BrightMark = ({ size, isLight }: { size: string; isLight: boolean }) => (
+  <svg
+    viewBox="0 0 200 200"
+    width={size}
+    height={size}
+    aria-hidden="true"
+    focusable="false"
+    className="shrink-0 transition-all duration-300"
+  >
+    <rect
+      x="0"
+      y="0"
+      width="200"
+      height="200"
+      rx="10"
+      fill={isLight ? "hsl(var(--pearl))" : "hsl(var(--navy))"}
+    />
+    <text
+      x="84"
+      y="129"
+      textAnchor="middle"
+      fontSize="100"
+      fontWeight="700"
+      fill={isLight ? "hsl(var(--navy))" : "hsl(var(--pearl))"}
+      style={{ fontFamily: "var(--font-serif, 'Libre Baskerville'), Georgia, serif" }}
+    >
+      B
+    </text>
+    <rect x="158" y="40" width="2.8" height="120" fill="hsl(var(--gold))" />
+    <rect x="133" y="99" width="25" height="2" fill="hsl(var(--gold))" opacity="0.85" />
+  </svg>
+);
+
 const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
   ({ className = "", isCompact = false, variant = "stacked" }, ref) => {
     const isLight = variant === "light";
@@ -15,7 +51,8 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
 
     if (variant === "horizontal") {
       return (
-        <a ref={ref} href="/" className={cn("flex items-baseline gap-[0.4em]", className)}>
+        <a ref={ref} href="/" className={cn("flex items-center gap-[0.7em]", className)}>
+          <BrightMark size={isCompact ? "1.6rem" : "1.95rem"} isLight={isLight} />
           <span
             className={cn(
               "font-serif font-bold leading-none transition-all duration-300",
