@@ -15,8 +15,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
 
     if (variant === "horizontal") {
       return (
-        <a ref={ref} href="/" className={cn("flex items-center gap-[0.7em]", className)}>
-          <BrightMark size={isCompact ? "1.6rem" : "1.95rem"} isLight={isLight} />
+        <a ref={ref} href="/" className={cn("flex items-baseline gap-[0.4em]", className)}>
           <span className="flex items-baseline gap-[0.4em]">
           <span
             className={cn(
