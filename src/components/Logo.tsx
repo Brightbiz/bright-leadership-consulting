@@ -74,6 +74,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
           >
             Leadership Consulting
           </span>
+          </span>
         </a>
       );
     }
