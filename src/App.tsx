@@ -48,6 +48,9 @@ const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 const AdminOutreach = lazy(() => import("./pages/AdminOutreach"));
 const AdminAuditRequests = lazy(() => import("./pages/AdminAuditRequests"));
 const AdminCpdAudit = lazy(() => import("./pages/AdminCpdAudit"));
+const AdminSecurity = lazy(() => import("./pages/AdminSecurity"));
+const AdminVerifyMfa = lazy(() => import("./pages/AdminVerifyMfa"));
+
 
 
 const queryClient = new QueryClient();
