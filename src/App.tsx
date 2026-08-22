@@ -120,6 +120,9 @@ const AnimatedRoutes = () => {
           <Route path="/admin/outreach" element={<PageTransition><AdminOutreach /></PageTransition>} />
           <Route path="/admin/audit-requests" element={<PageTransition><AdminAuditRequests /></PageTransition>} />
           <Route path="/admin/cpd-audit" element={<PageTransition><AdminCpdAudit /></PageTransition>} />
+          <Route path="/admin/security" element={<PageTransition><AdminSecurity /></PageTransition>} />
+          <Route path="/admin/verify" element={<PageTransition><AdminVerifyMfa /></PageTransition>} />
+
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </Suspense>
