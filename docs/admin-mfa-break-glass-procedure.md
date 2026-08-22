@@ -84,3 +84,18 @@ Reverse in this order, each step independently sufficient to restore access:
 
 Non-administrators remain blocked throughout; rollback never loosens RLS below today's posture and
 requires no data migration and no data exposure.
+
+## 8. Clean-session verification protocol (pre-enforcement, after manual enrolment)
+
+Before any enforcement is approved, a single clean-session verification is performed:
+
+1. The administrator signs in with password in a fresh session, then enters the authenticator code
+   personally into the visible `/admin/verify` screen. The code is never supplied, pasted or
+   disclosed in the project chat, and must not be captured, logged or retained by the operator.
+2. The operator may verify only the resulting AAL2 session state (e.g. `authenticator_assurance_level`
+   `aal2`, verified factor present) through the auth session — never the code itself.
+3. No factor is added, removed or re-enrolled for this verification. The working factor enrolled by
+   the administrator is left untouched.
+
+This verification confirms clean-session AAL2 login only. It does not enable UI, database or
+edge-function enforcement; that requires separate written approval.
