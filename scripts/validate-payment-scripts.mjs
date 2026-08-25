@@ -162,7 +162,15 @@ if (existsSync(distDir) && statSync(distDir).isDirectory()) {
     bundlesScanned += 1;
     // Bundles are generated, so they can never be allowlisted individually:
     // a provider here means it was imported from somewhere in the app.
-    scan(file, contents, { requireAllowlist: false });
+    // The one permitted exception is the runtime watchdog's own detection
+    // selector (src/lib/paymentSurfaceMonitor.ts, allowlisted at source): it
+    // is a query string used to REPORT an unexpected payment surface and loads
+    // no gateway, so the exact literal is removed before scanning. Every other
+    // provider host, SDK or embed in the bundle still fails the build.
+    scan(file, contents.replace(WATCHDOG_SELECTOR_LITERAL, ""), {
+      requireAllowlist: false,
+    });
+
   }
 }
 
