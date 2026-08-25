@@ -23,7 +23,11 @@ const OrganizationSchema = () => {
         url: `${SITE_URL}/`,
         description: DESCRIPTION,
         slogan: "Executive alignment rarely breaks — it drifts.",
-        // LEGAL IDENTITY — REQUIRES CONFIRMATION: legalName / registration identifier intentionally omitted.
+        founder: {
+          "@type": "Person",
+          name: "Irene A. Agunbiade",
+          jobTitle: "Principal",
+        },
         logo: {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/#logo`,
