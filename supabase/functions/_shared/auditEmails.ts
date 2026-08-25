@@ -132,9 +132,7 @@ export function buyerAcknowledgement(r: RequestSummary): EmailMessage {
     to: r.email,
     subject: `We have received your ${r.actionLabel} request`,
     idempotencyKey: `buyer-ack:${r.requestId}`,
-    text: [...paras, "", textBlock(fields), "", ...closing, "", SENDER_NAME, "Bright Business Solutions (Int'l) Company Limited"].join(
-      "\n",
-    ),
+    text: [...paras, "", textBlock(fields), "", ...closing, "", SENDER_NAME].join("\n"),
     html: wrap(
       [
         htmlParas(paras.map(escapeHtml)),
@@ -146,7 +144,7 @@ export function buyerAcknowledgement(r: RequestSummary): EmailMessage {
           `If any of the details above are incorrect, reply to this email or contact <a href="mailto:${REPLY_TO}" style="color:#1f2430">${REPLY_TO}</a>.`,
         ]),
         htmlParas([
-          `${escapeHtml(SENDER_NAME)}<br />Bright Business Solutions (Int&#39;l) Company Limited`,
+          escapeHtml(SENDER_NAME),
         ]),
       ].join("\n"),
     ),
