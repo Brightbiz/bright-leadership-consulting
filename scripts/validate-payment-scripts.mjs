@@ -148,6 +148,14 @@ for (const manifest of ["package.json"]) {
 
 /* --------------------------------------------------------- 3. built bundles */
 
+/**
+ * The exact detection selector held by the runtime payment-surface watchdog.
+ * Detection-only: it matches a gateway embed in the DOM so the watchdog can
+ * raise an alert; it never loads one.
+ */
+const WATCHDOG_SELECTOR_LITERAL =
+  /\[data-pp-message\],\[data-pp-button\],\[id\^=['"]paypal-button['"]\],\.paypal-buttons/g;
+
 const distDir = resolve(ROOT, "dist");
 let bundlesScanned = 0;
 if (existsSync(distDir) && statSync(distDir).isDirectory()) {
@@ -162,7 +170,15 @@ if (existsSync(distDir) && statSync(distDir).isDirectory()) {
     bundlesScanned += 1;
     // Bundles are generated, so they can never be allowlisted individually:
     // a provider here means it was imported from somewhere in the app.
-    scan(file, contents, { requireAllowlist: false });
+    // The one permitted exception is the runtime watchdog's own detection
+    // selector (src/lib/paymentSurfaceMonitor.ts, allowlisted at source): it
+    // is a query string used to REPORT an unexpected payment surface and loads
+    // no gateway, so the exact literal is removed before scanning. Every other
+    // provider host, SDK or embed in the bundle still fails the build.
+    scan(file, contents.replace(WATCHDOG_SELECTOR_LITERAL, ""), {
+      requireAllowlist: false,
+    });
+
   }
 }
 
