@@ -105,10 +105,13 @@ const Footer = () => {
           <div className="flex flex-col gap-4 border-t border-navy-foreground/10 pt-8 md:flex-row md:items-start md:justify-between">
             <div className="space-y-1.5">
               <p className="text-xs text-navy-foreground/60">
-                Bright Leadership Consulting — Confidential Executive Advisory
+                Bright Leadership Consulting
               </p>
               <p className="text-xs text-navy-foreground/50">
-                Irene A. Agunbiade trading as Bright Leadership Consulting. Correspondence address: 82 James Carter Road, Mildenhall, England IP28 7DE.
+                Principal-led executive advisory and development
+              </p>
+              <p className="text-xs text-navy-foreground/50">
+                Correspondence address: 82 James Carter Road, Mildenhall, England IP28 7DE.
               </p>
 
 

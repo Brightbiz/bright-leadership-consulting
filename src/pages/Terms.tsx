@@ -27,7 +27,7 @@ const sections: Section[] = [
   {
     heading: "These terms",
     body: [
-      "This website and the services described on it are operated by Irene A. Agunbiade trading as Bright Leadership Consulting. Correspondence and service address: 82 James Carter Road, Mildenhall, England IP28 7DE. By using the site you accept these terms.",
+      "For the purposes of these Terms, services are provided by Irene A. Agunbiade under the business name Bright Leadership Consulting. Correspondence and service address: 82 James Carter Road, Mildenhall, England IP28 7DE. By using the site you accept these terms.",
       "The contracting and invoicing party for all engagements, programmes and purchases is Irene A. Agunbiade trading as Bright Leadership Consulting.",
       "Programme, purchase, cancellation and access enquiries should be sent to admin@brightleadershipconsulting.com.",
     ],
