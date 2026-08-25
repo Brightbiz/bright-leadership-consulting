@@ -23,8 +23,8 @@ import { bandFor, readinessTotal, initialState } from "@/data/aiAudit/logic";
 const APPROVED_TITLES = [
   "Executive Leadership Mastery Programme",
   "Strategic Leadership in the Age of AI",
-  "Strategic AI Leadership for Organisations",
-  "Augmented Leadership™",
+  "Future Workplace and Workforce Strategy Programme",
+  "Strategic Productivity and Peak Performance Accelerator",
 ];
 
 describe("programme catalogue", () => {
@@ -91,8 +91,8 @@ describe("audit checkout", () => {
 
 describe("audit scoring", () => {
   it("keeps the 8–32 band boundaries unchanged", () => {
-    expect(bandFor(8).label).toBe(bandFor(13).label);
-    expect(bandFor(8).label).not.toBe(bandFor(32).label);
+    expect(bandFor(8).title).toBe(bandFor(13).title);
+    expect(bandFor(8).title).not.toBe(bandFor(32).title);
     expect(readinessTotal(initialState())).toBeGreaterThanOrEqual(0);
   });
 });
