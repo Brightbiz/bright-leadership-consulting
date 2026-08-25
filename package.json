@@ -15,6 +15,7 @@
     "validate:identity": "node scripts/validate-legal-identity.mjs",
     "validate:enrolment": "node scripts/validate-enrolment-routes.mjs",
     "validate:payments": "node scripts/validate-payment-scripts.mjs",
+    "verify:acls": "node scripts/verify-function-acls.mjs",
     "generate:brochure": "node scripts/generate-programme-brochure.mjs",
     "build": "node scripts/validate-payment-scripts.mjs && node scripts/validate-enrolment-routes.mjs && node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-seo-metadata.mjs && node scripts/validate-legal-identity.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours-report.mjs && node scripts/generate-cpd-audit.mjs && node scripts/generate-programme-brochure.mjs && vite build",
     "build:dev": "node scripts/validate-payment-scripts.mjs && node scripts/validate-enrolment-routes.mjs && node scripts/validate-thinkific-links.mjs && node scripts/validate-thinkific-urls-live.mjs && node scripts/validate-course-schema.mjs && node scripts/validate-seo-metadata.mjs && node scripts/validate-legal-identity.mjs && node scripts/validate-redirects.mjs && node scripts/validate-cpd-hours-report.mjs && node scripts/generate-cpd-audit.mjs && node scripts/generate-programme-brochure.mjs && vite build --mode development",

@@ -52,6 +52,14 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      # Read-only ACL regression check for public SECURITY DEFINER functions.
+      # Skips automatically when no server-side connection string is configured;
+      # the secret is never exposed to frontend code or build output.
+      - name: Verify function ACLs
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: npm run verify:acls
 
       - name: Build
         run: npm run build
+
