@@ -114,9 +114,20 @@ const AdminCRM = () => {
   const syncLeads = async () => {
     setSyncing(true);
     try {
-      const { data, error } = await supabase.rpc("sync_existing_leads_to_crm");
+      // Privileged sync runs server-side: the edge function validates the
+      // bearer token, confirms the admin role, then uses service-role
+      // authority. The database function stays service-role only.
+      const { data, error } = await supabase.functions.invoke("admin-sync-crm", {
+        method: "POST",
+        body: {},
+      });
       if (error) throw error;
-      toast({ title: "Sync complete", description: `${data} records processed.` });
+      const synced = (data as { synced?: number } | null)?.synced ?? 0;
+      const replayed = (data as { replayed?: boolean } | null)?.replayed === true;
+      toast({
+        title: replayed ? "Sync already completed" : "Sync complete",
+        description: `${synced} records processed.`,
+      });
       await fetchContacts();
     } catch (error) {
       console.error("Sync error:", error);
@@ -125,6 +136,7 @@ const AdminCRM = () => {
       setSyncing(false);
     }
   };
+
 
   const fetchOutreachSummaries = useCallback(async () => {
     try {
