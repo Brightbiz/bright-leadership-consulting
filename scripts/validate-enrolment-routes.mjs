@@ -206,11 +206,21 @@ const walkAll = (dir, out = []) => {
   }
   return out;
 };
+/**
+ * Test sources are a defined category, not a blanket exemption: they are still
+ * scanned, but the single approved £895 audit-checkout literal is permitted so
+ * the regression assertion in src/test/commercialInvariants.test.ts can pin it.
+ * Every other blocked purchase URL still fails, in test files as in production
+ * source, so an unrelated invalid enrolment route cannot hide in a test.
+ */
+const isTestSource = (f) =>
+  /(^|\/)src\/test\//.test(f) || /\.test\.(ts|tsx)$/.test(f);
+
+const APPROVED_AUDIT_CHECKOUT_URL =
+  "thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai";
+
 const outputFiles = OUTPUT_DIRS.flatMap((d) => walkAll(d)).filter(
-  (f) =>
-    f !== "scripts/validate-enrolment-routes.mjs" &&
-    // Regression test that asserts the single approved £895 audit checkout.
-    f !== "src/test/commercialInvariants.test.ts",
+  (f) => f !== "scripts/validate-enrolment-routes.mjs",
 );
 for (const file of outputFiles) {
   let src;
@@ -221,10 +231,11 @@ for (const file of outputFiles) {
   }
   for (const url of BANNED_THINKIFIC_URLS) {
     // Single approved exception: the AI Leadership Readiness Audit sends a buyer
-    // purchasing for themselves to the one verified £895 checkout.
+    // purchasing for themselves to the one verified £895 checkout. Permitted in
+    // the audit checkout module and, as an assertion, in test sources only.
     const approvedAuditCheckout =
-      file === "src/data/aiAudit/thinkific.ts" &&
-      url === "thinkific.com/products/courses/strategic-leadership-in-the-age-of-ai";
+      url === APPROVED_AUDIT_CHECKOUT_URL &&
+      (file === "src/data/aiAudit/thinkific.ts" || isTestSource(file));
     if (src.includes(url) && !approvedAuditCheckout) {
       failures.push(`${file} — blocked Thinkific purchase URL present: ${url}`);
     }
