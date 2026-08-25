@@ -1,0 +1,49 @@
+{
+  "note": "Approved EXECUTE privileges for public SECURITY DEFINER functions. Contains no credentials. Verified live by scripts/verify-function-acls.mjs; shape and policy asserted by src/test/functionAcls.test.ts.",
+  "requiredOwner": "postgres",
+  "requiredSearchPath": "search_path=public",
+  "functions": [
+    {
+      "signature": "purge_expired_ai_audit_data()",
+      "execute": ["service_role"],
+      "securityDefiner": true,
+      "reason": "Destructive retention purge. Service-role only after the approved hardening migration; never executed by tests."
+    },
+    {
+      "signature": "has_role(uuid,app_role)",
+      "execute": ["authenticated", "service_role"],
+      "securityDefiner": true,
+      "reason": "Self-scoped role check used by admin routes and RLS policies."
+    },
+    {
+      "signature": "admin_audit_subject_request(text,text)",
+      "execute": ["authenticated", "service_role"],
+      "securityDefiner": true,
+      "reason": "Admin-gated internally; consumed by /admin/audit-requests."
+    },
+    {
+      "signature": "retry_ai_audit_crm_mirror(uuid)",
+      "execute": ["authenticated", "service_role"],
+      "securityDefiner": true,
+      "reason": "Admin-gated internally; consumed by /admin/audit-requests."
+    },
+    {
+      "signature": "record_ai_audit_submission(text,text,text,text,text,integer,text,text,jsonb,boolean,text,text,text,integer,text)",
+      "execute": ["service_role"],
+      "securityDefiner": true,
+      "reason": "Written only by the submit-ai-audit edge function."
+    },
+    {
+      "signature": "cleanup_old_rate_limits()",
+      "execute": ["service_role"],
+      "securityDefiner": true,
+      "reason": "Maintenance routine called by edge functions only."
+    },
+    {
+      "signature": "sync_existing_leads_to_crm()",
+      "execute": ["service_role"],
+      "securityDefiner": true,
+      "reason": "CRM backfill; must stay service-role only pending the admin-gated edge function."
+    }
+  ]
+}
