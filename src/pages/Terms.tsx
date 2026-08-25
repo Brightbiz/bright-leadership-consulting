@@ -27,7 +27,8 @@ const sections: Section[] = [
   {
     heading: "These terms",
     body: [
-      "This website is operated by Bright Business Solutions (Int’l) Company Limited, trading as Bright Leadership Consulting (Company No. 07258400), registered office: 82 James Carter Road, Mildenhall, England IP28 7DE. Registered in England and Wales. By using the site you accept these terms.",
+      // LEGAL IDENTITY — REQUIRES CONFIRMATION: contracting and invoicing party for Bright Leadership Consulting.
+      "This website is operated by Bright Leadership Consulting. Correspondence address: 82 James Carter Road, Mildenhall, England IP28 7DE. By using the site you accept these terms.",
       "Programme, purchase, cancellation and access enquiries should be sent to admin@brightleadershipconsulting.com.",
     ],
   },

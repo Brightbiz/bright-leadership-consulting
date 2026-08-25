@@ -23,12 +23,7 @@ const OrganizationSchema = () => {
         url: `${SITE_URL}/`,
         description: DESCRIPTION,
         slogan: "Executive alignment rarely breaks — it drifts.",
-        legalName: "Bright Business Solutions (Int’l) Company Limited",
-        identifier: {
-          "@type": "PropertyValue",
-          name: "Company registration number",
-          value: "07258400",
-        },
+        // LEGAL IDENTITY — REQUIRES CONFIRMATION: legalName / registration identifier intentionally omitted.
         logo: {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/#logo`,

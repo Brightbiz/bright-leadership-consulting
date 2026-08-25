@@ -108,8 +108,9 @@ const Footer = () => {
                 Bright Leadership Consulting — Confidential Executive Advisory
               </p>
               <p className="text-xs text-navy-foreground/50">
-                Registered in England and Wales. Company number 07258400.
+                82 James Carter Road, Mildenhall, England IP28 7DE
               </p>
+
               <p className="text-xs text-navy-foreground/50">
                 <a href="mailto:info@brightleadershipconsulting.com" className="transition-colors hover:text-navy-foreground">
                   info@brightleadershipconsulting.com
