@@ -106,7 +106,7 @@ const sections: Section[] = [
       {
         subheading: "Receipts, invoices and purchase orders",
         paragraphs: [
-          "A receipt showing the order details is provided following a completed online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins.",
+          "A receipt showing the order details is provided following a completed online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins. Invoices are issued by Irene A. Agunbiade trading as Bright Leadership Consulting.",
           "Providing a purchase-order number does not replace the organisation's obligation to pay an invoice in accordance with the agreed payment terms.",
         ],
       },
