@@ -13,7 +13,7 @@ import {
   THINKIFIC_SUPPORTS_PURCHASE_FOR_ANOTHER,
   buildThinkificPurchaseUrl,
 } from "@/data/aiAudit/thinkific";
-import { scoreBand } from "@/data/aiAudit/logic";
+import { bandFor, readinessTotal, initialState } from "@/data/aiAudit/logic";
 
 /**
  * Commercial invariants: the identity-correction work must leave programmes,
@@ -91,9 +91,9 @@ describe("audit checkout", () => {
 
 describe("audit scoring", () => {
   it("keeps the 8–32 band boundaries unchanged", () => {
-    expect(scoreBand(8)).toBe(scoreBand(13));
-    expect(scoreBand(8)).not.toBe(scoreBand(32));
-    expect(typeof scoreBand(24)).toBe("string");
+    expect(bandFor(8).label).toBe(bandFor(13).label);
+    expect(bandFor(8).label).not.toBe(bandFor(32).label);
+    expect(readinessTotal(initialState())).toBeGreaterThanOrEqual(0);
   });
 });
 

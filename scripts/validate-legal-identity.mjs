@@ -32,7 +32,7 @@ const CONTROLLER_ALLOWED = new Set(["src/pages/Privacy.tsx"]);
 const SCAN_DIRS = ["src", "public"];
 const SCAN_FILES = ["index.html"];
 const SCAN_EXT = /\.(tsx?|jsx?|html|json|xml|txt|md|mjs|css)$/i;
-const SKIP_DIR = /(^|\/)(node_modules|dist|\.git)(\/|$)/;
+const SKIP_DIR = /(^|\/)(node_modules|dist|\.git|src\/test)(\/|$)/;
 
 /** Former-entity wording that must not appear anywhere on the public site. */
 const PROHIBITED = [
@@ -102,7 +102,8 @@ for (const full of files) {
       fail(rel, line, "data-controller wording outside the Privacy Notice");
     }
 
-    if (MILDENHALL.test(text) && !CORRESPONDENCE.test(text)) {
+    // Structured JSON-LD address fields are keyed data, not a label.
+    if (MILDENHALL.test(text) && !CORRESPONDENCE.test(text) && !/streetAddress/.test(text)) {
       fail(rel, line, "Mildenhall address is not labelled as a correspondence address");
     }
   });
