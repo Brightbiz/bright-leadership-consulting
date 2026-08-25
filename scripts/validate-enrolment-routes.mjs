@@ -207,7 +207,10 @@ const walkAll = (dir, out = []) => {
   return out;
 };
 const outputFiles = OUTPUT_DIRS.flatMap((d) => walkAll(d)).filter(
-  (f) => f !== "scripts/validate-enrolment-routes.mjs",
+  (f) =>
+    f !== "scripts/validate-enrolment-routes.mjs" &&
+    // Regression test that asserts the single approved £895 audit checkout.
+    f !== "src/test/commercialInvariants.test.ts",
 );
 for (const file of outputFiles) {
   let src;
