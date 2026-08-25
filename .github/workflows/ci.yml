@@ -43,6 +43,12 @@ jobs:
       - name: Validate SEO metadata
         run: npm run validate:seo
 
+      # Fails the pipeline if the sole-trader legal identity appears outside the
+      # approved Terms (contracting/invoicing) and Privacy (controller) provisions,
+      # or if prohibited former-company wording reappears.
+      - name: Validate legal identity
+        run: npm run validate:identity
+
       - name: Unit tests
         run: npm test
 
