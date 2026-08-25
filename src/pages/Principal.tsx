@@ -286,8 +286,7 @@ const Principal = () => {
               </Link>
             </div>
             <p className="text-xs leading-relaxed text-muted-foreground/70">
-              Bright Leadership Consulting is registered in England and Wales, company number
-              07258400.
+              Bright Leadership Consulting — confidential executive advisory, United Kingdom.
             </p>
           </motion.section>
 
