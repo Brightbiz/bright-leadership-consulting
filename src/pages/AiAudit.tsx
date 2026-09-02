@@ -397,10 +397,9 @@ const AiAudit = () => {
             <em className="text-gold not-italic">or just nodding along?</em>
           </h1>
           <p className="mt-6 max-w-[560px] text-[15px] leading-relaxed text-navy-foreground/75">
-            Eight questions on how your organisation connects AI with leadership judgement, followed
-            by a short set of questions to match you to the right route. You'll get an immediate
-            readiness result and a personalised recommendation — no call required to reach a decision.
+            {INTRO_PROMISE}
           </p>
+
           <button
             type="button"
             className={`${primaryBtn} mt-8`}
