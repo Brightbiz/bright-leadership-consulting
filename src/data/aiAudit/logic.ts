@@ -9,6 +9,8 @@
 import {
   BANDS,
   INDIVIDUAL_PRICE_GBP,
+  Q14_PRICED_OPTIONS,
+  Q14_UNPRICED_OPTIONS,
   READINESS_QUESTIONS,
   type Band,
   type ProductKey,
