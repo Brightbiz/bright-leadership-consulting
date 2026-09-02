@@ -52,12 +52,19 @@
       });
     </script>
 
-    <!-- Google tag (gtag.js) — single instance, Google Ads only -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18382257167"></script>
+    <!-- Google tag (gtag.js) — single instance: GA4 + Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FX0BYSEL34"></script>
     <script>
       gtag('js', new Date());
+      // GA4 property (Enhanced Measurement enabled in the property itself).
+      gtag('config', 'G-FX0BYSEL34', {
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
+      // Google Ads conversion tag — unchanged.
       gtag('config', 'AW-18382257167');
     </script>
+
   </head>
 
 
