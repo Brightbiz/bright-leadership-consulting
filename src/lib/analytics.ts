@@ -1,11 +1,15 @@
 /**
  * Lightweight, provider-agnostic analytics layer.
  *
- * The only Google tag on this site is the Google Ads tag declared in
- * index.html (AW-18382257167). No Google Analytics property, no Tag Manager
- * container, and no Enhanced Conversions. Events below are pushed to
- * `window.dataLayer` for future use and are inert without a configured
- * destination.
+ * Two Google tags are configured in index.html from a single gtag.js
+ * instance: the GA4 property G-FX0BYSEL34 and the Google Ads conversion tag
+ * AW-18382257167. Consent Mode v2 defaults (all four signals denied) are set
+ * before either configures.
+ *
+ * Every event below is pushed to `window.dataLayer` (retained for any future
+ * GTM/consumer) *and* sent to GA4 through a real `gtag('event', ...)` call
+ * scoped with `send_to` so it never reaches the Ads tag. No names, email
+ * addresses, organisation names or free-text are ever included.
  */
 
 declare global {
@@ -15,27 +19,52 @@ declare global {
   }
 }
 
+/** GA4 measurement ID for the Bright Leadership Consulting web stream. */
+export const GA4_MEASUREMENT_ID = "G-FX0BYSEL34";
+
 /** Google Ads conversion destination for a confirmed organisational enquiry. */
 const ENQUIRY_CONVERSION_SEND_TO = "AW-18382257167/6zYBCLOIr98cEI_4q71E";
 
 export function initAnalytics() {
   if (typeof window === "undefined") return;
-  // The gtag stub and consent defaults are established in index.html; this
-  // only guarantees dataLayer exists for the event helpers below.
+  // The gtag stub, consent defaults and tag configuration are established in
+  // index.html; this only guarantees dataLayer exists for the helpers below.
   window.dataLayer = window.dataLayer || [];
 }
 
-/** Send a named event with parameters to whichever provider is configured. */
+/**
+ * Send a named event with parameters to the dataLayer and to GA4.
+ *
+ * Direct gtag.js does not consume `dataLayer.push({ event })` objects, so the
+ * explicit `gtag('event', ...)` call below is what actually reaches GA4.
+ * Parameters are passed through unchanged, so optional properties such as
+ * `q14_value` stay absent (not null) when they were never supplied.
+ */
 export function trackEvent(name: string, params: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: name, ...params });
+  window.gtag?.("event", name, { ...params, send_to: GA4_MEASUREMENT_ID });
 }
 
-/** Track a route change as a page_view in the dataLayer. */
+let initialPageViewSkipped = false;
+
+/**
+ * Track a route change as a GA4 page_view. The first call after load is not
+ * forwarded to GA4: the `config` call in index.html already sent that page
+ * view, and duplicating it would double-count the landing page.
+ */
 export function trackPageView(path: string) {
-  trackEvent("page_view", { page_path: path, page_location: window.location.href });
+  const params = { page_path: path, page_location: window.location.href };
+  if (!initialPageViewSkipped) {
+    initialPageViewSkipped = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "page_view", ...params });
+    return;
+  }
+  trackEvent("page_view", params);
 }
+
 
 let enquiryConversionSent = false;
 
