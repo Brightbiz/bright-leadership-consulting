@@ -242,8 +242,8 @@ export function priceBlockFor(product: ProductKey, s: AuditState): PriceBlock | 
         ? `${n} × £895 = £${(n * INDIVIDUAL_PRICE_GBP).toLocaleString("en-GB")}`
         : "£895 per digital place",
       note: n
-        ? "Reference total based on the quantity you confirmed."
-        : "Enter the exact number of participants to calculate the reference total. Purchase, invoice and purchase-order actions remain unavailable until an exact whole number is entered.",
+        ? "Indicative total — final volume pricing and purchasing details are confirmed before checkout."
+        : "Select the exact number of participants to calculate the reference total. Purchase, invoice and purchase-order actions remain unavailable until an exact whole number is entered.",
       needsExactQty: true,
     };
   }
