@@ -379,12 +379,10 @@ const AiAudit = () => {
       window.setTimeout(() => window.location.assign(destination), 120);
       return;
     }
+    // Information actions are labelled as requests and always collect details
+    // first. The only immediate file download in the audit is the public
+    // summary on the general-interest terminal path.
 
-
-    if (action.kind === "info" && classification === "Not currently qualified") {
-      downloadPublicSummary();
-      return;
-    }
 
     if (action.kind === "email") {
       window.location.href =
