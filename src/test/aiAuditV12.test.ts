@@ -10,7 +10,8 @@ import {
 } from "@/data/aiAudit/logic";
 import { Q14_PRICED_OPTIONS, Q14_UNPRICED_OPTIONS } from "@/data/aiAudit/questions";
 
-const state = (over: Partial<AuditState>): AuditState => ({ ...initialState(), ...over });
+const state = (over: Partial<AuditState>): AuditState =>
+  ({ ...initialState(), ...over }) as AuditState;
 
 describe("v12 Q14 context", () => {
   it("shows the priced set on individual and confirmed-multiple routes", () => {
