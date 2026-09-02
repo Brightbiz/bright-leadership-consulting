@@ -10,6 +10,7 @@ import DetailsForm from "@/components/aiAudit/DetailsForm";
 
 import {
   GENERAL_INTEREST_QUESTION,
+  INTRO_PROMISE,
   MISMATCH_COPY,
   PROGRAMME_PAGE_URL,
   Q10_OPTIONS,
@@ -17,7 +18,8 @@ import {
   Q11_OPTIONS,
   Q12_OPTIONS,
   Q13_OPTIONS,
-  Q14_OPTIONS,
+  Q14_PRICED_HEADING,
+  Q14_UNPRICED_HEADING,
   Q9_OPTIONS,
   QTY_OPTIONS,
   READINESS_QUESTIONS,
@@ -28,6 +30,9 @@ import {
   classify,
   computeRoute,
   initialState,
+  isQ14ValidForContext,
+  q14ContextIsPriced,
+  q14OptionsFor,
   readinessTotal,
   resolvedQuantity,
   type Action,
