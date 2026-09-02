@@ -311,14 +311,22 @@ type ActionSet = {
   purchase: Action | null;
   invoice: Action | null;
   po: Action | null;
+  /** Written-proposal route. Offered on unpriced organisational routes only. */
+  proposal?: Action | null;
   info: Action;
 };
+
+type ActionKeyName = "purchase" | "invoice" | "po" | "proposal" | "info";
+
+/** Fixed presentation order for secondary actions. */
+const ACTION_ORDER: ActionKeyName[] = ["purchase", "invoice", "po", "proposal", "info"];
 
 function actionSetFor(product: ProductKey, s: AuditState): ActionSet {
   const needsQty = product === "multiple";
 
   if (product === "individual") {
     const isSelf = s.q10 !== "B";
+    const info: Action = { kind: "info", label: "Request programme information" };
     if (isSelf) {
       return {
         purchase: {
@@ -328,7 +336,7 @@ function actionSetFor(product: ProductKey, s: AuditState): ActionSet {
         },
         invoice: { kind: "invoice", label: "Request invoice" },
         po: null,
-        info: { kind: "info", label: "Download programme information" },
+        info,
       };
     }
     // Purchasing for a different named participant. The programme platform has
@@ -344,7 +352,7 @@ function actionSetFor(product: ProductKey, s: AuditState): ActionSet {
           },
       invoice: { kind: "invoice", label: "Request invoice" },
       po: null,
-      info: { kind: "info", label: "Download programme information" },
+      info,
     };
   }
 
@@ -357,66 +365,117 @@ function actionSetFor(product: ProductKey, s: AuditState): ActionSet {
       },
       invoice: { kind: "invoice", label: "Request invoice", requiresExactQty: needsQty },
       po: { kind: "po", label: "Submit purchase order", requiresExactQty: needsQty },
-      info: { kind: "info", label: "Download a decision summary" },
+      info: { kind: "info", label: "Request a decision summary" },
     };
   }
 
+  // Organisational and facilitated delivery carry no published price, so no
+  // card, invoice or purchase-order route is presented from the audit.
   if (product === "organisational") {
     return {
-      purchase: { kind: "purchaseRequest", label: "Purchase organisational access" },
-      invoice: { kind: "invoice", label: "Request invoice" },
-      po: { kind: "po", label: "Submit purchase order" },
-      info: { kind: "info", label: "Download the internal decision pack" },
+      purchase: { kind: "purchaseRequest", label: "Request organisational options" },
+      invoice: null,
+      po: null,
+      proposal: { kind: "proposal", label: "Request a written proposal" },
+      info: { kind: "info", label: "Request an internal decision pack" },
     };
   }
 
   if (product === "facilitated") {
     return {
-      purchase: { kind: "purchaseRequest", label: "Select / reserve package" },
-      invoice: { kind: "invoice", label: "Request invoice" },
-      po: { kind: "po", label: "Submit purchase order" },
-      info: { kind: "info", label: "Download decision pack" },
+      purchase: { kind: "purchaseRequest", label: "Discuss facilitated delivery" },
+      invoice: null,
+      po: null,
+      proposal: { kind: "proposal", label: "Request a written proposal" },
+      info: { kind: "info", label: "Request a decision pack" },
     };
   }
 
   if (product === "digitalUnresolved") {
-    return {
-      purchase: null,
-      invoice: null,
-      po: null,
-      info: { kind: "info", label: "Download the digital access comparison" },
-    };
+    // Where the participant number was deliberately left open, the card is the
+    // generic digital-access card: a decision pack, not a tier comparison.
+    const label = s.stillUncertain
+      ? classify(s) === "Not currently qualified"
+        ? "Request programme information"
+        : "Request a decision pack"
+      : "Request the digital-access comparison";
+    return { purchase: null, invoice: null, po: null, info: { kind: "info", label } };
   }
 
   return {
     purchase: null,
     invoice: null,
     po: null,
-    info: { kind: "info", label: "Download programme information" },
+    info: { kind: "info", label: "Request programme information" },
   };
 }
 
-const q14Key = (s: AuditState): "purchase" | "invoice" | "po" | "info" | "notready" => {
-  const map = {
+/**
+ * Q14 → internal action key. Both the priced and the unpriced option sets map
+ * onto the same conceptual keys, so CTA resolution is identical whichever
+ * variant of the question the respondent actually saw.
+ */
+export const q14Key = (s: AuditState): ActionKeyName | "notready" => {
+  const map: Record<Q14, ActionKeyName | "notready"> = {
     card: "purchase",
     invoice: "invoice",
     po: "po",
     download: "info",
     review: "info",
     notready: "notready",
-  } as const;
+    reviewoptions: "purchase",
+    decisionpack: "info",
+    proposal: "proposal",
+    discuss: "purchase",
+    notready2: "notready",
+  };
   return s.q14 ? map[s.q14] : "purchase";
 };
+
+/**
+ * True only when the settled route recommends a priced digital tier. Quantity
+ * is always resolved before Q14 renders, so this is never evaluated against an
+ * open participant number for the purpose of choosing the question variant.
+ */
+export function q14ContextIsPriced(s: AuditState): boolean {
+  const route = computeRoute(s);
+  if (!("recommended" in route)) return false;
+  const product = route.recommended.product;
+  return product === "individual" || product === "multiple";
+}
+
+export const q14OptionsFor = (s: AuditState) =>
+  q14ContextIsPriced(s) ? Q14_PRICED_OPTIONS : Q14_UNPRICED_OPTIONS;
+
+/**
+ * A stored Q14 answer from the other context must never survive a change to an
+ * earlier answer. Checked on every entry to the Q14 screen, in both directions.
+ */
+export const isQ14ValidForContext = (s: AuditState): boolean =>
+  s.q14 !== null && q14OptionsFor(s).some(([value]) => value === s.q14);
 
 /** Part F — classification decides the category; Q14 the transaction type. */
 export function buildCtaPlan(product: ProductKey, s: AuditState): CtaPlan {
   const classification = classify(s);
+  const key = q14Key(s);
 
   if (product === "tailored") {
-    if (classification === "Not currently qualified") {
-      return { primary: [{ kind: "info", label: "Download programme information" }], secondary: [], tertiary: [] };
+    // "Not ready" suppresses the scoping, proposal and conversation routes too.
+    if (key === "notready") {
+      return {
+        primary: [{ kind: "info", label: "Request programme information" }],
+        secondary: [],
+        tertiary: [EMAIL_ACTION],
+      };
     }
-    // The only place in the entire audit where a call is offered, and always last.
+    if (classification === "Not currently qualified") {
+      return {
+        primary: [{ kind: "info", label: "Request programme information" }],
+        secondary: [],
+        tertiary: [],
+      };
+    }
+    // The only place in the entire audit where a conversation is offered.
     return {
       primary: [{ kind: "scoping", label: "Complete scoping form" }],
       secondary: [{ kind: "proposal", label: "Request written proposal" }],
@@ -435,24 +494,10 @@ export function buildCtaPlan(product: ProductKey, s: AuditState): CtaPlan {
     return { primary: [set.info], secondary: [], tertiary: [EMAIL_ACTION] };
   }
 
-  if (classification === "Individual purchaser" && product === "individual") {
-    const secondary = [set.invoice, set.info].filter(Boolean) as Action[];
-    // "Purchase for another leader" already routes via invoice, so the generic
-    // invoice action is not duplicated beneath it.
-    const deduped =
-      set.purchase?.kind === "invoice" ? secondary.filter((a) => a.kind !== "invoice") : secondary;
-    return {
-      primary: set.purchase ? [set.purchase] : [set.info],
-      secondary: deduped,
-      tertiary: [EMAIL_ACTION],
-    };
-  }
-
-  const key = q14Key(s);
   const resolvePurchaseAction = (): Action | null => {
     if (key === "notready") return null;
     if (key === "info") return set.purchase;
-    return set[key];
+    return set[key] ?? set.purchase;
   };
 
   if (classification === "Purchase under consideration") {
@@ -472,19 +517,21 @@ export function buildCtaPlan(product: ProductKey, s: AuditState): CtaPlan {
     return { primary: [set.info], secondary: [], tertiary };
   }
 
-  // Ready to buy (and anything not covered above): fully governed by Q14.
+  // Ready to buy, and the Individual/Multiple purchaser cases: Q14 governs.
+  // A stated preference is never overridden by the classification.
   if (key === "notready") {
     return { primary: [set.info], secondary: [], tertiary: [EMAIL_ACTION] };
   }
-  let primaryKey: "purchase" | "invoice" | "po" | "info" = key;
+  let primaryKey: ActionKeyName = key;
   if (!set[primaryKey]) primaryKey = "purchase";
   if (!set[primaryKey]) primaryKey = "info";
   const primary = set[primaryKey] as Action;
-  const others = (["purchase", "invoice", "po", "info"] as const)
-    .filter((k) => k !== primaryKey && set[k])
-    .map((k) => set[k] as Action);
+  const others = ACTION_ORDER.filter((k) => k !== primaryKey && set[k]).map(
+    (k) => set[k] as Action,
+  );
   return { primary: [primary], secondary: others, tertiary: [EMAIL_ACTION] };
 }
+
 
 /** Part L — transaction actions stay non-submittable without an exact quantity. */
 export function isActionBlocked(action: Action, s: AuditState): boolean {
