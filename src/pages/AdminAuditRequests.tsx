@@ -410,7 +410,17 @@ const AdminAuditRequests = () => {
                     <span className="block text-muted-foreground">{r.organisation ?? ""}</span>
                   </TableCell>
                   <TableCell className="text-xs">
-                    <span className="block font-medium">{r.request_type}</span>
+                    <span className="block font-medium">
+                      {requestTypeLabel(r.request_type)}
+                    </span>
+                    {routingQ14Label(
+                      r.ai_audit_responses?.routing?.q14 as string | undefined,
+                    ) && (
+                      <span className="block text-muted-foreground">
+                        Respondent's stated next step:{" "}
+                        {routingQ14Label(r.ai_audit_responses?.routing?.q14 as string | undefined)}
+                      </span>
+                    )}
                     <span className="block text-muted-foreground">{r.action_label}</span>
                   </TableCell>
                   <TableCell className="text-xs">{r.participant_quantity ?? "—"}</TableCell>
