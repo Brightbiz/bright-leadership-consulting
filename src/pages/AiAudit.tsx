@@ -375,7 +375,7 @@ const AiAudit = () => {
       q11a: "Tailored delivery reason",
       q12: "Timing",
       q13: "Decision role",
-      q14: "Purchasing preference",
+      q14: "Preferred next step",
       quantityUnresolved: "Participant estimate",
       details: "Contact and delivery details",
       result: "Your readiness result and recommended route",
