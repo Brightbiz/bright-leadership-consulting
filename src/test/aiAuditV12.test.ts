@@ -54,6 +54,7 @@ describe("v12 pricing invariants", () => {
 
 describe("v12 routing", () => {
   it("treats an unknown team size as unresolved so quantity is settled before Q14", () => {
-    expect(computeRoute(state({ q9: "A", q10: "G" })).type).toBe("unresolved");
+    expect(computeRoute(state({ q9: "A", q10: "H" })).type).toBe("unresolved");
+    expect(computeRoute(state({ q9: "A", q10: "G" })).type).not.toBe("unresolved");
   });
 });
