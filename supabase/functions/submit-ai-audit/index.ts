@@ -20,11 +20,40 @@ const json = (body: unknown, status = 200) =>
 
 const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
+/** Operational request types the result cards can generate. */
+const REQUEST_TYPES = new Set([
+  "thinkific",
+  "purchaseRequest",
+  "invoice",
+  "po",
+  "info",
+  "proposal",
+  "scoping",
+  "call",
+  "email",
+]);
+
+/** Routing answers Q14 can hold, priced and unpriced contexts alike. */
+const Q14_VALUES = new Set([
+  "card",
+  "invoice",
+  "po",
+  "download",
+  "review",
+  "notready",
+  "reviewoptions",
+  "decisionpack",
+  "proposal",
+  "discuss",
+  "notready2",
+]);
+
 /** Requests that must never be accepted without a confirmed quantity. */
 const QTY_GATED = new Set(["invoice", "po"]);
 
 /** Requests that produce a buyer acknowledgement and an internal notice. */
-const COMMERCIAL = new Set(["invoice", "po", "pack", "scoping"]);
+const COMMERCIAL = new Set(["purchaseRequest", "invoice", "po", "proposal", "scoping"]);
+
 
 /** Layered submission protection thresholds. */
 const MAX_PER_IP_PER_HOUR = 10;
