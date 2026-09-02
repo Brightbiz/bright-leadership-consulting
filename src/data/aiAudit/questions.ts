@@ -274,6 +274,10 @@ export const PRODUCT_META: Record<ProductKey, { title: string; incl: string }> =
   },
 };
 
+/** Approved introductory promise. Replaces the earlier "no call required" line. */
+export const INTRO_PROMISE =
+  "Eight questions on how your organisation connects AI with leadership judgement, followed by a short set of questions to match you to the right route. You'll receive an immediate readiness result and a personalised recommendation, helping you identify the most proportionate next step before deciding whether further discussion is useful.";
+
 
 export const MISMATCH_COPY =
   "Bright Leadership Consulting focuses on the leadership, strategic, governance and organisational dimensions of AI. It does not provide coding, software-development or technical implementation services. Your readiness result above still stands as decision-support information.";
