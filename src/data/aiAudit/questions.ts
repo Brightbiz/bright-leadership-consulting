@@ -200,7 +200,12 @@ export const Q13_OPTIONS = [
   ["none", "I am not involved in purchasing"],
 ] as const;
 
-export const Q14_OPTIONS = [
+/**
+ * Q14 is dynamic. The priced set is shown only when the settled route
+ * recommends Individual or Multiple digital access; every other route sees the
+ * unpriced set, so no card/invoice language appears where no price applies.
+ */
+export const Q14_PRICED_OPTIONS = [
   ["card", "Pay online by card"],
   ["invoice", "Receive an invoice"],
   ["po", "Use a purchase order"],
@@ -208,6 +213,18 @@ export const Q14_OPTIONS = [
   ["review", "Review the recommendation before deciding"],
   ["notready", "I am not ready to purchase"],
 ] as const;
+
+export const Q14_UNPRICED_OPTIONS = [
+  ["reviewoptions", "Review organisational options"],
+  ["decisionpack", "Receive an internal decision pack"],
+  ["proposal", "Request a written proposal"],
+  ["discuss", "Discuss delivery requirements"],
+  ["notready2", "I am not ready to proceed"],
+] as const;
+
+export const Q14_PRICED_HEADING = "How would you prefer to purchase?";
+export const Q14_UNPRICED_HEADING = "What would be most useful as your next step?";
+
 
 export const QTY_OPTIONS = [
   ["A", "1 participant"],
