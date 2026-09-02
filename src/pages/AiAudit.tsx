@@ -245,14 +245,19 @@ const AiAudit = () => {
 
   const afterQ11 = () => goto(state.q11.tailored ? "q11a" : "q12");
 
-  const afterQ14 = () => {
+  /**
+   * Quantity resolves between Q13 and Q14, never after it. Q14 must only ever
+   * render against a settled route, so the priced/unpriced option set it shows
+   * is guaranteed to match the route the respondent is actually being sent to.
+   */
+  const afterQ13 = () => {
     setState((s) => ({ ...s, exactQty: null }));
     if (route.type === "unresolved") {
       setQtyChoice(null);
       goto("quantityUnresolved");
       return;
     }
-    goto("result");
+    goto("q14");
   };
 
   const finaliseQty = () => {
@@ -266,8 +271,10 @@ const AiAudit = () => {
         exactQty: null,
       }));
     }
-    goto("result");
+    // Quantity is now settled — Q14 computes its context fresh on render.
+    goto("q14");
   };
+
 
   const onExactQtyChange = (raw: string) => {
     const n = Number(raw);
