@@ -56,6 +56,43 @@ const CRM_BADGE: Record<string, string> = {
   failed: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
 
+/**
+ * The stored operational request type, rendered in words. This is the
+ * downstream action generated from the result card, and is deliberately
+ * separate from the respondent's own recorded routing answer below.
+ */
+const REQUEST_TYPE_LABELS: Record<string, string> = {
+  thinkific: "Card purchase (programme platform)",
+  purchaseRequest: "Purchase request",
+  invoice: "Invoice request",
+  po: "Purchase-order request",
+  info: "Information / decision-pack request",
+  proposal: "Written-proposal request",
+  scoping: "Tailored scoping request",
+  call: "Scoping-conversation request",
+  email: "Emailed question",
+};
+
+/** The respondent's own Q14 answer, stored unchanged and shown in words. */
+const ROUTING_Q14_LABELS: Record<string, string> = {
+  card: "Prefers to pay online by card",
+  invoice: "Prefers to receive an invoice",
+  po: "Prefers to use a purchase order",
+  download: "Wants information for internal approval",
+  review: "Wants to review the recommendation before deciding",
+  notready: "Not ready to purchase",
+  reviewoptions: "Wants organisational options reviewed",
+  decisionpack: "Wants an internal decision pack",
+  proposal: "Wants a written proposal",
+  discuss: "Wants to discuss delivery requirements",
+  notready2: "Not ready to proceed",
+};
+
+const requestTypeLabel = (value: string) => REQUEST_TYPE_LABELS[value] ?? value;
+const routingQ14Label = (value: string | null | undefined) =>
+  value ? (ROUTING_Q14_LABELS[value] ?? value) : null;
+
+
 /** Whole hours, or days once beyond 48 hours. */
 const ageLabel = (iso: string) => {
   const hours = Math.floor((Date.now() - new Date(iso).getTime()) / 3_600_000);
