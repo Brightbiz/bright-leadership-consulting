@@ -247,7 +247,7 @@ export type ProductKey =
   | "tailored"
   | "digitalUnresolved";
 
-export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; proposed?: string }> = {
+export const PRODUCT_META: Record<ProductKey, { title: string; incl: string }> = {
   individual: {
     title: "Individual Digital Access",
     incl: `10 core leadership modules · applied assessment · AI Leadership Blueprint™ capstone. ${CPD_LINE}`,
@@ -258,13 +258,11 @@ export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; pro
   },
   organisational: {
     title: "Organisational Digital Access",
-    incl: `The full digital programme across your organisation. ${CPD_LINE}`,
-    proposed: "Participant allocation approach: proposed — subject to approval.",
+    incl: `The full digital programme across your organisation, with participant access allocated to named individuals. ${CPD_LINE}`,
   },
   facilitated: {
     title: "Facilitated Team Cohort",
     incl: "Digital programme access, with facilitated team sessions to apply the material together.",
-    proposed: "Facilitated sessions: proposed — subject to approval.",
   },
   tailored: {
     title: "Tailored Organisational Delivery",
@@ -275,6 +273,7 @@ export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; pro
     incl: "Individual, Multiple and Organisational digital access all deliver the same core programme at different scale. No tier is committed until a participant number is confirmed.",
   },
 };
+
 
 export const MISMATCH_COPY =
   "Bright Leadership Consulting focuses on the leadership, strategic, governance and organisational dimensions of AI. It does not provide coding, software-development or technical implementation services. Your readiness result above still stands as decision-support information.";
