@@ -248,7 +248,7 @@ Deno.serve(async (req) => {
       _readiness_score: score,
       _readiness_band: str(body?.readinessBand, 80),
       _classification: classification,
-      _routing: body?.routing ?? {},
+      _routing: routing,
       _marketing_consent: body?.marketingConsent === true,
       _request_type: requestType,
       _action_label: actionLabel,
