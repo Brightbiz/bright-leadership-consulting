@@ -27,7 +27,11 @@ export type Q11Key =
 export type Q11aKey = "customisation" | "confidential" | "advisory" | "unsuitable" | "uncertain";
 export type Q12 = "now" | "30d" | "3m" | "6m" | "later" | "none";
 export type Q13 = "approve" | "share" | "budget" | "sponsor" | "lead" | "research" | "none";
-export type Q14 = "card" | "invoice" | "po" | "download" | "review" | "notready";
+/** Priced context — shown only for Individual and Multiple digital access. */
+export type Q14Priced = "card" | "invoice" | "po" | "download" | "review" | "notready";
+/** Unpriced context — organisational, facilitated, tailored and unresolved routes. */
+export type Q14Unpriced = "reviewoptions" | "decisionpack" | "proposal" | "discuss" | "notready2";
+export type Q14 = Q14Priced | Q14Unpriced;
 
 export type AuditState = {
   readiness: (number | null)[];
