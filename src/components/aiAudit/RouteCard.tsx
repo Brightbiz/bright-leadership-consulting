@@ -124,11 +124,7 @@ const RouteCard = ({
       )}
 
       <p className="mt-3 text-[14px] leading-relaxed text-navy-foreground/75">{meta.incl}</p>
-      {meta.proposed && (
-        <p className="mt-2 text-[13px] italic leading-relaxed text-navy-note">
-          {meta.proposed}
-        </p>
-      )}
+
 
       {price && (
         <div className="mt-5">
