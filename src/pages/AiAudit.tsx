@@ -10,6 +10,7 @@ import DetailsForm from "@/components/aiAudit/DetailsForm";
 
 import {
   GENERAL_INTEREST_QUESTION,
+  INTRO_PROMISE,
   MISMATCH_COPY,
   PROGRAMME_PAGE_URL,
   Q10_OPTIONS,
@@ -17,7 +18,8 @@ import {
   Q11_OPTIONS,
   Q12_OPTIONS,
   Q13_OPTIONS,
-  Q14_OPTIONS,
+  Q14_PRICED_HEADING,
+  Q14_UNPRICED_HEADING,
   Q9_OPTIONS,
   QTY_OPTIONS,
   READINESS_QUESTIONS,
@@ -28,6 +30,9 @@ import {
   classify,
   computeRoute,
   initialState,
+  isQ14ValidForContext,
+  q14ContextIsPriced,
+  q14OptionsFor,
   readinessTotal,
   resolvedQuantity,
   type Action,
@@ -167,6 +172,28 @@ const AiAudit = () => {
     trackAuditStepView(screen, PROGRESS[screen]);
   }, [screen]);
 
+  /**
+   * Second layer of protection behind the resequencing: an answer given under
+   * one Q14 context must never survive a change to an earlier answer that
+   * flips the route priced↔unpriced, in either direction.
+   */
+  useEffect(() => {
+    if (screen !== "q14") return;
+    if (state.q14 && !isQ14ValidForContext(state)) {
+      setState((s) => ({ ...s, q14: null }));
+    }
+  }, [screen, state]);
+
+  /** Screen changes move focus to the new heading; selections never do. */
+  useEffect(() => {
+    if (screen === "intro") return;
+    const heading = document.querySelector<HTMLElement>("main h1");
+    if (!heading) return;
+    heading.setAttribute("tabindex", "-1");
+    heading.focus({ preventScroll: true });
+  }, [screen, readinessIndex]);
+
+
   /* --------------------------------------------------------- result event */
 
   useEffect(() => {
@@ -245,14 +272,19 @@ const AiAudit = () => {
 
   const afterQ11 = () => goto(state.q11.tailored ? "q11a" : "q12");
 
-  const afterQ14 = () => {
+  /**
+   * Quantity resolves between Q13 and Q14, never after it. Q14 must only ever
+   * render against a settled route, so the priced/unpriced option set it shows
+   * is guaranteed to match the route the respondent is actually being sent to.
+   */
+  const afterQ13 = () => {
     setState((s) => ({ ...s, exactQty: null }));
     if (route.type === "unresolved") {
       setQtyChoice(null);
       goto("quantityUnresolved");
       return;
     }
-    goto("result");
+    goto("q14");
   };
 
   const finaliseQty = () => {
@@ -266,8 +298,10 @@ const AiAudit = () => {
         exactQty: null,
       }));
     }
-    goto("result");
+    // Quantity is now settled — Q14 computes its context fresh on render.
+    goto("q14");
   };
+
 
   const onExactQtyChange = (raw: string) => {
     const n = Number(raw);
@@ -345,12 +379,10 @@ const AiAudit = () => {
       window.setTimeout(() => window.location.assign(destination), 120);
       return;
     }
+    // Information actions are labelled as requests and always collect details
+    // first. The only immediate file download in the audit is the public
+    // summary on the general-interest terminal path.
 
-
-    if (action.kind === "info" && classification === "Not currently qualified") {
-      downloadPublicSummary();
-      return;
-    }
 
     if (action.kind === "email") {
       window.location.href =
@@ -375,7 +407,7 @@ const AiAudit = () => {
       q11a: "Tailored delivery reason",
       q12: "Timing",
       q13: "Decision role",
-      q14: "Purchasing preference",
+      q14: "Preferred next step",
       quantityUnresolved: "Participant estimate",
       details: "Contact and delivery details",
       result: "Your readiness result and recommended route",
@@ -397,10 +429,9 @@ const AiAudit = () => {
             <em className="text-gold not-italic">or just nodding along?</em>
           </h1>
           <p className="mt-6 max-w-[560px] text-[15px] leading-relaxed text-navy-foreground/75">
-            Eight questions on how your organisation connects AI with leadership judgement, followed
-            by a short set of questions to match you to the right route. You'll get an immediate
-            readiness result and a personalised recommendation — no call required to reach a decision.
+            {INTRO_PROMISE}
           </p>
+
           <button
             type="button"
             className={`${primaryBtn} mt-8`}
@@ -587,6 +618,7 @@ const AiAudit = () => {
     }
 
     if (screen === "q12" || screen === "q13" || screen === "q14") {
+      const q14Priced = q14ContextIsPriced(state);
       const config = {
         q12: {
           eyebrow: "Routing · When is access or delivery required?",
@@ -595,22 +627,25 @@ const AiAudit = () => {
           set: (v: string) => setState((s) => ({ ...s, q12: v as Q12 })),
           next: () => goto("q13"),
           label: "Next",
+          prompt: "Select the closest answer.",
         },
         q13: {
           eyebrow: "Routing · What role do you have in the purchasing decision?",
           options: Q13_OPTIONS,
           value: state.q13,
           set: (v: string) => setState((s) => ({ ...s, q13: v as Q13 })),
-          next: () => goto("q14"),
+          next: afterQ13,
           label: "Next",
+          prompt: "Select the closest answer.",
         },
         q14: {
-          eyebrow: "Routing · How would you prefer to purchase?",
-          options: Q14_OPTIONS,
-          value: state.q14,
+          eyebrow: `Routing · ${q14Priced ? Q14_PRICED_HEADING : Q14_UNPRICED_HEADING}`,
+          options: q14OptionsFor(state),
+          value: isQ14ValidForContext(state) ? state.q14 : null,
           set: (v: string) => setState((s) => ({ ...s, q14: v as Q14 })),
-          next: afterQ14,
+          next: () => goto("result"),
           label: "See my result",
+          prompt: q14Priced ? Q14_PRICED_HEADING : Q14_UNPRICED_HEADING,
         },
       }[screen];
 
@@ -619,7 +654,7 @@ const AiAudit = () => {
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-gold">
             {config.eyebrow}
           </p>
-          <h1 className="mt-4 font-serif text-2xl leading-snug">Select the closest answer.</h1>
+          <h1 className="mt-4 max-w-[620px] font-serif text-2xl leading-snug">{config.prompt}</h1>
           <OptionList
             legend={config.eyebrow}
             name={screen}
@@ -643,6 +678,7 @@ const AiAudit = () => {
         </section>
       );
     }
+
 
     if (screen === "quantityUnresolved") {
       return (

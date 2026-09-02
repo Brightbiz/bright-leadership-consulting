@@ -20,11 +20,40 @@ const json = (body: unknown, status = 200) =>
 
 const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
+/** Operational request types the result cards can generate. */
+const REQUEST_TYPES = new Set([
+  "thinkific",
+  "purchaseRequest",
+  "invoice",
+  "po",
+  "info",
+  "proposal",
+  "scoping",
+  "call",
+  "email",
+]);
+
+/** Routing answers Q14 can hold, priced and unpriced contexts alike. */
+const Q14_VALUES = new Set([
+  "card",
+  "invoice",
+  "po",
+  "download",
+  "review",
+  "notready",
+  "reviewoptions",
+  "decisionpack",
+  "proposal",
+  "discuss",
+  "notready2",
+]);
+
 /** Requests that must never be accepted without a confirmed quantity. */
 const QTY_GATED = new Set(["invoice", "po"]);
 
 /** Requests that produce a buyer acknowledgement and an internal notice. */
-const COMMERCIAL = new Set(["invoice", "po", "pack", "scoping"]);
+const COMMERCIAL = new Set(["purchaseRequest", "invoice", "po", "proposal", "scoping"]);
+
 
 /** Layered submission protection thresholds. */
 const MAX_PER_IP_PER_HOUR = 10;
@@ -104,7 +133,16 @@ Deno.serve(async (req) => {
       return json({ error: "Missing required details." }, 400);
     }
     if (!requestType) return json({ error: "Missing request type." }, 400);
+    if (!REQUEST_TYPES.has(requestType)) return json({ error: "Unknown request type." }, 400);
     if (!idempotencyKey) return json({ error: "Missing submission key." }, 400);
+
+    // The Q14 answer is stored exactly as selected, in either context. It is a
+    // routing record only and is never conflated with the request type above.
+    const routing = (body?.routing ?? {}) as Record<string, unknown>;
+    if (routing.q14 !== undefined && routing.q14 !== null && !Q14_VALUES.has(String(routing.q14))) {
+      return json({ error: "Unknown routing preference." }, 400);
+    }
+
 
     const score = Number(body?.readinessScore);
     if (!Number.isInteger(score) || score < 8 || score > 32) {
@@ -210,7 +248,7 @@ Deno.serve(async (req) => {
       _readiness_score: score,
       _readiness_band: str(body?.readinessBand, 80),
       _classification: classification,
-      _routing: body?.routing ?? {},
+      _routing: routing,
       _marketing_consent: body?.marketingConsent === true,
       _request_type: requestType,
       _action_label: actionLabel,

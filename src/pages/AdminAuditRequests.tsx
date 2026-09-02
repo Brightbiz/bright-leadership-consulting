@@ -23,6 +23,8 @@ interface AuditRequestRow {
   organisation: string | null;
   job_title: string | null;
   request_type: string;
+  /** Joined audit response — carries the respondent's stored routing answers. */
+  ai_audit_responses?: { routing: Record<string, unknown> | null } | null;
   action_label: string;
   product: string;
   participant_quantity: number | null;
@@ -55,6 +57,43 @@ const CRM_BADGE: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
   failed: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
+
+/**
+ * The stored operational request type, rendered in words. This is the
+ * downstream action generated from the result card, and is deliberately
+ * separate from the respondent's own recorded routing answer below.
+ */
+const REQUEST_TYPE_LABELS: Record<string, string> = {
+  thinkific: "Card purchase (programme platform)",
+  purchaseRequest: "Purchase request",
+  invoice: "Invoice request",
+  po: "Purchase-order request",
+  info: "Information / decision-pack request",
+  proposal: "Written-proposal request",
+  scoping: "Tailored scoping request",
+  call: "Scoping-conversation request",
+  email: "Emailed question",
+};
+
+/** The respondent's own Q14 answer, stored unchanged and shown in words. */
+const ROUTING_Q14_LABELS: Record<string, string> = {
+  card: "Prefers to pay online by card",
+  invoice: "Prefers to receive an invoice",
+  po: "Prefers to use a purchase order",
+  download: "Wants information for internal approval",
+  review: "Wants to review the recommendation before deciding",
+  notready: "Not ready to purchase",
+  reviewoptions: "Wants organisational options reviewed",
+  decisionpack: "Wants an internal decision pack",
+  proposal: "Wants a written proposal",
+  discuss: "Wants to discuss delivery requirements",
+  notready2: "Not ready to proceed",
+};
+
+const requestTypeLabel = (value: string) => REQUEST_TYPE_LABELS[value] ?? value;
+const routingQ14Label = (value: string | null | undefined) =>
+  value ? (ROUTING_Q14_LABELS[value] ?? value) : null;
+
 
 /** Whole hours, or days once beyond 48 hours. */
 const ageLabel = (iso: string) => {
@@ -92,7 +131,7 @@ const AdminAuditRequests = () => {
     setLoading(true);
     const { data, error } = await (supabase as any)
       .from("ai_audit_requests")
-      .select("*")
+      .select("*, ai_audit_responses(routing)")
       .order("created_at", { ascending: false });
     if (error) {
       toast({ title: "Could not load audit requests", variant: "destructive" });
@@ -371,7 +410,17 @@ const AdminAuditRequests = () => {
                     <span className="block text-muted-foreground">{r.organisation ?? ""}</span>
                   </TableCell>
                   <TableCell className="text-xs">
-                    <span className="block font-medium">{r.request_type}</span>
+                    <span className="block font-medium">
+                      {requestTypeLabel(r.request_type)}
+                    </span>
+                    {routingQ14Label(
+                      r.ai_audit_responses?.routing?.q14 as string | undefined,
+                    ) && (
+                      <span className="block text-muted-foreground">
+                        Respondent's stated next step:{" "}
+                        {routingQ14Label(r.ai_audit_responses?.routing?.q14 as string | undefined)}
+                      </span>
+                    )}
                     <span className="block text-muted-foreground">{r.action_label}</span>
                   </TableCell>
                   <TableCell className="text-xs">{r.participant_quantity ?? "—"}</TableCell>

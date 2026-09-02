@@ -200,7 +200,12 @@ export const Q13_OPTIONS = [
   ["none", "I am not involved in purchasing"],
 ] as const;
 
-export const Q14_OPTIONS = [
+/**
+ * Q14 is dynamic. The priced set is shown only when the settled route
+ * recommends Individual or Multiple digital access; every other route sees the
+ * unpriced set, so no card/invoice language appears where no price applies.
+ */
+export const Q14_PRICED_OPTIONS = [
   ["card", "Pay online by card"],
   ["invoice", "Receive an invoice"],
   ["po", "Use a purchase order"],
@@ -208,6 +213,18 @@ export const Q14_OPTIONS = [
   ["review", "Review the recommendation before deciding"],
   ["notready", "I am not ready to purchase"],
 ] as const;
+
+export const Q14_UNPRICED_OPTIONS = [
+  ["reviewoptions", "Review organisational options"],
+  ["decisionpack", "Receive an internal decision pack"],
+  ["proposal", "Request a written proposal"],
+  ["discuss", "Discuss delivery requirements"],
+  ["notready2", "I am not ready to proceed"],
+] as const;
+
+export const Q14_PRICED_HEADING = "How would you prefer to purchase?";
+export const Q14_UNPRICED_HEADING = "What would be most useful as your next step?";
+
 
 export const QTY_OPTIONS = [
   ["A", "1 participant"],
@@ -230,7 +247,7 @@ export type ProductKey =
   | "tailored"
   | "digitalUnresolved";
 
-export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; proposed?: string }> = {
+export const PRODUCT_META: Record<ProductKey, { title: string; incl: string }> = {
   individual: {
     title: "Individual Digital Access",
     incl: `10 core leadership modules · applied assessment · AI Leadership Blueprint™ capstone. ${CPD_LINE}`,
@@ -241,13 +258,11 @@ export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; pro
   },
   organisational: {
     title: "Organisational Digital Access",
-    incl: `The full digital programme across your organisation. ${CPD_LINE}`,
-    proposed: "Participant allocation approach: proposed — subject to approval.",
+    incl: `The full digital programme across your organisation, with participant access allocated to named individuals. ${CPD_LINE}`,
   },
   facilitated: {
     title: "Facilitated Team Cohort",
     incl: "Digital programme access, with facilitated team sessions to apply the material together.",
-    proposed: "Facilitated sessions: proposed — subject to approval.",
   },
   tailored: {
     title: "Tailored Organisational Delivery",
@@ -258,6 +273,11 @@ export const PRODUCT_META: Record<ProductKey, { title: string; incl: string; pro
     incl: "Individual, Multiple and Organisational digital access all deliver the same core programme at different scale. No tier is committed until a participant number is confirmed.",
   },
 };
+
+/** Approved introductory promise. Replaces the earlier "no call required" line. */
+export const INTRO_PROMISE =
+  "Eight questions on how your organisation connects AI with leadership judgement, followed by a short set of questions to match you to the right route. You'll receive an immediate readiness result and a personalised recommendation, helping you identify the most proportionate next step before deciding whether further discussion is useful.";
+
 
 export const MISMATCH_COPY =
   "Bright Leadership Consulting focuses on the leadership, strategic, governance and organisational dimensions of AI. It does not provide coding, software-development or technical implementation services. Your readiness result above still stands as decision-support information.";
