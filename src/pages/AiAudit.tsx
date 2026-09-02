@@ -207,6 +207,7 @@ const AiAudit = () => {
       recommendedProduct: state.stillUncertain ? "digitalUnresolved" : recommended,
       alternativeProduct: "alternative" in route ? (route.alternative ?? null) : null,
       quantityResolved: resolvedQuantity(state) !== null,
+      q14: state.q14,
     });
     setResultReported(true);
   }, [screen, resultReported, route, state, classification]);
@@ -370,12 +371,13 @@ const AiAudit = () => {
       classification,
       emphasis,
       quantity: resolvedQuantity(state),
+      q14: state.q14,
     });
 
     if (action.kind === "thinkific") {
       setCheckoutStarted(true);
       const destination = buildThinkificPurchaseUrl({ campaignSearch: search });
-      trackAuditOutboundPurchase(destination);
+      trackAuditOutboundPurchase(destination, state.q14);
       window.setTimeout(() => window.location.assign(destination), 120);
       return;
     }

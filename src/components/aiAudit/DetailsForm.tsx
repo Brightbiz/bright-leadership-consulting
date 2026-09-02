@@ -140,6 +140,7 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
     trackAuditRequestSubmitted(action.kind, quantity, {
       duplicate: payload.duplicate,
       replayed: payload.replayed,
+      q14: state.q14,
     });
     // Unfinished answers must not survive a completed submission.
     clearProgress();
