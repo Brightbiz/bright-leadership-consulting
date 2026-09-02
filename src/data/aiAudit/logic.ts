@@ -119,10 +119,9 @@ const baselineByQty = (qty: Q10 | null): Baseline => {
 const rule6Route = (q9: Q9 | null, qty: Q10 | null) => {
   const base = baselineByQty(qty);
   let alt: ProductKey | null = null;
-  if (q9 === "B" || q9 === "D") {
-    if (qty === "C" || qty === "D") base.product = "multiple";
-    if (qty === "E" || qty === "F" || qty === "G") base.product = "organisational";
-  }
+  // Q9 = A, B and D carry no override: the baseline product already expresses
+  // them, and none of them produces an alternative.
+
   if (q9 === "C") {
     if (qty === "H") base.product = "organisational-unresolved";
     alt = "facilitated";
