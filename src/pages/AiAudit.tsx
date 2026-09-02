@@ -167,6 +167,28 @@ const AiAudit = () => {
     trackAuditStepView(screen, PROGRESS[screen]);
   }, [screen]);
 
+  /**
+   * Second layer of protection behind the resequencing: an answer given under
+   * one Q14 context must never survive a change to an earlier answer that
+   * flips the route priced↔unpriced, in either direction.
+   */
+  useEffect(() => {
+    if (screen !== "q14") return;
+    if (state.q14 && !isQ14ValidForContext(state)) {
+      setState((s) => ({ ...s, q14: null }));
+    }
+  }, [screen, state]);
+
+  /** Screen changes move focus to the new heading; selections never do. */
+  useEffect(() => {
+    if (screen === "intro") return;
+    const heading = document.querySelector<HTMLElement>("main h1");
+    if (!heading) return;
+    heading.setAttribute("tabindex", "-1");
+    heading.focus({ preventScroll: true });
+  }, [screen, readinessIndex]);
+
+
   /* --------------------------------------------------------- result event */
 
   useEffect(() => {
