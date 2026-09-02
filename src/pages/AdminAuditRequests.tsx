@@ -131,7 +131,7 @@ const AdminAuditRequests = () => {
     setLoading(true);
     const { data, error } = await (supabase as any)
       .from("ai_audit_requests")
-      .select("*")
+      .select("*, ai_audit_responses(routing)")
       .order("created_at", { ascending: false });
     if (error) {
       toast({ title: "Could not load audit requests", variant: "destructive" });
