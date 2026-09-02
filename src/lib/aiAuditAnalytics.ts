@@ -19,6 +19,15 @@
 import { trackEvent, reportEnquiryConversion } from "./analytics";
 import { auditSessionId, isStagingHost, isTestMode } from "./auditSession";
 
+/**
+ * The respondent's raw Q14 routing selection, passed through unchanged. Only
+ * included once Q14 has actually been answered; never derived, and never a
+ * substitute for the action, label, product or classification fields.
+ */
+function q14Param(value?: string | null): Record<string, string> {
+  return value ? { q14_value: value } : {};
+}
+
 /** Events already emitted for this browser session's audit attempt. */
 const emitted = new Set<string>();
 
@@ -59,6 +68,8 @@ export interface AuditResultEvent {
   recommendedProduct: string;
   alternativeProduct?: string | null;
   quantityResolved: boolean;
+  /** Raw Q14 selection, when answered. */
+  q14?: string | null;
 }
 
 /**
@@ -75,6 +86,7 @@ export function trackAuditResultView(e: AuditResultEvent) {
       recommended_product: e.recommendedProduct,
       alternative_product: e.alternativeProduct ?? null,
       quantity_resolved: e.quantityResolved,
+      ...q14Param(e.q14),
       conversion: true,
       conversion_type: "audit",
     },
@@ -89,6 +101,8 @@ export interface AuditActionEvent {
   classification: string;
   emphasis: "primary" | "secondary" | "tertiary";
   quantity?: number | null;
+  /** Raw Q14 selection, when answered. */
+  q14?: string | null;
 }
 
 /** Any result-page action click. Engagement only — never a conversion. */
@@ -102,6 +116,7 @@ export function trackAuditActionClick(e: AuditActionEvent) {
       buyer_classification: e.classification,
       cta_emphasis: e.emphasis,
       participant_quantity: e.quantity ?? null,
+      ...q14Param(e.q14),
       conversion: false,
       event_category: "engagement",
     },
@@ -115,7 +130,7 @@ export function trackAuditActionClick(e: AuditActionEvent) {
  * classified as an engagement event: the completed platform sale is the only
  * purchase conversion.
  */
-export function trackAuditOutboundPurchase(destination: string) {
+export function trackAuditOutboundPurchase(destination: string, q14?: string | null) {
   emit(
     "ai_audit_outbound_checkout_click",
     {
@@ -123,6 +138,7 @@ export function trackAuditOutboundPurchase(destination: string) {
       programme_name: "Strategic Leadership in the Age of AI",
       product_tier: "individual_digital_place",
       price_gbp: 895,
+      ...q14Param(q14),
       outbound: true,
       conversion: false,
       conversion_type: null,
@@ -141,7 +157,7 @@ export function trackAuditOutboundPurchase(destination: string) {
 export function trackAuditRequestSubmitted(
   requestType: string,
   quantity: number | null,
-  opts?: { duplicate?: boolean; replayed?: boolean },
+  opts?: { duplicate?: boolean; replayed?: boolean; q14?: string | null },
 ) {
   if (opts?.replayed) return;
   emit(
@@ -150,6 +166,7 @@ export function trackAuditRequestSubmitted(
       request_type: requestType,
       participant_quantity: quantity ?? null,
       merged_duplicate: opts?.duplicate === true,
+      ...q14Param(opts?.q14),
       conversion: true,
       conversion_type: "qualified_request",
     },
