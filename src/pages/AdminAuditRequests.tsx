@@ -23,6 +23,8 @@ interface AuditRequestRow {
   organisation: string | null;
   job_title: string | null;
   request_type: string;
+  /** Joined audit response — carries the respondent's stored routing answers. */
+  ai_audit_responses?: { routing: Record<string, unknown> | null } | null;
   action_label: string;
   product: string;
   participant_quantity: number | null;
