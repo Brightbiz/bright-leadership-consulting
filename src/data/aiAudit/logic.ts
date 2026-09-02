@@ -450,7 +450,7 @@ export const q14OptionsFor = (s: AuditState) =>
  * earlier answer. Checked on every entry to the Q14 screen, in both directions.
  */
 export const isQ14ValidForContext = (s: AuditState): boolean =>
-  s.q14 !== null && q14OptionsFor(s).some(([value]) => value === s.q14);
+  s.q14 !== null && q14OptionsFor(s).some((option) => option[0] === s.q14);
 
 /** Part F — classification decides the category; Q14 the transaction type. */
 export function buildCtaPlan(product: ProductKey, s: AuditState): CtaPlan {
