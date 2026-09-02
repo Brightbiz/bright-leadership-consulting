@@ -587,6 +587,7 @@ const AiAudit = () => {
     }
 
     if (screen === "q12" || screen === "q13" || screen === "q14") {
+      const q14Priced = q14ContextIsPriced(state);
       const config = {
         q12: {
           eyebrow: "Routing · When is access or delivery required?",
@@ -595,22 +596,25 @@ const AiAudit = () => {
           set: (v: string) => setState((s) => ({ ...s, q12: v as Q12 })),
           next: () => goto("q13"),
           label: "Next",
+          prompt: "Select the closest answer.",
         },
         q13: {
           eyebrow: "Routing · What role do you have in the purchasing decision?",
           options: Q13_OPTIONS,
           value: state.q13,
           set: (v: string) => setState((s) => ({ ...s, q13: v as Q13 })),
-          next: () => goto("q14"),
+          next: afterQ13,
           label: "Next",
+          prompt: "Select the closest answer.",
         },
         q14: {
-          eyebrow: "Routing · How would you prefer to purchase?",
-          options: Q14_OPTIONS,
-          value: state.q14,
+          eyebrow: `Routing · ${q14Priced ? Q14_PRICED_HEADING : Q14_UNPRICED_HEADING}`,
+          options: q14OptionsFor(state),
+          value: isQ14ValidForContext(state) ? state.q14 : null,
           set: (v: string) => setState((s) => ({ ...s, q14: v as Q14 })),
-          next: afterQ14,
+          next: () => goto("result"),
           label: "See my result",
+          prompt: q14Priced ? Q14_PRICED_HEADING : Q14_UNPRICED_HEADING,
         },
       }[screen];
 
@@ -619,7 +623,7 @@ const AiAudit = () => {
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-gold">
             {config.eyebrow}
           </p>
-          <h1 className="mt-4 font-serif text-2xl leading-snug">Select the closest answer.</h1>
+          <h1 className="mt-4 max-w-[620px] font-serif text-2xl leading-snug">{config.prompt}</h1>
           <OptionList
             legend={config.eyebrow}
             name={screen}
@@ -643,6 +647,7 @@ const AiAudit = () => {
         </section>
       );
     }
+
 
     if (screen === "quantityUnresolved") {
       return (
