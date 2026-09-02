@@ -133,7 +133,16 @@ Deno.serve(async (req) => {
       return json({ error: "Missing required details." }, 400);
     }
     if (!requestType) return json({ error: "Missing request type." }, 400);
+    if (!REQUEST_TYPES.has(requestType)) return json({ error: "Unknown request type." }, 400);
     if (!idempotencyKey) return json({ error: "Missing submission key." }, 400);
+
+    // The Q14 answer is stored exactly as selected, in either context. It is a
+    // routing record only and is never conflated with the request type above.
+    const routing = (body?.routing ?? {}) as Record<string, unknown>;
+    if (routing.q14 !== undefined && routing.q14 !== null && !Q14_VALUES.has(String(routing.q14))) {
+      return json({ error: "Unknown routing preference." }, 400);
+    }
+
 
     const score = Number(body?.readinessScore);
     if (!Number.isInteger(score) || score < 8 || score > 32) {
