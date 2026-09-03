@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
+import { openCookiePreferences } from "@/lib/consent";
 
 interface AuditShellProps {
   /** Completion percentage, 0–100. */
@@ -45,7 +47,25 @@ const AuditShell = ({ progress, stepLabel, children }: AuditShellProps) => (
       {stepLabel}
     </p>
 
-    <main className="mx-auto w-full max-w-[760px] px-5 pb-24 pt-12">{children}</main>
+    <main className="mx-auto w-full max-w-[760px] px-5 pb-16 pt-12">{children}</main>
+
+    <div className="mx-auto w-full max-w-[760px] px-5 pb-16">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-navy-foreground/15 pt-6">
+        <Link
+          to="/privacy"
+          className="inline-flex items-center rounded-sm py-2 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        >
+          Privacy Notice
+        </Link>
+        <button
+          type="button"
+          onClick={openCookiePreferences}
+          className="inline-flex items-center rounded-sm py-2 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        >
+          Cookie Preferences
+        </button>
+      </div>
+    </div>
   </div>
 );
 
