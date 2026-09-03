@@ -53,14 +53,14 @@ const AuditShell = ({ progress, stepLabel, children }: AuditShellProps) => (
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-navy-foreground/15 pt-6">
         <Link
           to="/privacy"
-          className="inline-flex items-center rounded-sm py-2 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className="inline-flex min-h-11 items-center rounded-sm py-3 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           Privacy Notice
         </Link>
         <button
           type="button"
           onClick={openCookiePreferences}
-          className="inline-flex items-center rounded-sm py-2 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className="inline-flex min-h-11 items-center rounded-sm py-3 text-xs text-navy-foreground/60 underline underline-offset-4 transition-colors hover:text-navy-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           Cookie Preferences
         </button>
