@@ -161,6 +161,22 @@ Deno.serve(async (req) => {
 
     /* --------------------------------------------------------- application */
 
+    // Date-locked application window: 14 September – 11 October 2026 (UK time).
+    const OPEN_AT = Date.parse("2026-09-13T23:00:00.000Z");
+    const CLOSE_AT = Date.parse("2026-10-11T22:59:59.999Z");
+    const nowMs = Date.now();
+    if (nowMs < OPEN_AT || nowMs > CLOSE_AT) {
+      return json(
+        {
+          error:
+            nowMs < OPEN_AT
+              ? "Applications open on 14 September 2026."
+              : "Applications for the founding cohort have closed.",
+        },
+        403,
+      );
+    }
+
     const workEmail = str(payload.workEmail, 255).toLowerCase();
     const fundingRoute = str(payload.fundingRoute, 60);
     const anonymisable = str(payload.anonymisable, 20);
