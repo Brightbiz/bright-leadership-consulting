@@ -18,6 +18,16 @@ vi.mock("@/integrations/supabase/client", () => ({
   supabase: { functions: { invoke: vi.fn() } },
 }));
 
+/** Application window state under test; the real clock is left alone. */
+const windowMock = vi.hoisted(() => ({ state: "open" as "before" | "open" | "closed" }));
+
+vi.mock("@/data/edlIntensive", async () => {
+  const actual = await vi.importActual<typeof import("@/data/edlIntensive")>(
+    "@/data/edlIntensive",
+  );
+  return { ...actual, edlWindowState: () => windowMock.state };
+});
+
 const renderAt = (ui: React.ReactElement, path = "/") =>
   render(
     <HelmetProvider>
