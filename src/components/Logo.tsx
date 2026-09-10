@@ -7,57 +7,60 @@ interface LogoProps {
   variant?: "stacked" | "horizontal" | "light";
 }
 
+const ALT = "Bright Leadership Consulting";
+
 const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
   ({ className = "", isCompact = false, variant = "stacked" }, ref) => {
-    const isLight = variant === "light";
-    const textColor = isLight ? "text-navy-foreground" : "text-foreground";
-    const subColor = isLight ? "text-navy-foreground/70" : "text-foreground/70";
+    if (variant === "light") {
+      return (
+        <a ref={ref} href="/" className={cn("inline-flex items-center", className)}>
+          <img
+            src="/logo-wordmark-light.svg"
+            alt={ALT}
+            width={384}
+            height={60}
+            className="h-9 w-auto"
+          />
+        </a>
+      );
+    }
 
     if (variant === "horizontal") {
       return (
-        <a ref={ref} href="/" className={cn("flex items-baseline gap-[0.4em]", className)}>
-          <span className="flex items-baseline gap-[0.4em]">
-          <span
+        <a ref={ref} href="/" className={cn("inline-flex items-center", className)}>
+          {/* Horizontal wordmark: primary header lock-up on light backgrounds */}
+          <img
+            src="/logo-wordmark.svg"
+            alt={ALT}
+            width={384}
+            height={60}
             className={cn(
-              "font-serif font-bold leading-none transition-all duration-300",
-              textColor,
-              isCompact ? "text-[1.15rem]" : "text-[1.35rem]"
+              "w-auto transition-all duration-300 max-[380px]:hidden",
+              isCompact ? "h-7" : "h-9"
             )}
-            style={{ letterSpacing: "0.035em" }}
-          >
-            Bright
-          </span>
-          <span
-            className={cn(
-              "font-serif font-normal leading-none transition-all duration-300",
-              subColor,
-              isCompact ? "text-[0.78rem]" : "text-[0.88rem]"
-            )}
-            style={{ letterSpacing: "0.025em" }}
-          >
-            Leadership Consulting
-          </span>
-          </span>
+          />
+          {/* Stacked fallback only where the horizontal lock-up would be too small to read */}
+          <img
+            src="/logo-stacked.svg"
+            alt={ALT}
+            width={214}
+            height={82}
+            aria-hidden="true"
+            className="hidden w-auto max-[380px]:block h-10"
+          />
         </a>
       );
     }
 
     return (
-      <a ref={ref} href="/" className={cn("flex flex-col", className)}>
-        <span className="flex flex-col">
-        <span
-          className={cn("font-serif font-bold leading-none text-[1.35rem]", textColor)}
-          style={{ letterSpacing: "0.035em" }}
-        >
-          Bright
-        </span>
-        <span
-          className={cn("font-serif font-normal leading-none text-[0.78rem] mt-[0.35em]", subColor)}
-          style={{ letterSpacing: "0.025em" }}
-        >
-          Leadership Consulting
-        </span>
-        </span>
+      <a ref={ref} href="/" className={cn("inline-flex items-center", className)}>
+        <img
+          src="/logo-stacked.svg"
+          alt={ALT}
+          width={214}
+          height={82}
+          className="h-12 w-auto"
+        />
       </a>
     );
   }
