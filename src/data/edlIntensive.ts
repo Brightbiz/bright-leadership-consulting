@@ -26,6 +26,12 @@ export const EDL = {
 } as const;
 
 /**
+ * Private mode. While true the programme pages are reachable only by a
+ * signed-in administrator and no public submission is accepted.
+ */
+export const EDL_PRIVATE = true;
+
+/**
  * Application window, date-locked. Applications open at 00.00 UK time on
  * 14 September 2026 and close at 11.59 pm UK time on 11 October 2026 (BST).
  */

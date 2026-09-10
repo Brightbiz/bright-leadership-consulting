@@ -11,6 +11,7 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import PageLoader from "@/components/PageLoader";
 import CookieConsent from "@/components/CookieConsent";
+import EdlPrivateRoute from "@/components/EdlPrivateRoute";
 
 // Core pages
 const Index = lazy(() => import("./pages/Index"));
@@ -100,9 +101,10 @@ const AnimatedRoutes = () => {
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
           {/* Unpublished pending review — noindex, not linked from navigation. */}
           <Route path="/ai-audit" element={<PageTransition><AiAudit /></PageTransition>} />
-          <Route path="/executive-decision-leadership-intensive" element={<PageTransition><EdlIntensive /></PageTransition>} />
-          <Route path="/executive-decision-leadership-intensive/apply" element={<PageTransition><EdlApply /></PageTransition>} />
-          <Route path="/executive-decision-leadership-intensive/employer-information" element={<PageTransition><EdlEmployerInformation /></PageTransition>} />
+          {/* Held private: administrator sign-in required. */}
+          <Route path="/executive-decision-leadership-intensive" element={<PageTransition><EdlPrivateRoute><EdlIntensive /></EdlPrivateRoute></PageTransition>} />
+          <Route path="/executive-decision-leadership-intensive/apply" element={<PageTransition><EdlPrivateRoute><EdlApply /></EdlPrivateRoute></PageTransition>} />
+          <Route path="/executive-decision-leadership-intensive/employer-information" element={<PageTransition><EdlPrivateRoute><EdlEmployerInformation /></EdlPrivateRoute></PageTransition>} />
 
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
