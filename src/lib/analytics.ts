@@ -297,3 +297,132 @@ export function trackPaymentSurfaceInteraction(
     expected_surface: false,
   });
 }
+
+/* --------------------------------------------------------------------------
+ * Executive Decision Leadership Intensive™ — application funnel.
+ *
+ * Names, email addresses, free-text answers, decision-case content, conflict
+ * detail and access-support information are never sent. Only the categorical
+ * properties listed in the programme brief are permitted.
+ * ------------------------------------------------------------------------ */
+
+/** Sales page viewed. */
+export function trackProgrammePageView(params: {
+  programme: string;
+  source?: string;
+  campaign?: string;
+  deviceCategory: string;
+}) {
+  trackEvent("programme_page_view", {
+    programme_name: params.programme,
+    ...(params.source ? { source: params.source } : {}),
+    ...(params.campaign ? { campaign: params.campaign } : {}),
+    device_category: params.deviceCategory,
+  });
+}
+
+/** Primary "Apply for the founding cohort" CTA selected. */
+export function trackProgrammeApplyClick(params: {
+  programme: string;
+  pageSection: string;
+  source?: string;
+}) {
+  trackEvent("programme_apply_click", {
+    programme_name: params.programme,
+    page_section: params.pageSection,
+    ...(params.source ? { source: params.source } : {}),
+  });
+}
+
+/** First interaction with the application form. */
+export function trackProgrammeApplicationStart(params: { programme: string; source?: string }) {
+  trackEvent("programme_application_start", {
+    programme_name: params.programme,
+    ...(params.source ? { source: params.source } : {}),
+    timestamp: new Date().toISOString(),
+  });
+}
+
+/** A valid application was stored. */
+export function trackProgrammeApplicationSubmit(params: {
+  programme: string;
+  fundingRoute: string;
+  recruitmentSource: string;
+}) {
+  trackEvent("programme_application_submit", {
+    programme_name: params.programme,
+    funding_route: params.fundingRoute,
+    recruitment_source: params.recruitmentSource,
+  });
+}
+
+/** An employer-information request was stored. */
+export function trackProgrammeEmployerInfoRequest(params: {
+  programme: string;
+  invoiceRequired: string;
+  poRequired: string;
+}) {
+  trackEvent("programme_employer_info_request", {
+    programme_name: params.programme,
+    invoice_required: params.invoiceRequired,
+    po_required: params.poRequired,
+  });
+}
+
+/** Administratively triggered stages of the admissions journey. */
+export function trackProgrammeClarificationInvite(params: {
+  programme: string;
+  reasonCategory: string;
+}) {
+  trackEvent("programme_clarification_invite", {
+    programme_name: params.programme,
+    reason_category: params.reasonCategory,
+  });
+}
+
+export function trackProgrammeOfferIssued(params: {
+  programme: string;
+  route: "self" | "employer";
+  deadline: string;
+}) {
+  trackEvent("programme_offer_issued", {
+    programme_name: params.programme,
+    funding_route_type: params.route,
+    offer_deadline: params.deadline,
+  });
+}
+
+export function trackProgrammeEmployerCommitment(params: {
+  programme: string;
+  commitmentType: string;
+  date: string;
+}) {
+  trackEvent("programme_employer_commitment", {
+    programme_name: params.programme,
+    commitment_type: params.commitmentType,
+    commitment_date: params.date,
+  });
+}
+
+export function trackProgrammeEnrolmentConfirmed(params: {
+  programme: string;
+  fundingClassification: string;
+}) {
+  trackEvent("programme_enrolment_confirmed", {
+    programme_name: params.programme,
+    funding_classification: params.fundingClassification,
+  });
+}
+
+export function trackProgrammeWithdrawal(params: {
+  programme: string;
+  stage: string;
+  reasonCategory: string;
+}) {
+  trackEvent("programme_withdrawal", {
+    programme_name: params.programme,
+    withdrawal_stage: params.stage,
+    reason_category: params.reasonCategory,
+  });
+}
+
