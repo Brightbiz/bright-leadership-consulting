@@ -16,6 +16,7 @@ import {
   EDL_PRIVACY_NOTICE_VERSION,
   EDL_REFERRAL_SOURCES,
   EDL_YES_NO_UNSURE,
+  edlWindowState,
 } from "@/data/edlIntensive";
 import { trackProgrammeApplicationStart, trackProgrammeApplicationSubmit } from "@/lib/analytics";
 
