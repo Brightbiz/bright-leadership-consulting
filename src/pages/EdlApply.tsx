@@ -410,6 +410,7 @@ const EdlApply = () => {
   };
 
   const errorList = Object.entries(errors);
+  const windowState = edlWindowState();
 
 
 
