@@ -62,11 +62,13 @@ Deno.serve(async (req) => {
     const kind = str(body?.kind, 40);
     const payload = (body?.payload ?? {}) as Record<string, unknown>;
 
-    // Invisible honeypot. A real browser never fills this field.
+    // Invisible honeypot. A real browser never fills this field. Answer as if
+    // accepted so an automated client learns nothing from the response.
     if (str(body?.companyWebsite, 200) || str(payload.companyWebsite, 200)) {
       console.log("submit-edl-application: honeypot triggered");
-      return json({ error: "Submission rejected." }, 400);
+      return json({ success: true }, 200);
     }
+
 
     if (kind !== "application" && kind !== "employer_request") {
       return json({ error: "Unknown submission type." }, 400);

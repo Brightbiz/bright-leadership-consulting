@@ -35,6 +35,12 @@ const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
 const AiAudit = lazy(() => import("./pages/AiAudit"));
 
+// Executive Decision Leadership Intensive™ — staging only, not linked publicly.
+const EdlIntensive = lazy(() => import("./pages/EdlIntensive"));
+const EdlApply = lazy(() => import("./pages/EdlApply"));
+const EdlEmployerInformation = lazy(() => import("./pages/EdlEmployerInformation"));
+
+
 // Legal
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -47,6 +53,8 @@ const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 const AdminOutreach = lazy(() => import("./pages/AdminOutreach"));
 const AdminAuditRequests = lazy(() => import("./pages/AdminAuditRequests"));
+const AdminEdlApplications = lazy(() => import("./pages/AdminEdlApplications"));
+
 const AdminCpdAudit = lazy(() => import("./pages/AdminCpdAudit"));
 const AdminSecurity = lazy(() => import("./pages/AdminSecurity"));
 const AdminVerifyMfa = lazy(() => import("./pages/AdminVerifyMfa"));
@@ -92,6 +100,10 @@ const AnimatedRoutes = () => {
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
           {/* Unpublished pending review — noindex, not linked from navigation. */}
           <Route path="/ai-audit" element={<PageTransition><AiAudit /></PageTransition>} />
+          <Route path="/executive-decision-leadership-intensive" element={<PageTransition><EdlIntensive /></PageTransition>} />
+          <Route path="/executive-decision-leadership-intensive/apply" element={<PageTransition><EdlApply /></PageTransition>} />
+          <Route path="/executive-decision-leadership-intensive/employer-information" element={<PageTransition><EdlEmployerInformation /></PageTransition>} />
+
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
 
@@ -119,6 +131,8 @@ const AnimatedRoutes = () => {
           <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
           <Route path="/admin/outreach" element={<PageTransition><AdminOutreach /></PageTransition>} />
           <Route path="/admin/audit-requests" element={<PageTransition><AdminAuditRequests /></PageTransition>} />
+          <Route path="/admin/edl-applications" element={<PageTransition><AdminEdlApplications /></PageTransition>} />
+
           <Route path="/admin/cpd-audit" element={<PageTransition><AdminCpdAudit /></PageTransition>} />
           <Route path="/admin/security" element={<PageTransition><AdminSecurity /></PageTransition>} />
           <Route path="/admin/verify" element={<PageTransition><AdminVerifyMfa /></PageTransition>} />
