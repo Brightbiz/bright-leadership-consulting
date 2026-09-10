@@ -456,6 +456,48 @@ const EdlApply = () => {
     );
   }
 
+  if (windowState !== "open") {
+    const before = windowState === "before";
+    return (
+      <div className="min-h-screen bg-background">
+        <SEOHead
+          title="Applications — Executive Decision Leadership Intensive"
+          description="Application window for the Executive Decision Leadership Intensive founding cohort."
+          path={EDL.applyRoute}
+          noindex
+        />
+        <Header />
+        <main>
+          <section className="pt-36 pb-32 lg:pt-44 section-pearl">
+            <div className="container-brief">
+              <div className="max-w-[620px] rounded-sm border border-border bg-background p-8 lg:p-10">
+                <p className="kicker mb-6">Founding cohort · Six places</p>
+                <h1 className="mb-6 font-serif text-2xl font-semibold text-foreground">
+                  {before
+                    ? "Applications open on 14 September 2026."
+                    : "Applications for the founding cohort have closed."}
+                </h1>
+                <div className="space-y-5 text-sm leading-relaxed text-muted-foreground">
+                  <p>
+                    The application window is {EDL.applicationsWindow}. Applications
+                    close at {EDL.closingTime}.
+                  </p>
+                  <p>{EDL.programmeLine}</p>
+                </div>
+                <p className="mt-8 text-sm">
+                  <Link to={EDL.route} className="link-quiet">
+                    Return to the programme
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
