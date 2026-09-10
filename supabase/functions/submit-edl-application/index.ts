@@ -74,6 +74,12 @@ Deno.serve(async (req) => {
       return json({ error: "Unknown submission type." }, 400);
     }
 
+    // Programme held private: no public submission of any type is accepted.
+    const EDL_PRIVATE = true;
+    if (EDL_PRIVATE) {
+      return json({ error: "This programme is not open at present." }, 403);
+    }
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
