@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
@@ -165,6 +165,89 @@ const LIMITS: Partial<Record<keyof FormState, number>> = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * The two repeated controls read the live form through context, so they stay
+ * mounted between keystrokes and never lose focus mid-answer.
+ */
+interface FormContextValue {
+  form: FormState;
+  set: <K extends keyof FormState>(key: K, value: FormState[K]) => void;
+  errors: Record<string, string>;
+}
+
+const FormContext = createContext<FormContextValue | null>(null);
+const useFormContext = () => {
+  const ctx = useContext(FormContext);
+  if (!ctx) throw new Error("Form controls must be rendered inside the application form.");
+  return ctx;
+};
+
+/** Long-text control with an approved character limit and live counter. */
+const LongText = ({
+  id,
+  question,
+  note,
+  required = true,
+}: {
+  id: keyof FormState;
+  question: string;
+  note?: string;
+  required?: boolean;
+}) => {
+  const { form, set, errors } = useFormContext();
+  const max = LIMITS[id] ?? 600;
+  const value = String(form[id] ?? "");
+  return (
+    <div>
+      <label className={labelClass} htmlFor={id as string}>
+        {question}{" "}
+        <span className="text-muted-foreground">({required ? "required" : "optional"})</span>
+      </label>
+      <textarea
+        id={id as string}
+        rows={4}
+        maxLength={max}
+        className={field}
+        value={value}
+        onChange={(e) => set(id, e.target.value as FormState[typeof id])}
+        aria-invalid={!!errors[id as string]}
+        aria-describedby={`${id as string}-count`}
+      />
+      <p id={`${id as string}-count`} className={hint}>
+        {note ? `${note} ` : ""}
+        {value.length}/{max} characters.
+      </p>
+    </div>
+  );
+};
+
+const Check = ({
+  id,
+  children,
+  required = true,
+}: {
+  id: keyof FormState;
+  children: React.ReactNode;
+  required?: boolean;
+}) => {
+  const { form, set, errors } = useFormContext();
+  return (
+    <label className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+      <input
+        type="checkbox"
+        className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--navy))]"
+        checked={form[id] === true}
+        onChange={(e) => set(id, e.target.checked as FormState[typeof id])}
+        aria-invalid={!!errors[id as string]}
+      />
+      <span>
+        {children} <span className="text-muted-foreground">({required ? "required" : "optional"})</span>
+      </span>
+    </label>
+  );
+};
+
+
 const EdlApply = () => {
   const { toast } = useToast();
   const [step, setStep] = useState(0);
@@ -328,66 +411,7 @@ const EdlApply = () => {
 
   const errorList = Object.entries(errors);
 
-  /** Long-text control with an approved character limit and live counter. */
-  const LongText = ({
-    id,
-    question,
-    note,
-    required = true,
-  }: {
-    id: keyof FormState;
-    question: string;
-    note?: string;
-    required?: boolean;
-  }) => {
-    const max = LIMITS[id] ?? 600;
-    const value = String(form[id] ?? "");
-    return (
-      <div>
-        <label className={labelClass} htmlFor={id as string}>
-          {question}{" "}
-          <span className="text-muted-foreground">({required ? "required" : "optional"})</span>
-        </label>
-        <textarea
-          id={id as string}
-          rows={4}
-          maxLength={max}
-          className={field}
-          value={value}
-          onChange={(e) => set(id, e.target.value as FormState[typeof id])}
-          aria-invalid={!!errors[id as string]}
-          aria-describedby={`${id as string}-count`}
-        />
-        <p id={`${id as string}-count`} className={hint}>
-          {note ? `${note} ` : ""}
-          {value.length}/{max} characters.
-        </p>
-      </div>
-    );
-  };
 
-  const Check = ({
-    id,
-    children,
-    required = true,
-  }: {
-    id: keyof FormState;
-    children: React.ReactNode;
-    required?: boolean;
-  }) => (
-    <label className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
-      <input
-        type="checkbox"
-        className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--navy))]"
-        checked={form[id] === true}
-        onChange={(e) => set(id, e.target.checked as FormState[typeof id])}
-        aria-invalid={!!errors[id as string]}
-      />
-      <span>
-        {children} <span className="text-muted-foreground">({required ? "required" : "optional"})</span>
-      </span>
-    </label>
-  );
 
   if (submitted) {
     return (
