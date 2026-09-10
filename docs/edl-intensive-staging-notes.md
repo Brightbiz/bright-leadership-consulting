@@ -21,6 +21,17 @@ All three are service-role write / admin-read only under RLS. Public intake goes
 `submit-edl-application` edge function: honeypot (answers 200 silently), server-side validation,
 five submissions per IP per hour, and service-role inserts.
 
+## Application window (date-locked)
+
+Applications are locked to 14 September–11 October 2026 UK time
+(`EDL_APPLICATIONS_OPEN_AT` = 2026-09-13T23:00:00Z, `EDL_APPLICATIONS_CLOSE_AT`
+= 2026-10-11T22:59:59.999Z). Outside the window `/apply` renders a closed-window
+notice instead of the form, and `submit-edl-application` rejects application
+submissions with 403 — the lock is enforced server-side, not only in the browser.
+
+Note: the routes are unlisted and noindex, not access-controlled; anyone with the
+direct URL can view them.
+
 ## Analytics
 
 Categorical funnel events only (`programme_page_view`, `programme_apply_click`,

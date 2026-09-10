@@ -25,6 +25,22 @@ export const EDL = {
   employerRoute: "/executive-decision-leadership-intensive/employer-information",
 } as const;
 
+/**
+ * Application window, date-locked. Applications open at 00.00 UK time on
+ * 14 September 2026 and close at 11.59 pm UK time on 11 October 2026 (BST).
+ */
+export const EDL_APPLICATIONS_OPEN_AT = "2026-09-13T23:00:00.000Z";
+export const EDL_APPLICATIONS_CLOSE_AT = "2026-10-11T22:59:59.999Z";
+
+export type EdlWindowState = "before" | "open" | "closed";
+
+export const edlWindowState = (now: Date = new Date()): EdlWindowState => {
+  const t = now.getTime();
+  if (t < Date.parse(EDL_APPLICATIONS_OPEN_AT)) return "before";
+  if (t > Date.parse(EDL_APPLICATIONS_CLOSE_AT)) return "closed";
+  return "open";
+};
+
 /** Primary and secondary calls to action, used verbatim on every surface. */
 export const EDL_CTA = {
   primary: "Apply for the founding cohort",
