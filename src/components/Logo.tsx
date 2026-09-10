@@ -45,7 +45,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
             alt={ALT}
             width={214}
             height={82}
-            aria-hidden="true"
+            
             className="hidden w-auto max-[380px]:block h-10"
           />
         </a>
