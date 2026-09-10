@@ -8,7 +8,10 @@ interface SEOHeadProps {
   type?: string;
   /** Social-preview image. Absolute https URL, or a path under /public. */
   image?: string;
+  /** Keep the page out of search results (staging or confirmation screens). */
+  noindex?: boolean;
 }
+
 
 const SITE_URL = "https://brightleadershipconsulting.com";
 const DEFAULT_TITLE = "Bright Leadership Consulting | Executive Alignment Advisory";
