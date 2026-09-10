@@ -544,7 +544,9 @@ const EdlApply = () => {
                 </div>
               )}
 
+              <FormContext.Provider value={{ form, set, errors }}>
               <form onSubmit={onSubmit} noValidate>
+
                 {/* Honeypot — visually and programmatically hidden. */}
                 <div className="hidden" aria-hidden="true">
                   <label htmlFor="companyWebsite">Company website</label>
@@ -1041,6 +1043,8 @@ const EdlApply = () => {
                   </Link>
                 </div>
               </form>
+              </FormContext.Provider>
+
             </div>
           </div>
         </section>
