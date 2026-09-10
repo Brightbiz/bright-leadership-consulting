@@ -412,6 +412,301 @@ export type Database = {
         }
         Relationships: []
       }
+      edl_application_access_needs: {
+        Row: {
+          adjustment_detail: string | null
+          adjustment_route: string
+          application_id: string
+          created_at: string
+          id: string
+          preferred_contact_method: string | null
+        }
+        Insert: {
+          adjustment_detail?: string | null
+          adjustment_route: string
+          application_id: string
+          created_at?: string
+          id?: string
+          preferred_contact_method?: string | null
+        }
+        Update: {
+          adjustment_detail?: string | null
+          adjustment_route?: string
+          application_id?: string
+          created_at?: string
+          id?: string
+          preferred_contact_method?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "edl_application_access_needs_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "edl_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      edl_applications: {
+        Row: {
+          ack_authorised: boolean
+          ack_confidentiality_limits: boolean
+          ack_no_recording: boolean
+          anonymisable: string
+          commit_applied_work: boolean
+          commit_attend: boolean
+          commit_challenge: boolean
+          commit_confidentiality: boolean
+          commit_week4: boolean
+          conflict_note: string | null
+          country: string
+          created_at: string
+          decision_already_decided: string
+          decision_alternatives: string
+          decision_at: string | null
+          decision_at_risk: string
+          decision_deadline: string
+          decision_off_limits: string
+          decision_statement: string
+          decision_why_now: string
+          decl_accurate: boolean
+          decl_employer_funding_subject: boolean
+          decl_no_admission_guarantee: boolean
+          decl_no_outcome_guarantee: boolean
+          decl_privacy_read: boolean
+          expected_approval_date: string | null
+          full_name: string
+          funding_route: string
+          gclid: string | null
+          id: string
+          linkedin_url: string | null
+          marketing_consent: boolean
+          marketing_consent_at: string | null
+          offer_reserved_until: string | null
+          org_legal_name: string | null
+          organisation: string
+          po_required: string | null
+          privacy_notice_version: string
+          referral_detail: string | null
+          referral_source: string
+          resp_approvals: string
+          resp_authority: string
+          resp_current: string
+          resp_decision_types: string
+          review_notes: string | null
+          reviewer_id: string | null
+          role_title: string
+          sector: string
+          sponsor_email: string | null
+          sponsor_name: string | null
+          sponsor_role: string | null
+          status: Database["public"]["Enums"]["edl_application_status"]
+          telephone: string
+          time_zone: string
+          updated_at: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          vendor_onboarding_required: string | null
+          work_email: string
+        }
+        Insert: {
+          ack_authorised?: boolean
+          ack_confidentiality_limits?: boolean
+          ack_no_recording?: boolean
+          anonymisable: string
+          commit_applied_work?: boolean
+          commit_attend?: boolean
+          commit_challenge?: boolean
+          commit_confidentiality?: boolean
+          commit_week4?: boolean
+          conflict_note?: string | null
+          country: string
+          created_at?: string
+          decision_already_decided: string
+          decision_alternatives: string
+          decision_at?: string | null
+          decision_at_risk: string
+          decision_deadline: string
+          decision_off_limits: string
+          decision_statement: string
+          decision_why_now: string
+          decl_accurate?: boolean
+          decl_employer_funding_subject?: boolean
+          decl_no_admission_guarantee?: boolean
+          decl_no_outcome_guarantee?: boolean
+          decl_privacy_read?: boolean
+          expected_approval_date?: string | null
+          full_name: string
+          funding_route: string
+          gclid?: string | null
+          id?: string
+          linkedin_url?: string | null
+          marketing_consent?: boolean
+          marketing_consent_at?: string | null
+          offer_reserved_until?: string | null
+          org_legal_name?: string | null
+          organisation: string
+          po_required?: string | null
+          privacy_notice_version: string
+          referral_detail?: string | null
+          referral_source: string
+          resp_approvals: string
+          resp_authority: string
+          resp_current: string
+          resp_decision_types: string
+          review_notes?: string | null
+          reviewer_id?: string | null
+          role_title: string
+          sector: string
+          sponsor_email?: string | null
+          sponsor_name?: string | null
+          sponsor_role?: string | null
+          status?: Database["public"]["Enums"]["edl_application_status"]
+          telephone: string
+          time_zone: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          vendor_onboarding_required?: string | null
+          work_email: string
+        }
+        Update: {
+          ack_authorised?: boolean
+          ack_confidentiality_limits?: boolean
+          ack_no_recording?: boolean
+          anonymisable?: string
+          commit_applied_work?: boolean
+          commit_attend?: boolean
+          commit_challenge?: boolean
+          commit_confidentiality?: boolean
+          commit_week4?: boolean
+          conflict_note?: string | null
+          country?: string
+          created_at?: string
+          decision_already_decided?: string
+          decision_alternatives?: string
+          decision_at?: string | null
+          decision_at_risk?: string
+          decision_deadline?: string
+          decision_off_limits?: string
+          decision_statement?: string
+          decision_why_now?: string
+          decl_accurate?: boolean
+          decl_employer_funding_subject?: boolean
+          decl_no_admission_guarantee?: boolean
+          decl_no_outcome_guarantee?: boolean
+          decl_privacy_read?: boolean
+          expected_approval_date?: string | null
+          full_name?: string
+          funding_route?: string
+          gclid?: string | null
+          id?: string
+          linkedin_url?: string | null
+          marketing_consent?: boolean
+          marketing_consent_at?: string | null
+          offer_reserved_until?: string | null
+          org_legal_name?: string | null
+          organisation?: string
+          po_required?: string | null
+          privacy_notice_version?: string
+          referral_detail?: string | null
+          referral_source?: string
+          resp_approvals?: string
+          resp_authority?: string
+          resp_current?: string
+          resp_decision_types?: string
+          review_notes?: string | null
+          reviewer_id?: string | null
+          role_title?: string
+          sector?: string
+          sponsor_email?: string | null
+          sponsor_name?: string | null
+          sponsor_role?: string | null
+          status?: Database["public"]["Enums"]["edl_application_status"]
+          telephone?: string
+          time_zone?: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          vendor_onboarding_required?: string | null
+          work_email?: string
+        }
+        Relationships: []
+      }
+      edl_employer_requests: {
+        Row: {
+          admin_question: string | null
+          created_at: string
+          expected_decision_date: string | null
+          id: string
+          invoice_required: string | null
+          linked_application_id: string | null
+          participant_email: string | null
+          participant_name: string | null
+          participant_role: string | null
+          po_required: string | null
+          privacy_ack: boolean
+          requester_email: string
+          requester_name: string
+          requester_organisation: string
+          requester_role: string
+          status: Database["public"]["Enums"]["edl_employer_request_status"]
+          updated_at: string
+          vendor_onboarding_required: string | null
+        }
+        Insert: {
+          admin_question?: string | null
+          created_at?: string
+          expected_decision_date?: string | null
+          id?: string
+          invoice_required?: string | null
+          linked_application_id?: string | null
+          participant_email?: string | null
+          participant_name?: string | null
+          participant_role?: string | null
+          po_required?: string | null
+          privacy_ack?: boolean
+          requester_email: string
+          requester_name: string
+          requester_organisation: string
+          requester_role: string
+          status?: Database["public"]["Enums"]["edl_employer_request_status"]
+          updated_at?: string
+          vendor_onboarding_required?: string | null
+        }
+        Update: {
+          admin_question?: string | null
+          created_at?: string
+          expected_decision_date?: string | null
+          id?: string
+          invoice_required?: string | null
+          linked_application_id?: string | null
+          participant_email?: string | null
+          participant_name?: string | null
+          participant_role?: string | null
+          po_required?: string | null
+          privacy_ack?: boolean
+          requester_email?: string
+          requester_name?: string
+          requester_organisation?: string
+          requester_role?: string
+          status?: Database["public"]["Enums"]["edl_employer_request_status"]
+          updated_at?: string
+          vendor_onboarding_required?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "edl_employer_requests_linked_application_id_fkey"
+            columns: ["linked_application_id"]
+            isOneToOne: false
+            referencedRelation: "edl_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_magnet_downloads: {
         Row: {
           downloaded_at: string
@@ -744,6 +1039,25 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      edl_application_status:
+        | "submitted"
+        | "under_review"
+        | "clarification_required"
+        | "clarification_scheduled"
+        | "conflict_hold"
+        | "conditionally_accepted"
+        | "waitlisted"
+        | "declined"
+        | "withdrawn"
+        | "offer_lapsed"
+        | "enrolled"
+      edl_employer_request_status:
+        | "received"
+        | "pack_issued"
+        | "approver_verified"
+        | "offer_issued"
+        | "committed"
+        | "closed"
       outreach_draft_status: "draft" | "sent" | "replied"
     }
     CompositeTypes: {
@@ -873,6 +1187,27 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      edl_application_status: [
+        "submitted",
+        "under_review",
+        "clarification_required",
+        "clarification_scheduled",
+        "conflict_hold",
+        "conditionally_accepted",
+        "waitlisted",
+        "declined",
+        "withdrawn",
+        "offer_lapsed",
+        "enrolled",
+      ],
+      edl_employer_request_status: [
+        "received",
+        "pack_issued",
+        "approver_verified",
+        "offer_issued",
+        "committed",
+        "closed",
+      ],
       outreach_draft_status: ["draft", "sent", "replied"],
     },
   },
