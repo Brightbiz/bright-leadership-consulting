@@ -101,10 +101,28 @@ describe("Executive Decision Leadership Intensive — pages", () => {
   });
 
   it("opens the application at step one of six, noindex, with no payment link", async () => {
-    renderAt(<EdlApply />, EDL.applyRoute);
-    expect(document.body.textContent).toMatch(/1 of 6/i);
-    expect(document.body.textContent?.toLowerCase()).not.toContain("pay now");
-    await expectNoindex();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-09-20T10:00:00Z"));
+    try {
+      renderAt(<EdlApply />, EDL.applyRoute);
+      expect(document.body.textContent).toMatch(/1 of 6/i);
+      expect(document.body.textContent?.toLowerCase()).not.toContain("pay now");
+      await expectNoindex();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("locks the application before the window opens", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-09-01T10:00:00Z"));
+    try {
+      renderAt(<EdlApply />, EDL.applyRoute);
+      expect(document.body.textContent).toMatch(/Applications open on 14 September 2026/i);
+      expect(document.body.textContent).not.toMatch(/1 of 6/i);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("asks employers for administration only, with no payment route", async () => {
