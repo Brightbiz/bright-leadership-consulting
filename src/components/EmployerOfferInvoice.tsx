@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
-  BRIGHT_CONTACT_EMAIL,
+  BRIGHT_ADMIN_EMAIL,
+  BRIGHT_POST_PURCHASE_QUESTIONS_TEXT,
   EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
   EMPLOYER_OFFER_VAT_WORDING,
   LEGAL_CONTRACTING_IDENTITY,
@@ -60,6 +61,7 @@ export const buildEmployerOfferInvoiceText = (invoice: EmployerOfferInvoiceDetai
   const net = Number(invoice.invoice_net_amount_gbp ?? 1297);
   const vat = Number(invoice.invoice_vat_amount_gbp ?? 0);
   const total = Number(invoice.invoice_total_gbp ?? 1297);
+  const invoiceContactEmail = invoice.invoice_contact_email ?? BRIGHT_ADMIN_EMAIL;
   const description =
     invoice.invoice_description ||
     `One named individual place on the Executive Leadership Mastery Programme for ${invoice.participant_name}.`;
@@ -67,7 +69,7 @@ export const buildEmployerOfferInvoiceText = (invoice: EmployerOfferInvoiceDetai
     "Invoice",
     `Supplier: ${invoice.supplier_contracting_identity ?? LEGAL_CONTRACTING_IDENTITY}`,
     ...(invoice.supplier_address ?? LEGAL_SUPPLIER_ADDRESS).split(/\r?\n/),
-    `Contact: ${invoice.invoice_contact_email ?? BRIGHT_CONTACT_EMAIL}`,
+    `Questions about your invoice, payment or programme access: ${invoiceContactEmail}`,
     "",
     `Invoice number: ${invoice.invoice_number ?? "—"}`,
     `Invoice date: ${fmtDate(invoice.invoice_date)}`,
@@ -100,6 +102,7 @@ const EmployerOfferInvoice = ({ invoice, showCopy = false, onCopied }: EmployerO
   const total = Number(invoice.invoice_total_gbp ?? 1297);
   const supplierAddress = lines(invoice.supplier_address ?? LEGAL_SUPPLIER_ADDRESS);
   const invoiceAddress = lines(invoice.invoice_contact);
+  const invoiceContactEmail = invoice.invoice_contact_email ?? BRIGHT_ADMIN_EMAIL;
   const description =
     invoice.invoice_description ||
     `One named individual place on the Executive Leadership Mastery Programme for ${invoice.participant_name}.`;
@@ -139,7 +142,7 @@ const EmployerOfferInvoice = ({ invoice, showCopy = false, onCopied }: EmployerO
             ))}
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
-            {invoice.invoice_contact_email ?? BRIGHT_CONTACT_EMAIL}
+            Questions about your invoice, payment or programme access: {invoiceContactEmail}
           </p>
         </div>
         <div>
@@ -213,6 +216,9 @@ const EmployerOfferInvoice = ({ invoice, showCopy = false, onCopied }: EmployerO
       </p>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
         {invoice.invoice_payment_instructions ?? EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        {BRIGHT_POST_PURCHASE_QUESTIONS_TEXT}
       </p>
     </section>
   );

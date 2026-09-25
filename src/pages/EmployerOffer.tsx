@@ -10,6 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import EmployerOfferInvoice from "@/components/EmployerOfferInvoice";
 import {
+  BRIGHT_OFFER_QUESTIONS_TEXT,
+  BRIGHT_POST_PURCHASE_QUESTIONS_TEXT,
+} from "@/data/legal";
+import {
   employerOfferTerms,
   getEmployerOfferAcceptanceStatement,
   getEmployerOfferConfirmations,
@@ -178,6 +182,9 @@ const EmployerOffer = () => {
                   <Link to="/terms" className="underline underline-offset-4">Terms and Conditions</Link>{" · "}
                   <Link to="/privacy" className="underline underline-offset-4">Privacy Notice</Link>
                 </p>
+                {status === "issued" && (
+                  <p className="text-sm text-foreground">{BRIGHT_OFFER_QUESTIONS_TEXT}</p>
+                )}
               </section>
 
               {status === "accepted" || status === "paid" ? (
@@ -192,6 +199,7 @@ const EmployerOffer = () => {
                     <p className="body-brief mt-4">
                       Programme access will be enabled for {offer.participant_name} within two business days after cleared payment in full and the information needed to create their access have been received.
                     </p>
+                    <p className="body-brief mt-4">{BRIGHT_POST_PURCHASE_QUESTIONS_TEXT}</p>
                     <p className="mt-4 text-sm text-muted-foreground">
                       Offer reference: {offer.offer_reference} · Offer terms version: {termsVersionDisplay}
                     </p>

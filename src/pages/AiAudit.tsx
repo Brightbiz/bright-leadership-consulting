@@ -388,7 +388,7 @@ const AiAudit = () => {
 
     if (action.kind === "email") {
       window.location.href =
-        "mailto:enquiries@brightleadershipconsulting.com?subject=AI%20Leadership%20Readiness%20Audit%20-%20question";
+        "mailto:info@brightleadershipconsulting.com?subject=AI%20Leadership%20Readiness%20Audit%20-%20question";
       return;
     }
 

@@ -269,7 +269,7 @@ for (const item of faqItems) {
 
 
 rule(20);
-text("Enquiries: admin@brightleadershipconsulting.com", { size: 9, font: sansBold });
+text("Enquiries: info@brightleadershipconsulting.com", { size: 9, font: sansBold });
 text(
   "This brochure is generated from the live programme catalogue. Fees are in GBP and stated per participant.",
   { size: 8.5, color: MUTED, gap: 0 },

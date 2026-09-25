@@ -19,6 +19,7 @@ import {
   EMPLOYER_OFFER_TERMS_VERSION,
 } from "@/data/employerOffer";
 import {
+  BRIGHT_ADMIN_EMAIL,
   EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
   EMPLOYER_OFFER_PAYMENT_DUE_DAYS,
   LEGAL_CONTRACTING_IDENTITY,
@@ -109,6 +110,7 @@ const AdminEmployerOffers = () => {
       invoice_vat_amount_gbp: 0,
       invoice_total_gbp: EMPLOYER_OFFER_FEE_GBP,
       invoice_payment_instructions: EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
+      invoice_contact_email: BRIGHT_ADMIN_EMAIL,
       expires_at: addDays(new Date(), days).toISOString(),
       issued_by: user.id,
       issued_by_email: user.email,

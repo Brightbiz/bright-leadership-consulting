@@ -5,7 +5,8 @@ import Footer from "@/components/Footer";
 import CancellationFaq from "@/components/CancellationFaq";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
 import {
-  BRIGHT_CONTACT_EMAIL,
+  BRIGHT_ADMIN_EMAIL,
+  BRIGHT_PRE_PURCHASE_EMAIL,
   EMPLOYER_OFFER_VAT_WORDING,
   LEGAL_CONTRACTING_IDENTITY,
   LEGAL_SUPPLIER_ADDRESS_INLINE,
@@ -35,7 +36,8 @@ const sections: Section[] = [
     body: [
       `For the purposes of these Terms, services are provided by ${LEGAL_CONTRACTING_IDENTITY}. Correspondence and service address: ${LEGAL_SUPPLIER_ADDRESS_INLINE}. By using the site you accept these terms.`,
       `The contracting and invoicing party for all engagements, programmes and purchases is ${LEGAL_CONTRACTING_IDENTITY}.`,
-      `Programme, purchase, cancellation and access enquiries should be sent to ${BRIGHT_CONTACT_EMAIL}.`,
+      `Programme information and pre-purchase enquiries should be sent to ${BRIGHT_PRE_PURCHASE_EMAIL}.`,
+      `Accepted purchases, invoices, payment, cancellation notices, programme access and contractual administration should be sent to ${BRIGHT_ADMIN_EMAIL}.`,
     ],
   },
   {
@@ -74,7 +76,7 @@ const sections: Section[] = [
       {
         subheading: "Access",
         paragraphs: [
-          `Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to ${BRIGHT_CONTACT_EMAIL}.`,
+          `Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to ${BRIGHT_ADMIN_EMAIL}.`,
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
           "Bright Leadership Consulting reserves the right to make reasonable changes to the learning platform or programme-delivery arrangements. Any such change will not affect access rights already granted to a purchaser without appropriate notice or an appropriate alternative arrangement.",
         ],
@@ -93,13 +95,13 @@ const sections: Section[] = [
           },
           "Agreement to these Terms alone does not constitute the required prior express consent or acknowledgement. These must be obtained separately and expressly. The learning platform does not presently capture that separate declaration.",
           "If the required prior express consent and acknowledgement have not been obtained, the purchaser's statutory cancellation rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
-          `To request cancellation, the purchaser must write to ${BRIGHT_CONTACT_EMAIL}, providing their name, programme, purchase date and the email address used to enrol.`,
+          `To request cancellation, the purchaser must write to ${BRIGHT_ADMIN_EMAIL}, providing their name, programme, purchase date and the email address used to enrol.`,
         ],
       },
       {
         subheading: "Digital-content problems",
         paragraphs: [
-          `If programme content is faulty, unavailable or not supplied as described, the purchaser should notify ${BRIGHT_CONTACT_EMAIL} promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.`,
+          `If programme content is faulty, unavailable or not supplied as described, the purchaser should notify ${BRIGHT_ADMIN_EMAIL} promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.`,
           "Nothing in these terms limits the purchaser's statutory rights concerning digital content or services.",
         ],
       },

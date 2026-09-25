@@ -16,7 +16,7 @@ const sections = [
     body: [
       "Bright Leadership Consulting. Correspondence address: 82 James Carter Road, Mildenhall, England IP28 7DE.",
       "For the purposes of applicable data-protection law, the data controller is Irene A. Agunbiade, operating under the business name Bright Leadership Consulting.",
-      "Privacy enquiries and data-rights requests may be directed to info@brightleadershipconsulting.com. Programme and account support is handled at admin@brightleadershipconsulting.com.",
+      "Privacy enquiries, data-rights requests, programme information and pre-purchase questions may be directed to info@brightleadershipconsulting.com. Accepted purchases, invoices, payment, cancellation notices, programme access and contractual administration are handled at admin@brightleadershipconsulting.com.",
     ],
   },
   {
