@@ -60,6 +60,13 @@ const disciplines = [
   },
 ];
 
+/*
+ * CONTROLLED ACCREDITATION-DEPENDENT FIELDS: every "50–66 CPD hours" claim,
+ * CPD statement and CPDSO certificate promise on this page depends on the
+ * current CPD Standards Office accreditation (2025–2026). If renewal is not
+ * confirmed before expiry, remove these claims and any badge/certificate
+ * promise BEFORE expiry. Do not change them without Bright's instruction.
+ */
 const tiers = [
   {
     name: "Self-Directed Executive Programme",
