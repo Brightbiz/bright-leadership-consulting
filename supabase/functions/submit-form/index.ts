@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { NOTIFY_TO_ENQUIRIES, sendResendNotification } from "../_shared/resendNotify.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -162,6 +163,40 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: "Submission could not be processed" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Internal enquiry notification — best effort, never blocks the submission.
+    if (formType === "contact") {
+      const enquiryLabel = sanitized.enquiry_type
+        ? "ELM employer-funded enquiry"
+        : "general enquiry";
+      const lines = [
+        "New enquiry received from the Bright Leadership Consulting website.",
+        "",
+        `Type: ${enquiryLabel}`,
+        `Name: ${sanitized.name ?? "(not supplied)"}`,
+        `Email: ${sanitized.email ?? "(not supplied)"}`,
+        `Phone: ${sanitized.phone ?? "(not supplied)"}`,
+        `Organisation: ${sanitized.company ?? "(not supplied)"}`,
+        "",
+        "Message:",
+        sanitized.message ?? "(no message)",
+        "",
+        `Received: ${new Date().toISOString()} (UTC)`,
+      ];
+      const notification = sendResendNotification({
+        to: NOTIFY_TO_ENQUIRIES,
+        subject: `Website enquiry — ${enquiryLabel} — ${sanitized.name ?? "unknown name"}`,
+        text: lines.join("\n"),
+        replyTo: sanitized.email ?? undefined,
+      });
+      const waitUntil = (globalThis as unknown as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
+        .EdgeRuntime?.waitUntil;
+      if (waitUntil) {
+        waitUntil(notification);
+      } else {
+        notification.catch(() => {});
+      }
     }
 
     return new Response(
