@@ -105,11 +105,11 @@ describe("prohibited former-entity wording", () => {
 describe("restricted identity placement", () => {
   it("Terms carries the identity only in contracting and invoicing provisions", () => {
     expect(TERMS).toMatch(
-      /contracting and invoicing party for all engagements, programmes and purchases is Irene A\. Agunbiade trading as Bright Leadership Consulting/
+      /contracting and invoicing party for all engagements, programmes and purchases is \$\{LEGAL_CONTRACTING_IDENTITY\}/
     );
-    expect(TERMS).toMatch(/Invoices are issued by Irene A\. Agunbiade trading as Bright Leadership Consulting/);
+    expect(TERMS).toMatch(/Invoices are issued by \$\{LEGAL_CONTRACTING_IDENTITY\}/);
     const matches = TERMS.match(/Irene A\. Agunbiade/g) ?? [];
-    expect(matches.length).toBeGreaterThanOrEqual(2);
+    expect(matches.length).toHaveLength(0);
   });
 
   it("Privacy carries the identity only in the data-controller provision", () => {

@@ -24,7 +24,7 @@ An authenticated project-chat instruction is **not** sufficient on its own.
   project chat, naming the account email and the reason.
 - Step B — Independent ownership proof, one of:
   - a confirmation reply sent from the confirmed administrator mailbox
-    (`admin@…` as recorded on the auth account) to `enquiries@brightleadershipconsulting.com`,
+    (`admin@…` as recorded on the auth account) to `admin@brightleadershipconsulting.com`,
     quoting the request reference; or
   - control of a Lovable-verified ownership channel for the project (platform account owner
     verification via Lovable support), where the mailbox itself is unavailable; or
