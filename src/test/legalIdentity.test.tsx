@@ -109,7 +109,7 @@ describe("restricted identity placement", () => {
     );
     expect(TERMS).toMatch(/Invoices are issued by \$\{LEGAL_CONTRACTING_IDENTITY\}/);
     const matches = TERMS.match(/Irene A\. Agunbiade/g) ?? [];
-    expect(matches.length).toHaveLength(0);
+    expect(matches.length).toBe(0);
   });
 
   it("Privacy carries the identity only in the data-controller provision", () => {
