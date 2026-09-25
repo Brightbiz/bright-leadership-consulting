@@ -166,29 +166,29 @@ Deno.serve(async (req) => {
     }
 
     // Internal enquiry notification — best effort, never blocks the submission.
+    // Content is deliberately minimal: enquiry type, reference, timestamp and a
+    // link to the signed-in admin record only. The enquirer's personal details
+    // stay in the admin record, which requires authentication to view.
     if (formType === "contact") {
       const enquiryLabel = sanitized.enquiry_type
         ? "ELM employer-funded enquiry"
-        : "general enquiry";
+        : "General enquiry";
+      const reference = data?.[0]?.id ?? "(reference unavailable)";
+      const savedAt = new Date().toISOString();
+      const adminLink = `https://brightleadershipconsulting.com/admin/crm`;
       const lines = [
-        "New enquiry received from the Bright Leadership Consulting website.",
+        `A new ${enquiryLabel} was saved on ${savedAt} (UTC).`,
         "",
-        `Type: ${enquiryLabel}`,
-        `Name: ${sanitized.name ?? "(not supplied)"}`,
-        `Email: ${sanitized.email ?? "(not supplied)"}`,
-        `Phone: ${sanitized.phone ?? "(not supplied)"}`,
-        `Organisation: ${sanitized.company ?? "(not supplied)"}`,
+        `Reference: ${reference}`,
         "",
-        "Message:",
-        sanitized.message ?? "(no message)",
+        `Review the enquiry securely in admin: ${adminLink}`,
         "",
-        `Received: ${new Date().toISOString()} (UTC)`,
+        "The admin record is the authoritative record.",
       ];
       const notification = sendResendNotification({
         to: NOTIFY_TO_ENQUIRIES,
-        subject: `Website enquiry — ${enquiryLabel} — ${sanitized.name ?? "unknown name"}`,
+        subject: `New ${enquiryLabel} — ${reference}`,
         text: lines.join("\n"),
-        replyTo: sanitized.email ?? undefined,
       });
       const waitUntil = (globalThis as unknown as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
         .EdgeRuntime?.waitUntil;
