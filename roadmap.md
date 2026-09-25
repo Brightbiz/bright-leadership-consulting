@@ -3,5 +3,5 @@
 - [x] Separate Bright enquiry and purchase-administration mailbox routing
 - [ ] Private employer offer links (built; revised invoice checked in preview; issuing blocked pending Bright approval)
 - [ ] Server-side notification to info@ for enquiries (built on the Resend connector; mail leaves only after brightleadershipconsulting.com is added and verified in the Resend dashboard)
-- [ ] RELEASE ACTION (manual, no automatic expiry control): before the CPD Standards Office accreditation (2025–2026) expires, unless renewal is confirmed, remove/amend "50–66 CPD Hours", CPD statements, badge and CPDSO certificate wording. Do not change without Bright's approval.
+- [ ] CPD task (manual, no automatic expiry control; the code flag is an internal marker only): By 30 September 2026, confirm the exact CPD accreditation expiry date and renewal status. If renewal has not been confirmed, remove or qualify the '50–66 CPD Hours' claim and any related accreditation badge or certificate wording before the existing accreditation expires.
 - [ ] Amended Terms/Privacy publication (awaiting legal review + Bright approval; set effective date on actual publication)
