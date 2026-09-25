@@ -24,6 +24,7 @@ const sections = [
     body: [
       "Enquiry information you provide voluntarily: name, organisation, role, email address, telephone number and the content of your message.",
       "Diagnostic response data submitted by participants during an Executive Alignment Index™ deployment, held under the terms of the commissioning engagement.",
+      "Participant information received from an employer: where an employer funds a named individual's place, we receive that participant's name, work email address and the information needed to create their programme access from the employer rather than from the participant directly. We use it only to administer the funded place, and we provide the participant with this Privacy Notice, or a clear link to it, when their access is created.",
       "Basic technical information generated when you visit the site, such as pages viewed and referring source, used only in aggregate to understand site performance.",
     ],
   },
