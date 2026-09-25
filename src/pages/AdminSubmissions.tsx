@@ -37,6 +37,7 @@ interface ContactSubmission {
   phone: string | null;
   company: string | null;
   message: string;
+  enquiry_type?: string | null;
   created_at: string;
   is_read: boolean;
 }
@@ -408,6 +409,7 @@ const AdminSubmissions = () => {
                         <TableCell className="font-medium">
                           {submission.name}
                           {!submission.is_read && <Badge variant="default" className="ml-2 text-xs">New</Badge>}
+                          {submission.enquiry_type === "elm_employer_funded" && <Badge variant="outline" className="ml-2 text-xs">ELM employer-funded</Badge>}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{submission.email}</TableCell>
                         <TableCell className="hidden lg:table-cell">{submission.company || "—"}</TableCell>
@@ -649,6 +651,9 @@ const AdminSubmissions = () => {
                           <span className="font-medium text-foreground">Phone:</span>{" "}
                           <a href={`tel:${selectedSubmission.phone}`} className="text-primary hover:underline">{selectedSubmission.phone}</a>
                         </div>
+                      )}
+                      {selectedSubmission.enquiry_type && (
+                        <div><span className="font-medium text-foreground">Enquiry category:</span> {selectedSubmission.enquiry_type === "elm_employer_funded" ? "ELM employer-funded enquiry" : selectedSubmission.enquiry_type}</div>
                       )}
                       {selectedSubmission.company && (
                         <div><span className="font-medium text-foreground">Company:</span> {selectedSubmission.company}</div>

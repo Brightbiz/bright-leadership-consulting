@@ -222,6 +222,18 @@ const Contact = () => {
 
               <div className="section-divider mb-16" />
 
+              {isElmEmployerFunded && !isSubmitted && (
+                <p
+                  className="text-sm text-muted-foreground border-l-2 border-secondary pl-5 mb-10 leading-relaxed"
+                  data-testid="elm-employer-funded-notice"
+                >
+                  <span className="text-foreground font-medium">{ELM_EMPLOYER_FUNDED_LABEL}.</span>{" "}
+                  An information request for an employer considering funding a named
+                  individual's place on the Executive Leadership Mastery Programme.
+                  Please include the participant's name and role in your message.
+                </p>
+              )}
+
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
