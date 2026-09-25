@@ -4,6 +4,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CancellationFaq from "@/components/CancellationFaq";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
+import {
+  BRIGHT_CONTACT_EMAIL,
+  EMPLOYER_OFFER_VAT_WORDING,
+  LEGAL_CONTRACTING_IDENTITY,
+  LEGAL_SUPPLIER_ADDRESS_INLINE,
+} from "@/data/legal";
 
 
 const fade = {
@@ -27,9 +33,9 @@ const sections: Section[] = [
   {
     heading: "These terms",
     body: [
-      "For the purposes of these Terms, services are provided by Irene A. Agunbiade under the business name Bright Leadership Consulting. Correspondence and service address: 82 James Carter Road, Mildenhall, England IP28 7DE. By using the site you accept these terms.",
-      "The contracting and invoicing party for all engagements, programmes and purchases is Irene A. Agunbiade trading as Bright Leadership Consulting.",
-      "Programme, purchase, cancellation and access enquiries should be sent to admin@brightleadershipconsulting.com.",
+      `For the purposes of these Terms, services are provided by ${LEGAL_CONTRACTING_IDENTITY}. Correspondence and service address: ${LEGAL_SUPPLIER_ADDRESS_INLINE}. By using the site you accept these terms.`,
+      `The contracting and invoicing party for all engagements, programmes and purchases is ${LEGAL_CONTRACTING_IDENTITY}.`,
+      `Programme, purchase, cancellation and access enquiries should be sent to ${BRIGHT_CONTACT_EMAIL}.`,
     ],
   },
   {
@@ -61,13 +67,14 @@ const sections: Section[] = [
         subheading: "Prices, taxes and payment",
         paragraphs: [
           "Programme fees are stated in British Pounds unless otherwise shown. The price, payment schedule and any tax or VAT applicable to the purchaser are displayed at checkout before payment is completed.",
+          `For invoiced employer-funded purchases, the price, payment schedule and VAT treatment are stated in the private offer and invoice. ${EMPLOYER_OFFER_VAT_WORDING}`,
           "Where an instalment plan is selected, the purchaser is responsible for all instalments forming part of the agreed total price. An instalment plan is a method of paying the full programme fee and is not a monthly subscription that may be cancelled at will.",
         ],
       },
       {
         subheading: "Access",
         paragraphs: [
-          "Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to admin@brightleadershipconsulting.com.",
+          `Access to programme materials is currently not subject to a fixed expiry date on the learning platform. Purchasers requiring assistance with access should write to ${BRIGHT_CONTACT_EMAIL}.`,
           "Bright Leadership Consulting may temporarily restrict access where payment is overdue, the platform is misused, programme materials are shared without permission or these terms are materially breached.",
           "Bright Leadership Consulting reserves the right to make reasonable changes to the learning platform or programme-delivery arrangements. Any such change will not affect access rights already granted to a purchaser without appropriate notice or an appropriate alternative arrangement.",
         ],
@@ -86,13 +93,13 @@ const sections: Section[] = [
           },
           "Agreement to these Terms alone does not constitute the required prior express consent or acknowledgement. These must be obtained separately and expressly. The learning platform does not presently capture that separate declaration.",
           "If the required prior express consent and acknowledgement have not been obtained, the purchaser's statutory cancellation rights remain unaffected. Nothing in these terms excludes rights or remedies that cannot lawfully be limited.",
-          "To request cancellation, the purchaser must write to admin@brightleadershipconsulting.com, providing their name, programme, purchase date and the email address used to enrol.",
+          `To request cancellation, the purchaser must write to ${BRIGHT_CONTACT_EMAIL}, providing their name, programme, purchase date and the email address used to enrol.`,
         ],
       },
       {
         subheading: "Digital-content problems",
         paragraphs: [
-          "If programme content is faulty, unavailable or not supplied as described, the purchaser should notify admin@brightleadershipconsulting.com promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.",
+          `If programme content is faulty, unavailable or not supplied as described, the purchaser should notify ${BRIGHT_CONTACT_EMAIL} promptly so that the issue can be investigated and, where appropriate, repaired, restored or otherwise resolved.`,
           "Nothing in these terms limits the purchaser's statutory rights concerning digital content or services.",
         ],
       },
@@ -100,13 +107,14 @@ const sections: Section[] = [
         subheading: "Organisational and cohort purchases",
         paragraphs: [
           "Organisational, cohort, facilitated and advisory-supported purchases are governed by the proposal, order form or written agreement issued for that engagement.",
+          "Employer-funded purchases of an individual place for a named participant are governed by the private offer issued for that purchase. Where the private offer conflicts with these Terms, the private offer prevails for that purchase.",
           "Cancellation, postponement, substitution of participants, payment and refund arrangements for those purchases will be stated in the relevant written agreement. Consumer cancellation provisions do not ordinarily apply to purchases made wholly for business purposes.",
         ],
       },
       {
         subheading: "Receipts, invoices and purchase orders",
         paragraphs: [
-          "A receipt showing the order details is provided following a completed online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins. Invoices are issued by Irene A. Agunbiade trading as Bright Leadership Consulting.",
+          `A receipt showing the order details is provided following a completed online purchase. Organisational invoices and purchase-order arrangements must be agreed before enrolment or delivery begins. Invoices are issued by ${LEGAL_CONTRACTING_IDENTITY}.`,
           "Providing a purchase-order number does not replace the organisation's obligation to pay an invoice in accordance with the agreed payment terms.",
         ],
       },

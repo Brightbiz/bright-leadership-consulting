@@ -7,6 +7,7 @@
  * and regulatory documentation. On this website it may appear ONLY in:
  *   - src/pages/Terms.tsx   — contracting and invoicing provisions
  *   - src/pages/Privacy.tsx — data-controller provision
+ *   - src/data/legal.ts     — shared legal constants for transactional records
  *
  * It is prohibited everywhere else (homepage, programme pages, Principal,
  * footer, marketing copy, JSON-LD, brochures, downloads, index.html).
@@ -24,7 +25,7 @@ import { join, relative } from "node:path";
 const ROOT = process.cwd();
 
 /** Files permitted to carry the restricted proprietor identity. */
-const IDENTITY_ALLOWED = new Set(["src/pages/Terms.tsx", "src/pages/Privacy.tsx"]);
+const IDENTITY_ALLOWED = new Set(["src/pages/Terms.tsx", "src/pages/Privacy.tsx", "src/data/legal.ts"]);
 
 /** Only the Privacy Notice may identify the data controller. */
 const CONTROLLER_ALLOWED = new Set(["src/pages/Privacy.tsx"]);
@@ -103,7 +104,7 @@ for (const full of files) {
     }
 
     // Structured JSON-LD address fields are keyed data, not a label.
-    if (MILDENHALL.test(text) && !CORRESPONDENCE.test(text) && !/streetAddress/.test(text)) {
+    if (MILDENHALL.test(text) && !CORRESPONDENCE.test(text) && !/streetAddress/.test(text) && rel !== "src/data/legal.ts") {
       fail(rel, line, "Mildenhall address is not labelled as a correspondence address");
     }
   });

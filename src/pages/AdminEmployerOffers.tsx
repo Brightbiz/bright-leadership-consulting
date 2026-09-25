@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import EmployerOfferInvoice, { buildEmployerOfferInvoiceText } from "@/components/EmployerOfferInvoice";
 import {
   EMPLOYER_OFFER_DEFAULT_EXPIRY_DAYS,
   EMPLOYER_OFFER_FEE_GBP,
@@ -17,6 +18,12 @@ import {
   EMPLOYER_OFFER_TERMS_APPROVED,
   EMPLOYER_OFFER_TERMS_VERSION,
 } from "@/data/employerOffer";
+import {
+  EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
+  EMPLOYER_OFFER_PAYMENT_DUE_DAYS,
+  LEGAL_CONTRACTING_IDENTITY,
+  LEGAL_SUPPLIER_ADDRESS,
+} from "@/data/legal";
 
 type OfferRow = {
   id: string; token: string; contact_submission_id: string | null;
@@ -27,14 +34,29 @@ type OfferRow = {
   accepted_at: string | null; accepted_name: string | null; accepted_role: string | null; accepted_email: string | null;
   po_number: string | null; invoice_contact: string | null; non_standard_request: string | null; referred_at: string | null;
   paid_at: string | null; withdrawn_at: string | null; superseded_by: string | null;
+  accepted_at_uk: string | null; paid_marked_by: string | null; paid_marked_by_email: string | null; paid_marked_at_uk: string | null;
+  invoice_number: string | null; invoice_date: string | null; payment_due_date: string | null; invoice_description: string | null;
+  invoice_net_amount_gbp: number | null; invoice_vat_amount_gbp: number | null; invoice_total_gbp: number | null;
+  invoice_payment_instructions: string | null; invoice_contact_email: string | null; supplier_contracting_identity: string | null; supplier_address: string | null;
 };
 
 const db = supabase as any;
 const SITE = "https://brightleadershipconsulting.com";
 const offerUrl = (t: string) => `${SITE}/offer/${t}`;
+const offerReference = (o: OfferRow) => `ELM-${o.id.slice(0, 8).toUpperCase()}`;
 const effective = (o: OfferRow) =>
   o.status === "issued" && new Date(o.expires_at) < new Date() ? "expired" : o.status;
 const dt = (v: string | null) => (v ? format(new Date(v), "d MMM yyyy, HH:mm") : "—");
+const formatUkDateTime = (value: Date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/London",
+    timeZoneName: "short",
+  }).format(value);
 
 const empty = { employer_organisation: "", signatory_name: "", signatory_email: "", participant_name: "", participant_role: "", participant_email: "", expiry_days: String(EMPLOYER_OFFER_DEFAULT_EXPIRY_DAYS) };
 
@@ -78,6 +100,15 @@ const AdminEmployerOffers = () => {
       fee_gbp: EMPLOYER_OFFER_FEE_GBP,
       payment_method: "invoice",
       terms_version: EMPLOYER_OFFER_TERMS_VERSION,
+      payment_due_days: EMPLOYER_OFFER_PAYMENT_DUE_DAYS,
+      supplier_contracting_identity: LEGAL_CONTRACTING_IDENTITY,
+      supplier_address: LEGAL_SUPPLIER_ADDRESS,
+      supplier_vat_registered: false,
+      invoice_is_vat_invoice: false,
+      invoice_net_amount_gbp: EMPLOYER_OFFER_FEE_GBP,
+      invoice_vat_amount_gbp: 0,
+      invoice_total_gbp: EMPLOYER_OFFER_FEE_GBP,
+      invoice_payment_instructions: EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
       expires_at: addDays(new Date(), days).toISOString(),
       issued_by: user.id,
       issued_by_email: user.email,
@@ -135,7 +166,14 @@ const AdminEmployerOffers = () => {
 
   const markPaid = async (o: OfferRow) => {
     if (!confirm("Mark this offer as paid?")) return;
-    await db.from("employer_offers").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", o.id);
+    const now = new Date();
+    await db.from("employer_offers").update({
+      status: "paid",
+      paid_at: now.toISOString(),
+      paid_marked_by: user.id,
+      paid_marked_by_email: user.email,
+      paid_marked_at_uk: formatUkDateTime(now),
+    }).eq("id", o.id);
     void load();
   };
 
@@ -190,6 +228,9 @@ const AdminEmployerOffers = () => {
                     <div>Withdrawn: {dt(o.withdrawn_at)}</div>
                   </div>
                   {o.accepted_email && <p className="mt-2">Acceptance email: {o.accepted_email} · PO: {o.po_number || "—"}</p>}
+                  {o.accepted_at_uk && <p className="mt-1 text-muted-foreground">Acceptance recorded: {o.accepted_at_uk}</p>}
+                  {o.invoice_number && <p className="mt-1 text-muted-foreground">Invoice: {o.invoice_number} · due {o.payment_due_date ?? "—"}</p>}
+                  {o.paid_marked_by_email && <p className="mt-1 text-muted-foreground">Payment marked by {o.paid_marked_by_email}{o.paid_marked_at_uk ? ` on ${o.paid_marked_at_uk}` : ""}</p>}
                   {o.invoice_contact && <p className="mt-1 whitespace-pre-wrap">Invoicing: {o.invoice_contact}</p>}
                   {o.non_standard_request && <p className="mt-2 border-l-2 border-secondary pl-3 whitespace-pre-wrap">Non-standard request ({dt(o.referred_at)}): {o.non_standard_request}</p>}
                   {o.contact_submission_id && <p className="mt-1 text-xs text-muted-foreground">Enquiry {o.contact_submission_id}</p>}
@@ -197,8 +238,14 @@ const AdminEmployerOffers = () => {
                     {s === "issued" && <Button size="sm" variant="outline" onClick={() => navigator.clipboard.writeText(offerUrl(o.token)).then(() => toast({ title: "Link copied" }))}>Copy link</Button>}
                     {(s === "issued" || s === "referred") && <Button size="sm" variant="outline" onClick={() => withdraw(o)}>Withdraw</Button>}
                     {["issued", "expired", "referred", "withdrawn"].includes(s) && EMPLOYER_OFFER_TERMS_APPROVED && <Button size="sm" variant="outline" onClick={() => reissue(o)}>Reissue</Button>}
+                    {["accepted", "paid"].includes(s) && <Button size="sm" variant="outline" onClick={() => navigator.clipboard.writeText(buildEmployerOfferInvoiceText({ ...o, offer_reference: offerReference(o) })).then(() => toast({ title: "Invoice text copied" }))}>Copy invoice</Button>}
                     {s === "accepted" && <Button size="sm" onClick={() => markPaid(o)}>Mark paid</Button>}
                   </div>
+                  {["accepted", "paid"].includes(s) && (
+                    <div className="mt-5">
+                      <EmployerOfferInvoice invoice={{ ...o, offer_reference: offerReference(o) }} />
+                    </div>
+                  )}
                 </div>
               );
             })}
