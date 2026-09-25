@@ -1,0 +1,1 @@
+Employer-funded ELM offer records share contracting identity and invoice constants from `src/data/legal.ts` so the offer, invoice, acceptance record, and Terms page stay aligned.

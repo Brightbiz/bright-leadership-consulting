@@ -713,9 +713,21 @@ export type Database = {
       employer_offers: {
         Row: {
           accepted_at: string | null
+          accepted_at_uk: string | null
+          accepted_confirmation_authority_text: string | null
+          accepted_confirmation_participant_text: string | null
+          accepted_confirmation_privacy_text: string | null
+          accepted_confirmation_terms_text: string | null
           accepted_email: string | null
           accepted_name: string | null
+          accepted_offer_terms_text: string | null
+          accepted_offer_terms_version: string | null
           accepted_role: string | null
+          accepted_statement_text: string | null
+          accepted_terms_conditions_text: string | null
+          accepted_terms_conditions_url: string | null
+          accepted_terms_conditions_version: string | null
+          accepted_vat_treatment: string | null
           admin_notes: string | null
           contact_submission_id: string | null
           created_at: string
@@ -725,6 +737,15 @@ export type Database = {
           first_opened_at: string | null
           id: string
           invoice_contact: string | null
+          invoice_contact_email: string
+          invoice_date: string | null
+          invoice_description: string
+          invoice_is_vat_invoice: boolean
+          invoice_net_amount_gbp: number
+          invoice_number: string | null
+          invoice_payment_instructions: string
+          invoice_total_gbp: number
+          invoice_vat_amount_gbp: number
           issued_at: string
           issued_by: string | null
           issued_by_email: string | null
@@ -732,9 +753,14 @@ export type Database = {
           non_standard_request: string | null
           open_count: number
           paid_at: string | null
+          paid_marked_at_uk: string | null
+          paid_marked_by: string | null
+          paid_marked_by_email: string | null
           participant_email: string | null
           participant_name: string
           participant_role: string | null
+          payment_due_date: string | null
+          payment_due_days: number
           payment_method: string
           po_number: string | null
           programme: string
@@ -743,6 +769,9 @@ export type Database = {
           signatory_name: string
           status: string
           superseded_by: string | null
+          supplier_address: string
+          supplier_contracting_identity: string
+          supplier_vat_registered: boolean
           terms_version: string
           token: string
           updated_at: string
@@ -750,9 +779,21 @@ export type Database = {
         }
         Insert: {
           accepted_at?: string | null
+          accepted_at_uk?: string | null
+          accepted_confirmation_authority_text?: string | null
+          accepted_confirmation_participant_text?: string | null
+          accepted_confirmation_privacy_text?: string | null
+          accepted_confirmation_terms_text?: string | null
           accepted_email?: string | null
           accepted_name?: string | null
+          accepted_offer_terms_text?: string | null
+          accepted_offer_terms_version?: string | null
           accepted_role?: string | null
+          accepted_statement_text?: string | null
+          accepted_terms_conditions_text?: string | null
+          accepted_terms_conditions_url?: string | null
+          accepted_terms_conditions_version?: string | null
+          accepted_vat_treatment?: string | null
           admin_notes?: string | null
           contact_submission_id?: string | null
           created_at?: string
@@ -762,6 +803,15 @@ export type Database = {
           first_opened_at?: string | null
           id?: string
           invoice_contact?: string | null
+          invoice_contact_email?: string
+          invoice_date?: string | null
+          invoice_description?: string
+          invoice_is_vat_invoice?: boolean
+          invoice_net_amount_gbp?: number
+          invoice_number?: string | null
+          invoice_payment_instructions?: string
+          invoice_total_gbp?: number
+          invoice_vat_amount_gbp?: number
           issued_at?: string
           issued_by?: string | null
           issued_by_email?: string | null
@@ -769,9 +819,14 @@ export type Database = {
           non_standard_request?: string | null
           open_count?: number
           paid_at?: string | null
+          paid_marked_at_uk?: string | null
+          paid_marked_by?: string | null
+          paid_marked_by_email?: string | null
           participant_email?: string | null
           participant_name: string
           participant_role?: string | null
+          payment_due_date?: string | null
+          payment_due_days?: number
           payment_method?: string
           po_number?: string | null
           programme?: string
@@ -780,6 +835,9 @@ export type Database = {
           signatory_name: string
           status?: string
           superseded_by?: string | null
+          supplier_address?: string
+          supplier_contracting_identity?: string
+          supplier_vat_registered?: boolean
           terms_version: string
           token?: string
           updated_at?: string
@@ -787,9 +845,21 @@ export type Database = {
         }
         Update: {
           accepted_at?: string | null
+          accepted_at_uk?: string | null
+          accepted_confirmation_authority_text?: string | null
+          accepted_confirmation_participant_text?: string | null
+          accepted_confirmation_privacy_text?: string | null
+          accepted_confirmation_terms_text?: string | null
           accepted_email?: string | null
           accepted_name?: string | null
+          accepted_offer_terms_text?: string | null
+          accepted_offer_terms_version?: string | null
           accepted_role?: string | null
+          accepted_statement_text?: string | null
+          accepted_terms_conditions_text?: string | null
+          accepted_terms_conditions_url?: string | null
+          accepted_terms_conditions_version?: string | null
+          accepted_vat_treatment?: string | null
           admin_notes?: string | null
           contact_submission_id?: string | null
           created_at?: string
@@ -799,6 +869,15 @@ export type Database = {
           first_opened_at?: string | null
           id?: string
           invoice_contact?: string | null
+          invoice_contact_email?: string
+          invoice_date?: string | null
+          invoice_description?: string
+          invoice_is_vat_invoice?: boolean
+          invoice_net_amount_gbp?: number
+          invoice_number?: string | null
+          invoice_payment_instructions?: string
+          invoice_total_gbp?: number
+          invoice_vat_amount_gbp?: number
           issued_at?: string
           issued_by?: string | null
           issued_by_email?: string | null
@@ -806,9 +885,14 @@ export type Database = {
           non_standard_request?: string | null
           open_count?: number
           paid_at?: string | null
+          paid_marked_at_uk?: string | null
+          paid_marked_by?: string | null
+          paid_marked_by_email?: string | null
           participant_email?: string | null
           participant_name?: string
           participant_role?: string | null
+          payment_due_date?: string | null
+          payment_due_days?: number
           payment_method?: string
           po_number?: string | null
           programme?: string
@@ -817,6 +901,9 @@ export type Database = {
           signatory_name?: string
           status?: string
           superseded_by?: string | null
+          supplier_address?: string
+          supplier_contracting_identity?: string
+          supplier_vat_registered?: boolean
           terms_version?: string
           token?: string
           updated_at?: string

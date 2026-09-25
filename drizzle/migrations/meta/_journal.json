@@ -15,6 +15,20 @@
       "when": 1790351678945,
       "tag": "0001_employer_offers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790353420866,
+      "tag": "0002_add_employer_offer_invoice_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790353539479,
+      "tag": "0003_add_employer_offer_acceptance_record_fields",
+      "breakpoints": true
     }
   ]
 }

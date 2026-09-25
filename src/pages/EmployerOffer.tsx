@@ -7,10 +7,18 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { employerOfferTerms } from "@/data/employerOffer";
+import { Button } from "@/components/ui/button";
+import EmployerOfferInvoice from "@/components/EmployerOfferInvoice";
+import {
+  employerOfferTerms,
+  getEmployerOfferAcceptanceStatement,
+  getEmployerOfferConfirmations,
+} from "@/data/employerOffer";
 import { trackEvent } from "@/lib/analytics";
 
 type Offer = {
+  id: string;
+  offer_reference: string;
   programme: string;
   employer_organisation: string;
   signatory_name: string;
@@ -23,6 +31,23 @@ type Offer = {
   issued_at: string;
   accepted_at: string | null;
   accepted_name: string | null;
+  accepted_role: string | null;
+  accepted_at_uk: string | null;
+  accepted_offer_terms_version: string | null;
+  accepted_offer_terms_text: string | null;
+  po_number: string | null;
+  invoice_contact: string | null;
+  invoice_number: string | null;
+  invoice_date: string | null;
+  payment_due_date: string | null;
+  invoice_description: string | null;
+  invoice_net_amount_gbp: number | null;
+  invoice_vat_amount_gbp: number | null;
+  invoice_total_gbp: number | null;
+  invoice_payment_instructions: string | null;
+  invoice_contact_email: string | null;
+  supplier_contracting_identity: string | null;
+  supplier_address: string | null;
 };
 
 const call = (body: Record<string, unknown>) =>
@@ -31,13 +56,22 @@ const call = (body: Record<string, unknown>) =>
 const fmtGbp = (n: number) =>
   new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 
+const parseTermsText = (value: string | null | undefined) =>
+  (value ?? "")
+    .split(/\n{2,}/)
+    .map((block) => {
+      const [heading = "Offer term", ...body] = block.split("\n");
+      return { heading, body: body.join("\n").trim() };
+    })
+    .filter((term) => term.heading || term.body);
+
 const EmployerOffer = () => {
   const { token = "" } = useParams();
   const [status, setStatus] = useState<string>("loading");
   const [offer, setOffer] = useState<Offer | null>(null);
   const [mode, setMode] = useState<"accept" | "refer">("accept");
   const [form, setForm] = useState({ name: "", role: "", email: "", po_number: "", invoice_contact: "", message: "" });
-  const [checks, setChecks] = useState({ terms: false, authority: false, participant: false });
+  const [checks, setChecks] = useState({ terms: false, authority: false, participant: false, privacy: false });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const viewed = useRef(false);
@@ -66,7 +100,10 @@ const EmployerOffer = () => {
             action: "accept", token, terms_version: offer?.terms_version,
             name: form.name, role: form.role, email: form.email,
             po_number: form.po_number, invoice_contact: form.invoice_contact,
-            confirm_terms: checks.terms, confirm_authority: checks.authority, confirm_participant: checks.participant,
+            confirm_terms: checks.terms,
+            confirm_authority: checks.authority,
+            confirm_participant: checks.participant,
+            confirm_privacy: checks.privacy,
           }
         : { action: "refer", token, message: form.message };
     const { data, error: err } = await call(body);
@@ -77,12 +114,20 @@ const EmployerOffer = () => {
       return setError(msg ?? "The request could not be recorded. Please try again.");
     }
     setStatus(data.status);
+    if (data.offer) setOffer(data.offer);
     trackEvent(mode === "accept" ? "elm_employer_offer_accept" : "elm_employer_offer_refer", {
       enquiry_type: "elm_employer_funded",
     });
   };
 
   const inputCls = "h-12 bg-muted/30 border-border/50 focus:border-secondary";
+  const displayedTerms = offer?.accepted_offer_terms_text
+    ? parseTermsText(offer.accepted_offer_terms_text)
+    : employerOfferTerms;
+  const confirmationTexts = offer
+    ? getEmployerOfferConfirmations(offer.employer_organisation, offer.participant_name)
+    : null;
+  const termsVersionDisplay = offer?.accepted_offer_terms_version ?? offer?.terms_version;
 
   return (
     <div className="min-h-screen bg-background">
@@ -110,6 +155,7 @@ const EmployerOffer = () => {
             <>
               <h1 className="heading-hero mb-8">Employer-funded enrolment offer</h1>
               <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm mb-12 border-t border-b border-border py-6">
+                <dt className="text-muted-foreground">Offer reference</dt><dd className="text-foreground">{offer.offer_reference}</dd>
                 <dt className="text-muted-foreground">Programme</dt><dd className="text-foreground">{offer.programme}</dd>
                 <dt className="text-muted-foreground">Employer</dt><dd className="text-foreground">{offer.employer_organisation}</dd>
                 <dt className="text-muted-foreground">Named participant</dt>
@@ -117,15 +163,15 @@ const EmployerOffer = () => {
                 <dt className="text-muted-foreground">Fee</dt><dd className="text-foreground">{fmtGbp(offer.fee_gbp)} for one individual place</dd>
                 <dt className="text-muted-foreground">Payment</dt><dd className="text-foreground">By invoice</dd>
                 <dt className="text-muted-foreground">Valid until</dt><dd className="text-foreground">{format(new Date(offer.expires_at), "d MMMM yyyy")}</dd>
-                <dt className="text-muted-foreground">Terms version</dt><dd className="text-foreground">{offer.terms_version}</dd>
+                <dt className="text-muted-foreground">Terms version</dt><dd className="text-foreground">{termsVersionDisplay}</dd>
               </dl>
 
               <section className="space-y-5 mb-14">
                 <h2 className="font-serif text-xl text-foreground">Terms of this offer</h2>
-                {employerOfferTerms.map((t) => (
+                {displayedTerms.map((t) => (
                   <div key={t.heading}>
                     <h3 className="text-sm font-medium text-foreground mb-1">{t.heading}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{t.body}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">{t.body}</p>
                   </div>
                 ))}
                 <p className="text-sm text-muted-foreground">
@@ -135,12 +181,22 @@ const EmployerOffer = () => {
               </section>
 
               {status === "accepted" || status === "paid" ? (
-                <div className="border-l-2 border-secondary pl-5" role="status">
-                  <h2 className="font-serif text-xl text-foreground mb-2">Offer accepted</h2>
-                  <p className="body-brief">
-                    Acceptance has been recorded. An invoice will be issued to the invoicing contact provided.
-                    Access is issued to the named participant once payment has been received.
-                  </p>
+                <div className="space-y-8" role="status">
+                  <div className="border-l-2 border-secondary pl-5">
+                    <h2 className="font-serif text-xl text-foreground mb-2">Offer accepted</h2>
+                    <p className="body-brief">
+                      Acceptance was recorded{offer.accepted_at_uk ? ` on ${offer.accepted_at_uk}` : ""}
+                      {offer.accepted_name ? ` by ${offer.accepted_name}` : ""}
+                      {offer.accepted_role ? `, ${offer.accepted_role}` : ""}, on behalf of {offer.employer_organisation}.
+                    </p>
+                    <p className="body-brief mt-4">
+                      Programme access will be enabled for {offer.participant_name} within two business days after cleared payment in full and the information needed to create their access have been received.
+                    </p>
+                    <p className="mt-4 text-sm text-muted-foreground">
+                      Offer reference: {offer.offer_reference} · Offer terms version: {termsVersionDisplay}
+                    </p>
+                  </div>
+                  <EmployerOfferInvoice invoice={offer} showCopy />
                 </div>
               ) : status === "referred" ? (
                 <div className="border-l-2 border-secondary pl-5" role="status">
@@ -165,18 +221,17 @@ const EmployerOffer = () => {
                         <label className="text-sm space-y-2">Your role<Input required value={form.role} onChange={set("role")} className={inputCls} /></label>
                       </div>
                       <label className="text-sm space-y-2 block">Your work email<Input required type="email" value={form.email} onChange={set("email")} className={inputCls} /></label>
-                      <label className="text-sm space-y-2 block">Invoicing contact and address<Textarea required value={form.invoice_contact} onChange={set("invoice_contact")} /></label>
+                      <label className="text-sm space-y-2 block">Employer legal name and invoicing address<Textarea required value={form.invoice_contact} onChange={set("invoice_contact")} /></label>
                       <label className="text-sm space-y-2 block">Purchase order number (if applicable)<Input value={form.po_number} onChange={set("po_number")} className={inputCls} /></label>
-                      {([
-                        ["authority", `I am authorised to accept this offer on behalf of ${offer.employer_organisation}.`],
-                        ["participant", `The place is for ${offer.participant_name} and cannot be transferred without Bright Leadership Consulting's approval.`],
-                        ["terms", "I have read and accept the terms of this offer."],
-                      ] as const).map(([k, text]) => (
+                      {Object.entries(confirmationTexts ?? {}).map(([k, text]) => (
                         <label key={k} className="flex items-start gap-3 text-sm text-foreground min-h-11">
-                          <input type="checkbox" className="mt-1" checked={checks[k]} onChange={(e) => setChecks((c) => ({ ...c, [k]: e.target.checked }))} />
+                          <input type="checkbox" className="mt-1" checked={checks[k as keyof typeof checks]} onChange={(e) => setChecks((c) => ({ ...c, [k]: e.target.checked }))} />
                           {text}
                         </label>
                       ))}
+                      <p className="border-l-2 border-secondary pl-4 text-sm leading-relaxed text-muted-foreground">
+                        {getEmployerOfferAcceptanceStatement(offer.employer_organisation)}
+                      </p>
                     </>
                   ) : (
                     <label className="text-sm space-y-2 block">
@@ -186,9 +241,9 @@ const EmployerOffer = () => {
                   )}
 
                   {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
-                  <button type="submit" disabled={busy} className="btn-brief min-h-11">
-                    {mode === "accept" ? "Accept offer" : "Send to Bright Leadership Consulting"}
-                  </button>
+                  <Button type="submit" disabled={busy} className="min-h-11">
+                    {mode === "accept" ? "Accept offer and form contract" : "Send to Bright Leadership Consulting"}
+                  </Button>
                 </form>
               )}
             </>
