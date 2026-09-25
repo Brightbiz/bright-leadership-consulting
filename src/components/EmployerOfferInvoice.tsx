@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
-  BRIGHT_CONTACT_EMAIL,
+  BRIGHT_POST_PURCHASE_QUESTIONS_TEXT,
   EMPLOYER_OFFER_INVOICE_PAYMENT_INSTRUCTIONS,
   EMPLOYER_OFFER_VAT_WORDING,
   LEGAL_CONTRACTING_IDENTITY,
@@ -67,7 +67,7 @@ export const buildEmployerOfferInvoiceText = (invoice: EmployerOfferInvoiceDetai
     "Invoice",
     `Supplier: ${invoice.supplier_contracting_identity ?? LEGAL_CONTRACTING_IDENTITY}`,
     ...(invoice.supplier_address ?? LEGAL_SUPPLIER_ADDRESS).split(/\r?\n/),
-    `Contact: ${invoice.invoice_contact_email ?? BRIGHT_CONTACT_EMAIL}`,
+    BRIGHT_POST_PURCHASE_QUESTIONS_TEXT,
     "",
     `Invoice number: ${invoice.invoice_number ?? "—"}`,
     `Invoice date: ${fmtDate(invoice.invoice_date)}`,
@@ -139,7 +139,7 @@ const EmployerOfferInvoice = ({ invoice, showCopy = false, onCopied }: EmployerO
             ))}
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
-            {invoice.invoice_contact_email ?? BRIGHT_CONTACT_EMAIL}
+            {BRIGHT_POST_PURCHASE_QUESTIONS_TEXT}
           </p>
         </div>
         <div>

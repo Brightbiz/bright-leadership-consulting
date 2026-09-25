@@ -26,11 +26,11 @@
 export const BUYER_ACK_EMAILS_ENABLED = false;
 
 export const SENDER_NAME = "Bright Leadership Consulting";
-export const SENDER_ADDRESS = "notifications@brightleadershipconsulting.com";
-export const REPLY_TO = "enquiries@brightleadershipconsulting.com";
+export const SENDER_ADDRESS = "info@brightleadershipconsulting.com";
+export const REPLY_TO = "info@brightleadershipconsulting.com";
 
 /** Authorised test address; test sends go nowhere else. */
-export const TEST_RECIPIENT = "enquiries@brightleadershipconsulting.com";
+export const TEST_RECIPIENT = "info@brightleadershipconsulting.com";
 
 export type DeliveryStatus = "pending" | "sent" | "failed";
 

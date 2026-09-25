@@ -1,1 +1,2 @@
 Employer-funded ELM offer records share contracting identity and invoice constants from `src/data/legal.ts` so the offer, invoice, acceptance record, and Terms page stay aligned.
+Mailbox routing uses `info@brightleadershipconsulting.com` for programme/pre-purchase enquiries and `admin@brightleadershipconsulting.com` for accepted purchases, invoices, payment, access, cancellations and contractual administration, so transactional records do not mix enquiry and administration contacts.

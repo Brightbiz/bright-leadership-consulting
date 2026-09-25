@@ -26,7 +26,8 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const TOKEN = /^[a-f0-9]{64}$/;
 const CONTRACTING_IDENTITY = "Irene A. Agunbiade trading as Bright Leadership Consulting";
 const SUPPLIER_ADDRESS = "82 James Carter Road\nMildenhall\nEngland\nIP28 7DE";
-const CONTACT_EMAIL = "info@brightleadershipconsulting.com";
+const PRE_PURCHASE_EMAIL = "info@brightleadershipconsulting.com";
+const ADMIN_EMAIL = "admin@brightleadershipconsulting.com";
 const OFFER_TERMS_VERSION = "ELM-EMP-2026-09-v3";
 const TERMS_CONDITIONS_VERSION = "TC-2026-09";
 const TERMS_CONDITIONS_URL = "https://brightleadershipconsulting.com/terms";
@@ -35,7 +36,7 @@ const PAYMENT_DUE_DAYS = 30;
 const FEE_GBP = 1297;
 const VAT_WORDING = "VAT is not charged because the supplier is not registered for VAT.";
 const PAYMENT_INSTRUCTIONS =
-  `Payment is due within ${PAYMENT_DUE_DAYS} calendar days of the invoice date. Bank transfer details are supplied separately by Bright Leadership Consulting. Use the invoice number as the payment reference. For payment questions, contact ${CONTACT_EMAIL}.`;
+  `Payment is due within ${PAYMENT_DUE_DAYS} calendar days of the invoice date. Bank transfer details are supplied separately by Bright Leadership Consulting. Use the invoice number as the payment reference.`;
 
 const effectiveStatus = (o: { status: string; expires_at: string }) =>
   o.status === "issued" && new Date(o.expires_at).getTime() < Date.now() ? "expired" : o.status;
@@ -100,6 +101,8 @@ const offerTermsText = [
 
 const termsConditionsSnapshot = [
   `Contracting and invoicing party: ${CONTRACTING_IDENTITY}, 82 James Carter Road, Mildenhall, England, IP28 7DE.`,
+  `Programme information and pre-purchase enquiries: ${PRE_PURCHASE_EMAIL}.`,
+  `Accepted purchases, invoices, payment, cancellation notices, programme access and contractual administration: ${ADMIN_EMAIL}.`,
   "Employer-funded purchases of an individual place for a named participant are governed by the private offer issued for that purchase. Where the private offer conflicts with these Terms, the private offer prevails for that purchase.",
   "Programme fees are stated in British Pounds. Any tax or VAT treatment applicable to an invoiced offer is stated in the offer and invoice.",
   "Bright Leadership Consulting is not VAT registered. Employer-funded invoices issued by the supplier show VAT as £0.00 and state that VAT is not charged because the supplier is not registered for VAT.",
@@ -221,7 +224,7 @@ Deno.serve(async (req) => {
         invoice_vat_amount_gbp: 0,
         invoice_total_gbp: FEE_GBP,
         invoice_payment_instructions: PAYMENT_INSTRUCTIONS,
-        invoice_contact_email: CONTACT_EMAIL,
+        invoice_contact_email: ADMIN_EMAIL,
         supplier_contracting_identity: CONTRACTING_IDENTITY,
         supplier_address: SUPPLIER_ADDRESS,
         supplier_vat_registered: false,

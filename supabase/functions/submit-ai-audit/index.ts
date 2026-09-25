@@ -211,7 +211,7 @@ Deno.serve(async (req) => {
         return json(
           {
             error:
-              "We have recorded several requests from you in the last hour. Confirm the short check below, or email enquiries@brightleadershipconsulting.com and we will complete it manually.",
+              "We have recorded several requests from you in the last hour. Confirm the short check below, or email info@brightleadershipconsulting.com and we will complete it manually.",
             challengeRequired: true,
             ...challenge,
           },
@@ -222,7 +222,7 @@ Deno.serve(async (req) => {
         return json(
           {
             error:
-              "Too many requests. Please email enquiries@brightleadershipconsulting.com and we will complete this manually.",
+              "Too many requests. Please email info@brightleadershipconsulting.com and we will complete this manually.",
           },
           429,
         );

@@ -132,7 +132,7 @@ const DetailsForm = ({ action, product, state, onBack }: DetailsFormProps) => {
       setStatus("error");
       setErrorMessage(
         payload?.error ??
-          "We could not record that request. Please try again, or email enquiries@brightleadershipconsulting.com and we will complete it manually.",
+          "We could not record that request. Please try again, or email info@brightleadershipconsulting.com and we will complete it manually.",
       );
       return;
     }
