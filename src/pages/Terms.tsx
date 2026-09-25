@@ -6,6 +6,8 @@ import CancellationFaq from "@/components/CancellationFaq";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
 import {
   BRIGHT_ADMIN_EMAIL,
+  TERMS_AND_CONDITIONS_EFFECTIVE_DATE,
+  TERMS_AND_CONDITIONS_VERSION,
   BRIGHT_PRE_PURCHASE_EMAIL,
   EMPLOYER_OFFER_VAT_WORDING,
   LEGAL_CONTRACTING_IDENTITY,
@@ -178,6 +180,11 @@ const Terms = () => {
               <motion.h1 className="heading-hero mb-8" {...fade}>
                 Terms of Use
               </motion.h1>
+              {TERMS_AND_CONDITIONS_EFFECTIVE_DATE && (
+                <p className="text-sm text-muted-foreground mb-8">
+                  Version {TERMS_AND_CONDITIONS_VERSION}. Effective {TERMS_AND_CONDITIONS_EFFECTIVE_DATE}.
+                </p>
+              )}
               <motion.p className="body-brief text-muted-foreground" {...fade}>
                 The basis on which this website and the material published on it
                 are made available.
