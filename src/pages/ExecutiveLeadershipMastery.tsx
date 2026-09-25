@@ -14,7 +14,13 @@ import {
   CPD_CERTIFICATE_SCOPE_NOTE,
 } from "@/data/accreditation";
 import { programmes } from "@/data/programmes";
-import { trackCourseCtaClick } from "@/lib/analytics";
+import {
+  trackCourseCtaClick,
+  trackElmEmployerFundedClick,
+  ELM_EMPLOYER_FUNDED_ENQUIRY,
+} from "@/lib/analytics";
+
+const EMPLOYER_FUNDED_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -400,6 +406,28 @@ const ExecutiveLeadershipMastery = () => {
                   <Link to="/courses" className="link-quiet">
                     View All Courses
                     <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+
+                <div className="border-t border-border pt-8 space-y-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    For an employer considering funding a named individual's
+                    enrolment, request information on fees, invoicing and
+                    arrangements.
+                  </p>
+                  <Link
+                    to={EMPLOYER_FUNDED_PATH}
+                    className="btn-brief min-h-11"
+                    data-testid="elm-employer-funded-cta"
+                    onClick={() =>
+                      trackElmEmployerFundedClick({
+                        surface: "/executive-leadership-mastery#enquiry",
+                        destination: EMPLOYER_FUNDED_PATH,
+                      })
+                    }
+                  >
+                    Request employer-funded enrolment information
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                   </Link>
                 </div>
               </motion.div>

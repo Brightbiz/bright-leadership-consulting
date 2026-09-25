@@ -10,7 +10,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { reportEnquiryConversion } from "@/lib/analytics";
+import {
+  reportEnquiryConversion,
+  trackElmEmployerFundedSubmit,
+  ELM_EMPLOYER_FUNDED_ENQUIRY,
+  ELM_EMPLOYER_FUNDED_LABEL,
+} from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -94,10 +99,13 @@ const Contact = () => {
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
 
-  const prefilledProgramme = programmeInterestOptions.find(
-    (option) =>
-      option.toLowerCase() === (searchParams.get("programme") ?? "").toLowerCase()
-  );
+  const isElmEmployerFunded = searchParams.get("enquiry") === ELM_EMPLOYER_FUNDED_ENQUIRY;
+  const prefilledProgramme = isElmEmployerFunded
+    ? "Executive Leadership Mastery Programme"
+    : programmeInterestOptions.find(
+        (option) =>
+          option.toLowerCase() === (searchParams.get("programme") ?? "").toLowerCase()
+      );
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -123,6 +131,7 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormData) => {
     const details = [
       data.role ? `Role: ${data.role}` : null,
+      isElmEmployerFunded ? `Enquiry category: ${ELM_EMPLOYER_FUNDED_LABEL}` : null,
       `Enquiry type: ${data.enquiryType}`,
       data.programme ? `Programme of interest: ${data.programme}` : null,
       data.deliveryFormat ? `Preferred delivery: ${data.deliveryFormat}` : null,
@@ -140,6 +149,7 @@ const Contact = () => {
             phone: null,
             company: data.company || null,
             message: `${details.join("\n")}\n\n${data.message}`,
+            ...(isElmEmployerFunded ? { enquiry_type: ELM_EMPLOYER_FUNDED_ENQUIRY } : {}),
           },
         },
       });
@@ -165,6 +175,8 @@ const Contact = () => {
       ) {
         reportEnquiryConversion();
       }
+
+      if (isElmEmployerFunded) trackElmEmployerFundedSubmit();
 
       setIsSubmitted(true);
     } catch (error) {
@@ -209,6 +221,18 @@ const Contact = () => {
               </motion.p>
 
               <div className="section-divider mb-16" />
+
+              {isElmEmployerFunded && !isSubmitted && (
+                <p
+                  className="text-sm text-muted-foreground border-l-2 border-secondary pl-5 mb-10 leading-relaxed"
+                  data-testid="elm-employer-funded-notice"
+                >
+                  <span className="text-foreground font-medium">{ELM_EMPLOYER_FUNDED_LABEL}.</span>{" "}
+                  An information request for an employer considering funding a named
+                  individual's place on the Executive Leadership Mastery Programme.
+                  Please include the participant's name and role in your message.
+                </p>
+              )}
 
             {isSubmitted ? (
               <motion.div
@@ -279,7 +303,7 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  {track === ORGANISATIONAL && (
+                  {(track === ORGANISATIONAL || isElmEmployerFunded) && (
                     <FormField
                       control={form.control}
                       name="company"

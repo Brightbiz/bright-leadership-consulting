@@ -426,3 +426,27 @@ export function trackProgrammeWithdrawal(params: {
   });
 }
 
+
+/** Employer-funded ELM enquiry identifiers (stored on contact_submissions.enquiry_type). */
+export const ELM_EMPLOYER_FUNDED_ENQUIRY = "elm_employer_funded";
+export const ELM_EMPLOYER_FUNDED_LABEL = "ELM employer-funded enquiry";
+
+/** Click on "Request employer-funded enrolment information". No PII. */
+export function trackElmEmployerFundedClick(params: { surface: string; destination: string }) {
+  trackEvent("elm_employer_funded_enquiry_click", {
+    programme_name: "Executive Leadership Mastery Programme",
+    enquiry_type: ELM_EMPLOYER_FUNDED_ENQUIRY,
+    cta_label: "Request employer-funded enrolment information",
+    cta_surface: params.surface,
+    destination_url: params.destination,
+  });
+}
+
+/** Confirmed server-accepted submission of the employer-funded enquiry. No PII. */
+export function trackElmEmployerFundedSubmit() {
+  trackEvent("elm_employer_funded_enquiry_submit", {
+    programme_name: "Executive Leadership Mastery Programme",
+    enquiry_type: ELM_EMPLOYER_FUNDED_ENQUIRY,
+    form_name: "contact",
+  });
+}

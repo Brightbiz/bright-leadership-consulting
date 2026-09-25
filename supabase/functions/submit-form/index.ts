@@ -17,8 +17,8 @@ const FORM_CONFIGS: Record<string, { table: string; required: string[]; optional
   contact: {
     table: "contact_submissions",
     required: ["name", "email", "message"],
-    optional: ["phone", "company"],
-    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200 },
+    optional: ["phone", "company", "enquiry_type"],
+    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200, enquiry_type: 60 },
   },
   newsletter: {
     table: "newsletter_subscribers",
@@ -86,6 +86,15 @@ Deno.serve(async (req) => {
         }
         sanitized[field] = strValue || null;
       }
+    }
+
+    // Enquiry type is restricted to known values so leads can be segmented reliably.
+    const ALLOWED_ENQUIRY_TYPES = ["elm_employer_funded"];
+    if (sanitized.enquiry_type && !ALLOWED_ENQUIRY_TYPES.includes(sanitized.enquiry_type)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid enquiry type" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Email format validation
