@@ -55,6 +55,8 @@ const AdminCRM = lazy(() => import("./pages/AdminCRM"));
 const AdminOutreach = lazy(() => import("./pages/AdminOutreach"));
 const AdminAuditRequests = lazy(() => import("./pages/AdminAuditRequests"));
 const AdminEdlApplications = lazy(() => import("./pages/AdminEdlApplications"));
+const AdminEmployerOffers = lazy(() => import("./pages/AdminEmployerOffers"));
+const EmployerOffer = lazy(() => import("./pages/EmployerOffer"));
 
 const AdminCpdAudit = lazy(() => import("./pages/AdminCpdAudit"));
 const AdminSecurity = lazy(() => import("./pages/AdminSecurity"));
@@ -133,6 +135,8 @@ const AnimatedRoutes = () => {
           <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
           <Route path="/admin/outreach" element={<PageTransition><AdminOutreach /></PageTransition>} />
           <Route path="/admin/audit-requests" element={<PageTransition><AdminAuditRequests /></PageTransition>} />
+          <Route path="/admin/employer-offers" element={<PageTransition><AdminEmployerOffers /></PageTransition>} />
+          <Route path="/offer/:token" element={<PageTransition><EmployerOffer /></PageTransition>} />
           <Route path="/admin/edl-applications" element={<PageTransition><AdminEdlApplications /></PageTransition>} />
 
           <Route path="/admin/cpd-audit" element={<PageTransition><AdminCpdAudit /></PageTransition>} />

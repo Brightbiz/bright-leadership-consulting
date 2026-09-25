@@ -653,7 +653,11 @@ const AdminSubmissions = () => {
                         </div>
                       )}
                       {selectedSubmission.enquiry_type && (
-                        <div><span className="font-medium text-foreground">Enquiry category:</span> {selectedSubmission.enquiry_type === "elm_employer_funded" ? "ELM employer-funded enquiry" : selectedSubmission.enquiry_type}</div>
+                        <div><span className="font-medium text-foreground">Enquiry category:</span> {selectedSubmission.enquiry_type === "elm_employer_funded" ? "ELM employer-funded enquiry" : selectedSubmission.enquiry_type}
+                          {selectedSubmission.enquiry_type === "elm_employer_funded" && (
+                            <> · <Link to={`/admin/employer-offers?submission=${selectedSubmission.id}`} className="text-primary hover:underline">Prepare offer</Link></>
+                          )}
+                        </div>
                       )}
                       {selectedSubmission.company && (
                         <div><span className="font-medium text-foreground">Company:</span> {selectedSubmission.company}</div>
