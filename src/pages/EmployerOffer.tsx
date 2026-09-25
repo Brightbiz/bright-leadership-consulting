@@ -197,7 +197,7 @@ const EmployerOffer = () => {
                       {offer.accepted_role ? `, ${offer.accepted_role}` : ""}, on behalf of {offer.employer_organisation}.
                     </p>
                     <p className="body-brief mt-4">
-                      Programme access will be enabled for {offer.participant_name} within two business days after cleared payment in full and the information needed to create their access have been received.
+                      The 30-day payment period is the final deadline, not a waiting period: the employer may pay the invoice at any time before the due date. Programme access will be enabled for {offer.participant_name} within two business days after cleared payment and the required participant information have been received.
                     </p>
                     <p className="body-brief mt-4">{BRIGHT_POST_PURCHASE_QUESTIONS_TEXT}</p>
                     <p className="mt-4 text-sm text-muted-foreground">

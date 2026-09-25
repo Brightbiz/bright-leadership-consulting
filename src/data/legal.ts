@@ -39,3 +39,5 @@ export const TERMS_AND_CONDITIONS_ACCEPTANCE_SNAPSHOT = [
   "Bright Leadership Consulting is not VAT registered. Employer-funded invoices issued by the supplier show VAT as £0.00 and state that VAT is not charged because the supplier is not registered for VAT.",
   "Providing, omitting or delaying a purchase-order number does not replace the employer's obligation to pay an accepted invoice in accordance with the agreed payment terms.",
 ].join("\n");
+/** Set to the actual publication date (e.g. "12 October 2026") when the amended Terms are published. Version line is hidden while null. */
+export const TERMS_AND_CONDITIONS_EFFECTIVE_DATE: string | null = null;

@@ -19,7 +19,7 @@ import {
  */
 
 export const EMPLOYER_OFFER_TERMS_APPROVED = false;
-export const EMPLOYER_OFFER_TERMS_VERSION = "ELM-EMP-2026-09-v3";
+export const EMPLOYER_OFFER_TERMS_VERSION = "ELM-EMP-2026-09-v4";
 export const EMPLOYER_OFFER_DEFAULT_EXPIRY_DAYS = 14;
 export const EMPLOYER_OFFER_FEE_GBP = 1297;
 
@@ -44,7 +44,7 @@ export const employerOfferTerms: { heading: string; body: string }[] = [
   },
   {
     heading: "3. When the contract becomes binding",
-    body: "A binding contract between the employer and Bright Leadership Consulting is formed when the employer's authorised representative accepts this offer using the button below before the expiry date, and Bright Leadership Consulting records that acceptance. No contract is formed if the offer has expired, been withdrawn or been reissued, or if a non-standard requirement has been referred to Bright Leadership Consulting.",
+    body: "A binding contract between the employer and Bright Leadership Consulting is formed when the employer's authorised representative accepts this offer using the button below before the expiry date. Bright Leadership Consulting will record the acceptance and send confirmation. No contract is formed if the offer has expired, been withdrawn or been reissued, or where the employer selects the referral route for a non-standard requirement.",
   },
   {
     heading: "4. Authority to accept",
@@ -52,11 +52,11 @@ export const employerOfferTerms: { heading: string; body: string }[] = [
   },
   {
     heading: "5. Invoicing and payment",
-    body: `Bright Leadership Consulting will issue an invoice to the invoicing contact provided after acceptance. Payment is due within ${EMPLOYER_OFFER_PAYMENT_DUE_DAYS} calendar days of the invoice date. A purchase order number is optional unless the employer requires one; where supplied, it will be quoted on the invoice. Providing, omitting or delaying a purchase order number does not change the payment deadline.`,
+    body: `Bright Leadership Consulting will issue an invoice to the invoicing contact provided after acceptance. Payment is due within ${EMPLOYER_OFFER_PAYMENT_DUE_DAYS} calendar days of the invoice date. This is the final payment deadline, not a waiting period: the employer may pay the invoice at any time before the due date. A purchase order number is optional unless the employer requires one; where supplied, it will be quoted on the invoice. Providing, omitting or delaying a purchase order number does not change the payment deadline.`,
   },
   {
     heading: "6. Access",
-    body: "Programme access will be enabled for the named participant within two business days after Bright Leadership Consulting has received cleared payment in full and the information reasonably required to create the participant's access. Bright Leadership Consulting may withhold access until both requirements have been satisfied.",
+    body: "Programme access will be enabled for the named participant within two business days after Bright Leadership Consulting has received both cleared payment in full and the information reasonably required to create the participant's access. Bright Leadership Consulting may withhold access until both requirements have been satisfied.",
   },
   {
     heading: "7. Overdue payment",
