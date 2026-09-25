@@ -265,6 +265,9 @@ const AdminSubmissions = () => {
       <Header />
       <div className="container-narrow py-8 pt-28 flex-1">
         <OutstandingActionsBanner />
+        <div role="alert" className="mb-6 border-l-2 border-destructive bg-muted/40 px-4 py-3 text-sm text-foreground">
+          Email notifications for ELM employer-funded enquiries are not yet active. Check this page regularly for new employer-funded enquiries.
+        </div>
         {/* Page Header */}
 
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -409,7 +412,7 @@ const AdminSubmissions = () => {
                         <TableCell className="font-medium">
                           {submission.name}
                           {!submission.is_read && <Badge variant="default" className="ml-2 text-xs">New</Badge>}
-                          {submission.enquiry_type === "elm_employer_funded" && <Badge variant="outline" className="ml-2 text-xs">ELM employer-funded</Badge>}
+                          {submission.enquiry_type === "elm_employer_funded" && <Badge variant="outline" className="ml-2 text-xs">ELM employer-funded enquiry</Badge>}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{submission.email}</TableCell>
                         <TableCell className="hidden lg:table-cell">{submission.company || "—"}</TableCell>
