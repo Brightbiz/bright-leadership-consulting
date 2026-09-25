@@ -303,7 +303,7 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  {track === ORGANISATIONAL && (
+                  {(track === ORGANISATIONAL || isElmEmployerFunded) && (
                     <FormField
                       control={form.control}
                       name="company"
