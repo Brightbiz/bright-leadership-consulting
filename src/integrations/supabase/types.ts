@@ -710,6 +710,135 @@ export type Database = {
           },
         ]
       }
+      employer_offers: {
+        Row: {
+          accepted_at: string | null
+          accepted_email: string | null
+          accepted_name: string | null
+          accepted_role: string | null
+          admin_notes: string | null
+          contact_submission_id: string | null
+          created_at: string
+          employer_organisation: string
+          expires_at: string
+          fee_gbp: number
+          first_opened_at: string | null
+          id: string
+          invoice_contact: string | null
+          issued_at: string
+          issued_by: string | null
+          issued_by_email: string | null
+          last_opened_at: string | null
+          non_standard_request: string | null
+          open_count: number
+          paid_at: string | null
+          participant_email: string | null
+          participant_name: string
+          participant_role: string | null
+          payment_method: string
+          po_number: string | null
+          programme: string
+          referred_at: string | null
+          signatory_email: string
+          signatory_name: string
+          status: string
+          superseded_by: string | null
+          terms_version: string
+          token: string
+          updated_at: string
+          withdrawn_at: string | null
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_email?: string | null
+          accepted_name?: string | null
+          accepted_role?: string | null
+          admin_notes?: string | null
+          contact_submission_id?: string | null
+          created_at?: string
+          employer_organisation: string
+          expires_at: string
+          fee_gbp?: number
+          first_opened_at?: string | null
+          id?: string
+          invoice_contact?: string | null
+          issued_at?: string
+          issued_by?: string | null
+          issued_by_email?: string | null
+          last_opened_at?: string | null
+          non_standard_request?: string | null
+          open_count?: number
+          paid_at?: string | null
+          participant_email?: string | null
+          participant_name: string
+          participant_role?: string | null
+          payment_method?: string
+          po_number?: string | null
+          programme?: string
+          referred_at?: string | null
+          signatory_email: string
+          signatory_name: string
+          status?: string
+          superseded_by?: string | null
+          terms_version: string
+          token?: string
+          updated_at?: string
+          withdrawn_at?: string | null
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_email?: string | null
+          accepted_name?: string | null
+          accepted_role?: string | null
+          admin_notes?: string | null
+          contact_submission_id?: string | null
+          created_at?: string
+          employer_organisation?: string
+          expires_at?: string
+          fee_gbp?: number
+          first_opened_at?: string | null
+          id?: string
+          invoice_contact?: string | null
+          issued_at?: string
+          issued_by?: string | null
+          issued_by_email?: string | null
+          last_opened_at?: string | null
+          non_standard_request?: string | null
+          open_count?: number
+          paid_at?: string | null
+          participant_email?: string | null
+          participant_name?: string
+          participant_role?: string | null
+          payment_method?: string
+          po_number?: string | null
+          programme?: string
+          referred_at?: string | null
+          signatory_email?: string
+          signatory_name?: string
+          status?: string
+          superseded_by?: string | null
+          terms_version?: string
+          token?: string
+          updated_at?: string
+          withdrawn_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_offers_contact_submission_id_fkey"
+            columns: ["contact_submission_id"]
+            isOneToOne: false
+            referencedRelation: "contact_submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_offers_superseded_by_fkey"
+            columns: ["superseded_by"]
+            isOneToOne: false
+            referencedRelation: "employer_offers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_magnet_downloads: {
         Row: {
           downloaded_at: string
