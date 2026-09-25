@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { NOTIFY_TO_ENQUIRIES, sendResendNotification } from "../_shared/resendNotify.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
