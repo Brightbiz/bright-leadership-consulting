@@ -294,6 +294,7 @@ export type Database = {
           company: string | null
           created_at: string
           email: string
+          enquiry_type: string | null
           id: string
           is_read: boolean
           message: string
@@ -304,6 +305,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email: string
+          enquiry_type?: string | null
           id?: string
           is_read?: boolean
           message: string
@@ -314,6 +316,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email?: string
+          enquiry_type?: string | null
           id?: string
           is_read?: boolean
           message?: string
