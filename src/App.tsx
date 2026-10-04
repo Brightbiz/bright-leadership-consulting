@@ -23,6 +23,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Programme pages
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
+const ElmWebinar = lazy(() => import("./pages/ElmWebinar"));
 const Courses = lazy(() => import("./pages/Courses"));
 const StrategicLeadershipAI = lazy(() => import("./pages/StrategicLeadershipAI"));
 const StrategicAiLeadershipOrganisations = lazy(
