@@ -24,7 +24,7 @@ const ElmWebinar = () => (
     <Header />
     <main className="pt-32 pb-24 px-6">
       <div className="mx-auto max-w-5xl">
-        <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">On-demand webinar</p>
+        <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">On-demand webinar</p>
         <h1 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
           Developing the leaders your organisation depends on
         </h1>
