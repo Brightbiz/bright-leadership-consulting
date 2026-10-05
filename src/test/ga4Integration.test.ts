@@ -3,9 +3,10 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 /**
- * GA4 (G-FX0BYSEL34) must run alongside the Google Ads tag (AW-18382257167),
- * audit events must reach GA4 through real gtag('event', ...) calls, consent
- * defaults must be untouched, and no PII may be transmitted.
+ * GA4 (G-FX0BYSEL34) is the only Google tag: the Google Ads tag was removed
+ * (no active campaigns). Audit events must reach GA4 through real
+ * gtag('event', ...) calls, consent defaults must be untouched, and no PII
+ * may be transmitted.
  */
 
 const html = readFileSync(resolve(process.cwd(), "index.html"), "utf8");
@@ -17,16 +18,16 @@ describe("index.html tag configuration", () => {
     expect(html).not.toContain("gtm.js");
   });
 
-  it("keeps Consent Mode v2 defaults denied", () => {
+  it("keeps the Analytics Consent Mode default denied and carries no Ads signals", () => {
     expect(html).toContain("gtag('consent', 'default'");
-    for (const signal of [
-      "ad_storage: 'denied'",
-      "analytics_storage: 'denied'",
-      "ad_user_data: 'denied'",
-      "ad_personalization: 'denied'",
-    ]) {
-      expect(html).toContain(signal);
-    }
+    expect(html).toContain("analytics_storage: 'denied'");
+    expect(html).not.toContain("ad_storage");
+    expect(html).not.toContain("ad_user_data");
+    expect(html).not.toContain("ad_personalization");
+  });
+
+  it("contains no Google Ads tag anywhere in the entry document", () => {
+    expect(html).not.toContain("AW-18382257167");
   });
 });
 
@@ -43,17 +44,16 @@ describe("consent-gated loading", () => {
     const c = await import("@/lib/consent");
     c.applyStoredConsent();
     expect(scripts()).toBe(0);
-    c.setConsent({ analytics: false, advertising: false });
+    c.setConsent({ analytics: false });
     expect(scripts()).toBe(0);
   });
 
-  it("analytics-only loads GA4 without Ads; withdrawal disables GA4", async () => {
+  it("analytics consent loads GA4; withdrawal disables it", async () => {
     const c = await import("@/lib/consent");
-    c.setConsent({ analytics: true, advertising: false });
+    c.setConsent({ analytics: true });
     expect(scripts()).toBe(1);
     const calls = (window.gtag as unknown as ReturnType<typeof vi.fn>).mock.calls;
     expect(calls.some((x) => x[0] === "config" && x[1] === "G-FX0BYSEL34")).toBe(true);
-    expect(calls.some((x) => x[0] === "config" && x[1] === "AW-18382257167")).toBe(false);
     c.withdrawConsent();
     expect((window as unknown as Record<string, unknown>)["ga-disable-G-FX0BYSEL34"]).toBe(true);
   });
@@ -69,14 +69,14 @@ describe("analytics transmission", () => {
     window.dataLayer = [];
     window.gtag = gtag as unknown as Window["gtag"];
   });
-  const grant = async (analytics: boolean, advertising: boolean) => {
+  const grant = async (analytics: boolean) => {
     const c = await import("@/lib/consent");
-    c.setConsent({ analytics, advertising });
+    c.setConsent({ analytics });
     gtag.mockClear();
   };
 
   it("sends every event to GA4 with gtag('event', ...) and to the dataLayer", async () => {
-    await grant(true, false);
+    await grant(true);
     const { trackEvent, GA4_MEASUREMENT_ID } = await import("@/lib/analytics");
     trackEvent("section_view", { section_name: "x" });
     expect(gtag).toHaveBeenCalledWith("event", "section_view", {
@@ -92,21 +92,12 @@ describe("analytics transmission", () => {
     expect(gtag).not.toHaveBeenCalled();
   });
 
-  it("sends the Ads conversion only with advertising consent", async () => {
-    await grant(false, true);
-    const { reportEnquiryConversion } = await import("@/lib/analytics");
-    reportEnquiryConversion();
-    expect(gtag).toHaveBeenCalledWith("event", "conversion", {
-      send_to: "AW-18382257167/6zYBCLOIr98cEI_4q71E",
-    });
-  });
-
   it("leaves page views to GA4 Enhanced Measurement (no manual duplicates)", async () => {
-    await grant(true, false);
+    await grant(true);
     const { trackPageView } = await import("@/lib/analytics");
     trackPageView("/courses");
     expect(gtag).not.toHaveBeenCalled();
-});
+  });
 });
 
 describe("audit events reach GA4", () => {
@@ -129,7 +120,7 @@ describe("audit events reach GA4", () => {
   async function emitAll() {
     vi.resetModules();
     localStorage.clear();
-    (await import("@/lib/consent")).setConsent({ analytics: true, advertising: false });
+    (await import("@/lib/consent")).setConsent({ analytics: true });
     gtag.mockClear();
     vi.doMock("@/lib/auditSession", () => ({
       auditSessionId: () => "session-test",
