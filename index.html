@@ -44,17 +44,15 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {
-        ad_storage: 'denied',
         analytics_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
         wait_for_update: 500
       });
     </script>
 
     <!-- gtag.js is NOT loaded here. It is fetched only after the visitor
-         grants Analytics (GA4 G-FX0BYSEL34) or Advertising (Google Ads
-         AW-18382257167) consent — see src/lib/googleTag.ts. -->
+         grants Analytics (GA4 G-FX0BYSEL34) consent — see
+         src/lib/googleTag.ts. The Google Ads tag was removed (no active
+         campaigns). -->
 
   </head>
 

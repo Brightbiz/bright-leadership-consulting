@@ -75,7 +75,7 @@ const sections = [
   {
     heading: "Cookies and similar technologies",
     body: [
-      "Strictly necessary storage is used to operate this site and to remember your cookie choice. This includes a consent-preference item (blc.cookie-consent.v2) held in your browser's local storage, which persists until you clear your browser storage, and a session item used only when signing in to the administrative area.",
+      "Strictly necessary storage is used to operate this site and to remember your cookie choice. This includes a consent-preference item (blc.cookie-consent.v3) held in your browser's local storage, which persists until you clear your browser storage, and a session item used only when signing in to the administrative area.",
       "No non-essential cookies or similar technologies are set before you give consent. Consent requires a clear positive action; continuing to browse does not constitute consent.",
     ],
   },
@@ -90,25 +90,13 @@ const sections = [
       "User-level data (data associated with the _ga cookie identifiers) is retained in our Google Analytics account for 14 months. A separate account setting, “Reset user data on new activity”, is switched on. This resets the retention period for the user identifier each time that identifier generates new activity, so user-level data can be retained for a further 14 months from the most recent activity of that identifier. This reset affects user-level data only: event-level data retains its fixed two-month period regardless.",
       "The retention periods apply to the stored event-level and user-level data only. They do not mean that all Analytics data is deleted after those periods: the standard aggregated reports produced by Analytics are not subject to these retention periods.",
       "For Google Analytics, Google acts as our processor under the Google Ads Data Processing Terms, and processes this information on our instructions.",
-    ],
-  },
-  {
-    heading: "Google Ads conversion measurement on this website",
-    body: [
-      "brightleadershipconsulting.com uses one consent-controlled Google Ads tag (a single Google Ads base tag). It is provided by Google Ireland Limited. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational, cohort or in-house programme enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes.",
-      "The Google Ads tag is loaded only if you accept Advertising. Analytics and Advertising are separate choices; accepting one does not enable the other. Remarketing and personalised advertising are switched off: the ad_personalization signal remains denied even when Advertising is accepted, and the tag is configured not to use your visit for audience lists. When Advertising is accepted, Google may set conversion-linker cookies in the _gcl family on this domain, which typically expire up to 90 days after they are set, and Google may read or set its own advertising cookies on Google domains to attribute the conversion. If Advertising is not accepted, the tag is not loaded and no such cookies are set.",
-      "No Google Tag Manager container is active on this website. No Enhanced Conversions data is transmitted, and the content of your enquiry is not sent to Google.",
-      "One conversion is currently configured: an organisational enquiry. It is recorded only after our server has successfully accepted a qualifying organisational, cohort or in-house programme enquiry, and only subject to the consent controls described in this notice. It is not recorded on a page view, a form interaction, a button click, a validation failure, a server failure or a general contact enquiry.",
-      "The categories of information processed for this purpose are: a Google advertising click identifier present in the landing page address (for example gclid, gbraid or wbraid), campaign parameters such as utm_source and utm_campaign, the page address and referring source, approximate location derived from IP address, and general device and browser information.",
-      "For Google Ads conversion measurement, Google acts as a separate, independent controller under the Google Ads Controller-Controller Data Protection Terms, and is responsible for its own use of that information as described in its privacy policy.",
-      "Google's own information about how it processes advertising data is available in the Google Privacy Policy (policies.google.com/privacy) and in Google's description of how it uses cookies and similar technologies in advertising (policies.google.com/technologies/ads).",
-      "International transfers: information collected by Google Analytics and Google Ads may be processed by Google LLC and its affiliates in the United States and other countries where Google operates data centres. Google LLC is certified under the UK Extension to the EU–US Data Privacy Framework, and Google states that it also relies on UK adequacy regulations and on standard contractual clauses incorporated in its data protection terms (business.safety.google/adsdatatransfers).",
+      "International transfers: information collected by Google Analytics may be processed by Google LLC and its affiliates in the United States and other countries where Google operates data centres. Google LLC is certified under the UK Extension to the EU–US Data Privacy Framework, and Google states that it also relies on UK adequacy regulations and on standard contractual clauses incorporated in its data protection terms (business.safety.google/adsdatatransfers).",
     ],
   },
   {
     heading: "Accepting, rejecting and withdrawing consent",
     body: [
-      "When you first visit the site a banner offers Accept all, Reject non-essential and Manage preferences. Analytics and Advertising are switched off by default and are never preselected.",
+      "When you first visit the site a banner offers Accept analytics, Reject non-essential and Manage preferences. Analytics is switched off by default and is never preselected.",
       "You may change or withdraw your choice at any time by selecting Cookie Preferences in the footer of any page, which reopens the same panel. If you withdraw consent, the page reloads without the relevant Google code, and Google cookies set on this domain for that purpose are removed. You may also delete cookies and local storage through your browser settings.",
       "This control governs brightleadershipconsulting.com only. It does not govern the separately hosted learning platform, which operates under its own cookie and privacy arrangements.",
     ],
@@ -126,7 +114,7 @@ const sections = [
   {
     heading: "Measurement we may introduce later",
     body: [
-      "The technologies currently active on brightleadershipconsulting.com are the strictly necessary storage described above and, only where you consent, Google Analytics and the Google Ads tag used for the organisational-enquiry conversion.",
+      "The technologies currently active on brightleadershipconsulting.com are the strictly necessary storage described above and, only where you consent, Google Analytics. No advertising measurement is active on this website.",
       "We may in future introduce measurement of individual-enrolment link clicks or of purchases completed on the learning platform. No such measurement is active today, and it would only be introduced once appropriate consent controls have been implemented on the relevant domain. This notice would be updated before that happens.",
     ],
   },
