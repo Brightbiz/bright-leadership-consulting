@@ -15,6 +15,7 @@ import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { ENQUIRY_TYPE_LABELS, ENQUIRY_SOURCE_LABELS } from "@/lib/analytics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -38,6 +39,7 @@ interface ContactSubmission {
   company: string | null;
   message: string;
   enquiry_type?: string | null;
+  source?: string | null;
   created_at: string;
   is_read: boolean;
 }
