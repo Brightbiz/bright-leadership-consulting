@@ -15,6 +15,9 @@ import {
   trackElmEmployerFundedSubmit,
   ELM_EMPLOYER_FUNDED_ENQUIRY,
   ELM_EMPLOYER_FUNDED_LABEL,
+  ELM_INDIVIDUAL_ENROLMENT_ENQUIRY,
+  ELM_INDIVIDUAL_ENROLMENT_LABEL,
+  ELM_WEBINAR_SOURCE,
 } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -97,7 +100,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const isElmEmployerFunded = searchParams.get("enquiry") === ELM_EMPLOYER_FUNDED_ENQUIRY;
   const prefilledProgramme = isElmEmployerFunded
@@ -106,6 +109,19 @@ const Contact = () => {
         (option) =>
           option.toLowerCase() === (searchParams.get("programme") ?? "").toLowerCase()
       );
+  // Attribution lives only in the URL of the explicit enquiry route, so it survives
+  // refresh/back within that journey, is replaced when another route is chosen,
+  // and never attaches to unrelated enquiries.
+  const isElmIndividual =
+    searchParams.get("enquiry") === ELM_INDIVIDUAL_ENROLMENT_ENQUIRY &&
+    prefilledProgramme === "Executive Leadership Mastery Programme";
+  const enquiryTypeValue = isElmEmployerFunded
+    ? ELM_EMPLOYER_FUNDED_ENQUIRY
+    : isElmIndividual
+      ? ELM_INDIVIDUAL_ENROLMENT_ENQUIRY
+      : null;
+  const sourceValue =
+    enquiryTypeValue && searchParams.get("source") === ELM_WEBINAR_SOURCE ? ELM_WEBINAR_SOURCE : null;
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
