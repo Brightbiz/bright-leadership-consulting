@@ -3,36 +3,45 @@ import { hasAnalyticsConsent } from "@/lib/consent";
 import { trackEvent } from "@/lib/analytics";
 
 /**
- * Viewing measurement based on the share of the video actually watched.
+ * Viewing coverage = distinct one-second sections of the video actually
+ * played, at any playback speed. Seeking, buffering and paused time add
+ * nothing; replaying a section adds nothing.
  *
- * The video is divided into one-second slots. A slot is marked only when
- * playback runs continuously through it at normal speed (≤1×): skipping
- * ahead marks nothing, and replaying already-watched slots adds nothing.
- * Play fires once; 25/50/75% fire once each when that share of slots is
- * watched; 100% fires at 95% of slots. State lives only in this page visit.
- * Events are sent only when the visitor has accepted Analytics and carry no
- * identifiers.
+ * Events (each at most once per page visit):
+ *  - elm_webinar_play      first play
+ *  - elm_webinar_progress  percent 25 / 50 / 75 of coverage
+ *  - elm_webinar_complete  coverage reaches 95% (definition of "complete";
+ *                          never reported as 100%)
+ *
+ * Nothing is sent, in code, unless Analytics consent is granted at send
+ * time. No identifiers or personal details; no link to enquiry records.
  */
-export const WATCH_THRESHOLDS = [25, 50, 75, 100] as const;
-const COMPLETE_SHARE = 0.95;
-const MAX_CONTINUOUS_STEP = 1.5;
+export const PROGRESS_THRESHOLDS = [25, 50, 75] as const;
+export const COMPLETE_SHARE = 0.95;
+// Max media-time advance between two timeupdates still treated as continuous
+// playback (timeupdate fires ~4×/s; allows up to ~4× speed with headroom).
+const MAX_CONTINUOUS_STEP = 2.5;
 
 export function createWatchTracker(send: (name: string, params: Record<string, unknown>) => void) {
   let watched = new Set<number>();
   let last: number | null = null;
   let played = false;
+  let completed = false;
   const fired = new Set<number>();
 
-  const progress = (duration: number) => {
+  const evaluate = (duration: number) => {
     const slots = Math.ceil(duration);
     if (!slots) return;
     const share = watched.size / slots;
-    for (const pct of WATCH_THRESHOLDS) {
-      const needed = pct === 100 ? COMPLETE_SHARE : pct / 100;
-      if (share >= needed && !fired.has(pct)) {
+    for (const pct of PROGRESS_THRESHOLDS) {
+      if (share >= pct / 100 && !fired.has(pct)) {
         fired.add(pct);
         send("elm_webinar_progress", { percent: pct });
       }
+    }
+    if (!completed && share >= COMPLETE_SHARE) {
+      completed = true;
+      send("elm_webinar_complete", {});
     }
   };
 
@@ -42,48 +51,44 @@ export function createWatchTracker(send: (name: string, params: Record<string, u
       played = true;
       send("elm_webinar_play", {});
     },
-    seek(time: number) {
+    /** Seeking or buffering breaks continuity. */
+    interrupt(time: number) {
       last = time;
     },
-    tick(time: number, duration: number, rate: number, paused: boolean) {
-      if (paused || !Number.isFinite(duration) || duration <= 0) {
+    tick(time: number, duration: number, paused: boolean, buffering: boolean) {
+      if (paused || buffering || !Number.isFinite(duration) || duration <= 0) {
         last = time;
         return;
       }
-      if (last !== null && rate <= 1 && time >= last && time - last <= MAX_CONTINUOUS_STEP) {
+      if (last !== null && time > last && time - last <= MAX_CONTINUOUS_STEP) {
         for (let s = Math.floor(last); s <= Math.floor(time); s++) {
           if (s < Math.ceil(duration)) watched.add(s);
         }
-        progress(duration);
+        evaluate(duration);
       }
       last = time;
     },
-    /** For tests only. */
     reset() {
-      watched = new Set();
-      last = null;
-      played = false;
-      fired.clear();
+      watched = new Set(); last = null; played = false; completed = false; fired.clear();
     },
-    get watchedSeconds() {
-      return watched.size;
-    },
+    get watchedSeconds() { return watched.size; },
   };
 }
 
 const consentedSend = (name: string, params: Record<string, unknown>) => {
-  if (hasAnalyticsConsent()) trackEvent(name, { ...params, video_id: "elm_webinar" });
+  if (!hasAnalyticsConsent()) return;
+  trackEvent(name, { ...params, video_id: "elm_webinar" });
 };
 
 export function useWatchProgress() {
   const tracker = useRef(createWatchTracker(consentedSend));
   const onPlay = useCallback(() => tracker.current.play(), []);
-  const onSeeking = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
-    tracker.current.seek(e.currentTarget.currentTime);
+  const interrupt = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
+    tracker.current.interrupt(e.currentTarget.currentTime);
   }, []);
   const onTimeUpdate = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
     const v = e.currentTarget;
-    tracker.current.tick(v.currentTime, v.duration, v.playbackRate, v.paused);
+    tracker.current.tick(v.currentTime, v.duration, v.paused, v.readyState < 3);
   }, []);
-  return { onPlay, onSeeking, onTimeUpdate };
+  return { onPlay, onSeeking: interrupt, onWaiting: interrupt, onTimeUpdate };
 }

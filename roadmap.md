@@ -12,3 +12,6 @@
 - [ ] CPD renewal (manual, no automatic expiry control; the code flag is an internal marker only): Before the 7 November 2026 expiry, confirm renewal of the CPD Standards Office accreditation. Once renewal is confirmed, replace the 2025–2026 badge on the webinar and ELM pages with the new-period badge supplied by CPDSO. If renewal is NOT confirmed by 7 November 2026, remove the badge and the CPD-hours claims from both pages on that day, with no public expiry statement — the deadline stays internal. Expiry date stays internal; public CPD wording otherwise unchanged.
 - [ ] Amended Terms/Privacy publication (awaiting legal review + Bright approval; set effective date on actual publication)
 - [ ] Webinar funnel (preview only): two-category cookie banner, viewing events, campaign tags on enquiries, worksheet + follow-up opt-in, unsubscribe page — awaiting publish approval; worksheet PDF awaited; Privacy Notice update (Bright); news. sending domain DNS (Bright).
+
+- [ ] Stage 1 funnel (preview only): consent split, webinar coverage events (play/25/50/75 + complete at 95%), UTM on enquiries — awaiting publish approval
+- [ ] On hold until Bright confirms: worksheet follow-up form, automated emails, DNS/marketing subdomain

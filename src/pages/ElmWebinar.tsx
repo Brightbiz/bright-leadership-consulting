@@ -18,7 +18,6 @@ import captions from "@/assets/elm-webinar-captions.vtt.asset.json";
 import { useWatchProgress } from "@/hooks/useWatchProgress";
 import { withCampaignTags } from "@/lib/campaignTags";
 import { ELM_WEBINAR_WORKSHEET_URL } from "@/data/marketingConsent";
-import WebinarFollowUpForm from "@/components/WebinarFollowUpForm";
 
 const INDIVIDUAL_PATH = `${individualEnquiryPath("Executive Leadership Mastery Programme")}&enquiry=${ELM_INDIVIDUAL_ENROLMENT_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
 const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
@@ -105,6 +104,7 @@ const ElmWebinar = () => {
               watch.onTimeUpdate(e);
             }}
             onSeeking={watch.onSeeking}
+            onWaiting={watch.onWaiting}
             onSeeked={updateCaption}
             onPlay={watch.onPlay}
           >
@@ -165,7 +165,7 @@ const ElmWebinar = () => {
               </span>
             )}
           </div>
-          <WebinarFollowUpForm />
+          {/* Follow-up form on hold pending approval */}
         </section>
       </div>
     </main>
