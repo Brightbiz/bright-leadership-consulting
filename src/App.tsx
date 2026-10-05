@@ -45,6 +45,7 @@ const EdlEmployerInformation = lazy(() => import("./pages/EdlEmployerInformation
 
 // Legal
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const Terms = lazy(() => import("./pages/Terms"));
 
 // Admin (not in public nav)
@@ -111,6 +112,7 @@ const AnimatedRoutes = () => {
           <Route path="/executive-decision-leadership-intensive/employer-information" element={<PageTransition><EdlPrivateRoute><EdlEmployerInformation /></EdlPrivateRoute></PageTransition>} />
 
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+          <Route path="/unsubscribe" element={<PageTransition><Unsubscribe /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
 
           {/* Legacy indexed URLs — redirect rather than 404 so existing search
