@@ -45,7 +45,7 @@ function clearAnalyticsCookies() {
   const domains = ["", host, `.${host}`, `.${host.split(".").slice(-2).join(".")}`];
   document.cookie.split(";").forEach((c) => {
     const name = c.split("=")[0].trim();
-    if (name === "_ga" || name.startsWith("_ga_") || name === "_gid") {
+    if (name === "_ga" || name.startsWith("_ga_") || name === "_gid" || name.startsWith("_gcl_")) {
       domains.forEach((d) => {
         document.cookie = `${name}=; Max-Age=0; path=/${d ? `; domain=${d}` : ""}`;
       });
@@ -87,12 +87,17 @@ export function applyTagConsent(analytics: boolean, advertising: boolean) {
     ensureScript();
     if (!adsConfigured) {
       adsConfigured = true;
-      gtag("config", ADS_ID);
+      // Conversion measurement only: no remarketing or audience lists.
+      gtag("set", "allow_ad_personalization_signals", false);
+      gtag("config", ADS_ID, { allow_ad_personalization_signals: false });
     }
     adsActive = true;
   } else {
     w[`ga-disable-${ADS_ID}`] = true;
-    if (adsActive) needsReload = true;
+    if (adsActive) {
+      clearAnalyticsCookies();
+      needsReload = true;
+    }
     adsActive = false;
   }
   if (needsReload) window.location.reload();

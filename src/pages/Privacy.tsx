@@ -26,6 +26,7 @@ const sections = [
       "Diagnostic response data submitted by participants during an Executive Alignment Index™ deployment, held under the terms of the commissioning engagement.",
       "Participant information received from an employer: where an employer funds a named individual's place, we receive that participant's name, work email address and the information needed to create their programme access from the employer rather than from the participant directly. We use it only to administer the funded place, and we provide the participant with this Privacy Notice, or a clear link to it, when their access is created.",
       "Basic technical information generated when you visit the site, such as pages viewed and referring source, used only in aggregate to understand site performance.",
+      "Where you arrive through a tagged link, such as a LinkedIn post, the campaign source, medium and name in that link are saved with any enquiry you then submit. They are kept in memory only during your visit and are not stored in your browser.",
     ],
   },
   {
@@ -73,16 +74,24 @@ const sections = [
   {
     heading: "Cookies and similar technologies",
     body: [
-      "Strictly necessary storage is used to operate this site and to remember your cookie choice. This includes a consent-preference item (blc.cookie-consent.v1) held in your browser's local storage, which persists until you clear your browser storage, and a session item used only when signing in to the administrative area.",
+      "Strictly necessary storage is used to operate this site and to remember your cookie choice. This includes a consent-preference item (blc.cookie-consent.v2) held in your browser's local storage, which persists until you clear your browser storage, and a session item used only when signing in to the administrative area.",
       "No non-essential cookies or similar technologies are set before you give consent. Consent requires a clear positive action; continuing to browse does not constitute consent.",
+    ],
+  },
+  {
+    heading: "Google Analytics on this website",
+    body: [
+      "With your consent, brightleadershipconsulting.com uses Google Analytics 4, provided by Google Ireland Limited, to understand in aggregate how pages are used, including page views, scrolling, time on page and how much of the on-demand webinar is played.",
+      "Webinar measurement records playback coverage only: the share of distinct sections of the video that have actually played. It is not a measure of attention. Viewing is reported when it first starts, at 25%, 50% and 75% coverage, and as complete at 95% coverage, each once per visit. We do not add names, email addresses or enquiry references to webinar measurement events, or link those events to enquiry records. Google Analytics may use cookie-based identifiers and process technical information such as IP addresses and browser details when Analytics is enabled.",
+      "The Google Analytics code is not loaded unless you accept Analytics. Before you make a choice, or if you reject Analytics, nothing is sent to Google Analytics. When Analytics is accepted, Google may set cookies beginning _ga on this domain, which typically last up to two years.",
     ],
   },
   {
     heading: "Google Ads conversion measurement on this website",
     body: [
-      "brightleadershipconsulting.com uses one consent-controlled Google Ads tag (a single Google Ads base tag, and no other measurement tag). It is provided by Google Ireland Limited. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational, cohort or in-house programme enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes.",
-      "All four Google Consent Mode v2 signals — ad_storage, analytics_storage, ad_user_data and ad_personalization — are set to denied by default, before the Google tag loads. They are set to granted only if you accept advertising measurement, and returned to denied if you reject or later withdraw consent. When advertising measurement is accepted, Google may set conversion-linker cookies in the _gcl family on this domain, which typically expire up to 90 days after they are set. If consent is not given, no such cookies are set.",
-      "No Google Analytics property and no Google Tag Manager container is active on the Bright website. No Enhanced Conversions data is transmitted; the content of your enquiry is not sent to Google.",
+      "brightleadershipconsulting.com uses one consent-controlled Google Ads tag (a single Google Ads base tag). It is provided by Google Ireland Limited. Its sole purpose is to record whether a click on one of our advertisements resulted in a completed organisational, cohort or in-house programme enquiry, so that advertising expenditure can be assessed. It is not used to build profiles for unrelated purposes.",
+      "The Google Ads tag is loaded only if you accept Advertising. Analytics and Advertising are separate choices; accepting one does not enable the other. Remarketing and personalised advertising are switched off: the ad_personalization signal remains denied even when Advertising is accepted, and the tag is configured not to use your visit for audience lists. When Advertising is accepted, Google may set conversion-linker cookies in the _gcl family on this domain, which typically expire up to 90 days after they are set, and Google may read or set its own advertising cookies on Google domains to attribute the conversion. If Advertising is not accepted, the tag is not loaded and no such cookies are set.",
+      "No Google Tag Manager container is active on this website. No Enhanced Conversions data is transmitted, and the content of your enquiry is not sent to Google.",
       "One conversion is currently configured: an organisational enquiry. It is recorded only after our server has successfully accepted a qualifying organisational, cohort or in-house programme enquiry, and only subject to the consent controls described in this notice. It is not recorded on a page view, a form interaction, a button click, a validation failure, a server failure or a general contact enquiry.",
       "The categories of information processed for this purpose are: a Google advertising click identifier present in the landing page address (for example gclid, gbraid or wbraid), campaign parameters such as utm_source and utm_campaign, the page address and referring source, approximate location derived from IP address, and general device and browser information.",
       "Google's own information about how it processes advertising data is available in the Google Privacy Policy (policies.google.com/privacy) and in Google's description of how it uses cookies and similar technologies in advertising (policies.google.com/technologies/ads).",
@@ -91,8 +100,8 @@ const sections = [
   {
     heading: "Accepting, rejecting and withdrawing consent",
     body: [
-      "When you first visit the site a banner offers Accept all, Reject non-essential and Manage preferences. The advertising measurement category is switched off by default and is never preselected.",
-      "You may change or withdraw your choice at any time by selecting Cookie Preferences in the footer of any page, which reopens the same panel. Withdrawing consent returns all four Google consent signals to denied for subsequent activity. You may also delete cookies and local storage through your browser settings.",
+      "When you first visit the site a banner offers Accept all, Reject non-essential and Manage preferences. Analytics and Advertising are switched off by default and are never preselected.",
+      "You may change or withdraw your choice at any time by selecting Cookie Preferences in the footer of any page, which reopens the same panel. If you withdraw consent, the page reloads without the relevant Google code, and Google cookies set on this domain for that purpose are removed. You may also delete cookies and local storage through your browser settings.",
       "This control governs brightleadershipconsulting.com only. It does not govern the separately hosted learning platform, which operates under its own cookie and privacy arrangements.",
     ],
   },
@@ -109,7 +118,7 @@ const sections = [
   {
     heading: "Measurement we may introduce later",
     body: [
-      "The technologies currently active on brightleadershipconsulting.com are the strictly necessary storage described above and, where consented, the single Google Ads tag used for the organisational-enquiry conversion.",
+      "The technologies currently active on brightleadershipconsulting.com are the strictly necessary storage described above and, only where you consent, Google Analytics and the Google Ads tag used for the organisational-enquiry conversion.",
       "We may in future introduce measurement of individual-enrolment link clicks or of purchases completed on the learning platform. No such measurement is active today, and it would only be introduced once appropriate consent controls have been implemented on the relevant domain. This notice would be updated before that happens.",
     ],
   },
