@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { type SyntheticEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Captions } from "lucide-react";
 import Header from "@/components/Header";
@@ -22,15 +22,16 @@ const ElmWebinar = () => {
   const [activeCaption, setActiveCaption] = useState("");
   const [captionsEnabled, setCaptionsEnabled] = useState(true);
 
-  const initialiseCaptions = () => {
-    const textTrack = videoRef.current?.textTracks[0];
-    if (!textTrack) return;
-
+  const initialiseCaptions = (textTrack: TextTrack) => {
     textTrack.mode = "hidden";
     textTrack.oncuechange = () => {
       const cues = Array.from(textTrack.activeCues ?? []);
       setActiveCaption(cues.map((cue) => ("text" in cue ? String(cue.text) : "")).filter(Boolean).join(" "));
     };
+  };
+
+  const handleTrackLoad = (event: SyntheticEvent<HTMLTrackElement>) => {
+    initialiseCaptions(event.currentTarget.track);
   };
 
   return (
@@ -58,9 +59,8 @@ const ElmWebinar = () => {
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
-            onLoadedMetadata={initialiseCaptions}
           >
-            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" default onLoad={initialiseCaptions} />
+            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" onLoad={handleTrackLoad} />
           </video>
         </div>
         <div className="flex min-h-20 items-center gap-3 border-x border-b border-border bg-muted px-4 py-3 sm:px-6">
