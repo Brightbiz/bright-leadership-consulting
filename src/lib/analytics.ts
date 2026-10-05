@@ -430,6 +430,15 @@ export function trackProgrammeWithdrawal(params: {
 /** Employer-funded ELM enquiry identifiers (stored on contact_submissions.enquiry_type). */
 export const ELM_EMPLOYER_FUNDED_ENQUIRY = "elm_employer_funded";
 export const ELM_EMPLOYER_FUNDED_LABEL = "ELM employer-funded enquiry";
+export const ELM_INDIVIDUAL_ENROLMENT_ENQUIRY = "elm_individual_enrolment";
+export const ELM_INDIVIDUAL_ENROLMENT_LABEL = "ELM individual enrolment request";
+/** Allowed enquiry sources (stored on contact_submissions.source). */
+export const ELM_WEBINAR_SOURCE = "elm_webinar";
+export const ENQUIRY_SOURCE_LABELS: Record<string, string> = { [ELM_WEBINAR_SOURCE]: "Webinar" };
+export const ENQUIRY_TYPE_LABELS: Record<string, string> = {
+  [ELM_EMPLOYER_FUNDED_ENQUIRY]: ELM_EMPLOYER_FUNDED_LABEL,
+  [ELM_INDIVIDUAL_ENROLMENT_ENQUIRY]: ELM_INDIVIDUAL_ENROLMENT_LABEL,
+};
 
 /** Click on "Request employer-funded enrolment information". No PII. */
 export function trackElmEmployerFundedClick(params: { surface: string; destination: string }) {
