@@ -42,6 +42,7 @@ const sections = [
     heading: "Lawful basis",
     body: [
       "We process enquiry data on the basis of legitimate interests in responding to a request you have made, and engagement data on the basis of the contract with the commissioning organisation.",
+      "Optional Analytics and Advertising measurement takes place only with your consent, which is the lawful basis for that processing and for the related cookies. Each is a separate choice, and you may withdraw either at any time by selecting Cookie Preferences in the footer of any page. Withdrawal stops further processing from that point; it does not affect processing that took place before you withdrew.",
     ],
   },
   {
@@ -84,6 +85,7 @@ const sections = [
       "With your consent, brightleadershipconsulting.com uses Google Analytics 4, provided by Google Ireland Limited, to understand in aggregate how pages are used, including page views, scrolling, time on page and how much of the on-demand webinar is played.",
       "Webinar measurement records playback coverage only: the share of distinct sections of the video that have actually played. It is not a measure of attention. Viewing is reported when it first starts, at 25%, 50% and 75% coverage, and as complete at 95% coverage, each once per visit. We do not add names, email addresses or enquiry references to webinar measurement events, or link those events to enquiry records. Google Analytics may use cookie-based identifiers and process technical information such as IP addresses and browser details when Analytics is enabled.",
       "The Google Analytics code is not loaded unless you accept Analytics. Before you make a choice, or if you reject Analytics, nothing is sent to Google Analytics. When Analytics is accepted, Google may set cookies beginning _ga on this domain, which typically last up to two years.",
+      "For Google Analytics, Google acts as our processor under the Google Ads Data Processing Terms, and processes this information on our instructions.",
     ],
   },
   {
@@ -94,7 +96,9 @@ const sections = [
       "No Google Tag Manager container is active on this website. No Enhanced Conversions data is transmitted, and the content of your enquiry is not sent to Google.",
       "One conversion is currently configured: an organisational enquiry. It is recorded only after our server has successfully accepted a qualifying organisational, cohort or in-house programme enquiry, and only subject to the consent controls described in this notice. It is not recorded on a page view, a form interaction, a button click, a validation failure, a server failure or a general contact enquiry.",
       "The categories of information processed for this purpose are: a Google advertising click identifier present in the landing page address (for example gclid, gbraid or wbraid), campaign parameters such as utm_source and utm_campaign, the page address and referring source, approximate location derived from IP address, and general device and browser information.",
+      "For Google Ads conversion measurement, Google acts as a separate, independent controller under the Google Ads Controller-Controller Data Protection Terms, and is responsible for its own use of that information as described in its privacy policy.",
       "Google's own information about how it processes advertising data is available in the Google Privacy Policy (policies.google.com/privacy) and in Google's description of how it uses cookies and similar technologies in advertising (policies.google.com/technologies/ads).",
+      "International transfers: information collected by Google Analytics and Google Ads may be processed by Google LLC and its affiliates in the United States and other countries where Google operates data centres. Google LLC is certified under the UK Extension to the EU–US Data Privacy Framework, and Google states that it also relies on UK adequacy regulations and on standard contractual clauses incorporated in its data protection terms (business.safety.google/adsdatatransfers).",
     ],
   },
   {
