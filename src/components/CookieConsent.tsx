@@ -67,8 +67,8 @@ const CookieConsent = () => {
                 </p>
                 <p className="text-[13px] leading-relaxed text-navy-foreground/70">
                   We use strictly necessary storage to operate this site. With your
-                  consent we also use Google Analytics to understand how pages and
-                  the webinar are used, and Google Ads conversion measurement to
+                  consent we also use Google Analytics to understand how pages are
+                  used and how much of the webinar is played, and Google Ads conversion measurement to
                   record whether an advertising click led to an enquiry. You can
                   accept either, both or neither, and change or withdraw your
                   choice at any time.
@@ -145,7 +145,9 @@ const CookieConsent = () => {
                     </label>
                     <p className="text-[13px] leading-relaxed text-navy-foreground/70">
                       Google Analytics, used to count page visits and how much of the
-                      webinar is watched, in aggregate. It does not identify you and
+                      webinar is played (playback coverage, not a measure of
+                      attention), in aggregate. Google's code is not loaded
+                      unless you switch this on. It does not identify you and
                       is not linked to any enquiry you send. Off by default.
                     </p>
                   </div>
@@ -168,7 +170,8 @@ const CookieConsent = () => {
                     </label>
                     <p className="text-[13px] leading-relaxed text-navy-foreground/70">
                       Google Ads conversion measurement, used only to record whether
-                      an advertising click resulted in an enquiry. Off by default.
+                      an advertising click resulted in an enquiry. Google's code is not
+                      loaded for this unless you switch it on. Off by default.
                     </p>
                   </div>
                 </div>
