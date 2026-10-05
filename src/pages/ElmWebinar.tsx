@@ -6,6 +6,7 @@ import { individualEnquiryPath } from "@/data/programmes";
 import { trackEvent, ELM_EMPLOYER_FUNDED_ENQUIRY } from "@/lib/analytics";
 import video from "@/assets/elm-webinar.mp4.asset.json";
 import poster from "@/assets/elm-webinar-poster.jpg.asset.json";
+import captions from "@/assets/elm-webinar-captions.vtt.asset.json";
 
 const INDIVIDUAL_PATH = individualEnquiryPath("Executive Leadership Mastery Programme");
 const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
@@ -36,7 +37,10 @@ const ElmWebinar = () => (
             controls
             preload="metadata"
             playsInline
-          />
+            crossOrigin="anonymous"
+          >
+            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" default />
+          </video>
         </div>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <Link
