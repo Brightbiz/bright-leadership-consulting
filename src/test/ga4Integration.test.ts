@@ -101,18 +101,12 @@ describe("analytics transmission", () => {
     });
   });
 
-  it("does not duplicate the initial page view into GA4", async () => {
+  it("leaves page views to GA4 Enhanced Measurement (no manual duplicates)", async () => {
     await grant(true, false);
     const { trackPageView } = await import("@/lib/analytics");
-    trackPageView("/");
-    expect(gtag).not.toHaveBeenCalled();
     trackPageView("/courses");
-    expect(gtag).toHaveBeenCalledWith(
-      "event",
-      "page_view",
-      expect.objectContaining({ page_path: "/courses" }),
-    );
-  });
+    expect(gtag).not.toHaveBeenCalled();
+});
 });
 
 describe("audit events reach GA4", () => {

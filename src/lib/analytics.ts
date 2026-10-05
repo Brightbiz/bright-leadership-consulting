@@ -12,7 +12,7 @@
  */
 
 import { hasAnalyticsConsent, hasAdvertisingConsent } from "./consent";
-import { isAdsActive, isAnalyticsActive, markGaPath } from "./googleTag";
+import { isAdsActive, isAnalyticsActive } from "./googleTag";
 
 declare global {
   interface Window {
@@ -51,14 +51,15 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
 }
 
 /**
- * Track a route change as a GA4 page_view. GA4's config call (made when
- * Analytics consent is granted) already reports the page open at that
- * moment, so the same path is not sent twice.
+ * Route changes. GA4 Enhanced Measurement (enabled in the property) already
+ * records a page_view on every in-app navigation once Analytics consent has
+ * loaded the tag, so nothing is sent here; a manual call would double-count.
+ * The route is still pushed to the dataLayer for any local consumer.
  */
 export function trackPageView(path: string) {
-  if (!hasAnalyticsConsent() || !isAnalyticsActive()) return;
-  if (!markGaPath(path)) return;
-  trackEvent("page_view", { page_path: path, page_location: window.location.href });
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "route_change", page_path: path });
 }
 
 
