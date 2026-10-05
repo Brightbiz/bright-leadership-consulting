@@ -15,6 +15,10 @@ import {
 import video from "@/assets/elm-webinar.mp4.asset.json";
 import poster from "@/assets/elm-webinar-poster.jpg.asset.json";
 import captions from "@/assets/elm-webinar-captions.vtt.asset.json";
+import { useWatchProgress } from "@/hooks/useWatchProgress";
+import { withCampaignTags } from "@/lib/campaignTags";
+import { ELM_WEBINAR_WORKSHEET_URL } from "@/data/marketingConsent";
+import WebinarFollowUpForm from "@/components/WebinarFollowUpForm";
 
 const INDIVIDUAL_PATH = `${individualEnquiryPath("Executive Leadership Mastery Programme")}&enquiry=${ELM_INDIVIDUAL_ENROLMENT_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
 const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
@@ -45,6 +49,10 @@ const ElmWebinar = () => {
   const [captionCues, setCaptionCues] = useState<CaptionCue[]>([]);
   const [activeCaption, setActiveCaption] = useState("");
   const [captionsEnabled, setCaptionsEnabled] = useState(true);
+  const watch = useWatchProgress();
+  // Campaign tags from the landing address travel with the enquiry links.
+  const individualPath = withCampaignTags(INDIVIDUAL_PATH);
+  const employerPath = withCampaignTags(EMPLOYER_PATH);
 
   useEffect(() => {
     let isCurrent = true;
@@ -92,8 +100,13 @@ const ElmWebinar = () => {
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
-            onTimeUpdate={updateCaption}
+            onTimeUpdate={(e) => {
+              updateCaption();
+              watch.onTimeUpdate(e);
+            }}
+            onSeeking={watch.onSeeking}
             onSeeked={updateCaption}
+            onPlay={watch.onPlay}
           >
             <track kind="captions" src={captions.url} srcLang="en-GB" label="English" />
           </video>
@@ -117,20 +130,43 @@ const ElmWebinar = () => {
         </div>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <Link
-            to={INDIVIDUAL_PATH}
+            to={individualPath}
             onClick={() => track("elm_webinar_individual_enrolment_click", INDIVIDUAL_PATH, "Request Individual Enrolment")}
             className="inline-flex justify-center items-center px-6 py-3 border border-primary bg-primary text-primary-foreground text-sm hover:bg-accent hover:border-accent transition-colors"
           >
             Request Individual Enrolment
           </Link>
           <Link
-            to={EMPLOYER_PATH}
+            to={employerPath}
             onClick={() => track("elm_webinar_employer_funded_click", EMPLOYER_PATH, "Request Employer-Funded Enrolment Information")}
             className="inline-flex justify-center items-center px-6 py-3 border border-primary text-primary text-sm hover:border-accent hover:text-accent transition-colors"
           >
             Request Employer-Funded Enrolment Information
           </Link>
         </div>
+        <section className="mt-16 grid gap-10 border-t border-border pt-12 md:grid-cols-2" aria-labelledby="worksheet-heading">
+          <div>
+            <h2 id="worksheet-heading" className="font-serif text-xl text-foreground mb-3">Webinar worksheet</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground mb-6 max-w-[420px]">
+              A short worksheet to accompany the webinar. No details are required to download it.
+            </p>
+            {ELM_WEBINAR_WORKSHEET_URL ? (
+              <a
+                href={ELM_WEBINAR_WORKSHEET_URL}
+                download
+                onClick={() => track("elm_webinar_worksheet_download", ELM_WEBINAR_WORKSHEET_URL, "Download the worksheet")}
+                className="inline-flex justify-center items-center px-6 py-3 border border-primary text-primary text-sm hover:border-accent hover:text-accent transition-colors"
+              >
+                Download the worksheet (PDF)
+              </a>
+            ) : (
+              <span className="inline-flex px-6 py-3 border border-border text-muted-foreground text-sm" aria-disabled="true">
+                Worksheet available shortly
+              </span>
+            )}
+          </div>
+          <WebinarFollowUpForm />
+        </section>
       </div>
     </main>
     <Footer />
