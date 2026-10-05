@@ -1,3 +1,4 @@
+import { clearCampaignTags, getCampaignTags, noteCampaignTags } from "@/lib/campaignTags";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -152,6 +153,8 @@ const Contact = () => {
         ? null
         : enquiryTypeValue;
     const submittedSource = submittedType ? sourceValue : null;
+    noteCampaignTags(searchParams);
+    const campaignTags = getCampaignTags();
     const details = [
       data.role ? `Role: ${data.role}` : null,
       isElmEmployerFunded ? `Enquiry category: ${ELM_EMPLOYER_FUNDED_LABEL}` : null,
@@ -175,6 +178,7 @@ const Contact = () => {
             message: `${details.join("\n")}\n\n${data.message}`,
             ...(submittedType ? { enquiry_type: submittedType } : {}),
             ...(submittedSource ? { source: submittedSource } : {}),
+            ...campaignTags,
           },
         },
       });
@@ -189,6 +193,8 @@ const Contact = () => {
         });
         return;
       }
+
+      clearCampaignTags();
 
       // Confirmed success only: the request returned without a transport or
       // server error. Google Ads conversion for organisational / cohort
