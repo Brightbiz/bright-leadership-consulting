@@ -6,8 +6,8 @@
  *  - Advertising granted → gtag.js is fetched and the Google Ads tag is configured.
  * The two categories are independent. Withdrawing a category sets Google's
  * documented per-tag disable flag (`ga-disable-<ID>`), which stops all hits
- * from that tag for the rest of the page visit, and returns Consent Mode
- * signals to denied. Analytics cookies are also cleared on withdrawal.
+ * from that tag, returns Consent Mode signals to denied, clears analytics
+ * cookies and reloads the page so gtag.js is no longer present at all.
  */
 
 export const GA4_ID = "G-FX0BYSEL34";
@@ -56,6 +56,7 @@ function clearAnalyticsCookies() {
 export function applyTagConsent(analytics: boolean, advertising: boolean) {
   if (typeof window === "undefined") return;
   const w = window as unknown as W;
+  let needsReload = false;
 
   if (analytics) {
     w[`ga-disable-${GA4_ID}`] = false;
@@ -72,8 +73,13 @@ export function applyTagConsent(analytics: boolean, advertising: boolean) {
     gaActive = true;
   } else {
     w[`ga-disable-${GA4_ID}`] = true;
-    if (gaActive) clearAnalyticsCookies();
-    gaActive = false;
+    if (gaActive) {
+      // gtag.js cannot be unloaded and still emits cookieless pings while
+      // loaded, so a withdrawal clears cookies and reloads the page without it.
+      clearAnalyticsCookies();
+      gaActive = false;
+      needsReload = true;
+    }
   }
 
   if (advertising) {
@@ -86,8 +92,10 @@ export function applyTagConsent(analytics: boolean, advertising: boolean) {
     adsActive = true;
   } else {
     w[`ga-disable-${ADS_ID}`] = true;
+    if (adsActive) needsReload = true;
     adsActive = false;
   }
+  if (needsReload) window.location.reload();
 }
 
 export const isAnalyticsActive = () => gaActive;
