@@ -13,15 +13,14 @@ import {
  * Cookie consent banner and preferences panel.
  *
  * Accept and Reject are rendered as equally weighted, adjacent controls.
- * Analytics and advertising are separate choices; neither is preselected. The banner is not
- * dismissible by scrolling or navigating — a decision requires a positive
- * action — and it can be reopened at any time from the footer.
+ * Analytics is optional and never preselected. The banner is not dismissible
+ * by scrolling or navigating — a decision requires a positive action — and it
+ * can be reopened at any time from the footer.
  */
 const CookieConsent = () => {
   const [open, setOpen] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
   const [analytics, setAnalytics] = useState(false);
-  const [advertising, setAdvertising] = useState(false);
 
   useEffect(() => {
     applyStoredConsent();
@@ -32,7 +31,6 @@ const CookieConsent = () => {
     const reopen = () => {
       const record = getConsent();
       setAnalytics(record?.analytics ?? false);
-      setAdvertising(record?.advertising ?? false);
       setShowPreferences(true);
       setOpen(true);
     };
@@ -40,7 +38,7 @@ const CookieConsent = () => {
     return () => window.removeEventListener(OPEN_PREFERENCES_EVENT, reopen);
   }, []);
 
-  const decide = useCallback((choices: { analytics: boolean; advertising: boolean }) => {
+  const decide = useCallback((choices: { analytics: boolean }) => {
     setConsent(choices);
     setShowPreferences(false);
     setOpen(false);
@@ -63,15 +61,13 @@ const CookieConsent = () => {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-[560px] space-y-3">
                 <p className="text-sm font-medium tracking-[0.02em]">
-                  Cookies, analytics and advertising measurement
+                  Cookies and analytics
                 </p>
                 <p className="text-[13px] leading-relaxed text-navy-foreground/70">
                   We use strictly necessary storage to operate this site. With your
                   consent we also use Google Analytics to understand how pages are
-                  used and how much of the webinar is played, and Google Ads conversion measurement to
-                  record whether an advertising click led to an enquiry. You can
-                  accept either, both or neither, and change or withdraw your
-                  choice at any time.
+                  used and how much of the webinar is played. You can accept or
+                  decline, and change or withdraw your choice at any time.
                 </p>
                 <p className="text-[13px] text-navy-foreground/60">
                   <Link
@@ -87,14 +83,14 @@ const CookieConsent = () => {
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     type="button"
-                    onClick={() => decide({ analytics: true, advertising: true })}
+                    onClick={() => decide({ analytics: true })}
                     className="min-w-[190px] rounded-sm border border-[hsl(38,60%,52%)] px-6 py-3 text-sm font-medium tracking-[0.03em] text-[hsl(38,60%,52%)] transition-colors hover:bg-[hsl(38,60%,52%)] hover:text-navy"
                   >
-                    Accept all
+                    Accept analytics
                   </button>
                   <button
                     type="button"
-                    onClick={() => decide({ analytics: false, advertising: false })}
+                    onClick={() => decide({ analytics: false })}
                     className="min-w-[190px] rounded-sm border border-navy-foreground/40 px-6 py-3 text-sm font-medium tracking-[0.03em] text-navy-foreground transition-colors hover:border-navy-foreground hover:bg-navy-foreground/10"
                   >
                     Reject non-essential
@@ -153,40 +149,17 @@ const CookieConsent = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <input
-                    id="consent-advertising"
-                    type="checkbox"
-                    checked={advertising}
-                    onChange={(event) => setAdvertising(event.target.checked)}
-                    className="mt-1 h-4 w-4 accent-[hsl(38,60%,52%)]"
-                  />
-                  <div>
-                    <label
-                      htmlFor="consent-advertising"
-                      className="text-sm font-medium"
-                    >
-                      Advertising
-                    </label>
-                    <p className="text-[13px] leading-relaxed text-navy-foreground/70">
-                      Google Ads conversion measurement, used only to record whether
-                      an advertising click resulted in an enquiry. Google's code is not
-                      loaded for this unless you switch it on. Off by default.
-                    </p>
-                  </div>
-                </div>
-
                 <div className="flex flex-wrap gap-3 pt-2">
                   <button
                     type="button"
-                    onClick={() => decide({ analytics, advertising })}
+                    onClick={() => decide({ analytics })}
                     className="rounded-sm border border-navy-foreground/40 px-6 py-2.5 text-sm font-medium tracking-[0.03em] transition-colors hover:border-navy-foreground hover:bg-navy-foreground/10"
                   >
                     Save preferences
                   </button>
                   <button
                     type="button"
-                    onClick={() => decide({ analytics: false, advertising: false })}
+                    onClick={() => decide({ analytics: false })}
                     className="rounded-sm px-2 py-2.5 text-sm text-navy-foreground/70 underline underline-offset-4 transition-colors hover:text-navy-foreground"
                   >
                     Withdraw consent
