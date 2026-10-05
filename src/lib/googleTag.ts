@@ -1,26 +1,24 @@
 /**
- * Consent-gated loader for the single Google tag (gtag.js).
+ * Consent-gated loader for the Google Analytics tag (gtag.js).
  *
- * Nothing from Google is requested until a category is granted:
- *  - Analytics granted   → gtag.js is fetched and GA4 is configured.
- *  - Advertising granted → gtag.js is fetched and the Google Ads tag is configured.
- * The two categories are independent. Withdrawing a category sets Google's
- * documented per-tag disable flag (`ga-disable-<ID>`), which stops all hits
- * from that tag, returns Consent Mode signals to denied, clears analytics
- * cookies and reloads the page so gtag.js is no longer present at all.
+ * Nothing from Google is requested until Analytics consent is granted:
+ *  - Analytics granted → gtag.js is fetched and GA4 is configured.
+ * Withdrawing consent sets Google's documented per-tag disable flag
+ * (`ga-disable-<ID>`), which stops all hits from the tag, returns Consent
+ * Mode signals to denied, clears analytics cookies and reloads the page so
+ * gtag.js is no longer present at all.
+ *
+ * The Google Ads tag was removed (no active campaigns); only GA4 remains.
  */
 
 export const GA4_ID = "G-FX0BYSEL34";
-export const ADS_ID = "AW-18382257167";
 
 type W = Window & Record<string, unknown>;
 
 let scriptRequested = false;
 let jsCalled = false;
 let gaConfigured = false;
-let adsConfigured = false;
 let gaActive = false;
-let adsActive = false;
 let lastGaPath: string | null = null;
 
 function gtag(...args: unknown[]) {
@@ -53,10 +51,9 @@ function clearAnalyticsCookies() {
   });
 }
 
-export function applyTagConsent(analytics: boolean, advertising: boolean) {
+export function applyTagConsent(analytics: boolean) {
   if (typeof window === "undefined") return;
   const w = window as unknown as W;
-  let needsReload = false;
 
   if (analytics) {
     w[`ga-disable-${GA4_ID}`] = false;
@@ -78,33 +75,12 @@ export function applyTagConsent(analytics: boolean, advertising: boolean) {
       // loaded, so a withdrawal clears cookies and reloads the page without it.
       clearAnalyticsCookies();
       gaActive = false;
-      needsReload = true;
+      window.location.reload();
     }
   }
-
-  if (advertising) {
-    w[`ga-disable-${ADS_ID}`] = false;
-    ensureScript();
-    if (!adsConfigured) {
-      adsConfigured = true;
-      // Conversion measurement only: no remarketing or audience lists.
-      gtag("set", "allow_ad_personalization_signals", false);
-      gtag("config", ADS_ID, { allow_ad_personalization_signals: false });
-    }
-    adsActive = true;
-  } else {
-    w[`ga-disable-${ADS_ID}`] = true;
-    if (adsActive) {
-      clearAnalyticsCookies();
-      needsReload = true;
-    }
-    adsActive = false;
-  }
-  if (needsReload) window.location.reload();
 }
 
 export const isAnalyticsActive = () => gaActive;
-export const isAdsActive = () => adsActive;
 
 /** Path of the last page_view GA4 received, used to avoid double counting. */
 export function markGaPath(path: string): boolean {

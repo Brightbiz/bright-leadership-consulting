@@ -166,9 +166,6 @@ const StrategicAiLeadershipOrganisations = () => {
         return;
       }
 
-      // Server-confirmed organisational enquiry only. Guarded inside
-      // reportEnquiryConversion so it can fire at most once.
-      reportEnquiryConversion();
       setIsSubmitted(true);
     } catch (submitError) {
       console.error("Error submitting form:", submitError);

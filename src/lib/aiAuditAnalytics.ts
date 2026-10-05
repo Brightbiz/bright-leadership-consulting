@@ -172,10 +172,4 @@ export function trackAuditRequestSubmitted(
     },
     `${requestType}:${auditSessionId()}`,
   );
-
-  // Google Ads conversion is reserved for genuinely new qualified requests
-  // from the live public domain only.
-  if (!isStagingHost() && !isTestMode() && !opts?.duplicate) {
-    reportEnquiryConversion();
-  }
 }

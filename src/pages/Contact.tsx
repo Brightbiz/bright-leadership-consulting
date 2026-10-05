@@ -196,17 +196,6 @@ const Contact = () => {
 
       clearCampaignTags();
 
-      // Confirmed success only: the request returned without a transport or
-      // server error. Google Ads conversion for organisational / cohort
-      // enquiries, fired at most once (guarded in reportEnquiryConversion).
-      if (
-        data.enquiryType === ORGANISATIONAL ||
-        data.deliveryFormat === "Cohort-based" ||
-        data.deliveryFormat === "In-house / bespoke delivery"
-      ) {
-        reportEnquiryConversion();
-      }
-
       if (isElmEmployerFunded) trackElmEmployerFundedSubmit();
 
       // Clear attribution after submission so later enquiries are not tagged.
