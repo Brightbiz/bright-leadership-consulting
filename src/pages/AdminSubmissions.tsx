@@ -40,6 +40,9 @@ interface ContactSubmission {
   message: string;
   enquiry_type?: string | null;
   source?: string | null;
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
   created_at: string;
   is_read: boolean;
 }
@@ -416,6 +419,7 @@ const AdminSubmissions = () => {
                           {!submission.is_read && <Badge variant="default" className="ml-2 text-xs">New</Badge>}
                           {submission.enquiry_type && ENQUIRY_TYPE_LABELS[submission.enquiry_type] && <Badge variant="outline" className="ml-2 text-xs">{ENQUIRY_TYPE_LABELS[submission.enquiry_type]}</Badge>}
                           {submission.source && <Badge variant="secondary" className="ml-2 text-xs">Source: {ENQUIRY_SOURCE_LABELS[submission.source] ?? submission.source}</Badge>}
+                          {submission.utm_source && <Badge variant="outline" className="ml-2 text-xs">Campaign: {submission.utm_source}{submission.utm_campaign ? ` / ${submission.utm_campaign}` : ""}</Badge>}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{submission.email}</TableCell>
                         <TableCell className="hidden lg:table-cell">{submission.company || "—"}</TableCell>
@@ -664,6 +668,9 @@ const AdminSubmissions = () => {
                             <> · <Link to={`/admin/employer-offers?submission=${selectedSubmission.id}`} className="text-primary hover:underline">Prepare offer</Link></>
                           )}
                         </div>
+                      )}
+                      {(selectedSubmission.utm_source || selectedSubmission.utm_medium || selectedSubmission.utm_campaign) && (
+                        <div><span className="font-medium text-foreground">Campaign tags:</span> source {selectedSubmission.utm_source ?? "—"} · medium {selectedSubmission.utm_medium ?? "—"} · campaign {selectedSubmission.utm_campaign ?? "—"}</div>
                       )}
                       {selectedSubmission.source && (
                         <div><span className="font-medium text-foreground">Source:</span> {ENQUIRY_SOURCE_LABELS[selectedSubmission.source] ?? selectedSubmission.source}</div>
