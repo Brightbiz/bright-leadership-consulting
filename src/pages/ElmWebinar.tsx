@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Captions } from "lucide-react";
 import Header from "@/components/Header";
@@ -17,67 +17,20 @@ const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
 const track = (name: string, destination: string, label: string) =>
   trackEvent(name, { cta_surface: "elm_webinar", destination_url: destination, cta_label: label });
 
-type CaptionCue = {
-  start: number;
-  end: number;
-  text: string;
-};
-
-const timestampToSeconds = (timestamp: string) => {
-  const parts = timestamp.replace(",", ".").split(":").map(Number);
-  if (parts.some(Number.isNaN)) return 0;
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-  return parts[0] * 60 + parts[1];
-};
-
-const parseCaptions = (source: string): CaptionCue[] =>
-  source
-    .replace(/\r/g, "")
-    .split("\n\n")
-    .flatMap((block) => {
-      const lines = block.split("\n").filter(Boolean);
-      const timingIndex = lines.findIndex((line) => line.includes(" --> "));
-      if (timingIndex < 0) return [];
-
-      const [start, endWithSettings] = lines[timingIndex].split(" --> ");
-      const end = endWithSettings?.split(/\s+/)[0];
-      const text = lines
-        .slice(timingIndex + 1)
-        .join(" ")
-        .replace(/<[^>]+>/g, "")
-        .trim();
-
-      if (!start || !end || !text) return [];
-      return [{ start: timestampToSeconds(start), end: timestampToSeconds(end), text }];
-    });
-
 const ElmWebinar = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [captionCues, setCaptionCues] = useState<CaptionCue[]>([]);
   const [activeCaption, setActiveCaption] = useState("");
   const [captionsEnabled, setCaptionsEnabled] = useState(true);
 
-  useEffect(() => {
-    let isCurrent = true;
+  const initialiseCaptions = () => {
+    const textTrack = videoRef.current?.textTracks[0];
+    if (!textTrack) return;
 
-    fetch(captions.url)
-      .then((response) => (response.ok ? response.text() : Promise.reject(new Error("Captions unavailable"))))
-      .then((source) => {
-        if (isCurrent) setCaptionCues(parseCaptions(source));
-      })
-      .catch(() => {
-        if (isCurrent) setCaptionCues([]);
-      });
-
-    return () => {
-      isCurrent = false;
+    textTrack.mode = "hidden";
+    textTrack.oncuechange = () => {
+      const cues = Array.from(textTrack.activeCues ?? []);
+      setActiveCaption(cues.map((cue) => ("text" in cue ? String(cue.text) : "")).filter(Boolean).join(" "));
     };
-  }, []);
-
-  const updateCaption = () => {
-    const currentTime = videoRef.current?.currentTime;
-    if (currentTime === undefined) return;
-    setActiveCaption(captionCues.find((cue) => currentTime >= cue.start && currentTime <= cue.end)?.text ?? "");
   };
 
   return (
@@ -105,10 +58,9 @@ const ElmWebinar = () => {
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
-            onTimeUpdate={updateCaption}
-            onSeeked={updateCaption}
+            onLoadedMetadata={initialiseCaptions}
           >
-            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" />
+            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" default onLoad={initialiseCaptions} />
           </video>
         </div>
         <div className="flex min-h-20 items-center gap-3 border-x border-b border-border bg-muted px-4 py-3 sm:px-6">

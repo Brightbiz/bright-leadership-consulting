@@ -137,6 +137,12 @@
 }
 
 @layer components {
+  /* Webinar captions are rendered in a dedicated strip below the video. */
+  video::cue {
+    color: transparent;
+    background: transparent;
+  }
+
   /* Board-pack container — 1140px max */
   .container-brief {
     @apply max-w-[1140px] mx-auto px-8 md:px-16 lg:px-20;
