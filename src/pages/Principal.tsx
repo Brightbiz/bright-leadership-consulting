@@ -18,7 +18,6 @@ const fade = {
 import { CPD_CERTIFICATE_SCOPE_NOTE } from "@/data/accreditation";
 
 const CPD_PROVIDER_NUMBER = "50838";
-const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
 /**
  * Verification page, not a destination. Deliberately excluded from the primary
@@ -218,15 +217,12 @@ const Principal = () => {
 
 
 
-          {/* Accreditation. Body, provider number and period are taken from the certificate
-              issued by The CPD Standards Office. The accredited-activity mark is reproduced
-              as required by the accreditation terms — it is a verification mark, not
-              decoration, and is the only image permitted on this page. */}
+          {/* Accreditation. Public wording deliberately omits credential dates. */}
           <motion.section {...fade} className="mt-14 max-w-[680px] space-y-5">
             <h2 className="font-serif text-2xl">Accreditation</h2>
             <p className="leading-relaxed text-muted-foreground">
               The executive programmes are accredited by The CPD Standards Office, CPD provider
-              number {CPD_PROVIDER_NUMBER} ({CPD_ACCREDITATION_PERIOD}). Completion of all
+              number {CPD_PROVIDER_NUMBER}. Completion of all
               thirty-three core modules of the Executive Leadership Mastery Programme confers 50–66
               accredited CPD hours. Participants who satisfy the approved completion requirements
               receive the official CPDSO Certificate of Attendance manually from Bright Leadership
@@ -237,15 +233,7 @@ const Principal = () => {
               {CPD_CERTIFICATE_SCOPE_NOTE}
             </p>
 
-            <div className="flex items-start gap-5 border-t border-border pt-6">
-              <img
-                src="/cpd-standards-office-accredited.png"
-                alt="Accredited CPD Activity — The CPD Standards Office, CPD provider 50838, 2025–2026"
-                width={96}
-                height={96}
-                loading="lazy"
-                className="h-24 w-24 flex-shrink-0 object-contain"
-              />
+            <div className="border-t border-border pt-6">
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Accredited CPD Activity · The CPD Standards Office · CPD Provider {CPD_PROVIDER_NUMBER}
                 {" "}· {CPD_ACCREDITATION_PERIOD}. Participants remain responsible for recording
