@@ -236,8 +236,7 @@ const Principal = () => {
             <div className="border-t border-border pt-6">
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Accredited CPD Activity · The CPD Standards Office · CPD Provider {CPD_PROVIDER_NUMBER}
-                {" "}· {CPD_ACCREDITATION_PERIOD}. Participants remain responsible for recording
-                CPD with their own professional body.
+                . Participants remain responsible for recording CPD with their own professional body.
               </p>
             </div>
             <p className="leading-relaxed text-muted-foreground">
