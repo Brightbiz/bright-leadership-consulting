@@ -1,5 +1,6 @@
 # Roadmap
-- [x] Webinar playback verified on iPad, Android phone and laptop; caption strip renders below the slides on each device (captions remain preview-only until published)
+- [x] Webinar playback verified on iPad, Android phone and laptop; caption strip published 5 Oct 2026 and verified live
+- [ ] ELM enquiry identification and source attribution (proposal sent; awaiting Bright approval)
 
 - [x] ELM employer-funded enquiry button
 - [x] Separate Bright enquiry and purchase-administration mailbox routing
