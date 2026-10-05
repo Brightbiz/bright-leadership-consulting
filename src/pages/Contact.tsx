@@ -12,7 +12,6 @@ import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  reportEnquiryConversion,
   trackElmEmployerFundedSubmit,
   ELM_EMPLOYER_FUNDED_ENQUIRY,
   ELM_EMPLOYER_FUNDED_LABEL,

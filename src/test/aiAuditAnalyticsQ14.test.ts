@@ -7,11 +7,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  */
 
 const trackEvent = vi.fn();
-const reportEnquiryConversion = vi.fn();
 
 vi.mock("@/lib/analytics", () => ({
   trackEvent: (...args: unknown[]) => trackEvent(...args),
-  reportEnquiryConversion: () => reportEnquiryConversion(),
 }));
 
 vi.mock("@/lib/auditSession", () => ({
@@ -27,7 +25,6 @@ const ALL = [...PRICED, ...UNPRICED];
 async function fresh() {
   vi.resetModules();
   trackEvent.mockClear();
-  reportEnquiryConversion.mockClear();
   return await import("@/lib/aiAuditAnalytics");
 }
 

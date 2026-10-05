@@ -59,13 +59,15 @@ describe("campaign tags", () => {
 
 describe("consent categories", () => {
   beforeEach(() => localStorage.clear());
-  it("stores analytics and advertising separately and ignores v1 records", () => {
+  it("stores the analytics choice and ignores v1/v2 records", () => {
     localStorage.setItem("blc.cookie-consent.v1", JSON.stringify({ advertising: true, version: 1 }));
+    localStorage.setItem("blc.cookie-consent.v2", JSON.stringify({ analytics: true, advertising: true, version: 2 }));
     expect(getConsent()).toBeNull();
-    setConsent({ analytics: true, advertising: false });
+    setConsent({ analytics: true });
     expect(hasAnalyticsConsent()).toBe(true);
-    expect(JSON.parse(localStorage.getItem(CONSENT_STORAGE_KEY)!).advertising).toBe(false);
+    expect(JSON.parse(localStorage.getItem(CONSENT_STORAGE_KEY)!).version).toBe(3);
     expect(localStorage.getItem("blc.cookie-consent.v1")).toBeNull();
+    expect(localStorage.getItem("blc.cookie-consent.v2")).toBeNull();
   });
 });
 
