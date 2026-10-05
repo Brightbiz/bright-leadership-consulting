@@ -285,7 +285,7 @@ const StrategicLeadershipAI = () => {
               >
                 Bright Leadership Consulting's programmes are accredited by The
                 CPD Standards Office (Provider Number 50838) as Accredited CPD
-                Activity for the 2025–2026 period. Accreditation applies to the
+                Activity. Accreditation applies to the
                 programmes only; the Executive Alignment Index™ and advisory
                 engagements are proprietary instruments and are not externally
                 accredited.
@@ -415,7 +415,7 @@ const StrategicLeadershipAI = () => {
                     The programme carries 20–30 accredited CPD hours, depending on depth of
                     engagement with the working documents and capstone. It is accredited by The
                     CPD Standards Office (Provider Number 50838) as Accredited CPD Activity for
-                    the 2025–2026 period. Participants are responsible for recording CPD with
+                    participants. Participants are responsible for recording CPD with
                     their own professional body.
 
                   </p>

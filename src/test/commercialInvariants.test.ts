@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import { programmes, individualEnquiryPath } from "@/data/programmes";
 import {
   CPD_PROVIDER_NUMBER,
-  CPD_ACCREDITATION_PERIOD,
   CPD_PROVIDER_STATEMENT,
   CPD_PARTICIPANT_STATEMENT,
   CPD_CERTIFICATE_SCOPE_NOTE,
@@ -58,10 +57,10 @@ describe("programme catalogue", () => {
 });
 
 describe("CPD wording", () => {
-  it("keeps provider number and accreditation period fixed", () => {
+  it("keeps the provider identity fixed without publishing a validity period", () => {
     expect(CPD_PROVIDER_NUMBER).toBe("50838");
-    expect(CPD_ACCREDITATION_PERIOD).toBe("2025–2026");
     expect(CPD_PROVIDER_STATEMENT).toContain("The CPD Standards Office");
+    expect(CPD_PROVIDER_STATEMENT).not.toMatch(/20\d{2}|period|expir/i);
     expect(CPD_PARTICIPANT_STATEMENT).toContain("CPDSO Certificate of Attendance");
   });
 

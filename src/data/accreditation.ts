@@ -11,7 +11,6 @@
  */
 
 export const CPD_PROVIDER_NUMBER = "50838";
-export const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
 /*
  * INTERNAL credential-verification record (Bright-confirmed, supersedes the
@@ -29,7 +28,7 @@ export const CPD_ACCREDITATION_EXPIRY = "2026-11-07";
 
 /** Approved provider statement. */
 export const CPD_PROVIDER_STATEMENT =
-  "Bright Leadership Consulting is an official Accredited Provider recognised by The CPD Standards Office, Provider Number 50838. Accreditation period: 2025–2026.";
+  "Bright Leadership Consulting is an official Accredited Provider recognised by The CPD Standards Office, Provider Number 50838.";
 
 /** Approved participant statement. */
 export const CPD_PARTICIPANT_STATEMENT =

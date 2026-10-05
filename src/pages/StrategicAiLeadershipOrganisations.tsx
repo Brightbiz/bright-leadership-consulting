@@ -524,7 +524,7 @@ const StrategicAiLeadershipOrganisations = () => {
               </motion.h2>
               <motion.p className="body-brief" {...fade}>
                 Strategic Leadership in the Age of AI is accredited for 20–30 CPD
-                hours during the 2025–2026 accreditation period.
+                hours by The CPD Standards Office.
               </motion.p>
               <motion.p className="body-brief" {...fade}>
                 Participants who satisfy the approved completion requirements
