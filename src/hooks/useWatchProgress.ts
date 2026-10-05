@@ -3,8 +3,9 @@ import { hasAnalyticsConsent } from "@/lib/consent";
 import { trackEvent } from "@/lib/analytics";
 
 /**
- * Viewing coverage = distinct one-second sections of the video actually
- * played, at any playback speed. Seeking, buffering and paused time add
+ * Playback coverage = distinct one-second sections of the video actually
+ * played, at any playback speed. It measures playback, not attention: a
+ * video playing in an unattended tab counts the same. Seeking, buffering and paused time add
  * nothing; replaying a section adds nothing.
  *
  * Events (each at most once per page visit):

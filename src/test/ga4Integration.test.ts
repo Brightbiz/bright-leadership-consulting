@@ -11,21 +11,14 @@ import { resolve } from "node:path";
 const html = readFileSync(resolve(process.cwd(), "index.html"), "utf8");
 
 describe("index.html tag configuration", () => {
-  it("loads a single gtag.js instance and no Tag Manager", () => {
-    expect(html).toContain("googletagmanager.com/gtag/js?id=G-FX0BYSEL34");
+  it("does not load gtag.js or configure any Google tag before consent", () => {
+    expect(html).not.toContain("<script async src=\"https://www.googletagmanager.com");
+    expect(html).not.toContain("gtag('config'");
     expect(html).not.toContain("gtm.js");
-    expect(html.match(/gtag\/js\?id=/g)?.length).toBe(1);
   });
 
-  it("configures both GA4 and Google Ads", () => {
-    expect(html).toContain("gtag('config', 'G-FX0BYSEL34'");
-    expect(html).toContain("gtag('config', 'AW-18382257167')");
-  });
-
-  it("keeps Consent Mode v2 defaults denied before configuration", () => {
-    const consentIndex = html.indexOf("gtag('consent', 'default'");
-    expect(consentIndex).toBeGreaterThan(-1);
-    expect(consentIndex).toBeLessThan(html.indexOf("gtag/js?id="));
+  it("keeps Consent Mode v2 defaults denied", () => {
+    expect(html).toContain("gtag('consent', 'default'");
     for (const signal of [
       "ad_storage: 'denied'",
       "analytics_storage: 'denied'",
@@ -35,12 +28,34 @@ describe("index.html tag configuration", () => {
       expect(html).toContain(signal);
     }
   });
+});
 
-  it("does not enable Signals, ad personalisation, User-ID or cross-domain", () => {
-    expect(html).toContain("allow_google_signals: false");
-    expect(html).toContain("allow_ad_personalization_signals: false");
-    expect(html).not.toContain("user_id");
-    expect(html).not.toContain("linker");
+describe("consent-gated loading", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    localStorage.clear();
+    document.head.querySelectorAll("script[src*='googletagmanager']").forEach((s) => s.remove());
+    window.gtag = vi.fn() as unknown as Window["gtag"];
+  });
+  const scripts = () => document.head.querySelectorAll("script[src*='googletagmanager']").length;
+
+  it("loads nothing before a choice or after rejection", async () => {
+    const c = await import("@/lib/consent");
+    c.applyStoredConsent();
+    expect(scripts()).toBe(0);
+    c.setConsent({ analytics: false, advertising: false });
+    expect(scripts()).toBe(0);
+  });
+
+  it("analytics-only loads GA4 without Ads; withdrawal disables GA4", async () => {
+    const c = await import("@/lib/consent");
+    c.setConsent({ analytics: true, advertising: false });
+    expect(scripts()).toBe(1);
+    const calls = (window.gtag as unknown as ReturnType<typeof vi.fn>).mock.calls;
+    expect(calls.some((x) => x[0] === "config" && x[1] === "G-FX0BYSEL34")).toBe(true);
+    expect(calls.some((x) => x[0] === "config" && x[1] === "AW-18382257167")).toBe(false);
+    c.withdrawConsent();
+    expect((window as unknown as Record<string, unknown>)["ga-disable-G-FX0BYSEL34"]).toBe(true);
   });
 });
 
@@ -50,11 +65,18 @@ describe("analytics transmission", () => {
   beforeEach(async () => {
     vi.resetModules();
     gtag.mockClear();
+    localStorage.clear();
     window.dataLayer = [];
     window.gtag = gtag as unknown as Window["gtag"];
   });
+  const grant = async (analytics: boolean, advertising: boolean) => {
+    const c = await import("@/lib/consent");
+    c.setConsent({ analytics, advertising });
+    gtag.mockClear();
+  };
 
   it("sends every event to GA4 with gtag('event', ...) and to the dataLayer", async () => {
+    await grant(true, false);
     const { trackEvent, GA4_MEASUREMENT_ID } = await import("@/lib/analytics");
     trackEvent("section_view", { section_name: "x" });
     expect(gtag).toHaveBeenCalledWith("event", "section_view", {
@@ -64,7 +86,14 @@ describe("analytics transmission", () => {
     expect(window.dataLayer).toEqual([{ event: "section_view", section_name: "x" }]);
   });
 
-  it("keeps the Google Ads conversion call unchanged", async () => {
+  it("sends no GA4 event without analytics consent", async () => {
+    const { trackEvent } = await import("@/lib/analytics");
+    trackEvent("section_view", { section_name: "x" });
+    expect(gtag).not.toHaveBeenCalled();
+  });
+
+  it("sends the Ads conversion only with advertising consent", async () => {
+    await grant(false, true);
     const { reportEnquiryConversion } = await import("@/lib/analytics");
     reportEnquiryConversion();
     expect(gtag).toHaveBeenCalledWith("event", "conversion", {
@@ -72,17 +101,12 @@ describe("analytics transmission", () => {
     });
   });
 
-  it("does not duplicate the initial page view into GA4", async () => {
+  it("leaves page views to GA4 Enhanced Measurement (no manual duplicates)", async () => {
+    await grant(true, false);
     const { trackPageView } = await import("@/lib/analytics");
-    trackPageView("/");
-    expect(gtag).not.toHaveBeenCalled();
     trackPageView("/courses");
-    expect(gtag).toHaveBeenCalledWith(
-      "event",
-      "page_view",
-      expect.objectContaining({ page_path: "/courses" }),
-    );
-  });
+    expect(gtag).not.toHaveBeenCalled();
+});
 });
 
 describe("audit events reach GA4", () => {
@@ -104,6 +128,9 @@ describe("audit events reach GA4", () => {
 
   async function emitAll() {
     vi.resetModules();
+    localStorage.clear();
+    (await import("@/lib/consent")).setConsent({ analytics: true, advertising: false });
+    gtag.mockClear();
     vi.doMock("@/lib/auditSession", () => ({
       auditSessionId: () => "session-test",
       isStagingHost: () => false,

@@ -1,16 +1,18 @@
 /**
  * Lightweight, provider-agnostic analytics layer.
  *
- * Two Google tags are configured in index.html from a single gtag.js
- * instance: the GA4 property G-FX0BYSEL34 and the Google Ads conversion tag
- * AW-18382257167. Consent Mode v2 defaults (all four signals denied) are set
- * before either configures.
+ * gtag.js is loaded only after consent (src/lib/googleTag.ts): GA4
+ * G-FX0BYSEL34 after Analytics consent, Google Ads AW-18382257167 after
+ * Advertising consent. Without Analytics consent no GA4 call is made.
  *
  * Every event below is pushed to `window.dataLayer` (retained for any future
  * GTM/consumer) *and* sent to GA4 through a real `gtag('event', ...)` call
  * scoped with `send_to` so it never reaches the Ads tag. No names, email
  * addresses, organisation names or free-text are ever included.
  */
+
+import { hasAnalyticsConsent, hasAdvertisingConsent } from "./consent";
+import { isAdsActive, isAnalyticsActive } from "./googleTag";
 
 declare global {
   interface Window {
@@ -44,25 +46,20 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: name, ...params });
+  if (!hasAnalyticsConsent() || !isAnalyticsActive()) return;
   window.gtag?.("event", name, { ...params, send_to: GA4_MEASUREMENT_ID });
 }
 
-let initialPageViewSkipped = false;
-
 /**
- * Track a route change as a GA4 page_view. The first call after load is not
- * forwarded to GA4: the `config` call in index.html already sent that page
- * view, and duplicating it would double-count the landing page.
+ * Route changes. GA4 Enhanced Measurement (enabled in the property) already
+ * records a page_view on every in-app navigation once Analytics consent has
+ * loaded the tag, so nothing is sent here; a manual call would double-count.
+ * The route is still pushed to the dataLayer for any local consumer.
  */
 export function trackPageView(path: string) {
-  const params = { page_path: path, page_location: window.location.href };
-  if (!initialPageViewSkipped) {
-    initialPageViewSkipped = true;
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "page_view", ...params });
-    return;
-  }
-  trackEvent("page_view", params);
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "route_change", page_path: path });
 }
 
 
@@ -76,6 +73,7 @@ let enquiryConversionSent = false;
  */
 export function reportEnquiryConversion() {
   if (typeof window === "undefined" || enquiryConversionSent) return;
+  if (!hasAdvertisingConsent() || !isAdsActive()) return;
   enquiryConversionSent = true;
   window.gtag?.("event", "conversion", {
     send_to: ENQUIRY_CONVERSION_SEND_TO,

@@ -17,7 +17,6 @@ import poster from "@/assets/elm-webinar-poster.jpg.asset.json";
 import captions from "@/assets/elm-webinar-captions.vtt.asset.json";
 import { useWatchProgress } from "@/hooks/useWatchProgress";
 import { withCampaignTags } from "@/lib/campaignTags";
-import { ELM_WEBINAR_WORKSHEET_URL } from "@/data/marketingConsent";
 
 const INDIVIDUAL_PATH = `${individualEnquiryPath("Executive Leadership Mastery Programme")}&enquiry=${ELM_INDIVIDUAL_ENROLMENT_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
 const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
@@ -144,29 +143,6 @@ const ElmWebinar = () => {
             Request Employer-Funded Enrolment Information
           </Link>
         </div>
-        <section className="mt-16 grid gap-10 border-t border-border pt-12 md:grid-cols-2" aria-labelledby="worksheet-heading">
-          <div>
-            <h2 id="worksheet-heading" className="font-serif text-xl text-foreground mb-3">Webinar worksheet</h2>
-            <p className="text-sm leading-relaxed text-muted-foreground mb-6 max-w-[420px]">
-              A short worksheet to accompany the webinar. No details are required to download it.
-            </p>
-            {ELM_WEBINAR_WORKSHEET_URL ? (
-              <a
-                href={ELM_WEBINAR_WORKSHEET_URL}
-                download
-                onClick={() => track("elm_webinar_worksheet_download", ELM_WEBINAR_WORKSHEET_URL, "Download the worksheet")}
-                className="inline-flex justify-center items-center px-6 py-3 border border-primary text-primary text-sm hover:border-accent hover:text-accent transition-colors"
-              >
-                Download the worksheet (PDF)
-              </a>
-            ) : (
-              <span className="inline-flex px-6 py-3 border border-border text-muted-foreground text-sm" aria-disabled="true">
-                Worksheet available shortly
-              </span>
-            )}
-          </div>
-          {/* Follow-up form on hold pending approval */}
-        </section>
       </div>
     </main>
     <Footer />
