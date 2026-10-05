@@ -61,9 +61,8 @@ export function createWatchTracker(send: (name: string, params: Record<string, u
         return;
       }
       if (last !== null && time >= last && time - last <= MAX_CONTINUOUS_STEP) {
-        for (let s = Math.floor(last); s < Math.floor(time) || s === Math.floor(last); s++) {
+        for (let s = Math.floor(last); s <= Math.floor(time); s++) {
           if (s < Math.ceil(duration)) watched.add(s);
-          if (s >= Math.floor(time)) break;
         }
         evaluate(duration);
       }
