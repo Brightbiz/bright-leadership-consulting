@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] Publish approved CPD/badge changes with tested webinar enquiry labels/source tracking; verify both webinar routes, admin records, alerts and ordinary-enquiry attribution live
 - [x] Webinar playback verified on iPad, Android phone and laptop; caption strip published 5 Oct 2026 and verified live
 - [ ] ELM enquiry identification and source attribution (built and tested in preview; awaiting inbox confirmation, test cleanup and publish approval)
 
