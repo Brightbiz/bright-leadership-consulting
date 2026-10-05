@@ -6,13 +6,18 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
 import { individualEnquiryPath } from "@/data/programmes";
-import { trackEvent, ELM_EMPLOYER_FUNDED_ENQUIRY } from "@/lib/analytics";
+import {
+  trackEvent,
+  ELM_EMPLOYER_FUNDED_ENQUIRY,
+  ELM_INDIVIDUAL_ENROLMENT_ENQUIRY,
+  ELM_WEBINAR_SOURCE,
+} from "@/lib/analytics";
 import video from "@/assets/elm-webinar.mp4.asset.json";
 import poster from "@/assets/elm-webinar-poster.jpg.asset.json";
 import captions from "@/assets/elm-webinar-captions.vtt.asset.json";
 
-const INDIVIDUAL_PATH = individualEnquiryPath("Executive Leadership Mastery Programme");
-const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
+const INDIVIDUAL_PATH = `${individualEnquiryPath("Executive Leadership Mastery Programme")}&enquiry=${ELM_INDIVIDUAL_ENROLMENT_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
+const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}&source=${ELM_WEBINAR_SOURCE}`;
 
 const track = (name: string, destination: string, label: string) =>
   trackEvent(name, { cta_surface: "elm_webinar", destination_url: destination, cta_label: label });

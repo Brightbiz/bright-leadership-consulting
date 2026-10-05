@@ -18,8 +18,8 @@ const FORM_CONFIGS: Record<string, { table: string; required: string[]; optional
   contact: {
     table: "contact_submissions",
     required: ["name", "email", "message"],
-    optional: ["phone", "company", "enquiry_type"],
-    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200, enquiry_type: 60 },
+    optional: ["phone", "company", "enquiry_type", "source"],
+    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200, enquiry_type: 60, source: 40 },
   },
   newsletter: {
     table: "newsletter_subscribers",
@@ -89,11 +89,18 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Enquiry type is restricted to known values so leads can be segmented reliably.
-    const ALLOWED_ENQUIRY_TYPES = ["elm_employer_funded"];
+    // Enquiry type and source are restricted to known values so leads can be segmented reliably.
+    const ALLOWED_ENQUIRY_TYPES = ["elm_employer_funded", "elm_individual_enrolment"];
     if (sanitized.enquiry_type && !ALLOWED_ENQUIRY_TYPES.includes(sanitized.enquiry_type)) {
       return new Response(
         JSON.stringify({ error: "Invalid enquiry type" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const ALLOWED_SOURCES = ["elm_webinar"];
+    if (sanitized.source && !ALLOWED_SOURCES.includes(sanitized.source)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid source" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -170,9 +177,11 @@ Deno.serve(async (req) => {
     // link to the signed-in admin record only. The enquirer's personal details
     // stay in the admin record, which requires authentication to view.
     if (formType === "contact") {
-      const enquiryLabel = sanitized.enquiry_type
-        ? "ELM employer-funded enquiry"
-        : "General enquiry";
+      const ENQUIRY_LABELS: Record<string, string> = {
+        elm_employer_funded: "ELM employer-funded enquiry",
+        elm_individual_enrolment: "ELM individual enrolment request",
+      };
+      const enquiryLabel = (sanitized.enquiry_type && ENQUIRY_LABELS[sanitized.enquiry_type]) || "General enquiry";
       const reference = data?.[0]?.id ?? "(reference unavailable)";
       const savedAt = new Date().toISOString();
       const adminLink = `https://brightleadershipconsulting.com/admin/crm`;

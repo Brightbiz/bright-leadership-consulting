@@ -1,0 +1,2 @@
+ALTER TABLE public.contact_submissions ADD COLUMN source text;
+ALTER TABLE public.contact_submissions ADD CONSTRAINT contact_submissions_source_check CHECK (source IS NULL OR source IN ('elm_webinar'));

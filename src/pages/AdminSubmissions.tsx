@@ -15,6 +15,7 @@ import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { ENQUIRY_TYPE_LABELS, ENQUIRY_SOURCE_LABELS } from "@/lib/analytics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -38,6 +39,7 @@ interface ContactSubmission {
   company: string | null;
   message: string;
   enquiry_type?: string | null;
+  source?: string | null;
   created_at: string;
   is_read: boolean;
 }
@@ -412,7 +414,8 @@ const AdminSubmissions = () => {
                         <TableCell className="font-medium">
                           {submission.name}
                           {!submission.is_read && <Badge variant="default" className="ml-2 text-xs">New</Badge>}
-                          {submission.enquiry_type === "elm_employer_funded" && <Badge variant="outline" className="ml-2 text-xs">ELM employer-funded enquiry</Badge>}
+                          {submission.enquiry_type && ENQUIRY_TYPE_LABELS[submission.enquiry_type] && <Badge variant="outline" className="ml-2 text-xs">{ENQUIRY_TYPE_LABELS[submission.enquiry_type]}</Badge>}
+                          {submission.source && <Badge variant="secondary" className="ml-2 text-xs">Source: {ENQUIRY_SOURCE_LABELS[submission.source] ?? submission.source}</Badge>}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{submission.email}</TableCell>
                         <TableCell className="hidden lg:table-cell">{submission.company || "—"}</TableCell>
@@ -656,11 +659,14 @@ const AdminSubmissions = () => {
                         </div>
                       )}
                       {selectedSubmission.enquiry_type && (
-                        <div><span className="font-medium text-foreground">Enquiry category:</span> {selectedSubmission.enquiry_type === "elm_employer_funded" ? "ELM employer-funded enquiry" : selectedSubmission.enquiry_type}
+                        <div><span className="font-medium text-foreground">Enquiry category:</span> {ENQUIRY_TYPE_LABELS[selectedSubmission.enquiry_type] ?? selectedSubmission.enquiry_type}
                           {selectedSubmission.enquiry_type === "elm_employer_funded" && (
                             <> · <Link to={`/admin/employer-offers?submission=${selectedSubmission.id}`} className="text-primary hover:underline">Prepare offer</Link></>
                           )}
                         </div>
+                      )}
+                      {selectedSubmission.source && (
+                        <div><span className="font-medium text-foreground">Source:</span> {ENQUIRY_SOURCE_LABELS[selectedSubmission.source] ?? selectedSubmission.source}</div>
                       )}
                       {selectedSubmission.company && (
                         <div><span className="font-medium text-foreground">Company:</span> {selectedSubmission.company}</div>
