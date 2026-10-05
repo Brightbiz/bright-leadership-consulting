@@ -145,9 +145,17 @@ const Contact = () => {
 
 
   const onSubmit = async (data: ContactFormData) => {
+    // Individual label applies only if the visitor kept the individual ELM selection.
+    const submittedType =
+      enquiryTypeValue === ELM_INDIVIDUAL_ENROLMENT_ENQUIRY &&
+      (data.enquiryType !== INDIVIDUAL || data.programme !== "Executive Leadership Mastery Programme")
+        ? null
+        : enquiryTypeValue;
+    const submittedSource = submittedType ? sourceValue : null;
     const details = [
       data.role ? `Role: ${data.role}` : null,
       isElmEmployerFunded ? `Enquiry category: ${ELM_EMPLOYER_FUNDED_LABEL}` : null,
+      submittedType === ELM_INDIVIDUAL_ENROLMENT_ENQUIRY ? `Enquiry category: ${ELM_INDIVIDUAL_ENROLMENT_LABEL}` : null,
       `Enquiry type: ${data.enquiryType}`,
       data.programme ? `Programme of interest: ${data.programme}` : null,
       data.deliveryFormat ? `Preferred delivery: ${data.deliveryFormat}` : null,
@@ -165,7 +173,8 @@ const Contact = () => {
             phone: null,
             company: data.company || null,
             message: `${details.join("\n")}\n\n${data.message}`,
-            ...(isElmEmployerFunded ? { enquiry_type: ELM_EMPLOYER_FUNDED_ENQUIRY } : {}),
+            ...(submittedType ? { enquiry_type: submittedType } : {}),
+            ...(submittedSource ? { source: submittedSource } : {}),
           },
         },
       });
@@ -194,6 +203,8 @@ const Contact = () => {
 
       if (isElmEmployerFunded) trackElmEmployerFundedSubmit();
 
+      // Clear attribution after submission so later enquiries are not tagged.
+      setSearchParams({}, { replace: true });
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting form:", error);
