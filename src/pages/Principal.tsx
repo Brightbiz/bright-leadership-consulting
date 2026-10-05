@@ -233,7 +233,13 @@ const Principal = () => {
               {CPD_CERTIFICATE_SCOPE_NOTE}
             </p>
 
-            <div className="border-t border-border pt-6">
+            <div className="border-t border-border pt-6 flex items-center gap-5">
+              <img
+                src="/cpd-standards-office-accredited.png"
+                alt="The CPD Standards Office — Accredited CPD Activity"
+                className="h-20 w-20 shrink-0"
+                loading="lazy"
+              />
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Accredited CPD Activity · The CPD Standards Office · CPD Provider {CPD_PROVIDER_NUMBER}
                 . Participants remain responsible for recording CPD with their own professional body.
