@@ -2,17 +2,17 @@
  * Lightweight, provider-agnostic analytics layer.
  *
  * gtag.js is loaded only after consent (src/lib/googleTag.ts): GA4
- * G-FX0BYSEL34 after Analytics consent, Google Ads AW-18382257167 after
- * Advertising consent. Without Analytics consent no GA4 call is made.
+ * G-FX0BYSEL34 after Analytics consent. Without Analytics consent no GA4
+ * call is made. The Google Ads tag was removed (no active campaigns).
  *
  * Every event below is pushed to `window.dataLayer` (retained for any future
  * GTM/consumer) *and* sent to GA4 through a real `gtag('event', ...)` call
- * scoped with `send_to` so it never reaches the Ads tag. No names, email
- * addresses, organisation names or free-text are ever included.
+ * scoped with `send_to`. No names, email addresses, organisation names or
+ * free-text are ever included.
  */
 
-import { hasAnalyticsConsent, hasAdvertisingConsent } from "./consent";
-import { isAdsActive, isAnalyticsActive } from "./googleTag";
+import { hasAnalyticsConsent } from "./consent";
+import { isAnalyticsActive } from "./googleTag";
 
 declare global {
   interface Window {
@@ -23,9 +23,6 @@ declare global {
 
 /** GA4 measurement ID for the Bright Leadership Consulting web stream. */
 export const GA4_MEASUREMENT_ID = "G-FX0BYSEL34";
-
-/** Google Ads conversion destination for a confirmed organisational enquiry. */
-const ENQUIRY_CONVERSION_SEND_TO = "AW-18382257167/6zYBCLOIr98cEI_4q71E";
 
 export function initAnalytics() {
   if (typeof window === "undefined") return;
@@ -60,24 +57,6 @@ export function trackPageView(path: string) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: "route_change", page_path: path });
-}
-
-
-let enquiryConversionSent = false;
-
-/**
- * Google Ads conversion for a confirmed organisational / cohort enquiry.
- * Called only from the contact form's confirmed-success branch, never from a
- * click handler, and guarded so it can fire at most once per page session.
- * No redirect is required, so no URL is passed.
- */
-export function reportEnquiryConversion() {
-  if (typeof window === "undefined" || enquiryConversionSent) return;
-  if (!hasAdvertisingConsent() || !isAdsActive()) return;
-  enquiryConversionSent = true;
-  window.gtag?.("event", "conversion", {
-    send_to: ENQUIRY_CONVERSION_SEND_TO,
-  });
 }
 
 
