@@ -34,6 +34,11 @@ const ElmWebinar = () => {
     initialiseCaptions(event.currentTarget.track);
   };
 
+  const handleVideoMetadata = () => {
+    const textTrack = videoRef.current?.textTracks[0];
+    if (textTrack) initialiseCaptions(textTrack);
+  };
+
   return (
     <div className="min-h-screen bg-background">
     <SEOHead
@@ -59,6 +64,7 @@ const ElmWebinar = () => {
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
+            onLoadedMetadata={handleVideoMetadata}
           >
             <track kind="captions" src={captions.url} srcLang="en-GB" label="English" onLoad={handleTrackLoad} />
           </video>
