@@ -13,6 +13,20 @@
 export const CPD_PROVIDER_NUMBER = "50838";
 export const CPD_ACCREDITATION_PERIOD = "2025–2026";
 
+/*
+ * INTERNAL credential-verification record (Bright-confirmed, supersedes the
+ * earlier October 2026 note and the 2025–2027 badge):
+ *   Issue date:  10 October 2025
+ *   Expiry date: 7 November 2026
+ * Renewal is tracked against CPD_ACCREDITATION_EXPIRY. This is an internal
+ * marker only — no automatic expiry control. If renewal is not confirmed
+ * before expiry, the "50–66 CPD hours" claim and related badge/certificate
+ * wording must be removed or qualified first. The expiry date is not shown
+ * publicly; the approved public wording above is unchanged.
+ */
+export const CPD_ACCREDITATION_ISSUE_DATE = "2025-10-10";
+export const CPD_ACCREDITATION_EXPIRY = "2026-11-07";
+
 /** Approved provider statement. */
 export const CPD_PROVIDER_STATEMENT =
   "Bright Leadership Consulting is an official Accredited Provider recognised by The CPD Standards Office, Provider Number 50838. Accreditation period: 2025–2026.";
