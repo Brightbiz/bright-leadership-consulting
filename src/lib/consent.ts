@@ -6,13 +6,14 @@
  *  - advertising → ad_storage, ad_user_data, ad_personalization (Google Ads)
  *
  * Only one storage item is used — a strictly necessary consent-preference
- * record. Consent defaults (all four v2 signals denied) are set in index.html
- * before the Google tag configuration executes; this module only issues
- * `consent` updates and persists the visitor's choice.
+ * record. Consent defaults (all four v2 signals denied) are set in index.html;
+ * gtag.js itself is not loaded until a category is granted (see googleTag.ts).
  *
  * Records from the earlier single-category banner (v1) are discarded so the
  * visitor is asked again with the separated choices.
  */
+
+import { applyTagConsent } from "./googleTag";
 
 export const CONSENT_STORAGE_KEY = "blc.cookie-consent.v2";
 const LEGACY_STORAGE_KEYS = ["blc.cookie-consent.v1"];
@@ -61,6 +62,11 @@ export function hasAnalyticsConsent(): boolean {
   return readRaw()?.analytics === true;
 }
 
+/** True only when the visitor has actively accepted advertising. */
+export function hasAdvertisingConsent(): boolean {
+  return readRaw()?.advertising === true;
+}
+
 function pushConsentUpdate({ analytics, advertising }: ConsentChoices) {
   if (typeof window === "undefined") return;
   const ads = advertising ? "granted" : "denied";
@@ -70,6 +76,8 @@ function pushConsentUpdate({ analytics, advertising }: ConsentChoices) {
     ad_user_data: ads,
     ad_personalization: ads,
   });
+  // Google's tag is only fetched/configured for categories now granted.
+  applyTagConsent(analytics, advertising);
 }
 
 /** Record a decision, update Consent Mode, and notify subscribers. */
@@ -118,4 +126,12 @@ export function applyStoredConsent() {
   }
   const record = readRaw();
   if (record && (record.analytics || record.advertising)) pushConsentUpdate(record);
+  else applyTagConsent(false, false);
+  // A change made in another open tab applies here immediately.
+  window.addEventListener("storage", (event) => {
+    if (event.key !== CONSENT_STORAGE_KEY) return;
+    const next = readRaw();
+    pushConsentUpdate(next ?? { analytics: false, advertising: false });
+    listeners.forEach((listener) => listener(next));
+  });
 }
