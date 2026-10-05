@@ -42,7 +42,7 @@ const sections = [
     heading: "Lawful basis",
     body: [
       "We process enquiry data on the basis of legitimate interests in responding to a request you have made, and engagement data on the basis of the contract with the commissioning organisation.",
-      "Optional Analytics and Advertising measurement takes place only with your consent, which is the lawful basis for that processing and for the related cookies. Each is a separate choice, and you may withdraw either at any time by selecting Cookie Preferences in the footer of any page. Withdrawal stops further processing from that point; it does not affect processing that took place before you withdrew.",
+      "Optional Analytics measurement takes place only with your consent, which is the lawful basis for that processing and for the related cookies. You may withdraw consent at any time by selecting Cookie Preferences in the footer of any page. Withdrawal stops further processing from that point; it does not affect processing that took place before you withdrew.",
     ],
   },
   {
