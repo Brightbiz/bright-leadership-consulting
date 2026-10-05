@@ -6,40 +6,45 @@ import { readCampaignTags } from "@/lib/campaignTags";
 import { MARKETING_CONSENT_TEXT, MARKETING_CONSENT_VERSION } from "@/data/marketingConsent";
 import { CONSENT_STORAGE_KEY, getConsent, hasAnalyticsConsent, setConsent } from "@/lib/consent";
 
-function run(tracker: ReturnType<typeof createWatchTracker>, from: number, to: number, duration = 100) {
-  tracker.seek(from);
-  for (let t = from; t <= to; t += 0.25) tracker.tick(t, duration, 1, false);
+function run(tracker: ReturnType<typeof createWatchTracker>, from: number, to: number, duration = 100, step = 0.25) {
+  tracker.interrupt(from);
+  for (let t = from; t <= to; t += step) tracker.tick(t, duration, false, false);
 }
 
-describe("watch progress", () => {
-  it("counts only continuously watched seconds and ignores skips and replays", () => {
+describe("watch coverage", () => {
+  it("counts distinct played sections; ignores seeks and replays", () => {
     const sent: string[] = [];
     const t = createWatchTracker((n, p) => sent.push(`${n}:${p.percent ?? ""}`));
-    t.play();
-    t.play();
+    t.play(); t.play();
     run(t, 0, 20);
-    t.seek(90); // skip ahead: nothing counted
-    t.tick(90, 100, 1, false);
-    run(t, 0, 20); // replay: no inflation
+    t.interrupt(90); t.tick(90, 100, false, false);
+    run(t, 0, 20);
     expect(t.watchedSeconds).toBe(21);
     expect(sent).toEqual(["elm_webinar_play:"]);
     run(t, 21, 30);
-    expect(sent).toContain("elm_webinar_progress:25");
-    expect(sent.filter((s) => s.endsWith(":25"))).toHaveLength(1);
+    expect(sent.filter((s) => s === "elm_webinar_progress:25")).toHaveLength(1);
   });
 
-  it("completes at 95% and fires each threshold once", () => {
+  it("fires 25/50/75 once and a separate complete at 95%, never 100", () => {
     const sent: string[] = [];
     const t = createWatchTracker((n, p) => sent.push(`${n}:${p.percent ?? ""}`));
-    run(t, 0, 94.5);
-    expect(sent).toEqual(["elm_webinar_progress:25", "elm_webinar_progress:50", "elm_webinar_progress:75", "elm_webinar_progress:100"]);
+    run(t, 0, 93.5);
+    expect(sent).toEqual(["elm_webinar_progress:25", "elm_webinar_progress:50", "elm_webinar_progress:75"]);
+    run(t, 93.5, 94.5);
+    expect(sent).toContain("elm_webinar_complete:");
+    run(t, 0, 99);
+    expect(sent.filter((s) => s.startsWith("elm_webinar_complete"))).toHaveLength(1);
+    expect(sent.some((s) => s.includes("100"))).toBe(false);
   });
 
-  it("does not count faster-than-normal playback", () => {
+  it("counts faster playback; ignores paused and buffering time", () => {
     const t = createWatchTracker(() => {});
-    t.seek(0);
-    for (let x = 0; x < 10; x += 0.25) t.tick(x, 100, 2, false);
-    expect(t.watchedSeconds).toBe(0);
+    run(t, 0, 10, 100, 0.5); // 2x speed
+    expect(t.watchedSeconds).toBe(11);
+    t.interrupt(50);
+    t.tick(50, 100, true, false); t.tick(51, 100, true, false);
+    t.tick(52, 100, false, true); t.tick(53, 100, false, true);
+    expect(t.watchedSeconds).toBe(11);
   });
 });
 
