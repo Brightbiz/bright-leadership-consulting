@@ -15,4 +15,6 @@
 
 - [ ] Stage 1 funnel (preview only, built and tested 5 Oct 2026): Google loads only after consent; independent Analytics/Advertising; playback-coverage events (play/25/50/75 + complete at 95%); UTM on enquiries; worksheet placeholder removed; opt-in/unsubscribe handlers removed from the backend — awaiting publish approval
 - [ ] Google Ads tag: campaign status could not be verified (no Google Ads account connected) — tag kept, loads only with Advertising consent; remove once Bright confirms no active campaigns
+- [ ] Privacy Notice Analytics retention wording (preview): event-level/user-level data distinguished from standard aggregated reports; placeholder for retention period and "Reset user data on new activity" state — awaiting Bright's GA4 account check
+- [ ] Google Ads account-terms check UNRESOLVED: retention setting is not the only outstanding account confirmation — whether Bright's account accepts the current Google Ads terms / advertising features still needs confirmation
 - [ ] On hold until Bright confirms: worksheet follow-up form, automated emails, DNS/marketing subdomain
