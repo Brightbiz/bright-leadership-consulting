@@ -1,7 +1,10 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Captions } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { Button } from "@/components/ui/button";
 import { individualEnquiryPath } from "@/data/programmes";
 import { trackEvent, ELM_EMPLOYER_FUNDED_ENQUIRY } from "@/lib/analytics";
 import video from "@/assets/elm-webinar.mp4.asset.json";
@@ -14,8 +17,53 @@ const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
 const track = (name: string, destination: string, label: string) =>
   trackEvent(name, { cta_surface: "elm_webinar", destination_url: destination, cta_label: label });
 
-const ElmWebinar = () => (
-  <div className="min-h-screen bg-background">
+type CaptionCue = { start: number; end: number; text: string };
+
+const timestampToSeconds = (timestamp: string) => {
+  const parts = timestamp.trim().split(":").map(Number);
+  return parts.length === 3 ? parts[0] * 3600 + parts[1] * 60 + parts[2] : parts[0] * 60 + parts[1];
+};
+
+const parseCaptions = (source: string): CaptionCue[] =>
+  source.replace(/\r/g, "").split("\n\n").flatMap((block) => {
+    const lines = block.split("\n").filter(Boolean);
+    const timingIndex = lines.findIndex((line) => line.includes(" --> "));
+    if (timingIndex < 0) return [];
+    const [start, endWithSettings] = lines[timingIndex].split(" --> ");
+    const end = endWithSettings?.split(/\s+/)[0];
+    const text = lines.slice(timingIndex + 1).join(" ").replace(/<[^>]+>/g, "").trim();
+    return start && end && text ? [{ start: timestampToSeconds(start), end: timestampToSeconds(end), text }] : [];
+  });
+
+const ElmWebinar = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [captionCues, setCaptionCues] = useState<CaptionCue[]>([]);
+  const [activeCaption, setActiveCaption] = useState("");
+  const [captionsEnabled, setCaptionsEnabled] = useState(true);
+
+  useEffect(() => {
+    let isCurrent = true;
+    fetch(captions.url)
+      .then((response) => response.text())
+      .then((source) => {
+        if (isCurrent) setCaptionCues(parseCaptions(source));
+      })
+      .catch(() => {
+        if (isCurrent) setCaptionCues([]);
+      });
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
+
+  const updateCaption = () => {
+    const currentTime = videoRef.current?.currentTime;
+    if (currentTime === undefined) return;
+    setActiveCaption(captionCues.find((cue) => currentTime >= cue.start && currentTime <= cue.end)?.text ?? "");
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
     <SEOHead
       title="On-Demand Webinar | Executive Leadership Mastery"
       description="On-demand webinar: developing the leaders your organisation depends on."
@@ -31,6 +79,7 @@ const ElmWebinar = () => (
         </h1>
         <div className="w-full aspect-video bg-primary overflow-hidden">
           <video
+            ref={videoRef}
             className="w-full h-full object-contain"
             src={video.url}
             poster={poster.url}
@@ -38,9 +87,28 @@ const ElmWebinar = () => (
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
+            onTimeUpdate={updateCaption}
+            onSeeked={updateCaption}
           >
-            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" default />
+            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" />
           </video>
+        </div>
+        <div className="flex min-h-20 items-center gap-3 border-x border-b border-border bg-muted px-4 py-3 sm:px-6">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="shrink-0 rounded-sm"
+            aria-label={captionsEnabled ? "Turn captions off" : "Turn captions on"}
+            aria-pressed={captionsEnabled}
+            title={captionsEnabled ? "Turn captions off" : "Turn captions on"}
+            onClick={() => setCaptionsEnabled((enabled) => !enabled)}
+          >
+            <Captions aria-hidden="true" />
+          </Button>
+          <p className="flex-1 text-center text-sm leading-relaxed text-foreground sm:text-base" aria-live="polite">
+            {captionsEnabled ? activeCaption : ""}
+          </p>
         </div>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <Link
@@ -61,7 +129,8 @@ const ElmWebinar = () => (
       </div>
     </main>
     <Footer />
-  </div>
-);
+    </div>
+  );
+};
 
 export default ElmWebinar;
