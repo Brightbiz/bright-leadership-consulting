@@ -74,7 +74,9 @@ function pushConsentUpdate({ analytics, advertising }: ConsentChoices) {
     analytics_storage: analytics ? "granted" : "denied",
     ad_storage: ads,
     ad_user_data: ads,
-    ad_personalization: ads,
+    // Remarketing/personalised advertising is outside the approved
+    // conversion-measurement scope, so it stays denied even with consent.
+    ad_personalization: "denied",
   });
   // Google's tag is only fetched/configured for categories now granted.
   applyTagConsent(analytics, advertising);
