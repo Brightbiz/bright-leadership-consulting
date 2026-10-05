@@ -1,4 +1,4 @@
-import { type SyntheticEvent, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Captions } from "lucide-react";
 import Header from "@/components/Header";
@@ -17,26 +17,49 @@ const EMPLOYER_PATH = `/contact?enquiry=${ELM_EMPLOYER_FUNDED_ENQUIRY}`;
 const track = (name: string, destination: string, label: string) =>
   trackEvent(name, { cta_surface: "elm_webinar", destination_url: destination, cta_label: label });
 
+type CaptionCue = { start: number; end: number; text: string };
+
+const timestampToSeconds = (timestamp: string) => {
+  const parts = timestamp.trim().split(":").map(Number);
+  return parts.length === 3 ? parts[0] * 3600 + parts[1] * 60 + parts[2] : parts[0] * 60 + parts[1];
+};
+
+const parseCaptions = (source: string): CaptionCue[] =>
+  source.replace(/\r/g, "").split("\n\n").flatMap((block) => {
+    const lines = block.split("\n").filter(Boolean);
+    const timingIndex = lines.findIndex((line) => line.includes(" --> "));
+    if (timingIndex < 0) return [];
+    const [start, endWithSettings] = lines[timingIndex].split(" --> ");
+    const end = endWithSettings?.split(/\s+/)[0];
+    const text = lines.slice(timingIndex + 1).join(" ").replace(/<[^>]+>/g, "").trim();
+    return start && end && text ? [{ start: timestampToSeconds(start), end: timestampToSeconds(end), text }] : [];
+  });
+
 const ElmWebinar = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [captionCues, setCaptionCues] = useState<CaptionCue[]>([]);
   const [activeCaption, setActiveCaption] = useState("");
   const [captionsEnabled, setCaptionsEnabled] = useState(true);
 
-  const initialiseCaptions = (textTrack: TextTrack) => {
-    textTrack.mode = "hidden";
-    textTrack.oncuechange = () => {
-      const cues = Array.from(textTrack.activeCues ?? []);
-      setActiveCaption(cues.map((cue) => ("text" in cue ? String(cue.text) : "")).filter(Boolean).join(" "));
+  useEffect(() => {
+    let isCurrent = true;
+    fetch(captions.url)
+      .then((response) => response.text())
+      .then((source) => {
+        if (isCurrent) setCaptionCues(parseCaptions(source));
+      })
+      .catch(() => {
+        if (isCurrent) setCaptionCues([]);
+      });
+    return () => {
+      isCurrent = false;
     };
-  };
+  }, []);
 
-  const handleTrackLoad = (event: SyntheticEvent<HTMLTrackElement>) => {
-    initialiseCaptions(event.currentTarget.track);
-  };
-
-  const handleVideoMetadata = () => {
-    const textTrack = videoRef.current?.textTracks[0];
-    if (textTrack) initialiseCaptions(textTrack);
+  const updateCaption = () => {
+    const currentTime = videoRef.current?.currentTime;
+    if (currentTime === undefined) return;
+    setActiveCaption(captionCues.find((cue) => currentTime >= cue.start && currentTime <= cue.end)?.text ?? "");
   };
 
   return (
@@ -64,9 +87,10 @@ const ElmWebinar = () => {
             preload="metadata"
             playsInline
             crossOrigin="anonymous"
-            onLoadedMetadata={handleVideoMetadata}
+            onTimeUpdate={updateCaption}
+            onSeeked={updateCaption}
           >
-            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" onLoad={handleTrackLoad} />
+            <track kind="captions" src={captions.url} srcLang="en-GB" label="English" />
           </video>
         </div>
         <div className="flex min-h-20 items-center gap-3 border-x border-b border-border bg-muted px-4 py-3 sm:px-6">
