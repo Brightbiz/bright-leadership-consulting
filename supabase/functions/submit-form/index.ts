@@ -18,8 +18,8 @@ const FORM_CONFIGS: Record<string, { table: string; required: string[]; optional
   contact: {
     table: "contact_submissions",
     required: ["name", "email", "message"],
-    optional: ["phone", "company", "enquiry_type", "source"],
-    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200, enquiry_type: 60, source: 40 },
+    optional: ["phone", "company", "enquiry_type", "source", "utm_source", "utm_medium", "utm_campaign"],
+    maxLengths: { name: 100, email: 255, message: 2000, phone: 30, company: 200, enquiry_type: 60, source: 40, utm_source: 100, utm_medium: 100, utm_campaign: 100 },
   },
   newsletter: {
     table: "newsletter_subscribers",
@@ -103,6 +103,15 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: "Invalid source" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Campaign tags: allow-listed characters only; anything else is dropped
+    // (never rejected) so a malformed link can never lose an enquiry.
+    const UTM_PATTERN = /^[A-Za-z0-9._-]{1,100}$/;
+    for (const field of ["utm_source", "utm_medium", "utm_campaign"]) {
+      if (sanitized[field] && !UTM_PATTERN.test(sanitized[field] as string)) {
+        sanitized[field] = null;
+      }
     }
 
     // Email format validation

@@ -301,6 +301,9 @@ export type Database = {
           name: string
           phone: string | null
           source: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
         }
         Insert: {
           company?: string | null
@@ -313,6 +316,9 @@ export type Database = {
           name: string
           phone?: string | null
           source?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
         }
         Update: {
           company?: string | null
@@ -325,6 +331,9 @@ export type Database = {
           name?: string
           phone?: string | null
           source?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
         }
         Relationships: []
       }
@@ -950,6 +959,45 @@ export type Database = {
           id?: string
           lead_magnet_name?: string
           name?: string | null
+        }
+        Relationships: []
+      }
+      marketing_consents: {
+        Row: {
+          consent_text: string
+          consent_version: string
+          consented_at: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          source_page: string
+          unsubscribe_token: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          consent_text: string
+          consent_version: string
+          consented_at?: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          source_page: string
+          unsubscribe_token?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          consent_text?: string
+          consent_version?: string
+          consented_at?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          source_page?: string
+          unsubscribe_token?: string
+          unsubscribed_at?: string | null
         }
         Relationships: []
       }
