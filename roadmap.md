@@ -15,7 +15,8 @@
     Watch here: https://lnkd.in/gKvnptsn
 
     Which takes most of your leadership time at present: making decisions, securing accountability, or moving agreed priorities forward?"
-  - Phase 1 still to run: personal webinar messages to existing contacts (none logged yet); LinkedIn Post 2 on 8 October 2026; LinkedIn Post 3 on 9 October 2026.
+  - Send log — entry 2: LinkedIn Posts 2 and 3 were scheduled to publish on Wednesday 7 October 2026 (confirmed by Bright, 09:00 UTC / 10:00 London), to go out on the agreed dates: Post 2 Thursday 8 October 2026, Post 3 Friday 9 October 2026 using the final image supplied by Bright. Scheduling is not a send — neither post had been published at the time of this entry, so the promotion start remains 6 October 2026 and the reviews remain 5 December 2026 (60-day) and 4 January 2027 (90-day). Post texts and public links are not yet held; send them once live and they will be filed here alongside Post 1.
+  - Phase 1 still to run: personal webinar messages to existing contacts (none logged yet); LinkedIn Post 2 publishes 8 October 2026; LinkedIn Post 3 publishes 9 October 2026.
 
 - [x] ELM employer-funded enquiry button
 - [ ] Private employer offer links (built; revised invoice checked in preview; issuing blocked pending Bright approval)
