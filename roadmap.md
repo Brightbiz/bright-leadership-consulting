@@ -5,7 +5,6 @@
 
 - [ ] ELM pre-launch promotion, Phase 1 (agreed 5 Oct 2026; roundtable removed from the pre-launch plan — no invitation/date dependencies): promotion proceeds through the live webinar, personal webinar messages to existing contacts and Irene's LinkedIn posts. School validation is handled in individual buyer conversations, not in promotion materials. Promotion start (first promotional send): 6 October 2026. 60-day review: 5 December 2026. 90-day review: 4 January 2027. LinkedIn schedule: Post 2 Thursday 8 October 2026; Post 3 Friday 9 October 2026. Webinar enquiry tracking and the evidence log remain in place.
   - Send log — entry 1: LinkedIn Post 1, a public post on Irene's LinkedIn profile (not a personal message to a named contact), 6 October 2026. Nothing was added to the admin Outreach tab: that tab records personalised one-to-one messages with a named recipient, reply status and follow-up cadence, none of which a public post has. The post text itself is not held in this project — supply it and it will be added to this record.
-  - Promotion start date to confirm: the LinkedIn post was reported here on 7 October 2026. If it actually went out on 7 October rather than 6 October, the promotion start becomes 7 October 2026 and the reviews move to 6 December 2026 (60-day) and 5 January 2027 (90-day).
   - Phase 1 still to run: personal webinar messages to existing contacts (none logged yet); LinkedIn Post 2 on 8 October 2026; LinkedIn Post 3 on 9 October 2026.
 
 - [x] ELM employer-funded enquiry button
