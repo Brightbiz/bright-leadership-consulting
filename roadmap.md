@@ -4,7 +4,17 @@
 - [x] ELM enquiry identification and source attribution (published, verified live and test records removed)
 
 - [ ] ELM pre-launch promotion, Phase 1 (agreed 5 Oct 2026; roundtable removed from the pre-launch plan — no invitation/date dependencies): promotion proceeds through the live webinar, personal webinar messages to existing contacts and Irene's LinkedIn posts. School validation is handled in individual buyer conversations, not in promotion materials. Promotion start (first promotional send): 6 October 2026. 60-day review: 5 December 2026. 90-day review: 4 January 2027. LinkedIn schedule: Post 2 Thursday 8 October 2026; Post 3 Friday 9 October 2026. Webinar enquiry tracking and the evidence log remain in place.
-  - Send log — entry 1: LinkedIn Post 1, a public post on Irene's LinkedIn profile (not a personal message to a named contact), 6 October 2026. Nothing was added to the admin Outreach tab: that tab records personalised one-to-one messages with a named recipient, reply status and follow-up cadence, none of which a public post has. The post text itself is not held in this project — supply it and it will be added to this record.
+  - Send log — entry 1: LinkedIn Post 1, a public post on Irene's LinkedIn profile (not a personal message to a named contact), 6 October 2026. Nothing was added to the admin Outreach tab: that tab records personalised one-to-one messages with a named recipient, reply status and follow-up cadence, none of which a public post has. Post 1 text (as published; public link https://www.linkedin.com/feed/update/urn:li:activity:7513312246232682496):
+
+    "Senior leadership can look effective on paper while becoming harder to sustain in practice.
+
+    Decisions return to the same person. Delegated work comes back for approval. Priorities are agreed, but execution drifts.
+
+    We've published a free, 13-minute webinar for experienced and aspiring senior leaders, exploring three disciplines that help address these pressures: judgement, accountability, and influence and execution. It includes practical questions you can apply to your own leadership, alongside an introduction to Bright's Executive Leadership Mastery programme.
+
+    Watch here: https://lnkd.in/gKvnptsn
+
+    Which takes most of your leadership time at present: making decisions, securing accountability, or moving agreed priorities forward?"
   - Phase 1 still to run: personal webinar messages to existing contacts (none logged yet); LinkedIn Post 2 on 8 October 2026; LinkedIn Post 3 on 9 October 2026.
 
 - [x] ELM employer-funded enquiry button
