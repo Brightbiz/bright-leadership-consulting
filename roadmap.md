@@ -52,3 +52,4 @@
 
 - 9 Oct 2026: one test copy of the iwoca Apollo draft sent to aguns70418@aol.com for Victoria's review (marked [TEST]). Privacy publish declined twice in editor; Privacy paragraph still not live; no Apollo emails to contacts.
 - 9 Oct 2026 ~20:28 London: Privacy "Business contacts from third-party sources" paragraph published and confirmed live. Apollo emails may now be sent once Victoria approves the drafts and sign-off.
+- [x] ELM email colour recommendation (9 Oct 2026, Victoria): tentative TEST C layout with blue footer; supporting accent requested closest to red/wine/burgundy. Recommend rich burgundy #8B1E3F, used sparingly alongside navy and gold. Colour discussion only; no template change, test send, contact send or publication authorised.
