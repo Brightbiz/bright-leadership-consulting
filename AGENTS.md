@@ -5,6 +5,7 @@ Webinar captions render in a separate strip below the video so they never obscur
 - Cookie consent has two independent categories (analytics → analytics_storage, advertising → ad_*) stored as a v2 record; older records are discarded so visitors are re-asked after wording changes. gtag.js is never in index.html: it is injected only after a category is granted, and any withdrawal reloads the page so no Google script remains (it cannot be unloaded and still sends cookieless pings).
 - GA4 page views come only from the config call and Enhanced Measurement history events; the app never sends manual page_view (it double-counted).
 - On-hold features live in /on-hold (not deployed, not routed) until approved.
+- Email design review drafts stay in `on-hold/email-design` and are never imported into public routes; this allows layout review without activating outreach or changing the website.
 - Campaign tags (utm_source/medium/campaign) are held in memory only (no storage), allow-listed client- and server-side, and malformed values are dropped rather than rejecting an enquiry.
 - Webinar viewing events use one-second watched slots (normal speed, no skips/replays counted) and are sent only with analytics consent and no identifiers.
 - Marketing opt-ins are stored in marketing_consents with server-held consent wording keyed by version; every marketing send must exclude any email with a withdrawn record.
