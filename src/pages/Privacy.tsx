@@ -66,6 +66,15 @@ const sections = [
     ],
   },
   {
+    heading: "Business contacts from third-party sources",
+    body: [
+      "We sometimes obtain the work contact details of senior professionals, such as HR, learning and people leaders, from Apollo.io, a business contact database. The details we obtain are your name, job title, employer, work email address, and where available your work location and public professional profile.",
+      "We use these details to send you a small number of individual business emails about our programmes, including Executive Leadership Mastery, which may be relevant to your role or organisation. Our lawful basis is legitimate interests: making relevant professional contact with people in suitable roles. We do not use these details for automated decisions, and we do not share them with other organisations for their own marketing.",
+      "You may object at any time by replying to any email or writing to info@brightleadershipconsulting.com. We will then stop contacting you and keep only a minimal record so that you are not contacted again.",
+      "If you do not respond or engage, we delete your details within 12 months of our last contact with you. Your other rights, including your right to complain to the Information Commissioner's Office, are set out elsewhere in this notice.",
+    ],
+  },
+  {
     heading: "Your rights",
     body: [
       "You may request access to the personal information we hold about you, ask for it to be corrected or deleted, object to processing, or request that it be transferred. Requests may be made to info@brightleadershipconsulting.com.",
