@@ -115,7 +115,8 @@ Deno.serve(async (req) => {
   }
   const suppressedSet = new Set((suppressed ?? []).map((s: { email: string }) => s.email.trim().toLowerCase()));
 
-  const results: Array<{ id: string; to: string; sent: boolean; error?: string }> = [];
+  const results: Array<{ id: string; to: string; sent: boolean; state?: string; error?: string }> = [];
+  const runId = crypto.randomUUID();
 
   for (const draft of drafts ?? []) {
     const to = (draft.outreach_recipients as { email: string | null } | null)?.email;
@@ -123,8 +124,25 @@ Deno.serve(async (req) => {
       results.push({ id: draft.id, to: "", sent: false, error: "No recipient email" });
       continue;
     }
+
+    // Atomic claim: only one execution can move a row from unsent -> claimed.
+    const { data: claimed, error: claimErr } = await supabase
+      .from("outreach_drafts")
+      .update({ send_state: "claimed", send_claim_id: runId, send_claimed_at: new Date().toISOString() })
+      .eq("id", draft.id)
+      .eq("status", "draft")
+      .eq("send_state", "unsent")
+      .select("id");
+    if (claimErr || !claimed || claimed.length !== 1) {
+      results.push({ id: draft.id, to, sent: false, error: claimErr ? "Claim error" : "Already claimed" });
+      continue;
+    }
+    const mark = (fields: Record<string, unknown>) =>
+      supabase.from("outreach_drafts").update(fields).eq("id", draft.id).eq("send_claim_id", runId);
+
     if (suppressedSet.has(to.trim().toLowerCase())) {
-      results.push({ id: draft.id, to, sent: false, error: "Suppressed" });
+      await mark({ send_state: "suppressed" });
+      results.push({ id: draft.id, to, sent: false, state: "suppressed", error: "Suppressed" });
       continue;
     }
 
@@ -148,6 +166,8 @@ Deno.serve(async (req) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${LOVABLE_API_KEY}`,
           "X-Connection-Api-Key": RESEND_API_KEY,
+          // Stable per outreach record: the provider drops repeats of this key.
+          "Idempotency-Key": `elm-outreach-${draft.id}`,
         },
         body: JSON.stringify({
           from: "Bright Leadership Consulting <info@brightleadershipconsulting.com>",
@@ -159,24 +179,36 @@ Deno.serve(async (req) => {
         }),
       });
 
+      const bodyText = await response.text();
       if (!response.ok) {
-        const errorBody = await response.text();
-        console.error(`Send failed for ${draft.id} [${response.status}]: ${errorBody}`);
-        results.push({ id: draft.id, to, sent: false, error: `${response.status}: ${errorBody.slice(0, 300)}` });
+        console.error(`Send failed for ${draft.id} [${response.status}]: ${bodyText}`);
+        // Definite validation rejections vs anything where acceptance is uncertain.
+        const definite = [400, 401, 403, 422].includes(response.status);
+        const state = definite ? "rejected" : "needs_reconciliation";
+        await mark({ send_state: state, reconciliation_note: `${response.status}: ${bodyText.slice(0, 300)}` });
+        results.push({ id: draft.id, to, sent: false, state, error: `${response.status}` });
         continue;
       }
 
-      await supabase
-        .from("outreach_drafts")
-        .update({ status: "sent", sent_at: new Date().toISOString() })
-        .eq("id", draft.id)
-        .eq("status", "draft");
+      let messageId: string | null = null;
+      try { messageId = JSON.parse(bodyText)?.id ?? null; } catch { /* ignore */ }
+      await mark({
+        status: "sent",
+        sent_at: new Date().toISOString(),
+        send_state: messageId ? "accepted" : "needs_reconciliation",
+        provider_message_id: messageId,
+        provider_accepted_at: new Date().toISOString(),
+        delivery_status: "accepted_not_confirmed",
+        reconciliation_note: messageId ? null : "Accepted without message ID",
+      });
 
-      results.push({ id: draft.id, to, sent: true });
+      results.push({ id: draft.id, to, sent: true, state: "accepted" });
       await sleep(1200);
     } catch (err) {
       console.error(`Send error for ${draft.id}:`, err);
-      results.push({ id: draft.id, to, sent: false, error: String(err).slice(0, 300) });
+      // Network/timeout: the provider may have accepted. Never auto-resend.
+      await mark({ send_state: "needs_reconciliation", reconciliation_note: String(err).slice(0, 300) });
+      results.push({ id: draft.id, to, sent: false, state: "needs_reconciliation", error: String(err).slice(0, 300) });
     }
   }
 
