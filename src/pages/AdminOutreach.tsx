@@ -22,6 +22,7 @@ import {
 import { Loader2, Plus, Trash2, Copy, Download, ArrowLeft, Star, AlertTriangle, Filter, CheckCircle2, MailCheck, Reply, Send, BarChart3, PenLine, ShieldAlert, BookOpen } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import OutreachSuppressionList from "@/components/admin/OutreachSuppressionList";
 
 type DraftStatus = "draft" | "sent" | "replied";
 type ReplySentiment = "positive" | "neutral" | "negative" | "no_thanks" | "meeting_booked";
@@ -1129,6 +1130,8 @@ const AdminOutreach = () => {
             </p>
           </div>
         </div>
+
+        <OutreachSuppressionList />
 
         <Card className="p-6 mb-6">
           <div className="flex items-center justify-between mb-4">

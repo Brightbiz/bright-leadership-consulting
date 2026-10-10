@@ -103,12 +103,28 @@ Deno.serve(async (req) => {
     });
   }
 
+  const { data: suppressed, error: suppErr } = await supabase
+    .from("outreach_suppressions")
+    .select("email");
+  if (suppErr) {
+    console.error("Failed to load suppression list:", suppErr);
+    return new Response(JSON.stringify({ error: "Could not load suppression list" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+  const suppressedSet = new Set((suppressed ?? []).map((s: { email: string }) => s.email.trim().toLowerCase()));
+
   const results: Array<{ id: string; to: string; sent: boolean; error?: string }> = [];
 
   for (const draft of drafts ?? []) {
     const to = (draft.outreach_recipients as { email: string | null } | null)?.email;
     if (!to) {
       results.push({ id: draft.id, to: "", sent: false, error: "No recipient email" });
+      continue;
+    }
+    if (suppressedSet.has(to.trim().toLowerCase())) {
+      results.push({ id: draft.id, to, sent: false, error: "Suppressed" });
       continue;
     }
 
