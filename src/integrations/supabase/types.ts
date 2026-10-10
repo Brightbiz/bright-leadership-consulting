@@ -1028,15 +1028,22 @@ export type Database = {
           company: string
           created_at: string
           crm_contact_id: string | null
+          delivery_status: string | null
           id: string
           is_follow_up: boolean
           parent_draft_id: string | null
+          provider_accepted_at: string | null
+          provider_message_id: string | null
           recipient_id: string | null
           recipient_name: string
           recipient_role: string
+          reconciliation_note: string | null
           replied_at: string | null
           reply_sentiment: string | null
           reply_text: string | null
+          send_claim_id: string | null
+          send_claimed_at: string | null
+          send_state: string
           sent_at: string | null
           status: Database["public"]["Enums"]["outreach_draft_status"]
           subject: string
@@ -1048,15 +1055,22 @@ export type Database = {
           company?: string
           created_at?: string
           crm_contact_id?: string | null
+          delivery_status?: string | null
           id?: string
           is_follow_up?: boolean
           parent_draft_id?: string | null
+          provider_accepted_at?: string | null
+          provider_message_id?: string | null
           recipient_id?: string | null
           recipient_name: string
           recipient_role: string
+          reconciliation_note?: string | null
           replied_at?: string | null
           reply_sentiment?: string | null
           reply_text?: string | null
+          send_claim_id?: string | null
+          send_claimed_at?: string | null
+          send_state?: string
           sent_at?: string | null
           status?: Database["public"]["Enums"]["outreach_draft_status"]
           subject: string
@@ -1068,15 +1082,22 @@ export type Database = {
           company?: string
           created_at?: string
           crm_contact_id?: string | null
+          delivery_status?: string | null
           id?: string
           is_follow_up?: boolean
           parent_draft_id?: string | null
+          provider_accepted_at?: string | null
+          provider_message_id?: string | null
           recipient_id?: string | null
           recipient_name?: string
           recipient_role?: string
+          reconciliation_note?: string | null
           replied_at?: string | null
           reply_sentiment?: string | null
           reply_text?: string | null
+          send_claim_id?: string | null
+          send_claimed_at?: string | null
+          send_state?: string
           sent_at?: string | null
           status?: Database["public"]["Enums"]["outreach_draft_status"]
           subject?: string

@@ -70,3 +70,12 @@
 - [x] Pre-send tidy-up and suppression verification (10 Oct 2026 ~16:55 London, Victoria: "let's implement the ones that can be implemented now"): company names corrected in both outreach_recipients and outreach_drafts — 'LendInvest (LSE: LINV)' → 'LendInvest', 'Loans 2 Go Limited' → 'Loans 2 Go'; all 32 drafts verified intact, status 'draft'. Suppression list verified end-to-end: a made-up test address (suppression-test@example.invalid) was inserted, confirmed stored, then removed (test entry, not a real opt-out — permanence rule not applicable). Matthew's long job title left as-is (reads correctly). 'Lucy Hg' left as-is (only first name appears in emails).
 - [x] Legitimate interests assessment APPROVED and signed by Victoria 10 Oct 2026 (v2, /mnt/documents/Legitimate_Interests_Assessment_Apollo_Outreach_APPROVED.md) — ready for the reviewer's evidence log. Her approval confirmed the three v2 checks: open/click tracking off for this batch, Companies House corporate-status check done for all 32 organisations, Apollo terms permit this use. Supersedes the v1 draft.
 - [ ] After send: report sent count to Victoria for the evidence log (first cold employer outreach, separate from LinkedIn posts).
+
+## ELM outreach duplicate protection (10 Oct 2026)
+- [x] Atomic per-draft claim (unsent→claimed, single winner) — tested: 2nd claim returned 0 rows
+- [x] Stable Idempotency-Key `elm-outreach-<draft id>` sent to provider (Resend honours ~24h) — not live-tested (would send)
+- [x] Uncertain outcome (network error, 5xx, 409, 429, missing ID) → needs_reconciliation, never auto-resent
+- [x] Provider message ID + accepted time saved; delivery_status = accepted_not_confirmed (separate from confirmed delivery)
+- [ ] After send: check Resend for bounces/failures; add hard bounces to suppression list
+- [ ] Confirm who monitors info@ for opt-out replies (Victoria to answer)
+- Evidence pack: signed LIA (Legitimate_Interests_Assessment_Apollo_Outreach_APPROVED.md) + Companies House corporate-status confirmation
