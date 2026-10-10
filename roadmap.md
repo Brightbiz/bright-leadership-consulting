@@ -79,3 +79,4 @@
 - [ ] After send: check Resend for bounces/failures; add hard bounces to suppression list
 - [ ] Confirm who monitors info@ for opt-out replies (Victoria to answer)
 - Evidence pack: signed LIA (Legitimate_Interests_Assessment_Apollo_Outreach_APPROVED.md) + Companies House corporate-status confirmation
+- [x] Opt-out monitoring confirmed (Victoria, 10 Oct 2026, 17:36 London): Irene checks info@brightleadershipconsulting.com at least once a day. Any opt-out reply is added to the Outreach tab suppression list the same day, always before any further send. Opt-outs are permanent unless the person asks to hear from Bright again (standing rule).
