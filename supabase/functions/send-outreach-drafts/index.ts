@@ -66,8 +66,9 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  const secret = Deno.env.get("OUTREACH_CRON_KEY");
-  if (!secret || req.headers.get("X-Outreach-Secret") !== secret) {
+  const secrets = [Deno.env.get("OUTREACH_CRON_KEY"), Deno.env.get("OUTREACH_CRON_KEY_2")].filter(Boolean);
+  const provided = req.headers.get("X-Outreach-Secret");
+  if (secrets.length === 0 || !provided || !secrets.includes(provided)) {
     return new Response(JSON.stringify({ error: "Unauthorised" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
