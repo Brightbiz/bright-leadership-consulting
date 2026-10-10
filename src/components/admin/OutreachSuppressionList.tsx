@@ -60,7 +60,7 @@ const OutreachSuppressionList = () => {
   };
 
   const remove = async (row: Suppression) => {
-    if (!window.confirm(`Remove ${row.email} from the suppression list? They could then be emailed again.`)) return;
+    if (!window.confirm(`Only remove ${row.email} if they have since asked to hear from Bright again. Opt-outs are permanent, even if the address appears in a future Apollo export. Remove?`)) return;
     const { error } = await (supabase as any).from("outreach_suppressions").delete().eq("id", row.id);
     if (error) toast({ title: "Could not remove address", variant: "destructive" });
     void load();
