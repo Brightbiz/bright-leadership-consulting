@@ -1158,6 +1158,30 @@ export type Database = {
         }
         Relationships: []
       }
+      outreach_suppressions: {
+        Row: {
+          added_by: string | null
+          created_at: string
+          email: string
+          id: string
+          reason: string | null
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          reason?: string | null
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           created_at: string

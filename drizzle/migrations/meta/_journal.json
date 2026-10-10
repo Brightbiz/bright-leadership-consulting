@@ -50,6 +50,13 @@
       "when": 1791219418300,
       "tag": "0006_utm_and_marketing_consents",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791640645476,
+      "tag": "0007_outreach_suppressions",
+      "breakpoints": true
     }
   ]
 }
