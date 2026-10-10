@@ -93,6 +93,7 @@ Deno.serve(async (req) => {
     .from("outreach_drafts")
     .select("id, subject, recipient_name, recipient_role, company, recipient_id, outreach_recipients(email)")
     .eq("status", "draft")
+    .eq("send_state", "unsent")
     .eq("is_follow_up", false);
 
   if (error) {
