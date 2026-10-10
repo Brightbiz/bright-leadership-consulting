@@ -66,5 +66,6 @@
 
 ## Outreach suppression rule (10 Oct 2026)
 - [ ] Opt-out replies are added to the admin Outreach suppression list straight away; removal only if the person later asks to hear from Bright again. Opt-outs are permanent across future Apollo exports.
-- [ ] Before Tue 13 Oct 10:30: spot-check 2–3 personalised emails; confirm the legitimate interests assessment is on file (blocked: Victoria to confirm).
+- [x] Spot-check (10 Oct 2026 ~15:25 London): 3 real personalised emails (Fiona/LendInvest, Matthew/First Rate Exchange Services, Mohsin/Loans 2 Go) sent to aguns70418@aol.com only, exact production subject; Resend accepted all 3. Data quirks flagged for approval: company 'LendInvest (LSE: LINV)', 'Loans 2 Go Limited', surname 'Lucy Hg', long role 'Human Resources & Facilities Management Director'.
+- [ ] Legitimate interests assessment drafted (/mnt/documents/Legitimate_Interests_Assessment_Apollo_Outreach_DRAFT.md) — awaiting Victoria's approval and signature before Tue 13 Oct 10:30.
 - [ ] After send: report sent count to Victoria for the evidence log (first cold employer outreach, separate from LinkedIn posts).
