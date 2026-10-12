@@ -87,3 +87,5 @@
 - Evidence log: first cold employer outreach = 32 accepted, 10 Oct. Promotion start remains 6 Oct.
 - Pending: propose isolated test mode + explicit batch approval for Victoria's approval before any future batch (do not build until approved).
 - Plain-text fallback flaw (10 Oct batch): "&" in job titles showed as "&amp;" in the plain-text version only (branded version correct). Affected 6: Matthew Starks, David Tasker, Debbie Lombard, Justine Friedmann, Lucy Hg, Marnie Wright. Fix (stop escaping the plain-text version) to be included in the future-batch proposal; no corrections sent.
+
+- 12 Oct 2026: Tuesday 13 Oct outreach timer CANCELLED on Victoria instruction. Saturday batch reconciled 32/32 delivered, 0 bounces. Incident record v1 awaiting sign-off. No outreach until test mode + batch approval built and checked (not to build until approved).
