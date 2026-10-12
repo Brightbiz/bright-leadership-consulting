@@ -80,3 +80,9 @@
 - [ ] Confirm who monitors info@ for opt-out replies (Victoria to answer)
 - Evidence pack: signed LIA (Legitimate_Interests_Assessment_Apollo_Outreach_APPROVED.md) + Companies House corporate-status confirmation
 - [x] Opt-out monitoring confirmed (Victoria, 10 Oct 2026, 17:36 London): Irene checks info@brightleadershipconsulting.com at least once a day. Any opt-out reply is added to the Outreach tab suppression list the same day, always before any further send. Opt-outs are permanent unless the person asks to hear from Bright again (standing rule).
+
+## ELM cold outreach batch — reconciliation (12 Oct 2026)
+- Early send (accidental, manual trigger): Sat 10 Oct 2026, 18:42:22–18:43:11 London. ALL 32 drafts accepted and delivered (provider status); 0 rejected/bounced/needs checking. Not 14 as first reported.
+- Tuesday 13 Oct 10:30 job (still scheduled): 0 eligible drafts, so it is expected to send nothing. Record any Tuesday sends separately (expected: none).
+- Evidence log: first cold employer outreach = 32 accepted, 10 Oct. Promotion start remains 6 Oct.
+- Pending: propose isolated test mode + explicit batch approval for Victoria's approval before any future batch (do not build until approved).
