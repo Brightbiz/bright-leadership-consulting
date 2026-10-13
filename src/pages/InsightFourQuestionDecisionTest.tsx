@@ -53,7 +53,7 @@ const InsightFourQuestionDecisionTest = () => {
               Why some decisions keep coming back, and four questions that help them stick.
             </p>
             <p className="mt-6 text-sm text-muted-foreground">
-              By Irene A. Agunbiade, Principal Consultant, Bright Leadership Consulting · [Publication date]
+              By Irene A. Agunbiade, Principal Consultant, Bright Leadership Consulting · 13 October 2026
             </p>
 
             <H2>When a decision keeps coming back</H2>
