@@ -8,7 +8,7 @@ const articles = [
     href: "/insights/four-question-decision-test",
     title: "The four-question decision test",
     standfirst: "Why some decisions keep coming back, and four questions that help them stick.",
-    byline: "Irene A. Agunbiade · [Publication date]",
+    byline: "Irene A. Agunbiade · 13 October 2026",
   },
 ];
 
