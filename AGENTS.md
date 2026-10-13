@@ -10,3 +10,4 @@ Webinar captions render in a separate strip below the video so they never obscur
 - Webinar viewing events use one-second watched slots (normal speed, no skips/replays counted) and are sent only with analytics consent and no identifiers.
 - Marketing opt-ins are stored in marketing_consents with server-held consent wording keyed by version; every marketing send must exclude any email with a withdrawn record.
 - Insights articles are standalone pages under /insights listed in generate-sitemap.mjs; their CTAs never add campaign tags (only carry the visitor's in-memory tags) and record origin via the consent-gated article_cta_click event.
+- Sitemap lastmod dates are hand-recorded per entry in generate-sitemap.mjs, never derived from Git/file times/build date, because the publish build has no history and re-stamped every page.
