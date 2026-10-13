@@ -73,7 +73,23 @@ const InsightFourQuestionDecisionTest = () => {
             <P>The four questions change the discussion:</P>
           </div>
 
-          <div className="mt-6 max-w-[880px] overflow-x-auto">
+          <dl className="mt-6 max-w-[680px] space-y-6 md:hidden">
+            {rows.map(([q, before, after]) => (
+              <div key={q} className="border-t border-foreground/40 pt-4">
+                <dt className="font-medium text-foreground">{q}</dt>
+                <dd className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-foreground">Before</span>
+                  {before}
+                </dd>
+                <dd className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-foreground">After</span>
+                  {after}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-6 hidden max-w-[880px] md:block">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-foreground/40">

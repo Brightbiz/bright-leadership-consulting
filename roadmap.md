@@ -89,3 +89,4 @@
 - Plain-text fallback flaw (10 Oct batch): "&" in job titles showed as "&amp;" in the plain-text version only (branded version correct). Affected 6: Matthew Starks, David Tasker, Debbie Lombard, Justine Friedmann, Lucy Hg, Marnie Wright. Fix (stop escaping the plain-text version) to be included in the future-batch proposal; no corrections sent.
 
 - 12 Oct 2026: Tuesday 13 Oct outreach timer CANCELLED on Victoria instruction. Saturday batch reconciled 32/32 delivered, 0 bounces. Incident record v1 awaiting sign-off. No outreach until test mode + batch approval built and checked (not to build until approved).
+- [ ] Insights article release: replace "[Publication date]" in src/pages/InsightFourQuestionDecisionTest.tsx and src/pages/Insights.tsx with the actual release date (Victoria, 13 Oct 2026). Publishing awaits Victoria's approval.
