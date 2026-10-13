@@ -36,6 +36,8 @@ const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity")
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
 const AiAudit = lazy(() => import("./pages/AiAudit"));
+const Insights = lazy(() => import("./pages/Insights"));
+const InsightFourQuestionDecisionTest = lazy(() => import("./pages/InsightFourQuestionDecisionTest"));
 
 // Executive Decision Leadership Intensive™ — staging only, not linked publicly.
 const EdlIntensive = lazy(() => import("./pages/EdlIntensive"));
@@ -103,6 +105,8 @@ const AnimatedRoutes = () => {
 
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
+          <Route path="/insights" element={<PageTransition><Insights /></PageTransition>} />
+          <Route path="/insights/four-question-decision-test" element={<PageTransition><InsightFourQuestionDecisionTest /></PageTransition>} />
           {/* Unpublished pending review — noindex, not linked from navigation. */}
           <Route path="/ai-audit" element={<PageTransition><AiAudit /></PageTransition>} />
           {/* Held private: administrator sign-in required. */}

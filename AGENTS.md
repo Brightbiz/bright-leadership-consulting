@@ -9,3 +9,4 @@ Webinar captions render in a separate strip below the video so they never obscur
 - Campaign tags (utm_source/medium/campaign) are held in memory only (no storage), allow-listed client- and server-side, and malformed values are dropped rather than rejecting an enquiry.
 - Webinar viewing events use one-second watched slots (normal speed, no skips/replays counted) and are sent only with analytics consent and no identifiers.
 - Marketing opt-ins are stored in marketing_consents with server-held consent wording keyed by version; every marketing send must exclude any email with a withdrawn record.
+- Insights articles are standalone pages under /insights listed in generate-sitemap.mjs; their CTAs never add campaign tags (only carry the visitor's in-memory tags) and record origin via the consent-gated article_cta_click event.
