@@ -1,64 +1,42 @@
-import { writeFileSync, statSync } from "fs";
+import { writeFileSync } from "fs";
 import { resolve } from "path";
-import { execSync } from "child_process";
 
 const BASE_URL = "https://brightleadershipconsulting.com";
 
 /**
- * Derive a page-specific <lastmod> value from the source file's last Git
- * commit date. Falls back to filesystem mtime when Git is unavailable or the
- * file is untracked. This keeps the sitemap in sync with actual content
- * changes rather than build time.
+ * Each entry's lastmod is recorded by hand: update it only when that page's
+ * content materially changes. Never derive it from Git, file times or the
+ * build date — the publish build has no history, so those re-stamp every page.
  */
-function getLastModified(filePath) {
-  try {
-    const gitDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-      encoding: "utf-8",
-      stdio: ["pipe", "pipe", "ignore"],
-      timeout: 5000,
-    }).trim();
-    if (gitDate) return gitDate.slice(0, 10); // YYYY-MM-DD
-  } catch {
-    // Git unavailable or file not tracked — fall through to mtime.
-  }
-
-  try {
-    const stats = statSync(filePath);
-    return stats.mtime.toISOString().slice(0, 10);
-  } catch {
-    return undefined;
-  }
-}
-
 const entries = [
-  { path: "/", source: "src/pages/Index.tsx", changefreq: "monthly", priority: "1.0" },
-  { path: "/executive-alignment-index", source: "src/pages/ExecutiveAlignmentIndex.tsx", changefreq: "monthly", priority: "0.9" },
-  { path: "/selected-engagements", source: "src/pages/SelectedEngagements.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/executive-alignment-brief", source: "src/pages/ExecutiveAlignmentBrief.tsx", changefreq: "monthly", priority: "0.7" },
-  { path: "/contact", source: "src/pages/Contact.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/executive-leadership-mastery", source: "src/pages/ExecutiveLeadershipMastery.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/strategic-leadership-ai", source: "src/pages/StrategicLeadershipAI.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/future-of-work", source: "src/pages/FutureOfWork.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/strategic-productivity-peak-performance", source: "src/pages/StrategicProductivity.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/strategic-ai-leadership-for-organisations", source: "src/pages/StrategicAiLeadershipOrganisations.tsx", changefreq: "monthly", priority: "0.9" },
+  { path: "/", lastmod: "2026-08-04", changefreq: "monthly", priority: "1.0" },
+  { path: "/executive-alignment-index", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.9" },
+  { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
+  { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+  { path: "/contact", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+  { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-leadership-ai", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+  { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-productivity-peak-performance", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-ai-leadership-for-organisations", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.9" },
 
-  { path: "/courses", source: "src/pages/Courses.tsx", changefreq: "monthly", priority: "0.7" },
-  { path: "/augmented-leadership", source: "src/pages/AugmentedLeadership.tsx", changefreq: "monthly", priority: "0.7" },
-  { path: "/advisory-process", source: "src/pages/AdvisoryProcess.tsx", changefreq: "monthly", priority: "0.8" },
-  { path: "/principal", source: "src/pages/Principal.tsx", changefreq: "yearly", priority: "0.6" },
-  { path: "/insights", source: "src/pages/Insights.tsx", changefreq: "monthly", priority: "0.6" },
-  { path: "/insights/four-question-decision-test", source: "src/pages/InsightFourQuestionDecisionTest.tsx", changefreq: "yearly", priority: "0.6" },
-  { path: "/privacy", source: "src/pages/Privacy.tsx", changefreq: "yearly", priority: "0.3" },
-  { path: "/terms", source: "src/pages/Terms.tsx", changefreq: "yearly", priority: "0.3" },
-  { path: "/brochures/executive-leadership-mastery-brochure.html", source: "public/brochures/executive-leadership-mastery-brochure.html", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/future-of-work-brochure.html", source: "public/brochures/future-of-work-brochure.html", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/peak-performance-brochure.html", source: "public/brochures/peak-performance-brochure.html", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/executive-alignment-index-brochure.html", source: "public/brochures/executive-alignment-index-brochure.html", changefreq: "monthly", priority: "0.6" },
+  { path: "/courses", lastmod: "2026-08-20", changefreq: "monthly", priority: "0.7" },
+  { path: "/augmented-leadership", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+  { path: "/advisory-process", lastmod: "2026-08-08", changefreq: "monthly", priority: "0.8" },
+  { path: "/principal", lastmod: "2026-10-05", changefreq: "yearly", priority: "0.6" },
+  { path: "/insights", lastmod: "2026-10-13", changefreq: "monthly", priority: "0.6" },
+  { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
+  { path: "/privacy", lastmod: "2026-10-09", changefreq: "yearly", priority: "0.3" },
+  { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
+  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/executive-alignment-index-brochure.html", lastmod: "2026-08-07", changefreq: "monthly", priority: "0.6" },
 ];
 
 function generateSitemap(entries) {
   const urls = entries.map((e) => {
-    const lastmod = getLastModified(e.source);
+    const lastmod = e.lastmod;
     return [
       `  <url>`,
       `    <loc>${BASE_URL}${e.path}</loc>`,
