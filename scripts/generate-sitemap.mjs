@@ -46,6 +46,8 @@ const entries = [
   { path: "/augmented-leadership", source: "src/pages/AugmentedLeadership.tsx", changefreq: "monthly", priority: "0.7" },
   { path: "/advisory-process", source: "src/pages/AdvisoryProcess.tsx", changefreq: "monthly", priority: "0.8" },
   { path: "/principal", source: "src/pages/Principal.tsx", changefreq: "yearly", priority: "0.6" },
+  { path: "/insights", source: "src/pages/Insights.tsx", changefreq: "monthly", priority: "0.6" },
+  { path: "/insights/four-question-decision-test", source: "src/pages/InsightFourQuestionDecisionTest.tsx", changefreq: "yearly", priority: "0.6" },
   { path: "/privacy", source: "src/pages/Privacy.tsx", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", source: "src/pages/Terms.tsx", changefreq: "yearly", priority: "0.3" },
   { path: "/brochures/executive-leadership-mastery-brochure.html", source: "public/brochures/executive-leadership-mastery-brochure.html", changefreq: "monthly", priority: "0.6" },
