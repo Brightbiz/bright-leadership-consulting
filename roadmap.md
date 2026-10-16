@@ -92,3 +92,5 @@
 - [x] Insights article released 13 Oct 2026 with publication date filled in.
 
 - 16 Oct 2026 — new Apollo lists comparison (no imports, nothing sent): 163 cleaned contacts checked against the suppression list and the first 32 recipients. Suppression list empty (0 matches). 3 contacts overlap the first batch already emailed 10 Oct (Emily Wilson/Vitesse, David Tasker/Creditinfo Group, Jo Smallwood/Soldo) — exclude from any future batch. 53 flagged addresses (35 catch-all review, 18 email-status hold) also excluded from any future batch pending review. Provider-stored copy of a 10 Oct email (HTML + plain text, recipient redacted) saved to /mnt/documents/Apollo_Email_10Oct2026_Provider_Stored_Copy_REDACTED.md.
+
+- [ ] Outreach (16 Oct): review pack, Companies House check (108 orgs: 40 matched/20 probable/45 unresolved/3 dissolved), LIA v3 drafted — awaiting Irene approval of LIA, footer identity wording, shortlist. Hold remains; no records/drafts/approvals/schedules.
