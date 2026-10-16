@@ -1022,6 +1022,48 @@ export type Database = {
         }
         Relationships: []
       }
+      outreach_batch_approvals: {
+        Row: {
+          approved_by: string | null
+          approved_by_email: string | null
+          content_hash: string
+          created_at: string
+          expires_at: string
+          id: string
+          max_count: number
+          note: string | null
+          recipient_draft_ids: string[]
+          sender: string
+          used_at: string | null
+        }
+        Insert: {
+          approved_by?: string | null
+          approved_by_email?: string | null
+          content_hash: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          max_count: number
+          note?: string | null
+          recipient_draft_ids: string[]
+          sender: string
+          used_at?: string | null
+        }
+        Update: {
+          approved_by?: string | null
+          approved_by_email?: string | null
+          content_hash?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          max_count?: number
+          note?: string | null
+          recipient_draft_ids?: string[]
+          sender?: string
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       outreach_drafts: {
         Row: {
           body: string
