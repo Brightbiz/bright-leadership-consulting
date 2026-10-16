@@ -64,6 +64,13 @@
       "when": 1791649961993,
       "tag": "0008_outreach_send_claims",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792145958494,
+      "tag": "0009_create_outreach_batch_approvals",
+      "breakpoints": true
     }
   ]
 }
