@@ -104,6 +104,8 @@ const AnimatedRoutes = () => {
           <Route path="/future-of-work" element={<PageTransition><FutureOfWork /></PageTransition>} />
           <Route path="/strategic-productivity-peak-performance" element={<PageTransition><StrategicProductivity /></PageTransition>} />
           <Route path="/strategic-ai-leadership-for-organisations" element={<PageTransition><StrategicAiLeadershipOrganisations /></PageTransition>} />
+          {/* Preview only — not linked from navigation, not in sitemap, noindex. */}
+          <Route path="/leading-people" element={<PageTransition><LeadingPeople /></PageTransition>} />
 
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
