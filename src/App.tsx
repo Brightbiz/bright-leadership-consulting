@@ -32,8 +32,15 @@ const StrategicAiLeadershipOrganisations = lazy(
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const FutureOfWork = lazy(() => import("./pages/FutureOfWork"));
 const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity"));
-// Leading People — preview only: noindex, no public navigation, not in sitemap.
-const LeadingPeople = lazy(() => import("./pages/LeadingPeople"));
+// Leading People — launch switch. Off in production: the page exists only in
+// the dev-server preview (import.meta.env.DEV is true there, false in the
+// published build). While off, /leading-people renders the normal not-found
+// page and the page code is excluded from the production bundle entirely.
+// To launch: set LEADING_PEOPLE_LAUNCHED to true.
+const LEADING_PEOPLE_LAUNCHED = import.meta.env.DEV;
+const LeadingPeople = LEADING_PEOPLE_LAUNCHED
+  ? lazy(() => import("./pages/LeadingPeople"))
+  : null;
 
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
