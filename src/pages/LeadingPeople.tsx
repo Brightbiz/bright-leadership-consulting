@@ -452,8 +452,8 @@ const LeadingPeople = () => {
                 </p>
                 <p className="text-xs leading-relaxed text-muted-foreground">
                   Irene A. Agunbiade, operating under the business name Bright
-                  Leadership Consulting · 82 James Carter Road, Mildenhall,
-                  England IP28 7DE.
+                  Leadership Consulting · Correspondence address: 82 James
+                  Carter Road, Mildenhall, England IP28 7DE.
                 </p>
               </motion.div>
             </div>
