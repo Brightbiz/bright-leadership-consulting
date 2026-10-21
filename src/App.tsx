@@ -32,6 +32,8 @@ const StrategicAiLeadershipOrganisations = lazy(
 const AugmentedLeadership = lazy(() => import("./pages/AugmentedLeadership"));
 const FutureOfWork = lazy(() => import("./pages/FutureOfWork"));
 const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity"));
+// Leading People — preview only: noindex, no public navigation, not in sitemap.
+const LeadingPeople = lazy(() => import("./pages/LeadingPeople"));
 
 const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
@@ -102,6 +104,8 @@ const AnimatedRoutes = () => {
           <Route path="/future-of-work" element={<PageTransition><FutureOfWork /></PageTransition>} />
           <Route path="/strategic-productivity-peak-performance" element={<PageTransition><StrategicProductivity /></PageTransition>} />
           <Route path="/strategic-ai-leadership-for-organisations" element={<PageTransition><StrategicAiLeadershipOrganisations /></PageTransition>} />
+          {/* Preview only — not linked from navigation, not in sitemap, noindex. */}
+          <Route path="/leading-people" element={<PageTransition><LeadingPeople /></PageTransition>} />
 
           <Route path="/advisory-process" element={<PageTransition><AdvisoryProcess /></PageTransition>} />
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
