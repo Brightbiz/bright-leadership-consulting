@@ -86,6 +86,22 @@ export interface ApprovalRow {
   max_count: number;
   expires_at: string;
   used_at: string | null;
+  // draft id -> draftFingerprint() at approval time
+  recipient_fingerprints: Record<string, string> | null;
+}
+
+// Per-recipient fingerprint: subject, address and every merge field. Must
+// match public.outreach_draft_fingerprint() in the database exactly.
+export async function draftFingerprint(d: DraftRow): Promise<string> {
+  const canonical = [
+    d.subject ?? "",
+    (d.email ?? "").replace(/^[ \t\r\n]+|[ \t\r\n]+$/g, "").toLowerCase(),
+    d.recipient_name ?? "",
+    d.recipient_role ?? "",
+    d.company ?? "",
+  ].join("\u001f");
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonical));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 export interface SendResult {
@@ -179,6 +195,20 @@ export async function runBatchSend(deps: SendDeps, approvalId: string | null): P
   if (drafts.length === 0) return { mode: "batch", ok: false, error: "No approved drafts eligible" };
   if (drafts.length > approval.max_count) {
     return { mode: "batch", ok: false, error: `Eligible ${drafts.length} exceeds approved maximum ${approval.max_count}` };
+  }
+
+  // Subject, address and merge fields must be exactly as approved for every
+  // draft; any change invalidates the whole batch before any send.
+  const fps = approval.recipient_fingerprints;
+  if (!fps || typeof fps !== "object") {
+    return { mode: "batch", ok: false, error: "Approval has no recipient fingerprints" };
+  }
+  const changed: string[] = [];
+  for (const d of drafts) {
+    if (fps[d.id] !== (await draftFingerprint(d))) changed.push(d.id);
+  }
+  if (changed.length > 0) {
+    return { mode: "batch", ok: false, error: `Recipient details changed since approval: ${changed.join(", ")}` };
   }
 
   // Consume the approval atomically before sending. If two calls race, only

@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
     async getApproval(id: string): Promise<ApprovalRow | null> {
       const { data, error } = await supabase
         .from("outreach_batch_approvals")
-        .select("id, recipient_draft_ids, content_hash, sender, max_count, expires_at, used_at")
+        .select("id, recipient_draft_ids, content_hash, sender, max_count, expires_at, used_at, recipient_fingerprints")
         .eq("id", id)
         .maybeSingle();
       if (error) throw new Error("Could not load approval");
