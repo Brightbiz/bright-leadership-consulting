@@ -10,6 +10,7 @@ import {
   runBatchSend,
   runTestSend,
   contentHash,
+  draftFingerprint,
   TEST_ADDRESS,
   SENDER,
   type SendDeps,
@@ -64,13 +65,16 @@ function makeDeps(overrides: {
 const draft = (id: string, email: string | null, name = "Jo Smith", role = "HR & People Director", company = "Acme"): DraftRow =>
   ({ id, subject: "Has their leadership kept pace with their role?", recipient_name: name, recipient_role: role, company, email });
 
-async function approvalFor(draftIds: string[], overrides: Partial<ApprovalRow> = {}): Promise<ApprovalRow> {
+async function approvalFor(approved: DraftRow[], overrides: Partial<ApprovalRow> = {}): Promise<ApprovalRow> {
+  const recipient_fingerprints: Record<string, string> = {};
+  for (const d of approved) recipient_fingerprints[d.id] = await draftFingerprint(d);
   return {
     id: "appr-1",
-    recipient_draft_ids: draftIds,
+    recipient_draft_ids: approved.map((d) => d.id),
+    recipient_fingerprints,
     content_hash: await contentHash(),
     sender: SENDER,
-    max_count: draftIds.length,
+    max_count: approved.length,
     expires_at: "2026-10-17T10:00:00Z",
     used_at: null,
     ...overrides,
@@ -85,16 +89,18 @@ Deno.test("batch without an approval header is refused and sends nothing", async
 });
 
 Deno.test("expired approval is refused and sends nothing", async () => {
-  const appr = await approvalFor(["d1"], { expires_at: "2026-10-15T10:00:00Z" });
-  const { deps, sent } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)), { expires_at: "2026-10-15T10:00:00Z" });
+  const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
   const res = await runBatchSend(deps, "appr-1");
   assertEquals(res.error, "Approval expired");
   assertEquals(sent.length, 0);
 });
 
 Deno.test("reused approval is refused and sends nothing", async () => {
-  const appr = await approvalFor(["d1"]);
-  const { deps, sent, isApprovalUsed } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
+  const { deps, sent, isApprovalUsed } = makeDeps({ drafts: ds, approval: appr });
   const first = await runBatchSend(deps, "appr-1");
   assertEquals(first.ok, true);
   assertEquals(sent.length, 1);
@@ -105,8 +111,9 @@ Deno.test("reused approval is refused and sends nothing", async () => {
 });
 
 Deno.test("concurrent batch calls: only one wins the approval", async () => {
-  const appr = await approvalFor(["d1"]);
-  const { deps, sent } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
+  const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
   const [a, b] = await Promise.all([runBatchSend(deps, "appr-1"), runBatchSend(deps, "appr-1")]);
   const winners = [a, b].filter((r) => r.ok);
   const losers = [a, b].filter((r) => !r.ok);
@@ -117,8 +124,9 @@ Deno.test("concurrent batch calls: only one wins the approval", async () => {
 });
 
 Deno.test("changed content (hash mismatch) invalidates the approval", async () => {
-  const appr = await approvalFor(["d1"], { content_hash: "stale-hash" });
-  const { deps, sent, isApprovalUsed } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)), { content_hash: "stale-hash" });
+  const { deps, sent, isApprovalUsed } = makeDeps({ drafts: ds, approval: appr });
   const res = await runBatchSend(deps, "appr-1");
   assertEquals(res.error, "Content changed since approval");
   assertEquals(sent.length, 0);
@@ -126,17 +134,19 @@ Deno.test("changed content (hash mismatch) invalidates the approval", async () =
 });
 
 Deno.test("sender mismatch invalidates the approval", async () => {
-  const appr = await approvalFor(["d1"], { sender: "Someone Else <x@y.co>" });
-  const { deps, sent } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)), { sender: "Someone Else <x@y.co>" });
+  const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
   const res = await runBatchSend(deps, "appr-1");
   assertEquals(res.error, "Sender mismatch");
   assertEquals(sent.length, 0);
 });
 
 Deno.test("recipients outside the approved list are never sent", async () => {
-  const appr = await approvalFor(["d1"], { max_count: 2 });
+  const ds = [draft("d1", "approved@b.co"), draft("d2", "not-approved@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)), { max_count: 2 });
   const { deps, sent, draftStates } = makeDeps({
-    drafts: [draft("d1", "approved@b.co"), draft("d2", "not-approved@b.co")],
+    drafts: ds,
     approval: appr,
   });
   const res = await runBatchSend(deps, "appr-1");
@@ -147,9 +157,10 @@ Deno.test("recipients outside the approved list are never sent", async () => {
 });
 
 Deno.test("eligible count above the approved maximum aborts before any send", async () => {
-  const appr = await approvalFor(["d1", "d2"], { max_count: 1 });
+  const ds = [draft("d1", "a@b.co"), draft("d2", "c@d.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1", "d2"].includes(d.id)), { max_count: 1 });
   const { deps, sent, isApprovalUsed } = makeDeps({
-    drafts: [draft("d1", "a@b.co"), draft("d2", "c@d.co")],
+    drafts: ds,
     approval: appr,
   });
   const res = await runBatchSend(deps, "appr-1");
@@ -159,9 +170,10 @@ Deno.test("eligible count above the approved maximum aborts before any send", as
 });
 
 Deno.test("suppressed contacts are skipped and marked suppressed, not emailed", async () => {
-  const appr = await approvalFor(["d1", "d2"]);
+  const ds = [draft("d1", "optout@b.co"), draft("d2", "fine@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1", "d2"].includes(d.id)));
   const { deps, sent, draftStates } = makeDeps({
-    drafts: [draft("d1", "optout@b.co"), draft("d2", "fine@b.co")],
+    drafts: ds,
     suppressed: ["OptOut@b.co"],
     approval: appr,
   });
@@ -173,10 +185,11 @@ Deno.test("suppressed contacts are skipped and marked suppressed, not emailed", 
 });
 
 Deno.test("provider timeout flags needs_reconciliation and never resends", async () => {
-  const appr = await approvalFor(["d1"]);
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
   let calls = 0;
   const { deps, sent, draftStates } = makeDeps({
-    drafts: [draft("d1", "a@b.co")],
+    drafts: ds,
     approval: appr,
     sendBehaviour: () => { calls++; return { ok: false, error: "fetch failed: timeout" }; },
   });
@@ -190,9 +203,10 @@ Deno.test("provider timeout flags needs_reconciliation and never resends", async
 });
 
 Deno.test("definite provider rejection (422) is marked rejected", async () => {
-  const appr = await approvalFor(["d1"]);
+  const ds = [draft("d1", "bad@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
   const { deps, draftStates } = makeDeps({
-    drafts: [draft("d1", "bad@b.co")],
+    drafts: ds,
     approval: appr,
     sendBehaviour: () => ({ ok: false, status: 422, error: "invalid to" }),
   });
@@ -217,9 +231,10 @@ Deno.test("test mode sends only to the designated test address and touches no st
 });
 
 Deno.test("plain text keeps a literal & in job titles (no &amp; defect)", async () => {
-  const appr = await approvalFor(["d1"]);
+  const ds = [draft("d1", "a@b.co", "Jo Smith", "Human Resources & Facilities Management Director", "Acme")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
   const { deps, sent } = makeDeps({
-    drafts: [draft("d1", "a@b.co", "Jo Smith", "Human Resources & Facilities Management Director", "Acme")],
+    drafts: ds,
     approval: appr,
   });
   await runBatchSend(deps, "appr-1");
@@ -229,9 +244,41 @@ Deno.test("plain text keeps a literal & in job titles (no &amp; defect)", async 
 });
 
 Deno.test("footer carries Irene A. Agunbiade in both versions", async () => {
-  const appr = await approvalFor(["d1"]);
-  const { deps, sent } = makeDeps({ drafts: [draft("d1", "a@b.co")], approval: appr });
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
+  const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
   await runBatchSend(deps, "appr-1");
   assert(sent[0].html.includes("Irene A. Agunbiade &middot; Principal Consultant"));
   assert(sent[0].text.includes("Irene A. Agunbiade, Principal Consultant"));
+});
+
+// Any change to subject, address or merge fields after approval cancels it.
+for (const [field, value] of [
+  ["subject", "A different subject"],
+  ["email", "someone-else@b.co"],
+  ["recipient_name", "Pat Jones"],
+  ["recipient_role", "Chief Executive"],
+  ["company", "Other Ltd"],
+] as const) {
+  Deno.test(`changed ${field} after approval refuses the whole batch before any send`, async () => {
+    const approved = [draft("d1", "a@b.co"), draft("d2", "c@d.co")];
+    const appr = await approvalFor(approved);
+    const edited = [approved[0], { ...approved[1], [field]: value }];
+    const { deps, sent, isApprovalUsed, draftStates } = makeDeps({ drafts: edited, approval: appr });
+    const res = await runBatchSend(deps, "appr-1");
+    assertEquals(res.ok, false);
+    assertEquals(res.error, "Recipient details changed since approval: d2");
+    assertEquals(sent.length, 0);
+    assertEquals(draftStates.size, 0);
+    assertEquals(isApprovalUsed(), false);
+  });
+}
+
+Deno.test("approval without recipient fingerprints is refused", async () => {
+  const ds = [draft("d1", "a@b.co")];
+  const appr = await approvalFor(ds, { recipient_fingerprints: null });
+  const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
+  const res = await runBatchSend(deps, "appr-1");
+  assertEquals(res.error, "Approval has no recipient fingerprints");
+  assertEquals(sent.length, 0);
 });
