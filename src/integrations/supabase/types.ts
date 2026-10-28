@@ -1033,6 +1033,7 @@ export type Database = {
           max_count: number
           note: string | null
           recipient_draft_ids: string[]
+          recipient_fingerprints: Json | null
           sender: string
           used_at: string | null
         }
@@ -1046,6 +1047,7 @@ export type Database = {
           max_count: number
           note?: string | null
           recipient_draft_ids: string[]
+          recipient_fingerprints?: Json | null
           sender: string
           used_at?: string | null
         }
@@ -1059,6 +1061,7 @@ export type Database = {
           max_count?: number
           note?: string | null
           recipient_draft_ids?: string[]
+          recipient_fingerprints?: Json | null
           sender?: string
           used_at?: string | null
         }
@@ -1366,6 +1369,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      outreach_draft_fingerprint: {
+        Args: { _draft_id: string }
+        Returns: string
       }
       purge_expired_ai_audit_data: { Args: never; Returns: Json }
       record_ai_audit_submission: {
