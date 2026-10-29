@@ -33,6 +33,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CsvImportDialog } from "@/components/CsvImportDialog";
+import { serialiseCsv } from "@/lib/csvExport";
 
 type CrmStatus = "new" | "contacted" | "qualified" | "converted" | "lost";
 
@@ -336,7 +337,6 @@ const AdminCRM = () => {
 
   // CSV Export
   const exportCsv = () => {
-    const escape = (v: string) => `"${v.replace(/"/g, '""')}"`;
     const headers = ["Name", "Email", "Phone", "Company", "Job Title", "Source", "Status", "Tags", "Notes", "Deal Stage", "Estimated Value", "Next Follow-Up", "Last Contacted", "Created"];
     const rows = filteredContacts.map((c) => [
       c.name || "", c.email, c.phone || "", c.company || "", c.job_title || "",
@@ -346,7 +346,7 @@ const AdminCRM = () => {
       c.last_contacted_at ? format(new Date(c.last_contacted_at), "yyyy-MM-dd") : "",
       format(new Date(c.created_at), "yyyy-MM-dd HH:mm"),
     ]);
-    const csv = [headers.map(escape).join(","), ...rows.map((r) => r.map(escape).join(","))].join("\n");
+    const csv = serialiseCsv(headers, rows);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

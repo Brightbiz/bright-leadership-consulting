@@ -1,4 +1,7 @@
 # Roadmap
+- [ ] CSV export-only preview fix: protect both writers and verify formula prefixes, whitespace/control characters, quotes and ordinary text; no stored-data changes or publication.
+- [ ] Read-only deployed chatbot quota investigation; no endpoint requests, records, settings, function deployments or migrations. Active limit/failure behaviour requires evidence before changes.
+- [ ] Re-check CPDSO validity against original documentation, not source constants or prior notes.
 - [x] Academy preview fixes: discovery pages/navigation, scoped Courses/Contact wording, local mobile comparison constraints, indexing/sitemap and desktop/mobile/keyboard verification completed. Publication remains on hold pending separate approval.
 - [x] Published approved CPD/badge changes with webinar enquiry labels/source tracking; verified both webinar routes, admin records, delivered alerts and ordinary-enquiry attribution live; test records removed
 - [x] Webinar playback verified on iPad, Android phone and laptop; caption strip published 5 Oct 2026 and verified live
