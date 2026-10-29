@@ -27,6 +27,7 @@ const Academy = () => (
             <p className="body-brief mb-6">For new and developing managers with direct reports. Four two-hour online workshops over six weeks, for an employer cohort of 8–12 managers.</p>
             <p className="body-brief mb-6">£4,800 total per employer cohort; no VAT added.</p>
             <p className="body-brief mb-8">Leading People can be commissioned without an Executive Alignment Index™ diagnostic.</p>
+            <p className="body-brief mb-8">Practical professional development; no qualification, external accreditation or CPD-hours claim is made for Leading People.</p>
             <Link to="/leading-people" className="btn-brief">Explore Leading People</Link>
           </div>
         </div>
