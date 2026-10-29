@@ -49,7 +49,7 @@ const ProgrammeComparisonTable = () => {
         role="region"
         aria-label="Programme comparison — scroll horizontally to see all four programmes"
         tabIndex={0}
-        className="min-w-0 max-w-full overflow-x-auto rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+        className="relative min-w-0 max-w-full overflow-x-auto rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         <table className="w-full min-w-[720px] border-collapse text-left">
           <caption className="sr-only">
