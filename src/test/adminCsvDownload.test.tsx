@@ -11,7 +11,9 @@ vi.mock("@/hooks/useAdminAuth", () => ({ useAdminAuth: () => ({
   user: fixtures.user, isAdmin: true, isLoading: false, signOut: vi.fn(),
 }) }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: {
-  from: (table: string) => ({ select: () => ({ order: () => ({
+  from: (table: string) => ({ select: () => ({
+    not: async () => ({ data: [], error: null }),
+    order: () => ({
     not: async () => ({ data: [], error: null }),
     then: (resolve: (result: unknown) => unknown) => Promise.resolve({ data: fixtures.records[table] ?? [], error: null }).then(resolve),
   }) }) }),
@@ -43,8 +45,8 @@ describe("admin export downloads with synthetic records only", () => {
       static revokeObjectURL = vi.fn();
     });
     vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
-    render(<MemoryRouter>{page === "CRM" ? <AdminCRM /> : <AdminSubmissions />}</MemoryRouter>);
-    const button = await screen.findByRole("button", { name: page === "CRM" ? "Export" : "Export CSV", exact: true });
+    render(<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>{page === "CRM" ? <AdminCRM /> : <AdminSubmissions />}</MemoryRouter>);
+    const button = await screen.findByRole("button", { name: page === "CRM" ? /^Export$/ : /^Export CSV$/ });
     await waitFor(() => expect(button).toBeEnabled());
     fireEvent.click(button);
     expect(downloads).toHaveLength(1);
