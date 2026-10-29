@@ -134,9 +134,7 @@ const ProgrammeSelector = () => {
 
       <motion.li className="py-8" {...fade}>
         <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-          Where development is being commissioned for a leadership team rather
-          than an individual, the appropriate programme is determined by
-          structural measurement rather than preference.
+          For executive advisory engagements, structural measurement informs the development proposed for the leadership team. Leading People employer cohorts can be commissioned directly without an Executive Alignment Index™ diagnostic.
         </p>
         <Link to="/executive-alignment-index" className="link-quiet text-sm">
           Explore the Executive Alignment Index™
