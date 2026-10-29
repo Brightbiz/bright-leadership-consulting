@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { shouldNoindex } from "@/lib/searchIndexing";
 
 interface SEOHeadProps {
   title?: string;
@@ -34,7 +35,7 @@ const SEOHead = React.forwardRef<HTMLElement, SEOHeadProps>(({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {shouldNoindex(typeof window === "undefined" ? "" : window.location.hostname, noindex) && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={canonicalUrl} />
 
       <meta property="og:title" content={fullTitle} />

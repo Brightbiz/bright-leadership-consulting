@@ -35,8 +35,8 @@ const ProgrammePortfolioSection = () => {
             transition={{ ...fade.transition, delay: 0.15 }}
           >
             Four accredited programmes. Individual executives enrol directly.
-            Organisations commissioning development for a leadership team begin
-            with structural measurement.
+            Executive advisory engagements for leadership teams begin
+            with structural measurement. This does not apply to Leading People.
           </motion.p>
 
           <motion.p
@@ -85,7 +85,7 @@ const ProgrammePortfolioSection = () => {
             transition={{ ...fade.transition, delay: 0.2 }}
           >
             <Link to="/courses" className="btn-brief text-sm py-2.5 px-6">
-              Explore All Programmes
+              Explore Executive Programmes
             </Link>
             <Link to="/contact" className="link-quiet text-sm">
               Discuss Organisational Development

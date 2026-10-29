@@ -68,14 +68,26 @@ const Courses = () => {
                 Four CPD-accredited programmes for senior leaders who require
                 more than content. Individual places are arranged through
                 individual enrolment on request.
-                Organisations commissioning development for a leadership team
-                begin with structural measurement.
+                Executive advisory engagements for leadership teams
+                begin with structural measurement. This is not a prerequisite for Leading People.
               </motion.p>
             </div>
           </div>
         </section>
 
         <div className="section-divider" />
+
+        <section className="section-brief section-pearl">
+          <div className="container-brief">
+            <div className="max-w-[680px]">
+              <p className="kicker mb-6">Separate from the accredited executive catalogue</p>
+              <h2 className="heading-section mb-6">Leading People</h2>
+              <p className="body-brief mb-6">For new and developing managers with direct reports. An employer cohort of 8–12 managers, with four two-hour online workshops over six weeks. £4,800 total per cohort; no VAT added.</p>
+              <p className="body-brief mb-8">Leading People can be commissioned without an Executive Alignment Index™ diagnostic.</p>
+              <Link to="/leading-people" className="btn-brief">Explore Leading People</Link>
+            </div>
+          </div>
+        </section>
 
         {/* Section 2 — Two Pathways */}
         <section className="section-brief bg-background">
@@ -120,7 +132,7 @@ const Courses = () => {
                   organisational sponsorship requirement.
                 </p>
                 <a href="#programme-catalogue" className="link-quiet text-sm">
-                  View All Programmes
+                  View Executive Programmes
                   <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               </motion.div>
@@ -137,7 +149,7 @@ const Courses = () => {
                   Measure → Install → Sustain → Develop
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Where development is commissioned for a leadership team,
+                  For executive advisory engagements with a leadership team,
                   structural alignment is measured first through the Executive
                   Alignment Index™ — ensuring investment targets the right
                   gaps rather than the most visible ones.
@@ -173,7 +185,7 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.15 }}
             >
-              This is the complete programme catalogue. The individual fee for
+              This is the executive programme catalogue. The individual fee for
               each programme is stated below. Organisational, cohort and
               facilitated delivery is scoped individually and the fee is
               confirmed on request.
