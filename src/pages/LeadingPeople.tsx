@@ -289,9 +289,11 @@ const LeadingPeople = () => {
                 <p className="body-brief">
                   The programme includes an initial sponsor briefing and a
                   sponsor follow-up approximately thirty days after the final
-                  workshop. Bright and the sponsor agree what learning evidence
-                  will be shared. Private employee case records are not
-                  required.
+                  workshop. The sponsor receives named attendance and
+                  cohort-level application themes. Private workbook reflections
+                  are not routinely collected or shared, and no individual
+                  performance ratings are given. Private employee case records
+                  are not required.
                 </p>
               </motion.div>
             </div>
