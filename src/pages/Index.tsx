@@ -9,6 +9,7 @@ import OfferSequencingSection from "@/components/OfferSequencingSection";
 import CommissionedBySection from "@/components/CommissionedBySection";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import AcademyIntroduction from "@/components/AcademyIntroduction";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         <HeroSection />
         <StructuralProblemSection />
         <InstrumentSection />
+        <AcademyIntroduction />
         <ProgrammePortfolioSection />
         <OfferSequencingSection />
         <CommissionedBySection />

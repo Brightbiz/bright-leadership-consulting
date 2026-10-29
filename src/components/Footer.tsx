@@ -13,6 +13,8 @@ const footerLinks = [
 ];
 
 const programmeLinks = [
+  { label: "Bright Leadership Academy", href: "/academy", isRoute: true },
+  { label: "Leading People", href: "/leading-people", isRoute: true },
   { label: "Executive Programmes", href: "/courses", isRoute: true },
   { label: "Executive Leadership Mastery Programme", href: "/executive-leadership-mastery", isRoute: true },
   { label: "Strategic Leadership in the Age of AI", href: "/strategic-leadership-ai", isRoute: true },

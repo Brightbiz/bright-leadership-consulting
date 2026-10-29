@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,7 +57,7 @@ const tracks = [
     value: ORGANISATIONAL,
     label: "Organisational",
     detail:
-      "A board, chair or executive sponsor commissioning work for a leadership team. Engagements begin with the Executive Alignment Index™.",
+      "A board, chair or executive sponsor commissioning work for a leadership team. Executive advisory engagements begin with the Executive Alignment Index™.",
   },
   {
     value: INDIVIDUAL,
@@ -231,7 +232,7 @@ const Contact = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Confidential Executive Enquiries
+                Programme and advisory enquiries
               </motion.h1>
               <motion.p
                 className="body-brief mb-16"
@@ -242,6 +243,13 @@ const Contact = () => {
               </motion.p>
 
               <div className="section-divider mb-16" />
+
+              <div className="mb-12 space-y-5">
+                <h2 className="font-serif text-xl">Leading People employer cohorts</h2>
+                <p className="body-brief">For a Leading People employer cohort, enquire by email. No Executive Alignment Index™ diagnostic is required.</p>
+                <a className="btn-brief" href="mailto:info@brightleadershipconsulting.com?subject=Leading%20People%20%E2%80%94%20employer%20cohort%20enquiry&body=Organisation%3A%0AApproximate%20number%20of%20managers%3A%0AMain%20development%20need%3A%0APreferred%20timing%3A">Discuss an employer cohort</a>
+                <p><Link to="/leading-people" className="link-quiet">Review Leading People</Link></p>
+              </div>
 
               {isElmEmployerFunded && !isSubmitted && (
                 <p

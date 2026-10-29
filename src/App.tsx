@@ -25,6 +25,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const ExecutiveLeadershipMastery = lazy(() => import("./pages/ExecutiveLeadershipMastery"));
 const ElmWebinar = lazy(() => import("./pages/ElmWebinar"));
 const Courses = lazy(() => import("./pages/Courses"));
+const Academy = lazy(() => import("./pages/Academy"));
 const StrategicLeadershipAI = lazy(() => import("./pages/StrategicLeadershipAI"));
 const StrategicAiLeadershipOrganisations = lazy(
   () => import("./pages/StrategicAiLeadershipOrganisations")
@@ -106,6 +107,7 @@ const AnimatedRoutes = () => {
           <Route path="/executive-leadership-mastery/webinar" element={<PageTransition><ElmWebinar /></PageTransition>} />
           <Route path="/executive-leadership-mastery" element={<PageTransition><ExecutiveLeadershipMastery /></PageTransition>} />
           <Route path="/courses" element={<PageTransition><Courses /></PageTransition>} />
+          <Route path="/academy" element={<PageTransition><Academy /></PageTransition>} />
           <Route path="/strategic-leadership-ai" element={<PageTransition><StrategicLeadershipAI /></PageTransition>} />
           <Route path="/augmented-leadership" element={<PageTransition><AugmentedLeadership /></PageTransition>} />
           <Route path="/future-of-work" element={<PageTransition><FutureOfWork /></PageTransition>} />

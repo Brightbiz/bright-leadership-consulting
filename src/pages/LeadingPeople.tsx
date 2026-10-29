@@ -88,7 +88,6 @@ const LeadingPeople = () => {
         title="Leading People | Employer Management Development | Bright Leadership Consulting"
         description="A six-week online programme for managers with direct reports. Four practical workshops, workplace application and sponsor reviews. £4,800 per employer cohort."
         path="/leading-people"
-        noindex
       />
       <ScrollProgress />
       <Header />
