@@ -29,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OutstandingActionsBanner from "@/components/admin/OutstandingActionsBanner";
+import { serialiseCsv } from "@/lib/csvExport";
 
 
 interface ContactSubmission {
@@ -227,8 +228,7 @@ const AdminSubmissions = () => {
   };
 
   const downloadCsv = (filename: string, headers: string[], rows: string[][]) => {
-    const escape = (v: string) => `"${v.replace(/"/g, '""')}"`;
-    const csv = [headers.map(escape).join(","), ...rows.map((r) => r.map(escape).join(","))].join("\n");
+    const csv = serialiseCsv(headers, rows);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

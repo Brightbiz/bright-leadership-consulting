@@ -1,4 +1,7 @@
 # Roadmap
+- [x] CSV export-only preview fix: both writers share formula/control-prefix neutralisation and quote escaping; synthetic download tests preserve original records. Current working version includes Academy PLUS export fixes; publication requires explicit approval of that combined scope (no independent release assumed).
+- [ ] Deployed chatbot quota behaviour remains unverified: read-only log lookup found no logs; aggregate shared-database check found zero retained chat quota rows. Source flaws identified, but enforcing 30/hour, failure behaviour and proxy headers cannot be demonstrated from these observations. Blocked on representative read-only deployed execution evidence; no quota-consuming requests or backend changes authorised.
+- [ ] CPDSO validity verification blocked: no original accreditation document located in available project documents/upload filenames; internal constants and previous notes are not proof. Await original CPDSO documentation from Bright.
 - [x] Academy preview fixes: discovery pages/navigation, scoped Courses/Contact wording, local mobile comparison constraints, indexing/sitemap and desktop/mobile/keyboard verification completed. Publication remains on hold pending separate approval.
 - [x] Published approved CPD/badge changes with webinar enquiry labels/source tracking; verified both webinar routes, admin records, delivered alerts and ordinary-enquiry attribution live; test records removed
 - [x] Webinar playback verified on iPad, Android phone and laptop; caption strip published 5 Oct 2026 and verified live
