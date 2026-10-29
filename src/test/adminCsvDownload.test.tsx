@@ -5,9 +5,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 const fixtures = vi.hoisted(() => ({
   name: '  =HYPERLINK("https://example.invalid","test")',
   records: {} as Record<string, unknown[]>,
+  user: { id: "synthetic-admin" },
 }));
 vi.mock("@/hooks/useAdminAuth", () => ({ useAdminAuth: () => ({
-  user: { id: "synthetic-admin" }, isAdmin: true, isLoading: false, signOut: vi.fn(),
+  user: fixtures.user, isAdmin: true, isLoading: false, signOut: vi.fn(),
 }) }));
 vi.mock("@/integrations/supabase/client", () => ({ supabase: {
   from: (table: string) => ({ select: () => ({ order: () => ({
