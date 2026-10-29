@@ -292,7 +292,8 @@ const LeadingPeople = () => {
                   workshop. The sponsor receives named attendance and
                   cohort-level application themes. Private workbook reflections
                   are not routinely collected or shared, and no individual
-                  performance ratings are given.
+                  performance ratings are given. Private employee case records
+                  are not required.
                 </p>
               </motion.div>
             </div>
