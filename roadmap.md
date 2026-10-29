@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Academy preview fixes: discovery pages/navigation, scoped Courses/Contact wording, local mobile comparison constraints, indexing/sitemap and desktop/mobile/keyboard verification. Publication requires separate approval.
+- [x] Academy preview fixes: discovery pages/navigation, scoped Courses/Contact wording, local mobile comparison constraints, indexing/sitemap and desktop/mobile/keyboard verification completed. Publication remains on hold pending separate approval.
 - [x] Published approved CPD/badge changes with webinar enquiry labels/source tracking; verified both webinar routes, admin records, delivered alerts and ordinary-enquiry attribution live; test records removed
 - [x] Webinar playback verified on iPad, Android phone and laptop; caption strip published 5 Oct 2026 and verified live
 - [x] ELM enquiry identification and source attribution (published, verified live and test records removed)
