@@ -24,7 +24,7 @@ const sections = [
     body: [
       "Enquiry information you provide voluntarily: name, organisation, role, email address, telephone number and the content of your message.",
       "Diagnostic response data submitted by participants during an Executive Alignment Index™ deployment, held under the terms of the commissioning engagement.",
-      "Participant information received from an employer: where an employer funds a named individual's place, we receive that participant's name, work email address and the information needed to create their programme access from the employer rather than from the participant directly. We use it only to administer the funded place, and we provide the participant with this Privacy Notice, or a clear link to it, when their access is created.",
+      "Participant information received from an employer for employer-funded programmes other than Leading People: where an employer funds a named individual's place, we receive that participant's name, work email address and the information needed to create their programme access from the employer rather than from the participant directly. We use it only to administer the funded place, and we provide the participant with this Privacy Notice, or a clear link to it, when their access is created.",
       "Leading People participants: where an employer nominates managers for a Leading People cohort, we receive each participant's name, work email address and employer and cohort information from the employer or from the participant. For Leading People we use job role only where relevant, attendance, limited programme activity, platform access and progress, and support correspondence. We provide this Privacy Notice, or a clear link to it, with our first direct communication to the participant, within the timeframe required by data-protection law and before any relevant disclosure of their information.",
       "Basic technical information generated when you visit the site, such as pages viewed and referring source, used only in aggregate to understand site performance.",
       "Where you arrive through a tagged link, such as a LinkedIn post, the campaign source, medium and name in that link are saved with any enquiry you then submit. They are kept in memory only during your visit and are not stored in your browser.",
@@ -42,7 +42,7 @@ const sections = [
   {
     heading: "Lawful basis",
     body: [
-      "We process enquiry data on the basis of legitimate interests in responding to a request you have made. We rely on contract only where processing is necessary for a contract with the individual concerned, or to take steps they request before entering into one. Engagement data is processed on the basis of legitimate interests in delivering the engagement agreed with the commissioning organisation.",
+      "We process enquiry data on the basis of legitimate interests in responding to a request you have made. We rely on contract only where processing is necessary for a contract with the individual concerned, or to take steps they request before entering into one.",
       "For Leading People, routine administration of nominated learners, platform access and support, and the limited reporting agreed with the employer rely on legitimate interests in delivering the programme the employer has arranged. A contract between Bright Leadership Consulting and an employer is not in itself a contract with each participant.",
       "Optional Analytics measurement takes place only with your consent, which is the lawful basis for that processing and for the related cookies. You may withdraw consent at any time by selecting Cookie Preferences in the footer of any page. Withdrawal stops further processing from that point; it does not affect processing that took place before you withdrew.",
     ],
@@ -57,7 +57,7 @@ const sections = [
       "Individual diagnostic response data from commissioned instruments is deleted within 90 days of report delivery unless the commissioning party requests retention for comparative re-measurement.",
       "Engagement records required for legal or accounting purposes are retained for the statutory period.",
       "Leading People: participant hub access normally opens seven days before the first workshop and ends 90 calendar days after the fourth workshop. At the end of access we review routine identifiable cohort administration, attendance and progress records and resolved support records, and we delete or anonymise them no later than 12 months after the fourth workshop. Where a specific record is needed for a documented complaint or legal matter, only that record is retained, and the hold is given a review date. Ending Leading People access does not affect access to any other course a participant holds, and financial records follow the separate legal and accounting rule above. Copies held in a provider's backups are removed according to that provider's own arrangements, so we do not state that every copy is erased at the same time.",
-      "Records held on our learning platform, including course accounts, payments and progress, are governed by that platform's own retention arrangements and are handled through a separate process.",
+      "For programmes other than Leading People, records held on our learning platform, including course accounts, payments and progress, are governed by that platform's own retention arrangements and are handled through a separate process.",
     ],
   },
 
@@ -65,7 +65,7 @@ const sections = [
     heading: "Confidentiality and sharing",
     body: [
       "Advisory engagements are conducted under strict confidentiality. We do not disclose client identities, and case material published on this site consists of composite examples with identifying detail removed or adapted.",
-      "Leading People: for the initial programme offer, the employer receives named attendance and cohort-level application themes only. Private workbook reflections, raw lesson histories and individual performance ratings are not routinely shared. Named completion findings would be shared only under criteria separately agreed in advance, and only after participants have been told before that use. Individual diagnostic responses remain undisclosed to client organisations, as stated above.",
+      "For Leading People, the employer receives named attendance and cohort-level application themes only. Private workbook reflections, raw lesson histories and individual performance ratings are not routinely shared. Named completion findings would be shared only under criteria separately agreed in advance, and only after participants have been told before that use. Individual diagnostic responses remain undisclosed to client organisations, as stated above.",
       "We share personal information with third parties only where necessary to operate the site and our systems (for example hosting, email and course delivery providers), and only under appropriate data-processing terms.",
     ],
   },
