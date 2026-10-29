@@ -26,7 +26,7 @@ const entries = [
   { path: "/principal", lastmod: "2026-10-05", changefreq: "yearly", priority: "0.6" },
   { path: "/insights", lastmod: "2026-10-13", changefreq: "monthly", priority: "0.6" },
   { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
-  { path: "/privacy", lastmod: "2026-10-09", changefreq: "yearly", priority: "0.3" },
+  { path: "/privacy", lastmod: "2026-10-29", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
   { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.6" },
   { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.6" },

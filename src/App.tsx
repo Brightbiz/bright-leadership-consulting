@@ -37,7 +37,7 @@ const StrategicProductivity = lazy(() => import("./pages/StrategicProductivity")
 // published build). While off, /leading-people renders the normal not-found
 // page and the page code is excluded from the production bundle entirely.
 // To launch: set LEADING_PEOPLE_LAUNCHED to true.
-const LEADING_PEOPLE_LAUNCHED = import.meta.env.DEV;
+const LEADING_PEOPLE_LAUNCHED = true;
 const LeadingPeople = LEADING_PEOPLE_LAUNCHED
   ? lazy(() => import("./pages/LeadingPeople"))
   : null;
