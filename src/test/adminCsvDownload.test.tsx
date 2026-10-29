@@ -37,8 +37,10 @@ describe("admin export downloads with synthetic records only", () => {
     const downloads: string[] = [];
     // Capture downloaded bytes in memory. No network, real auth, database or files.
     vi.stubGlobal("Blob", class { constructor(parts: string[]) { downloads.push(parts.join("")); } });
-    vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:synthetic");
-    vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => undefined);
+    vi.stubGlobal("URL", class extends URL {
+      static createObjectURL = vi.fn(() => "blob:synthetic");
+      static revokeObjectURL = vi.fn();
+    });
     vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
     render(<MemoryRouter>{page === "CRM" ? <AdminCRM /> : <AdminSubmissions />}</MemoryRouter>);
     const button = await screen.findByRole("button", { name: page === "CRM" ? "Export" : "Export CSV", exact: true });
