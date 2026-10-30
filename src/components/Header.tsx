@@ -46,7 +46,7 @@ const Header = () => {
         ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
         : "bg-background border-b border-border/40"
     )}>
-      <div className="container-brief">
+      <div className="container-brief xl:max-w-[1400px]">
         <nav className={cn(
           "flex items-center justify-between transition-all duration-300",
           isScrolled ? "h-16" : "h-20"
@@ -54,7 +54,7 @@ const Header = () => {
           <Logo isCompact={isScrolled} variant="horizontal" />
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-7 lg:gap-9 md:flex">
+          <div className="hidden items-center gap-6 xl:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
@@ -73,14 +73,17 @@ const Header = () => {
               to="/contact"
               className="btn-brief text-sm py-2 px-5"
             >
-              Discuss Executive Alignment
+              <span className="flex flex-col text-left leading-snug">
+                <span>Discuss Executive</span>
+                <span>Alignment</span>
+              </span>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded xl:hidden"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
@@ -98,7 +101,7 @@ const Header = () => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="absolute left-0 right-0 top-full overflow-hidden border-b border-border bg-background shadow-sm md:hidden"
+              className="absolute left-0 right-0 top-full overflow-hidden border-b border-border bg-background shadow-sm xl:hidden"
             >
               <div className="flex flex-col gap-6 p-8">
                 {navLinks.map((link) => (
