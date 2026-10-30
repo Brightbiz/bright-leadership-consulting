@@ -17,7 +17,7 @@ const dispersionDims = [
 ];
 
 const varianceStyles: Record<string, string> = {
-  Low: "bg-[hsl(180,25%,94%)] text-[hsl(180,30%,60%)]",
+  Low: "bg-teal-50 text-teal-600",
   Moderate: "bg-[hsl(180,40%,90%)] text-[hsl(180,60%,26%)]",
   Elevated: "bg-[hsl(180,35%,85%)] text-[hsl(180,70%,18%)]",
 };

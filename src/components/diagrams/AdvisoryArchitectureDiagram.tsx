@@ -59,7 +59,7 @@ const AdvisoryArchitectureDiagram = () => {
                 <span className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase">
                   Phase {stage.phase}
                 </span>
-                <span className="text-[9px] font-medium tracking-[0.12em] text-primary/50 uppercase">
+                <span className="text-[9px] font-medium tracking-[0.12em] text-primary uppercase">
                   {stage.category}
                 </span>
               </div>
@@ -103,7 +103,7 @@ const AdvisoryArchitectureDiagram = () => {
                 <span className="text-[10px] font-medium tracking-[0.2em] text-muted-foreground uppercase">
                   Phase {stage.phase}
                 </span>
-                <span className="text-[9px] font-medium tracking-[0.12em] text-primary/50 uppercase">
+                <span className="text-[9px] font-medium tracking-[0.12em] text-primary uppercase">
                   {stage.category}
                 </span>
               </div>
@@ -143,7 +143,7 @@ const AdvisoryArchitectureDiagram = () => {
       {/* Continuity baseline */}
       <div className="mt-5">
         <div className="h-px bg-primary/12 w-full" />
-        <p className="text-center text-[10px] text-primary/40 mt-2 tracking-[0.1em]">
+        <p className="text-center text-[10px] text-primary mt-2 tracking-[0.1em]">
           One structured process — each phase shaped by the diagnostic
         </p>
       </div>

@@ -72,7 +72,7 @@ const OfferSequencingSection = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary/50 mb-3 block">
+                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-primary mb-3 block">
                   {stage.step}
                 </span>
                 <h3 className="font-serif text-lg font-medium text-foreground mb-1 leading-snug">

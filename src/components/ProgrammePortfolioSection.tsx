@@ -58,7 +58,7 @@ const ProgrammePortfolioSection = () => {
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
                   {programme.title}
                 </h3>
-                <p className="text-sm font-medium text-accent mb-3">
+                <p className="text-sm font-medium text-accent-foreground mb-3">
                   {programme.subtitle}
                 </p>
                 <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">

@@ -9,10 +9,10 @@ const BASE_URL = "https://brightleadershipconsulting.com";
  * build date — the publish build has no history, so those re-stamp every page.
  */
 const entries = [
-  { path: "/", lastmod: "2026-10-29", changefreq: "monthly", priority: "1.0" },
+  { path: "/", lastmod: "2026-10-30", changefreq: "monthly", priority: "1.0" },
   { path: "/academy", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
   { path: "/leading-people", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
-  { path: "/executive-alignment-index", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.9" },
+  { path: "/executive-alignment-index", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.9" },
   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
   { path: "/contact", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
