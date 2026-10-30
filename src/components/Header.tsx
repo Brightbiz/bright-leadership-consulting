@@ -54,7 +54,7 @@ const Header = () => {
           <Logo isCompact={isScrolled} variant="horizontal" />
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-7 xl:flex">
+          <div className="hidden items-center gap-6 xl:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
@@ -71,7 +71,7 @@ const Header = () => {
             ))}
             <Link
               to="/contact"
-              className="btn-brief text-sm py-2 px-5 xl:px-4"
+              className="btn-brief text-sm py-2 px-5"
             >
               Discuss Executive Alignment
             </Link>
