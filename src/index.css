@@ -68,6 +68,8 @@
     --navy-note: 220 16% 68%;
     --gold: 42 50% 52%;
     --gold-muted: 42 40% 65%;
+    /* Small gold text on white/pearl; decorative gold remains unchanged. */
+    --gold-ink: 42 55% 32%;
 
 
     /* Shadows — restrained */
@@ -210,7 +212,7 @@
   /* Kicker / eyebrow — gold accent */
   .kicker {
     @apply text-xs font-medium tracking-[0.2em] uppercase;
-    color: hsl(var(--gold));
+    color: hsl(var(--gold-ink));
   }
 
   /* Quiet CTA link */

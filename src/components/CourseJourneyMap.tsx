@@ -36,14 +36,19 @@ const stages = [
 
 const CourseJourneyMap = () => {
   return (
-    <motion.div {...fade} className="w-full">
-      <div className="flex items-start gap-0 overflow-x-auto pb-4">
+    <motion.div {...fade} className="w-full min-w-0 max-w-full">
+      <div
+        role="region"
+        aria-label="AI programme curriculum timeline"
+        tabIndex={0}
+        className="flex max-w-full items-start gap-0 overflow-x-auto pb-4 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
         {stages.map((s, i) => (
           <div key={s.stage} className="flex items-start shrink-0">
             <div className="flex flex-col items-center min-w-[140px] lg:min-w-[160px]">
               {/* Stage number + name */}
               <div className="flex flex-col items-center mb-3">
-                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-accent-foreground/60 mb-1">
+                <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-accent-foreground mb-1">
                   Stage {i + 1}
                 </span>
                 <span className="text-xs font-semibold text-foreground tracking-wide">
