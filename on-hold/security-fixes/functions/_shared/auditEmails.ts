@@ -169,8 +169,7 @@ export async function deliverBuyerAcknowledgement(
   if (attempted.has(message.idempotencyKey)) return "pending";
   attempted.add(message.idempotencyKey);
 
-  const target = options.test ? TEST_RECIPIENT : message.to;
-  const subject = options.test ? `[TEST — do not action] ${message.subject}` : message.subject;
+  // Recipient and subject are resolved at send time; never logged.
 
   if (!BUYER_ACK_EMAILS_ENABLED) {
     console.log(
