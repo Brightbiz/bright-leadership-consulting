@@ -73,8 +73,10 @@ const Header = () => {
               to="/contact"
               className="btn-brief text-sm py-2 px-5"
             >
-              <span className="block leading-snug">Discuss Executive</span>
-              <span className="block leading-snug">Alignment</span>
+              <span className="flex flex-col text-left leading-snug">
+                <span>Discuss Executive</span>
+                <span>Alignment</span>
+              </span>
             </Link>
           </div>
 
