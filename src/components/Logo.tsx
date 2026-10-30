@@ -27,7 +27,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>(
 
     if (variant === "horizontal") {
       return (
-        <a ref={ref} href="/" className={cn("inline-flex items-center", className)}>
+        <a ref={ref} href="/" className={cn("inline-flex shrink-0 items-center", className)}>
           {/* Horizontal wordmark: primary header lock-up on light backgrounds */}
           <img
             src="/logo-wordmark.svg"
