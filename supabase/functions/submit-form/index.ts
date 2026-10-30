@@ -174,7 +174,8 @@ Deno.serve(async (req) => {
           { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      console.error("Insert error:", error);
+      // Database error details can quote the failing row (names, emails): log the code only.
+      console.error(JSON.stringify({ event: "form:insert_failed", formType, code: error.code ?? "unknown" }));
       return new Response(
         JSON.stringify({ error: "Submission could not be processed" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -203,6 +204,7 @@ Deno.serve(async (req) => {
         to: NOTIFY_TO_ENQUIRIES,
         subject: `New ${enquiryLabel} — ${reference}`,
         text: lines.join("\n"),
+        reference: typeof reference === "string" ? reference : undefined,
       });
       const waitUntil = (globalThis as unknown as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
         .EdgeRuntime?.waitUntil;
@@ -218,7 +220,7 @@ Deno.serve(async (req) => {
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error("Form submission error:", error);
+    console.error(JSON.stringify({ event: "form:unexpected_error", name: error instanceof Error ? error.name : "unknown" }));
     return new Response(
       JSON.stringify({ error: "An unexpected error occurred" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
