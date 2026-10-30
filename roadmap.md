@@ -112,3 +112,4 @@
 
 - [x] 30 Oct: /admin/participants and the Leading People employer cohort enquiry labels PUBLISHED and verified live (admin page loads signed-in; empty table; tests pass). Header spacing defect found and fixed in the same release: desktop menu now shows only at 1280px+ with a 1400px header container and two-line CTA; logo no longer collides with the menu; mobile menu shows below 1280px; verified 375-1440px, no overflow.
 - [x] 30 Oct: Leading People participant records (one per email, no duplicate cohort places, Thinkific account/invitation status tracked in admin; no sends, Thinkific untouched).
+- [x] 30 Oct ~17:50 UTC: Victoria's live test of /admin/participants verified by her (add, duplicate-cohort block message). Test row TEST PARTICIPANT (test.participant@example.com, cohort LP-OCT-2026) deleted on her approval; database confirmed empty (0 participants, 0 enrolments). Page ready for first real participant.
