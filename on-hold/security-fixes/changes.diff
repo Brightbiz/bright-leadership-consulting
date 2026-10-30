@@ -1,0 +1,148 @@
+--- supabase/functions/chat-assistant/index.ts	2026-10-30 18:51:21.377066071 +0000
++++ on-hold/security-fixes/functions/chat-assistant/index.ts	2026-10-30 19:00:27.946623430 +0000
+@@ -1,6 +1,7 @@
+ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+ import { reserveQuota } from "./quota.ts";
++import { guardHistory, HISTORY_RULE } from "./historyGuard.ts";
+ 
+ const corsHeaders = {
+   "Access-Control-Allow-Origin": "*",
+@@ -90,8 +91,6 @@
+ - "What sectors do you work with?" → Cross-sector experience including financial services, professional services, technology, healthcare, manufacturing, and the public sector
+ - "What outcomes can we expect?" → Outcomes and measurement criteria are agreed at the outset of each engagement. Never quote a percentage or statistic.`;
+ 
+-const MAX_MESSAGES = 20;
+-const MAX_MESSAGE_LENGTH = 2000;
+ 
+ serve(async (req) => {
+   if (req.method === "OPTIONS") {
+@@ -102,19 +101,15 @@
+     const body = await req.json();
+     const { messages } = body;
+ 
+-    // Input validation
+-    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
++    // Browser-supplied history is untrusted: no caller assistant role reaches the model.
++    const guarded = guardHistory(messages);
++    if (!guarded.ok) {
+       return new Response(
+-        JSON.stringify({ error: "Invalid request" }),
++        JSON.stringify({ error: guarded.reason }),
+         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+       );
+     }
+-
+-    // Sanitize messages
+-    const sanitized = messages.map((m: any) => ({
+-      role: ["user", "assistant"].includes(m.role) ? m.role : "user",
+-      content: String(m.content || "").slice(0, MAX_MESSAGE_LENGTH),
+-    }));
++    const sanitized = guarded.messages;
+ 
+     // --- IP-based rate limiting ---
+     const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+@@ -155,7 +150,7 @@
+         body: JSON.stringify({
+           model: "google/gemini-3-flash-preview",
+           messages: [
+-            { role: "system", content: SYSTEM_PROMPT },
++            { role: "system", content: `${SYSTEM_PROMPT}\n\n## CONVERSATION HISTORY\n${HISTORY_RULE}` },
+             ...sanitized,
+           ],
+           stream: true,
+@@ -187,7 +182,7 @@
+       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+     });
+   } catch (error) {
+-    console.error("Chat assistant error:", error);
++    console.error("Chat assistant error:", error instanceof Error ? error.name : "unknown");
+     return new Response(
+       JSON.stringify({ error: "An unexpected error occurred. Please try again." }),
+       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+--- supabase/functions/_shared/resendNotify.ts	2026-10-30 18:51:21.376726809 +0000
++++ on-hold/security-fixes/functions/_shared/resendNotify.ts	2026-10-30 19:00:27.946874651 +0000
+@@ -1,3 +1,5 @@
++import { safeEmailLog } from "./logSafe.ts";
++
+ // Best-effort internal notification emails sent through the Resend connector
+ // gateway. brightleadershipconsulting.com must be verified in the linked
+ // Resend account before Resend accepts mail from it; failures are logged and
+@@ -13,6 +15,8 @@
+   subject: string;
+   text: string;
+   replyTo?: string;
++  /** Record reference for diagnostics only (no personal data). */
++  reference?: string;
+ }
+ 
+ export async function sendResendNotification(
+@@ -44,19 +48,19 @@
+ 
+     if (!response.ok) {
+       const errorBody = await response.text();
+-      console.error(`Resend notification failed [${response.status}]: ${errorBody}`);
++      console.error(JSON.stringify(safeEmailLog("email:failed:notification", { reference: input.reference, status: response.status, raw: errorBody })));
+       return { sent: false, status: response.status, error: errorBody.slice(0, 500) };
+     }
+ 
+     const body = await response.json().catch(() => null);
+     if (body && (body as Record<string, unknown>).ok === false) {
+-      console.error(`Resend notification rejected: ${JSON.stringify(body)}`);
++      console.error(JSON.stringify(safeEmailLog("email:rejected:notification", { reference: input.reference, status: 200, raw: JSON.stringify(body) })));
+       return { sent: false, status: 200, error: JSON.stringify(body).slice(0, 500) };
+     }
+ 
+     return { sent: true };
+   } catch (error) {
+-    console.error("Resend notification error:", error);
++    console.error(JSON.stringify(safeEmailLog("email:error:notification", { reference: input.reference, raw: error instanceof Error ? error.message : error })));
+     return { sent: false, error: String(error).slice(0, 500) };
+   }
+ }
+--- supabase/functions/_shared/auditEmails.ts	2026-10-30 18:51:21.376513168 +0000
++++ on-hold/security-fixes/functions/_shared/auditEmails.ts	2026-10-30 19:00:41.911145958 +0000
+@@ -169,12 +169,11 @@
+   if (attempted.has(message.idempotencyKey)) return "pending";
+   attempted.add(message.idempotencyKey);
+ 
+-  const target = options.test ? TEST_RECIPIENT : message.to;
+-  const subject = options.test ? `[TEST — do not action] ${message.subject}` : message.subject;
++  // Recipient and subject are resolved at send time; never logged.
+ 
+   if (!BUYER_ACK_EMAILS_ENABLED) {
+     console.log(
+-      `[email:suppressed:buyer-acknowledgement] to=${target} key=${message.idempotencyKey} subject="${subject}"`,
++      `[email:suppressed:buyer-acknowledgement] key=${message.idempotencyKey} test=${options.test ? "yes" : "no"}`,
+     );
+     return "pending";
+   }
+--- supabase/functions/submit-form/index.ts	2026-10-30 18:51:21.378395741 +0000
++++ on-hold/security-fixes/functions/submit-form/index.ts	2026-10-30 19:00:41.910991805 +0000
+@@ -174,7 +174,8 @@
+           { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+         );
+       }
+-      console.error("Insert error:", error);
++      // Database error details can quote the failing row (names, emails): log the code only.
++      console.error(JSON.stringify({ event: "form:insert_failed", formType, code: error.code ?? "unknown" }));
+       return new Response(
+         JSON.stringify({ error: "Submission could not be processed" }),
+         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+@@ -203,6 +204,7 @@
+         to: NOTIFY_TO_ENQUIRIES,
+         subject: `New ${enquiryLabel} — ${reference}`,
+         text: lines.join("\n"),
++        reference: typeof reference === "string" ? reference : undefined,
+       });
+       const waitUntil = (globalThis as unknown as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
+         .EdgeRuntime?.waitUntil;
+@@ -218,7 +220,7 @@
+       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+     );
+   } catch (error) {
+-    console.error("Form submission error:", error);
++    console.error(JSON.stringify({ event: "form:unexpected_error", name: error instanceof Error ? error.name : "unknown" }));
+     return new Response(
+       JSON.stringify({ error: "An unexpected error occurred" }),
+       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
