@@ -66,6 +66,7 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const AdminForgotPassword = lazy(() => import("./pages/AdminForgotPassword"));
 const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const AdminCRM = lazy(() => import("./pages/AdminCRM"));
+const AdminParticipants = lazy(() => import("./pages/AdminParticipants"));
 const AdminOutreach = lazy(() => import("./pages/AdminOutreach"));
 const AdminAuditRequests = lazy(() => import("./pages/AdminAuditRequests"));
 const AdminEdlApplications = lazy(() => import("./pages/AdminEdlApplications"));
@@ -159,6 +160,7 @@ const AnimatedRoutes = () => {
           
           <Route path="/admin" element={<PageTransition><AdminSubmissions /></PageTransition>} />
           <Route path="/admin/crm" element={<PageTransition><AdminCRM /></PageTransition>} />
+          <Route path="/admin/participants" element={<PageTransition><AdminParticipants /></PageTransition>} />
           <Route path="/admin/outreach" element={<PageTransition><AdminOutreach /></PageTransition>} />
           <Route path="/admin/audit-requests" element={<PageTransition><AdminAuditRequests /></PageTransition>} />
           <Route path="/admin/employer-offers" element={<PageTransition><AdminEmployerOffers /></PageTransition>} />

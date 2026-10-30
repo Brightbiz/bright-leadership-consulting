@@ -962,6 +962,97 @@ export type Database = {
         }
         Relationships: []
       }
+      lp_enrolments: {
+        Row: {
+          cohort_code: string
+          created_at: string
+          enrolment_status: string
+          id: string
+          invitation_sent_at: string | null
+          invitation_status: string
+          participant_id: string
+          updated_at: string
+        }
+        Insert: {
+          cohort_code: string
+          created_at?: string
+          enrolment_status?: string
+          id?: string
+          invitation_sent_at?: string | null
+          invitation_status?: string
+          participant_id: string
+          updated_at?: string
+        }
+        Update: {
+          cohort_code?: string
+          created_at?: string
+          enrolment_status?: string
+          id?: string
+          invitation_sent_at?: string | null
+          invitation_status?: string
+          participant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lp_enrolments_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "lp_participants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lp_participants: {
+        Row: {
+          contact_submission_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          job_title: string | null
+          notes: string | null
+          organisation: string | null
+          thinkific_account_status: string
+          thinkific_user_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          contact_submission_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          job_title?: string | null
+          notes?: string | null
+          organisation?: string | null
+          thinkific_account_status?: string
+          thinkific_user_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contact_submission_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          job_title?: string | null
+          notes?: string | null
+          organisation?: string | null
+          thinkific_account_status?: string
+          thinkific_user_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lp_participants_contact_submission_id_fkey"
+            columns: ["contact_submission_id"]
+            isOneToOne: false
+            referencedRelation: "contact_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       marketing_consents: {
         Row: {
           consent_text: string
