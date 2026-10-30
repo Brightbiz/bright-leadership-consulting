@@ -118,3 +118,7 @@
 - [ ] Brochure download form posts directly to the database and is refused (no anon grant); visitors still get the PDF but no record is saved. Fix (route via submit-form) needs approval.
 - [ ] Security deep scan warnings (30 Oct): chat message roles; buyer emails in function logs — fixes need approval (shared live backend).
 - [ ] 30 Oct security fixes PREPARED, not deployed (awaiting approval): (1) ELM brochure form → protected form route (preview file only; uses already-live route; no email sent); (2) email/form log allowlist; (3) chat history guard. Backend code staged in on-hold/security-fixes (diff: changes.diff); tests src/test/securityFixesStaged.test.ts. Live saving + rate limit untested (would write to live data). Peak Performance brochure still posts directly (not in scope).
+
+## Incident 30 Oct 2026 — synthetic brochure records (closed)
+- 5 Peak Performance download records (synthetic@example.invalid, "Synthetic Test", 19:11:26–19:11:33 UTC = London time) reached live via preview test; deleted by exact ID with Victoria's approval; incident logged in admin action log; rate-limit entries untouched.
+- Open for decision: ungated brochure PDFs (stop collecting names/emails); chatbot staged prompt revision; 2 AI-audit log corrections staged; Future of Work / Advanced Leadership / Employability brochure review. Live tests not approved.
