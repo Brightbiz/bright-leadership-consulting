@@ -71,9 +71,10 @@ const Header = () => {
             ))}
             <Link
               to="/contact"
-              className="btn-brief max-w-[10.5rem] py-2 px-5 text-sm"
+              className="btn-brief text-sm py-2 px-5"
             >
-              Discuss Executive Alignment
+              <span className="block leading-snug">Discuss Executive</span>
+              <span className="block leading-snug">Alignment</span>
             </Link>
           </div>
 
