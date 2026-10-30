@@ -134,15 +134,28 @@ serve(async (req) => {
       .eq("form_type", "chat")
       .gte("created_at", windowStart);
 
-    if (!countError && (count || 0) >= CHAT_RATE_LIMIT) {
-      return new Response(
-        JSON.stringify({ error: "Our assistant is busy right now. Please try again shortly." }),
-        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+    const busy = () => new Response(
+      JSON.stringify({ error: "Our assistant is busy right now. Please try again shortly." }),
+      { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+
+    // Fail closed: if the quota cannot be checked, do not call the paid AI service.
+    if (countError) {
+      console.error("Chat quota lookup failed");
+      return busy();
+    }
+    if ((count || 0) >= CHAT_RATE_LIMIT) {
+      return busy();
     }
 
-    // Record this request
-    await supabase.from("rate_limits").insert({ ip_address: clientIp, form_type: "chat" });
+    // Record this request; fail closed if it cannot be recorded.
+    const { error: insertError } = await supabase
+      .from("rate_limits")
+      .insert({ ip_address: clientIp, form_type: "chat" });
+    if (insertError) {
+      console.error("Chat quota record failed");
+      return busy();
+    }
 
     // --- Call AI gateway ---
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
