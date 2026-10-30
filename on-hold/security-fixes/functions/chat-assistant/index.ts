@@ -15,7 +15,6 @@ const SYSTEM_PROMPT = `You are the advisory assistant for Bright Leadership Cons
 - Specialist executive alignment advisory firm
 - CPD-accredited programmes (Provider #50838)
 - Clients across 25+ countries, with a track record spanning 10+ years
-- 98% client satisfaction rate | Average 40% improvement in leadership effectiveness
 - Creator of the Executive Alignment Index™ (EAI) — a proprietary governance diagnostic
 
 ## EXECUTIVE ALIGNMENT INDEX™ (EAI)

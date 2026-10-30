@@ -183,10 +183,10 @@
     </div>
     <form id="downloadForm" onsubmit="handleDownloadSubmit(event)">
       <div style="display:flex;gap:10px;margin-bottom:12px;">
-        <input type="text" id="dlFirstName" placeholder="First name" required style="flex:1;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
-        <input type="text" id="dlSurname" placeholder="Surname" required style="flex:1;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
+        <input type="text" id="dlFirstName" maxlength="49" placeholder="First name" required style="flex:1;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
+        <input type="text" id="dlSurname" maxlength="50" placeholder="Surname" required style="flex:1;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
       </div>
-      <input type="email" id="dlEmail" placeholder="Email address" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:16px;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
+      <input type="email" id="dlEmail" maxlength="255" placeholder="Email address" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:16px;transition:border 0.2s;" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='#e2e8f0'">
       <button type="submit" id="dlSubmitBtn" style="width:100%;padding:14px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.3s;box-shadow:0 4px 15px rgba(26,107,107,0.3);" onmouseover="this.style.background='var(--teal-dark)'" onmouseout="this.style.background='var(--teal)'">
         Download as PDF
       </button>
@@ -219,9 +219,10 @@
     var surname = document.getElementById('dlSurname').value.trim();
     var email = document.getElementById('dlEmail').value.trim();
     btn.textContent = 'Processing...'; btn.disabled = true;
-    fetch(SUPABASE_URL + '/rest/v1/lead_magnet_downloads', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ name: firstName + ' ' + surname, email: email, lead_magnet_name: 'Brochure: ' + BROCHURE_NAME })
+    // Saved through the protected form route (validation + rate limit); no email is sent.
+    fetch(SUPABASE_URL + '/functions/v1/submit-form', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ formType: 'lead_magnet', formData: { name: (firstName + ' ' + surname).slice(0, 100), email: email, lead_magnet_name: ('Brochure: ' + BROCHURE_NAME).slice(0, 100) } })
     }).then(function() { closeDownloadModal(); setTimeout(function() { window.print(); }, 300); })
     .catch(function() { closeDownloadModal(); setTimeout(function() { window.print(); }, 300); })
     .finally(function() { btn.textContent = 'Download as PDF'; btn.disabled = false; });
