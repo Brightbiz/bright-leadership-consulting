@@ -109,3 +109,5 @@
 - [x] LIA v5 draft (unsigned): personal-data statement corrected, data-held split with retention/deletion, selection description, LinkedIn sentence, controller line, batch record.
 - [x] Workbook v3 (Outreach_Shortlist_and_Companies_House_Check_16Oct2026_v3.xlsx): "Operations batch (21)", Ridge Crest removed, five retentions annotated.
 - [ ] AWAITING Victoria/Irene: (1) Irene signs LIA v5; (2) separate authorisation to load operations version into live sender; (3) confirm live template matches reviewed version + explain fingerprint coverage; (4) separate authorisation for one test email to aguns70418@aol.com; (5) separate approval of final recipient list, content, sending time. Testing proposal (isolated suppression demonstration + one test-mode email) submitted — not run. Outreach hold remains; nothing sent, no records/drafts/approvals/schedules created.
+
+- [x] 30 Oct: Leading People participant records (one per email, no duplicate cohort places, Thinkific account/invitation status tracked in admin; no sends, Thinkific untouched).

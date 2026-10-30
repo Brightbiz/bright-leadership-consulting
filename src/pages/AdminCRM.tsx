@@ -377,7 +377,7 @@ const AdminCRM = () => {
             </Button>
             <div>
               <h1 className="font-serif text-3xl font-semibold text-foreground">CRM</h1>
-              <p className="text-sm text-muted-foreground">{contacts.length} total contacts</p>
+              <p className="text-sm text-muted-foreground">{contacts.length} total contacts · <Link to="/admin/participants" className="underline">Leading People participants</Link></p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
