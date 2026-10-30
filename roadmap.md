@@ -114,5 +114,6 @@
 - [x] 30 Oct: Leading People participant records (one per email, no duplicate cohort places, Thinkific account/invitation status tracked in admin; no sends, Thinkific untouched).
 - [x] 30 Oct ~17:50 UTC: Victoria's live test of /admin/participants verified by her (add, duplicate-cohort block message). Test row TEST PARTICIPANT (test.participant@example.com, cohort LP-OCT-2026) deleted on her approval; database confirmed empty (0 participants, 0 enrolments). Page ready for first real participant.
 
-- [ ] ELM brochure revision (preview only, 30 Oct 2026): coaching packages/launch offers/crossed-out prices/emoji removed, £1,297 or 3×£435; icon 404 and phone overflow fixed. Awaiting Irene publication approval. Removed 30-day money-back guarantee and 50% course-discount bonus lines — confirm whether either is a current approved term.
+- [x] ELM brochure revision PUBLISHED 30 Oct 2026 (Victoria approved): £1,297 or 3×£435 (total £1,305); guarantee and 50% discount stay out; Module 11 "Coaching & Mentoring" kept. Verified live: pricing, total, enrolment link to /contact, icon 200, no overflow at 375/1280.
+- [ ] Brochure download form posts directly to the database and is refused (no anon grant); visitors still get the PDF but no record is saved. Fix (route via submit-form) needs approval.
 - [ ] Security deep scan warnings (30 Oct): chat message roles; buyer emails in function logs — fixes need approval (shared live backend).
