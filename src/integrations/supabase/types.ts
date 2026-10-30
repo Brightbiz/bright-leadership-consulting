@@ -1395,6 +1395,7 @@ export type Database = {
         }
         Returns: Json
       }
+      reserve_chat_quota: { Args: { _ip_address: string }; Returns: boolean }
       retry_ai_audit_crm_mirror: {
         Args: { _request_id: string }
         Returns: Json
