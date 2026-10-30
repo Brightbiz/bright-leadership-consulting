@@ -12,17 +12,8 @@ const fade = {
 };
 
 const ENQUIRY_EMAIL = "info@brightleadershipconsulting.com";
-const ENQUIRY_SUBJECT = "Leading People — employer cohort enquiry";
-const ENQUIRY_BODY = [
-  "Organisation:",
-  "Approximate number of managers:",
-  "Main development need:",
-  "Preferred timing:",
-].join("\n");
+// Cohort enquiries go through the contact form so they are saved to the admin enquiry list.
 const enquiryHref = "/contact?cohort=leading-people#enquiry-form";
-const _unusedMailto = `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(
-  ENQUIRY_SUBJECT,
-)}&body=${encodeURIComponent(ENQUIRY_BODY)}`;
 
 const workshops = [
   {
