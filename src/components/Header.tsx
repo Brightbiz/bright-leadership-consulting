@@ -71,7 +71,7 @@ const Header = () => {
             ))}
             <Link
               to="/contact"
-              className="btn-brief text-sm py-2 px-5"
+              className="btn-brief max-w-[10.5rem] py-2 px-5 text-sm"
             >
               Discuss Executive Alignment
             </Link>
