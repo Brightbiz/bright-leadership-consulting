@@ -1,4 +1,5 @@
 import { clearCampaignTags, getCampaignTags, noteCampaignTags } from "@/lib/campaignTags";
+import { leadingPeopleEnquiryType } from "../../supabase/functions/_shared/enquiryLabels";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -120,11 +121,11 @@ const Contact = () => {
     ? ELM_EMPLOYER_FUNDED_ENQUIRY
     : isElmIndividual
       ? ELM_INDIVIDUAL_ENROLMENT_ENQUIRY
-      : null;
+      : leadingPeopleEnquiryType(searchParams, Boolean(prefilledProgramme));
   const sourceValue =
     enquiryTypeValue && searchParams.get("source") === ELM_WEBINAR_SOURCE ? ELM_WEBINAR_SOURCE : null;
 
-  // Leading People cohort route: prefills the form text only; no attribution field is sent.
+  // Leading People attribution is scoped only to its explicit cohort URL.
   const isLeadingPeopleCohort = !prefilledProgramme && searchParams.get("cohort") === "leading-people";
 
   const form = useForm<ContactFormData>({

@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { NOTIFY_TO_ENQUIRIES, sendResendNotification } from "../_shared/resendNotify.ts";
+import { ALLOWED_ENQUIRY_TYPES, ENQUIRY_LABELS } from "../_shared/enquiryLabels.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -90,7 +91,6 @@ Deno.serve(async (req) => {
     }
 
     // Enquiry type and source are restricted to known values so leads can be segmented reliably.
-    const ALLOWED_ENQUIRY_TYPES = ["elm_employer_funded", "elm_individual_enrolment"];
     if (sanitized.enquiry_type && !ALLOWED_ENQUIRY_TYPES.includes(sanitized.enquiry_type)) {
       return new Response(
         JSON.stringify({ error: "Invalid enquiry type" }),
@@ -186,10 +186,6 @@ Deno.serve(async (req) => {
     // link to the signed-in admin record only. The enquirer's personal details
     // stay in the admin record, which requires authentication to view.
     if (formType === "contact") {
-      const ENQUIRY_LABELS: Record<string, string> = {
-        elm_employer_funded: "ELM employer-funded enquiry",
-        elm_individual_enrolment: "ELM individual enrolment request",
-      };
       const enquiryLabel = (sanitized.enquiry_type && ENQUIRY_LABELS[sanitized.enquiry_type]) || "General enquiry";
       const reference = data?.[0]?.id ?? "(reference unavailable)";
       const savedAt = new Date().toISOString();
