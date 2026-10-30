@@ -1,8 +1,13 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import NotFound from "@/pages/NotFound";
+
+// Model the public custom domain: only an explicit page exclusion blocks indexing.
+vi.mock("@/lib/searchIndexing", () => ({
+  shouldNoindex: (_hostname: string, noindex = false) => noindex,
+}));
 
 afterEach(cleanup);
 
