@@ -16,3 +16,10 @@ describe("staged chatbot instructions", () => {
   it("ELM fee matches approved pricing", () => expect(prompt).toContain("£1,297 in full, or three monthly instalments of £435 (£1,305 in total)"));
   it("rate limit call preserved", () => expect(src).toContain("reserveQuota"));
 });
+describe("staged chatbot corrections (30 Oct review)", () => {
+  it.each(["[COLLECT_LEAD]", "pass your details", "Individuals enrol directly"])("removed: %s", (s) => expect(prompt).not.toContain(s));
+  it("enrolment wording", () => expect(prompt).toContain("Individuals can request enrolment at the published fee; employer sponsorship and the EAI™ are not prerequisites."));
+  it("certificate wording", () => expect(prompt).toContain("Eligible participants receive the official CPD Standards Office Certificate of Attendance after satisfying the approved completion requirements."));
+  it("Leading People joining/hub access goes to info@", () => expect(prompt).toContain("Leading People joining and participant hub-access questions: info@brightleadershipconsulting.com"));
+  it("points to the contact form", () => expect(prompt).toContain("Use the enquiry form at /contact to contact the team."));
+});
