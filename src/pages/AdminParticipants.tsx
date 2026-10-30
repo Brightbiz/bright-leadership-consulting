@@ -27,7 +27,7 @@ const ACCOUNT_LABELS: Record<string, string> = {
   not_checked: "Not checked", existing_account: "Existing Thinkific account",
   new_account_needed: "New account needed", account_created: "Account created",
 };
-const INVITE_LABELS: Record<string, string> = { not_sent: "Not sent", sent: "Sent", accepted: "Accepted" };
+const INVITE_LABELS: Record<string, string> = { not_sent: "Not sent", sent: "Sent", accepted: "Accepted (recorded manually)" };
 
 const AdminParticipants = () => {
   const { user, isAdmin, isLoading } = useAdminAuth();
@@ -75,14 +75,14 @@ const AdminParticipants = () => {
     }
     if (isDuplicateEnrolment(enrolments, participant.id, cohort)) {
       setSaving(false);
-      toast({ title: "Already enrolled", description: `${email} already has a place in ${cohort}.`, variant: "destructive" });
+      toast({ title: "Already added to this cohort", description: `${email} is already on the list for ${cohort}.`, variant: "destructive" });
       await load();
       return;
     }
     const { error } = await supabase.from("lp_enrolments").insert({ participant_id: participant.id, cohort_code: cohort });
     setSaving(false);
     if (error) {
-      toast({ title: error.code === "23505" ? "Already enrolled in this cohort" : "Could not add enrolment", variant: "destructive" });
+      toast({ title: error.code === "23505" ? "Already added to this cohort" : "Could not add enrolment", variant: "destructive" });
     } else {
       toast({ title: "Participant added", description: "No email has been sent." });
       setForm({ email: "", full_name: "", organisation: "", cohort_code: cohort });
@@ -112,7 +112,7 @@ const AdminParticipants = () => {
           <h1 className="font-serif text-3xl mt-2">Leading People participants</h1>
           <p className="text-sm text-muted-foreground mt-2">
             One record per email address. Statuses are recorded here only — nothing on this page sends email or changes Thinkific.
-            Joining invitations are a separate action from {LP_SUPPORT_EMAIL}.
+            Joining invitations are a separate action from {LP_SUPPORT_EMAIL}. "Enrolled" and "Accepted" are recorded manually by an admin and are not verified Thinkific activity; adding someone here does not enrol them in Thinkific.
           </p>
         </div>
 
@@ -130,7 +130,7 @@ const AdminParticipants = () => {
               <TableRow>
                 <TableHead>Participant</TableHead><TableHead>Cohort</TableHead>
                 <TableHead>Thinkific account</TableHead><TableHead>Thinkific user ID</TableHead>
-                <TableHead>Enrolment</TableHead><TableHead>Invitation</TableHead>
+                <TableHead>Enrolment (manual record)</TableHead><TableHead>Invitation (manual record)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -156,13 +156,13 @@ const AdminParticipants = () => {
                     </TableCell>
                     <TableCell>
                       <Select value={en.enrolment_status} onValueChange={(v) => updateEnrolment(en.id, { enrolment_status: v })}>
-                        <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
-                        <SelectContent><SelectItem value="pending">Pending</SelectItem><SelectItem value="enrolled">Enrolled</SelectItem><SelectItem value="withdrawn">Withdrawn</SelectItem></SelectContent>
+                        <SelectTrigger className="w-56"><SelectValue /></SelectTrigger>
+                        <SelectContent><SelectItem value="pending">Pending</SelectItem><SelectItem value="enrolled">Enrolled (recorded manually)</SelectItem><SelectItem value="withdrawn">Withdrawn</SelectItem></SelectContent>
                       </Select>
                     </TableCell>
                     <TableCell>
                       <Select value={en.invitation_status} onValueChange={(v) => updateEnrolment(en.id, { invitation_status: v, invitation_sent_at: v === "not_sent" ? null : new Date().toISOString() })}>
-                        <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="w-56"><SelectValue /></SelectTrigger>
                         <SelectContent>{Object.entries(INVITE_LABELS).map(([k, l]) => <SelectItem key={k} value={k}>{l}</SelectItem>)}</SelectContent>
                       </Select>
                     </TableCell>
