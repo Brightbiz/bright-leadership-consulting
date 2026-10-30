@@ -205,7 +205,7 @@ const Courses = () => {
                     </h3>
                   </div>
 
-                  <p className="text-sm font-medium text-accent mb-3">
+                  <p className="text-sm font-medium text-accent-foreground mb-3">
                     {programme.subtitle}
                   </p>
 
@@ -419,7 +419,7 @@ const Courses = () => {
               <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
                 {facilitatedEngagement.title}
               </h3>
-              <p className="text-sm font-medium text-accent mb-3">
+              <p className="text-sm font-medium text-accent-foreground mb-3">
                 {facilitatedEngagement.subtitle}
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">

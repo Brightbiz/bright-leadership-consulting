@@ -9,20 +9,20 @@ const BASE_URL = "https://brightleadershipconsulting.com";
  * build date — the publish build has no history, so those re-stamp every page.
  */
 const entries = [
-  { path: "/", lastmod: "2026-10-29", changefreq: "monthly", priority: "1.0" },
+  { path: "/", lastmod: "2026-10-30", changefreq: "monthly", priority: "1.0" },
   { path: "/academy", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
   { path: "/leading-people", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
-  { path: "/executive-alignment-index", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.9" },
+  { path: "/executive-alignment-index", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.9" },
   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
   { path: "/contact", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
-  { path: "/strategic-leadership-ai", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+  { path: "/strategic-leadership-ai", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
   { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
   { path: "/strategic-productivity-peak-performance", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
   { path: "/strategic-ai-leadership-for-organisations", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.9" },
 
-  { path: "/courses", lastmod: "2026-10-29", changefreq: "monthly", priority: "0.7" },
+  { path: "/courses", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.7" },
   { path: "/augmented-leadership", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
   { path: "/advisory-process", lastmod: "2026-08-08", changefreq: "monthly", priority: "0.8" },
   { path: "/principal", lastmod: "2026-10-05", changefreq: "yearly", priority: "0.6" },

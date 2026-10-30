@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { Button } from "@/components/ui/button";
 import { openCookiePreferences } from "@/lib/consent";
 
 const footerLinks = [
@@ -46,7 +47,7 @@ const Footer = () => {
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
+                  className="text-sm text-navy-note tracking-wide transition-colors hover:text-navy-foreground"
                 >
                   {link.label}
                 </Link>
@@ -56,7 +57,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
+                  className="text-sm text-navy-note tracking-wide transition-colors hover:text-navy-foreground"
                 >
                   {link.label}
                 </a>
@@ -70,7 +71,7 @@ const Footer = () => {
               <Link
                 key={link.label}
                 to={link.href}
-                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
+                className="text-sm text-navy-note tracking-wide transition-colors hover:text-navy-foreground"
               >
                 {link.label}
               </Link>
@@ -85,7 +86,7 @@ const Footer = () => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-navy-foreground/70 tracking-wide transition-colors hover:text-navy-foreground"
+                className="text-sm text-navy-note tracking-wide transition-colors hover:text-navy-foreground"
               >
                 {link.label}
               </a>
@@ -107,18 +108,18 @@ const Footer = () => {
 
           <div className="flex flex-col gap-4 border-t border-navy-foreground/10 pt-8 md:flex-row md:items-start md:justify-between">
             <div className="space-y-1.5">
-              <p className="text-xs text-navy-foreground/60">
+              <p className="text-xs text-navy-note">
                 Bright Leadership Consulting
               </p>
-              <p className="text-xs text-navy-foreground/50">
+              <p className="text-xs text-navy-note">
                 Principal-led executive advisory and development
               </p>
-              <p className="text-xs text-navy-foreground/50">
+              <p className="text-xs text-navy-note">
                 Correspondence address: 82 James Carter Road, Mildenhall, England IP28 7DE.
               </p>
 
 
-              <p className="text-xs text-navy-foreground/50">
+              <p className="text-xs text-navy-note">
                 <a href="mailto:info@brightleadershipconsulting.com" className="transition-colors hover:text-navy-foreground">
                   info@brightleadershipconsulting.com
                 </a>
@@ -129,24 +130,25 @@ const Footer = () => {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link
                 to="/privacy"
-                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+                className="text-xs text-navy-note transition-colors hover:text-navy-foreground"
               >
                 Privacy Notice
               </Link>
               <Link
                 to="/terms"
-                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+                className="text-xs text-navy-note transition-colors hover:text-navy-foreground"
               >
                 Terms of Use
               </Link>
-              <button
+              <Button
+                variant="link"
                 type="button"
                 onClick={openCookiePreferences}
-                className="text-xs text-navy-foreground/60 transition-colors hover:text-navy-foreground"
+                className="h-auto p-0 text-xs font-normal text-navy-note transition-colors hover:text-navy-foreground"
               >
                 Cookie Preferences
-              </button>
-              <span className="text-xs text-navy-foreground/30">
+              </Button>
+              <span className="text-xs text-navy-note">
                 © {new Date().getFullYear()}
               </span>
             </div>

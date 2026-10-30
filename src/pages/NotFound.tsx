@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const NotFound = () => {
   const location = useLocation();
@@ -14,6 +15,12 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEOHead
+        title="Page Not Found | Bright Leadership Consulting"
+        description="The requested Bright Leadership Consulting page does not exist or has been moved."
+        path={location.pathname}
+        noindex
+      />
       <Header />
       <main className="flex-1 flex items-center">
         <div className="container-brief py-24">
