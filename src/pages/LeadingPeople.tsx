@@ -19,7 +19,8 @@ const ENQUIRY_BODY = [
   "Main development need:",
   "Preferred timing:",
 ].join("\n");
-const enquiryHref = `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(
+const enquiryHref = "/contact?cohort=leading-people#enquiry-form";
+const _unusedMailto = `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(
   ENQUIRY_SUBJECT,
 )}&body=${encodeURIComponent(ENQUIRY_BODY)}`;
 
