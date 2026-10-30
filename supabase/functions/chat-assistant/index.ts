@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { reserveQuota } from "./quota.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -91,8 +92,6 @@ Trigger [COLLECT_LEAD] when users say things like:
 
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 2000;
-const CHAT_RATE_LIMIT = 30; // max requests per IP per hour
-const CHAT_WINDOW_MINUTES = 60;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -126,34 +125,16 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const windowStart = new Date(Date.now() - CHAT_WINDOW_MINUTES * 60 * 1000).toISOString();
-    const { count, error: countError } = await supabase
-      .from("rate_limits")
-      .select("*", { count: "exact", head: true })
-      .eq("ip_address", clientIp)
-      .eq("form_type", "chat")
-      .gte("created_at", windowStart);
-
     const busy = () => new Response(
       JSON.stringify({ error: "Our assistant is busy right now. Please try again shortly." }),
       { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
-    // Fail closed: if the quota cannot be checked, do not call the paid AI service.
-    if (countError) {
-      console.error("Chat quota lookup failed");
-      return busy();
-    }
-    if ((count || 0) >= CHAT_RATE_LIMIT) {
-      return busy();
-    }
-
-    // Record this request; fail closed if it cannot be recorded.
-    const { error: insertError } = await supabase
-      .from("rate_limits")
-      .insert({ ip_address: clientIp, form_type: "chat" });
-    if (insertError) {
-      console.error("Chat quota record failed");
+    // Count and reserve under one database lock; every error fails closed.
+    const allowed = await reserveQuota(() =>
+      supabase.rpc("reserve_chat_quota", { _ip_address: clientIp })
+    );
+    if (!allowed) {
       return busy();
     }
 
