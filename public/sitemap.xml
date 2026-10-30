@@ -14,9 +14,15 @@
   </url>
   <url>
     <loc>https://brightleadershipconsulting.com/leading-people</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://brightleadershipconsulting.com/cpd</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://brightleadershipconsulting.com/executive-alignment-index</loc>
@@ -38,7 +44,7 @@
   </url>
   <url>
     <loc>https://brightleadershipconsulting.com/contact</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

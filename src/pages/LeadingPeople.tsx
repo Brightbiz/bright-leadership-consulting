@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -395,6 +396,9 @@ const LeadingPeople = () => {
                   </h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {q.answer}
+                    {q.question === "Is this a qualification?" && (
+                      <> <Link to="/cpd" className="link-quiet">CPD information and accredited executive programmes</Link>.</>
+                    )}
                   </p>
                 </motion.div>
               ))}
