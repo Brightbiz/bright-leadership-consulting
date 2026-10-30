@@ -174,7 +174,7 @@ export async function deliverBuyerAcknowledgement(
 
   if (!BUYER_ACK_EMAILS_ENABLED) {
     console.log(
-      `[email:suppressed:buyer-acknowledgement] to=${target} key=${message.idempotencyKey} subject="${subject}"`,
+      `[email:suppressed:buyer-acknowledgement] key=${message.idempotencyKey} test=${options.test ? "yes" : "no"}`,
     );
     return "pending";
   }

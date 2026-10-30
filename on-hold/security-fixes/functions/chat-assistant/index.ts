@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { reserveQuota } from "./quota.ts";
+import { guardHistory, HISTORY_RULE } from "./historyGuard.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -90,8 +91,6 @@ Trigger [COLLECT_LEAD] when users say things like:
 - "What sectors do you work with?" → Cross-sector experience including financial services, professional services, technology, healthcare, manufacturing, and the public sector
 - "What outcomes can we expect?" → Outcomes and measurement criteria are agreed at the outset of each engagement. Never quote a percentage or statistic.`;
 
-const MAX_MESSAGES = 20;
-const MAX_MESSAGE_LENGTH = 2000;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -102,19 +101,15 @@ serve(async (req) => {
     const body = await req.json();
     const { messages } = body;
 
-    // Input validation
-    if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) {
+    // Browser-supplied history is untrusted: no caller assistant role reaches the model.
+    const guarded = guardHistory(messages);
+    if (!guarded.ok) {
       return new Response(
-        JSON.stringify({ error: "Invalid request" }),
+        JSON.stringify({ error: guarded.reason }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-
-    // Sanitize messages
-    const sanitized = messages.map((m: any) => ({
-      role: ["user", "assistant"].includes(m.role) ? m.role : "user",
-      content: String(m.content || "").slice(0, MAX_MESSAGE_LENGTH),
-    }));
+    const sanitized = guarded.messages;
 
     // --- IP-based rate limiting ---
     const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
@@ -155,7 +150,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: `${SYSTEM_PROMPT}\n\n## CONVERSATION HISTORY\n${HISTORY_RULE}` },
             ...sanitized,
           ],
           stream: true,
@@ -187,7 +182,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (error) {
-    console.error("Chat assistant error:", error);
+    console.error("Chat assistant error:", error instanceof Error ? error.name : "unknown");
     return new Response(
       JSON.stringify({ error: "An unexpected error occurred. Please try again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }

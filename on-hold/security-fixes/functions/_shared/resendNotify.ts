@@ -1,3 +1,5 @@
+import { safeEmailLog } from "./logSafe.ts";
+
 // Best-effort internal notification emails sent through the Resend connector
 // gateway. brightleadershipconsulting.com must be verified in the linked
 // Resend account before Resend accepts mail from it; failures are logged and
@@ -13,6 +15,8 @@ export interface ResendNotifyInput {
   subject: string;
   text: string;
   replyTo?: string;
+  /** Record reference for diagnostics only (no personal data). */
+  reference?: string;
 }
 
 export async function sendResendNotification(
@@ -44,19 +48,19 @@ export async function sendResendNotification(
 
     if (!response.ok) {
       const errorBody = await response.text();
-      console.error(`Resend notification failed [${response.status}]: ${errorBody}`);
+      console.error(JSON.stringify(safeEmailLog("email:failed:notification", { reference: input.reference, status: response.status, raw: errorBody })));
       return { sent: false, status: response.status, error: errorBody.slice(0, 500) };
     }
 
     const body = await response.json().catch(() => null);
     if (body && (body as Record<string, unknown>).ok === false) {
-      console.error(`Resend notification rejected: ${JSON.stringify(body)}`);
+      console.error(JSON.stringify(safeEmailLog("email:rejected:notification", { reference: input.reference, status: 200, raw: JSON.stringify(body) })));
       return { sent: false, status: 200, error: JSON.stringify(body).slice(0, 500) };
     }
 
     return { sent: true };
   } catch (error) {
-    console.error("Resend notification error:", error);
+    console.error(JSON.stringify(safeEmailLog("email:error:notification", { reference: input.reference, raw: error instanceof Error ? error.message : error })));
     return { sent: false, error: String(error).slice(0, 500) };
   }
 }
