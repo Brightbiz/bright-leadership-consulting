@@ -63,17 +63,9 @@ const AdminCpdAudit = () => {
   const [filter, setFilter] = useState("");
 
   const load = async () => {
-    setLoadingSnapshot(true);
-    setLoadError(null);
-    try {
-      const res = await fetch(`/cpd-audit.json?t=${Date.now()}`);
-      if (!res.ok) throw new Error(`Snapshot unavailable (${res.status})`);
-      setSnapshot((await res.json()) as AuditSnapshot);
-    } catch (err) {
-      setLoadError(err instanceof Error ? err.message : "Unable to load the audit snapshot.");
-    } finally {
-      setLoadingSnapshot(false);
-    }
+    setSnapshot(null);
+    setLoadError("The detailed CPD audit is retained as an internal review report, not a public download. Online report access is on hold pending a separately approved protected delivery route.");
+    setLoadingSnapshot(false);
   };
 
   useEffect(() => {
