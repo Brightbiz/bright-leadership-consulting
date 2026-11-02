@@ -30,7 +30,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--brochure-focus)
   .hero::after { display: none; }
   section { padding: 24px 0; break-inside: auto; page-break-inside: auto; }
   .container { padding: 0 16px; }
-  h2, .phase-header { break-after: avoid; }
+  .section-label, h2, h3, h4, .phase-header { break-after: avoid; page-break-after: avoid; }
+  .section-label { display: flex; width: fit-content; }
+  .driver-card, .trigger-item, .dimension-card, .deliver-item, .module-pill { break-inside: avoid; page-break-inside: avoid; }
+  .trigger-grid { break-inside: avoid; page-break-inside: avoid; }
   .phase { margin-bottom: 20px; }
   .overview-card, .module-item, .learn-item, .assess-card, .benefit-card, .module-card, tr { break-inside: avoid; }
   .overview-card, .assess-card, .benefit-card { padding: 16px; }
