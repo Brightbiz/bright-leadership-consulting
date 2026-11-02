@@ -134,3 +134,4 @@
 - Open for decision: ungated brochure PDFs (stop collecting names/emails); chatbot staged prompt revision; 2 AI-audit log corrections staged; Future of Work / Advanced Leadership / Employability brochure review. Live tests not approved.
 
 - [ ] Academy: isolated Thinkific invitation test — recipient info@brightleadershipconsulting.com; awaiting course/cohort, method and explicit authorisation. Nothing sent.
+- [ ] Victoria to review/answer general enquiry b989c927 (30 Oct 2026) in admin CRM — genuine record, no action by agent.
