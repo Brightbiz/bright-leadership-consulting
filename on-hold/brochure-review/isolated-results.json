@@ -1,0 +1,267 @@
+{
+  "self_test": "passed before brochure use",
+  "popup_probe": "blocked",
+  "production_egress": 0,
+  "nonlocal_responses": 0,
+  "live_records_created": 0,
+  "reason": "all external and non-GET requests aborted before egress; download buttons made no requests",
+  "blocked_attempts": [
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "POST",
+      "host": "brightleadershipconsulting.com",
+      "path": "/isolation-probe"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "example.invalid",
+      "path": "/isolation-probe"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    },
+    {
+      "method": "GET",
+      "host": "fonts.googleapis.com",
+      "path": "/css2"
+    }
+  ],
+  "results": [
+    {
+      "brochure": "executive-leadership-mastery",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "executive-leadership-mastery",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "executive-leadership-mastery",
+      "pdf_pages": 7,
+      "final_page_characters": 450,
+      "footer_only_final_page": false
+    },
+    {
+      "brochure": "peak-performance",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "peak-performance",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "peak-performance",
+      "pdf_pages": 3,
+      "final_page_characters": 963,
+      "footer_only_final_page": false
+    },
+    {
+      "brochure": "future-of-work",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "future-of-work",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "future-of-work",
+      "pdf_pages": 3,
+      "final_page_characters": 960,
+      "footer_only_final_page": false
+    },
+    {
+      "brochure": "executive-alignment-index",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "executive-alignment-index",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "executive-alignment-index",
+      "pdf_pages": 3,
+      "final_page_characters": 749,
+      "footer_only_final_page": false
+    },
+    {
+      "brochure": "advanced-leadership-skills",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "advanced-leadership-skills",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "advanced-leadership-skills",
+      "pdf_pages": 4,
+      "final_page_characters": 659,
+      "footer_only_final_page": false
+    },
+    {
+      "brochure": "enhanced-employability-skills",
+      "width": 1280,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "enhanced-employability-skills",
+      "width": 375,
+      "forms": 0,
+      "keyboard_print": true,
+      "mouse_print": true,
+      "click_requests": 0,
+      "overflow": false
+    },
+    {
+      "brochure": "enhanced-employability-skills",
+      "pdf_pages": 3,
+      "final_page_characters": 624,
+      "footer_only_final_page": false
+    }
+  ],
+  "runtime_errors": []
+}
