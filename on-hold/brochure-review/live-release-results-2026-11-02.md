@@ -25,3 +25,5 @@ Publication requested after Victoria's 08:06 UTC approval. Approved release obse
 2. **Authenticated admin check:** deployed asset contains the exact report-hold notice; signed-out route redirects to /admin/login. The actual signed-in notice and refresh cannot be verified without an authorised session. Own-account session mint failed because no matching account was available; user sign-in to preview required. This is not a completed authenticated check.
 
 No backend deployment, legacy changes, emails, Thinkific changes, outreach or form submissions performed. All other holds remain.
+## Admin hold notice — closed 2 Nov 2026 09:06 UTC
+Victoria confirmed from the signed-in page text: hold notice displayed, catalogue ranges visible, no detailed audit findings. Peak four-page live print accepted (font cause, content unchanged). Release closed; no further publication.
