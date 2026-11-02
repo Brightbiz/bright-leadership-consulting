@@ -2,6 +2,24 @@
 
 **Preparation only. Nothing published, deployed or emailed; no live tests, records, historical logs or Thinkific settings touched.**
 
+## v4 correction and release decision — supersedes the v3 inspection/scope below
+Victoria identified outcomes 09–10 as unlabelled continuation on page 5 of ELM v3. Print-only rules now keep the complete outcomes container together and reduce its internal spacing, without changing outcome wording or screen layout. An initial keep-together render increased ELM to seven pages; compact print spacing resolved that regression. Final ELM v4 is six pages, with heading and all ten outcomes on page 4, assessments on page 5 and fee/closing/footer on page 6.
+All 15 final pages were rendered and visually checked; no clipping, stranded outcome headings, split outcome items, blank or footer-only pages found. Eight desktop/mobile print checks passed with zero external responses, production egress, click requests or runtime errors. Four legacy/CPD safeguard tests passed. External fonts remain blocked, so these are fallback-font checks. No live verification performed.
+
+### Brochure-only approval scope
+The proposed brochure release is limited to the four retained HTML files under public/brochures (ELM, Peak, Future of Work and EAI), public/brochures/review-accessibility.css, scripts/generate-sitemap.mjs and public/sitemap.xml. Four brochure lastmod dates remain 2026-11-02; this correction is on the same day, so no other dates change. Both legacy public HTML files still match recorded baseline 95414a1; their revised copies remain held.
+
+### Separate CPD-report decision: exact effects, NOT brochure approval
+The current publishable working version still contains these three unrelated changes; publication cannot be represented as brochure-only until they are separately resolved:
+- public/cpd-audit.json deletion: stops serving the detailed audit snapshot at https://brightleadershipconsulting.com/cpd-audit.json. The historical snapshot is retained under on-hold/cpd-audit/previous-public-snapshot.json. The deletion changes public report availability, not brochure CPD wording or accreditation.
+- scripts/generate-cpd-audit.mjs: changes default output from public/cpd-audit.json to on-hold/cpd-audit/snapshot.json and refuses public output. Normal generation cannot recreate a public report. No protected delivery is implemented.
+- src/pages/AdminCpdAudit.tsx: stops fetching that public JSON and shows a report-access hold notice instead. The authorised admin page and catalogue ranges remain; detailed findings, counts and asset rows no longer load online. Refresh repeats the hold notice. Admins temporarily lose detailed online report access until a separately approved protected route exists.
+These are website/generation changes, not backend deployment. No other visitor-facing source changes were identified against recorded baseline 95414a1. Review/test/hold documents are non-public. Previously deployed function-source differences and staged chatbot/AI-audit replacements are excluded from deployment authority.
+
+**Decision required:** approve the four-brochure candidate, then separately approve the three CPD-report effects above or keep publication held pending an isolated release version. The report has not been restored to public merely to hide this dependency. No combined publication is authorised by approving brochures alone.
+
+## Historical v3 note (inspection and combined scope below superseded above)
+
 ## Four revised brochures
 - **ELM:** approximately 3–4 hours weekly over 16 weeks; 33 core modules plus welcome/foundation chapter; project delivery added under Module 14. Removed inconsistent per-module hours/CPD allocations and unconfirmed monthly Q&A, every-module quizzes and 70% progression promises. Original teaching documents contain the latter historically, but current delivery is not verified.
 - **Peak Performance:** original source confirms seven modules. Restored documented titles: Productivity, Company Productivity, Individual Productivity, Assessment, Finances, Employees, Planning. Replaced unsupported Research-Based Content claim with Workplace Focus.
