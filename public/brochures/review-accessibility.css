@@ -33,7 +33,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--brochure-focus)
   .section-label, h2, h3, h4, .phase-header { break-after: avoid; page-break-after: avoid; }
   .section-label { display: flex; width: fit-content; }
   .driver-card, .trigger-item, .dimension-card, .deliver-item, .module-pill { break-inside: avoid; page-break-inside: avoid; }
-  .trigger-grid { break-inside: avoid; page-break-inside: avoid; }
+  .trigger-grid, .commission-section .container, .fee-panel { break-inside: avoid; page-break-inside: avoid; }
+  .assess-grid { grid-template-columns: repeat(2, 1fr); }
+  .assess-card { overflow-wrap: anywhere; }
   .phase { margin-bottom: 20px; }
   .overview-card, .module-item, .learn-item, .assess-card, .benefit-card, .module-card, tr { break-inside: avoid; }
   .overview-card, .assess-card, .benefit-card { padding: 16px; }
