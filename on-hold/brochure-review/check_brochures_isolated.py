@@ -3,7 +3,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 from playwright.async_api import async_playwright
 import fitz
-OUT=Path(__file__).parent
+OUT=Path('/tmp/browser/brochure-finish')
+OUT.mkdir(parents=True, exist_ok=True)
 SLUGS=['executive-leadership-mastery','peak-performance','future-of-work','executive-alignment-index','advanced-leadership-skills','enhanced-employability-skills']
 async def main():
  async with async_playwright() as p:
