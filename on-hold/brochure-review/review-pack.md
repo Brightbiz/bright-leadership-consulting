@@ -1,5 +1,28 @@
 # Preparation-only review pack — 2 November 2026
 
+## Superseding correction review — Victoria, 07:00 UTC, 2 November 2026
+The original six-brochure recommendation below is historical and is NOT release approval. The latest release candidate contains only ELM, Peak, Future Workplace and EAI. Both legacy revisions are held under `on-hold/brochure-review/legacy`; public legacy HTML is byte-identical to recorded published commit 95414a1, preserving existing direct access without releasing the revised availability claims. No Thinkific settings or live pages were changed.
+
+### Exact targeted corrections
+- ELM: approved approximately 3–4 hours weekly over 16 weeks; conflicting 2–3 hours/module and per-module CPD allocations removed. Welcome/foundation chapter distinguished from 33 core modules. Module 14 retains Strategic Planning and now includes project delivery, using Victoria's latest instruction for placement; the exact earlier detailed addition could not be found, so no new lessons/delivery promises were invented.
+- ELM: removed monthly live Q&A, every-module quiz and 70% progression promises. Historical teaching documents support these historically, but current provision/enforcement is unverified; use neutral assessment wording pending confirmation.
+- Peak: seven-module count verified against original programme PDF, p. 2. Restored its exact titles: Productivity; Company Productivity; Individual Productivity; Assessment; Finances; Employees; Planning. Removed research-validation claim because the old marketing assertion has no substantiation dossier. Current platform equivalence is not established by this documentary check.
+- Future Workplace: Key Focus Areas stays with its heading and content.
+- EAI: all five commissioning items, including Rapid growth phases, stay with their heading and introduction. Removed Most executive teams assume alignment and objective visibility; methodology now identifies participant-reported perspectives and expressly disclaims independent verification.
+- Print: two-column ELM assessment cards avoid excessive height; fee panel remains whole; compact print-only closing sections prevent unnecessary final pages. Original screen design retained.
+
+### Isolated verification, superseding earlier counts
+Four brochures at 1280×1800 and 375×812: no forms/inputs, keyboard and mouse print successful, zero click requests, no horizontal overflow or runtime errors. DNS kill switch, context-wide deny-by-default, service-worker blocking, pre-run POST and popup probes passed; zero non-local responses/production egress, no records or emails. All 15 A4 pages rendered to images and visually inspected: ELM 6; Peak 3; Future 3; EAI 3. Found and fixed a split ELM fee panel, overly tall assessment cards, and separated EAI commissioning introduction/list. Final pass shows no stranded section headings or split list items, clipped text, blank or footer-only pages. Fonts were blocked deliberately: PDFs use fallback fonts, not verified Google-font output. 13 existing commercial/privacy regression tests pass; latest observed preview build is OK.
+
+### Current combined publication scope (not authorised)
+Four retained brochure HTML files; shared review-accessibility.css; scripts/generate-sitemap.mjs and public/sitemap.xml (four brochure dates remain 2026-11-02, already today's date); earlier internal CPD-report changes in scripts/generate-cpd-audit.mjs, public/cpd-audit.json removal and src/pages/AdminCpdAudit.tsx. No legacy HTML differences remain versus recorded baseline. Non-public hold/test/document files are not public release content. Baseline/live equivalence was not freshly checked because live testing remains held.
+
+### Backend and open decisions
+No backend changes in this correction task. Earlier chatbot and AI-audit logging corrections remain staged only. Publication, deployment, email and live-test holds remain. ELM's detailed Module 14 wording and current delivery configuration need evidence before full curriculum sign-off; Peak's current platform titles need confirmation if different from the documented original. Advanced Leadership is held as retired/project-delivery transferred per Victoria's latest review, not independently verified against prior decision records. Employability catalogue disposition remains undecided. Earlier PDF versions remain historical; only the four v3 PDFs belong in the current review collection; no duplicate Employability copy is included.
+
+---
+## Historical preparation record (superseded where the correction review above differs)
+
 ## Authority and holds
 All six recommended preparation actions implemented. Nothing published, deployed, emailed or live-tested. No database reads/writes or historical-log changes were made in this task. No Thinkific settings changed. Release and live testing require separate approval.
 
