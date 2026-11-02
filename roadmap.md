@@ -132,3 +132,5 @@
 ## Incident 30 Oct 2026 — synthetic brochure records (closed)
 - 5 Peak Performance download records (synthetic@example.invalid, "Synthetic Test", 19:11:26–19:11:33 UTC = London time) reached live via preview test; deleted by exact ID with Victoria's approval; incident logged in admin action log; rate-limit entries untouched.
 - Open for decision: ungated brochure PDFs (stop collecting names/emails); chatbot staged prompt revision; 2 AI-audit log corrections staged; Future of Work / Advanced Leadership / Employability brochure review. Live tests not approved.
+
+- [ ] Academy: isolated Thinkific invitation test — recipient info@brightleadershipconsulting.com; awaiting course/cohort, method and explicit authorisation. Nothing sent.
