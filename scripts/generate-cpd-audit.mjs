@@ -4,11 +4,11 @@
  *
  * Produces a machine-readable snapshot of every downloadable asset's stated
  * CPD hours alongside the expected range from src/data/programmes.ts.
- * The snapshot is consumed by the admin-only audit page at /admin/cpd-audit.
+ * The full snapshot is internal review material, never a public static asset.
  *
  * Usage:
  *   node scripts/generate-cpd-audit.mjs
- *   node scripts/generate-cpd-audit.mjs --out public/cpd-audit.json
+ *   node scripts/generate-cpd-audit.mjs --out on-hold/cpd-audit/snapshot.json
  */
 
 import { readFileSync, readdirSync, statSync, mkdirSync, writeFileSync } from "node:fs";
@@ -18,8 +18,13 @@ const args = process.argv.slice(2);
 const ROOT = resolve(args.includes("--root") ? args[args.indexOf("--root") + 1] : process.cwd());
 const OUT = resolve(
   ROOT,
-  args.includes("--out") ? args[args.indexOf("--out") + 1] : "public/cpd-audit.json"
+  args.includes("--out") ? args[args.indexOf("--out") + 1] : "on-hold/cpd-audit/snapshot.json"
 );
+const publicRoot = resolve(ROOT, "public");
+const outRelative = relative(publicRoot, OUT);
+if (!outRelative.startsWith("..") && !outRelative.startsWith("/")) {
+  throw new Error("Internal CPD audit output must not be written under public.");
+}
 const CATALOGUE = "src/data/programmes.ts";
 
 /* ---------------------------------------------------------------- catalogue */
