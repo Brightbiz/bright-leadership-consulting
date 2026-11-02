@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-const src = readFileSync("on-hold/security-fixes/functions/chat-assistant/index.ts", "utf8");
+const src = readFileSync("supabase/functions/chat-assistant/index.ts", "utf8");
 const prompt = src.slice(src.indexOf("const SYSTEM_PROMPT = `"), src.indexOf("`;", src.indexOf("const SYSTEM_PROMPT = `")));
 describe("staged chatbot instructions", () => {
   it.each(["98%", "40%", "25+", "10+ years", "24 hours", "training provider", "up to 12", "worldwide", "360", "psychometric", "scoping proposal"])("no unsupported claim: %s", (s) => expect(prompt).not.toContain(s));
