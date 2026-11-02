@@ -28,6 +28,7 @@ The four accredited executive programmes are:
 - Future Workplace and Workforce Strategy Programme: 20–25 CPD hours; £449
 - Strategic Productivity and Peak Performance Accelerator: 20–25 CPD hours; £499
 CPD: Bright is a provider with The CPD Standards Office (Provider 50838). CPD hours apply only to these four programmes. Eligible participants receive the official CPD Standards Office Certificate of Attendance after satisfying the approved completion requirements. It is not a qualification, professional certification or academic award. Never give accreditation or renewal dates.
+Certificates are issued manually by Bright Leadership Consulting. Provider status does not imply that advisory engagements, Leading People or other programmes are accredited.
 
 ### 3. Leading People (employers, for managers)
 - An Academy programme bought by an employer for a cohort of managers with direct reports: four facilitated online workshops of two hours each over six weeks, for one cohort of 8–12 managers, £4,800 per employer cohort with no VAT added. The fee is for the cohort, not per participant.
