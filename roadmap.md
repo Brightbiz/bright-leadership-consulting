@@ -123,7 +123,8 @@
 - [x] LIA v5 draft (unsigned): personal-data statement corrected, data-held split with retention/deletion, selection description, LinkedIn sentence, controller line, batch record.
 - [x] Workbook v3 (Outreach_Shortlist_and_Companies_House_Check_16Oct2026_v3.xlsx): "Operations batch (21)", Ridge Crest removed, five retentions annotated.
 - [x] 2 Nov 11:16 Irene approved assessment scope (v5.2 with pack v6) plus retention decisions; recorded in v5.3/v7 (retention-only change, v5.2 preserved).
-- [ ] AWAITING Victoria/Irene: (1) authorise loading operations version into live sender; (2) fresh live-template match + fingerprint coverage; (3) authorise one test email to aguns70418@aol.com; (4) approve final recipient list, content, sending time. Outreach hold remains.
+- [x] 2 Nov 11:2x loaded operations HTML+text (review pack v7 section 5) into send-outreach-drafts; local fingerprint ed6597052d51b383bcf45ea1e9ef3d4996f40815e605168f060f7c838fa6f609 matches; 20 simulated tests pass (footer test updated to approved footer line); deployed source sha 2070f5a1…153e. Pre-check: 0 approvals, 0 unsent drafts, 0 cron jobs; unchanged after. No records/drafts/approvals/schedules/sends.
+- [ ] AWAITING Irene: (1) authorise one test email to aguns70418@aol.com; (2) approve final recipient list, content, sending time. Outreach hold remains.
 
 - [x] 30 Oct: /admin/participants and the Leading People employer cohort enquiry labels PUBLISHED and verified live (admin page loads signed-in; empty table; tests pass). Header spacing defect found and fixed in the same release: desktop menu now shows only at 1280px+ with a 1400px header container and two-line CTA; logo no longer collides with the menu; mobile menu shows below 1280px; verified 375-1440px, no overflow.
 - [x] 30 Oct: Leading People participant records (one per email, no duplicate cohort places, Thinkific account/invitation status tracked in admin; no sends, Thinkific untouched).
