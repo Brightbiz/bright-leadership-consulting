@@ -248,8 +248,8 @@ Deno.test("footer carries Irene A. Agunbiade in both versions", async () => {
   const appr = await approvalFor(ds.filter((d) => ["d1"].includes(d.id)));
   const { deps, sent } = makeDeps({ drafts: ds, approval: appr });
   await runBatchSend(deps, "appr-1");
-  assert(sent[0].html.includes("Irene A. Agunbiade &middot; Principal Consultant"));
-  assert(sent[0].text.includes("Irene A. Agunbiade, Principal Consultant"));
+  assert(sent[0].html.includes("Irene A. Agunbiade, operating under the business name Bright Leadership Consulting"));
+  assert(sent[0].text.includes("Irene A. Agunbiade, operating under the business name Bright Leadership Consulting"));
 });
 
 // Any change to subject, address or merge fields after approval cancels it.
