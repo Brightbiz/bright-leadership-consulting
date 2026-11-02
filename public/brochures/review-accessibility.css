@@ -35,6 +35,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--brochure-focus)
   .driver-card, .trigger-item, .dimension-card, .deliver-item, .module-pill { break-inside: avoid; page-break-inside: avoid; }
   .trigger-grid, .commission-section .container, .fee-panel { break-inside: avoid; page-break-inside: avoid; }
   .learn-section .container { break-inside: avoid; page-break-inside: avoid; }
+  .learn-section h2 { font-size: 28px; margin-bottom: 12px; }
+  .learn-section .section-label { margin-bottom: 8px; }
+  .learn-grid { gap: 10px; margin-top: 16px; }
+  .learn-item { padding: 10px; }
   .assess-grid { grid-template-columns: repeat(2, 1fr); }
   .assess-card { overflow-wrap: anywhere; }
   .phase { margin-bottom: 20px; }
