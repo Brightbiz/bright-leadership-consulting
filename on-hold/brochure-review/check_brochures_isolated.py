@@ -3,9 +3,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 from playwright.async_api import async_playwright
 import fitz
-OUT=Path('/tmp/browser/brochure-finish')
+OUT=Path('/tmp/browser/brochure-corrections')
 OUT.mkdir(parents=True, exist_ok=True)
-SLUGS=['executive-leadership-mastery','peak-performance','future-of-work','executive-alignment-index','advanced-leadership-skills','enhanced-employability-skills']
+SLUGS=['executive-leadership-mastery','peak-performance','future-of-work','executive-alignment-index']
 async def main():
  async with async_playwright() as p:
   browser=await p.chromium.launch(headless=True,args=['--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost, EXCLUDE 127.0.0.1'])
@@ -50,7 +50,10 @@ async def main():
    await page.pdf(path=str(OUT/f'{slug}.pdf'),format='A4',print_background=True,prefer_css_page_size=True)
    doc=fitz.open(OUT/f'{slug}.pdf');texts=[p.get_text() for p in doc]
    last=texts[-1];assert len(last.strip())>350,slug+' footer-only or blank final PDF page: '+repr(last)
-   doc[-1].get_pixmap(matrix=fitz.Matrix(1,1)).save(OUT/f'{slug}-final-page.png')
+   for number,pdf_page in enumerate(doc,1):
+    pdf_page.get_pixmap(matrix=fitz.Matrix(1.4,1.4)).save(OUT/f'{slug}-page-{number}.png')
+   for number,text in enumerate(texts,1):
+    print(slug,'page',number,'first:',repr(text[:120]),'last:',repr(text[-180:]))
    result.append({'brochure':slug,'pdf_pages':len(texts),'final_page_characters':len(last.strip()),'footer_only_final_page':False})
   assert not external_responses
   assert not errors,errors
