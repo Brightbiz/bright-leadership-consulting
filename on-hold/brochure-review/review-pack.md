@@ -1,5 +1,10 @@
 # Preparation-only review pack — 2 November 2026
 
+## Latest v4 review — Victoria, 07:14 UTC, 2 November 2026
+The v3 inspection missed the ELM outcomes 09–10 continuation. Print-only compact spacing and a keep-together outcomes container now place heading and outcomes 01–10 together on page 4, retaining six ELM pages. All 15 final PDF pages visually checked; eight isolated desktop/mobile print flows passed, zero production egress/click requests/runtime errors; four legacy/CPD safeguard tests passed. The initial keep-together attempt created an extra page and was corrected before delivery. Full exact release/CPD effects are in correction-note.md.
+
+Brochure-only candidate: four retained brochure HTML pages, shared print/accessibility CSS, sitemap generator and sitemap; four dates remain 2026-11-02. Current working version is NOT yet brochure-only: public/cpd-audit.json deletion, scripts/generate-cpd-audit.mjs internal output restriction and src/pages/AdminCpdAudit.tsx detailed-report hold still need separate approval or an isolated release version. Brochure approval alone must not publish those effects. Legacy revisions and backend corrections remain held. Nothing published, deployed, sent or live-tested.
+
 ## Superseding correction review — Victoria, 07:00 UTC, 2 November 2026
 The original six-brochure recommendation below is historical and is NOT release approval. The latest release candidate contains only ELM, Peak, Future Workplace and EAI. Both legacy revisions are held under `on-hold/brochure-review/legacy`; public legacy HTML is byte-identical to recorded published commit 95414a1, preserving existing direct access without releasing the revised availability claims. No Thinkific settings or live pages were changed.
 
