@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { recordFailureDiagnostic, unexpectedFailureDiagnostic } from "../_shared/aiAuditDiagnostics.ts";
 import {
   buyerAcknowledgement,
   deliverBuyerAcknowledgement,
@@ -258,7 +259,7 @@ Deno.serve(async (req) => {
     });
 
     if (rpcError || !result) {
-      console.error(JSON.stringify({ event: "ai_audit:record_failed", code: rpcError?.code ?? "unknown" }));
+      console.error(JSON.stringify(recordFailureDiagnostic(rpcError)));
       return json({ error: "Could not record the request." }, 500);
     }
 
@@ -316,7 +317,7 @@ Deno.serve(async (req) => {
       crmStatus: outcome.crm_status,
     });
   } catch (error) {
-    console.error(JSON.stringify({ event: "ai_audit:unexpected_error", name: error instanceof Error ? error.name : "unknown" }));
+    console.error(JSON.stringify(unexpectedFailureDiagnostic(error)));
     return json({ error: "Unexpected error." }, 500);
   }
 });
