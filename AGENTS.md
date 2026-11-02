@@ -26,5 +26,5 @@ Webinar captions render in a separate strip below the video so they never obscur
 - Browser tests touching forms must use on-hold/security-fixes/isolated_run_template.py guards (DNS kill switch + context-wide deny-by-default + pre-run self-test); page-level interception alone let a preview test write to live data.
 - Standalone brochures share review-accessibility.css for keyboard focus, narrow-screen sizing and A4 pagination, so PDF access stays ungated without duplicating collection code.
 - Legacy brochure revisions stay under on-hold/brochure-review/legacy; public legacy files retain the recorded published baseline until removal is separately approved, so an unrelated publication cannot release held revisions or remove existing direct links.
-- Staged AI-audit diagnostics use fixed code and native-type allowlists in aiAuditDiagnostics.ts; mutable error properties cannot safely be logged even when named code or name.
+- AI-audit diagnostics use the deployed shared aiAuditDiagnostics.ts helper with fixed code and native-type allowlists; mutable error properties cannot safely be logged even when named code or name.
 - Detailed CPD audit snapshots are generated under on-hold/cpd-audit, never public or client bundles; the admin catalogue remains available but full report delivery requires a separately approved protected route.
