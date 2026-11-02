@@ -28,10 +28,6 @@
     background: linear-gradient(135deg, var(--dark) 0%, var(--teal-dark) 50%, var(--teal) 100%);
     display: flex; align-items: center; padding: 80px 40px;
   }
-  .hero::before {
-    content: ''; position: absolute; top: -30%; right: -10%; width: 500px; height: 500px;
-    border-radius: 50%; background: var(--amber); opacity: 0.06;
-  }
   .hero::after {
     content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
     background: linear-gradient(to top, #fff, transparent);
@@ -186,6 +182,7 @@
     .trigger-grid { grid-template-columns: 1fr; }
   }
 </style>
+<link rel="stylesheet" href="/brochures/review-accessibility.css">
 </head>
 <body>
 
@@ -206,32 +203,26 @@
     <p class="what-intro">The Executive Alignment Index (EAI) is a structured governance instrument that measures executive variance across six critical dimensions. It does not measure sentiment. It measures structural cohesion.</p>
     <div class="dimension-grid">
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Strategic Interpretation</h4>
         <p>Consistency in how executives interpret strategic direction</p>
       </div>
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Decision Rights Clarity</h4>
         <p>Defined ownership of decision authority across functions</p>
       </div>
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Cross-Functional Coordination</h4>
         <p>Alignment of processes and priorities between divisions</p>
       </div>
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Escalation Pathways</h4>
         <p>Structured routes for issue resolution and governance</p>
       </div>
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Accountability Architecture</h4>
         <p>Clarity of ownership, reporting lines, and outcomes</p>
       </div>
       <div class="dimension-card">
-        <div class="dimension-icon">&#9670;</div>
         <h4>Risk Ownership</h4>
         <p>Distribution and acceptance of risk at executive level</p>
       </div>
