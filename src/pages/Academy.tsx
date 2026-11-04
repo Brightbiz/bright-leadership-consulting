@@ -3,6 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import { programmes } from "@/data/programmes";
 
 const Academy = () => (
   <div className="min-h-screen bg-background">
@@ -37,12 +38,24 @@ const Academy = () => (
           <div className="max-w-[680px]">
             <p className="kicker mb-6">Experienced and aspiring senior leaders</p>
             <h2 className="heading-section mb-6">Executive development</h2>
-            <p className="body-brief mb-8">Review Bright's existing executive programmes, including Executive Leadership Mastery and Strategic Leadership in the Age of AI. Individual places do not require a diagnostic.</p>
+            <p className="body-brief mb-8">Four CPD-accredited executive programmes. Individual places do not require a diagnostic.</p>
             <div className="flex flex-col items-start gap-6">
-              <Link to="/executive-leadership-mastery" className="link-quiet">Executive Leadership Mastery Programme</Link>
-              <Link to="/strategic-leadership-ai" className="link-quiet">Strategic Leadership in the Age of AI</Link>
+              {programmes.map((programme) => (
+                <Link key={programme.title} to={programme.detailPage ?? "/courses"} className="link-quiet">
+                  {programme.title}
+                </Link>
+              ))}
               <Link to="/courses" className="btn-brief">Explore the executive catalogue</Link>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-brief section-pearl">
+        <div className="container-brief">
+          <div className="max-w-[680px]">
+            <p className="kicker mb-6">Further reading</p>
+            <p className="body-brief mb-8">Short articles on leadership decisions and judgement, written for practising leaders.</p>
+            <Link to="/insights" className="link-quiet">Read Insights</Link>
           </div>
         </div>
       </section>

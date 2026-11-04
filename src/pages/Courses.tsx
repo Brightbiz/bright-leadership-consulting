@@ -71,6 +71,18 @@ const Courses = () => {
                 Executive advisory engagements for leadership teams
                 begin with structural measurement. This is not a prerequisite for Leading People.
               </motion.p>
+
+              <motion.nav
+                aria-label="On this page"
+                className="mt-12 flex flex-wrap gap-x-8 gap-y-3"
+                {...fade}
+                transition={{ ...fade.transition, delay: 0.25 }}
+              >
+                <a href="#programme-catalogue" className="link-quiet text-sm">Programme catalogue</a>
+                <a href="#comparison" className="link-quiet text-sm">Comparison</a>
+                <a href="#which-programme" className="link-quiet text-sm">Which programme is right for me?</a>
+                <a href="#cpd-hours" className="link-quiet text-sm">CPD hours explained</a>
+              </motion.nav>
             </div>
           </div>
         </section>

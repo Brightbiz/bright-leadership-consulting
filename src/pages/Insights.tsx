@@ -38,6 +38,17 @@ const Insights = () => (
               </li>
             ))}
           </ul>
+          <div className="mt-16 border-t border-border pt-10">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+              Next step
+            </p>
+            <p className="mt-4 leading-relaxed text-muted-foreground">
+              Structured development for managers and senior leaders sits with the Bright Leadership Academy.
+            </p>
+            <Link to="/academy" className="mt-4 inline-block border-b border-foreground/25 pb-0.5 text-sm tracking-[0.03em] transition-colors hover:border-foreground">
+              Explore the Academy
+            </Link>
+          </div>
         </div>
       </div>
     </main>
