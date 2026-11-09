@@ -41,3 +41,13 @@ The reviewed implementation is retained. Publication is on hold pending your dec
 
 ## 7. Decision and access route (13:24 UTC)
 Victoria recommends including 6602274 in the eventual release scope. Accepting it into scope does not authorise publication. The id-preview address is private: it requires a Lovable sign-in with access to the project, so further unauthenticated retries will not help. Route: Share → Share a preview link (view-only, no editor access, may expire or be password-protected). Once a link is supplied, the outstanding hosted checks will run with production analytics blocked, consent rejected and form submissions denied.
+
+## 8. Hosted-preview checks completed (13:35 UTC)
+Opened via the shared view-only preview link. Guards: DNS kill switch for all non-preview hosts, context-wide deny of every non-GET request, pre-run self-test (backend submit and GA collect both BLOCKED), cookie banner rejected. Result: 0 responses from any non-preview host; blocked attempts included google-analytics.com and the form backend. No form submitted.
+- Home, Academy, Courses, Courses#comparison, Insights, Contact load at 1280, 768 and 390 px with no horizontal overflow.
+- Homepage actions: one primary "Discuss Executive Alignment"; "Explore Bright Leadership Academy" → /academy.
+- Academy: all four programme links plus Leading People load (/leading-people, /executive-leadership-mastery, /strategic-leadership-ai, /future-of-work, /strategic-productivity-peak-performance).
+- Leading People enquiry links → /contact?cohort=leading-people#enquiry-form.
+- Three retained brochures (ELM, Future of Work, Peak Performance) use programme-specific same-origin enquiry links; the three legacy/other brochures still use the plain live /contact link (unchanged, outside this revision).
+- Sitemap: seven entries dated 2026-11-09.
+Limits: fonts/platform scripts were blocked, so typography is a fallback-font render; hosting-injected telemetry was blocked, not observed.
