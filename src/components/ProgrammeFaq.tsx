@@ -93,8 +93,8 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
     {
       q: "How much time should I set aside?",
       a: hours
-        ? `The accredited range is ${hours}. The lower bound reflects the structured content; the upper bound includes the applied work and closing exercise. Most participants spread this across the enrolment period rather than working through it continuously.`
-        : "Time commitment reflects the structured content plus the applied work and closing exercise, spread across the enrolment period.",
+        ? `Approved CPD hours: ${hours}.`
+        : "Approved CPD hours are stated on each programme page.",
     },
     {
       q: "What is the difference between self-directed and facilitated delivery?",

@@ -266,7 +266,7 @@ const Terms = () => {
                 className="font-serif text-xl font-medium text-foreground mb-6"
                 {...fade}
               >
-                How CPD hours are determined
+                Approved CPD hours
               </motion.h2>
               <CpdHoursFaq />
             </div>

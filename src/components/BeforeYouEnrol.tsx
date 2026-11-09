@@ -48,8 +48,8 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
     {
       q: "How long does completion usually take?",
       a: hours
-        ? `Most participants complete in line with the accredited range of ${hours}, spread across the enrolment period. The lower bound is the structured content; the upper bound includes the applied work and closing exercise.`
-        : "Completion time reflects the structured content plus the applied work and closing exercise, spread across the enrolment period.",
+        ? `Approved CPD hours: ${hours}.`
+        : "Approved CPD hours are stated on each programme page.",
     },
     {
       q: "What support is included?",

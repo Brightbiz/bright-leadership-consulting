@@ -1,0 +1,134 @@
+diff --git a/scripts/generate-sitemap.mjs b/scripts/generate-sitemap.mjs
+index acc5549..0f47af9 100644
+--- a/scripts/generate-sitemap.mjs
++++ b/scripts/generate-sitemap.mjs
+@@ -17,20 +17,20 @@ const entries = [
+   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
+   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+   { path: "/contact", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+-  { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+-  { path: "/strategic-leadership-ai", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
+-  { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
+-  { path: "/strategic-productivity-peak-performance", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
++  { path: "/executive-leadership-mastery", lastmod: "2026-11-10", changefreq: "monthly", priority: "0.8" },
++  { path: "/strategic-leadership-ai", lastmod: "2026-11-10", changefreq: "monthly", priority: "0.8" },
++  { path: "/future-of-work", lastmod: "2026-11-10", changefreq: "monthly", priority: "0.8" },
++  { path: "/strategic-productivity-peak-performance", lastmod: "2026-11-10", changefreq: "monthly", priority: "0.8" },
+   { path: "/strategic-ai-leadership-for-organisations", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.9" },
+ 
+-  { path: "/courses", lastmod: "2026-11-04", changefreq: "monthly", priority: "0.7" },
++  { path: "/courses", lastmod: "2026-11-10", changefreq: "monthly", priority: "0.7" },
+   { path: "/augmented-leadership", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+   { path: "/advisory-process", lastmod: "2026-08-08", changefreq: "monthly", priority: "0.8" },
+   { path: "/principal", lastmod: "2026-10-05", changefreq: "yearly", priority: "0.6" },
+   { path: "/insights", lastmod: "2026-11-04", changefreq: "monthly", priority: "0.6" },
+   { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
+   { path: "/privacy", lastmod: "2026-10-29", changefreq: "yearly", priority: "0.3" },
+-  { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
++  { path: "/terms", lastmod: "2026-11-10", changefreq: "yearly", priority: "0.3" },
+   { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+   { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+   { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+diff --git a/src/components/BeforeYouEnrol.tsx b/src/components/BeforeYouEnrol.tsx
+index 9e0b269..d2e1eaf 100644
+--- a/src/components/BeforeYouEnrol.tsx
++++ b/src/components/BeforeYouEnrol.tsx
+@@ -48,8 +48,8 @@ const BeforeYouEnrol = ({ programmeTitle }: Props) => {
+     {
+       q: "How long does completion usually take?",
+       a: hours
+-        ? `Most participants complete in line with the accredited range of ${hours}, spread across the enrolment period. The lower bound is the structured content; the upper bound includes the applied work and closing exercise.`
+-        : "Completion time reflects the structured content plus the applied work and closing exercise, spread across the enrolment period.",
++        ? `Approved CPD hours: ${hours}.`
++        : "Approved CPD hours are stated on each programme page.",
+     },
+     {
+       q: "What support is included?",
+diff --git a/src/components/ProgrammeFaq.tsx b/src/components/ProgrammeFaq.tsx
+index 690f877..235172b 100644
+--- a/src/components/ProgrammeFaq.tsx
++++ b/src/components/ProgrammeFaq.tsx
+@@ -93,8 +93,8 @@ const ProgrammeFaq = ({ programmeTitle }: Props) => {
+     {
+       q: "How much time should I set aside?",
+       a: hours
+-        ? `The accredited range is ${hours}. The lower bound reflects the structured content; the upper bound includes the applied work and closing exercise. Most participants spread this across the enrolment period rather than working through it continuously.`
+-        : "Time commitment reflects the structured content plus the applied work and closing exercise, spread across the enrolment period.",
++        ? `Approved CPD hours: ${hours}.`
++        : "Approved CPD hours are stated on each programme page.",
+     },
+     {
+       q: "What is the difference between self-directed and facilitated delivery?",
+diff --git a/src/data/cpd-faq.json b/src/data/cpd-faq.json
+index 0ed1823..b909ba1 100644
+--- a/src/data/cpd-faq.json
++++ b/src/data/cpd-faq.json
+@@ -2,16 +2,12 @@
+   "note": "Single source of truth for the CPD hours FAQ. Rendered by src/components/CpdHoursFaq.tsx and printed into the programme portfolio PDF by scripts/generate-programme-brochure.mjs. {{PROGRAMME_HOURS}} is replaced with the catalogue's title/hours list at render time.",
+   "items": [
+     {
+-      "q": "Why are CPD hours stated as a range rather than a fixed number?",
+-      "a": "Accredited CPD hours reflect verifiable learning time, and that time varies with how deeply a participant engages the working documents, diagnostics and capstone exercises. The lower bound is the structured content itself; the upper bound includes the applied work, written reflections and capstone submission. Both bounds fall within the accredited range recorded with The CPD Standards Office (Provider Number 50838)."
+-    },
+-    {
+-      "q": "How is the range for each programme determined?",
+-      "a": "Each range is set at programme level from module count, taught content length and the applied work attached to it. {{PROGRAMME_HOURS}}."
++      "q": "What CPD hours does each programme carry?",
++      "a": "Approved CPD hours are stated as a range for each programme, as recorded with The CPD Standards Office (Provider Number 50838). {{PROGRAMME_HOURS}}."
+     },
+     {
+       "q": "What counts as completion?",
+-      "a": "Completion means every module in the programme has been worked through and the capstone or closing exercise has been submitted within the learning platform. For the Executive Leadership Mastery Programme this is all thirty-three modules; for Strategic Leadership in the Age of AI it is the ten modules plus the AI Leadership Blueprint™ Canvas; for the Future Workplace and Workforce Strategy Programme and the Strategic Productivity and Peak Performance Accelerator it is the full module sequence plus the closing applied exercise. Partial completion is recorded module by module but does not carry the full accredited range."
++      "a": "Completion means satisfying the approved completion requirements for the programme, as confirmed on enrolment."
+     },
+     {
+       "q": "Who records the hours?",
+diff --git a/src/pages/Courses.tsx b/src/pages/Courses.tsx
+index 9413777..f374f77 100644
+--- a/src/pages/Courses.tsx
++++ b/src/pages/Courses.tsx
+@@ -83,7 +83,7 @@ const Courses = () => {
+                 <a href="#programme-catalogue" className="link-quiet text-sm">Programme catalogue</a>
+                 <a href="#comparison" className="link-quiet text-sm">Comparison</a>
+                 <a href="#which-programme" className="link-quiet text-sm">Which programme is right for me?</a>
+-                <a href="#cpd-hours" className="link-quiet text-sm">CPD hours explained</a>
++                <a href="#cpd-hours" className="link-quiet text-sm">Approved CPD hours</a>
+               </motion.nav>
+             </div>
+           </div>
+@@ -356,7 +356,7 @@ const Courses = () => {
+               {...fade}
+               transition={{ ...fade.transition, delay: 0.1 }}
+             >
+-              How CPD Hours Are Determined
++              Approved CPD Hours
+             </motion.h2>
+ 
+             <motion.p
+diff --git a/src/pages/StrategicLeadershipAI.tsx b/src/pages/StrategicLeadershipAI.tsx
+index a951c6c..f0d990b 100644
+--- a/src/pages/StrategicLeadershipAI.tsx
++++ b/src/pages/StrategicLeadershipAI.tsx
+@@ -412,8 +412,7 @@ const StrategicLeadershipAI = () => {
+                     How many CPD hours does the programme carry?
+                   </summary>
+                   <p className="mt-3 leading-relaxed text-muted-foreground">
+-                    The programme carries 20–30 accredited CPD hours, depending on depth of
+-                    engagement with the working documents and capstone. It is accredited by The
++                    Approved CPD hours: 20–30. It is accredited by The
+                     CPD Standards Office (Provider Number 50838) as Accredited CPD Activity for
+                     participants. Participants are responsible for recording CPD with
+                     their own professional body.
+diff --git a/src/pages/Terms.tsx b/src/pages/Terms.tsx
+index 74eab20..1e34d71 100644
+--- a/src/pages/Terms.tsx
++++ b/src/pages/Terms.tsx
+@@ -266,7 +266,7 @@ const Terms = () => {
+                 className="font-serif text-xl font-medium text-foreground mb-6"
+                 {...fade}
+               >
+-                How CPD hours are determined
++                Approved CPD hours
+               </motion.h2>
+               <CpdHoursFaq />
+             </div>

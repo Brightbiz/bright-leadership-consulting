@@ -83,7 +83,7 @@ const Courses = () => {
                 <a href="#programme-catalogue" className="link-quiet text-sm">Programme catalogue</a>
                 <a href="#comparison" className="link-quiet text-sm">Comparison</a>
                 <a href="#which-programme" className="link-quiet text-sm">Which programme is right for me?</a>
-                <a href="#cpd-hours" className="link-quiet text-sm">CPD hours explained</a>
+                <a href="#cpd-hours" className="link-quiet text-sm">Approved CPD hours</a>
               </motion.nav>
             </div>
           </div>
@@ -356,7 +356,7 @@ const Courses = () => {
               {...fade}
               transition={{ ...fade.transition, delay: 0.1 }}
             >
-              How CPD Hours Are Determined
+              Approved CPD Hours
             </motion.h2>
 
             <motion.p

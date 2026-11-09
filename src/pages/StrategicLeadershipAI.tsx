@@ -412,8 +412,7 @@ const StrategicLeadershipAI = () => {
                     How many CPD hours does the programme carry?
                   </summary>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    The programme carries 20–30 accredited CPD hours, depending on depth of
-                    engagement with the working documents and capstone. It is accredited by The
+                    Approved CPD hours: 20–30. It is accredited by The
                     CPD Standards Office (Provider Number 50838) as Accredited CPD Activity for
                     participants. Participants are responsible for recording CPD with
                     their own professional body.
