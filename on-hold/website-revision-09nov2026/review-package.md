@@ -1,6 +1,6 @@
 # Bright website revision — preview review package
 9 November 2026 · Prepared for Irene A. Agunbiade
-Updated 9 November 2026 (second pass): review points resolved — see R9.
+Updated 9 November 2026 (third pass): final evidence corrected; hosted-preview checks remain OUTSTANDING. Earlier v1/v2 reports are historical and superseded by v3.
 
 **Preview only. Nothing published or deployed. No live submissions, records, emails or external-account changes.**
 
@@ -9,8 +9,8 @@ Updated 9 November 2026 (second pass): review points resolved — see R9.
 Before page edits, rendered text and main-page links matched exactly on /, /academy, /courses and /leading-people. Public live pages were read-only; third-party requests blocked. The 4 November release 09a5516 is complete, not pending.
 ### R1.2 Already complete
 Four Academy programme names and their existing links; Courses jump links including #comparison; homepage primary-action hierarchy; Leading People top/lower buttons and existing cohort URL; workshops, workbook/resources, practice/feedback, sponsor reviews, six-week format and £4,800 cohort fee. Kept, not duplicated.
-### R1.3 Earlier pending public-source differences
-Before this task: src/App.tsx + src/pages/InsightPreviewArticles.tsx, plus internal roadmap.md, compared with 09a5516. The three article pages remain unchanged, preview-only, noindex, unlisted and absent from sitemap. These are separate pending source differences, not permission to release articles.
+### R1.3 Historical article status — superseded
+Before this task: src/App.tsx + src/pages/InsightPreviewArticles.tsx, plus internal roadmap.md, compared with 09a5516. At that earlier stage the three articles were preview-only, noindex, unlisted and absent from sitemap. This is historical: their import/route has since been removed and the unchanged article source moved to on-hold/insights-preview/InsightPreviewArticles.tsx. The article URLs now render not-found; see R9.1.
 
 ## R2. Leading People employer journey
 ### R2.1 Buttons and destination
@@ -129,7 +129,7 @@ Second pass: a selected release state HAS now been prepared — see R9.1.
 Superseded by R9.1: the article routes and source are no longer in the build. A publish of the current state would include exactly the G0–G4 frontend/assets changes, the message-preservation fix, and the seven lastmod changes listed in R7.5 — and nothing else beyond the already-live 09a5516 scope. Internal on-hold diffs, tests, AGENTS and roadmap are not public pages.
 No backend deployments/configuration, badge replacement, CPD explanatory revision, tax wording change, legacy retirement, workbook activity or framework migration is in this change set.
 ### R7.4 Changed-file list
-AGENTS.md; src/hooks/useEnquiryAnchor.ts; src/pages/LeadingPeople.tsx; src/pages/Contact.tsx; src/components/HeroSection.tsx; src/pages/Academy.tsx; src/pages/Courses.tsx; src/data/programmes.ts; the three public brochure HTML files listed in R5.1; src/test/brochureEnquiryRoutes.test.ts; scripts/generate-sitemap.mjs; public/sitemap.xml; roadmap.md; internal review diffs/report under on-hold/website-revision-09nov2026. No App/article/analytics/backend file edited for this task.
+AGENTS.md; src/hooks/useEnquiryAnchor.ts; src/pages/LeadingPeople.tsx; src/pages/Contact.tsx; src/components/HeroSection.tsx; src/pages/Academy.tsx; src/pages/Courses.tsx; src/data/programmes.ts; the three public brochure HTML files listed in R5.1; src/test/brochureEnquiryRoutes.test.ts; scripts/generate-sitemap.mjs; public/sitemap.xml; roadmap.md; internal review diffs/report under on-hold/website-revision-09nov2026. Also changed against preparation baseline c004ba5: src/App.tsx (article import/route removed); src/pages/InsightPreviewArticles.tsx moved unchanged to on-hold/insights-preview/InsightPreviewArticles.tsx; src/test/contactMessagePreservation.test.tsx (four regression tests); on-hold/cpd-audit/snapshot.json (internal record). App.tsx has no net difference against published 09a5516, but was edited during preparation. No analytics/backend file edited. R10 and the final appendix provide the complete inventory.
 ### R7.5 Explicit sitemap implications
 | Entry | Live/prior lastmod | Proposed preview lastmod |
 |---|---|---|
@@ -146,12 +146,25 @@ Three Insights articles; badge/date decision; public CPD wording and separate ta
 All original/supplementary sections now have unique handover references R1–R8 and Rn.n subsections. Original continued Leading People material → R2.3–R2.5; Academy destinations → R4.2; verification safety → R6.2–R6.3. Supplement dependencies → R2.2; homepage order → R3.1; ELM audience → R4.1; analytics → R6.3; brochure diff/copies → R5.3–R5.5; separation → R7.1–R7.3; unique numbering → R8.
 No publication, deployment, messages, live form submissions or external changes authorised/performed. All separate holds remain unchanged.
 
-## R9. Second pass — review points resolved (9 November 2026)
+## R9. Second pass — implementation corrected; hosted checks outstanding (9 November 2026)
 ### R9.1 Release state excluding the articles (prepared, awaiting approval)
 The preview-only Insights article route and source are removed from the build: src/App.tsx is byte-identical to the published 09a5516, and the article component is held at on-hold/insights-preview/InsightPreviewArticles.tsx (content also preserved in git history and Files/insights-drafts/). Verified: typecheck clean, all 250 tests in 31 files pass, build OK, and in-preview the three article URLs render the not-found page while /, /academy, /courses, /leading-people and /contact load correctly. The exact public scope a publish would now ship: G0–G4 changes (R7.1), the message-preservation fix (R2.2), and the seven hand-recorded sitemap date changes (R7.5) — all explicitly included. Articles can be restored after publication without touching this scope.
 ### R9.2 Message preservation
 Resolved as recorded in R2.2: route switches replace only untouched automatic text; visitor-written content is preserved. Four regression tests (src/test/contactMessagePreservation.test.tsx) plus an isolated browser check, all passing.
-### R9.3 Local versus hosted-preview verification
+### R9.3 Local versus hosted-preview verification — OUTSTANDING
 All behavioural checks remain local (localhost preview, emulated Chromium). The managed hosted preview was re-checked on 9 November and still returns HTTP 401, so hosted behaviour, hosting-injected telemetry and real-device rendering remain unverified. When the hosted preview is accessible, the affected navigation and layout checks should be repeated there with production analytics blocked and no live form submissions. End-to-end submission remains explicitly untested under the existing boundary.
 ### R9.4 Audience inconsistency — flagged for a separate copy decision
 The new Academy audience descriptions position Future Workplace and Productivity for senior executives, while the retained brochure footers say “For Professionals, Managers, Supervisors & Team Leaders.” These footers were preserved unchanged under the destination-only instruction. Visitors could receive different audience signals. This is flagged for a separate copy decision; this release does not alter it.
+
+## R10. Final evidence and exact review reference
+### R10.1 Commit and baselines
+Exact final implementation commit for review and eventual publication: **ada806787b39194abc52b28f5a38aaaf71c718e8**.
+Published baseline: **09a5516aac5e75f9a5c4afe919d5d416b2b062c7**.
+Preparation baseline (includes the earlier article pages): **c004ba54640e2829d9876aa5bab7a709753684b7**.
+This third pass changes documentation/evidence only, not the implementation scope. Before eventual publication, confirm the current public/source state still matches this implementation commit; a documentation-only successor is not an extra public change.
+### R10.2 Final appendix
+The v3 appendix replaces the stale initial-pass diff with the final preparation-baseline-to-implementation-commit diff: conditional message preservation, all four regression tests, App article import/route removal and unchanged article-source relocation. It also includes the published-baseline public/source diff and complete changed-file inventory. The final evidence file is final-implementation.diff; earlier grouped diff files and v1/v2 attachments are historical initial-pass evidence, not the final appendix.
+Fresh targeted verification: **7 tests passed in two files**, including all four message-preservation tests. The broader 250-test and local browser results in R9 remain earlier verification, not newly performed hosted checks.
+### R10.3 Hosted-preview retry — OUTSTANDING
+Read-only retry on 9 November 2026 returned **HTTP 401** again. Hosted navigation/layout checks remain **OUTSTANDING**, not resolved, because the intended pages cannot be reached. When accessible, repeat affected navigation, four programme links, three brochure destinations, anchors and desktop/tablet/mobile layout checks with production analytics blocked, consent rejected and context-wide network/submission guards. No live forms may be submitted. Local verification does not establish hosting-injected telemetry behaviour.
+No publication, backend deployment, messages, badge change or live submissions were performed; all separate holds remain unchanged.
