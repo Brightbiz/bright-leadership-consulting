@@ -142,7 +142,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* When the role changes */}
-        <section id="who-its-for" className="section-brief section-pearl scroll-mt-32">
+        <section id="who-its-for" tabIndex={-1} aria-label="Who it’s for" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.h2
@@ -177,7 +177,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Workshops */}
-        <section id="workshops" className="section-brief bg-background scroll-mt-32">
+        <section id="workshops" tabIndex={-1} aria-label="Four workshops" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Structure
@@ -264,7 +264,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Practice and application */}
-        <section id="participants-receive" className="section-brief section-pearl scroll-mt-32">
+        <section id="participants-receive" tabIndex={-1} aria-label="What participants receive" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.h2
@@ -301,7 +301,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Format and commitment */}
-        <section id="six-week-format" className="section-brief bg-background scroll-mt-32">
+        <section id="six-week-format" tabIndex={-1} aria-label="Six-week format" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
@@ -335,7 +335,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Fee */}
-        <section id="cohort-fee" className="section-brief section-pearl scroll-mt-32">
+        <section id="cohort-fee" tabIndex={-1} aria-label="Cohort fee" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>

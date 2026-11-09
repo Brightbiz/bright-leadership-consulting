@@ -64,7 +64,7 @@ const HeroSection = () => {
               Executive Alignment Index™
             </Link>
             <Link to="/academy" className="link-quiet basis-full sm:basis-auto">
-              Bright Leadership Academy
+              Explore Bright Leadership Academy
             </Link>
           </div>
         </div>
