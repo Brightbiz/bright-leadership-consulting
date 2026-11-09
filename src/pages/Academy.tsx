@@ -41,11 +41,15 @@ const Academy = () => (
             <p className="body-brief mb-8">Four CPD-accredited executive programmes. Individual places do not require a diagnostic.</p>
             <div className="flex flex-col items-start gap-6">
               {programmes.map((programme) => (
-                <Link key={programme.title} to={programme.detailPage ?? "/courses"} className="link-quiet">
+                <div key={programme.title} className="w-full border-b border-border pb-6">
+                <Link to={programme.detailPage ?? "/courses"} className="link-quiet">
                   {programme.title}
                 </Link>
+                {programme.audience && <p className="text-sm leading-relaxed text-muted-foreground mt-2"><span className="font-medium text-foreground">Who it’s for: </span>{programme.audience}</p>}
+                </div>
               ))}
               <Link to="/courses" className="btn-brief">Explore the executive catalogue</Link>
+              <Link to="/courses#comparison" className="link-quiet">Compare the four executive programmes</Link>
             </div>
           </div>
         </div>

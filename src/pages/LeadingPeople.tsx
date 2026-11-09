@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import { Button } from "@/components/ui/button";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -125,9 +126,14 @@ const LeadingPeople = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.3 }}
               >
-                <a href={enquiryHref} className="btn-brief">
-                  Discuss an employer cohort
-                </a>
+                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to={enquiryHref}>Enquire about a cohort</Link></Button>
+                <nav aria-label="Leading People programme details" className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                  <a href="#who-its-for" className="link-quiet">Who it’s for</a>
+                  <a href="#six-week-format" className="link-quiet">Six-week format</a>
+                  <a href="#workshops" className="link-quiet">Four workshops</a>
+                  <a href="#participants-receive" className="link-quiet">What participants receive</a>
+                  <a href="#cohort-fee" className="link-quiet">Cohort fee</a>
+                </nav>
               </motion.div>
             </div>
           </div>
@@ -136,7 +142,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* When the role changes */}
-        <section className="section-brief section-pearl">
+        <section id="who-its-for" className="section-brief section-pearl scroll-mt-32">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.h2
@@ -144,7 +150,7 @@ const LeadingPeople = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                When the role changes, everyday management changes too
+                Who it’s for
               </motion.h2>
               <motion.div
                 className="space-y-6"
@@ -171,7 +177,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Workshops */}
-        <section className="section-brief bg-background">
+        <section id="workshops" className="section-brief bg-background scroll-mt-32">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Programme Structure
@@ -258,7 +264,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Practice and application */}
-        <section className="section-brief section-pearl">
+        <section id="participants-receive" className="section-brief section-pearl scroll-mt-32">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.h2
@@ -266,7 +272,7 @@ const LeadingPeople = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Built around practice and application
+                What participants receive
               </motion.h2>
               <motion.div
                 className="space-y-6"
@@ -295,7 +301,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Format and commitment */}
-        <section className="section-brief bg-background">
+        <section id="six-week-format" className="section-brief bg-background scroll-mt-32">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
@@ -306,7 +312,7 @@ const LeadingPeople = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Format and commitment
+                Six-week format and commitment
               </motion.h2>
               <motion.div
                 className="space-y-1.5 border-l-2 border-border pl-6 mt-10"
@@ -329,7 +335,7 @@ const LeadingPeople = () => {
         <div className="section-divider" />
 
         {/* Fee */}
-        <section className="section-brief section-pearl">
+        <section id="cohort-fee" className="section-brief section-pearl scroll-mt-32">
           <div className="container-brief">
             <div className="max-w-[680px]">
               <motion.p className="kicker mb-6" {...fade}>
@@ -417,26 +423,22 @@ const LeadingPeople = () => {
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.1 }}
               >
-                Discuss an employer cohort
+                What happens after you enquire?
               </motion.h2>
               <motion.p
                 className="body-brief mb-10"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.15 }}
               >
-                Tell us your organisation, approximate number of managers, main
-                development need and preferred timing. Bright will discuss
-                programme fit and confirm the scope and booking arrangements
-                before you commit.
+                Tell us about the managers you’d like to develop. We’ll discuss
+                your needs and whether Leading People is a good fit.
               </motion.p>
               <motion.div
                 className="space-y-6"
                 {...fade}
                 transition={{ ...fade.transition, delay: 0.2 }}
               >
-                <a href={enquiryHref} className="btn-brief">
-                  Discuss an employer cohort
-                </a>
+                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to={enquiryHref}>Enquire about a cohort</Link></Button>
                 <p className="text-sm text-muted-foreground">
                   Or email{" "}
                   <a

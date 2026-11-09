@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import heroStructural from "@/assets/hero-structural.webp";
+import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
@@ -56,11 +57,14 @@ const HeroSection = () => {
           </div>
 
           <div className="mt-14 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-            <Link to="/contact" className="btn-brief">
+            <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to="/contact">
               Discuss Executive Alignment
-            </Link>
+            </Link></Button>
             <Link to="/executive-alignment-index" className="link-quiet self-center">
               Executive Alignment Index™
+            </Link>
+            <Link to="/academy" className="link-quiet basis-full sm:basis-auto">
+              Bright Leadership Academy
             </Link>
           </div>
         </div>

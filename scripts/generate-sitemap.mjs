@@ -9,14 +9,14 @@ const BASE_URL = "https://brightleadershipconsulting.com";
  * build date — the publish build has no history, so those re-stamp every page.
  */
 const entries = [
-  { path: "/", lastmod: "2026-11-04", changefreq: "monthly", priority: "1.0" },
-  { path: "/academy", lastmod: "2026-11-04", changefreq: "monthly", priority: "0.8" },
-  { path: "/leading-people", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
+  { path: "/", lastmod: "2026-11-09", changefreq: "monthly", priority: "1.0" },
+  { path: "/academy", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+  { path: "/leading-people", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
   { path: "/cpd", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.6" },
   { path: "/executive-alignment-index", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.9" },
   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
-  { path: "/contact", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
+  { path: "/contact", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
   { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
   { path: "/strategic-leadership-ai", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
   { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
@@ -31,9 +31,9 @@ const entries = [
   { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
   { path: "/privacy", lastmod: "2026-10-29", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
-  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
-  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
   { path: "/brochures/executive-alignment-index-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
 ];
 

@@ -10,6 +10,7 @@ import CourseJourneyMap from "@/components/CourseJourneyMap";
 import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
 import ProgrammeSelector from "@/components/ProgrammeSelector";
 import CpdHoursFaq from "@/components/CpdHoursFaq";
+import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
 
 import {
   programmes,
@@ -32,6 +33,7 @@ const fade = {
 };
 
 const Courses = () => {
+  useEnquiryAnchor("comparison");
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -280,7 +282,7 @@ const Courses = () => {
         <div className="section-divider" />
 
         {/* Section 3b — Comparison */}
-        <section id="comparison" className="section-brief bg-background scroll-mt-24">
+        <section id="comparison" tabIndex={-1} aria-label="Programme comparison" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
           <div className="container-brief">
             <motion.p className="kicker mb-6" {...fade}>
               Side by Side

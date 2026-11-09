@@ -4,7 +4,8 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { z } from "zod";
@@ -127,6 +128,7 @@ const Contact = () => {
 
   // Leading People attribution is scoped only to its explicit cohort URL.
   const isLeadingPeopleCohort = !prefilledProgramme && searchParams.get("cohort") === "leading-people";
+  useEnquiryAnchor("enquiry-form");
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -148,8 +150,15 @@ const Contact = () => {
   });
 
   const track = form.watch("enquiryType");
-
-
+  useEffect(() => {
+    form.reset({ ...form.getValues(),
+      enquiryType: prefilledProgramme ? INDIVIDUAL : isLeadingPeopleCohort ? ORGANISATIONAL : "",
+      programme: prefilledProgramme ?? "",
+      message: isLeadingPeopleCohort
+        ? "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:"
+        : "",
+    });
+  }, [prefilledProgramme, isLeadingPeopleCohort, form]);
 
   const onSubmit = async (data: ContactFormData) => {
     // Individual label applies only if the visitor kept the individual ELM selection.
@@ -250,12 +259,12 @@ const Contact = () => {
 
               <div className="section-divider mb-16" />
 
-              <div className="mb-12 space-y-5">
+              {!isLeadingPeopleCohort && <div className="mb-12 space-y-5">
                 <h2 className="font-serif text-xl">Leading People employer cohorts</h2>
                 <p className="body-brief">For a Leading People employer cohort, use the form below. No Executive Alignment Index™ diagnostic is required.</p>
-                <Link className="btn-brief" to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Discuss an employer cohort</Link>
+                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Enquire about a cohort</Link></Button>
                 <p><Link to="/leading-people" className="link-quiet">Review Leading People</Link></p>
-              </div>
+              </div>}
 
               {isElmEmployerFunded && !isSubmitted && (
                 <p
@@ -284,7 +293,11 @@ const Contact = () => {
               </motion.div>
             ) : (
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-labelledby="enquiry-form">
+                  <h2 id="enquiry-form" tabIndex={-1} className="heading-section scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-4">
+                    {isLeadingPeopleCohort ? "Leading People employer enquiry" : "Enquiry form"}
+                  </h2>
+                  {isLeadingPeopleCohort && <p className="body-brief">For an employer enquiring about a cohort of managers who already supervise people. No Executive Alignment Index™ diagnostic is required.</p>}
                   <FormField
                     control={form.control}
                     name="enquiryType"
@@ -297,24 +310,24 @@ const Contact = () => {
                           {tracks.map((option) => {
                             const active = field.value === option.value;
                             return (
-                              <button
+                              <Button variant="ghost"
                                 key={option.value}
                                 type="button"
                                 onClick={() => field.onChange(option.value)}
                                 aria-pressed={active}
-                                className={`rounded-sm border p-4 text-left transition-colors ${
+                                className={`h-auto block whitespace-normal rounded-sm border p-4 text-left transition-colors ${
                                   active
                                     ? "border-secondary bg-secondary/5"
                                     : "border-border/50 bg-muted/20 hover:border-border"
                                 }`}
                               >
                                 <span className="block text-sm font-medium text-foreground">
-                                  {option.label}
+                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "Employer cohort" : option.label}
                                 </span>
                                 <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
-                                  {option.detail}
+                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "An employer enquiring about Leading People for a cohort of managers with direct reports. No diagnostic is required." : option.detail}
                                 </span>
-                              </button>
+                              </Button>
                             );
                           })}
                         </div>
@@ -450,13 +463,13 @@ const Contact = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-sm font-medium text-foreground">
-                              Size of the leadership team in scope
+                              {isLeadingPeopleCohort ? "Approximate number of managers" : "Size of the leadership team in scope"}
                             </FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
                                 inputMode="numeric"
-                                placeholder="e.g. 9 direct reports, or 12 including the executive committee"
+                                placeholder={isLeadingPeopleCohort ? "e.g. 8–12 managers" : "e.g. 9 direct reports, or 12 including the executive committee"}
                                 className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
                               />
                             </FormControl>
