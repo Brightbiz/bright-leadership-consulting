@@ -1,0 +1,50 @@
+diff --git a/src/pages/Academy.tsx b/src/pages/Academy.tsx
+index 58971c2..f9ddb7d 100644
+--- a/src/pages/Academy.tsx
++++ b/src/pages/Academy.tsx
+@@ -41,11 +41,15 @@ const Academy = () => (
+             <p className="body-brief mb-8">Four CPD-accredited executive programmes. Individual places do not require a diagnostic.</p>
+             <div className="flex flex-col items-start gap-6">
+               {programmes.map((programme) => (
+-                <Link key={programme.title} to={programme.detailPage ?? "/courses"} className="link-quiet">
++                <div key={programme.title} className="w-full border-b border-border pb-6">
++                <Link to={programme.detailPage ?? "/courses"} className="link-quiet">
+                   {programme.title}
+                 </Link>
++                {programme.audience && <p className="text-sm leading-relaxed text-muted-foreground mt-2"><span className="font-medium text-foreground">Who it’s for: </span>{programme.audience}</p>}
++                </div>
+               ))}
+               <Link to="/courses" className="btn-brief">Explore the executive catalogue</Link>
++              <Link to="/courses#comparison" className="link-quiet">Compare the four executive programmes</Link>
+             </div>
+           </div>
+         </div>
+diff --git a/src/pages/Courses.tsx b/src/pages/Courses.tsx
+index 1945131..9413777 100644
+--- a/src/pages/Courses.tsx
++++ b/src/pages/Courses.tsx
+@@ -10,6 +10,7 @@ import CourseJourneyMap from "@/components/CourseJourneyMap";
+ import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
+ import ProgrammeSelector from "@/components/ProgrammeSelector";
+ import CpdHoursFaq from "@/components/CpdHoursFaq";
++import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
+ 
+ import {
+   programmes,
+@@ -32,6 +33,7 @@ const fade = {
+ };
+ 
+ const Courses = () => {
++  useEnquiryAnchor("comparison");
+   return (
+     <div className="min-h-screen bg-background">
+       <SEOHead
+@@ -280,7 +282,7 @@ const Courses = () => {
+         <div className="section-divider" />
+ 
+         {/* Section 3b — Comparison */}
+-        <section id="comparison" className="section-brief bg-background scroll-mt-24">
++        <section id="comparison" tabIndex={-1} aria-label="Programme comparison" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <motion.p className="kicker mb-6" {...fade}>
+               Side by Side

@@ -1,0 +1,58 @@
+diff --git a/src/data/programmes.ts b/src/data/programmes.ts
+index 8c2b582..5402376 100644
+--- a/src/data/programmes.ts
++++ b/src/data/programmes.ts
+@@ -7,6 +7,8 @@
+ export type Programme = {
+   title: string;
+   subtitle: string;
++  /** Audience summary drawn only from approved programme-page copy. */
++  audience?: string;
+   description: string;
+   features: string[];
+   /**
+@@ -50,6 +52,7 @@ export const individualEnquiryPath = (title: string) =>
+ export const programmes: Programme[] = [
+   {
+     title: "Executive Leadership Mastery Programme",
++    audience: "Senior leaders and high-potential executives who require a comprehensive, accredited development pathway.",
+     subtitle: "33 Core Modules, Plus Welcome and Foundation Chapter",
+     description:
+       "33 core modules — plus an additional welcome and foundation chapter — integrating seven leadership disciplines into a single accredited development architecture. 50–66 accredited CPD hours.",
+@@ -73,6 +76,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Strategic Leadership in the Age of AI",
++    audience: "Chairs and non-executive directors; chief executives and executive directors; functional leaders with AI exposure.",
+     subtitle: "Executive capability for AI-enabled strategic advantage",
+     description:
+       "Develops the leadership capability to turn AI potential into stronger strategic insight, sharper decisions and responsible organisational action, examining where AI can create meaningful value and where human judgement, decision authority and executive accountability must remain decisive.",
+@@ -93,6 +97,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Future Workplace and Workforce Strategy Programme",
++    audience: "Chief executives and executive directors; chief people officers and HR directors; divisional and functional leaders.",
+     subtitle: "Navigating Workforce Transformation",
+     description:
+       "Addresses the structural shifts redefining how organisations attract, develop and retain talent — from hybrid models to workforce strategy.",
+@@ -114,6 +119,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Strategic Productivity and Peak Performance Accelerator",
++    audience: "Chief executives and executive directors; senior leaders carrying delivery load; leadership teams with throughput problems.",
+     subtitle: "High-Impact Executive Performance",
+     description:
+       "A structured programme for senior leaders optimising personal and team performance, grounded in evidence-based executive performance frameworks.",
+@@ -171,9 +177,9 @@ export const programmeInterestOptions = [
+ export const brochureCtaLinks: Record<string, string> = {
+   // Individual places for the four catalogue programmes are arranged directly,
+   // so brochure CTAs route to the enquiry page rather than a purchase link.
+-  "executive-leadership-mastery": "https://brightleadershipconsulting.com/contact",
+-  "future-of-work": "https://brightleadershipconsulting.com/contact",
+-  "peak-performance": "https://brightleadershipconsulting.com/contact",
++  "executive-leadership-mastery": `${individualEnquiryPath("Executive Leadership Mastery Programme")}#enquiry-form`,
++  "future-of-work": `${individualEnquiryPath("Future Workplace and Workforce Strategy Programme")}#enquiry-form`,
++  "peak-performance": `${individualEnquiryPath("Strategic Productivity and Peak Performance Accelerator")}#enquiry-form`,
+   // Standalone courses outside the four-programme catalogue. Both are now
+   // Published, Hidden and Private with checkout blocked, so their brochures
+   // route to the enquiry page rather than a purchase link.

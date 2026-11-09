@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Button } from "@/components/ui/button";
+import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
 
 const fade = {
   initial: { opacity: 0, y: 16 },
@@ -76,6 +77,11 @@ const employerQuestions = [
 ];
 
 const LeadingPeople = () => {
+  useEnquiryAnchor("who-its-for");
+  useEnquiryAnchor("six-week-format");
+  useEnquiryAnchor("workshops");
+  useEnquiryAnchor("participants-receive");
+  useEnquiryAnchor("cohort-fee");
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -128,11 +134,11 @@ const LeadingPeople = () => {
               >
                 <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to={enquiryHref}>Enquire about a cohort</Link></Button>
                 <nav aria-label="Leading People programme details" className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-                  <a href="#who-its-for" className="link-quiet">Who it’s for</a>
-                  <a href="#six-week-format" className="link-quiet">Six-week format</a>
-                  <a href="#workshops" className="link-quiet">Four workshops</a>
-                  <a href="#participants-receive" className="link-quiet">What participants receive</a>
-                  <a href="#cohort-fee" className="link-quiet">Cohort fee</a>
+                  <Link to="#who-its-for" className="link-quiet">Who it’s for</Link>
+                  <Link to="#six-week-format" className="link-quiet">Six-week format</Link>
+                  <Link to="#workshops" className="link-quiet">Four workshops</Link>
+                  <Link to="#participants-receive" className="link-quiet">What participants receive</Link>
+                  <Link to="#cohort-fee" className="link-quiet">Cohort fee</Link>
                 </nav>
               </motion.div>
             </div>

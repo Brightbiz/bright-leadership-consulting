@@ -1,0 +1,599 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 8088e27..cf65bef 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -4,6 +4,8 @@ The static description is marked as Helmet-managed so route metadata replaces it
+ Use gold-ink for small gold labels on light surfaces and navy-note for subdued footer text; keep decorative gold unchanged to preserve the brand while meeting contrast requirements.
+ The shared curriculum timeline is a labelled, focusable scroll region so keyboard users can reach every stage without whole-page overflow.
+ Academy discovery lives at /academy separately from the unchanged accredited executive catalogue; local comparison scroll constraints preserve page sizing and keyboard access. Public indexing is permitted only on Bright's custom domains, with per-page noindex overriding that permission, so preview discovery and webinar pages remain excluded.
++Academy audience summaries live in the shared programme catalogue and must be drawn from approved programme-page audience copy, so discovery wording cannot silently invent a new audience.
++Explicit enquiry/comparison deep links use the scoped useEnquiryAnchor hook after lazy routes mount, with focusable targets and header offsets; brochure enquiry links stay same-origin and derive from the programme enquiry helper so preview navigation never falls through to live forms.
+ The CPD information page reads provider statements and executive programme hours from the shared accreditation/catalogue data; it explicitly excludes Leading People so provider status cannot imply programme accreditation.
+ Chat quota count and reservation run atomically in a service-only database function; paid processing requires an explicit true response, and errors or ambiguous results deny processing.
+ Chat history is normalised by the function-local historyGuard before quota reservation; browser-supplied assistant turns become unverified user context, preventing caller-controlled model roles.
+diff --git a/public/brochures/executive-leadership-mastery-brochure.html b/public/brochures/executive-leadership-mastery-brochure.html
+index bb825a3..30c843c 100644
+--- a/public/brochures/executive-leadership-mastery-brochure.html
++++ b/public/brochures/executive-leadership-mastery-brochure.html
+@@ -382,7 +382,7 @@
+ <section class="cta-section">
+   <h2>Ready to Transform Your <span style="color: var(--amber);">Leadership?</span></h2>
+   <p>Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="executive-leadership-mastery" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Executive%20Leadership%20Mastery%20Programme#enquiry-form" data-programme="executive-leadership-mastery" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-price">
+     <strong>&pound;1,297</strong> in full, or three monthly instalments of &pound;435
+   </div>
+diff --git a/public/brochures/future-of-work-brochure.html b/public/brochures/future-of-work-brochure.html
+index 4a97b63..e6f85ec 100644
+--- a/public/brochures/future-of-work-brochure.html
++++ b/public/brochures/future-of-work-brochure.html
+@@ -158,7 +158,7 @@
+ <section class="cta-section">
+   <h2>Prepare for the <span style="color: var(--amber);">Future Workplace</span></h2>
+   <p>Programme fee: &pound;449. Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="future-of-work" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Future%20Workplace%20and%20Workforce%20Strategy%20Programme#enquiry-form" data-programme="future-of-work" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-info">For Professionals, Managers, Supervisors & Team Leaders</div>
+ </section>
+ 
+diff --git a/public/brochures/peak-performance-brochure.html b/public/brochures/peak-performance-brochure.html
+index 48c5de9..79e1b8f 100644
+--- a/public/brochures/peak-performance-brochure.html
++++ b/public/brochures/peak-performance-brochure.html
+@@ -163,7 +163,7 @@
+ <section class="cta-section">
+   <h2>Accelerate Your <span style="color: var(--amber);">Performance</span></h2>
+   <p>Programme fee: &pound;499. Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="peak-performance" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Strategic%20Productivity%20and%20Peak%20Performance%20Accelerator#enquiry-form" data-programme="peak-performance" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-info">For Professionals, Managers, Supervisors & Team Leaders</div>
+ </section>
+ 
+diff --git a/public/sitemap.xml b/public/sitemap.xml
+index bd2dc9f..0ae7047 100644
+--- a/public/sitemap.xml
++++ b/public/sitemap.xml
+@@ -2,19 +2,19 @@
+ <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+     <loc>https://brightleadershipconsulting.com/</loc>
+-    <lastmod>2026-11-04</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>1.0</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/academy</loc>
+-    <lastmod>2026-11-04</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/leading-people</loc>
+-    <lastmod>2026-10-30</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+@@ -44,7 +44,7 @@
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/contact</loc>
+-    <lastmod>2026-10-30</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+@@ -128,19 +128,19 @@
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/executive-leadership-mastery-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/future-of-work-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/peak-performance-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+diff --git a/scripts/generate-sitemap.mjs b/scripts/generate-sitemap.mjs
+index 4624596..acc5549 100644
+--- a/scripts/generate-sitemap.mjs
++++ b/scripts/generate-sitemap.mjs
+@@ -9,14 +9,14 @@ const BASE_URL = "https://brightleadershipconsulting.com";
+  * build date — the publish build has no history, so those re-stamp every page.
+  */
+ const entries = [
+-  { path: "/", lastmod: "2026-11-04", changefreq: "monthly", priority: "1.0" },
+-  { path: "/academy", lastmod: "2026-11-04", changefreq: "monthly", priority: "0.8" },
+-  { path: "/leading-people", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
++  { path: "/", lastmod: "2026-11-09", changefreq: "monthly", priority: "1.0" },
++  { path: "/academy", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
++  { path: "/leading-people", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+   { path: "/cpd", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.6" },
+   { path: "/executive-alignment-index", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.9" },
+   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
+   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+-  { path: "/contact", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
++  { path: "/contact", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+   { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+   { path: "/strategic-leadership-ai", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
+   { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
+@@ -31,9 +31,9 @@ const entries = [
+   { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
+   { path: "/privacy", lastmod: "2026-10-29", changefreq: "yearly", priority: "0.3" },
+   { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
+-  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+-  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+-  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+   { path: "/brochures/executive-alignment-index-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+ ];
+ 
+diff --git a/src/components/HeroSection.tsx b/src/components/HeroSection.tsx
+index f0e28fd..724dc8d 100644
+--- a/src/components/HeroSection.tsx
++++ b/src/components/HeroSection.tsx
+@@ -1,6 +1,7 @@
+ import { Link } from "react-router-dom";
+ import { motion } from "framer-motion";
+ import heroStructural from "@/assets/hero-structural.webp";
++import { Button } from "@/components/ui/button";
+ 
+ const HeroSection = () => {
+   return (
+@@ -56,12 +57,15 @@ const HeroSection = () => {
+           </div>
+ 
+           <div className="mt-14 flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+-            <Link to="/contact" className="btn-brief">
++            <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to="/contact">
+               Discuss Executive Alignment
+-            </Link>
++            </Link></Button>
+             <Link to="/executive-alignment-index" className="link-quiet self-center">
+               Executive Alignment Index™
+             </Link>
++            <Link to="/academy" className="link-quiet basis-full sm:basis-auto">
++              Explore Bright Leadership Academy
++            </Link>
+           </div>
+         </div>
+       </div>
+diff --git a/src/data/programmes.ts b/src/data/programmes.ts
+index 8c2b582..5402376 100644
+--- a/src/data/programmes.ts
++++ b/src/data/programmes.ts
+@@ -7,6 +7,8 @@
+ export type Programme = {
+   title: string;
+   subtitle: string;
++  /** Audience summary drawn only from approved programme-page copy. */
++  audience?: string;
+   description: string;
+   features: string[];
+   /**
+@@ -50,6 +52,7 @@ export const individualEnquiryPath = (title: string) =>
+ export const programmes: Programme[] = [
+   {
+     title: "Executive Leadership Mastery Programme",
++    audience: "Senior leaders and high-potential executives who require a comprehensive, accredited development pathway.",
+     subtitle: "33 Core Modules, Plus Welcome and Foundation Chapter",
+     description:
+       "33 core modules — plus an additional welcome and foundation chapter — integrating seven leadership disciplines into a single accredited development architecture. 50–66 accredited CPD hours.",
+@@ -73,6 +76,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Strategic Leadership in the Age of AI",
++    audience: "Chairs and non-executive directors; chief executives and executive directors; functional leaders with AI exposure.",
+     subtitle: "Executive capability for AI-enabled strategic advantage",
+     description:
+       "Develops the leadership capability to turn AI potential into stronger strategic insight, sharper decisions and responsible organisational action, examining where AI can create meaningful value and where human judgement, decision authority and executive accountability must remain decisive.",
+@@ -93,6 +97,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Future Workplace and Workforce Strategy Programme",
++    audience: "Chief executives and executive directors; chief people officers and HR directors; divisional and functional leaders.",
+     subtitle: "Navigating Workforce Transformation",
+     description:
+       "Addresses the structural shifts redefining how organisations attract, develop and retain talent — from hybrid models to workforce strategy.",
+@@ -114,6 +119,7 @@ export const programmes: Programme[] = [
+   },
+   {
+     title: "Strategic Productivity and Peak Performance Accelerator",
++    audience: "Chief executives and executive directors; senior leaders carrying delivery load; leadership teams with throughput problems.",
+     subtitle: "High-Impact Executive Performance",
+     description:
+       "A structured programme for senior leaders optimising personal and team performance, grounded in evidence-based executive performance frameworks.",
+@@ -171,9 +177,9 @@ export const programmeInterestOptions = [
+ export const brochureCtaLinks: Record<string, string> = {
+   // Individual places for the four catalogue programmes are arranged directly,
+   // so brochure CTAs route to the enquiry page rather than a purchase link.
+-  "executive-leadership-mastery": "https://brightleadershipconsulting.com/contact",
+-  "future-of-work": "https://brightleadershipconsulting.com/contact",
+-  "peak-performance": "https://brightleadershipconsulting.com/contact",
++  "executive-leadership-mastery": `${individualEnquiryPath("Executive Leadership Mastery Programme")}#enquiry-form`,
++  "future-of-work": `${individualEnquiryPath("Future Workplace and Workforce Strategy Programme")}#enquiry-form`,
++  "peak-performance": `${individualEnquiryPath("Strategic Productivity and Peak Performance Accelerator")}#enquiry-form`,
+   // Standalone courses outside the four-programme catalogue. Both are now
+   // Published, Hidden and Private with checkout blocked, so their brochures
+   // route to the enquiry page rather than a purchase link.
+diff --git a/src/hooks/useEnquiryAnchor.ts b/src/hooks/useEnquiryAnchor.ts
+new file mode 100644
+index 0000000..5b48dcd
+--- /dev/null
++++ b/src/hooks/useEnquiryAnchor.ts
+@@ -0,0 +1,17 @@
++import { useEffect } from "react";
++import { useLocation } from "react-router-dom";
++
++/** Focus only the explicitly requested section after its route has mounted. */
++export function useEnquiryAnchor(id: string) {
++  const { hash, pathname, search } = useLocation();
++  useEffect(() => {
++    if (hash !== `#${id}`) return;
++    const frame = requestAnimationFrame(() => {
++      const target = document.getElementById(id);
++      if (!target) return;
++      target.focus({ preventScroll: true });
++      target.scrollIntoView({ block: "start", behavior: "instant" });
++    });
++    return () => cancelAnimationFrame(frame);
++  }, [hash, pathname, search, id]);
++}
+\ No newline at end of file
+diff --git a/src/pages/Academy.tsx b/src/pages/Academy.tsx
+index 58971c2..f9ddb7d 100644
+--- a/src/pages/Academy.tsx
++++ b/src/pages/Academy.tsx
+@@ -41,11 +41,15 @@ const Academy = () => (
+             <p className="body-brief mb-8">Four CPD-accredited executive programmes. Individual places do not require a diagnostic.</p>
+             <div className="flex flex-col items-start gap-6">
+               {programmes.map((programme) => (
+-                <Link key={programme.title} to={programme.detailPage ?? "/courses"} className="link-quiet">
++                <div key={programme.title} className="w-full border-b border-border pb-6">
++                <Link to={programme.detailPage ?? "/courses"} className="link-quiet">
+                   {programme.title}
+                 </Link>
++                {programme.audience && <p className="text-sm leading-relaxed text-muted-foreground mt-2"><span className="font-medium text-foreground">Who it’s for: </span>{programme.audience}</p>}
++                </div>
+               ))}
+               <Link to="/courses" className="btn-brief">Explore the executive catalogue</Link>
++              <Link to="/courses#comparison" className="link-quiet">Compare the four executive programmes</Link>
+             </div>
+           </div>
+         </div>
+diff --git a/src/pages/Contact.tsx b/src/pages/Contact.tsx
+index 5ade9ca..435b6ea 100644
+--- a/src/pages/Contact.tsx
++++ b/src/pages/Contact.tsx
+@@ -4,7 +4,8 @@ import SEOHead from "@/components/SEOHead";
+ import Header from "@/components/Header";
+ import Footer from "@/components/Footer";
+ import ScrollProgress from "@/components/ScrollProgress";
+-import { useState } from "react";
++import { useEffect, useState } from "react";
++import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
+ import { useSearchParams } from "react-router-dom";
+ import { Link } from "react-router-dom";
+ import { z } from "zod";
+@@ -127,6 +128,7 @@ const Contact = () => {
+ 
+   // Leading People attribution is scoped only to its explicit cohort URL.
+   const isLeadingPeopleCohort = !prefilledProgramme && searchParams.get("cohort") === "leading-people";
++  useEnquiryAnchor("enquiry-form");
+ 
+   const form = useForm<ContactFormData>({
+     resolver: zodResolver(contactSchema),
+@@ -148,8 +150,15 @@ const Contact = () => {
+   });
+ 
+   const track = form.watch("enquiryType");
+-
+-
++  useEffect(() => {
++    form.reset({ ...form.getValues(),
++      enquiryType: prefilledProgramme ? INDIVIDUAL : isLeadingPeopleCohort ? ORGANISATIONAL : "",
++      programme: prefilledProgramme ?? "",
++      message: isLeadingPeopleCohort
++        ? "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:"
++        : "",
++    });
++  }, [prefilledProgramme, isLeadingPeopleCohort, form]);
+ 
+   const onSubmit = async (data: ContactFormData) => {
+     // Individual label applies only if the visitor kept the individual ELM selection.
+@@ -250,12 +259,12 @@ const Contact = () => {
+ 
+               <div className="section-divider mb-16" />
+ 
+-              <div className="mb-12 space-y-5">
++              {!isLeadingPeopleCohort && <div className="mb-12 space-y-5">
+                 <h2 className="font-serif text-xl">Leading People employer cohorts</h2>
+                 <p className="body-brief">For a Leading People employer cohort, use the form below. No Executive Alignment Index™ diagnostic is required.</p>
+-                <Link className="btn-brief" to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Discuss an employer cohort</Link>
++                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Enquire about a cohort</Link></Button>
+                 <p><Link to="/leading-people" className="link-quiet">Review Leading People</Link></p>
+-              </div>
++              </div>}
+ 
+               {isElmEmployerFunded && !isSubmitted && (
+                 <p
+@@ -284,7 +293,11 @@ const Contact = () => {
+               </motion.div>
+             ) : (
+               <Form {...form}>
+-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
++                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-labelledby="enquiry-form">
++                  <h2 id="enquiry-form" tabIndex={-1} className="heading-section scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-4">
++                    {isLeadingPeopleCohort ? "Leading People employer enquiry" : "Enquiry form"}
++                  </h2>
++                  {isLeadingPeopleCohort && <p className="body-brief">For an employer enquiring about a cohort of managers who already supervise people. No Executive Alignment Index™ diagnostic is required.</p>}
+                   <FormField
+                     control={form.control}
+                     name="enquiryType"
+@@ -297,24 +310,24 @@ const Contact = () => {
+                           {tracks.map((option) => {
+                             const active = field.value === option.value;
+                             return (
+-                              <button
++                              <Button variant="ghost"
+                                 key={option.value}
+                                 type="button"
+                                 onClick={() => field.onChange(option.value)}
+                                 aria-pressed={active}
+-                                className={`rounded-sm border p-4 text-left transition-colors ${
++                                className={`h-auto block whitespace-normal rounded-sm border p-4 text-left transition-colors ${
+                                   active
+                                     ? "border-secondary bg-secondary/5"
+                                     : "border-border/50 bg-muted/20 hover:border-border"
+                                 }`}
+                               >
+                                 <span className="block text-sm font-medium text-foreground">
+-                                  {option.label}
++                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "Employer cohort" : option.label}
+                                 </span>
+                                 <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
+-                                  {option.detail}
++                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "An employer enquiring about Leading People for a cohort of managers with direct reports. No diagnostic is required." : option.detail}
+                                 </span>
+-                              </button>
++                              </Button>
+                             );
+                           })}
+                         </div>
+@@ -450,13 +463,13 @@ const Contact = () => {
+                         render={({ field }) => (
+                           <FormItem>
+                             <FormLabel className="text-sm font-medium text-foreground">
+-                              Size of the leadership team in scope
++                              {isLeadingPeopleCohort ? "Approximate number of managers" : "Size of the leadership team in scope"}
+                             </FormLabel>
+                             <FormControl>
+                               <Input
+                                 {...field}
+                                 inputMode="numeric"
+-                                placeholder="e.g. 9 direct reports, or 12 including the executive committee"
++                                placeholder={isLeadingPeopleCohort ? "e.g. 8–12 managers" : "e.g. 9 direct reports, or 12 including the executive committee"}
+                                 className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
+                               />
+                             </FormControl>
+diff --git a/src/pages/Courses.tsx b/src/pages/Courses.tsx
+index 1945131..9413777 100644
+--- a/src/pages/Courses.tsx
++++ b/src/pages/Courses.tsx
+@@ -10,6 +10,7 @@ import CourseJourneyMap from "@/components/CourseJourneyMap";
+ import ProgrammeComparisonTable from "@/components/ProgrammeComparisonTable";
+ import ProgrammeSelector from "@/components/ProgrammeSelector";
+ import CpdHoursFaq from "@/components/CpdHoursFaq";
++import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
+ 
+ import {
+   programmes,
+@@ -32,6 +33,7 @@ const fade = {
+ };
+ 
+ const Courses = () => {
++  useEnquiryAnchor("comparison");
+   return (
+     <div className="min-h-screen bg-background">
+       <SEOHead
+@@ -280,7 +282,7 @@ const Courses = () => {
+         <div className="section-divider" />
+ 
+         {/* Section 3b — Comparison */}
+-        <section id="comparison" className="section-brief bg-background scroll-mt-24">
++        <section id="comparison" tabIndex={-1} aria-label="Programme comparison" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <motion.p className="kicker mb-6" {...fade}>
+               Side by Side
+diff --git a/src/pages/LeadingPeople.tsx b/src/pages/LeadingPeople.tsx
+index f49207b..8f99d6a 100644
+--- a/src/pages/LeadingPeople.tsx
++++ b/src/pages/LeadingPeople.tsx
+@@ -4,6 +4,8 @@ import SEOHead from "@/components/SEOHead";
+ import Header from "@/components/Header";
+ import Footer from "@/components/Footer";
+ import ScrollProgress from "@/components/ScrollProgress";
++import { Button } from "@/components/ui/button";
++import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
+ 
+ const fade = {
+   initial: { opacity: 0, y: 16 },
+@@ -75,6 +77,11 @@ const employerQuestions = [
+ ];
+ 
+ const LeadingPeople = () => {
++  useEnquiryAnchor("who-its-for");
++  useEnquiryAnchor("six-week-format");
++  useEnquiryAnchor("workshops");
++  useEnquiryAnchor("participants-receive");
++  useEnquiryAnchor("cohort-fee");
+   return (
+     <div className="min-h-screen bg-background">
+       <SEOHead
+@@ -125,9 +132,14 @@ const LeadingPeople = () => {
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.3 }}
+               >
+-                <a href={enquiryHref} className="btn-brief">
+-                  Discuss an employer cohort
+-                </a>
++                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to={enquiryHref}>Enquire about a cohort</Link></Button>
++                <nav aria-label="Leading People programme details" className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
++                  <Link to="#who-its-for" className="link-quiet">Who it’s for</Link>
++                  <Link to="#six-week-format" className="link-quiet">Six-week format</Link>
++                  <Link to="#workshops" className="link-quiet">Four workshops</Link>
++                  <Link to="#participants-receive" className="link-quiet">What participants receive</Link>
++                  <Link to="#cohort-fee" className="link-quiet">Cohort fee</Link>
++                </nav>
+               </motion.div>
+             </div>
+           </div>
+@@ -136,7 +148,7 @@ const LeadingPeople = () => {
+         <div className="section-divider" />
+ 
+         {/* When the role changes */}
+-        <section className="section-brief section-pearl">
++        <section id="who-its-for" tabIndex={-1} aria-label="Who it’s for" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <div className="max-w-[680px]">
+               <motion.h2
+@@ -144,7 +156,7 @@ const LeadingPeople = () => {
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.1 }}
+               >
+-                When the role changes, everyday management changes too
++                Who it’s for
+               </motion.h2>
+               <motion.div
+                 className="space-y-6"
+@@ -171,7 +183,7 @@ const LeadingPeople = () => {
+         <div className="section-divider" />
+ 
+         {/* Workshops */}
+-        <section className="section-brief bg-background">
++        <section id="workshops" tabIndex={-1} aria-label="Four workshops" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <motion.p className="kicker mb-6" {...fade}>
+               Programme Structure
+@@ -258,7 +270,7 @@ const LeadingPeople = () => {
+         <div className="section-divider" />
+ 
+         {/* Practice and application */}
+-        <section className="section-brief section-pearl">
++        <section id="participants-receive" tabIndex={-1} aria-label="What participants receive" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <div className="max-w-[680px]">
+               <motion.h2
+@@ -266,7 +278,7 @@ const LeadingPeople = () => {
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.1 }}
+               >
+-                Built around practice and application
++                What participants receive
+               </motion.h2>
+               <motion.div
+                 className="space-y-6"
+@@ -295,7 +307,7 @@ const LeadingPeople = () => {
+         <div className="section-divider" />
+ 
+         {/* Format and commitment */}
+-        <section className="section-brief bg-background">
++        <section id="six-week-format" tabIndex={-1} aria-label="Six-week format" className="section-brief bg-background scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <div className="max-w-[680px]">
+               <motion.p className="kicker mb-6" {...fade}>
+@@ -306,7 +318,7 @@ const LeadingPeople = () => {
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.1 }}
+               >
+-                Format and commitment
++                Six-week format and commitment
+               </motion.h2>
+               <motion.div
+                 className="space-y-1.5 border-l-2 border-border pl-6 mt-10"
+@@ -329,7 +341,7 @@ const LeadingPeople = () => {
+         <div className="section-divider" />
+ 
+         {/* Fee */}
+-        <section className="section-brief section-pearl">
++        <section id="cohort-fee" tabIndex={-1} aria-label="Cohort fee" className="section-brief section-pearl scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">
+           <div className="container-brief">
+             <div className="max-w-[680px]">
+               <motion.p className="kicker mb-6" {...fade}>
+@@ -417,26 +429,22 @@ const LeadingPeople = () => {
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.1 }}
+               >
+-                Discuss an employer cohort
++                What happens after you enquire?
+               </motion.h2>
+               <motion.p
+                 className="body-brief mb-10"
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.15 }}
+               >
+-                Tell us your organisation, approximate number of managers, main
+-                development need and preferred timing. Bright will discuss
+-                programme fit and confirm the scope and booking arrangements
+-                before you commit.
++                Tell us about the managers you’d like to develop. We’ll discuss
++                your needs and whether Leading People is a good fit.
+               </motion.p>
+               <motion.div
+                 className="space-y-6"
+                 {...fade}
+                 transition={{ ...fade.transition, delay: 0.2 }}
+               >
+-                <a href={enquiryHref} className="btn-brief">
+-                  Discuss an employer cohort
+-                </a>
++                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to={enquiryHref}>Enquire about a cohort</Link></Button>
+                 <p className="text-sm text-muted-foreground">
+                   Or email{" "}
+                   <a
+diff --git a/src/test/brochureEnquiryRoutes.test.ts b/src/test/brochureEnquiryRoutes.test.ts
+new file mode 100644
+index 0000000..9451dce
+--- /dev/null
++++ b/src/test/brochureEnquiryRoutes.test.ts
+@@ -0,0 +1,22 @@
++import { describe, expect, it } from "vitest";
++import { readFileSync } from "node:fs";
++import { brochureCtaLinks } from "@/data/programmes";
++
++describe("retained brochure programme enquiry destinations", () => {
++  for (const [key, filename, title] of [
++    ["executive-leadership-mastery", "executive-leadership-mastery", "Executive Leadership Mastery Programme"],
++    ["future-of-work", "future-of-work", "Future Workplace and Workforce Strategy Programme"],
++    ["peak-performance", "peak-performance", "Strategic Productivity and Peak Performance Accelerator"],
++  ]) {
++    it(`${key} selects its own programme on the same-origin enquiry form`, () => {
++      const destination = new URL(brochureCtaLinks[key], "https://preview.example");
++      expect(destination.origin).toBe("https://preview.example");
++      expect(destination.pathname).toBe("/contact");
++      expect(destination.searchParams.get("programme")).toBe(title);
++      expect(destination.hash).toBe("#enquiry-form");
++      const html = readFileSync(`public/brochures/${filename}-brochure.html`, "utf8");
++      const href = html.match(new RegExp(`<a href="([^"]+)" data-programme="${key}"`))?.[1];
++      expect(href).toBe(brochureCtaLinks[key]);
++    });
++  }
++});
+\ No newline at end of file

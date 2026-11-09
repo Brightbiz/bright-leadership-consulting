@@ -1,0 +1,68 @@
+diff --git a/public/brochures/executive-leadership-mastery-brochure.html b/public/brochures/executive-leadership-mastery-brochure.html
+index bb825a3..30c843c 100644
+--- a/public/brochures/executive-leadership-mastery-brochure.html
++++ b/public/brochures/executive-leadership-mastery-brochure.html
+@@ -382,7 +382,7 @@
+ <section class="cta-section">
+   <h2>Ready to Transform Your <span style="color: var(--amber);">Leadership?</span></h2>
+   <p>Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="executive-leadership-mastery" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Executive%20Leadership%20Mastery%20Programme#enquiry-form" data-programme="executive-leadership-mastery" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-price">
+     <strong>&pound;1,297</strong> in full, or three monthly instalments of &pound;435
+   </div>
+diff --git a/public/brochures/future-of-work-brochure.html b/public/brochures/future-of-work-brochure.html
+index 4a97b63..e6f85ec 100644
+--- a/public/brochures/future-of-work-brochure.html
++++ b/public/brochures/future-of-work-brochure.html
+@@ -158,7 +158,7 @@
+ <section class="cta-section">
+   <h2>Prepare for the <span style="color: var(--amber);">Future Workplace</span></h2>
+   <p>Programme fee: &pound;449. Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="future-of-work" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Future%20Workplace%20and%20Workforce%20Strategy%20Programme#enquiry-form" data-programme="future-of-work" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-info">For Professionals, Managers, Supervisors & Team Leaders</div>
+ </section>
+ 
+diff --git a/public/brochures/peak-performance-brochure.html b/public/brochures/peak-performance-brochure.html
+index 48c5de9..79e1b8f 100644
+--- a/public/brochures/peak-performance-brochure.html
++++ b/public/brochures/peak-performance-brochure.html
+@@ -163,7 +163,7 @@
+ <section class="cta-section">
+   <h2>Accelerate Your <span style="color: var(--amber);">Performance</span></h2>
+   <p>Programme fee: &pound;499. Individual enrolment is requested through the enquiry form at the published fee; employer sponsorship and the Executive Alignment Index&trade; are not prerequisites.</p>
+-  <a href="https://brightleadershipconsulting.com/contact" data-programme="peak-performance" class="cta-btn">Request Individual Enrolment &rarr;</a>
++  <a href="/contact?programme=Strategic%20Productivity%20and%20Peak%20Performance%20Accelerator#enquiry-form" data-programme="peak-performance" class="cta-btn">Request Individual Enrolment &rarr;</a>
+   <div class="cta-info">For Professionals, Managers, Supervisors & Team Leaders</div>
+ </section>
+ 
+diff --git a/src/test/brochureEnquiryRoutes.test.ts b/src/test/brochureEnquiryRoutes.test.ts
+new file mode 100644
+index 0000000..9451dce
+--- /dev/null
++++ b/src/test/brochureEnquiryRoutes.test.ts
+@@ -0,0 +1,22 @@
++import { describe, expect, it } from "vitest";
++import { readFileSync } from "node:fs";
++import { brochureCtaLinks } from "@/data/programmes";
++
++describe("retained brochure programme enquiry destinations", () => {
++  for (const [key, filename, title] of [
++    ["executive-leadership-mastery", "executive-leadership-mastery", "Executive Leadership Mastery Programme"],
++    ["future-of-work", "future-of-work", "Future Workplace and Workforce Strategy Programme"],
++    ["peak-performance", "peak-performance", "Strategic Productivity and Peak Performance Accelerator"],
++  ]) {
++    it(`${key} selects its own programme on the same-origin enquiry form`, () => {
++      const destination = new URL(brochureCtaLinks[key], "https://preview.example");
++      expect(destination.origin).toBe("https://preview.example");
++      expect(destination.pathname).toBe("/contact");
++      expect(destination.searchParams.get("programme")).toBe(title);
++      expect(destination.hash).toBe("#enquiry-form");
++      const html = readFileSync(`public/brochures/${filename}-brochure.html`, "utf8");
++      const href = html.match(new RegExp(`<a href="([^"]+)" data-programme="${key}"`))?.[1];
++      expect(href).toBe(brochureCtaLinks[key]);
++    });
++  }
++});
+\ No newline at end of file

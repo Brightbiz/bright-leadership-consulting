@@ -1,0 +1,247 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 8088e27..cf65bef 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -4,6 +4,8 @@ The static description is marked as Helmet-managed so route metadata replaces it
+ Use gold-ink for small gold labels on light surfaces and navy-note for subdued footer text; keep decorative gold unchanged to preserve the brand while meeting contrast requirements.
+ The shared curriculum timeline is a labelled, focusable scroll region so keyboard users can reach every stage without whole-page overflow.
+ Academy discovery lives at /academy separately from the unchanged accredited executive catalogue; local comparison scroll constraints preserve page sizing and keyboard access. Public indexing is permitted only on Bright's custom domains, with per-page noindex overriding that permission, so preview discovery and webinar pages remain excluded.
++Academy audience summaries live in the shared programme catalogue and must be drawn from approved programme-page audience copy, so discovery wording cannot silently invent a new audience.
++Explicit enquiry/comparison deep links use the scoped useEnquiryAnchor hook after lazy routes mount, with focusable targets and header offsets; brochure enquiry links stay same-origin and derive from the programme enquiry helper so preview navigation never falls through to live forms.
+ The CPD information page reads provider statements and executive programme hours from the shared accreditation/catalogue data; it explicitly excludes Leading People so provider status cannot imply programme accreditation.
+ Chat quota count and reservation run atomically in a service-only database function; paid processing requires an explicit true response, and errors or ambiguous results deny processing.
+ Chat history is normalised by the function-local historyGuard before quota reservation; browser-supplied assistant turns become unverified user context, preventing caller-controlled model roles.
+diff --git a/public/sitemap.xml b/public/sitemap.xml
+index bd2dc9f..0ae7047 100644
+--- a/public/sitemap.xml
++++ b/public/sitemap.xml
+@@ -2,19 +2,19 @@
+ <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+     <loc>https://brightleadershipconsulting.com/</loc>
+-    <lastmod>2026-11-04</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>1.0</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/academy</loc>
+-    <lastmod>2026-11-04</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/leading-people</loc>
+-    <lastmod>2026-10-30</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+@@ -44,7 +44,7 @@
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/contact</loc>
+-    <lastmod>2026-10-30</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.8</priority>
+   </url>
+@@ -128,19 +128,19 @@
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/executive-leadership-mastery-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/future-of-work-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://brightleadershipconsulting.com/brochures/peak-performance-brochure.html</loc>
+-    <lastmod>2026-11-02</lastmod>
++    <lastmod>2026-11-09</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+diff --git a/scripts/generate-sitemap.mjs b/scripts/generate-sitemap.mjs
+index 4624596..acc5549 100644
+--- a/scripts/generate-sitemap.mjs
++++ b/scripts/generate-sitemap.mjs
+@@ -9,14 +9,14 @@ const BASE_URL = "https://brightleadershipconsulting.com";
+  * build date — the publish build has no history, so those re-stamp every page.
+  */
+ const entries = [
+-  { path: "/", lastmod: "2026-11-04", changefreq: "monthly", priority: "1.0" },
+-  { path: "/academy", lastmod: "2026-11-04", changefreq: "monthly", priority: "0.8" },
+-  { path: "/leading-people", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
++  { path: "/", lastmod: "2026-11-09", changefreq: "monthly", priority: "1.0" },
++  { path: "/academy", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
++  { path: "/leading-people", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+   { path: "/cpd", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.6" },
+   { path: "/executive-alignment-index", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.9" },
+   { path: "/selected-engagements", lastmod: "2026-08-04", changefreq: "monthly", priority: "0.8" },
+   { path: "/executive-alignment-brief", lastmod: "2026-04-08", changefreq: "monthly", priority: "0.7" },
+-  { path: "/contact", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
++  { path: "/contact", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.8" },
+   { path: "/executive-leadership-mastery", lastmod: "2026-10-05", changefreq: "monthly", priority: "0.8" },
+   { path: "/strategic-leadership-ai", lastmod: "2026-10-30", changefreq: "monthly", priority: "0.8" },
+   { path: "/future-of-work", lastmod: "2026-08-14", changefreq: "monthly", priority: "0.8" },
+@@ -31,9 +31,9 @@ const entries = [
+   { path: "/insights/four-question-decision-test", lastmod: "2026-10-13", changefreq: "yearly", priority: "0.6" },
+   { path: "/privacy", lastmod: "2026-10-29", changefreq: "yearly", priority: "0.3" },
+   { path: "/terms", lastmod: "2026-09-25", changefreq: "yearly", priority: "0.3" },
+-  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+-  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+-  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/executive-leadership-mastery-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/future-of-work-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
++  { path: "/brochures/peak-performance-brochure.html", lastmod: "2026-11-09", changefreq: "monthly", priority: "0.6" },
+   { path: "/brochures/executive-alignment-index-brochure.html", lastmod: "2026-11-02", changefreq: "monthly", priority: "0.6" },
+ ];
+ 
+diff --git a/src/hooks/useEnquiryAnchor.ts b/src/hooks/useEnquiryAnchor.ts
+new file mode 100644
+index 0000000..5b48dcd
+--- /dev/null
++++ b/src/hooks/useEnquiryAnchor.ts
+@@ -0,0 +1,17 @@
++import { useEffect } from "react";
++import { useLocation } from "react-router-dom";
++
++/** Focus only the explicitly requested section after its route has mounted. */
++export function useEnquiryAnchor(id: string) {
++  const { hash, pathname, search } = useLocation();
++  useEffect(() => {
++    if (hash !== `#${id}`) return;
++    const frame = requestAnimationFrame(() => {
++      const target = document.getElementById(id);
++      if (!target) return;
++      target.focus({ preventScroll: true });
++      target.scrollIntoView({ block: "start", behavior: "instant" });
++    });
++    return () => cancelAnimationFrame(frame);
++  }, [hash, pathname, search, id]);
++}
+\ No newline at end of file
+diff --git a/src/pages/Contact.tsx b/src/pages/Contact.tsx
+index 5ade9ca..435b6ea 100644
+--- a/src/pages/Contact.tsx
++++ b/src/pages/Contact.tsx
+@@ -4,7 +4,8 @@ import SEOHead from "@/components/SEOHead";
+ import Header from "@/components/Header";
+ import Footer from "@/components/Footer";
+ import ScrollProgress from "@/components/ScrollProgress";
+-import { useState } from "react";
++import { useEffect, useState } from "react";
++import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
+ import { useSearchParams } from "react-router-dom";
+ import { Link } from "react-router-dom";
+ import { z } from "zod";
+@@ -127,6 +128,7 @@ const Contact = () => {
+ 
+   // Leading People attribution is scoped only to its explicit cohort URL.
+   const isLeadingPeopleCohort = !prefilledProgramme && searchParams.get("cohort") === "leading-people";
++  useEnquiryAnchor("enquiry-form");
+ 
+   const form = useForm<ContactFormData>({
+     resolver: zodResolver(contactSchema),
+@@ -148,8 +150,15 @@ const Contact = () => {
+   });
+ 
+   const track = form.watch("enquiryType");
+-
+-
++  useEffect(() => {
++    form.reset({ ...form.getValues(),
++      enquiryType: prefilledProgramme ? INDIVIDUAL : isLeadingPeopleCohort ? ORGANISATIONAL : "",
++      programme: prefilledProgramme ?? "",
++      message: isLeadingPeopleCohort
++        ? "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:"
++        : "",
++    });
++  }, [prefilledProgramme, isLeadingPeopleCohort, form]);
+ 
+   const onSubmit = async (data: ContactFormData) => {
+     // Individual label applies only if the visitor kept the individual ELM selection.
+@@ -250,12 +259,12 @@ const Contact = () => {
+ 
+               <div className="section-divider mb-16" />
+ 
+-              <div className="mb-12 space-y-5">
++              {!isLeadingPeopleCohort && <div className="mb-12 space-y-5">
+                 <h2 className="font-serif text-xl">Leading People employer cohorts</h2>
+                 <p className="body-brief">For a Leading People employer cohort, use the form below. No Executive Alignment Index™ diagnostic is required.</p>
+-                <Link className="btn-brief" to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Discuss an employer cohort</Link>
++                <Button asChild variant="outline" className="btn-brief h-auto whitespace-normal"><Link to="/contact?cohort=leading-people#enquiry-form" reloadDocument>Enquire about a cohort</Link></Button>
+                 <p><Link to="/leading-people" className="link-quiet">Review Leading People</Link></p>
+-              </div>
++              </div>}
+ 
+               {isElmEmployerFunded && !isSubmitted && (
+                 <p
+@@ -284,7 +293,11 @@ const Contact = () => {
+               </motion.div>
+             ) : (
+               <Form {...form}>
+-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
++                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-labelledby="enquiry-form">
++                  <h2 id="enquiry-form" tabIndex={-1} className="heading-section scroll-mt-32 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-4">
++                    {isLeadingPeopleCohort ? "Leading People employer enquiry" : "Enquiry form"}
++                  </h2>
++                  {isLeadingPeopleCohort && <p className="body-brief">For an employer enquiring about a cohort of managers who already supervise people. No Executive Alignment Index™ diagnostic is required.</p>}
+                   <FormField
+                     control={form.control}
+                     name="enquiryType"
+@@ -297,24 +310,24 @@ const Contact = () => {
+                           {tracks.map((option) => {
+                             const active = field.value === option.value;
+                             return (
+-                              <button
++                              <Button variant="ghost"
+                                 key={option.value}
+                                 type="button"
+                                 onClick={() => field.onChange(option.value)}
+                                 aria-pressed={active}
+-                                className={`rounded-sm border p-4 text-left transition-colors ${
++                                className={`h-auto block whitespace-normal rounded-sm border p-4 text-left transition-colors ${
+                                   active
+                                     ? "border-secondary bg-secondary/5"
+                                     : "border-border/50 bg-muted/20 hover:border-border"
+                                 }`}
+                               >
+                                 <span className="block text-sm font-medium text-foreground">
+-                                  {option.label}
++                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "Employer cohort" : option.label}
+                                 </span>
+                                 <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">
+-                                  {option.detail}
++                                  {isLeadingPeopleCohort && option.value === ORGANISATIONAL ? "An employer enquiring about Leading People for a cohort of managers with direct reports. No diagnostic is required." : option.detail}
+                                 </span>
+-                              </button>
++                              </Button>
+                             );
+                           })}
+                         </div>
+@@ -450,13 +463,13 @@ const Contact = () => {
+                         render={({ field }) => (
+                           <FormItem>
+                             <FormLabel className="text-sm font-medium text-foreground">
+-                              Size of the leadership team in scope
++                              {isLeadingPeopleCohort ? "Approximate number of managers" : "Size of the leadership team in scope"}
+                             </FormLabel>
+                             <FormControl>
+                               <Input
+                                 {...field}
+                                 inputMode="numeric"
+-                                placeholder="e.g. 9 direct reports, or 12 including the executive committee"
++                                placeholder={isLeadingPeopleCohort ? "e.g. 8–12 managers" : "e.g. 9 direct reports, or 12 including the executive committee"}
+                                 className="h-12 bg-muted/30 border-border/50 focus:border-secondary"
+                               />
+                             </FormControl>
