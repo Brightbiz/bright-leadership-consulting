@@ -259,7 +259,7 @@ rule(20);
 // Keep the section heading on the same page as its first question.
 need(200);
 kicker("Common Questions");
-text("How CPD Hours Are Determined", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
+text("Approved CPD Hours", { font: serifBold, size: 18, lead: 1.3, gap: 14 });
 
 for (const item of faqItems) {
   need(90);
