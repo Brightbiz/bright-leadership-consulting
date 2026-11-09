@@ -1,5 +1,6 @@
 # Bright website revision — preview review package
-9 November 2026 · Prepared for Irene A. Agunbiade, via Victoria
+9 November 2026 · Prepared for Irene A. Agunbiade
+Updated 9 November 2026 (second pass): review points resolved — see R9.
 
 **Preview only. Nothing published or deployed. No live submissions, records, emails or external-account changes.**
 
@@ -18,6 +19,7 @@ Both existing buttons now say **Enquire about a cohort** and navigate to [https:
 Before: no form anchor; general organisational explanation mentioned board/executive advisory; participant label “Size of the leadership team in scope”.
 After, only on explicit cohort route: **Leading People employer enquiry**; employer/cohort explanation without diagnostic prerequisite; **Approximate number of managers**, placeholder “e.g. 8–12 managers”.
 Exact-text search across repository source, admin/CRM, functions, reports/scripts and on-hold materials found that label only in Contact.tsx. No admin/CRM/report dependency found. External reports not in this repository are unverified. Field identifiers and the “Approx. participants:” submitted detail prefix are unchanged. Route transitions reset route-specific selection/prefill, avoiding cohort wording leaking into a later general journey.
+Message preservation (added second pass): the route-change reset now replaces the message only when it is still the untouched automatic template (or empty); any text the visitor typed is preserved in both directions. Verified by four regression tests and an isolated browser check: typed text survived leaving and entering the cohort route; the untouched template was cleared on the general route and re-added on the cohort route. No page errors.
 ### R2.3 Page scanning
 Added quiet jump links to existing audience, format, workshop, participant-support and fee sections; revised headings to “Who it’s for”, “What participants receive” and “Six-week format and commitment”. No duplicate curriculum or deliverables added. Workshop titles/content, six-week delivery, direct-report manager audience and fee unchanged. Lower button remains after programme details/questions.
 ### R2.4 Wording for Bright’s review
@@ -121,9 +123,10 @@ The platform recorded the initial edits together in a6ad8fd when the supplementa
 - **G4 brochures:** three HTML files, destination hunks in programmes.ts, brochureEnquiryRoutes.test.ts.
 - Shared catalogue diff explicitly shows G3 audiences and G4 destination hunks separately.
 ### R7.2 Can groups publish independently?
-Not by pressing Publish in this combined working version: it publishes the whole current site. G2 is logically separable with only homepage lastmod; G1 needs Contact/anchor + its two lastmods; G3 needs catalogue audience hunks + Courses/anchor + Academy lastmod; G4 needs destination mapping/HTML/test + Contact/anchor + three brochure lastmods. Catalogue, anchor, Contact and sitemap are shared dependencies, so a selective release would require preparing and verifying a selected source state first. No selective release prepared or authorised here.
+Not by pressing Publish in this combined working version: it publishes the whole current site. G2 is logically separable with only homepage lastmod; G1 needs Contact/anchor + its two lastmods; G3 needs catalogue audience hunks + Courses/anchor + Academy lastmod; G4 needs destination mapping/HTML/test + Contact/anchor + three brochure lastmods. Catalogue, anchor, Contact and sitemap are shared dependencies, so a selective release would require preparing and verifying a selected source state first.
+Second pass: a selected release state HAS now been prepared — see R9.1.
 ### R7.3 Exact public changes a later publish would include now
-All current G0–G4 frontend/assets changes and seven lastmod changes; plus the already-pending src/App.tsx/InsightPreviewArticles.tsx source additions. Those article pages still do not render on the custom domains, but their routes/source would be deployed in the build; they cannot be described as excluded from the bundle by simply being noindex. Exclude them by a separately prepared release state before any narrow publication approval. Internal on-hold diffs, tests, AGENTS and roadmap are not public pages.
+Superseded by R9.1: the article routes and source are no longer in the build. A publish of the current state would include exactly the G0–G4 frontend/assets changes, the message-preservation fix, and the seven lastmod changes listed in R7.5 — and nothing else beyond the already-live 09a5516 scope. Internal on-hold diffs, tests, AGENTS and roadmap are not public pages.
 No backend deployments/configuration, badge replacement, CPD explanatory revision, tax wording change, legacy retirement, workbook activity or framework migration is in this change set.
 ### R7.4 Changed-file list
 AGENTS.md; src/hooks/useEnquiryAnchor.ts; src/pages/LeadingPeople.tsx; src/pages/Contact.tsx; src/components/HeroSection.tsx; src/pages/Academy.tsx; src/pages/Courses.tsx; src/data/programmes.ts; the three public brochure HTML files listed in R5.1; src/test/brochureEnquiryRoutes.test.ts; scripts/generate-sitemap.mjs; public/sitemap.xml; roadmap.md; internal review diffs/report under on-hold/website-revision-09nov2026. No App/article/analytics/backend file edited for this task.
@@ -142,3 +145,13 @@ Three Insights articles; badge/date decision; public CPD wording and separate ta
 ## R8. Hold points and requirement references
 All original/supplementary sections now have unique handover references R1–R8 and Rn.n subsections. Original continued Leading People material → R2.3–R2.5; Academy destinations → R4.2; verification safety → R6.2–R6.3. Supplement dependencies → R2.2; homepage order → R3.1; ELM audience → R4.1; analytics → R6.3; brochure diff/copies → R5.3–R5.5; separation → R7.1–R7.3; unique numbering → R8.
 No publication, deployment, messages, live form submissions or external changes authorised/performed. All separate holds remain unchanged.
+
+## R9. Second pass — review points resolved (9 November 2026)
+### R9.1 Release state excluding the articles (prepared, awaiting approval)
+The preview-only Insights article route and source are removed from the build: src/App.tsx is byte-identical to the published 09a5516, and the article component is held at on-hold/insights-preview/InsightPreviewArticles.tsx (content also preserved in git history and Files/insights-drafts/). Verified: typecheck clean, all 250 tests in 31 files pass, build OK, and in-preview the three article URLs render the not-found page while /, /academy, /courses, /leading-people and /contact load correctly. The exact public scope a publish would now ship: G0–G4 changes (R7.1), the message-preservation fix (R2.2), and the seven hand-recorded sitemap date changes (R7.5) — all explicitly included. Articles can be restored after publication without touching this scope.
+### R9.2 Message preservation
+Resolved as recorded in R2.2: route switches replace only untouched automatic text; visitor-written content is preserved. Four regression tests (src/test/contactMessagePreservation.test.tsx) plus an isolated browser check, all passing.
+### R9.3 Local versus hosted-preview verification
+All behavioural checks remain local (localhost preview, emulated Chromium). The managed hosted preview was re-checked on 9 November and still returns HTTP 401, so hosted behaviour, hosting-injected telemetry and real-device rendering remain unverified. When the hosted preview is accessible, the affected navigation and layout checks should be repeated there with production analytics blocked and no live form submissions. End-to-end submission remains explicitly untested under the existing boundary.
+### R9.4 Audience inconsistency — flagged for a separate copy decision
+The new Academy audience descriptions position Future Workplace and Productivity for senior executives, while the retained brochure footers say “For Professionals, Managers, Supervisors & Team Leaders.” These footers were preserved unchanged under the destination-only instruction. Visitors could receive different audience signals. This is flagged for a separate copy decision; this release does not alter it.

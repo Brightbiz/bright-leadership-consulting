@@ -48,7 +48,6 @@ const AdvisoryProcess = lazy(() => import("./pages/AdvisoryProcess"));
 const Principal = lazy(() => import("./pages/Principal"));
 const AiAudit = lazy(() => import("./pages/AiAudit"));
 const Insights = lazy(() => import("./pages/Insights"));
-const InsightPreviewArticle = lazy(() => import("./pages/InsightPreviewArticles"));
 const InsightFourQuestionDecisionTest = lazy(() => import("./pages/InsightFourQuestionDecisionTest"));
 
 // Executive Decision Leadership Intensive™ — staging only, not linked publicly.
@@ -129,8 +128,6 @@ const AnimatedRoutes = () => {
           <Route path="/principal" element={<PageTransition><Principal /></PageTransition>} />
           <Route path="/insights" element={<PageTransition><Insights /></PageTransition>} />
           <Route path="/insights/four-question-decision-test" element={<PageTransition><InsightFourQuestionDecisionTest /></PageTransition>} />
-          {/* Preview-only articles: render off the custom domain only, noindex, not listed or in sitemap. */}
-          <Route path="/insights/:slug" element={<PageTransition><InsightPreviewArticle /></PageTransition>} />
           {/* Unpublished pending review — noindex, not linked from navigation. */}
           <Route path="/ai-audit" element={<PageTransition><AiAudit /></PageTransition>} />
           {/* Held private: administrator sign-in required. */}

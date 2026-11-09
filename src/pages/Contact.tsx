@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEnquiryAnchor } from "@/hooks/useEnquiryAnchor";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -53,6 +53,9 @@ const fade = {
 
 const ORGANISATIONAL = "Organisational / leadership team";
 const INDIVIDUAL = "Individual executive";
+
+const COHORT_MESSAGE_TEMPLATE =
+  "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:";
 
 const tracks = [
   {
@@ -142,21 +145,25 @@ const Contact = () => {
       deliveryFormat: "",
       participants: "",
       timeframe: "",
-      message: isLeadingPeopleCohort
-        ? "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:"
-        : "",
+      message: isLeadingPeopleCohort ? COHORT_MESSAGE_TEMPLATE : "",
     },
     mode: "onTouched",
   });
 
   const track = form.watch("enquiryType");
+  const previousRoute = useRef({ cohort: isLeadingPeopleCohort });
   useEffect(() => {
-    form.reset({ ...form.getValues(),
+    const values = form.getValues();
+    const previousTemplate = previousRoute.current.cohort ? COHORT_MESSAGE_TEMPLATE : "";
+    const nextTemplate = isLeadingPeopleCohort ? COHORT_MESSAGE_TEMPLATE : "";
+    // Replace only untouched automatic text; anything the visitor wrote is preserved.
+    const message = values.message === previousTemplate ? nextTemplate : values.message;
+    previousRoute.current = { cohort: isLeadingPeopleCohort };
+    form.reset({
+      ...values,
       enquiryType: prefilledProgramme ? INDIVIDUAL : isLeadingPeopleCohort ? ORGANISATIONAL : "",
       programme: prefilledProgramme ?? "",
-      message: isLeadingPeopleCohort
-        ? "Leading People — employer cohort enquiry\nApproximate number of managers:\nMain development need:\nPreferred timing:"
-        : "",
+      message,
     });
   }, [prefilledProgramme, isLeadingPeopleCohort, form]);
 
