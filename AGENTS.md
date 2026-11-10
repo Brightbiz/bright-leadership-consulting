@@ -30,3 +30,4 @@ Webinar captions render in a separate strip below the video so they never obscur
 - Legacy brochure revisions stay under on-hold/brochure-review/legacy; public legacy files retain the recorded published baseline until removal is separately approved, so an unrelated publication cannot release held revisions or remove existing direct links.
 - AI-audit diagnostics use the deployed shared aiAuditDiagnostics.ts helper with fixed code and native-type allowlists; mutable error properties cannot safely be logged even when named code or name.
 - Detailed CPD audit snapshots are generated under on-hold/cpd-audit, never public or client bundles; the admin catalogue remains available but full report delivery requires a separately approved protected route.
+- The portfolio generator embeds pinned static brand fonts from scripts/fonts with zero character spacing and matching measurement/drawing features, preventing PDF-viewer substitutions and glyph-spacing drift.

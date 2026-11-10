@@ -16,7 +16,8 @@
 
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, rgb, setCharacterSpacing } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
 
 const ROOT = resolve(process.cwd());
 const OUT = resolve(ROOT, "public/downloads/programme-portfolio.pdf");
@@ -104,15 +105,24 @@ doc.setAuthor("Bright Leadership Consulting");
 doc.setSubject("Accredited executive development programmes, CPD hours and fees");
 doc.setCreator("Bright Leadership Consulting");
 
-const serif = await doc.embedFont(StandardFonts.TimesRoman);
-const serifBold = await doc.embedFont(StandardFonts.TimesRomanBold);
-const sans = await doc.embedFont(StandardFonts.Helvetica);
-const sansBold = await doc.embedFont(StandardFonts.HelveticaBold);
+// Embed pinned static fonts: viewer substitutions and variable-font handling
+// must not change glyph widths or introduce apparent spaces inside words.
+doc.registerFontkit(fontkit);
+const embed = (name) => doc.embedFont(readFileSync(join(ROOT, "scripts/fonts", name)), {
+  // Full embedding avoids fontkit's subset glyph-outline loss for Inter.
+  subset: false,
+  features: { liga: false, clig: false, kern: false },
+});
+const serif = await embed("LibreBaskerville-Regular.ttf");
+const serifBold = await embed("LibreBaskerville-Bold.ttf");
+const sans = await embed("Inter-Regular.ttf");
+const sansBold = await embed("Inter-Bold.ttf");
 
-/** WinAnsi covers en dash, ™, £ and curly quotes; only NBSP needs replacing. */
+/** Embedded Unicode fonts cover en dash, ™, £ and curly quotes. */
 const ascii = (s) => s.replace(/\u00a0/g, " ");
 
 let page = doc.addPage(PAGE);
+page.pushOperators(setCharacterSpacing(0));
 let y = PAGE[1] - MARGIN;
 let pageNo = 1;
 
@@ -137,6 +147,7 @@ const footer = () => {
 const newPage = () => {
   footer();
   page = doc.addPage(PAGE);
+  page.pushOperators(setCharacterSpacing(0));
   pageNo += 1;
   y = PAGE[1] - MARGIN;
 };
