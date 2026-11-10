@@ -141,9 +141,12 @@ const CATALOGUE_BROCHURES = [
  * Published, Hidden and Private with checkout blocked. They stay publicly
  * reachable by direct URL, must be noindex/follow, and must present an
  * enquiry-only CTA.
+ *
+ * advanced-leadership-skills-brochure.html was deliberately retired on
+ * 10 Nov 2026 (preview approval): its URL now serves a withdrawal notice and
+ * is checked separately below.
  */
 const STANDALONE_BROCHURES = [
-  "advanced-leadership-skills-brochure.html",
   "enhanced-employability-skills-brochure.html",
 ];
 const STANDALONE_CTA_LABEL = "Enquire About This Programme";
@@ -169,6 +172,32 @@ for (const file of STANDALONE_BROCHURES) {
   }
   if (!/<meta\s+name="robots"\s+content="noindex,\s*follow">/i.test(html)) {
     failures.push(`${rel} — must declare <meta name="robots" content="noindex, follow">.`);
+  }
+}
+
+/* -------------------------------------- retired brochure: withdrawal notice */
+/**
+ * The Advanced Leadership Skills programme is no longer offered. Its brochure
+ * URL must serve the approved retirement notice: noindex, a link to the
+ * current catalogue at /courses, and no enquiry action, accreditation
+ * presentation or checkout wording.
+ */
+const RETIRED_BROCHURE = "public/brochures/advanced-leadership-skills-brochure.html";
+if (!existsSync(resolve(ROOT, RETIRED_BROCHURE))) {
+  failures.push(`${RETIRED_BROCHURE} is missing — the retirement notice must stay reachable.`);
+} else {
+  const notice = read(RETIRED_BROCHURE);
+  if (!/noindex/i.test(notice)) {
+    failures.push(`${RETIRED_BROCHURE} — retirement notice must be noindex.`);
+  }
+  if (!notice.includes('href="/courses"')) {
+    failures.push(`${RETIRED_BROCHURE} — retirement notice must link to /courses.`);
+  }
+  if (/Enquire About This Programme|brightleadershipconsulting\.com\/contact|thinkific|Enrol Now|checkout/i.test(notice)) {
+    failures.push(`${RETIRED_BROCHURE} — retirement notice must not carry an enquiry action or checkout wording.`);
+  }
+  if (/accredit|CPD Standards Office|50838/i.test(notice)) {
+    failures.push(`${RETIRED_BROCHURE} — retirement notice must not present accreditation.`);
   }
 }
 
